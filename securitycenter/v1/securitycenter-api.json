@@ -218,7 +218,7 @@
                   "type": "string"
                 },
                 "startTime": {
-                  "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time.",
+                  "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be smaller or equal to the server time.",
                   "format": "google-datetime",
                   "location": "query",
                   "type": "string"
@@ -236,6 +236,195 @@
               },
               "response": {
                 "$ref": "SecurityMarks"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
+        },
+        "findings": {
+          "methods": {
+            "bulkMute": {
+              "description": "Kicks off an LRO to bulk mute findings for a parent based on a filter. The parent can be either an organization, folder or project. The findings matched by the filter will be muted after the LRO is done.",
+              "flatPath": "v1/folders/{foldersId}/findings:bulkMute",
+              "httpMethod": "POST",
+              "id": "securitycenter.folders.findings.bulkMute",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The parent, at which bulk action needs to be applied. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", \"projects/[project_id]\".",
+                  "location": "path",
+                  "pattern": "^folders/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/findings:bulkMute",
+              "request": {
+                "$ref": "BulkMuteFindingsRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
+        },
+        "muteConfigs": {
+          "methods": {
+            "create": {
+              "description": "Creates a mute config.",
+              "flatPath": "v1/folders/{foldersId}/muteConfigs",
+              "httpMethod": "POST",
+              "id": "securitycenter.folders.muteConfigs.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "muteConfigId": {
+                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. Resource name of the new mute configs's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+                  "location": "path",
+                  "pattern": "^folders/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/muteConfigs",
+              "request": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+              },
+              "response": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "delete": {
+              "description": "Deletes an existing mute config.",
+              "flatPath": "v1/folders/{foldersId}/muteConfigs/{muteConfigsId}",
+              "httpMethod": "DELETE",
+              "id": "securitycenter.folders.muteConfigs.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the mute config to delete. Its format is organizations/{organization}/muteConfigs/{config_id}, folders/{folder}/muteConfigs/{config_id}, or projects/{project}/muteConfigs/{config_id}",
+                  "location": "path",
+                  "pattern": "^folders/[^/]+/muteConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "get": {
+              "description": "Gets a mute config.",
+              "flatPath": "v1/folders/{foldersId}/muteConfigs/{muteConfigsId}",
+              "httpMethod": "GET",
+              "id": "securitycenter.folders.muteConfigs.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the mute config to retrieve. Its format is organizations/{organization}/muteConfigs/{config_id}, folders/{folder}/muteConfigs/{config_id}, or projects/{project}/muteConfigs/{config_id}",
+                  "location": "path",
+                  "pattern": "^folders/[^/]+/muteConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "list": {
+              "description": "Lists mute configs.",
+              "flatPath": "v1/folders/{foldersId}/muteConfigs",
+              "httpMethod": "GET",
+              "id": "securitycenter.folders.muteConfigs.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "The maximum number of configs to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "A page token, received from a previous `ListMuteConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMuteConfigs` must match the call that provided the page token.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. The parent, which owns the collection of mute configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", \"projects/[project_id]\".",
+                  "location": "path",
+                  "pattern": "^folders/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/muteConfigs",
+              "response": {
+                "$ref": "ListMuteConfigsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "patch": {
+              "description": "Updates a mute config.",
+              "flatPath": "v1/folders/{foldersId}/muteConfigs/{muteConfigsId}",
+              "httpMethod": "PATCH",
+              "id": "securitycenter.folders.muteConfigs.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "This field will be ignored if provided on config creation. Format \"organizations/{organization}/muteConfigs/{mute_config}\" \"folders/{folder}/muteConfigs/{mute_config}\" \"projects/{project}/muteConfigs/{mute_config}\"",
+                  "location": "path",
+                  "pattern": "^folders/[^/]+/muteConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "The list of fields to be updated. If empty all mutable fields will be updated.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+              },
+              "response": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
@@ -335,7 +524,7 @@
                       "type": "string"
                     },
                     "filter": {
-                      "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` * event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` * severity: `=`, `:` * workflow_state: `=`, `:` * security_marks.marks: `=`, `:` * source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"` * resource: * resource.name: `=`, `:` * resource.parent_name: `=`, `:` * resource.parent_display_name: `=`, `:` * resource.project_name: `=`, `:` * resource.project_display_name: `=`, `:` * resource.type: `=`, `:` * resource.folders.resource_folder: `=`, `:`",
+                      "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` * event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` * severity: `=`, `:` * workflow_state: `=`, `:` * security_marks.marks: `=`, `:` * source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"` * resource: * resource.name: `=`, `:` * resource.parent_name: `=`, `:` * resource.parent_display_name: `=`, `:` * resource.project_name: `=`, `:` * resource.project_display_name: `=`, `:` * resource.type: `=`, `:` * resource.folders.resource_folder: `=`, `:` * resource.display_name: `=`, `:`",
                       "location": "query",
                       "type": "string"
                     },
@@ -411,6 +600,34 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "setMute": {
+                  "description": "Updates the mute state of a finding.",
+                  "flatPath": "v1/folders/{foldersId}/sources/{sourcesId}/findings/{findingsId}:setMute",
+                  "httpMethod": "POST",
+                  "id": "securitycenter.folders.sources.findings.setMute",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/finding/{finding_id}\", \"projects/{project_id}/sources/{source_id}/finding/{finding_id}\".",
+                      "location": "path",
+                      "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:setMute",
+                  "request": {
+                    "$ref": "SetMuteRequest"
+                  },
+                  "response": {
+                    "$ref": "Finding"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "setState": {
                   "description": "Updates the state of a finding.",
                   "flatPath": "v1/folders/{foldersId}/sources/{sourcesId}/findings/{findingsId}:setState",
@@ -456,7 +673,7 @@
                       "type": "string"
                     },
                     "startTime": {
-                      "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time.",
+                      "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be smaller or equal to the server time.",
                       "format": "google-datetime",
                       "location": "query",
                       "type": "string"
@@ -478,6 +695,46 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
+                }
+              },
+              "resources": {
+                "externalSystems": {
+                  "methods": {
+                    "patch": {
+                      "description": "Updates external system. This is for a given finding.",
+                      "flatPath": "v1/folders/{foldersId}/sources/{sourcesId}/findings/{findingsId}/externalSystems/{externalSystemsId}",
+                      "httpMethod": "PATCH",
+                      "id": "securitycenter.folders.sources.findings.externalSystems.patch",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "External System Name e.g. jira, demisto, etc. e.g.: organizations/1234/sources/5678/findings/123456/externalSystems/jira folders/1234/sources/5678/findings/123456/externalSystems/jira projects/1234/sources/5678/findings/123456/externalSystems/jira",
+                          "location": "path",
+                          "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "updateMask": {
+                          "description": "The FieldMask to use when updating the external system resource. If empty all mutable fields will be updated.",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "request": {
+                        "$ref": "GoogleCloudSecuritycenterV1ExternalSystem"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudSecuritycenterV1ExternalSystem"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -687,7 +944,7 @@
                   "type": "string"
                 },
                 "startTime": {
-                  "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time.",
+                  "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be smaller or equal to the server time.",
                   "format": "google-datetime",
                   "location": "query",
                   "type": "string"
@@ -705,6 +962,195 @@
               },
               "response": {
                 "$ref": "SecurityMarks"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
+        },
+        "findings": {
+          "methods": {
+            "bulkMute": {
+              "description": "Kicks off an LRO to bulk mute findings for a parent based on a filter. The parent can be either an organization, folder or project. The findings matched by the filter will be muted after the LRO is done.",
+              "flatPath": "v1/organizations/{organizationsId}/findings:bulkMute",
+              "httpMethod": "POST",
+              "id": "securitycenter.organizations.findings.bulkMute",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The parent, at which bulk action needs to be applied. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", \"projects/[project_id]\".",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/findings:bulkMute",
+              "request": {
+                "$ref": "BulkMuteFindingsRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
+        },
+        "muteConfigs": {
+          "methods": {
+            "create": {
+              "description": "Creates a mute config.",
+              "flatPath": "v1/organizations/{organizationsId}/muteConfigs",
+              "httpMethod": "POST",
+              "id": "securitycenter.organizations.muteConfigs.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "muteConfigId": {
+                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. Resource name of the new mute configs's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/muteConfigs",
+              "request": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+              },
+              "response": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "delete": {
+              "description": "Deletes an existing mute config.",
+              "flatPath": "v1/organizations/{organizationsId}/muteConfigs/{muteConfigsId}",
+              "httpMethod": "DELETE",
+              "id": "securitycenter.organizations.muteConfigs.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the mute config to delete. Its format is organizations/{organization}/muteConfigs/{config_id}, folders/{folder}/muteConfigs/{config_id}, or projects/{project}/muteConfigs/{config_id}",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/muteConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "get": {
+              "description": "Gets a mute config.",
+              "flatPath": "v1/organizations/{organizationsId}/muteConfigs/{muteConfigsId}",
+              "httpMethod": "GET",
+              "id": "securitycenter.organizations.muteConfigs.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the mute config to retrieve. Its format is organizations/{organization}/muteConfigs/{config_id}, folders/{folder}/muteConfigs/{config_id}, or projects/{project}/muteConfigs/{config_id}",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/muteConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "list": {
+              "description": "Lists mute configs.",
+              "flatPath": "v1/organizations/{organizationsId}/muteConfigs",
+              "httpMethod": "GET",
+              "id": "securitycenter.organizations.muteConfigs.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "The maximum number of configs to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "A page token, received from a previous `ListMuteConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMuteConfigs` must match the call that provided the page token.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. The parent, which owns the collection of mute configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", \"projects/[project_id]\".",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/muteConfigs",
+              "response": {
+                "$ref": "ListMuteConfigsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "patch": {
+              "description": "Updates a mute config.",
+              "flatPath": "v1/organizations/{organizationsId}/muteConfigs/{muteConfigsId}",
+              "httpMethod": "PATCH",
+              "id": "securitycenter.organizations.muteConfigs.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "This field will be ignored if provided on config creation. Format \"organizations/{organization}/muteConfigs/{mute_config}\" \"folders/{folder}/muteConfigs/{mute_config}\" \"projects/{project}/muteConfigs/{mute_config}\"",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/muteConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "The list of fields to be updated. If empty all mutable fields will be updated.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+              },
+              "response": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
@@ -1285,7 +1731,7 @@
                       "type": "string"
                     },
                     "filter": {
-                      "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` * event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` * severity: `=`, `:` * workflow_state: `=`, `:` * security_marks.marks: `=`, `:` * source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"` * resource: * resource.name: `=`, `:` * resource.parent_name: `=`, `:` * resource.parent_display_name: `=`, `:` * resource.project_name: `=`, `:` * resource.project_display_name: `=`, `:` * resource.type: `=`, `:` * resource.folders.resource_folder: `=`, `:`",
+                      "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` * event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` * severity: `=`, `:` * workflow_state: `=`, `:` * security_marks.marks: `=`, `:` * source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"` * resource: * resource.name: `=`, `:` * resource.parent_name: `=`, `:` * resource.parent_display_name: `=`, `:` * resource.project_name: `=`, `:` * resource.project_display_name: `=`, `:` * resource.type: `=`, `:` * resource.folders.resource_folder: `=`, `:` * resource.display_name: `=`, `:`",
                       "location": "query",
                       "type": "string"
                     },
@@ -1361,6 +1807,34 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "setMute": {
+                  "description": "Updates the mute state of a finding.",
+                  "flatPath": "v1/organizations/{organizationsId}/sources/{sourcesId}/findings/{findingsId}:setMute",
+                  "httpMethod": "POST",
+                  "id": "securitycenter.organizations.sources.findings.setMute",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/finding/{finding_id}\", \"projects/{project_id}/sources/{source_id}/finding/{finding_id}\".",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:setMute",
+                  "request": {
+                    "$ref": "SetMuteRequest"
+                  },
+                  "response": {
+                    "$ref": "Finding"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "setState": {
                   "description": "Updates the state of a finding.",
                   "flatPath": "v1/organizations/{organizationsId}/sources/{sourcesId}/findings/{findingsId}:setState",
@@ -1406,7 +1880,7 @@
                       "type": "string"
                     },
                     "startTime": {
-                      "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time.",
+                      "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be smaller or equal to the server time.",
                       "format": "google-datetime",
                       "location": "query",
                       "type": "string"
@@ -1428,6 +1902,46 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
+                }
+              },
+              "resources": {
+                "externalSystems": {
+                  "methods": {
+                    "patch": {
+                      "description": "Updates external system. This is for a given finding.",
+                      "flatPath": "v1/organizations/{organizationsId}/sources/{sourcesId}/findings/{findingsId}/externalSystems/{externalSystemsId}",
+                      "httpMethod": "PATCH",
+                      "id": "securitycenter.organizations.sources.findings.externalSystems.patch",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "External System Name e.g. jira, demisto, etc. e.g.: organizations/1234/sources/5678/findings/123456/externalSystems/jira folders/1234/sources/5678/findings/123456/externalSystems/jira projects/1234/sources/5678/findings/123456/externalSystems/jira",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "updateMask": {
+                          "description": "The FieldMask to use when updating the external system resource. If empty all mutable fields will be updated.",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "request": {
+                        "$ref": "GoogleCloudSecuritycenterV1ExternalSystem"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudSecuritycenterV1ExternalSystem"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -1548,7 +2062,7 @@
                   "type": "string"
                 },
                 "startTime": {
-                  "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time.",
+                  "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be smaller or equal to the server time.",
                   "format": "google-datetime",
                   "location": "query",
                   "type": "string"
@@ -1566,6 +2080,195 @@
               },
               "response": {
                 "$ref": "SecurityMarks"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
+        },
+        "findings": {
+          "methods": {
+            "bulkMute": {
+              "description": "Kicks off an LRO to bulk mute findings for a parent based on a filter. The parent can be either an organization, folder or project. The findings matched by the filter will be muted after the LRO is done.",
+              "flatPath": "v1/projects/{projectsId}/findings:bulkMute",
+              "httpMethod": "POST",
+              "id": "securitycenter.projects.findings.bulkMute",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The parent, at which bulk action needs to be applied. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", \"projects/[project_id]\".",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/findings:bulkMute",
+              "request": {
+                "$ref": "BulkMuteFindingsRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
+        },
+        "muteConfigs": {
+          "methods": {
+            "create": {
+              "description": "Creates a mute config.",
+              "flatPath": "v1/projects/{projectsId}/muteConfigs",
+              "httpMethod": "POST",
+              "id": "securitycenter.projects.muteConfigs.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "muteConfigId": {
+                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. Resource name of the new mute configs's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/muteConfigs",
+              "request": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+              },
+              "response": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "delete": {
+              "description": "Deletes an existing mute config.",
+              "flatPath": "v1/projects/{projectsId}/muteConfigs/{muteConfigsId}",
+              "httpMethod": "DELETE",
+              "id": "securitycenter.projects.muteConfigs.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the mute config to delete. Its format is organizations/{organization}/muteConfigs/{config_id}, folders/{folder}/muteConfigs/{config_id}, or projects/{project}/muteConfigs/{config_id}",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/muteConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "get": {
+              "description": "Gets a mute config.",
+              "flatPath": "v1/projects/{projectsId}/muteConfigs/{muteConfigsId}",
+              "httpMethod": "GET",
+              "id": "securitycenter.projects.muteConfigs.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the mute config to retrieve. Its format is organizations/{organization}/muteConfigs/{config_id}, folders/{folder}/muteConfigs/{config_id}, or projects/{project}/muteConfigs/{config_id}",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/muteConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "list": {
+              "description": "Lists mute configs.",
+              "flatPath": "v1/projects/{projectsId}/muteConfigs",
+              "httpMethod": "GET",
+              "id": "securitycenter.projects.muteConfigs.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "The maximum number of configs to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "A page token, received from a previous `ListMuteConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMuteConfigs` must match the call that provided the page token.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. The parent, which owns the collection of mute configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", \"projects/[project_id]\".",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/muteConfigs",
+              "response": {
+                "$ref": "ListMuteConfigsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "patch": {
+              "description": "Updates a mute config.",
+              "flatPath": "v1/projects/{projectsId}/muteConfigs/{muteConfigsId}",
+              "httpMethod": "PATCH",
+              "id": "securitycenter.projects.muteConfigs.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "This field will be ignored if provided on config creation. Format \"organizations/{organization}/muteConfigs/{mute_config}\" \"folders/{folder}/muteConfigs/{mute_config}\" \"projects/{project}/muteConfigs/{mute_config}\"",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/muteConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "The list of fields to be updated. If empty all mutable fields will be updated.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+              },
+              "response": {
+                "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
@@ -1665,7 +2368,7 @@
                       "type": "string"
                     },
                     "filter": {
-                      "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` * event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` * severity: `=`, `:` * workflow_state: `=`, `:` * security_marks.marks: `=`, `:` * source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"` * resource: * resource.name: `=`, `:` * resource.parent_name: `=`, `:` * resource.parent_display_name: `=`, `:` * resource.project_name: `=`, `:` * resource.project_display_name: `=`, `:` * resource.type: `=`, `:` * resource.folders.resource_folder: `=`, `:`",
+                      "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` * event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` * severity: `=`, `:` * workflow_state: `=`, `:` * security_marks.marks: `=`, `:` * source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"` * resource: * resource.name: `=`, `:` * resource.parent_name: `=`, `:` * resource.parent_display_name: `=`, `:` * resource.project_name: `=`, `:` * resource.project_display_name: `=`, `:` * resource.type: `=`, `:` * resource.folders.resource_folder: `=`, `:` * resource.display_name: `=`, `:`",
                       "location": "query",
                       "type": "string"
                     },
@@ -1741,6 +2444,34 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "setMute": {
+                  "description": "Updates the mute state of a finding.",
+                  "flatPath": "v1/projects/{projectsId}/sources/{sourcesId}/findings/{findingsId}:setMute",
+                  "httpMethod": "POST",
+                  "id": "securitycenter.projects.sources.findings.setMute",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/finding/{finding_id}\", \"projects/{project_id}/sources/{source_id}/finding/{finding_id}\".",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:setMute",
+                  "request": {
+                    "$ref": "SetMuteRequest"
+                  },
+                  "response": {
+                    "$ref": "Finding"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "setState": {
                   "description": "Updates the state of a finding.",
                   "flatPath": "v1/projects/{projectsId}/sources/{sourcesId}/findings/{findingsId}:setState",
@@ -1786,7 +2517,7 @@
                       "type": "string"
                     },
                     "startTime": {
-                      "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time.",
+                      "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be smaller or equal to the server time.",
                       "format": "google-datetime",
                       "location": "query",
                       "type": "string"
@@ -1809,6 +2540,46 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 }
+              },
+              "resources": {
+                "externalSystems": {
+                  "methods": {
+                    "patch": {
+                      "description": "Updates external system. This is for a given finding.",
+                      "flatPath": "v1/projects/{projectsId}/sources/{sourcesId}/findings/{findingsId}/externalSystems/{externalSystemsId}",
+                      "httpMethod": "PATCH",
+                      "id": "securitycenter.projects.sources.findings.externalSystems.patch",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "External System Name e.g. jira, demisto, etc. e.g.: organizations/1234/sources/5678/findings/123456/externalSystems/jira folders/1234/sources/5678/findings/123456/externalSystems/jira projects/1234/sources/5678/findings/123456/externalSystems/jira",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "updateMask": {
+                          "description": "The FieldMask to use when updating the external system resource. If empty all mutable fields will be updated.",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "request": {
+                        "$ref": "GoogleCloudSecuritycenterV1ExternalSystem"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudSecuritycenterV1ExternalSystem"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
+                }
               }
             }
           }
@@ -1816,9 +2587,40 @@
       }
     }
   },
-  "revision": "20210820",
+  "revision": "20220127",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
+    "Access": {
+      "description": "Represents an access event.",
+      "id": "Access",
+      "properties": {
+        "callerIp": {
+          "description": "Caller's IP address, such as \"1.1.1.1\".",
+          "type": "string"
+        },
+        "callerIpGeo": {
+          "$ref": "Geolocation",
+          "description": "The caller IP's geolocation, which identifies where the call came from."
+        },
+        "methodName": {
+          "description": "The method that the service account called, e.g. \"SetIamPolicy\".",
+          "type": "string"
+        },
+        "principalEmail": {
+          "description": "Associated email, such as \"foo@google.com\".",
+          "type": "string"
+        },
+        "serviceName": {
+          "description": "This is the API service that the service account made a call to, e.g. \"iam.googleapis.com\"",
+          "type": "string"
+        },
+        "userAgentFamily": {
+          "description": "What kind of user agent is associated, e.g. operating system shells, embedded or stand-alone applications, etc.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Asset": {
       "description": "Security Command Center representation of a Google Cloud resource. The Asset is a Security Command Center resource that captures information about a single Google Cloud resource. All modifications to an Asset are only within the context of Security Command Center and don't affect the referenced Google Cloud resource.",
       "id": "Asset",
@@ -1947,22 +2749,37 @@
       "type": "object"
     },
     "Binding": {
-      "description": "Associates `members` with a `role`.",
+      "description": "Associates `members`, or principals, with a `role`.",
       "id": "Binding",
       "properties": {
         "condition": {
           "$ref": "Expr",
-          "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the members in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
+          "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
+          "description": "Specifies the principals requesting access for a Cloud Platform resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BulkMuteFindingsRequest": {
+      "description": "Request message for bulk findings update. Note: 1. If multiple bulk update requests match the same resource, the order in which they get executed is not defined. 2. Once a bulk operation is started, there is no way to stop it.",
+      "id": "BulkMuteFindingsRequest",
+      "properties": {
+        "filter": {
+          "description": "Expression that identifies findings that should be updated. The expression is a list of zero or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. The fields map to those defined in the corresponding resource. The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes.",
+          "type": "string"
+        },
+        "muteAnnotation": {
+          "description": "This can be a mute configuration name or any identifier for mute/unmute of findings based on the filter.",
           "type": "string"
         }
       },
@@ -2159,6 +2976,10 @@
       "description": "Security Command Center finding. A finding is a record of assessment data like security, risk, health, or privacy, that is ingested into Security Command Center for presentation, notification, analysis, policy testing, and enforcement. For example, a cross-site scripting (XSS) vulnerability in an App Engine application is a finding.",
       "id": "Finding",
       "properties": {
+        "access": {
+          "$ref": "Access",
+          "description": "Access details associated to the Finding, such as more information on the caller, which method was accessed, from where, etc."
+        },
         "canonicalName": {
           "description": "The canonical name of the finding. It's either \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\" or \"projects/{project_number}/sources/{source_id}/findings/{finding_id}\", depending on the closest CRM ancestor of the resource associated with the finding.",
           "type": "string"
@@ -2173,9 +2994,17 @@
           "type": "string"
         },
         "eventTime": {
-          "description": "The time at which the event took place, or when an update to the finding occurred. For example, if the finding represents an open firewall it would capture the time the detector believes the firewall became open. The accuracy is determined by the detector. If the finding were to be resolved afterward, this time would reflect when the finding was resolved. Must not be set to a value greater than the current timestamp.",
+          "description": "The time the finding was first detected. If an existing finding is updated, then this is the time the update occurred. For example, if the finding represents an open firewall, this property captures the time the detector believes the firewall became open. The accuracy is determined by the detector. If the finding is later resolved, then this time reflects when the finding was resolved. This must not be set to a value greater than the current timestamp.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "externalSystems": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudSecuritycenterV1ExternalSystem"
+          },
+          "description": "Output only. Third party SIEM/SOAR fields within SCC, contains external system information and external system finding fields.",
+          "readOnly": true,
+          "type": "object"
         },
         "externalUri": {
           "description": "The URI that, if available, points to a web page outside of Security Command Center where additional information about the finding can be found. This field is guaranteed to be either empty or a well formed URL.",
@@ -2188,20 +3017,52 @@
             "THREAT",
             "VULNERABILITY",
             "MISCONFIGURATION",
-            "OBSERVATION"
+            "OBSERVATION",
+            "SCC_ERROR"
           ],
           "enumDescriptions": [
             "Unspecified finding class.",
             "Describes unwanted or malicious activity.",
             "Describes a potential weakness in software that increases risk to Confidentiality \u0026 Integrity \u0026 Availability.",
             "Describes a potential weakness in cloud resource/asset configuration that increases risk.",
-            "Describes a security observation that is for informational purposes."
+            "Describes a security observation that is for informational purposes.",
+            "Describes an error that prevents some SCC functionality."
           ],
           "type": "string"
         },
         "indicator": {
           "$ref": "Indicator",
           "description": "Represents what's commonly known as an Indicator of compromise (IoC) in computer forensics. This is an artifact observed on a network or in an operating system that, with high confidence, indicates a computer intrusion. Reference: https://en.wikipedia.org/wiki/Indicator_of_compromise"
+        },
+        "mitreAttack": {
+          "$ref": "MitreAttack",
+          "description": "MITRE ATT\u0026CK tactics and techniques related to this finding. See: https://attack.mitre.org"
+        },
+        "mute": {
+          "description": "Indicates the mute state of a finding (either unspecified, muted, unmuted or undefined). Unlike other attributes of a finding, a finding provider shouldn't set the value of mute.",
+          "enum": [
+            "MUTE_UNSPECIFIED",
+            "MUTED",
+            "UNMUTED",
+            "UNDEFINED"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "Finding has been muted.",
+            "Finding has been unmuted.",
+            "Finding has never been muted/unmuted."
+          ],
+          "type": "string"
+        },
+        "muteInitiator": {
+          "description": "First known as mute_annotation. Records additional information about the mute operation e.g. mute config that muted the finding, user who muted the finding, etc. Unlike other attributes of a finding, a finding provider shouldn't set the value of mute.",
+          "type": "string"
+        },
+        "muteUpdateTime": {
+          "description": "Output only. The most recent time this finding was muted or unmuted.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
         },
         "name": {
           "description": "The relative resource name of this finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
@@ -2281,6 +3142,17 @@
       },
       "type": "object"
     },
+    "Geolocation": {
+      "description": "Represents a geographical location for a given access.",
+      "id": "Geolocation",
+      "properties": {
+        "regionCode": {
+          "description": "A CLDR.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GetIamPolicyRequest": {
       "description": "Request message for `GetIamPolicy` method.",
       "id": "GetIamPolicyRequest",
@@ -2297,9 +3169,86 @@
       "id": "GetPolicyOptions",
       "properties": {
         "requestedPolicyVersion": {
-          "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+          "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudSecuritycenterV1BulkMuteFindingsResponse": {
+      "description": "The response to a BulkMute request. Contains the LRO information.",
+      "id": "GoogleCloudSecuritycenterV1BulkMuteFindingsResponse",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudSecuritycenterV1ExternalSystem": {
+      "description": "Representation of third party SIEM/SOAR fields within SCC.",
+      "id": "GoogleCloudSecuritycenterV1ExternalSystem",
+      "properties": {
+        "assignees": {
+          "description": "References primary/secondary etc assignees in the external system.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "externalSystemUpdateTime": {
+          "description": "The most recent time when the corresponding finding's ticket/tracker was updated in the external system.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "externalUid": {
+          "description": "Identifier that's used to track the given finding in the external system.",
+          "type": "string"
+        },
+        "name": {
+          "description": "External System Name e.g. jira, demisto, etc. e.g.: organizations/1234/sources/5678/findings/123456/externalSystems/jira folders/1234/sources/5678/findings/123456/externalSystems/jira projects/1234/sources/5678/findings/123456/externalSystems/jira",
+          "type": "string"
+        },
+        "status": {
+          "description": "Most recent status of the corresponding finding's ticket/tracker in the external system.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudSecuritycenterV1MuteConfig": {
+      "description": "A mute config is a Cloud SCC resource that contains the configuration to mute create/update events of findings.",
+      "id": "GoogleCloudSecuritycenterV1MuteConfig",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The time at which the mute config was created. This field is set by the server and will be ignored if provided on config creation.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "description": {
+          "description": "A description of the mute config.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "The human readable name to be displayed for the mute config.",
+          "type": "string"
+        },
+        "filter": {
+          "description": "Required. An expression that defines the filter to apply across create/update events of findings. While creating a filter string, be mindful of the scope in which the mute configuration is being created. E.g., If a filter contains project = X but is created under the project = Y scope, it might not match any findings. The following field and operator combinations are supported: * severity: `=`, `:` * category: `=`, `:` * resource.name: `=`, `:` * resource.project_name: `=`, `:` * resource.project_display_name: `=`, `:` * resource.folders.resource_folder: `=`, `:` * resource.parent_name: `=`, `:` * resource.parent_display_name: `=`, `:` * resource.type: `=`, `:` * finding_class: `=`, `:` * indicator.ip_addresses: `=`, `:` * indicator.domains: `=`, `:`",
+          "type": "string"
+        },
+        "mostRecentEditor": {
+          "description": "Output only. Email address of the user who last edited the mute config. This field is set by the server and will be ignored if provided on config creation or update.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "This field will be ignored if provided on config creation. Format \"organizations/{organization}/muteConfigs/{mute_config}\" \"folders/{folder}/muteConfigs/{mute_config}\" \"projects/{project}/muteConfigs/{mute_config}\"",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. The most recent time at which the mute config was updated. This field is set by the server and will be ignored if provided on config creation or update.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -2327,6 +3276,10 @@
       "description": "Information related to the Google Cloud resource.",
       "id": "GoogleCloudSecuritycenterV1Resource",
       "properties": {
+        "displayName": {
+          "description": "The human readable name of the resource.",
+          "type": "string"
+        },
         "folders": {
           "description": "Output only. Contains a Folder message for each folder in the assets ancestry. The first folder is the deepest nested folder, and the last folder is the folder directly under the Organization.",
           "items": {
@@ -2914,6 +3867,24 @@
       },
       "type": "object"
     },
+    "ListMuteConfigsResponse": {
+      "description": "Response message for listing mute configs.",
+      "id": "ListMuteConfigsResponse",
+      "properties": {
+        "muteConfigs": {
+          "description": "The mute configs from the specified parent.",
+          "items": {
+            "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListNotificationConfigsResponse": {
       "description": "Response message for listing notification configs.",
       "id": "ListNotificationConfigsResponse",
@@ -2964,6 +3935,230 @@
             "$ref": "Source"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "MitreAttack": {
+      "description": "MITRE ATT\u0026CK tactics and techniques related to this finding. See: https://attack.mitre.org",
+      "id": "MitreAttack",
+      "properties": {
+        "additionalTactics": {
+          "description": "Additional MITRE ATT\u0026CK tactics related to this finding, if any.",
+          "items": {
+            "enum": [
+              "TACTIC_UNSPECIFIED",
+              "RECONNAISSANCE",
+              "RESOURCE_DEVELOPMENT",
+              "INITIAL_ACCESS",
+              "EXECUTION",
+              "PERSISTENCE",
+              "PRIVILEGE_ESCALATION",
+              "DEFENSE_EVASION",
+              "CREDENTIAL_ACCESS",
+              "DISCOVERY",
+              "LATERAL_MOVEMENT",
+              "COLLECTION",
+              "COMMAND_AND_CONTROL",
+              "EXFILTRATION",
+              "IMPACT"
+            ],
+            "enumDescriptions": [
+              "Unspecified value.",
+              "TA0043",
+              "TA0042",
+              "TA0001",
+              "TA0002",
+              "TA0003",
+              "TA0004",
+              "TA0005",
+              "TA0006",
+              "TA0007",
+              "TA0008",
+              "TA0009",
+              "TA0011",
+              "TA0010",
+              "TA0040"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "additionalTechniques": {
+          "description": "Additional MITRE ATT\u0026CK techniques related to this finding, if any, along with any of their respective parent techniques.",
+          "items": {
+            "enum": [
+              "TECHNIQUE_UNSPECIFIED",
+              "ACTIVE_SCANNING",
+              "SCANNING_IP_BLOCKS",
+              "INGRESS_TOOL_TRANSFER",
+              "NATIVE_API",
+              "SHARED_MODULES",
+              "COMMAND_AND_SCRIPTING_INTERPRETER",
+              "UNIX_SHELL",
+              "RESOURCE_HIJACKING",
+              "PROXY",
+              "EXTERNAL_PROXY",
+              "MULTI_HOP_PROXY",
+              "DYNAMIC_RESOLUTION",
+              "UNSECURED_CREDENTIALS",
+              "VALID_ACCOUNTS",
+              "LOCAL_ACCOUNTS",
+              "CLOUD_ACCOUNTS",
+              "NETWORK_DENIAL_OF_SERVICE",
+              "PERMISSION_GROUPS_DISCOVERY",
+              "CLOUD_GROUPS",
+              "EXFILTRATION_OVER_WEB_SERVICE",
+              "EXFILTRATION_TO_CLOUD_STORAGE",
+              "ACCOUNT_MANIPULATION",
+              "SSH_AUTHORIZED_KEYS",
+              "CREATE_OR_MODIFY_SYSTEM_PROCESS",
+              "STEAL_WEB_SESSION_COOKIE",
+              "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE",
+              "EXPLOIT_PUBLIC_FACING_APPLICATION"
+            ],
+            "enumDescriptions": [
+              "Unspecified value.",
+              "T1595",
+              "T1595.001",
+              "T1105",
+              "T1106",
+              "T1129",
+              "T1059",
+              "T1059.004",
+              "T1496",
+              "T1090",
+              "T1090.002",
+              "T1090.003",
+              "T1568",
+              "T1552",
+              "T1078",
+              "T1078.003",
+              "T1078.004",
+              "T1498",
+              "T1069",
+              "T1069.003",
+              "T1567",
+              "T1567.002",
+              "T1098",
+              "T1098.004",
+              "T1543",
+              "T1539",
+              "T1578",
+              "T1190"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "primaryTactic": {
+          "description": "The MITRE ATT\u0026CK tactic most closely represented by this finding, if any.",
+          "enum": [
+            "TACTIC_UNSPECIFIED",
+            "RECONNAISSANCE",
+            "RESOURCE_DEVELOPMENT",
+            "INITIAL_ACCESS",
+            "EXECUTION",
+            "PERSISTENCE",
+            "PRIVILEGE_ESCALATION",
+            "DEFENSE_EVASION",
+            "CREDENTIAL_ACCESS",
+            "DISCOVERY",
+            "LATERAL_MOVEMENT",
+            "COLLECTION",
+            "COMMAND_AND_CONTROL",
+            "EXFILTRATION",
+            "IMPACT"
+          ],
+          "enumDescriptions": [
+            "Unspecified value.",
+            "TA0043",
+            "TA0042",
+            "TA0001",
+            "TA0002",
+            "TA0003",
+            "TA0004",
+            "TA0005",
+            "TA0006",
+            "TA0007",
+            "TA0008",
+            "TA0009",
+            "TA0011",
+            "TA0010",
+            "TA0040"
+          ],
+          "type": "string"
+        },
+        "primaryTechniques": {
+          "description": "The MITRE ATT\u0026CK technique most closely represented by this finding, if any. primary_techniques is a repeated field because there are multiple levels of MITRE ATT\u0026CK techniques. If the technique most closely represented by this finding is a sub-technique (e.g. SCANNING_IP_BLOCKS), both the sub-technique and its parent technique(s) will be listed (e.g. SCANNING_IP_BLOCKS, ACTIVE_SCANNING).",
+          "items": {
+            "enum": [
+              "TECHNIQUE_UNSPECIFIED",
+              "ACTIVE_SCANNING",
+              "SCANNING_IP_BLOCKS",
+              "INGRESS_TOOL_TRANSFER",
+              "NATIVE_API",
+              "SHARED_MODULES",
+              "COMMAND_AND_SCRIPTING_INTERPRETER",
+              "UNIX_SHELL",
+              "RESOURCE_HIJACKING",
+              "PROXY",
+              "EXTERNAL_PROXY",
+              "MULTI_HOP_PROXY",
+              "DYNAMIC_RESOLUTION",
+              "UNSECURED_CREDENTIALS",
+              "VALID_ACCOUNTS",
+              "LOCAL_ACCOUNTS",
+              "CLOUD_ACCOUNTS",
+              "NETWORK_DENIAL_OF_SERVICE",
+              "PERMISSION_GROUPS_DISCOVERY",
+              "CLOUD_GROUPS",
+              "EXFILTRATION_OVER_WEB_SERVICE",
+              "EXFILTRATION_TO_CLOUD_STORAGE",
+              "ACCOUNT_MANIPULATION",
+              "SSH_AUTHORIZED_KEYS",
+              "CREATE_OR_MODIFY_SYSTEM_PROCESS",
+              "STEAL_WEB_SESSION_COOKIE",
+              "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE",
+              "EXPLOIT_PUBLIC_FACING_APPLICATION"
+            ],
+            "enumDescriptions": [
+              "Unspecified value.",
+              "T1595",
+              "T1595.001",
+              "T1105",
+              "T1106",
+              "T1129",
+              "T1059",
+              "T1059.004",
+              "T1496",
+              "T1090",
+              "T1090.002",
+              "T1090.003",
+              "T1568",
+              "T1552",
+              "T1078",
+              "T1078.003",
+              "T1078.004",
+              "T1498",
+              "T1069",
+              "T1069.003",
+              "T1567",
+              "T1567.002",
+              "T1098",
+              "T1098.004",
+              "T1543",
+              "T1539",
+              "T1578",
+              "T1190"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "version": {
+          "description": "The MITRE ATT\u0026CK version referenced by the above fields. E.g. \"8\".",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3051,7 +4246,7 @@
       "type": "object"
     },
     "Policy": {
-      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
+      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
       "properties": {
         "auditConfigs": {
@@ -3062,7 +4257,7 @@
           "type": "array"
         },
         "bindings": {
-          "description": "Associates a list of `members` to a `role`. Optionally, may specify a `condition` that determines how and when the `bindings` are applied. Each of the `bindings` must contain at least one member.",
+          "description": "Associates a list of `members`, or principals, with a `role`. Optionally, may specify a `condition` that determines how and when the `bindings` are applied. Each of the `bindings` must contain at least one principal. The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250 of these principals can be Google groups. Each occurrence of a principal counts towards these limits. For example, if the `bindings` grant 50 different roles to `user:alice@example.com`, and not to any other principal, then you can add another 1,450 principals to the `bindings` in the `Policy`.",
           "items": {
             "$ref": "Binding"
           },
@@ -3100,6 +4295,10 @@
       "description": "Information related to the Google Cloud resource that is associated with this finding.",
       "id": "Resource",
       "properties": {
+        "displayName": {
+          "description": "The human readable name of the resource.",
+          "type": "string"
+        },
         "folders": {
           "description": "Contains a Folder message for each folder in the assets ancestry. The first folder is the deepest nested folder, and the last folder is the folder directly under the Organization.",
           "items": {
@@ -3125,6 +4324,10 @@
         },
         "projectName": {
           "description": "The full resource name of project that the resource belongs to.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The full resource type of the resource.",
           "type": "string"
         }
       },
@@ -3244,6 +4447,29 @@
         "updateMask": {
           "description": "OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only the fields in the mask will be modified. If no mask is provided, the following default mask is used: `paths: \"bindings, etag\"`",
           "format": "google-fieldmask",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SetMuteRequest": {
+      "description": "Request message for updating a finding's mute status.",
+      "id": "SetMuteRequest",
+      "properties": {
+        "mute": {
+          "description": "Required. The desired state of the Mute.",
+          "enum": [
+            "MUTE_UNSPECIFIED",
+            "MUTED",
+            "UNMUTED",
+            "UNDEFINED"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "Finding has been muted.",
+            "Finding has been unmuted.",
+            "Finding has never been muted/unmuted."
+          ],
           "type": "string"
         }
       },

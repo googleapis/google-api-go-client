@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -121,6 +121,71 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
+// AutoscalingLimits: Limits for the number of nodes a Cluster can
+// autoscale up/down to.
+type AutoscalingLimits struct {
+	// MaxServeNodes: Required. Maximum number of nodes to scale up to.
+	MaxServeNodes int64 `json:"maxServeNodes,omitempty"`
+
+	// MinServeNodes: Required. Minimum number of nodes to scale down to.
+	MinServeNodes int64 `json:"minServeNodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxServeNodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxServeNodes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoscalingLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutoscalingTargets: The Autoscaling targets for a Cluster. These
+// determine the recommended nodes.
+type AutoscalingTargets struct {
+	// CpuUtilizationPercent: The cpu utilization that the Autoscaler should
+	// be trying to achieve. This number is on a scale from 0 (no
+	// utilization) to 100 (total utilization).
+	CpuUtilizationPercent int64 `json:"cpuUtilizationPercent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CpuUtilizationPercent") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CpuUtilizationPercent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoscalingTargets) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingTargets
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Backup: A backup of a Cloud Bigtable table.
 type Backup struct {
 	// EncryptionInfo: Output only. The encryption information for the
@@ -239,6 +304,9 @@ func (s *BackupInfo) MarshalJSON() ([]byte, error) {
 // Cluster: A resizable group of nodes in a particular cloud location,
 // capable of serving all Tables in the parent Instance.
 type Cluster struct {
+	// ClusterConfig: Configuration for this cluster.
+	ClusterConfig *ClusterConfig `json:"clusterConfig,omitempty"`
+
 	// DefaultStorageType: Immutable. The type of storage used by this
 	// cluster to serve its parent instance's tables, unless explicitly
 	// overridden.
@@ -265,8 +333,8 @@ type Cluster struct {
 	// `projects/{project}/instances/{instance}/clusters/a-z*`.
 	Name string `json:"name,omitempty"`
 
-	// ServeNodes: Required. The number of nodes allocated to this cluster.
-	// More nodes enable higher throughput and more consistent performance.
+	// ServeNodes: The number of nodes allocated to this cluster. More nodes
+	// enable higher throughput and more consistent performance.
 	ServeNodes int64 `json:"serveNodes,omitempty"`
 
 	// State: Output only. The current state of the cluster.
@@ -288,7 +356,38 @@ type Cluster struct {
 	// still exist, but no operations can be performed on the cluster.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DefaultStorageType")
+	// ForceSendFields is a list of field names (e.g. "ClusterConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Cluster) MarshalJSON() ([]byte, error) {
+	type NoMethod Cluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterAutoscalingConfig: Autoscaling config for a cluster.
+type ClusterAutoscalingConfig struct {
+	// AutoscalingLimits: Required. Autoscaling limits for this cluster.
+	AutoscalingLimits *AutoscalingLimits `json:"autoscalingLimits,omitempty"`
+
+	// AutoscalingTargets: Required. Autoscaling targets for this cluster.
+	AutoscalingTargets *AutoscalingTargets `json:"autoscalingTargets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoscalingLimits")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -296,7 +395,7 @@ type Cluster struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DefaultStorageType") to
+	// NullFields is a list of field names (e.g. "AutoscalingLimits") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -306,8 +405,38 @@ type Cluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Cluster) MarshalJSON() ([]byte, error) {
-	type NoMethod Cluster
+func (s *ClusterAutoscalingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterAutoscalingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterConfig: Configuration for a cluster.
+type ClusterConfig struct {
+	// ClusterAutoscalingConfig: Autoscaling configuration for this cluster.
+	ClusterAutoscalingConfig *ClusterAutoscalingConfig `json:"clusterAutoscalingConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ClusterAutoscalingConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterAutoscalingConfig")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -614,69 +743,13 @@ func (s *EncryptionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FailureTrace: Added to the error payload.
-type FailureTrace struct {
-	Frames []*Frame `json:"frames,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Frames") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Frames") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FailureTrace) MarshalJSON() ([]byte, error) {
-	type NoMethod FailureTrace
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type Frame struct {
-	TargetName string `json:"targetName,omitempty"`
-
-	WorkflowGuid string `json:"workflowGuid,omitempty"`
-
-	ZoneId string `json:"zoneId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "TargetName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TargetName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Frame) MarshalJSON() ([]byte, error) {
-	type NoMethod Frame
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Instance: A collection of Bigtable Tables and the resources that
 // serve them. All tables in an instance are served from all Clusters in
 // the instance.
 type Instance struct {
 	// CreateTime: Output only. A server-assigned timestamp representing
-	// when this Instance was created.
+	// when this Instance was created. For instances created before this
+	// field was added (August 2021), this value is `seconds: 0, nanos: 1`.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DisplayName: Required. The descriptive name for this instance as it
@@ -815,6 +888,76 @@ type OptimizeRestoredTableMetadata struct {
 
 func (s *OptimizeRestoredTableMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OptimizeRestoredTableMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartialUpdateClusterMetadata: The metadata for the Operation returned
+// by PartialUpdateCluster.
+type PartialUpdateClusterMetadata struct {
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
+
+	// OriginalRequest: The original request for PartialUpdateCluster.
+	OriginalRequest *PartialUpdateClusterRequest `json:"originalRequest,omitempty"`
+
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FinishTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FinishTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartialUpdateClusterMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod PartialUpdateClusterMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartialUpdateClusterRequest: Request message for
+// BigtableInstanceAdmin.PartialUpdateCluster.
+type PartialUpdateClusterRequest struct {
+	// Cluster: Required. The Cluster which contains the partial updates to
+	// be applied, subject to the update_mask.
+	Cluster *Cluster `json:"cluster,omitempty"`
+
+	// UpdateMask: Required. The subset of Cluster fields which should be
+	// replaced.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cluster") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cluster") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartialUpdateClusterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PartialUpdateClusterRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

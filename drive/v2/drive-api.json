@@ -38,7 +38,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"uWj2hSb4GVjzdDlAnRd2gbM1ZQ8/1zEdrQsJh-Ob8KbDsrp0vIynqK0\"",
+  "etag": "\"uWj2hSb4GVjzdDlAnRd2gbM1ZQ8/fyRiAs3KSL24dYObYzBvDUCJFvw\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -1280,7 +1280,7 @@
           ]
         },
         "export": {
-          "description": "Exports a Google Doc to the requested MIME type and returns the exported content. Please note that the exported content is limited to 10MB.",
+          "description": "Exports a Google Workspace document to the requested MIME type and returns exported byte content. Note that the exported content is limited to 10MB.",
           "httpMethod": "GET",
           "id": "drive.files.export",
           "parameterOrder": [
@@ -1659,7 +1659,7 @@
           ]
         },
         "patch": {
-          "description": "Updates a file's metadata and/or content. When calling this method, only populate fields in the request that you want to modify. When updating fields, some fields might might change automatically, such as modifiedDate. This method supports patch semantics.",
+          "description": "Updates a file's metadata and/or content. When calling this method, only populate fields in the request that you want to modify. When updating fields, some fields might change automatically, such as modifiedDate. This method supports patch semantics.",
           "httpMethod": "PATCH",
           "id": "drive.files.patch",
           "parameterOrder": [
@@ -3527,7 +3527,7 @@
       }
     }
   },
-  "revision": "20210921",
+  "revision": "20220110",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -4561,6 +4561,10 @@
           "description": "The name of this shared drive.",
           "type": "string"
         },
+        "orgUnitId": {
+          "description": "The organizational unit of this shared drive. This field is only populated on drives.list responses when the useDomainAdminAccess parameter is set to true.",
+          "type": "string"
+        },
         "restrictions": {
           "description": "A set of restrictions that apply to this shared drive or items inside this shared drive.",
           "properties": {
@@ -4636,6 +4640,10 @@
         "capabilities": {
           "description": "Capabilities the current user has on this file. Each capability corresponds to a fine-grained action that a user may take.",
           "properties": {
+            "canAcceptOwnership": {
+              "description": "Whether the current user is the pending owner of the file. Not populated for shared drive files.",
+              "type": "boolean"
+            },
             "canAddChildren": {
               "description": "Whether the current user can add children to this folder. This is always false when the item is not a folder.",
               "type": "boolean"
@@ -5462,6 +5470,10 @@
           "description": "The name for this permission.",
           "type": "string"
         },
+        "pendingOwner": {
+          "description": "Whether the account associated with this permission is a pending owner. Only populated for user type permissions for files that are not in a shared drive.",
+          "type": "boolean"
+        },
         "permissionDetails": {
           "description": "Details of whether the permissions on this shared drive item are inherited or directly on this item. This is an output-only field which is present only for shared drive items.",
           "items": {
@@ -5951,6 +5963,10 @@
             ]
           },
           "description": "The name of this Team Drive.",
+          "type": "string"
+        },
+        "orgUnitId": {
+          "description": "The organizational unit of this shared drive. This field is only populated on drives.list responses when the useDomainAdminAccess parameter is set to true.",
           "type": "string"
         },
         "restrictions": {

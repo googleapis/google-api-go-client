@@ -212,7 +212,7 @@
                   ],
                   "parameters": {
                     "conversationId": {
-                      "description": "A unique ID for the new conversation. This ID will become the final component of the conversation's resource name. If no ID is specified, a server-generated ID will be used. This value should be 4-32 characters and must match the regular expression /^[a-z0-9-]{4,32}$/. Valid characters are /a-z-/",
+                      "description": "A unique ID for the new conversation. This ID will become the final component of the conversation's resource name. If no ID is specified, a server-generated ID will be used. This value should be 4-64 characters and must match the regular expression `^[a-z0-9-]{4,64}$`. Valid characters are `a-z-`",
                       "location": "query",
                       "type": "string"
                     },
@@ -285,13 +285,13 @@
                       "description": "The level of details of the conversation. Default is `FULL`.",
                       "enum": [
                         "CONVERSATION_VIEW_UNSPECIFIED",
-                        "BASIC",
-                        "FULL"
+                        "FULL",
+                        "BASIC"
                       ],
                       "enumDescriptions": [
-                        "Not specified. Defaults to FULL on GetConversationRequest and BASIC for ListConversationsRequest.",
-                        "Transcript field is not populated in the response.",
-                        "All fields are populated."
+                        "The conversation view is not specified. * Defaults to `FULL` in `GetConversationRequest`. * Defaults to `BASIC` in `ListConversationsRequest`.",
+                        "Populates all fields in the conversation.",
+                        "Populates all fields in the conversation except the transcript."
                       ],
                       "location": "query",
                       "type": "string"
@@ -341,13 +341,13 @@
                       "description": "The level of details of the conversation. Default is `BASIC`.",
                       "enum": [
                         "CONVERSATION_VIEW_UNSPECIFIED",
-                        "BASIC",
-                        "FULL"
+                        "FULL",
+                        "BASIC"
                       ],
                       "enumDescriptions": [
-                        "Not specified. Defaults to FULL on GetConversationRequest and BASIC for ListConversationsRequest.",
-                        "Transcript field is not populated in the response.",
-                        "All fields are populated."
+                        "The conversation view is not specified. * Defaults to `FULL` in `GetConversationRequest`. * Defaults to `BASIC` in `ListConversationsRequest`.",
+                        "Populates all fields in the conversation.",
+                        "Populates all fields in the conversation except the transcript."
                       ],
                       "location": "query",
                       "type": "string"
@@ -1081,6 +1081,192 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
+                },
+                "patch": {
+                  "description": "Updates a phrase matcher.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/phraseMatchers/{phraseMatchersId}",
+                  "httpMethod": "PATCH",
+                  "id": "contactcenterinsights.projects.locations.phraseMatchers.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The resource name of the phrase matcher. Format: projects/{project}/locations/{location}/phraseMatchers/{phrase_matcher}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/phraseMatchers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The list of fields to be updated.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudContactcenterinsightsV1PhraseMatcher"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudContactcenterinsightsV1PhraseMatcher"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
+            "views": {
+              "methods": {
+                "create": {
+                  "description": "Creates a view.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/views",
+                  "httpMethod": "POST",
+                  "id": "contactcenterinsights.projects.locations.views.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The parent resource of the view. Required. The location to create a view for. Format: `projects//locations/` or `projects//locations/`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/views",
+                  "request": {
+                    "$ref": "GoogleCloudContactcenterinsightsV1View"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudContactcenterinsightsV1View"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes a view.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/views/{viewsId}",
+                  "httpMethod": "DELETE",
+                  "id": "contactcenterinsights.projects.locations.views.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the view to delete.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/views/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GoogleProtobufEmpty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Gets a view.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/views/{viewsId}",
+                  "httpMethod": "GET",
+                  "id": "contactcenterinsights.projects.locations.views.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the view to get.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/views/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudContactcenterinsightsV1View"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists views.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/views",
+                  "httpMethod": "GET",
+                  "id": "contactcenterinsights.projects.locations.views.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The maximum number of views to return in the response. If this value is zero, the service will select a default size. A call may return fewer objects than requested. A non-empty `next_page_token` in the response indicates that more data is available.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "The value returned by the last `ListViewsResponse`; indicates that this is a continuation of a prior `ListViews` call and the system should return the next page of data.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent resource of the views.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/views",
+                  "response": {
+                    "$ref": "GoogleCloudContactcenterinsightsV1ListViewsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates a view.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/views/{viewsId}",
+                  "httpMethod": "PATCH",
+                  "id": "contactcenterinsights.projects.locations.views.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Immutable. The resource name of the view. Format: projects/{project}/locations/{location}/views/{view}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/views/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The list of fields to be updated.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudContactcenterinsightsV1View"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudContactcenterinsightsV1View"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
                 }
               }
             }
@@ -1089,7 +1275,7 @@
       }
     }
   },
-  "revision": "20210927",
+  "revision": "20220107",
   "rootUrl": "https://contactcenterinsights.googleapis.com/",
   "schemas": {
     "GoogleCloudContactcenterinsightsV1Analysis": {
@@ -1315,6 +1501,13 @@
           "description": "A map associating each issue resource name with its respective number of matches in the set of conversations. Key has the format: `projects//locations//issueModels//issues/` Deprecated, use `issue_matches_stats` field instead.",
           "type": "object"
         },
+        "issueMatchesStats": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudContactcenterinsightsV1IssueModelLabelStatsIssueStats"
+          },
+          "description": "A map associating each issue resource name with its respective number of matches in the set of conversations. Key has the format: `projects//locations//issueModels//issues/`",
+          "type": "object"
+        },
         "smartHighlighterMatches": {
           "additionalProperties": {
             "format": "int32",
@@ -1468,14 +1661,14 @@
           "readOnly": true
         },
         "medium": {
-          "description": "Immutable. The conversation medium.",
+          "description": "Immutable. The conversation medium, if unspecified will default to PHONE_CALL.",
           "enum": [
             "MEDIUM_UNSPECIFIED",
             "PHONE_CALL",
             "CHAT"
           ],
           "enumDescriptions": [
-            "Default value.",
+            "Default value, if unspecified will default to PHONE_CALL.",
             "The format for conversations that took place over the phone.",
             "The format for conversations that took place over chat."
           ],
@@ -1483,6 +1676,10 @@
         },
         "name": {
           "description": "Immutable. The resource name of the conversation. Format: projects/{project}/locations/{location}/conversations/{conversation}",
+          "type": "string"
+        },
+        "obfuscatedUserId": {
+          "description": "Obfuscated user ID which the customer sent to us.",
           "type": "string"
         },
         "runtimeAnnotations": {
@@ -2041,6 +2238,20 @@
         "parent": {
           "description": "Required. The parent resource to export data from.",
           "type": "string"
+        },
+        "writeDisposition": {
+          "description": "Options for what to do if the destination table already exists.",
+          "enum": [
+            "WRITE_DISPOSITION_UNSPECIFIED",
+            "WRITE_TRUNCATE",
+            "WRITE_APPEND"
+          ],
+          "enumDescriptions": [
+            "Write disposition is not specified. Defaults to WRITE_TRUNCATE.",
+            "If the table already exists, BigQuery will overwrite the table data and use the schema from the load.",
+            "If the table already exists, BigQuery will append data to the table."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -2278,7 +2489,7 @@
             "CHAT"
           ],
           "enumDescriptions": [
-            "Default value.",
+            "Default value, if unspecified will default to PHONE_CALL.",
             "The format for conversations that took place over the phone.",
             "The format for conversations that took place over chat."
           ],
@@ -2321,6 +2532,10 @@
       "description": "Aggregated statistics about an issue.",
       "id": "GoogleCloudContactcenterinsightsV1IssueModelLabelStatsIssueStats",
       "properties": {
+        "displayName": {
+          "description": "Display name of the issue.",
+          "type": "string"
+        },
         "issue": {
           "description": "Issue resource. Format: projects/{project}/locations/{location}/issueModels/{issue_model}/issues/{issue}",
           "type": "string"
@@ -2338,7 +2553,7 @@
       "id": "GoogleCloudContactcenterinsightsV1IssueModelResult",
       "properties": {
         "issueModel": {
-          "description": "Issue model that generates the result.",
+          "description": "Issue model that generates the result. Format: projects/{project}/locations/{location}/issueModels/{issue_model}",
           "type": "string"
         },
         "issues": {
@@ -2427,6 +2642,24 @@
           "description": "The phrase matchers that match the request.",
           "items": {
             "$ref": "GoogleCloudContactcenterinsightsV1PhraseMatcher"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ListViewsResponse": {
+      "description": "The response of listing views.",
+      "id": "GoogleCloudContactcenterinsightsV1ListViewsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
+        },
+        "views": {
+          "description": "The views that match the request.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1View"
           },
           "type": "array"
         }
@@ -2811,6 +3044,37 @@
       "properties": {},
       "type": "object"
     },
+    "GoogleCloudContactcenterinsightsV1View": {
+      "description": "The View resource.",
+      "id": "GoogleCloudContactcenterinsightsV1View",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The time at which this view was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "displayName": {
+          "description": "The human-readable display name of the view.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Immutable. The resource name of the view. Format: projects/{project}/locations/{location}/views/{view}",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. The most recent time at which the view was updated.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "value": {
+          "description": "String with specific view properties.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudContactcenterinsightsV1alpha1CreateAnalysisOperationMetadata": {
       "description": "Metadata for a create analysis operation.",
       "id": "GoogleCloudContactcenterinsightsV1alpha1CreateAnalysisOperationMetadata",
@@ -2996,6 +3260,20 @@
         "parent": {
           "description": "Required. The parent resource to export data from.",
           "type": "string"
+        },
+        "writeDisposition": {
+          "description": "Options for what to do if the destination table already exists.",
+          "enum": [
+            "WRITE_DISPOSITION_UNSPECIFIED",
+            "WRITE_TRUNCATE",
+            "WRITE_APPEND"
+          ],
+          "enumDescriptions": [
+            "Write disposition is not specified. Defaults to WRITE_TRUNCATE.",
+            "If the table already exists, BigQuery will overwrite the table data and use the schema from the load.",
+            "If the table already exists, BigQuery will append data to the table."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -3098,7 +3376,7 @@
             "CHAT"
           ],
           "enumDescriptions": [
-            "Default value.",
+            "Default value, if unspecified will default to PHONE_CALL.",
             "The format for conversations that took place over the phone.",
             "The format for conversations that took place over chat."
           ],
@@ -3141,6 +3419,10 @@
       "description": "Aggregated statistics about an issue.",
       "id": "GoogleCloudContactcenterinsightsV1alpha1IssueModelLabelStatsIssueStats",
       "properties": {
+        "displayName": {
+          "description": "Display name of the issue.",
+          "type": "string"
+        },
         "issue": {
           "description": "Issue resource. Format: projects/{project}/locations/{location}/issueModels/{issue_model}/issues/{issue}",
           "type": "string"

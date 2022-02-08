@@ -573,6 +573,62 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "modifyEntryContacts": {
+                      "description": "Modifies contacts, part of the business context of an Entry. To call this method, you must have the `datacatalog.entries.updateContacts` IAM permission on the corresponding project.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}:modifyEntryContacts",
+                      "httpMethod": "POST",
+                      "id": "datacatalog.projects.locations.entryGroups.entries.modifyEntryContacts",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The full resource name of the entry.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:modifyEntryContacts",
+                      "request": {
+                        "$ref": "GoogleCloudDatacatalogV1ModifyEntryContactsRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1Contacts"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "modifyEntryOverview": {
+                      "description": "Modifies entry overview, part of the business context of an Entry. To call this method, you must have the `datacatalog.entries.updateOverview` IAM permission on the corresponding project.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}:modifyEntryOverview",
+                      "httpMethod": "POST",
+                      "id": "datacatalog.projects.locations.entryGroups.entries.modifyEntryOverview",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The full resource name of the entry.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:modifyEntryOverview",
+                      "request": {
+                        "$ref": "GoogleCloudDatacatalogV1ModifyEntryOverviewRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1EntryOverview"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "patch": {
                       "description": "Updates an existing entry. You must enable the Data Catalog API in the project identified by the `entry.name` parameter. For more information, see [Data Catalog resource project](https://cloud.google.com/data-catalog/docs/concepts/resource-project).",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}",
@@ -607,6 +663,34 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "star": {
+                      "description": "Marks an Entry as starred by the current user. Starring information is private to each user.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}:star",
+                      "httpMethod": "POST",
+                      "id": "datacatalog.projects.locations.entryGroups.entries.star",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the entry to mark as starred.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:star",
+                      "request": {
+                        "$ref": "GoogleCloudDatacatalogV1StarEntryRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1StarEntryResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "testIamPermissions": {
                       "description": "Gets your permissions on a resource. Returns an empty set of permissions if the resource doesn't exist. Supported resources are: - Tag templates - Entry groups Note: This method gets policies only within Data Catalog and can't be used to get policies from BigQuery, Pub/Sub, Dataproc Metastore, and any external Google Cloud Platform resources ingested into Data Catalog. No Google IAM permissions are required to call this method.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}:testIamPermissions",
@@ -634,13 +718,41 @@
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
+                    },
+                    "unstar": {
+                      "description": "Marks an Entry as NOT starred by the current user. Starring information is private to each user.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}:unstar",
+                      "httpMethod": "POST",
+                      "id": "datacatalog.projects.locations.entryGroups.entries.unstar",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the entry to mark as **not** starred.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:unstar",
+                      "request": {
+                        "$ref": "GoogleCloudDatacatalogV1UnstarEntryRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1UnstarEntryResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
                     }
                   },
                   "resources": {
                     "tags": {
                       "methods": {
                         "create": {
-                          "description": "Creates a tag and assigns it to: * An Entry if the method name is ``projects.locations.entryGroups.entries.tags.create``. * Or EntryGroupif the method name is ``projects.locations.entryGroups.tags.create``. Note: The project identified by the `parent` parameter for the [tag] (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries.tags/create#path-parameters) and the [tag template] (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters) used to create the tag must be in the same organization.",
+                          "description": "Creates a tag and assigns it to: * An Entry if the method name is `projects.locations.entryGroups.entries.tags.create`. * Or EntryGroupif the method name is `projects.locations.entryGroups.tags.create`. Note: The project identified by the `parent` parameter for the [tag] (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries.tags/create#path-parameters) and the [tag template] (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters) used to create the tag must be in the same organization.",
                           "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}/tags",
                           "httpMethod": "POST",
                           "id": "datacatalog.projects.locations.entryGroups.entries.tags.create",
@@ -693,7 +805,7 @@
                           ]
                         },
                         "list": {
-                          "description": "Lists tags assigned to an Entry.",
+                          "description": "Lists tags assigned to an Entry. The columns in the response are lowercased.",
                           "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}/tags",
                           "httpMethod": "GET",
                           "id": "datacatalog.projects.locations.entryGroups.entries.tags.list",
@@ -769,7 +881,7 @@
                 "tags": {
                   "methods": {
                     "create": {
-                      "description": "Creates a tag and assigns it to: * An Entry if the method name is ``projects.locations.entryGroups.entries.tags.create``. * Or EntryGroupif the method name is ``projects.locations.entryGroups.tags.create``. Note: The project identified by the `parent` parameter for the [tag] (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries.tags/create#path-parameters) and the [tag template] (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters) used to create the tag must be in the same organization.",
+                      "description": "Creates a tag and assigns it to: * An Entry if the method name is `projects.locations.entryGroups.entries.tags.create`. * Or EntryGroupif the method name is `projects.locations.entryGroups.tags.create`. Note: The project identified by the `parent` parameter for the [tag] (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries.tags/create#path-parameters) and the [tag template] (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters) used to create the tag must be in the same organization.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags",
                       "httpMethod": "POST",
                       "id": "datacatalog.projects.locations.entryGroups.tags.create",
@@ -822,7 +934,7 @@
                       ]
                     },
                     "list": {
-                      "description": "Lists tags assigned to an Entry.",
+                      "description": "Lists tags assigned to an Entry. The columns in the response are lowercased.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags",
                       "httpMethod": "GET",
                       "id": "datacatalog.projects.locations.entryGroups.tags.list",
@@ -1030,7 +1142,7 @@
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "Names of fields whose values to overwrite on a tag template. Currently, only `display_name` can be overwritten. If this parameter is absent or empty, all modifiable fields are overwritten. If such fields are non-required and omitted in the request body, their values are emptied.",
+                      "description": "Names of fields whose values to overwrite on a tag template. Currently, only `display_name` and `is_publicly_readable` can be overwritten. If this parameter is absent or empty, all modifiable fields are overwritten. If such fields are non-required and omitted in the request body, their values are emptied. Note: Updating the `is_publicly_readable` field may require up to 12 hours to take effect in search results. Additionally, it also requires the `tagTemplates.getIamPolicy` and `tagTemplates.setIamPolicy` permissions.",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -1214,7 +1326,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the tag template.",
+                          "description": "Required. The name of the tag template field.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+/fields/[^/]+$",
                           "required": true,
@@ -1841,26 +1953,26 @@
       }
     }
   },
-  "revision": "20210920",
+  "revision": "20211230",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
-      "description": "Associates `members` with a `role`.",
+      "description": "Associates `members`, or principals, with a `role`.",
       "id": "Binding",
       "properties": {
         "condition": {
           "$ref": "Expr",
-          "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the members in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
+          "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
+          "description": "Specifies the principals requesting access for a Cloud Platform resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
           "type": "string"
         }
       },
@@ -1911,7 +2023,7 @@
       "id": "GetPolicyOptions",
       "properties": {
         "requestedPolicyVersion": {
-          "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+          "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
           "format": "int32",
           "type": "integer"
         }
@@ -1951,6 +2063,11 @@
       "properties": {
         "dataset": {
           "description": "Output only. The Data Catalog resource name of the dataset entry the current table belongs to. For example: `projects/{PROJECT_ID}/locations/{LOCATION}/entrygroups/{ENTRY_GROUP_ID}/entries/{ENTRY_ID}`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "latestShardResource": {
+          "description": "Output only. BigQuery resource name of the latest shard.",
           "readOnly": true,
           "type": "string"
         },
@@ -2014,6 +2131,21 @@
       },
       "type": "object"
     },
+    "GoogleCloudDatacatalogV1BusinessContext": {
+      "description": "Business Context of the entry.",
+      "id": "GoogleCloudDatacatalogV1BusinessContext",
+      "properties": {
+        "contacts": {
+          "$ref": "GoogleCloudDatacatalogV1Contacts",
+          "description": "Contact people for the entry."
+        },
+        "entryOverview": {
+          "$ref": "GoogleCloudDatacatalogV1EntryOverview",
+          "description": "Entry overview fields for rich text descriptions of entries."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDatacatalogV1CloudSqlBigQueryConnectionSpec": {
       "description": "Specification for the BigQuery connection to a Cloud SQL instance.",
       "id": "GoogleCloudDatacatalogV1CloudSqlBigQueryConnectionSpec",
@@ -2068,6 +2200,35 @@
         },
         "type": {
           "description": "Required. Type of the column. Must be a UTF-8 string with the maximum size of 128 bytes.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1Contacts": {
+      "description": "Contact people for the entry.",
+      "id": "GoogleCloudDatacatalogV1Contacts",
+      "properties": {
+        "people": {
+          "description": "The list of contact people for the entry.",
+          "items": {
+            "$ref": "GoogleCloudDatacatalogV1ContactsPerson"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1ContactsPerson": {
+      "description": "A contact person for the entry.",
+      "id": "GoogleCloudDatacatalogV1ContactsPerson",
+      "properties": {
+        "designation": {
+          "description": "Designation of the person, for example, Data Steward.",
+          "type": "string"
+        },
+        "email": {
+          "description": "Email of the person in the format of `john.doe@xyz`, ``, or `John Doe`.",
           "type": "string"
         }
       },
@@ -2153,6 +2314,10 @@
           "$ref": "GoogleCloudDatacatalogV1BigQueryTableSpec",
           "description": "Specification that applies to a BigQuery table. Valid only for entries with the `TABLE` type."
         },
+        "businessContext": {
+          "$ref": "GoogleCloudDatacatalogV1BusinessContext",
+          "description": "Business Context of the entry."
+        },
         "dataSource": {
           "$ref": "GoogleCloudDatacatalogV1DataSource",
           "description": "Output only. Physical location of the entry.",
@@ -2214,6 +2379,11 @@
           "description": "Output only. The resource name of an entry in URL format. Note: The entry itself and its child resources might not be stored in the location specified in its name.",
           "readOnly": true,
           "type": "string"
+        },
+        "personalDetails": {
+          "$ref": "GoogleCloudDatacatalogV1PersonalDetails",
+          "description": "Output only. Additional information related to the entry. Private to the current user.",
+          "readOnly": true
         },
         "routineSpec": {
           "$ref": "GoogleCloudDatacatalogV1RoutineSpec",
@@ -2290,6 +2460,17 @@
         },
         "name": {
           "description": "The resource name of the entry group in URL format. Note: The entry group itself and its child resources might not be stored in the location specified in its name.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1EntryOverview": {
+      "description": "Entry overview fields for rich text descriptions of entries.",
+      "id": "GoogleCloudDatacatalogV1EntryOverview",
+      "properties": {
+        "overview": {
+          "description": "Entry overview with support for rich text. The overview must only contain Unicode characters, and should be formatted using HTML. The maximum length is 10 MiB as this value holds HTML descriptions including encoded images. The maximum length of the text without images is 100 KiB.",
           "type": "string"
         }
       },
@@ -2539,6 +2720,44 @@
       },
       "type": "object"
     },
+    "GoogleCloudDatacatalogV1ModifyEntryContactsRequest": {
+      "description": "Request message for ModifyEntryContacts.",
+      "id": "GoogleCloudDatacatalogV1ModifyEntryContactsRequest",
+      "properties": {
+        "contacts": {
+          "$ref": "GoogleCloudDatacatalogV1Contacts",
+          "description": "Required. The new value for the Contacts."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1ModifyEntryOverviewRequest": {
+      "description": "Request message for ModifyEntryOverview.",
+      "id": "GoogleCloudDatacatalogV1ModifyEntryOverviewRequest",
+      "properties": {
+        "entryOverview": {
+          "$ref": "GoogleCloudDatacatalogV1EntryOverview",
+          "description": "Required. The new value for the Entry Overview."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1PersonalDetails": {
+      "description": "Entry metadata relevant only to the user and private to them.",
+      "id": "GoogleCloudDatacatalogV1PersonalDetails",
+      "properties": {
+        "starTime": {
+          "description": "Set if the entry is starred; unset otherwise.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "starred": {
+          "description": "True if the entry is starred by the user; false otherwise.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDatacatalogV1PolicyTag": {
       "description": "Denotes one policy tag in a taxonomy, for example, SSN. Policy tags can be defined in a hierarchy. For example: ``` + Geolocation + LatLong + City + ZipCode ``` Where the \"Geolocation\" policy tag contains three children.",
       "id": "GoogleCloudDatacatalogV1PolicyTag",
@@ -2698,7 +2917,7 @@
       "id": "GoogleCloudDatacatalogV1SearchCatalogRequest",
       "properties": {
         "orderBy": {
-          "description": "Specifies the order of results. Currently supported case-sensitive values are: * `relevance` that can only be descending * `last_modified_timestamp [asc|desc]` with descending (`desc`) as default If this parameter is omitted, it defaults to the descending `relevance`.",
+          "description": "Specifies the order of results. Currently supported case-sensitive values are: * `relevance` that can only be descending * `last_modified_timestamp [asc|desc]` with descending (`desc`) as default * `default` that can only be descending If this parameter is omitted, it defaults to the descending `relevance`.",
           "type": "string"
         },
         "pageSize": {
@@ -2711,7 +2930,7 @@
           "type": "string"
         },
         "query": {
-          "description": "Optional. The query string with a minimum of 3 characters and specific syntax. For more information, see [Data Catalog search syntax](/data-catalog/docs/how-to/search-reference). An empty query string returns all data assets (in the specified scope) that you have access to. A query string can be a simple `xyz` or qualified by predicates: * `name:x` * `column:y` * `description:z`",
+          "description": "Optional. The query string with a minimum of 3 characters and specific syntax. For more information, see [Data Catalog search syntax](https://cloud.google.com/data-catalog/docs/how-to/search-reference). An empty query string returns all data assets (in the specified scope) that you have access to. A query string can be a simple `xyz` or qualified by predicates: * `name:x` * `column:y` * `description:z`",
           "type": "string"
         },
         "scope": {
@@ -2744,7 +2963,7 @@
           "type": "array"
         },
         "includePublicTagTemplates": {
-          "description": "Optional. If `true`, include public tag templates in the search results. By default, they are included only if you have explicit permissions on them to view them. For example, if you are the owner. Other scope fields, for example, ``include_org_ids``, still restrict the returned public tag templates and at least one of them is required.",
+          "description": "Optional. If `true`, include public tag templates in the search results. By default, they are included only if you have explicit permissions on them to view them. For example, if you are the owner. Other scope fields, for example, `include_org_ids`, still restrict the returned public tag templates and at least one of them is required.",
           "type": "boolean"
         },
         "restrictedLocations": {
@@ -2753,6 +2972,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "starredOnly": {
+          "description": "Optional. If `true`, search only among starred entries. By default, all results are returned, starred or not.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -2786,6 +3009,14 @@
       "description": "Result in the response to a search request. Each result captures details of one entry that matches the search.",
       "id": "GoogleCloudDatacatalogV1SearchCatalogResult",
       "properties": {
+        "description": {
+          "description": "Entry description that can consist of several sentences or paragraphs that describe entry contents.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "The display name of the result.",
+          "type": "string"
+        },
         "fullyQualifiedName": {
           "description": "Fully qualified name (FQN) of the resource. FQNs take two forms: * For non-regionalized resources: `{SYSTEM}:{PROJECT}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOTS}` * For regionalized resources: `{SYSTEM}:{PROJECT}.{LOCATION_ID}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOTS}` Example for a DPMS table: `dataproc_metastore:PROJECT_ID.LOCATION_ID.INSTANCE_ID.DATABASE_ID.TABLE_ID`",
           "type": "string"
@@ -2908,6 +3139,18 @@
           "type": "array"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1StarEntryRequest": {
+      "description": "Request message for StarEntry.",
+      "id": "GoogleCloudDatacatalogV1StarEntryRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1StarEntryResponse": {
+      "description": "Response message for StarEntry. Empty for now",
+      "id": "GoogleCloudDatacatalogV1StarEntryResponse",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudDatacatalogV1SystemTimestamps": {
@@ -3136,6 +3379,18 @@
       },
       "type": "object"
     },
+    "GoogleCloudDatacatalogV1UnstarEntryRequest": {
+      "description": "Request message for UnstarEntry.",
+      "id": "GoogleCloudDatacatalogV1UnstarEntryRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1UnstarEntryResponse": {
+      "description": "Response message for UnstarEntry. Empty for now",
+      "id": "GoogleCloudDatacatalogV1UnstarEntryResponse",
+      "properties": {},
+      "type": "object"
+    },
     "GoogleCloudDatacatalogV1UsageSignal": {
       "description": "The set of all usage signals that Data Catalog stores. Note: Usually, these signals are updated daily. In rare cases, an update may fail but will be performed again on the next day.",
       "id": "GoogleCloudDatacatalogV1UsageSignal",
@@ -3195,11 +3450,11 @@
       "type": "object"
     },
     "Policy": {
-      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
+      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
       "properties": {
         "bindings": {
-          "description": "Associates a list of `members` to a `role`. Optionally, may specify a `condition` that determines how and when the `bindings` are applied. Each of the `bindings` must contain at least one member.",
+          "description": "Associates a list of `members`, or principals, with a `role`. Optionally, may specify a `condition` that determines how and when the `bindings` are applied. Each of the `bindings` must contain at least one principal. The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250 of these principals can be Google groups. Each occurrence of a principal counts towards these limits. For example, if the `bindings` grant 50 different roles to `user:alice@example.com`, and not to any other principal, then you can add another 1,450 principals to the `bindings` in the `Policy`.",
           "items": {
             "$ref": "Binding"
           },

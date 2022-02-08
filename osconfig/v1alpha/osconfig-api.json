@@ -282,36 +282,34 @@
                   }
                 },
                 "osPolicyAssignments": {
-                  "methods": {
-                    "getReport": {
-                      "description": "Get the OS policy asssignment report for the specified Compute Engine VM instance.",
-                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/osPolicyAssignments/{osPolicyAssignmentsId}/report",
-                      "httpMethod": "GET",
-                      "id": "osconfig.projects.locations.instances.osPolicyAssignments.getReport",
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "description": "Required. API resource name for OS policy assignment report. Format: `/projects/{project}/locations/{location}/instances/{instance}/osPolicyAssignments/{assignment}/report` For `{project}`, either `project-number` or `project-id` can be provided. For `{instance_id}`, either Compute Engine `instance-id` or `instance-name` can be provided. For `{assignment_id}`, the OSPolicyAssignment id must be provided.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+/osPolicyAssignments/[^/]+/report$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1alpha/{+name}",
-                      "response": {
-                        "$ref": "OSPolicyAssignmentReport"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    }
-                  },
                   "resources": {
                     "reports": {
                       "methods": {
+                        "get": {
+                          "description": "Get the OS policy asssignment report for the specified Compute Engine VM instance.",
+                          "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/osPolicyAssignments/{osPolicyAssignmentsId}/report",
+                          "httpMethod": "GET",
+                          "id": "osconfig.projects.locations.instances.osPolicyAssignments.reports.get",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. API resource name for OS policy assignment report. Format: `/projects/{project}/locations/{location}/instances/{instance}/osPolicyAssignments/{assignment}/report` For `{project}`, either `project-number` or `project-id` can be provided. For `{instance_id}`, either Compute Engine `instance-id` or `instance-name` can be provided. For `{assignment_id}`, the OSPolicyAssignment id must be provided.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+/osPolicyAssignments/[^/]+/report$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1alpha/{+name}",
+                          "response": {
+                            "$ref": "OSPolicyAssignmentReport"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        },
                         "list": {
                           "description": "List OS policy asssignment reports for all Compute Engine VM instances in the specified zone.",
                           "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/osPolicyAssignments/{osPolicyAssignmentsId}/reports",
@@ -686,7 +684,7 @@
       }
     }
   },
-  "revision": "20210914",
+  "revision": "20211106",
   "rootUrl": "https://osconfig.googleapis.com/",
   "schemas": {
     "CVSSv3": {
@@ -882,6 +880,61 @@
           "description": "Specifies the relative value defined as a percentage, which will be multiplied by a reference value.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata": {
+      "description": "OS policy assignment operation metadata provided by OS policy assignment API methods that return long running operations.",
+      "id": "GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata",
+      "properties": {
+        "apiMethod": {
+          "description": "The OS policy assignment API method.",
+          "enum": [
+            "API_METHOD_UNSPECIFIED",
+            "CREATE",
+            "UPDATE",
+            "DELETE"
+          ],
+          "enumDescriptions": [
+            "Invalid value",
+            "Create OS policy assignment API method",
+            "Update OS policy assignment API method",
+            "Delete OS policy assignment API method"
+          ],
+          "type": "string"
+        },
+        "osPolicyAssignment": {
+          "description": "Reference to the `OSPolicyAssignment` API resource. Format: `projects/{project_number}/locations/{location}/osPolicyAssignments/{os_policy_assignment_id@revision_id}`",
+          "type": "string"
+        },
+        "rolloutStartTime": {
+          "description": "Rollout start time",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "rolloutState": {
+          "description": "State of the rollout",
+          "enum": [
+            "ROLLOUT_STATE_UNSPECIFIED",
+            "IN_PROGRESS",
+            "CANCELLING",
+            "CANCELLED",
+            "SUCCEEDED"
+          ],
+          "enumDescriptions": [
+            "Invalid value",
+            "The rollout is in progress.",
+            "The rollout is being cancelled.",
+            "The rollout is cancelled.",
+            "The rollout has completed successfully."
+          ],
+          "type": "string"
+        },
+        "rolloutUpdateTime": {
+          "description": "Rollout update time",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1179,7 +1232,7 @@
       "type": "object"
     },
     "InventoryWindowsApplication": {
-      "description": "Contains information about a Windows application as retrieved from the Windows Registry. For more information about these fields, see [Windows Installer Properties for the Uninstall Registry](https://docs.microsoft.com/en-us/windows/win32/msi/uninstall-registry-key){: class=\"external\" }",
+      "description": "Contains information about a Windows application that is retrieved from the Windows Registry. For more information about these fields, see: https://docs.microsoft.com/en-us/windows/win32/msi/uninstall-registry-key",
       "id": "InventoryWindowsApplication",
       "properties": {
         "displayName": {
@@ -2561,6 +2614,13 @@
           },
           "type": "array"
         },
+        "items": {
+          "description": "List of items affected by the vulnerability.",
+          "items": {
+            "$ref": "VulnerabilityReportVulnerabilityItem"
+          },
+          "type": "array"
+        },
         "updateTime": {
           "description": "The timestamp for when the vulnerability was last modified.",
           "format": "google-datetime",
@@ -2614,6 +2674,29 @@
         },
         "url": {
           "description": "The url of the reference.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VulnerabilityReportVulnerabilityItem": {
+      "description": "OS inventory item that is affected by a vulnerability or fixed as a result of a vulnerability.",
+      "id": "VulnerabilityReportVulnerabilityItem",
+      "properties": {
+        "availableInventoryItemId": {
+          "description": "Corresponds to the `AVAILABLE_PACKAGE` inventory item on the VM. If the vulnerability report was not updated after the VM inventory update, these values might not display in VM inventory. If there is no available fix, the field is empty. The `inventory_item` value specifies the latest `SoftwarePackage` available to the VM that fixes the vulnerability.",
+          "type": "string"
+        },
+        "fixedCpeUri": {
+          "description": "The recommended [CPE URI](https://cpe.mitre.org/specification/) update that contains a fix for this vulnerability.",
+          "type": "string"
+        },
+        "installedInventoryItemId": {
+          "description": "Corresponds to the `INSTALLED_PACKAGE` inventory item on the VM. This field displays the inventory items affected by this vulnerability. If the vulnerability report was not updated after the VM inventory update, these values might not display in VM inventory. For some operating systems, this field might be empty.",
+          "type": "string"
+        },
+        "upstreamFix": {
+          "description": "The upstream OS patch, packages or KB that fixes the vulnerability.",
           "type": "string"
         }
       },

@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -172,8 +172,8 @@ type PartnersSubscriptionsService struct {
 type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	// CancelImmediately: Optional. If true, the subscription will be
 	// cancelled immediately. Otherwise, the subscription will be cancelled
-	// at the end of the current cycle, and therefore no prorated refund
-	// will be issued for the rest of the cycle.
+	// at renewal_time, and therefore no prorated refund will be issued for
+	// the rest of the cycle.
 	CancelImmediately bool `json:"cancelImmediately,omitempty"`
 
 	// CancellationReason: Specifies the reason for the cancellation.
@@ -375,6 +375,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse struct 
 	// This time will be set the same as initial subscription creation time
 	// if no free trial period is offered to the partner.
 	FreeTrialEndTime string `json:"freeTrialEndTime,omitempty"`
+
+	// RenewalTime: Output only. The time at which the subscription is
+	// expected to be renewed by Google - a new charge will be incurred and
+	// the service entitlement will be renewed. A non-immediate cancellation
+	// will take place at this time too, before which, the service
+	// entitlement for the end user will remain valid. UTC timezone in ISO
+	// 8061 format. For example: "2019-08-31T17:28:54.564Z"
+	RenewalTime string `json:"renewalTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -596,14 +604,29 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	// available indefinitely.
 	EndTime string `json:"endTime,omitempty"`
 
-	// FreeTrialDuration: Output only. Specifies the duration of the free
-	// trial of the subscription.
+	// FreeTrialDuration: Optional. Specifies the duration of the free trial
+	// of the subscription when promotion_type is PROMOTION_TYPE_FREE_TRIAL
 	FreeTrialDuration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"freeTrialDuration,omitempty"`
+
+	// IntroductoryPricingDetails: Optional. Specifies the introductory
+	// pricing details when the promotion_type is
+	// PROMOTION_TYPE_INTRODUCTORY_PRICING.
+	IntroductoryPricingDetails *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails `json:"introductoryPricingDetails,omitempty"`
 
 	// Name: Output only. Response only. Resource name of the subscription
 	// promotion. It will have the format of
 	// "partners/{partner_id}/promotion/{promotion_id}"
 	Name string `json:"name,omitempty"`
+
+	// PromotionType: Output only. Output Only. Specifies the type of the
+	// promotion.
+	//
+	// Possible values:
+	//   "PROMOTION_TYPE_UNSPECIFIED" - The promotion type is unspecified.
+	//   "PROMOTION_TYPE_FREE_TRIAL" - The promotion is a free trial.
+	//   "PROMOTION_TYPE_INTRODUCTORY_PRICING" - The promotion is a reduced
+	// introductory pricing.
+	PromotionType string `json:"promotionType,omitempty"`
 
 	// RegionCodes: Output only. 2-letter ISO region code where the
 	// promotion is available in. Ex. "US" Please refers to:
@@ -637,6 +660,69 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1Promotion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Promotion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingD
+// etails: The details of a introductory pricing promotion.
+type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails struct {
+	// IntroductoryPricingSpecs: Specifies the introductory pricing periods.
+	IntroductoryPricingSpecs []*GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec `json:"introductoryPricingSpecs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IntroductoryPricingSpecs") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IntroductoryPricingSpecs")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingD
+// etailsIntroductoryPricingSpec: The duration of an introductory
+// pricing promotion.
+type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec struct {
+	// RecurrenceCount: Output only. Output Only. The duration of an
+	// introductory offer in billing cycles.
+	RecurrenceCount int64 `json:"recurrenceCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RecurrenceCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RecurrenceCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -706,6 +792,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// when creation failed. However, Partners should always prepare a
 	// default URL to redirect the user in case this field is empty.
 	RedirectUri string `json:"redirectUri,omitempty"`
+
+	// RenewalTime: Output only. The time at which the subscription is
+	// expected to be renewed by Google - a new charge will be incurred and
+	// the service entitlement will be renewed. A non-immediate cancellation
+	// will take place at this time too, before which, the service
+	// entitlement for the end user will remain valid. UTC timezone in ISO
+	// 8061 format. For example: "2019-08-31T17:28:54.564Z"
+	RenewalTime string `json:"renewalTime,omitempty"`
 
 	// ServiceLocation: Required. The location that the service is provided
 	// as indicated by the partner.
@@ -1007,7 +1101,7 @@ func (c *PartnersProductsListCall) Header() http.Header {
 
 func (c *PartnersProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1217,7 +1311,7 @@ func (c *PartnersPromotionsListCall) Header() http.Header {
 
 func (c *PartnersPromotionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1396,7 +1490,7 @@ func (c *PartnersSubscriptionsCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1552,7 +1646,7 @@ func (c *PartnersSubscriptionsCreateCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1703,7 +1797,7 @@ func (c *PartnersSubscriptionsEntitleCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsEntitleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1809,8 +1903,9 @@ type PartnersSubscriptionsExtendCall struct {
 }
 
 // Extend: Used by partners to extend a subscription service for their
-// customers. It should be called directly by the partner using service
-// accounts.
+// customers on an ongoing basis for the subscription to remain active
+// and renewable. It should be called directly by the partner using
+// service accounts.
 //
 // - name: The name of the subscription resource to be extended. It will
 //   have the format of
@@ -1849,7 +1944,7 @@ func (c *PartnersSubscriptionsExtendCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsExtendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1916,7 +2011,7 @@ func (c *PartnersSubscriptionsExtendCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Used by partners to extend a subscription service for their customers. It should be called directly by the partner using service accounts.",
+	//   "description": "Used by partners to extend a subscription service for their customers on an ongoing basis for the subscription to remain active and renewable. It should be called directly by the partner using service accounts.",
 	//   "flatPath": "v1/partners/{partnersId}/subscriptions/{subscriptionsId}:extend",
 	//   "httpMethod": "POST",
 	//   "id": "paymentsresellersubscription.partners.subscriptions.extend",
@@ -2003,7 +2098,7 @@ func (c *PartnersSubscriptionsGetCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2155,7 +2250,7 @@ func (c *PartnersSubscriptionsProvisionCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsProvisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2307,7 +2402,7 @@ func (c *PartnersSubscriptionsUndoCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsUndoCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

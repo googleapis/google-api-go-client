@@ -860,7 +860,7 @@
       }
     }
   },
-  "revision": "20210924",
+  "revision": "20220129",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddDnsRecordSetMetadata": {
@@ -970,6 +970,10 @@
       "description": "Request to create a subnetwork in a previously peered service network.",
       "id": "AddSubnetworkRequest",
       "properties": {
+        "checkServiceNetworkingUsePermission": {
+          "description": "Optional. The IAM permission check determines whether the consumer project has 'servicenetworking.services.use' permission or not.",
+          "type": "boolean"
+        },
         "consumer": {
           "description": "Required. A resource that represents the service consumer, such as `projects/123456`. The project number can be different from the value in the consumer network parameter. For example, the network might be part of a Shared VPC network. In those cases, Service Networking validates that this resource belongs to that Shared VPC.",
           "type": "string"
@@ -993,6 +997,10 @@
         },
         "privateIpv6GoogleAccess": {
           "description": "Optional. The private IPv6 google access type for the VMs in this subnet. For information about the access types that can be set using this field, see [subnetwork](https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks) in the Compute API documentation.",
+          "type": "string"
+        },
+        "purpose": {
+          "description": "Optional. Defines the purpose field of the subnet, e.g. 'PRIVATE_SERVICE_CONNECT'. For information about the purposes that can be set using this field, see [subnetwork](https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks) in the Compute API documentation.",
           "type": "string"
         },
         "region": {
@@ -1438,11 +1446,11 @@
       "type": "object"
     },
     "Control": {
-      "description": "Selects and configures the service controller used by the service. The service controller handles features like abuse, quota, billing, logging, monitoring, etc.",
+      "description": "Selects and configures the service controller used by the service. The service controller handles two things: - **What is allowed:** for each API request, Chemist checks the project status, activation status, abuse status, billing status, service status, location restrictions, VPC Service Controls, SuperQuota, and other policies. - **What has happened:** for each API response, Chemist reports the telemetry data to analytics, auditing, billing, eventing, logging, monitoring, sawmill, and tracing. Chemist also accepts telemetry data not associated with API traffic, such as billing metrics. Example: control: environment: servicecontrol.googleapis.com",
       "id": "Control",
       "properties": {
         "environment": {
-          "description": "The service control environment to use. If empty, no control plane feature (like quota and billing) will be enabled.",
+          "description": "The service controller environment to use. If empty, no control plane feature (like quota and billing) will be enabled. The recommended value for most services is servicecontrol.googleapis.com",
           "type": "string"
         }
       },
@@ -2215,10 +2223,10 @@
             "The feature is not yet implemented. Users can not use it.",
             "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
-            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
+            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don't have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
             "GA features are open to all developers and are considered stable and fully qualified for production use.",
-            "Deprecated features are scheduled to be shut down and removed. For more information, see the “Deprecation Policy” section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
+            "Deprecated features are scheduled to be shut down and removed. For more information, see the \"Deprecation Policy\" section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
           ],
           "type": "string"
         },
@@ -2312,10 +2320,10 @@
             "The feature is not yet implemented. Users can not use it.",
             "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
-            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
+            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don't have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
             "GA features are open to all developers and are considered stable and fully qualified for production use.",
-            "Deprecated features are scheduled to be shut down and removed. For more information, see the “Deprecation Policy” section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
+            "Deprecated features are scheduled to be shut down and removed. For more information, see the \"Deprecation Policy\" section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
           ],
           "type": "string"
         },
@@ -2397,10 +2405,10 @@
             "The feature is not yet implemented. Users can not use it.",
             "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
-            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
+            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don't have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
             "GA features are open to all developers and are considered stable and fully qualified for production use.",
-            "Deprecated features are scheduled to be shut down and removed. For more information, see the “Deprecation Policy” section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
+            "Deprecated features are scheduled to be shut down and removed. For more information, see the \"Deprecation Policy\" section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
           ],
           "type": "string"
         },
@@ -3257,6 +3265,10 @@
     "ValidateConsumerConfigRequest": {
       "id": "ValidateConsumerConfigRequest",
       "properties": {
+        "checkServiceNetworkingUsePermission": {
+          "description": "Optional. The IAM permission check determines whether the consumer project has 'servicenetworking.services.use' permission or not.",
+          "type": "boolean"
+        },
         "consumerNetwork": {
           "description": "Required. The network that the consumer is using to connect with services. Must be in the form of projects/{project}/global/networks/{network} {project} is a project number, as in '12345' {network} is network name.",
           "type": "string"
@@ -3306,7 +3318,8 @@
             "RANGES_EXHAUSTED",
             "RANGES_NOT_RESERVED",
             "RANGES_DELETED_LATER",
-            "COMPUTE_API_NOT_ENABLED"
+            "COMPUTE_API_NOT_ENABLED",
+            "USE_PERMISSION_NOT_FOUND"
           ],
           "enumDescriptions": [
             "",
@@ -3322,7 +3335,8 @@
             "The reserved IP ranges do not have enough space to create a subnet of desired size.",
             "The IP ranges were not reserved.",
             "The IP ranges were reserved but deleted later.",
-            "The consumer project does not have the compute api enabled."
+            "The consumer project does not have the compute api enabled.",
+            "The consumer project does not have the permission from the host project."
           ],
           "type": "string"
         }

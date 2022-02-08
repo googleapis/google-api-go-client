@@ -179,7 +179,7 @@
             "instances": {
               "methods": {
                 "get": {
-                  "description": "Gets details of a single Instance.",
+                  "description": "Get details about a single server.",
                   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}",
                   "httpMethod": "GET",
                   "id": "baremetalsolution.projects.locations.instances.get",
@@ -203,39 +203,8 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
-                "getIamPolicy": {
-                  "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:getIamPolicy",
-                  "httpMethod": "GET",
-                  "id": "baremetalsolution.projects.locations.instances.getIamPolicy",
-                  "parameterOrder": [
-                    "resource"
-                  ],
-                  "parameters": {
-                    "options.requestedPolicyVersion": {
-                      "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
-                      "format": "int32",
-                      "location": "query",
-                      "type": "integer"
-                    },
-                    "resource": {
-                      "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+resource}:getIamPolicy",
-                  "response": {
-                    "$ref": "Policy"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
                 "list": {
-                  "description": "Lists Instances in a given project and location.",
+                  "description": "List servers in a given project and location.",
                   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instances",
                   "httpMethod": "GET",
                   "id": "baremetalsolution.projects.locations.instances.list",
@@ -243,24 +212,14 @@
                     "parent"
                   ],
                   "parameters": {
-                    "filter": {
-                      "description": "Filtering results.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "orderBy": {
-                      "description": "Hint for how to order the results.",
-                      "location": "query",
-                      "type": "string"
-                    },
                     "pageSize": {
-                      "description": "Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
+                      "description": "Requested page size. Server may return fewer items than requested. If unspecified, the server will pick an appropriate default.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "A token identifying a page of results the server should return.",
+                      "description": "A token identifying a page of results from the server.",
                       "location": "query",
                       "type": "string"
                     },
@@ -280,57 +239,94 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
-                "setIamPolicy": {
-                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
-                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:setIamPolicy",
+                "reset": {
+                  "description": "Perform an ungraceful, hard reset on a server. Equivalent to shutting the power off and then turning it back on.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:reset",
                   "httpMethod": "POST",
-                  "id": "baremetalsolution.projects.locations.instances.setIamPolicy",
+                  "id": "baremetalsolution.projects.locations.instances.reset",
                   "parameterOrder": [
-                    "resource"
+                    "name"
                   ],
                   "parameters": {
-                    "resource": {
-                      "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+                    "name": {
+                      "description": "Required. Name of the resource.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v2/{+resource}:setIamPolicy",
+                  "path": "v2/{+name}:reset",
                   "request": {
-                    "$ref": "SetIamPolicyRequest"
+                    "$ref": "ResetInstanceRequest"
                   },
                   "response": {
-                    "$ref": "Policy"
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
+            "networks": {
+              "methods": {
+                "get": {
+                  "description": "Get details of a single network.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/networks/{networksId}",
+                  "httpMethod": "GET",
+                  "id": "baremetalsolution.projects.locations.networks.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the resource.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/networks/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "response": {
+                    "$ref": "Network"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
-                "testIamPermissions": {
-                  "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:testIamPermissions",
-                  "httpMethod": "POST",
-                  "id": "baremetalsolution.projects.locations.instances.testIamPermissions",
+                "list": {
+                  "description": "List network in a given project and location.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/networks",
+                  "httpMethod": "GET",
+                  "id": "baremetalsolution.projects.locations.networks.list",
                   "parameterOrder": [
-                    "resource"
+                    "parent"
                   ],
                   "parameters": {
-                    "resource": {
-                      "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+                    "pageSize": {
+                      "description": "Requested page size. The server might return fewer items than requested. If unspecified, server will pick an appropriate default.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A token identifying a page of results from the server.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Parent value for ListNetworksRequest.",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v2/{+resource}:testIamPermissions",
-                  "request": {
-                    "$ref": "TestIamPermissionsRequest"
-                  },
+                  "path": "v2/{+parent}/networks",
                   "response": {
-                    "$ref": "TestIamPermissionsResponse"
+                    "$ref": "ListNetworksResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -461,10 +457,167 @@
                 }
               }
             },
+            "snapshotSchedulePolicies": {
+              "methods": {
+                "create": {
+                  "description": "Create a snapshot schedule policy in the specified project.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/snapshotSchedulePolicies",
+                  "httpMethod": "POST",
+                  "id": "baremetalsolution.projects.locations.snapshotSchedulePolicies.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The parent project and location containing the SnapshotSchedulePolicy.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "snapshotSchedulePolicyId": {
+                      "description": "Required. Snapshot policy ID",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/snapshotSchedulePolicies",
+                  "request": {
+                    "$ref": "SnapshotSchedulePolicy"
+                  },
+                  "response": {
+                    "$ref": "SnapshotSchedulePolicy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Delete a named snapshot schedule policy.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/snapshotSchedulePolicies/{snapshotSchedulePoliciesId}",
+                  "httpMethod": "DELETE",
+                  "id": "baremetalsolution.projects.locations.snapshotSchedulePolicies.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the snapshot schedule policy to delete.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/snapshotSchedulePolicies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Get details of a single snapshot schedule policy.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/snapshotSchedulePolicies/{snapshotSchedulePoliciesId}",
+                  "httpMethod": "GET",
+                  "id": "baremetalsolution.projects.locations.snapshotSchedulePolicies.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the resource.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/snapshotSchedulePolicies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "response": {
+                    "$ref": "SnapshotSchedulePolicy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "List snapshot schedule policies in a given project and location.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/snapshotSchedulePolicies",
+                  "httpMethod": "GET",
+                  "id": "baremetalsolution.projects.locations.snapshotSchedulePolicies.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The maximum number of items to return.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "The next_page_token value returned from a previous List request, if any.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent project containing the Snapshot Schedule Policies.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/snapshotSchedulePolicies",
+                  "response": {
+                    "$ref": "ListSnapshotSchedulePoliciesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Update a snapshot schedule policy in the specified project.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/snapshotSchedulePolicies/{snapshotSchedulePoliciesId}",
+                  "httpMethod": "PATCH",
+                  "id": "baremetalsolution.projects.locations.snapshotSchedulePolicies.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Output only. The name of the snapshot schedule policy.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/snapshotSchedulePolicies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. The list of fields to update.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "request": {
+                    "$ref": "SnapshotSchedulePolicy"
+                  },
+                  "response": {
+                    "$ref": "SnapshotSchedulePolicy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "volumes": {
               "methods": {
                 "get": {
-                  "description": "Gets details of a single Volume.",
+                  "description": "Get details of a single storage volume.",
                   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes/{volumesId}",
                   "httpMethod": "GET",
                   "id": "baremetalsolution.projects.locations.volumes.get",
@@ -489,7 +642,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists Volumes in a given project and location.",
+                  "description": "List storage volumes in a given project and location.",
                   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes",
                   "httpMethod": "GET",
                   "id": "baremetalsolution.projects.locations.volumes.list",
@@ -497,24 +650,14 @@
                     "parent"
                   ],
                   "parameters": {
-                    "filter": {
-                      "description": "Filtering results.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "orderBy": {
-                      "description": "Hint for how to order the results.",
-                      "location": "query",
-                      "type": "string"
-                    },
                     "pageSize": {
-                      "description": "Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
+                      "description": "Requested page size. The server might return fewer items than requested. If unspecified, server will pick an appropriate default.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "A token identifying a page of results the server should return.",
+                      "description": "A token identifying a page of results from the server.",
                       "location": "query",
                       "type": "string"
                     },
@@ -533,6 +676,253 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
+                },
+                "patch": {
+                  "description": "Update details of a single storage volume.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes/{volumesId}",
+                  "httpMethod": "PATCH",
+                  "id": "baremetalsolution.projects.locations.volumes.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Output only. The resource name of this `Volume`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. Format: `projects/{project}/locations/{location}/volumes/{volume}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/volumes/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The list of fields to update. The only currently supported fields are: `snapshot_auto_delete_behavior` `snapshot_schedule_policy_name`",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "request": {
+                    "$ref": "Volume"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              },
+              "resources": {
+                "luns": {
+                  "methods": {
+                    "get": {
+                      "description": "Get details of a single storage lun.",
+                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes/{volumesId}/luns/{lunsId}",
+                      "httpMethod": "GET",
+                      "id": "baremetalsolution.projects.locations.volumes.luns.get",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. Name of the resource.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/volumes/[^/]+/luns/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v2/{+name}",
+                      "response": {
+                        "$ref": "Lun"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "list": {
+                      "description": "List storage volume luns for given storage volume.",
+                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes/{volumesId}/luns",
+                      "httpMethod": "GET",
+                      "id": "baremetalsolution.projects.locations.volumes.luns.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "Requested page size. The server might return fewer items than requested. If unspecified, server will pick an appropriate default.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "A token identifying a page of results from the server.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. Parent value for ListLunsRequest.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/volumes/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v2/{+parent}/luns",
+                      "response": {
+                        "$ref": "ListLunsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
+                },
+                "snapshots": {
+                  "methods": {
+                    "create": {
+                      "description": "Create a storage volume snapshot in a containing volume.",
+                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes/{volumesId}/snapshots",
+                      "httpMethod": "POST",
+                      "id": "baremetalsolution.projects.locations.volumes.snapshots.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The volume to snapshot.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/volumes/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v2/{+parent}/snapshots",
+                      "request": {
+                        "$ref": "VolumeSnapshot"
+                      },
+                      "response": {
+                        "$ref": "VolumeSnapshot"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "delete": {
+                      "description": "Deletes a storage volume snapshot for a given volume.",
+                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes/{volumesId}/snapshots/{snapshotsId}",
+                      "httpMethod": "DELETE",
+                      "id": "baremetalsolution.projects.locations.volumes.snapshots.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the snapshot to delete.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/volumes/[^/]+/snapshots/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v2/{+name}",
+                      "response": {
+                        "$ref": "Empty"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "get": {
+                      "description": "Get details of a single storage volume snapshot.",
+                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes/{volumesId}/snapshots/{snapshotsId}",
+                      "httpMethod": "GET",
+                      "id": "baremetalsolution.projects.locations.volumes.snapshots.get",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. Name of the resource.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/volumes/[^/]+/snapshots/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v2/{+name}",
+                      "response": {
+                        "$ref": "VolumeSnapshot"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "list": {
+                      "description": "List storage volume snapshots for given storage volume.",
+                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes/{volumesId}/snapshots",
+                      "httpMethod": "GET",
+                      "id": "baremetalsolution.projects.locations.volumes.snapshots.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "Requested page size. The server might return fewer items than requested. If unspecified, server will pick an appropriate default.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "A token identifying a page of results from the server.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. Parent value for ListVolumesRequest.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/volumes/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v2/{+parent}/snapshots",
+                      "response": {
+                        "$ref": "ListVolumeSnapshotsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "restoreVolumeSnapshot": {
+                      "description": "Restore a storage volume snapshot to its containing volume.",
+                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes/{volumesId}/snapshots/{snapshotsId}:restoreVolumeSnapshot",
+                      "httpMethod": "POST",
+                      "id": "baremetalsolution.projects.locations.volumes.snapshots.restoreVolumeSnapshot",
+                      "parameterOrder": [
+                        "volumeSnapshot"
+                      ],
+                      "parameters": {
+                        "volumeSnapshot": {
+                          "description": "Required. Name of the resource.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/volumes/[^/]+/snapshots/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v2/{+volumeSnapshot}:restoreVolumeSnapshot",
+                      "request": {
+                        "$ref": "RestoreVolumeSnapshotRequest"
+                      },
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -541,31 +931,9 @@
       }
     }
   },
-  "revision": "20210802",
+  "revision": "20211207",
   "rootUrl": "https://baremetalsolution.googleapis.com/",
   "schemas": {
-    "Binding": {
-      "description": "Associates `members` with a `role`.",
-      "id": "Binding",
-      "properties": {
-        "condition": {
-          "$ref": "Expr",
-          "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the members in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
-        },
-        "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "role": {
-          "description": "Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "CancelOperationRequest": {
       "description": "The request message for Operations.CancelOperation.",
       "id": "CancelOperationRequest",
@@ -578,41 +946,22 @@
       "properties": {},
       "type": "object"
     },
-    "Expr": {
-      "description": "Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec. Example (Comparison): title: \"Summary size limit\" description: \"Determines if a summary is less than 100 chars\" expression: \"document.summary.size() \u003c 100\" Example (Equality): title: \"Requestor is owner\" description: \"Determines if requestor is the document owner\" expression: \"document.owner == request.auth.claims.email\" Example (Logic): title: \"Public documents\" description: \"Determine whether the document should be publicly visible\" expression: \"document.type != 'private' \u0026\u0026 document.type != 'internal'\" Example (Data Manipulation): title: \"Notification string\" description: \"Create a notification string with a timestamp.\" expression: \"'New message received at ' + string(document.create_time)\" The exact variables and functions that may be referenced within an expression are determined by the service that evaluates it. See the service documentation for additional information.",
-      "id": "Expr",
-      "properties": {
-        "description": {
-          "description": "Optional. Description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.",
-          "type": "string"
-        },
-        "expression": {
-          "description": "Textual representation of an expression in Common Expression Language syntax.",
-          "type": "string"
-        },
-        "location": {
-          "description": "Optional. String indicating the location of the expression for error reporting, e.g. a file name and a position in the file.",
-          "type": "string"
-        },
-        "title": {
-          "description": "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Instance": {
-      "description": "An instance resource.",
+      "description": "A server.",
       "id": "Instance",
       "properties": {
         "createTime": {
-          "description": "Output only. Create time stamp.",
+          "description": "Output only. Create a time stamp.",
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
         },
         "hyperthreadingEnabled": {
-          "description": "True if hyperthreading enabled for the instance, false otherwise. The default value is false.",
+          "description": "True if you enable hyperthreading for the server, otherwise false. The default value is false.",
+          "type": "boolean"
+        },
+        "interactiveSerialConsoleEnabled": {
+          "description": "True if the interactive serial console feature is enabled for the instance, false otherwise. The default value is false.",
           "type": "boolean"
         },
         "labels": {
@@ -623,14 +972,14 @@
           "type": "object"
         },
         "luns": {
-          "description": "List of luns associated with this instance.",
+          "description": "List of LUNs associated with this server.",
           "items": {
             "$ref": "Lun"
           },
           "type": "array"
         },
         "machineType": {
-          "description": "The type of this Instance. [Available Instance types](https://cloud.google.com/bare-metal/docs/bms-planning#server_configurations)",
+          "description": "The server type. [Available server types](https://cloud.google.com/bare-metal/docs/bms-planning#server_configurations)",
           "type": "string"
         },
         "name": {
@@ -639,14 +988,14 @@
           "type": "string"
         },
         "networks": {
-          "description": "List of networks associated with this instance.",
+          "description": "List of networks associated with this server.",
           "items": {
             "$ref": "Network"
           },
           "type": "array"
         },
         "state": {
-          "description": "The state of this Instance.",
+          "description": "The state of the server.",
           "enum": [
             "STATE_UNSPECIFIED",
             "PROVISIONING",
@@ -654,15 +1003,15 @@
             "DELETED"
           ],
           "enumDescriptions": [
-            "The unspecified state.",
-            "The Instance is being provisioned.",
-            "The Instance is running.",
-            "The Instance has been deleted."
+            "The server is in an unknown state.",
+            "The server is being provisioned.",
+            "The server is running.",
+            "The server has been deleted."
           ],
           "type": "string"
         },
         "updateTime": {
-          "description": "Output only. Update time stamp.",
+          "description": "Output only. Update a time stamp.",
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
@@ -671,18 +1020,18 @@
       "type": "object"
     },
     "ListInstancesResponse": {
-      "description": "Message for response to listing Instances.",
+      "description": "Response message for the list of servers.",
       "id": "ListInstancesResponse",
       "properties": {
         "instances": {
-          "description": "The list of Instance.",
+          "description": "The list of servers.",
           "items": {
             "$ref": "Instance"
           },
           "type": "array"
         },
         "nextPageToken": {
-          "description": "A token identifying a page of results the server should return.",
+          "description": "A token identifying a page of results from the server.",
           "type": "string"
         },
         "unreachable": {
@@ -713,6 +1062,56 @@
       },
       "type": "object"
     },
+    "ListLunsResponse": {
+      "description": "Response message containing the list of storage volume luns.",
+      "id": "ListLunsResponse",
+      "properties": {
+        "luns": {
+          "description": "The list of luns.",
+          "items": {
+            "$ref": "Lun"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "A token identifying a page of results from the server.",
+          "type": "string"
+        },
+        "unreachable": {
+          "description": "Locations that could not be reached.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListNetworksResponse": {
+      "description": "Response message containing the list of networks.",
+      "id": "ListNetworksResponse",
+      "properties": {
+        "networks": {
+          "description": "The list of networks.",
+          "items": {
+            "$ref": "Network"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "A token identifying a page of results from the server.",
+          "type": "string"
+        },
+        "unreachable": {
+          "description": "Locations that could not be reached.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ListOperationsResponse": {
       "description": "The response message for Operations.ListOperations.",
       "id": "ListOperationsResponse",
@@ -731,12 +1130,55 @@
       },
       "type": "object"
     },
+    "ListSnapshotSchedulePoliciesResponse": {
+      "description": "Response message containing the list of snapshot schedule policies.",
+      "id": "ListSnapshotSchedulePoliciesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results, or empty if there are no more results in the list.",
+          "type": "string"
+        },
+        "snapshotSchedulePolicies": {
+          "description": "The snapshot schedule policies registered in this project.",
+          "items": {
+            "$ref": "SnapshotSchedulePolicy"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListVolumeSnapshotsResponse": {
+      "description": "Response message containing the list of storage volume snapshots.",
+      "id": "ListVolumeSnapshotsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token identifying a page of results from the server.",
+          "type": "string"
+        },
+        "unreachable": {
+          "description": "Locations that could not be reached.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "volumeSnapshots": {
+          "description": "The list of storage volumes.",
+          "items": {
+            "$ref": "VolumeSnapshot"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ListVolumesResponse": {
-      "description": "Message for response to listing Volumes.",
+      "description": "Response message containing the list of storage volumes.",
       "id": "ListVolumesResponse",
       "properties": {
         "nextPageToken": {
-          "description": "A token identifying a page of results the server should return.",
+          "description": "A token identifying a page of results from the server.",
           "type": "string"
         },
         "unreachable": {
@@ -747,7 +1189,7 @@
           "type": "array"
         },
         "volumes": {
-          "description": "The list of Volume.",
+          "description": "The list of storage volumes.",
           "items": {
             "$ref": "Volume"
           },
@@ -791,45 +1233,41 @@
       "type": "object"
     },
     "Lun": {
-      "description": "A storage Lun.",
+      "description": "A storage volume logical unit number (LUN).",
       "id": "Lun",
       "properties": {
         "bootLun": {
-          "description": "Whether this Lun is a boot Lun.",
+          "description": "Display if this LUN is a boot LUN.",
           "type": "boolean"
         },
         "multiprotocolType": {
-          "description": "The Lun Multiprotocol type to ensure the characteristics of the LUN are optimized for the Operating System.",
+          "description": "The LUN multiprotocol type ensures the characteristics of the LUN are optimized for each operating system.",
           "enum": [
             "MULTIPROTOCOL_TYPE_UNSPECIFIED",
-            "LINUX",
-            "WINDOWS",
-            "VMWARE"
+            "LINUX"
           ],
           "enumDescriptions": [
             "Server has no OS specified.",
-            "Server with Linux OS.",
-            "Server with Windows OS.",
-            "Server with ESXi OS."
+            "Server with Linux OS."
           ],
           "type": "string"
         },
         "name": {
-          "description": "Output only. The name of this Lun.",
+          "description": "Output only. The name of the LUN.",
           "readOnly": true,
           "type": "string"
         },
-        "shared": {
-          "description": "Whether this Lun is allowed to be shared between multiple physical servers.",
+        "shareable": {
+          "description": "Display if this LUN can be shared between multiple physical servers.",
           "type": "boolean"
         },
         "sizeGb": {
-          "description": "The size of this Lun, in gigabytes.",
+          "description": "The size of this LUN, in gigabytes.",
           "format": "int64",
           "type": "string"
         },
         "state": {
-          "description": "The state of this Volume.",
+          "description": "The state of this storage volume.",
           "enum": [
             "STATE_UNSPECIFIED",
             "CREATING",
@@ -838,52 +1276,79 @@
             "DELETING"
           ],
           "enumDescriptions": [
-            "The unspecified state.",
-            "The Lun is being created.",
-            "The Lun is being updated.",
-            "The Lun is ready for consumption.",
-            "The Lun has been requested to be deleted."
+            "The LUN is in an unknown state.",
+            "The LUN is being created.",
+            "The LUN is being updated.",
+            "The LUN is ready for use.",
+            "The LUN has been requested to be deleted."
           ],
           "type": "string"
         },
         "storageType": {
-          "description": "The storage type of this Lun.",
+          "description": "The storage type for this LUN.",
           "enum": [
             "STORAGE_TYPE_UNSPECIFIED",
             "SSD",
             "HDD"
           ],
           "enumDescriptions": [
-            "The unspecified type.",
-            "This Lun storage type is SSD.",
-            "This Lun storage type is HDD."
+            "The storage type for this LUN is unknown.",
+            "This storage type for this LUN is SSD.",
+            "This storage type for this LUN is HDD."
           ],
           "type": "string"
         },
         "storageVolume": {
-          "description": "The storage volume that this Lun is attached to.",
+          "description": "Display the storage volume for this LUN.",
+          "type": "string"
+        },
+        "wwid": {
+          "description": "The WWID for this LUN.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "Network": {
-      "description": "A network.",
+      "description": "A Network.",
       "id": "Network",
       "properties": {
+        "cidr": {
+          "description": "The cidr of the Network.",
+          "type": "string"
+        },
         "ipAddress": {
           "description": "IP address configured.",
           "type": "string"
         },
         "macAddress": {
-          "description": "List of physical nics.",
+          "description": "List of physical interfaces.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
+        "name": {
+          "description": "Output only. The resource name of this `Network`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. Format: `projects/{project}/locations/{location}/networks/{network}` This field will contain the same value as field \"network\", which will soon be deprecated. Please use this field to reference the name of the network resource.",
+          "readOnly": true,
+          "type": "string"
+        },
         "network": {
           "description": "Name of the network.",
+          "type": "string"
+        },
+        "state": {
+          "description": "The Network state.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PROVISIONING",
+            "PROVISIONED"
+          ],
+          "enumDescriptions": [
+            "The Network is in an unknown state.",
+            "The Network is being provisioning.",
+            "The Network has been provisioned."
+          ],
           "type": "string"
         },
         "type": {
@@ -895,10 +1360,18 @@
           ],
           "enumDescriptions": [
             "Unspecified value.",
-            "Client network, that is a network peered to a GCP VPC.",
-            "Private network, that is a network local to the BMS POD."
+            "Client network, a network peered to a Google Cloud VPC.",
+            "Private network, a network local to the Bare Metal Solution environment."
           ],
           "type": "string"
+        },
+        "vlanId": {
+          "description": "The vlan id of the Network.",
+          "type": "string"
+        },
+        "vrf": {
+          "$ref": "VRF",
+          "description": "The vrf for the Network."
         }
       },
       "type": "object"
@@ -938,103 +1411,91 @@
       },
       "type": "object"
     },
-    "OperationMetadata": {
-      "description": "Represents the metadata of the long-running operation.",
-      "id": "OperationMetadata",
+    "QosPolicy": {
+      "description": "QOS policy parameters.",
+      "id": "QosPolicy",
       "properties": {
-        "apiVersion": {
-          "description": "Output only. API version used to start the operation.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "createTime": {
-          "description": "Output only. The time the operation was created.",
-          "format": "google-datetime",
-          "readOnly": true,
-          "type": "string"
-        },
-        "endTime": {
-          "description": "Output only. The time the operation finished running.",
-          "format": "google-datetime",
-          "readOnly": true,
-          "type": "string"
-        },
-        "requestedCancellation": {
-          "description": "Output only. Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-          "readOnly": true,
-          "type": "boolean"
-        },
-        "statusMessage": {
-          "description": "Output only. Human-readable status of the operation, if any.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "target": {
-          "description": "Output only. Server-defined resource path for the target of the operation.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "verb": {
-          "description": "Output only. Name of the verb executed by the operation.",
-          "readOnly": true,
-          "type": "string"
+        "bandwidthGbps": {
+          "description": "The bandwidth permitted by the QOS policy, in gbps.",
+          "format": "double",
+          "type": "number"
         }
       },
       "type": "object"
     },
-    "Policy": {
-      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
-      "id": "Policy",
+    "ResetInstanceRequest": {
+      "description": "Message requesting to reset a server.",
+      "id": "ResetInstanceRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "RestoreVolumeSnapshotRequest": {
+      "description": "Message for restoring a volume snapshot.",
+      "id": "RestoreVolumeSnapshotRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "Schedule": {
+      "description": "A snapshot schedule.",
+      "id": "Schedule",
       "properties": {
-        "bindings": {
-          "description": "Associates a list of `members` to a `role`. Optionally, may specify a `condition` that determines how and when the `bindings` are applied. Each of the `bindings` must contain at least one member.",
-          "items": {
-            "$ref": "Binding"
-          },
-          "type": "array"
-        },
-        "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An `etag` is returned in the response to `getIamPolicy`, and systems are expected to put that etag in the request to `setIamPolicy` to ensure that their change will be applied to the same version of the policy. **Important:** If you use IAM Conditions, you must include the `etag` field whenever you call `setIamPolicy`. If you omit this field, then IAM allows you to overwrite a version `3` policy with a version `1` policy, and all of the conditions in the version `3` policy are lost.",
-          "format": "byte",
+        "crontabSpec": {
+          "description": "A crontab-like specification that the schedule uses to take snapshots.",
           "type": "string"
         },
-        "version": {
-          "description": "Specifies the format of the policy. Valid values are `0`, `1`, and `3`. Requests that specify an invalid value are rejected. Any operation that affects conditional role bindings must specify version `3`. This requirement applies to the following operations: * Getting a policy that includes a conditional role binding * Adding a conditional role binding to a policy * Changing a conditional role binding in a policy * Removing any role binding, with or without a condition, from a policy that includes conditions **Important:** If you use IAM Conditions, you must include the `etag` field whenever you call `setIamPolicy`. If you omit this field, then IAM allows you to overwrite a version `3` policy with a version `1` policy, and all of the conditions in the version `3` policy are lost. If a policy does not include any conditions, operations on that policy may specify any valid version or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+        "prefix": {
+          "description": "A list of snapshot names created in this schedule.",
+          "type": "string"
+        },
+        "retentionCount": {
+          "description": "The maximum number of snapshots to retain in this schedule.",
           "format": "int32",
           "type": "integer"
-        }
-      },
-      "type": "object"
-    },
-    "SetIamPolicyRequest": {
-      "description": "Request message for `SetIamPolicy` method.",
-      "id": "SetIamPolicyRequest",
-      "properties": {
-        "policy": {
-          "$ref": "Policy",
-          "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of the policy is limited to a few 10s of KB. An empty policy is a valid policy but certain Cloud Platform services (such as Projects) might reject them."
         }
       },
       "type": "object"
     },
     "SnapshotReservationDetail": {
-      "description": "Details about snapshot space reservation and usage on the Volume.",
+      "description": "Details about snapshot space reservation and usage on the storage volume.",
       "id": "SnapshotReservationDetail",
       "properties": {
         "reservedSpaceGib": {
-          "description": "The space on this Volume reserved for snapshotsk, provided in GiB.",
+          "description": "The space on this storage volume reserved for snapshots, shown in GiB.",
           "format": "int64",
           "type": "string"
         },
         "reservedSpaceRemainingGib": {
-          "description": "The amount, in GiB, of space available in this Volume's reserved snapshot space.",
+          "description": "The amount, in GiB, of available space in this storage volume's reserved snapshot space.",
           "format": "int64",
           "type": "string"
         },
         "reservedSpaceUsedPercent": {
-          "description": "The percent of reserved snapshot space on this Volume that is actually used by snapshot copies. This may be higher than 100% if snapshot copies are occupying more space than has been reserved on the Volume.",
+          "description": "The percent of snapshot space on this storage volume actually being used by the snapshot copies. This value might be higher than 100% if the snapshot copies have overflowed into the data portion of the storage volume.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "SnapshotSchedulePolicy": {
+      "description": "A snapshot schedule policy.",
+      "id": "SnapshotSchedulePolicy",
+      "properties": {
+        "description": {
+          "description": "The description of the snapshot schedule policy.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The name of the snapshot schedule policy.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "schedules": {
+          "description": "The snapshot schedules contained in this policy. You can specify a maxiumum of 5 schedules.",
+          "items": {
+            "$ref": "Schedule"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1066,45 +1527,73 @@
       },
       "type": "object"
     },
-    "TestIamPermissionsRequest": {
-      "description": "Request message for `TestIamPermissions` method.",
-      "id": "TestIamPermissionsRequest",
+    "VRF": {
+      "description": "A network VRF.",
+      "id": "VRF",
       "properties": {
-        "permissions": {
-          "description": "The set of permissions to check for the `resource`. Permissions with wildcards (such as '*' or 'storage.*') are not allowed. For more information see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
+        "name": {
+          "description": "The name of the VRF.",
+          "type": "string"
+        },
+        "qosPolicy": {
+          "$ref": "QosPolicy",
+          "description": "The QOS policy applied to this VRF."
+        },
+        "state": {
+          "description": "The possible state of VRF.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PROVISIONING",
+            "PROVISIONED"
+          ],
+          "enumDescriptions": [
+            "The unspecified state.",
+            "The vrf is being provisioning.",
+            "The vrf is being provisioning."
+          ],
+          "type": "string"
+        },
+        "vlanAttachments": {
+          "description": "The list of VLAN attachments for the VRF.",
           "items": {
-            "type": "string"
+            "$ref": "VlanAttachment"
           },
           "type": "array"
         }
       },
       "type": "object"
     },
-    "TestIamPermissionsResponse": {
-      "description": "Response message for `TestIamPermissions` method.",
-      "id": "TestIamPermissionsResponse",
+    "VlanAttachment": {
+      "description": "VLAN attachment details.",
+      "id": "VlanAttachment",
       "properties": {
-        "permissions": {
-          "description": "A subset of `TestPermissionsRequest.permissions` that the caller is allowed.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+        "peerIp": {
+          "description": "The peer IP of the attachment.",
+          "type": "string"
+        },
+        "peerVlanId": {
+          "description": "The peer vlan ID of the attachment.",
+          "format": "int64",
+          "type": "string"
+        },
+        "routerIp": {
+          "description": "The router IP of the attachment.",
+          "type": "string"
         }
       },
       "type": "object"
     },
     "Volume": {
-      "description": "A storage Volume.",
+      "description": "A storage volume.",
       "id": "Volume",
       "properties": {
         "autoGrownSizeGib": {
-          "description": "The size, in GiB, that this Volume has expanded as a result of an auto grow policy. In the absence of auto-grow, the value is 0.",
+          "description": "The size, in GiB, that this storage volume has expanded as a result of an auto grow policy. In the absence of auto-grow, the value is 0.",
           "format": "int64",
           "type": "string"
         },
         "currentSizeGib": {
-          "description": "The current size of this Volume, in GiB, including space reserved for snapshots. This size may be different than the requested size if the Volume has been configured with auto grow or auto shrink.",
+          "description": "The current size of this storage volume, in GiB, including space reserved for snapshots. This size might be different than the requested size if the storage volume has been configured with auto grow or auto shrink.",
           "format": "int64",
           "type": "string"
         },
@@ -1114,21 +1603,41 @@
           "type": "string"
         },
         "remainingSpaceGib": {
-          "description": "The space remaining in the Volume for new LUNs, in GiB, excluding space reserved for snapshots.",
+          "description": "The space remaining in the storage volume for new LUNs, in GiB, excluding space reserved for snapshots.",
           "format": "int64",
           "type": "string"
         },
         "requestedSizeGib": {
-          "description": "The requested size of this Volume, in GiB.",
+          "description": "The requested size of this storage volume, in GiB.",
           "format": "int64",
+          "type": "string"
+        },
+        "snapshotAutoDeleteBehavior": {
+          "description": "The behavior to use when snapshot reserved space is full.",
+          "enum": [
+            "SNAPSHOT_AUTO_DELETE_BEHAVIOR_UNSPECIFIED",
+            "DISABLED",
+            "OLDEST_FIRST",
+            "NEWEST_FIRST"
+          ],
+          "enumDescriptions": [
+            "The unspecified behavior.",
+            "Don't delete any snapshots. This disables new snapshot creation, as long as the snapshot reserved space is full.",
+            "Delete the oldest snapshots first.",
+            "Delete the newest snapshots first."
+          ],
           "type": "string"
         },
         "snapshotReservationDetail": {
           "$ref": "SnapshotReservationDetail",
-          "description": "Details about snapshot space reservation and usage on the Volume."
+          "description": "Details about snapshot space reservation and usage on the storage volume."
+        },
+        "snapshotSchedulePolicy": {
+          "description": "The name of the snapshot schedule policy in use for this volume, if any.",
+          "type": "string"
         },
         "state": {
-          "description": "The state of this Volume.",
+          "description": "The state of this storage volume.",
           "enum": [
             "STATE_UNSPECIFIED",
             "CREATING",
@@ -1136,25 +1645,55 @@
             "DELETING"
           ],
           "enumDescriptions": [
-            "The unspecified state.",
-            "The Volume is being created.",
-            "The Volume is ready for consumption.",
-            "The Volume has been requested to be deleted."
+            "The storage volume is in an unknown state.",
+            "The storage volume is being created.",
+            "The storage volume is ready for use.",
+            "The storage volume has been requested to be deleted."
           ],
           "type": "string"
         },
         "storageType": {
-          "description": "The storage type of this Volume.",
+          "description": "The storage type for this volume.",
           "enum": [
             "STORAGE_TYPE_UNSPECIFIED",
             "SSD",
             "HDD"
           ],
           "enumDescriptions": [
-            "The unspecified type.",
-            "This Volume storage type is SSD.",
-            "This Volume storage type is HDD."
+            "The storage type for this volume is unknown.",
+            "The storage type for this volume is SSD.",
+            "This storage type for this volume is HDD."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VolumeSnapshot": {
+      "description": "Snapshot registered for a given storage volume.",
+      "id": "VolumeSnapshot",
+      "properties": {
+        "createTime": {
+          "description": "Optional. The creation time of the storage volume snapshot.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "description": {
+          "description": "The description of the storage volume snapshot.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The name of the storage volume snapshot.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "sizeBytes": {
+          "description": "The size of the storage volume snapshot, in bytes.",
+          "format": "int64",
+          "type": "string"
+        },
+        "storageVolume": {
+          "description": "The storage volume this snapshot belongs to.",
           "type": "string"
         }
       },

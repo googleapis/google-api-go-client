@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -133,19 +133,20 @@ type V1Service struct {
 	s *Service
 }
 
-// GoogleIamV1Binding: Associates `members` with a `role`.
+// GoogleIamV1Binding: Associates `members`, or principals, with a
+// `role`.
 type GoogleIamV1Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *GoogleTypeExpr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
+	// Members: Specifies the principals requesting access for a Cloud
 	// Platform resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
@@ -179,8 +180,8 @@ type GoogleIamV1Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -897,7 +898,7 @@ func (c *V1IntrospectCall) Header() http.Header {
 
 func (c *V1IntrospectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -988,12 +989,11 @@ type V1TokenCall struct {
 }
 
 // Token: Exchanges a credential for a Google OAuth 2.0 access token.
-// The token asserts an external identity within a workload identity
-// pool, or it applies a Credential Access Boundary to a Google access
-// token. When you call this method, do not send the `Authorization`
-// HTTP header in the request. This method does not require the
-// `Authorization` header, and using the header can cause the request to
-// fail.
+// The token asserts an external identity within an identity pool, or it
+// applies a Credential Access Boundary to a Google access token. When
+// you call this method, do not send the `Authorization` HTTP header in
+// the request. This method does not require the `Authorization` header,
+// and using the header can cause the request to fail.
 func (r *V1Service) Token(googleidentitystsv1exchangetokenrequest *GoogleIdentityStsV1ExchangeTokenRequest) *V1TokenCall {
 	c := &V1TokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googleidentitystsv1exchangetokenrequest = googleidentitystsv1exchangetokenrequest
@@ -1027,7 +1027,7 @@ func (c *V1TokenCall) Header() http.Header {
 
 func (c *V1TokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1090,7 +1090,7 @@ func (c *V1TokenCall) Do(opts ...googleapi.CallOption) (*GoogleIdentityStsV1Exch
 	}
 	return ret, nil
 	// {
-	//   "description": "Exchanges a credential for a Google OAuth 2.0 access token. The token asserts an external identity within a workload identity pool, or it applies a Credential Access Boundary to a Google access token. When you call this method, do not send the `Authorization` HTTP header in the request. This method does not require the `Authorization` header, and using the header can cause the request to fail.",
+	//   "description": "Exchanges a credential for a Google OAuth 2.0 access token. The token asserts an external identity within an identity pool, or it applies a Credential Access Boundary to a Google access token. When you call this method, do not send the `Authorization` HTTP header in the request. This method does not require the `Authorization` header, and using the header can cause the request to fail.",
 	//   "flatPath": "v1/token",
 	//   "httpMethod": "POST",
 	//   "id": "sts.token",

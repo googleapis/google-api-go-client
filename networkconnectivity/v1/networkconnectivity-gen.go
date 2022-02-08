@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -314,19 +314,19 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
+	// Members: Specifies the principals requesting access for a Cloud
 	// Platform resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
@@ -360,8 +360,8 @@ type Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -627,9 +627,7 @@ type Hub struct {
 	// `projects/{project_number}/locations/global/hubs/{hub_id}`
 	Name string `json:"name,omitempty"`
 
-	// RoutingVpcs: The VPC network associated with this hub's spokes. All
-	// of the VPN tunnels, VLAN attachments, and router appliance instances
-	// referenced by this hub's spokes must belong to this VPC network. This
+	// RoutingVpcs: The VPC networks associated with this hub's spokes. This
 	// field is read-only. Network Connectivity Center automatically
 	// populates it based on the set of spokes attached to the hub.
 	RoutingVpcs []*RoutingVPC `json:"routingVpcs,omitempty"`
@@ -686,9 +684,9 @@ func (s *Hub) MarshalJSON() ([]byte, error) {
 // advertising the same prefixes.
 type LinkedInterconnectAttachments struct {
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site
-	// data transfer is enabled for these resources. This field is set to
-	// false by default, but you must set it to true. Note that data
-	// transfer is available only in supported locations.
+	// data transfer is enabled for these resources. Data transfer is
+	// available only in supported locations
+	// (https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/locations).
 	SiteToSiteDataTransfer bool `json:"siteToSiteDataTransfer,omitempty"`
 
 	// Uris: The URIs of linked interconnect attachment resources
@@ -727,9 +725,9 @@ type LinkedRouterApplianceInstances struct {
 	Instances []*RouterApplianceInstance `json:"instances,omitempty"`
 
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site
-	// data transfer is enabled for these resources. This field is set to
-	// false by default, but you must set it to true. Note that data
-	// transfer is available only in supported locations.
+	// data transfer is enabled for these resources. Data transfer is
+	// available only in supported locations
+	// (https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/locations).
 	SiteToSiteDataTransfer bool `json:"siteToSiteDataTransfer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
@@ -762,9 +760,9 @@ func (s *LinkedRouterApplianceInstances) MarshalJSON() ([]byte, error) {
 // prefixes.
 type LinkedVpnTunnels struct {
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site
-	// data transfer is enabled for these resources. This field is set to
-	// false by default, but you must set it to true. Note that data
-	// transfer is available only in supported locations.
+	// data transfer is enabled for these resources. Data transfer is
+	// available only in supported locations
+	// (https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/locations).
 	SiteToSiteDataTransfer bool `json:"siteToSiteDataTransfer,omitempty"`
 
 	// Uris: The URIs of linked VPN tunnel resources.
@@ -962,6 +960,43 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LocationMetadata: Metadata about locations
+type LocationMetadata struct {
+	// LocationFeatures: List of supported features
+	//
+	// Possible values:
+	//   "LOCATION_FEATURE_UNSPECIFIED" - No publicly supported feature in
+	// this location
+	//   "SITE_TO_CLOUD_SPOKES" - Site-to-cloud spokes are supported in this
+	// location
+	//   "SITE_TO_SITE_SPOKES" - Site-to-site spokes are supported in this
+	// location
+	LocationFeatures []string `json:"locationFeatures,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LocationFeatures") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocationFeatures") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod LocationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OperationMetadata: Represents the metadata of the long-running
 // operation.
 type OperationMetadata struct {
@@ -1016,17 +1051,17 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members` to
-// a single `role`. Members can be user accounts, service accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of permissions; each `role` can be an IAM predefined role or a
-// user-created custom role. For some types of Google Cloud resources, a
-// `binding` can also specify a `condition`, which is a logical
-// expression that allows access to a resource only if the expression
-// evaluates to `true`. A condition can add constraints based on
-// attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -1053,9 +1088,15 @@ type Policy struct {
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -1152,21 +1193,31 @@ func (s *RouterApplianceInstance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RoutingVPC: RoutingVPC contains information about the VPC network
-// that is associated with a hub's spokes.
+// RoutingVPC: RoutingVPC contains information about the VPC networks
+// that are associated with a hub's spokes.
 type RoutingVPC struct {
+	// RequiredForNewSiteToSiteDataTransferSpokes: Output only. If true,
+	// indicates that this VPC network is currently associated with spokes
+	// that use the data transfer feature (spokes where the
+	// site_to_site_data_transfer field is set to true). If you create new
+	// spokes that use data transfer, they must be associated with this VPC
+	// network. At most, one VPC network will have this field set to true.
+	RequiredForNewSiteToSiteDataTransferSpokes bool `json:"requiredForNewSiteToSiteDataTransferSpokes,omitempty"`
+
 	// Uri: The URI of the VPC network.
 	Uri string `json:"uri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Uri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "RequiredForNewSiteToSiteDataTransferSpokes") to unconditionally
+	// include in API requests. By default, fields with empty or default
+	// values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// NullFields is a list of field names (e.g.
+	// "RequiredForNewSiteToSiteDataTransferSpokes") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1230,7 +1281,7 @@ type Spoke struct {
 	// Description: An optional description of the spoke.
 	Description string `json:"description,omitempty"`
 
-	// Hub: Immutable. The URI of the hub that this spoke is attached to.
+	// Hub: Immutable. The name of the hub that this spoke is attached to.
 	Hub string `json:"hub,omitempty"`
 
 	// Labels: Optional labels in key:value format. For more information
@@ -1422,7 +1473,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1594,7 +1645,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1741,8 +1792,8 @@ func (r *ProjectsLocationsGlobalHubsService) Create(parent string, hub *Hub) *Pr
 	return c
 }
 
-// HubId sets the optional parameter "hubId": A unique identifier for
-// the hub.
+// HubId sets the optional parameter "hubId": Required. A unique
+// identifier for the hub.
 func (c *ProjectsLocationsGlobalHubsCreateCall) HubId(hubId string) *ProjectsLocationsGlobalHubsCreateCall {
 	c.urlParams_.Set("hubId", hubId)
 	return c
@@ -1793,7 +1844,7 @@ func (c *ProjectsLocationsGlobalHubsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalHubsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1866,7 +1917,7 @@ func (c *ProjectsLocationsGlobalHubsCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "hubId": {
-	//       "description": "Optional. A unique identifier for the hub.",
+	//       "description": "Required. A unique identifier for the hub.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1961,7 +2012,7 @@ func (c *ProjectsLocationsGlobalHubsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalHubsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2109,7 +2160,7 @@ func (c *ProjectsLocationsGlobalHubsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalHubsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2223,13 +2274,17 @@ func (r *ProjectsLocationsGlobalHubsService) GetIamPolicy(resource string) *Proj
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsGlobalHubsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsGlobalHubsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -2273,7 +2328,7 @@ func (c *ProjectsLocationsGlobalHubsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalHubsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2344,7 +2399,7 @@ func (c *ProjectsLocationsGlobalHubsGetIamPolicyCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2452,7 +2507,7 @@ func (c *ProjectsLocationsGlobalHubsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalHubsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2662,7 +2717,7 @@ func (c *ProjectsLocationsGlobalHubsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalHubsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2819,7 +2874,7 @@ func (c *ProjectsLocationsGlobalHubsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalHubsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2968,7 +3023,7 @@ func (c *ProjectsLocationsGlobalHubsTestIamPermissionsCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalHubsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3087,13 +3142,17 @@ func (r *ProjectsLocationsGlobalPolicyBasedRoutesService) GetIamPolicy(resource 
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsGlobalPolicyBasedRoutesGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -3137,7 +3196,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3208,7 +3267,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetIamPolicyCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3284,7 +3343,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesSetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalPolicyBasedRoutesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3433,7 +3492,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesTestIamPermissionsCall) Header(
 
 func (c *ProjectsLocationsGlobalPolicyBasedRoutesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3584,7 +3643,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3727,7 +3786,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3872,7 +3931,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4048,7 +4107,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4214,8 +4273,8 @@ func (c *ProjectsLocationsSpokesCreateCall) RequestId(requestId string) *Project
 	return c
 }
 
-// SpokeId sets the optional parameter "spokeId": Unique id for the
-// spoke to create.
+// SpokeId sets the optional parameter "spokeId": Required. Unique id
+// for the spoke to create.
 func (c *ProjectsLocationsSpokesCreateCall) SpokeId(spokeId string) *ProjectsLocationsSpokesCreateCall {
 	c.urlParams_.Set("spokeId", spokeId)
 	return c
@@ -4248,7 +4307,7 @@ func (c *ProjectsLocationsSpokesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsSpokesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4333,7 +4392,7 @@ func (c *ProjectsLocationsSpokesCreateCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "spokeId": {
-	//       "description": "Optional. Unique id for the spoke to create.",
+	//       "description": "Required. Unique id for the spoke to create.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4416,7 +4475,7 @@ func (c *ProjectsLocationsSpokesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsSpokesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4564,7 +4623,7 @@ func (c *ProjectsLocationsSpokesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsSpokesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4678,13 +4737,17 @@ func (r *ProjectsLocationsSpokesService) GetIamPolicy(resource string) *Projects
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsSpokesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsSpokesGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -4728,7 +4791,7 @@ func (c *ProjectsLocationsSpokesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsSpokesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4799,7 +4862,7 @@ func (c *ProjectsLocationsSpokesGetIamPolicyCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4907,7 +4970,7 @@ func (c *ProjectsLocationsSpokesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsSpokesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5117,7 +5180,7 @@ func (c *ProjectsLocationsSpokesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsSpokesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5274,7 +5337,7 @@ func (c *ProjectsLocationsSpokesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsSpokesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5423,7 +5486,7 @@ func (c *ProjectsLocationsSpokesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsSpokesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

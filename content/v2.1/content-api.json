@@ -147,7 +147,7 @@
               "type": "string"
             },
             "overwrite": {
-              "description": "Only available to selected merchants. When set to `True`, this flag removes any existing claim on the requested website by another account and replaces it with a claim from this account.",
+              "description": "Only available to selected merchants, for example multi-client accounts (MCAs) and their sub-accounts. When set to `True`, this flag removes any existing claim on the requested website and replaces it with a claim from the account that makes the request.",
               "location": "query",
               "type": "boolean"
             }
@@ -2042,7 +2042,7 @@
           ]
         },
         "getaccessiblegmbaccounts": {
-          "description": "Retrieves the list of accessible Google My Business accounts.",
+          "description": "Retrieves the list of accessible Business Profiles.",
           "flatPath": "{merchantId}/liasettings/{accountId}/accessiblegmbaccounts",
           "httpMethod": "GET",
           "id": "content.liasettings.getaccessiblegmbaccounts",
@@ -2052,7 +2052,7 @@
           ],
           "parameters": {
             "accountId": {
-              "description": "The ID of the account for which to retrieve accessible Google My Business accounts.",
+              "description": "The ID of the account for which to retrieve accessible Business Profiles.",
               "format": "uint64",
               "location": "path",
               "required": true,
@@ -2126,7 +2126,7 @@
           ]
         },
         "requestgmbaccess": {
-          "description": "Requests access to a specified Google My Business account.",
+          "description": "Requests access to a specified Business Profile.",
           "flatPath": "{merchantId}/liasettings/{accountId}/requestgmbaccess",
           "httpMethod": "POST",
           "id": "content.liasettings.requestgmbaccess",
@@ -2137,14 +2137,14 @@
           ],
           "parameters": {
             "accountId": {
-              "description": "The ID of the account for which GMB access is requested.",
+              "description": "The ID of the account for which Business Profile access is requested.",
               "format": "uint64",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "gmbEmail": {
-              "description": "The email of the Google My Business account.",
+              "description": "The email of the Business Profile.",
               "location": "query",
               "required": true,
               "type": "string"
@@ -2278,7 +2278,7 @@
           ],
           "parameters": {
             "accountId": {
-              "description": "The ID of the account for which to retrieve accessible Google My Business accounts.",
+              "description": "The ID of the account for which to retrieve accessible Business Profiles.",
               "format": "uint64",
               "location": "path",
               "required": true,
@@ -4388,6 +4388,38 @@
           "scopes": [
             "https://www.googleapis.com/auth/content"
           ]
+        },
+        "get": {
+          "description": "Retrieves a promotion from your Merchant Center account.",
+          "flatPath": "{merchantId}/promotions/{id}",
+          "httpMethod": "GET",
+          "id": "content.promotions.get",
+          "parameterOrder": [
+            "merchantId",
+            "id"
+          ],
+          "parameters": {
+            "id": {
+              "description": "Required. REST ID of the promotion to retrieve.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "merchantId": {
+              "description": "Required. The ID of the account that contains the collection.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/promotions/{id}",
+          "response": {
+            "$ref": "Promotion"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
         }
       }
     },
@@ -5783,7 +5815,7 @@
       }
     }
   },
-  "revision": "20210924",
+  "revision": "20220112",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5806,6 +5838,10 @@
           "description": "Indicates whether the merchant sells adult content.",
           "type": "boolean"
         },
+        "automaticImprovements": {
+          "$ref": "AccountAutomaticImprovements",
+          "description": "The automatic improvements of the account can be used to automatically update items, improve images and shipping. Each section inside AutomaticImprovements is updated separately."
+        },
         "automaticLabelIds": {
           "description": "Automatically created label IDs that are assigned to the account by CSS Center.",
           "items": {
@@ -5825,7 +5861,7 @@
         },
         "googleMyBusinessLink": {
           "$ref": "AccountGoogleMyBusinessLink",
-          "description": "The GMB account which is linked or in the process of being linked with the Merchant Center account."
+          "description": "The Business Profile which is linked or in the process of being linked with the Merchant Center account."
         },
         "id": {
           "description": "Required for update. Merchant Center account ID.",
@@ -5914,6 +5950,25 @@
       },
       "type": "object"
     },
+    "AccountAutomaticImprovements": {
+      "description": "The automatic improvements of the account can be used to automatically update items, improve images and shipping.",
+      "id": "AccountAutomaticImprovements",
+      "properties": {
+        "imageImprovements": {
+          "$ref": "AccountImageImprovements",
+          "description": "This improvement will attempt to automatically correct submitted images if they don't meet the [image requirements](https://support.google.com/merchants/answer/6324350), for example, removing overlays. If successful, the image will be replaced and approved. This improvement is only applied to images of disapproved offers. For more information see: [Automatic image improvements](https://support.google.com/merchants/answer/9242973) This field is only updated (cleared) if provided."
+        },
+        "itemUpdates": {
+          "$ref": "AccountItemUpdates",
+          "description": "Turning on [item updates](https://support.google.com/merchants/answer/3246284) allows Google to automatically update items for you. When item updates are on, Google uses the structured data markup on the website and advanced data extractors to update the price and availability of the items. When the item updates are off, items with mismatched data aren't shown. This field is only updated (cleared) if provided."
+        },
+        "shippingImprovements": {
+          "$ref": "AccountShippingImprovements",
+          "description": "Not available for MCAs [accounts](https://support.google.com/merchants/answer/188487). By turning on [automatic shipping improvements](https://support.google.com/merchants/answer/10027038), you are allowing Google to improve the accuracy of your delivery times shown to shoppers using Google. More accurate delivery times, especially when faster, typically lead to better conversion rates. Google will improve your estimated delivery times based on various factors: - Delivery address of an order - Current handling time and shipping time settings - Estimated weekdays or business days - Parcel tracking data This field is only updated (cleared) if provided."
+        }
+      },
+      "type": "object"
+    },
     "AccountBusinessInformation": {
       "id": "AccountBusinessInformation",
       "properties": {
@@ -5930,7 +5985,11 @@
           "type": "string"
         },
         "phoneNumber": {
-          "description": "! The phone number of the business. This can only be updated if a verified ! phone number is not already set. To replace a verified phone number use ! the `Accounts.requestphoneverification` and ! `Accounts.verifyphonenumber`.",
+          "description": "The phone number of the business. This can only be updated if a verified phone number is not already set. To replace a verified phone number use the `Accounts.requestphoneverification` and `Accounts.verifyphonenumber`.",
+          "type": "string"
+        },
+        "phoneVerificationStatus": {
+          "description": "Verification status of the phone number of the business. This status is read only and can be updated only by successful phone verification. Acceptable values are: - \"`verified`\" - \"`unverified`\" ",
           "type": "string"
         }
       },
@@ -5988,15 +6047,15 @@
       "id": "AccountGoogleMyBusinessLink",
       "properties": {
         "gmbAccountId": {
-          "description": "The ID of the GMB account. If this is provided, then `gmbEmail` is ignored. The value of this field should match the `accountId` used by the GMB API.",
+          "description": "The ID of the Business Profile. If this is provided, then `gmbEmail` is ignored. The value of this field should match the `accountId` used by the Business Profile API.",
           "type": "string"
         },
         "gmbEmail": {
-          "description": "The GMB email address of which a specific account within a GMB account. A sample account within a GMB account could be a business account with set of locations, managed under the GMB account.",
+          "description": "The Business Profile email address of a specific account within a Business Profile. A sample account within a Business Profile could be a business account with set of locations, managed under the Business Profile.",
           "type": "string"
         },
         "status": {
-          "description": "Status of the link between this Merchant Center account and the GMB account. Acceptable values are: - \"`active`\" - \"`pending`\" ",
+          "description": "Status of the link between this Merchant Center account and the Business Profile. Acceptable values are: - \"`active`\" - \"`pending`\" ",
           "type": "string"
         }
       },
@@ -6014,6 +6073,78 @@
           "description": "The merchant account ID, set for individual accounts and subaccounts.",
           "format": "uint64",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AccountImageImprovements": {
+      "description": "This improvement will attempt to automatically correct submitted images if they don't meet the [image requirements](https://support.google.com/merchants/answer/6324350), for example, removing overlays. If successful, the image will be replaced and approved. This improvement is only applied to images of disapproved offers. For more information see: [Automatic image improvements](https://support.google.com/merchants/answer/9242973)",
+      "id": "AccountImageImprovements",
+      "properties": {
+        "accountImageImprovementsSettings": {
+          "$ref": "AccountImageImprovementsSettings",
+          "description": "Determines how the images should be automatically updated. If this field is not present, then the settings will be deleted. If there are no settings for subaccount, they are inherited from aggregator."
+        },
+        "effectiveAllowAutomaticImageImprovements": {
+          "description": "Output only. The effective value of allow_automatic_image_improvements. If account_image_improvements_settings is present, then this value is the same. Otherwise, it represents the inherited value of the parent account. Read-only.",
+          "readOnly": true,
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "AccountImageImprovementsSettings": {
+      "description": "Settings for the Automatic Image Improvements.",
+      "id": "AccountImageImprovementsSettings",
+      "properties": {
+        "allowAutomaticImageImprovements": {
+          "description": "Enables automatic image improvements.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "AccountItemUpdates": {
+      "description": "Turning on [item updates](https://support.google.com/merchants/answer/3246284) allows Google to automatically update items for you. When item updates are on, Google uses the structured data markup on the website and advanced data extractors to update the price and availability of the items. When the item updates are off, items with mismatched data aren't shown.",
+      "id": "AccountItemUpdates",
+      "properties": {
+        "accountItemUpdatesSettings": {
+          "$ref": "AccountItemUpdatesSettings",
+          "description": "Determines which attributes of the items should be automatically updated. If this field is not present, then the settings will be deleted. If there are no settings for subaccount, they are inherited from aggregator."
+        },
+        "effectiveAllowAvailabilityUpdates": {
+          "description": "Output only. The effective value of allow_availability_updates. If account_item_updates_settings is present, then this value is the same. Otherwise, it represents the inherited value of the parent account. Read-only.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "effectiveAllowPriceUpdates": {
+          "description": "Output only. The effective value of allow_price_updates. If account_item_updates_settings is present, then this value is the same. Otherwise, it represents the inherited value of the parent account. Read-only.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "effectiveAllowStrictAvailabilityUpdates": {
+          "description": "Output only. The effective value of allow_strict_availability_updates. If account_item_updates_settings is present, then this value is the same. Otherwise, it represents the inherited value of the parent account. Read-only.",
+          "readOnly": true,
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "AccountItemUpdatesSettings": {
+      "description": "Settings for the Automatic Item Updates.",
+      "id": "AccountItemUpdatesSettings",
+      "properties": {
+        "allowAvailabilityUpdates": {
+          "description": "If availability updates are enabled, any previous availability values get overwritten if Google finds an out-of-stock annotation on the offer's page. If additionally `allow_availability_updates` field is set to true, values get overwritten if Google finds an in-stock annotation on the offer’s page.",
+          "type": "boolean"
+        },
+        "allowPriceUpdates": {
+          "description": "If price updates are enabled, Google always updates the active price with the crawled information.",
+          "type": "boolean"
+        },
+        "allowStrictAvailabilityUpdates": {
+          "description": "If allow_availability_updates is enabled, items are automatically updated in all your Shopping target countries. By default, availability updates will only be applied to items that are 'out of stock' on your website but 'in stock' on Shopping. Set this to true to also update items that are 'in stock' on your website, but 'out of stock' on Google Shopping. In order for this field to have an effect, you must also allow availability updates.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -6090,6 +6221,17 @@
             "UPS carrier"
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AccountShippingImprovements": {
+      "description": "Not available for MCAs [accounts](https://support.google.com/merchants/answer/188487). By turning on [automatic shipping improvements](https://support.google.com/merchants/answer/10027038), you are allowing Google to improve the accuracy of your delivery times shown to shoppers using Google. More accurate delivery times, especially when faster, typically lead to better conversion rates. Google will improve your estimated delivery times based on various factors: * Delivery address of an order * Current handling time and shipping time settings * Estimated weekdays or business days * Parcel tracking data",
+      "id": "AccountShippingImprovements",
+      "properties": {
+        "allowShippingImprovements": {
+          "description": "Enables automatic shipping improvements.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -6831,6 +6973,32 @@
       "properties": {},
       "type": "object"
     },
+    "Address": {
+      "id": "Address",
+      "properties": {
+        "administrativeArea": {
+          "description": "Required. Top-level administrative subdivision of the country. For example, a state like California (\"CA\") or a province like Quebec (\"QC\").",
+          "type": "string"
+        },
+        "city": {
+          "description": "Required. City, town or commune. May also include dependent localities or sublocalities (e.g. neighborhoods or suburbs).",
+          "type": "string"
+        },
+        "country": {
+          "description": "Required. [CLDR country code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) (e.g. \"US\").",
+          "type": "string"
+        },
+        "postalCode": {
+          "description": "Required. Postal code or ZIP (e.g. \"94043\").",
+          "type": "string"
+        },
+        "streetAddress": {
+          "description": "Street-level part of the address.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Amount": {
       "id": "Amount",
       "properties": {
@@ -7541,7 +7709,7 @@
           "type": "array"
         },
         "includedDestinations": {
-          "description": "The list of destinations to include for this target (corresponds to checked check boxes in Merchant Center). Default destinations are always included unless provided in `excludedDestinations`. List of supported destinations (if available to the account): - DisplayAds - Shopping - ShoppingActions - SurfacesAcrossGoogle ",
+          "description": "The list of destinations to include for this target (corresponds to checked check boxes in Merchant Center). Default destinations are always included unless provided in `excludedDestinations`.",
           "items": {
             "type": "string"
           },
@@ -8074,7 +8242,7 @@
           "type": "string"
         },
         "gmbAccounts": {
-          "description": "A list of GMB accounts which are available to the merchant.",
+          "description": "A list of Business Profiles which are available to the merchant.",
           "items": {
             "$ref": "GmbAccountsGmbAccount"
           },
@@ -8087,7 +8255,7 @@
       "id": "GmbAccountsGmbAccount",
       "properties": {
         "email": {
-          "description": "The email which identifies the GMB account.",
+          "description": "The email which identifies the Business Profile.",
           "type": "string"
         },
         "listingCount": {
@@ -8096,11 +8264,11 @@
           "type": "string"
         },
         "name": {
-          "description": "The name of the GMB account.",
+          "description": "The name of the Business Profile.",
           "type": "string"
         },
         "type": {
-          "description": "The type of the GMB account (User or Business).",
+          "description": "The type of the Business Profile (User or Business).",
           "type": "string"
         }
       },
@@ -8466,7 +8634,7 @@
           "type": "string"
         },
         "gmbEmail": {
-          "description": "The GMB account. Required only for RequestGmbAccess.",
+          "description": "The Business Profile. Required only for RequestGmbAccess.",
           "type": "string"
         },
         "liaSettings": {
@@ -8525,7 +8693,7 @@
         },
         "gmbAccounts": {
           "$ref": "GmbAccounts",
-          "description": "The list of accessible GMB accounts."
+          "description": "The list of accessible Business Profiles."
         },
         "kind": {
           "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#liasettingsCustomBatchResponseEntry`\"",
@@ -8554,7 +8722,7 @@
           "type": "string"
         },
         "gmbAccounts": {
-          "description": "A list of GMB accounts which are available to the merchant.",
+          "description": "A list of Business Profiles which are available to the merchant.",
           "items": {
             "$ref": "GmbAccountsGmbAccount"
           },
@@ -10227,6 +10395,10 @@
       "description": "The line items of the order.",
       "id": "OrderTrackingSignalLineItemDetails",
       "properties": {
+        "brand": {
+          "description": "Brand of the product.",
+          "type": "string"
+        },
         "gtin": {
           "description": "The Global Trade Item Number.",
           "type": "string"
@@ -10239,13 +10411,29 @@
           "description": "The manufacturer part number.",
           "type": "string"
         },
+        "productDescription": {
+          "description": "Plain text description of this product (deprecated: Please use product_title instead).",
+          "type": "string"
+        },
         "productId": {
           "description": "Required. The Content API REST ID of the product, in the form channel:contentLanguage:targetCountry:offerId.",
           "type": "string"
         },
+        "productTitle": {
+          "description": "Plain text title of this product.",
+          "type": "string"
+        },
         "quantity": {
-          "description": "Required. The quantity of the line item in the order.",
+          "description": "The quantity of the line item in the order.",
           "format": "int64",
+          "type": "string"
+        },
+        "sku": {
+          "description": "Merchant SKU for this item (deprecated).",
+          "type": "string"
+        },
+        "upc": {
+          "description": "Universal product code for this item (deprecated: Please use GTIN instead).",
           "type": "string"
         }
       },
@@ -10260,7 +10448,7 @@
           "type": "string"
         },
         "quantity": {
-          "description": "Required. The line item quantity in the shipment.",
+          "description": "The line item quantity in the shipment.",
           "format": "int64",
           "type": "string"
         },
@@ -11695,7 +11883,7 @@
           "type": "string"
         },
         "storeCode": {
-          "description": "Required. The identifier of the merchant's store. Either a `storeCode` inserted via the API or the code of the store in Google My Business.",
+          "description": "Required. The identifier of the merchant's store. Either a `storeCode` inserted via the API or the code of the store in a Business Profile.",
           "type": "string"
         },
         "targetCountry": {
@@ -11734,7 +11922,7 @@
           "type": "string"
         },
         "storeCode": {
-          "description": "Required. The identifier of the merchant's store. Either a `storeCode` inserted via the API or the code of the store in Google My Business.",
+          "description": "Required. The identifier of the merchant's store. Either a `storeCode` inserted via the API or the code of the store in a Business Profile.",
           "type": "string"
         },
         "targetCountry": {
@@ -11777,7 +11965,7 @@
           "type": "string"
         },
         "storeCode": {
-          "description": "Required. The identifier of the merchant's store. Either a `storeCode` inserted via the API or the code of the store in Google My Business.",
+          "description": "Required. The identifier of the merchant's store. Either a `storeCode` inserted via the API or the code of the store in a Business Profile.",
           "type": "string"
         },
         "targetCountry": {
@@ -11841,7 +12029,7 @@
           "type": "string"
         },
         "storeCode": {
-          "description": "Required. The identifier of the merchant's store. Either a `storeCode` inserted via the API or the code of the store in Google My Business.",
+          "description": "Required. The identifier of the merchant's store. Either a `storeCode` inserted via the API or the code of the store in a Business Profile.",
           "type": "string"
         },
         "targetCountry": {
@@ -11884,7 +12072,7 @@
           "type": "string"
         },
         "storeCode": {
-          "description": "Required. The identifier of the merchant's store. Either a `storeCode` inserted via the API or the code of the store in Google My Business.",
+          "description": "Required. The identifier of the merchant's store. Either a `storeCode` inserted via the API or the code of the store in a Business Profile.",
           "type": "string"
         },
         "targetCountry": {
@@ -11931,7 +12119,7 @@
           "type": "string"
         },
         "storeCode": {
-          "description": "Required. The identifier of the merchant's store. Either a `storeCode` inserted via the API or the code of the store in Google My Business.",
+          "description": "Required. The identifier of the merchant's store. Either a `storeCode` inserted via the API or the code of the store in a Business Profile.",
           "type": "string"
         },
         "targetCountry": {
@@ -11949,8 +12137,23 @@
       "description": "Store resource.",
       "id": "PosStore",
       "properties": {
+        "gcidCategory": {
+          "description": "The business type of the store.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "kind": {
           "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#posStore`\"",
+          "type": "string"
+        },
+        "phoneNumber": {
+          "description": "The store phone number.",
+          "type": "string"
+        },
+        "placeId": {
+          "description": "The Google Place Id of the store location.",
           "type": "string"
         },
         "storeAddress": {
@@ -11959,6 +12162,14 @@
         },
         "storeCode": {
           "description": "Required. A store identifier that is unique for the given merchant.",
+          "type": "string"
+        },
+        "storeName": {
+          "description": "The merchant or store name.",
+          "type": "string"
+        },
+        "websiteUrl": {
+          "description": "The website url for the store or merchant.",
           "type": "string"
         }
       },
@@ -13022,7 +13233,7 @@
       "type": "object"
     },
     "Promotion": {
-      "description": "Represents a promotion. (1) https://support.google.com/merchants/answer/2906014 (2) https://support.google.com/merchants/answer/10146130 (3) https://support.google.com/merchants/answer/9173673",
+      "description": " The Promotions feature is currently in alpha and is not yet publicly available via Content API for Shopping. This documentation is provided for reference only may be subject to change. Represents a promotion. See the following articles for more details. * [Promotions feed specification](https://support.google.com/merchants/answer/2906014) * [Local promotions feed specification](https://support.google.com/merchants/answer/10146130) * [Promotions on Buy on Google product data specification](https://support.google.com/merchants/answer/9173673)",
       "id": "Promotion",
       "properties": {
         "brand": {
@@ -13099,7 +13310,7 @@
           "type": "integer"
         },
         "id": {
-          "description": "Required. Output only. The REST promotion id to uniquely identify the promotion. Content API methods that operate on promotions take this as their promotionId parameter.",
+          "description": "Required. Output only. The REST promotion id to uniquely identify the promotion. Content API methods that operate on promotions take this as their promotionId parameter. The REST ID for a promotion is of the form channel:contentLanguage:targetCountry:promotionId The channel field will have a value of \"online\", \"in_store\", or \"online_in_store\".",
           "readOnly": true,
           "type": "string"
         },
@@ -13190,7 +13401,7 @@
           "enum": [
             "PRODUCT_APPLICABILITY_UNSPECIFIED",
             "ALL_PRODUCTS",
-            "PRODUCT_SPECIFIC"
+            "SPECIFIC_PRODUCTS"
           ],
           "enumDescriptions": [
             "Unknown product applicability.",
@@ -13224,9 +13435,17 @@
           "description": "String representation of the promotion display dates.",
           "type": "string"
         },
+        "promotionDisplayTimePeriod": {
+          "$ref": "TimePeriod",
+          "description": "TimePeriod representation of the promotion display dates."
+        },
         "promotionEffectiveDates": {
           "description": "Required. String representation of the promotion effective dates.",
           "type": "string"
+        },
+        "promotionEffectiveTimePeriod": {
+          "$ref": "TimePeriod",
+          "description": "Required. TimePeriod representation of the promotion effective dates."
         },
         "promotionId": {
           "description": "Required. The user provided promotion id to uniquely identify the promotion.",
@@ -13237,12 +13456,12 @@
           "items": {
             "enum": [
               "REDEMPTION_CHANNEL_UNSPECIFIED",
-              "LOCAL",
+              "IN_STORE",
               "ONLINE"
             ],
             "enumDescriptions": [
               "Indicates that the channel is unspecified.",
-              "Indicates that the channel is local.",
+              "Indicates that the channel is in store.",
               "Indicates that the channel is online."
             ],
             "type": "string"
@@ -15120,6 +15339,13 @@
             "$ref": "Service"
           },
           "type": "array"
+        },
+        "warehouses": {
+          "description": "Optional. A list of warehouses which can be referred to in `services`.",
+          "items": {
+            "$ref": "Warehouse"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -15649,6 +15875,23 @@
       },
       "type": "object"
     },
+    "TimePeriod": {
+      "description": "A message that represents a time period.",
+      "id": "TimePeriod",
+      "properties": {
+        "endTime": {
+          "description": "The ending timestamp.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "The starting timestamp.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "TimeZone": {
       "description": "Represents a time zone from the [IANA Time Zone Database](https://www.iana.org/time-zones).",
       "id": "TimeZone",
@@ -15841,6 +16084,34 @@
       },
       "type": "object"
     },
+    "Warehouse": {
+      "description": "A fulfillment warehouse, which stores and handles inventory.",
+      "id": "Warehouse",
+      "properties": {
+        "businessDayConfig": {
+          "$ref": "BusinessDayConfig",
+          "description": "Business days of the warehouse. If not set, will be Monday to Friday by default."
+        },
+        "cutoffTime": {
+          "$ref": "WarehouseCutoffTime",
+          "description": "Required. The latest time of day that an order can be accepted and begin processing. Later orders will be processed in the next day. The time is based on the warehouse postal code."
+        },
+        "handlingDays": {
+          "description": "Required. The number of days it takes for this warehouse to pack up and ship an item. This is on the warehouse level, but can be overridden on the offer level based on the attributes of an item.",
+          "format": "int64",
+          "type": "string"
+        },
+        "name": {
+          "description": "Required. The name of the warehouse. Must be unique within account.",
+          "type": "string"
+        },
+        "shippingAddress": {
+          "$ref": "Address",
+          "description": "Required. Shipping address of the warehouse."
+        }
+      },
+      "type": "object"
+    },
     "WarehouseBasedDeliveryTime": {
       "id": "WarehouseBasedDeliveryTime",
       "properties": {
@@ -15853,24 +16124,44 @@
           "type": "string"
         },
         "originAdministrativeArea": {
-          "description": "Required. Shipping origin's state.",
+          "description": "Shipping origin's state.",
           "type": "string"
         },
         "originCity": {
-          "description": "Required. Shipping origin's city.",
+          "description": "Shipping origin's city.",
           "type": "string"
         },
         "originCountry": {
-          "description": "Required. Shipping origin's country represented as a [CLDR territory code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml).",
+          "description": "Shipping origin's country represented as a [CLDR territory code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml).",
           "type": "string"
         },
         "originPostalCode": {
-          "description": "Required. Shipping origin.",
+          "description": "Shipping origin.",
           "type": "string"
         },
         "originStreetAddress": {
           "description": "Shipping origin's street address.",
           "type": "string"
+        },
+        "warehouseName": {
+          "description": "The name of the warehouse. Warehouse name need to be matched with name. If warehouseName is set, the below fields will be ignored. The warehouse info will be read from warehouse.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WarehouseCutoffTime": {
+      "id": "WarehouseCutoffTime",
+      "properties": {
+        "hour": {
+          "description": "Required. Hour (24-hour clock) of the cutoff time until which an order has to be placed to be processed in the same day by the warehouse. Hour is based on the timezone of warehouse.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "minute": {
+          "description": "Required. Minute of the cutoff time until which an order has to be placed to be processed in the same day by the warehouse. Minute is based on the timezone of warehouse.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

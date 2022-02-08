@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -200,6 +200,59 @@ func NewMediaService(s *Service) *MediaService {
 
 type MediaService struct {
 	s *Service
+}
+
+type ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle struct {
+	// Description: Description about current life cycle.
+	Description string `json:"description,omitempty"`
+
+	// EndSupport: End supporting date for current policy.
+	EndSupport *GoogleTypeDate `json:"endSupport,omitempty"`
+
+	// PolicyApiLifecycleStage: Indicate current life cycle stage of the
+	// policy API.
+	//
+	// Possible values:
+	//   "API_UNSPECIFIED" - unspecified.
+	//   "API_PREVIEW" - Policy is not working yet, but giving developers
+	// heads up on format. This stage can transfer to API_DEVELOPEMNT or
+	// API_CURRENT.
+	//   "API_DEVELOPMENT" - Policy can change format in backward
+	// incompatible way (breaking change). This stage can transfer to
+	// API_CURRENT or API_DEPRECATED. This could be used for policies
+	// launched only to TTs or launched to selected customers for emergency
+	// usage.
+	//   "API_CURRENT" - Policy in official format. Policy can change format
+	// in backward compatible way (non-breaking change). Example: this
+	// policy can introduce a new field, which is considered non-breaking
+	// change, when field masks are properly utilized. This stage can
+	// transfer to API_DEPRECATED.
+	//   "API_DEPRECATED" - Please stop using this policy. This policy is
+	// deprecated and may/will be removed in the future. Most likely a new
+	// policy was introduced to replace this one.
+	PolicyApiLifecycleStage string `json:"policyApiLifecycleStage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle) MarshalJSON() ([]byte, error) {
+	type NoMethod ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyV1AdditionalTargetKeyName: Additional key names
@@ -424,7 +477,7 @@ func (s *GoogleChromePolicyV1ModifyOrgUnitPolicyRequest) MarshalJSON() ([]byte, 
 }
 
 // GoogleChromePolicyV1PolicySchema: Resource representing a policy
-// schema. Next ID: 10
+// schema. Next ID: 12
 type GoogleChromePolicyV1PolicySchema struct {
 	// AccessRestrictions: Output only. Specific access restrictions related
 	// to this policy.
@@ -451,19 +504,31 @@ type GoogleChromePolicyV1PolicySchema struct {
 	// certain values in certain fields in the schema.
 	Notices []*GoogleChromePolicyV1PolicySchemaNoticeDescription `json:"notices,omitempty"`
 
+	// PolicyApiLifeycle: Output only. Current life cycle information.
+	PolicyApiLifeycle *ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle `json:"policyApiLifeycle,omitempty"`
+
 	// PolicyDescription: Output only. Description about the policy schema
 	// for user consumption.
 	PolicyDescription string `json:"policyDescription,omitempty"`
 
-	// SchemaName: Output only. The full qualified name of the policy
+	// SchemaName: Output only. The fully qualified name of the policy
 	// schema. This value is used to fill the field `policy_schema` in
 	// PolicyValue when calling BatchInheritOrgUnitPolicies or
-	// BatchModifyOrgUnitPolicies.
+	// BatchModifyOrgUnitPolicies
 	SchemaName string `json:"schemaName,omitempty"`
 
 	// SupportUri: Output only. URI to related support article for this
 	// schema.
 	SupportUri string `json:"supportUri,omitempty"`
+
+	// ValidTargetResources: Output only. Information about applicable
+	// target resources for the policy.
+	//
+	// Possible values:
+	//   "TARGET_RESOURCE_UNSPECIFIED" - Unspecified target resource.
+	//   "ORG_UNIT" - Organizational Unit target resource.
+	//   "GROUP" - Group target resource.
+	ValidTargetResources []string `json:"validTargetResources,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -930,6 +995,52 @@ type GoogleProtobufEmpty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleTypeDate: Represents a whole or partial calendar date, such as
+// a birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values * A month and day, with a
+// zero year (e.g., an anniversary) * A year on its own, with a zero
+// month and a zero day * A year and month, with a zero day (e.g., a
+// credit card expiration date) Related types: * google.type.TimeOfDay *
+// google.type.DateTime * google.protobuf.Timestamp
+type GoogleTypeDate struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeDate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Proto2DescriptorProto: Describes a message type.
 type Proto2DescriptorProto struct {
 	EnumType []*Proto2EnumDescriptorProto `json:"enumType,omitempty"`
@@ -1250,7 +1361,7 @@ func (c *CustomersPoliciesResolveCall) Header() http.Header {
 
 func (c *CustomersPoliciesResolveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1382,9 +1493,9 @@ type CustomersPoliciesOrgunitsBatchInheritCall struct {
 // specific org unit so that they now inherit the value from a parent
 // (if applicable). All targets must have the same target format. That
 // is to say that they must point to the same target resource and must
-// have the same keys specified in `additionalTargetKeyNames`. On
-// failure the request will return the error details as part of the
-// google.rpc.Status.
+// have the same keys specified in `additionalTargetKeyNames`, though
+// the values for those keys may be different. On failure the request
+// will return the error details as part of the google.rpc.Status.
 //
 // - customer: ID of the G Suite account or literal "my_customer" for
 //   the customer associated to the request.
@@ -1422,7 +1533,7 @@ func (c *CustomersPoliciesOrgunitsBatchInheritCall) Header() http.Header {
 
 func (c *CustomersPoliciesOrgunitsBatchInheritCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1486,7 +1597,7 @@ func (c *CustomersPoliciesOrgunitsBatchInheritCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Modify multiple policy values that are applied to a specific org unit so that they now inherit the value from a parent (if applicable). All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`. On failure the request will return the error details as part of the google.rpc.Status.",
+	//   "description": "Modify multiple policy values that are applied to a specific org unit so that they now inherit the value from a parent (if applicable). All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`, though the values for those keys may be different. On failure the request will return the error details as part of the google.rpc.Status.",
 	//   "flatPath": "v1/customers/{customersId}/policies/orgunits:batchInherit",
 	//   "httpMethod": "POST",
 	//   "id": "chromepolicy.customers.policies.orgunits.batchInherit",
@@ -1530,9 +1641,9 @@ type CustomersPoliciesOrgunitsBatchModifyCall struct {
 // BatchModify: Modify multiple policy values that are applied to a
 // specific org unit. All targets must have the same target format. That
 // is to say that they must point to the same target resource and must
-// have the same keys specified in `additionalTargetKeyNames`. On
-// failure the request will return the error details as part of the
-// google.rpc.Status.
+// have the same keys specified in `additionalTargetKeyNames`, though
+// the values for those keys may be different. On failure the request
+// will return the error details as part of the google.rpc.Status.
 //
 // - customer: ID of the G Suite account or literal "my_customer" for
 //   the customer associated to the request.
@@ -1570,7 +1681,7 @@ func (c *CustomersPoliciesOrgunitsBatchModifyCall) Header() http.Header {
 
 func (c *CustomersPoliciesOrgunitsBatchModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1634,7 +1745,7 @@ func (c *CustomersPoliciesOrgunitsBatchModifyCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Modify multiple policy values that are applied to a specific org unit. All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`. On failure the request will return the error details as part of the google.rpc.Status.",
+	//   "description": "Modify multiple policy values that are applied to a specific org unit. All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`, though the values for those keys may be different. On failure the request will return the error details as part of the google.rpc.Status.",
 	//   "flatPath": "v1/customers/{customersId}/policies/orgunits:batchModify",
 	//   "httpMethod": "POST",
 	//   "id": "chromepolicy.customers.policies.orgunits.batchModify",
@@ -1722,7 +1833,7 @@ func (c *CustomersPolicySchemasGetCall) Header() http.Header {
 
 func (c *CustomersPolicySchemasGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1892,7 +2003,7 @@ func (c *CustomersPolicySchemasListCall) Header() http.Header {
 
 func (c *CustomersPolicySchemasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2110,7 +2221,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

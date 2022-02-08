@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -245,11 +245,19 @@ func (s *ConfigMapKeySelector) MarshalJSON() ([]byte, error) {
 // the file names, unless the items element is populated with specific
 // mappings of keys to paths.
 type ConfigMapVolumeSource struct {
-	// DefaultMode: (Optional) Mode bits to use on created files by default.
-	// Must be a value between 0 and 0777. Defaults to 0644. Directories
-	// within the path are not affected by this setting. This might be in
-	// conflict with other options that affect the file mode, like fsGroup,
-	// and the result can be other mode bits set.
+	// DefaultMode: (Optional) Integer representation of mode bits to use on
+	// created files by default. Must be a value between 01 and 0777
+	// (octal). If 0 or not set, it will default to 0644. Directories within
+	// the path are not affected by this setting. Notes * Internally, a
+	// umask of 0222 will be applied to any non-zero value. * This is an
+	// integer representation of the mode bits. So, the octal integer value
+	// should look exactly as the chmod numeric notation with a leading
+	// zero. Some examples: for chmod 777 (a=rwx), set to 0777 (octal) or
+	// 511 (base-10). For chmod 640 (u=rw,g=r), set to 0640 (octal) or 416
+	// (base-10). For chmod 755 (u=rwx,g=rx,o=rx), set to 0755 (octal) or
+	// 493 (base-10). * This might be in conflict with other options that
+	// affect the file mode, like fsGroup, and the result can be other mode
+	// bits set.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 
 	// Items: (Optional) If unspecified, each key-value pair in the Data
@@ -1206,9 +1214,16 @@ type KeyToPath struct {
 	Key string `json:"key,omitempty"`
 
 	// Mode: (Optional) Mode bits to use on this file, must be a value
-	// between 0000 and 0777. If not specified, the volume defaultMode will
-	// be used. This might be in conflict with other options that affect the
-	// file mode, like fsGroup, and the result can be other mode bits set.
+	// between 01 and 0777 (octal). If 0 or not set, the Volume's default
+	// mode will be used. Notes * Internally, a umask of 0222 will be
+	// applied to any non-zero value. * This is an integer representation of
+	// the mode bits. So, the octal integer value should look exactly as the
+	// chmod numeric notation with a leading zero. Some examples: for chmod
+	// 777 (a=rwx), set to 0777 (octal) or 511 (base-10). For chmod 640
+	// (u=rw,g=r), set to 0640 (octal) or 416 (base-10). For chmod 755
+	// (u=rwx,g=rx,o=rx), set to 0755 (octal) or 493 (base-10). * This might
+	// be in conflict with other options that affect the file mode, like
+	// fsGroup, and the result can be other mode bits set.
 	Mode int64 `json:"mode,omitempty"`
 
 	// Path: The relative path of the file to map the key to. May not be an
@@ -1654,20 +1669,17 @@ func (s *Probe) MarshalJSON() ([]byte, error) {
 // ResourceRequirements: ResourceRequirements describes the compute
 // resource requirements.
 type ResourceRequirements struct {
-	// Limits: (Optional) Only memory and CPU are supported. Note: The only
-	// supported values for CPU are '1', '2', and '4'. Setting 4 CPU
-	// requires at least 2Gi of memory. Limits describes the maximum amount
-	// of compute resources allowed. The values of the map is string form of
-	// the 'quantity' k8s type:
+	// Limits: (Optional) Only memory and CPU are supported. Limits
+	// describes the maximum amount of compute resources allowed. The values
+	// of the map is string form of the 'quantity' k8s type:
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	Limits map[string]string `json:"limits,omitempty"`
 
-	// Requests: (Optional) Only memory and CPU are supported. Note: The
-	// only supported values for CPU are '1' and '2'. Requests describes the
-	// minimum amount of compute resources required. If Requests is omitted
-	// for a container, it defaults to Limits if that is explicitly
-	// specified, otherwise to an implementation-defined value. The values
-	// of the map is string form of the 'quantity' k8s type:
+	// Requests: (Optional) Only memory and CPU are supported. Requests
+	// describes the minimum amount of compute resources required. If
+	// Requests is omitted for a container, it defaults to Limits if that is
+	// explicitly specified, otherwise to an implementation-defined value.
+	// The values of the map is string form of the 'quantity' k8s type:
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	Requests map[string]string `json:"requests,omitempty"`
 
@@ -1789,14 +1801,19 @@ func (s *SecretKeySelector) MarshalJSON() ([]byte, error) {
 // the target Secret's Data field will be presented in a volume as files
 // using the keys in the Data field as the file names.
 type SecretVolumeSource struct {
-	// DefaultMode: (Optional) Mode bits to use on created files by default.
-	// Must be a value between 0000 and 0777. Defaults to 0644. Directories
-	// within the path are not affected by this setting. This might be in
-	// conflict with other options that affect the file mode, like fsGroup,
-	// and the result can be other mode bits set. NOTE: This is an integer
-	// representation of the mode bits. So, the integer value should look
-	// exactly as the chmod numeric notation, i.e. Unix chmod "777" (a=rwx)
-	// should have the integer value 777.
+	// DefaultMode: Integer representation of mode bits to use on created
+	// files by default. Must be a value between 01 and 0777 (octal). If 0
+	// or not set, it will default to 0644. Directories within the path are
+	// not affected by this setting. Notes * Internally, a umask of 0222
+	// will be applied to any non-zero value. * This is an integer
+	// representation of the mode bits. So, the octal integer value should
+	// look exactly as the chmod numeric notation with a leading zero. Some
+	// examples: for chmod 777 (a=rwx), set to 0777 (octal) or 511
+	// (base-10). For chmod 640 (u=rw,g=r), set to 0640 (octal) or 416
+	// (base-10). For chmod 755 (u=rwx,g=rx,o=rx), set to 0755 (octal) or
+	// 493 (base-10). * This might be in conflict with other options that
+	// affect the file mode, like fsGroup, and the result can be other mode
+	// bits set.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 
 	// Items: (Optional) If unspecified, the volume will expose a file whose
@@ -2042,7 +2059,7 @@ func (c *NamespacesJobsCreateCall) Header() http.Header {
 
 func (c *NamespacesJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2207,7 +2224,7 @@ func (c *NamespacesJobsDeleteCall) Header() http.Header {
 
 func (c *NamespacesJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2366,7 +2383,7 @@ func (c *NamespacesJobsGetCall) Header() http.Header {
 
 func (c *NamespacesJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2567,7 +2584,7 @@ func (c *NamespacesJobsListCall) Header() http.Header {
 
 func (c *NamespacesJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

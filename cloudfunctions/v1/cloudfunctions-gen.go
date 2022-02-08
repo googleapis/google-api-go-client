@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -278,19 +278,19 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
+	// Members: Specifies the principals requesting access for a Cloud
 	// Platform resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
@@ -324,8 +324,8 @@ type Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -422,7 +422,7 @@ func (s *CallFunctionResponse) MarshalJSON() ([]byte, error) {
 
 // CloudFunction: Describes a Cloud Function that contains user
 // computation executed in response to an event. It encapsulate function
-// and triggers configurations. Next tag: 35
+// and triggers configurations. Next tag: 36
 type CloudFunction struct {
 	// AvailableMemoryMb: The amount of memory in MB available for a
 	// function. Defaults to 256MB.
@@ -455,6 +455,18 @@ type CloudFunction struct {
 	// Description: User-provided description of a function.
 	Description string `json:"description,omitempty"`
 
+	// DockerRepository: User managed repository created in Artifact
+	// Registry optionally with a customer managed encryption key. If
+	// specified, deployments will use Artifact Registry. If unspecified and
+	// the deployment is eligible to use Artifact Registry, GCF will create
+	// and use a repository named 'gcf-artifacts' for every deployed region.
+	// This is the repository to which the function docker image will be
+	// pushed after it is built by Cloud Build. It must match the pattern
+	// `projects/{project}/locations/{location}/repositories/{repository}`.
+	// Cross-project repositories are not supported. Cross-location
+	// repositories are not supported. Repository format must be 'DOCKER'.
+	DockerRepository string `json:"dockerRepository,omitempty"`
+
 	// EntryPoint: The name of the function (as defined in source code) that
 	// will be executed. Defaults to the resource name suffix, if not
 	// specified. For backward compatibility, if function with given name is
@@ -486,6 +498,31 @@ type CloudFunction struct {
 	//   "ALLOW_INTERNAL_AND_GCLB" - Allow HTTP traffic from private VPC
 	// sources and through GCLB.
 	IngressSettings string `json:"ingressSettings,omitempty"`
+
+	// KmsKeyName: Resource name of a KMS crypto key (managed by the user)
+	// used to encrypt/decrypt function resources. It must match the pattern
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}`. If specified, you must also provide an artifact
+	// registry repository using the `docker_repository` field that was
+	// created with the same KMS crypto key. The following service accounts
+	// need to be granted the role 'Cloud KMS CryptoKey Encrypter/Decrypter
+	// (roles/cloudkms.cryptoKeyEncrypterDecrypter)' on the
+	// Key/KeyRing/Project/Organization (least access preferred). 1. Google
+	// Cloud Functions service account
+	// (service-{project_number}@gcf-admin-robot.iam.gserviceaccount.com) -
+	// Required to protect the function's image. 2. Google Storage service
+	// account
+	// (service-{project_number}@gs-project-accounts.iam.gserviceaccount.com)
+	//  - Required to protect the function's source code. If this service
+	// account does not exist, deploying a function without a KMS key or
+	// retrieving the service agent name provisions it. For more
+	// information, see
+	// https://cloud.google.com/storage/docs/projects#service-agents and
+	// https://cloud.google.com/storage/docs/getting-service-agent#gsutil.
+	// Google Cloud Functions delegates access to service agents to protect
+	// function resources in internal projects that are not accessible by
+	// the end user.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// Labels: Labels associated with this Cloud Function.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -1223,17 +1260,17 @@ func (s *OperationMetadataV1) MarshalJSON() ([]byte, error) {
 
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members` to
-// a single `role`. Members can be user accounts, service accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of permissions; each `role` can be an IAM predefined role or a
-// user-created custom role. For some types of Google Cloud resources, a
-// `binding` can also specify a `condition`, which is a logical
-// expression that allows access to a resource only if the expression
-// evaluates to `true`. A condition can add constraints based on
-// attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -1260,9 +1297,15 @@ type Policy struct {
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -1721,7 +1764,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1906,7 +1949,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2108,7 +2151,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2285,7 +2328,7 @@ func (c *ProjectsLocationsFunctionsCallCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsCallCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2430,7 +2473,7 @@ func (c *ProjectsLocationsFunctionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2572,7 +2615,7 @@ func (c *ProjectsLocationsFunctionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2711,7 +2754,7 @@ func (c *ProjectsLocationsFunctionsGenerateDownloadUrlCall) Header() http.Header
 
 func (c *ProjectsLocationsFunctionsGenerateDownloadUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2870,7 +2913,7 @@ func (c *ProjectsLocationsFunctionsGenerateUploadUrlCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsGenerateUploadUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3022,7 +3065,7 @@ func (c *ProjectsLocationsFunctionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3136,13 +3179,17 @@ func (r *ProjectsLocationsFunctionsService) GetIamPolicy(resource string) *Proje
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsFunctionsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsFunctionsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -3186,7 +3233,7 @@ func (c *ProjectsLocationsFunctionsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3257,7 +3304,7 @@ func (c *ProjectsLocationsFunctionsGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3361,7 +3408,7 @@ func (c *ProjectsLocationsFunctionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3505,8 +3552,8 @@ func (r *ProjectsLocationsFunctionsService) Patch(name string, cloudfunction *Cl
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required list of
-// fields to be updated in this request.
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields in `CloudFunction` that have to be updated.
 func (c *ProjectsLocationsFunctionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFunctionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3539,7 +3586,7 @@ func (c *ProjectsLocationsFunctionsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3619,7 +3666,7 @@ func (c *ProjectsLocationsFunctionsPatchCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required list of fields to be updated in this request.",
+	//       "description": "Required. The list of fields in `CloudFunction` that have to be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3690,7 +3737,7 @@ func (c *ProjectsLocationsFunctionsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3836,7 +3883,7 @@ func (c *ProjectsLocationsFunctionsTestIamPermissionsCall) Header() http.Header 
 
 func (c *ProjectsLocationsFunctionsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -457,6 +457,78 @@
                 }
               },
               "resources": {
+                "changelogs": {
+                  "methods": {
+                    "get": {
+                      "description": "Retrieves the specified Changelog.",
+                      "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/changelogs/{changelogsId}",
+                      "httpMethod": "GET",
+                      "id": "dialogflow.projects.locations.agents.changelogs.get",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the changelog to get. Format: `projects//locations//agents//changelogs/`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/changelogs/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v3/{+name}",
+                      "response": {
+                        "$ref": "GoogleCloudDialogflowCxV3Changelog"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
+                      ]
+                    },
+                    "list": {
+                      "description": "Returns the list of Changelogs.",
+                      "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/changelogs",
+                      "httpMethod": "GET",
+                      "id": "dialogflow.projects.locations.agents.changelogs.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "filter": {
+                          "description": "The filter string. Supports filter by user_email, resource, type and create_time. Some examples: 1. By user email: user_email = \"someone@google.com\" 2. By resource name: resource = \"projects/123/locations/global/agents/456/flows/789\" 3. By resource display name: display_name = \"my agent\" 4. By action: action = \"Create\" 5. By type: type = \"flows\" 6. By create time. Currently predicates on `create_time` and `create_time_epoch_seconds` are supported: create_time_epoch_seconds \u003e 1551790877 AND create_time \u003c= 2017-01-15T01:30:15.01Z 7. Combination of above filters: resource = \"projects/123/locations/global/agents/456/flows/789\" AND user_email = \"someone@google.com\" AND create_time \u003c= 2017-01-15T01:30:15.01Z",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "pageSize": {
+                          "description": "The maximum number of items to return in a single page. By default 100 and at most 1000.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "The next_page_token value returned from a previous list request.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. The agent containing the changelogs. Format: `projects//locations//agents/`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v3/{+parent}/changelogs",
+                      "response": {
+                        "$ref": "GoogleCloudDialogflowCxV3ListChangelogsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
+                      ]
+                    }
+                  }
+                },
                 "entityTypes": {
                   "methods": {
                     "create": {
@@ -2161,6 +2233,35 @@
                     },
                     "versions": {
                       "methods": {
+                        "compareVersions": {
+                          "description": "Compares the specified base version with target version.",
+                          "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows/{flowsId}/versions/{versionsId}:compareVersions",
+                          "httpMethod": "POST",
+                          "id": "dialogflow.projects.locations.agents.flows.versions.compareVersions",
+                          "parameterOrder": [
+                            "baseVersion"
+                          ],
+                          "parameters": {
+                            "baseVersion": {
+                              "description": "Required. Name of the base flow version to compare with the target version. Use version ID `0` to indicate the draft version of the specified flow. Format: `projects//locations//agents/ /flows//versions/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+/versions/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3/{+baseVersion}:compareVersions",
+                          "request": {
+                            "$ref": "GoogleCloudDialogflowCxV3CompareVersionsRequest"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3CompareVersionsResponse"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
                         "create": {
                           "description": "Creates a Version in the specified Flow. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: CreateVersionOperationMetadata - `response`: Version",
                           "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows/{flowsId}/versions",
@@ -3719,7 +3820,7 @@
       }
     }
   },
-  "revision": "20210918",
+  "revision": "20220119",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -3923,6 +4024,77 @@
         "transitionCoverage": {
           "$ref": "GoogleCloudDialogflowCxV3TransitionCoverage",
           "description": "Transition (excluding transition route groups) coverage."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3Changelog": {
+      "description": "Changelogs represents a change made to a given agent.",
+      "id": "GoogleCloudDialogflowCxV3Changelog",
+      "properties": {
+        "action": {
+          "description": "The action of the change.",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "The timestamp of the change.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "The affected resource display name of the change.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The unique identifier of the changelog. Format: `projects//locations//agents//changelogs/`.",
+          "type": "string"
+        },
+        "resource": {
+          "description": "The affected resource name of the change.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The affected resource type.",
+          "type": "string"
+        },
+        "userEmail": {
+          "description": "Email address of the authenticated user.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3CompareVersionsRequest": {
+      "description": "The request message for Versions.CompareVersions.",
+      "id": "GoogleCloudDialogflowCxV3CompareVersionsRequest",
+      "properties": {
+        "languageCode": {
+          "description": "The language to compare the flow versions for. If not specified, the agent's default language is used. [Many languages](https://cloud.google.com/dialogflow/docs/reference/language) are supported. Note: languages must be enabled in the agent before they can be used.",
+          "type": "string"
+        },
+        "targetVersion": {
+          "description": "Required. Name of the target flow version to compare with the base version. Use version ID `0` to indicate the draft version of the specified flow. Format: `projects//locations//agents//flows//versions/`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3CompareVersionsResponse": {
+      "description": "The response message for Versions.CompareVersions.",
+      "id": "GoogleCloudDialogflowCxV3CompareVersionsResponse",
+      "properties": {
+        "baseVersionContentJson": {
+          "description": "JSON representation of the base version content.",
+          "type": "string"
+        },
+        "compareTime": {
+          "description": "The timestamp when the two version compares.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "targetVersionContentJson": {
+          "description": "JSON representation of the target version content.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -4403,7 +4575,7 @@
       "id": "GoogleCloudDialogflowCxV3EnvironmentTestCasesConfig",
       "properties": {
         "enableContinuousRun": {
-          "description": "Whether to run test cases in TestCasesConfig.test_cases periodically. Default false. If set to ture, run once a day.",
+          "description": "Whether to run test cases in TestCasesConfig.test_cases periodically. Default false. If set to true, run once a day.",
           "type": "boolean"
         },
         "enablePredeploymentRun": {
@@ -5470,6 +5642,24 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3ListChangelogsResponse": {
+      "description": "The response message for Changelogs.ListChangelogs.",
+      "id": "GoogleCloudDialogflowCxV3ListChangelogsResponse",
+      "properties": {
+        "changelogs": {
+          "description": "The list of changelogs. There will be a maximum number of items returned based on the page_size field in the request. The changelogs will be ordered by timestamp.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3Changelog"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results, or empty if there are no more results in the list.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3ListContinuousTestResultsResponse": {
       "description": "The response message for Environments.ListTestCaseResults.",
       "id": "GoogleCloudDialogflowCxV3ListContinuousTestResultsResponse",
@@ -5779,7 +5969,7 @@
           "type": "number"
         },
         "event": {
-          "description": "The event that matched the query. Only filled for `EVENT` match type.",
+          "description": "The event that matched the query. Filled for `EVENT`, `NO_MATCH` and `NO_INPUT` match types.",
           "type": "string"
         },
         "intent": {
@@ -6000,6 +6190,10 @@
           "description": "Always present for WebhookRequest. Ignored for WebhookResponse. The unique identifier of the current page. Format: `projects//locations//agents//flows//pages/`.",
           "type": "string"
         },
+        "displayName": {
+          "description": "Always present for WebhookRequest. Ignored for WebhookResponse. The display name of the current page.",
+          "type": "string"
+        },
         "formInfo": {
           "$ref": "GoogleCloudDialogflowCxV3PageInfoFormInfo",
           "description": "Optional for both WebhookRequest and WebhookResponse. Information about the form."
@@ -6171,6 +6365,10 @@
           "description": "The free-form diagnostic info. For example, this field could contain webhook call latency. The string keys of the Struct's fields map can change without notice.",
           "type": "object"
         },
+        "dtmf": {
+          "$ref": "GoogleCloudDialogflowCxV3DtmfInput",
+          "description": "If a DTMF was provided as input, this field will contain a copy of the DTMFInput."
+        },
         "intent": {
           "$ref": "GoogleCloudDialogflowCxV3Intent",
           "description": "The Intent that matched the conversational query. Some, not all fields are filled in this message, including but not limited to: `name` and `display_name`. This field is deprecated, please use QueryResult.match instead."
@@ -6308,6 +6506,10 @@
           "$ref": "GoogleCloudDialogflowCxV3ResponseMessagePlayAudio",
           "description": "Signal that the client should play an audio clip hosted at a client-specific URI. Dialogflow uses this to construct mixed_audio. However, Dialogflow itself does not try to read or process the URI in any way."
         },
+        "telephonyTransferCall": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall",
+          "description": "A signal that the client should transfer the phone call connected to this agent to a third-party endpoint."
+        },
         "text": {
           "$ref": "GoogleCloudDialogflowCxV3ResponseMessageText",
           "description": "Returns a text response."
@@ -6417,6 +6619,17 @@
         },
         "audioUri": {
           "description": "Required. URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall": {
+      "description": "Represents the signal that telles the client to transfer the phone call connected to the agent to a third-party endpoint.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall",
+      "properties": {
+        "phoneNumber": {
+          "description": "Transfer the call to a phone number in [E.164 format](https://en.wikipedia.org/wiki/E.164).",
           "type": "string"
         }
       },
@@ -6599,7 +6812,7 @@
       "id": "GoogleCloudDialogflowCxV3SecuritySettings",
       "properties": {
         "deidentifyTemplate": {
-          "description": "[DLP](https://cloud.google.com/dlp/docs) deidentify template name. Use this template to define de-identification configuration for the content. If empty, Dialogflow replaces sensitive info with `[redacted]` text. The template name will have one of the following formats: `projects//locations//deidentifyTemplates/` OR `organizations//locations//deidentifyTemplates/` Note: `deidentify_template` must be located in the same region as the `SecuritySettings`.",
+          "description": "[DLP](https://cloud.google.com/dlp/docs) deidentify template name. Use this template to define de-identification configuration for the content. The `DLP De-identify Templates Reader` role is needed on the Dialogflow service identity service account (has the form `service-PROJECT_NUMBER@gcp-sa-dialogflow.iam.gserviceaccount.com`) for your agent's project. If empty, Dialogflow replaces sensitive info with `[redacted]` text. The template name will have one of the following formats: `projects//locations//deidentifyTemplates/` OR `organizations//locations//deidentifyTemplates/` Note: `deidentify_template` must be located in the same region as the `SecuritySettings`.",
           "type": "string"
         },
         "displayName": {
@@ -6611,7 +6824,7 @@
           "description": "Controls conversation exporting settings to Insights after conversation is completed. If retention_strategy is set to REMOVE_AFTER_CONVERSATION, Insights export is disabled no matter what you configure here."
         },
         "inspectTemplate": {
-          "description": "[DLP](https://cloud.google.com/dlp/docs) inspect template name. Use this template to define inspect base settings. If empty, we use the default DLP inspect config. The template name will have one of the following formats: `projects//locations//inspectTemplates/` OR `organizations//locations//inspectTemplates/` Note: `inspect_template` must be located in the same region as the `SecuritySettings`.",
+          "description": "[DLP](https://cloud.google.com/dlp/docs) inspect template name. Use this template to define inspect base settings. The `DLP Inspect Templates Reader` role is needed on the Dialogflow service identity service account (has the form `service-PROJECT_NUMBER@gcp-sa-dialogflow.iam.gserviceaccount.com`) for your agent's project. If empty, we use the default DLP inspect config. The template name will have one of the following formats: `projects//locations//inspectTemplates/` OR `organizations//locations//inspectTemplates/` Note: `inspect_template` must be located in the same region as the `SecuritySettings`.",
           "type": "string"
         },
         "name": {
@@ -6658,7 +6871,7 @@
           "type": "string"
         },
         "retentionWindowDays": {
-          "description": "Retains data in interaction logging for the specified number of days. This does not apply to Cloud logging, which is owned by the user - not Dialogflow. User must Set a value lower than Dialogflow's default 30d TTL. Setting a value higher than that has no effect. A missing value or setting to 0 also means we use Dialogflow's default TTL. Note: Interaction logging is a limited access feature. Talk to your Google representative to check availability for you.",
+          "description": "Retains data in interaction logging for the specified number of days. This does not apply to Cloud logging, which is owned by the user - not Dialogflow. User must set a value lower than Dialogflow's default 365d TTL. Setting a value higher than that has no effect. A missing value or setting to 0 also means we use Dialogflow's default TTL. Note: Interaction logging is a limited access feature. Talk to your Google representative to check availability for you.",
           "format": "int32",
           "type": "integer"
         }
@@ -6666,7 +6879,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3SecuritySettingsInsightsExportSettings": {
-      "description": "Settings for exporting conversations to [Insights](https://cloud.google.com/dialogflow/priv/docs/insights).",
+      "description": "Settings for exporting conversations to [Insights](https://cloud.google.com/contact-center/insights/docs).",
       "id": "GoogleCloudDialogflowCxV3SecuritySettingsInsightsExportSettings",
       "properties": {
         "enableInsightsExport": {
@@ -7433,6 +7646,14 @@
       "description": "Represents configuration for a generic web service.",
       "id": "GoogleCloudDialogflowCxV3WebhookGenericWebService",
       "properties": {
+        "allowedCaCerts": {
+          "description": "Optional. Specifies a list of allowed custom CA certificates (in DER format) for HTTPS verification. This overrides the default SSL trust store. If this is empty or unspecified, Dialogflow will use Google's default trust store to verify certificates. N.B. Make sure the HTTPS server certificates are signed with \"subject alt name\". For instance a certificate can be self-signed using the following command, openssl x509 -req -days 200 -in example.com.csr \\ -signkey example.com.key \\ -out example.com.crt \\ -extfile \u003c(printf \"\\nsubjectAltName='DNS:www.example.com'\")",
+          "items": {
+            "format": "byte",
+            "type": "string"
+          },
+          "type": "array"
+        },
         "password": {
           "description": "The password for HTTP Basic authentication.",
           "type": "string"
@@ -7960,7 +8181,7 @@
       "id": "GoogleCloudDialogflowCxV3beta1EnvironmentTestCasesConfig",
       "properties": {
         "enableContinuousRun": {
-          "description": "Whether to run test cases in TestCasesConfig.test_cases periodically. Default false. If set to ture, run once a day.",
+          "description": "Whether to run test cases in TestCasesConfig.test_cases periodically. Default false. If set to true, run once a day.",
           "type": "boolean"
         },
         "enablePredeploymentRun": {
@@ -8582,6 +8803,10 @@
           "description": "Always present for WebhookRequest. Ignored for WebhookResponse. The unique identifier of the current page. Format: `projects//locations//agents//flows//pages/`.",
           "type": "string"
         },
+        "displayName": {
+          "description": "Always present for WebhookRequest. Ignored for WebhookResponse. The display name of the current page.",
+          "type": "string"
+        },
         "formInfo": {
           "$ref": "GoogleCloudDialogflowCxV3beta1PageInfoFormInfo",
           "description": "Optional for both WebhookRequest and WebhookResponse. Information about the form."
@@ -8722,6 +8947,10 @@
           "$ref": "GoogleCloudDialogflowCxV3beta1ResponseMessagePlayAudio",
           "description": "Signal that the client should play an audio clip hosted at a client-specific URI. Dialogflow uses this to construct mixed_audio. However, Dialogflow itself does not try to read or process the URI in any way."
         },
+        "telephonyTransferCall": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall",
+          "description": "A signal that the client should transfer the phone call connected to this agent to a third-party endpoint."
+        },
         "text": {
           "$ref": "GoogleCloudDialogflowCxV3beta1ResponseMessageText",
           "description": "Returns a text response."
@@ -8831,6 +9060,17 @@
         },
         "audioUri": {
           "description": "Required. URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall": {
+      "description": "Represents the signal that telles the client to transfer the phone call connected to the agent to a third-party endpoint.",
+      "id": "GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall",
+      "properties": {
+        "phoneNumber": {
+          "description": "Transfer the call to a phone number in [E.164 format](https://en.wikipedia.org/wiki/E.164).",
           "type": "string"
         }
       },
@@ -9648,6 +9888,20 @@
           "description": "The suggestion results payload that this notification refers to.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2SuggestionResult"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2ImportDocumentsResponse": {
+      "description": "Response message for Documents.ImportDocuments.",
+      "id": "GoogleCloudDialogflowV2ImportDocumentsResponse",
+      "properties": {
+        "warnings": {
+          "description": "Includes details about skipped documents or any other warnings.",
+          "items": {
+            "$ref": "GoogleRpcStatus"
           },
           "type": "array"
         }
@@ -10568,6 +10822,10 @@
       "description": "Metadata in google::longrunning::Operation for Knowledge operations.",
       "id": "GoogleCloudDialogflowV2KnowledgeOperationMetadata",
       "properties": {
+        "knowledgeBase": {
+          "description": "The name of the knowledge base interacted with during the operation.",
+          "type": "string"
+        },
         "state": {
           "description": "Output only. The current state of this operation.",
           "enum": [
@@ -10597,7 +10855,7 @@
           "type": "string"
         },
         "createTime": {
-          "description": "Output only. The time when the message was created.",
+          "description": "Output only. The time when the message was created in Contact Center AI.",
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
@@ -10612,7 +10870,7 @@
           "readOnly": true
         },
         "name": {
-          "description": "The unique identifier of the message. Format: `projects//locations//conversations//messages/`.",
+          "description": "Optional. The unique identifier of the message. Format: `projects//locations//conversations//messages/`.",
           "type": "string"
         },
         "participant": {
@@ -10636,6 +10894,16 @@
           ],
           "readOnly": true,
           "type": "string"
+        },
+        "sendTime": {
+          "description": "Optional. The time when the message was sent.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "sentimentAnalysis": {
+          "$ref": "GoogleCloudDialogflowV2SentimentAnalysisResult",
+          "description": "Output only. The sentiment analysis result for the message.",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -10832,6 +11100,26 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2SmartReplyAnswer": {
+      "description": "Represents a smart reply answer.",
+      "id": "GoogleCloudDialogflowV2SmartReplyAnswer",
+      "properties": {
+        "answerRecord": {
+          "description": "The name of answer record, in the format of \"projects//locations//answerRecords/\"",
+          "type": "string"
+        },
+        "confidence": {
+          "description": "Smart reply confidence. The system's confidence score that this reply is a good match for this conversation, as a value from 0.0 (completely uncertain) to 1.0 (completely certain).",
+          "format": "float",
+          "type": "number"
+        },
+        "reply": {
+          "description": "The content of the reply.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2SuggestArticlesResponse": {
       "description": "The response message for Participants.SuggestArticles.",
       "id": "GoogleCloudDialogflowV2SuggestArticlesResponse",
@@ -10878,6 +11166,30 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2SuggestSmartRepliesResponse": {
+      "description": "The response message for Participants.SuggestSmartReplies.",
+      "id": "GoogleCloudDialogflowV2SuggestSmartRepliesResponse",
+      "properties": {
+        "contextSize": {
+          "description": "Number of messages prior to and including latest_message to compile the suggestion. It may be smaller than the SuggestSmartRepliesRequest.context_size field in the request if there aren't that many messages in the conversation.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "latestMessage": {
+          "description": "The name of the latest conversation message used to compile suggestion for. Format: `projects//locations//conversations//messages/`.",
+          "type": "string"
+        },
+        "smartReplyAnswers": {
+          "description": "Output only. Multiple reply options provided by smart reply service. The order is based on the rank of the model prediction. The maximum number of the returned replies is set in SmartReplyConfig.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2SmartReplyAnswer"
+          },
+          "readOnly": true,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2SuggestionResult": {
       "description": "One response of different type of suggestion response which is used in the response of Participants.AnalyzeContent and Participants.AnalyzeContent, as well as HumanAgentAssistantEvent.",
       "id": "GoogleCloudDialogflowV2SuggestionResult",
@@ -10893,6 +11205,10 @@
         "suggestFaqAnswersResponse": {
           "$ref": "GoogleCloudDialogflowV2SuggestFaqAnswersResponse",
           "description": "SuggestFaqAnswersResponse if request is for FAQ_ANSWER."
+        },
+        "suggestSmartRepliesResponse": {
+          "$ref": "GoogleCloudDialogflowV2SuggestSmartRepliesResponse",
+          "description": "SuggestSmartRepliesResponse if request is for SMART_REPLY."
         }
       },
       "type": "object"
@@ -12555,6 +12871,10 @@
       "description": "Metadata in google::longrunning::Operation for Knowledge operations.",
       "id": "GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata",
       "properties": {
+        "knowledgeBase": {
+          "description": "The name of the knowledge base interacted with during the operation.",
+          "type": "string"
+        },
         "state": {
           "description": "Required. Output only. The current state of this operation.",
           "enum": [

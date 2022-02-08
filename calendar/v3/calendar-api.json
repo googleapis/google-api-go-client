@@ -1723,7 +1723,7 @@
       }
     }
   },
-  "revision": "20210807",
+  "revision": "20211229",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Acl": {
@@ -2131,7 +2131,7 @@
           "description": "Additional properties related to a conference. An example would be a solution-specific setting for enabling video streaming."
         },
         "signature": {
-          "description": "The signature of the conference data.\nGenerated on server side. Must be preserved while copying the conference data between events, otherwise the conference data will not be copied.\nUnset for a conference with a failed create request.\nOptional for a conference with a pending create request.",
+          "description": "The signature of the conference data.\nGenerated on server side.\nUnset for a conference with a failed create request.\nOptional for a conference with a pending create request.",
           "type": "string"
         }
       },
@@ -2380,7 +2380,7 @@
         },
         "eventType": {
           "default": "default",
-          "description": "Specific type of the event. Read-only. Possible values are:  \n- \"default\" - A regular event or not further specified. \n- \"outOfOffice\" - An out-of-office event.",
+          "description": "Specific type of the event. Read-only. Possible values are:  \n- \"default\" - A regular event or not further specified. \n- \"outOfOffice\" - An out-of-office event. \n- \"focusTime\" - A focus-time event.",
           "type": "string"
         },
         "extendedProperties": {

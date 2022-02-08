@@ -28,8 +28,8 @@ func main() {
 }
 ```
 
-* For a longer tutorial, see the [Getting Started guide](https://github.com/google/google-api-go-client/blob/master/GettingStarted.md).
-* For examples, see the [examples directory](https://github.com/google/google-api-go-client/tree/master/examples).
+* For a longer tutorial, see the [Getting Started guide](https://github.com/google/google-api-go-client/blob/main/GettingStarted.md).
+* For examples, see the [examples directory](https://github.com/google/google-api-go-client/tree/main/examples).
 * For support, use the [golang-nuts](https://groups.google.com/group/golang-nuts) mailing list.
 
 ## Status

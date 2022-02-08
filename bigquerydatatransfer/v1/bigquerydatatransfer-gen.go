@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -309,8 +309,8 @@ func (s *CheckValidCredsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSource: Represents data source metadata. Metadata is sufficient
-// to render UI and request proper OAuth tokens.
+// DataSource: Defines the properties and custom parameters for a data
+// source.
 type DataSource struct {
 	// AuthorizationType: Indicates the type of authorization.
 	//
@@ -435,12 +435,8 @@ func (s *DataSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceParameter: Represents a data source parameter with
-// validation rules, so that parameters can be rendered in the UI. These
-// parameters are given to us by supported data sources, and include all
-// needed information for rendering and validation. Thus, whoever uses
-// this api can decide to generate either generic ui, or custom data
-// source specific forms.
+// DataSourceParameter: A parameter used to define custom fields in a
+// data source definition.
 type DataSourceParameter struct {
 	// AllowedValues: All possible values for the parameter.
 	AllowedValues []string `json:"allowedValues,omitempty"`
@@ -1203,7 +1199,8 @@ type TransferConfig struct {
 	// `every wed,fri of jan,jun 13:15`, and `first sunday of quarter
 	// 00:00`. See more explanation about the format here:
 	// https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format
-	// NOTE: the granularity should be at least 8 hours, or less frequent.
+	// NOTE: The minimum interval time between recurring transfers depends
+	// on the data source; refer to the documentation for your data source.
 	Schedule string `json:"schedule,omitempty"`
 
 	// ScheduleOptions: Options customizing the data transfer schedule.
@@ -1486,7 +1483,7 @@ func (c *ProjectsEnrollDataSourcesCall) Header() http.Header {
 
 func (c *ProjectsEnrollDataSourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1593,11 +1590,7 @@ type ProjectsDataSourcesCheckValidCredsCall struct {
 }
 
 // CheckValidCreds: Returns true if valid credentials exist for the
-// given data source and requesting user. Some data sources doesn't
-// support service account, so we need to talk to them on behalf of the
-// end user. This API just checks whether we have OAuth token for the
-// particular user, which is a pre-requisite before user can create a
-// transfer config.
+// given data source and requesting user.
 //
 // - name: The data source in the form:
 //   `projects/{project_id}/dataSources/{data_source_id}` or
@@ -1637,7 +1630,7 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1701,7 +1694,7 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns true if valid credentials exist for the given data source and requesting user. Some data sources doesn't support service account, so we need to talk to them on behalf of the end user. This API just checks whether we have OAuth token for the particular user, which is a pre-requisite before user can create a transfer config.",
+	//   "description": "Returns true if valid credentials exist for the given data source and requesting user.",
 	//   "flatPath": "v1/projects/{projectsId}/dataSources/{dataSourcesId}:checkValidCreds",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.dataSources.checkValidCreds",
@@ -1744,8 +1737,7 @@ type ProjectsDataSourcesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a supported data source and returns its settings,
-// which can be used for UI rendering.
+// Get: Retrieves a supported data source and returns its settings.
 //
 // - name: The field will contain name of the resource requested, for
 //   example: `projects/{project_id}/dataSources/{data_source_id}` or
@@ -1794,7 +1786,7 @@ func (c *ProjectsDataSourcesGetCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1856,7 +1848,7 @@ func (c *ProjectsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSour
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a supported data source and returns its settings, which can be used for UI rendering.",
+	//   "description": "Retrieves a supported data source and returns its settings.",
 	//   "flatPath": "v1/projects/{projectsId}/dataSources/{dataSourcesId}",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.dataSources.get",
@@ -1896,12 +1888,11 @@ type ProjectsDataSourcesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists supported data sources and returns their settings, which
-// can be used for UI rendering.
+// List: Lists supported data sources and returns their settings.
 //
 // - parent: The BigQuery project id for which data sources should be
 //   returned. Must be in the form: `projects/{project_id}` or
-//   `projects/{project_id}/locations/{location_id}.
+//   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsDataSourcesService) List(parent string) *ProjectsDataSourcesListCall {
 	c := &ProjectsDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1963,7 +1954,7 @@ func (c *ProjectsDataSourcesListCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2025,7 +2016,7 @@ func (c *ProjectsDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists supported data sources and returns their settings, which can be used for UI rendering.",
+	//   "description": "Lists supported data sources and returns their settings.",
 	//   "flatPath": "v1/projects/{projectsId}/dataSources",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.dataSources.list",
@@ -2045,7 +2036,7 @@ func (c *ProjectsDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}",
+	//       "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2141,7 +2132,7 @@ func (c *ProjectsLocationsEnrollDataSourcesCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnrollDataSourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2293,7 +2284,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2467,7 +2458,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2607,11 +2598,7 @@ type ProjectsLocationsDataSourcesCheckValidCredsCall struct {
 }
 
 // CheckValidCreds: Returns true if valid credentials exist for the
-// given data source and requesting user. Some data sources doesn't
-// support service account, so we need to talk to them on behalf of the
-// end user. This API just checks whether we have OAuth token for the
-// particular user, which is a pre-requisite before user can create a
-// transfer config.
+// given data source and requesting user.
 //
 // - name: The data source in the form:
 //   `projects/{project_id}/dataSources/{data_source_id}` or
@@ -2651,7 +2638,7 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2715,7 +2702,7 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns true if valid credentials exist for the given data source and requesting user. Some data sources doesn't support service account, so we need to talk to them on behalf of the end user. This API just checks whether we have OAuth token for the particular user, which is a pre-requisite before user can create a transfer config.",
+	//   "description": "Returns true if valid credentials exist for the given data source and requesting user.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources/{dataSourcesId}:checkValidCreds",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.locations.dataSources.checkValidCreds",
@@ -2758,8 +2745,7 @@ type ProjectsLocationsDataSourcesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a supported data source and returns its settings,
-// which can be used for UI rendering.
+// Get: Retrieves a supported data source and returns its settings.
 //
 // - name: The field will contain name of the resource requested, for
 //   example: `projects/{project_id}/dataSources/{data_source_id}` or
@@ -2808,7 +2794,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2870,7 +2856,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a supported data source and returns its settings, which can be used for UI rendering.",
+	//   "description": "Retrieves a supported data source and returns its settings.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources/{dataSourcesId}",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.locations.dataSources.get",
@@ -2910,12 +2896,11 @@ type ProjectsLocationsDataSourcesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists supported data sources and returns their settings, which
-// can be used for UI rendering.
+// List: Lists supported data sources and returns their settings.
 //
 // - parent: The BigQuery project id for which data sources should be
 //   returned. Must be in the form: `projects/{project_id}` or
-//   `projects/{project_id}/locations/{location_id}.
+//   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsDataSourcesService) List(parent string) *ProjectsLocationsDataSourcesListCall {
 	c := &ProjectsLocationsDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2977,7 +2962,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3039,7 +3024,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists supported data sources and returns their settings, which can be used for UI rendering.",
+	//   "description": "Lists supported data sources and returns their settings.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.locations.dataSources.list",
@@ -3059,7 +3044,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}",
+	//       "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3195,7 +3180,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3354,7 +3339,7 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3501,7 +3486,7 @@ func (c *ProjectsLocationsTransferConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3606,8 +3591,8 @@ type ProjectsLocationsTransferConfigsListCall struct {
 // List: Returns information about all transfer configs owned by a
 // project in the specified location.
 //
-// - parent: The BigQuery project id for which data sources should be
-//   returned: `projects/{project_id}` or
+// - parent: The BigQuery project id for which transfer configs should
+//   be returned: `projects/{project_id}` or
 //   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsTransferConfigsService) List(parent string) *ProjectsLocationsTransferConfigsListCall {
 	c := &ProjectsLocationsTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3678,7 +3663,7 @@ func (c *ProjectsLocationsTransferConfigsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3766,7 +3751,7 @@ func (c *ProjectsLocationsTransferConfigsListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
+	//       "description": "Required. The BigQuery project id for which transfer configs should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3912,7 +3897,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4082,7 +4067,7 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Header() http.Header 
 
 func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4231,7 +4216,7 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Header() http.Head
 
 func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4377,7 +4362,7 @@ func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4526,7 +4511,7 @@ func (c *ProjectsLocationsTransferConfigsRunsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4628,7 +4613,7 @@ type ProjectsLocationsTransferConfigsRunsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns information about running and completed jobs.
+// List: Returns information about running and completed transfer runs.
 //
 // - parent: Name of transfer configuration for which transfer runs
 //   should be retrieved. Format of transfer configuration resource name
@@ -4723,7 +4708,7 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4785,7 +4770,7 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns information about running and completed jobs.",
+	//   "description": "Returns information about running and completed transfer runs.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}/runs",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.runs.list",
@@ -4892,7 +4877,7 @@ type ProjectsLocationsTransferConfigsRunsTransferLogsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns user facing log messages for the data transfer run.
+// List: Returns log messages for the transfer run.
 //
 // - parent: Transfer run name in the form:
 //   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
@@ -4974,7 +4959,7 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Header() http
 
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5036,7 +5021,7 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns user facing log messages for the data transfer run.",
+	//   "description": "Returns log messages for the transfer run.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}/runs/{runsId}/transferLogs",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.runs.transferLogs.list",
@@ -5210,7 +5195,7 @@ func (c *ProjectsTransferConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5369,7 +5354,7 @@ func (c *ProjectsTransferConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5516,7 +5501,7 @@ func (c *ProjectsTransferConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5621,8 +5606,8 @@ type ProjectsTransferConfigsListCall struct {
 // List: Returns information about all transfer configs owned by a
 // project in the specified location.
 //
-// - parent: The BigQuery project id for which data sources should be
-//   returned: `projects/{project_id}` or
+// - parent: The BigQuery project id for which transfer configs should
+//   be returned: `projects/{project_id}` or
 //   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsTransferConfigsService) List(parent string) *ProjectsTransferConfigsListCall {
 	c := &ProjectsTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5693,7 +5678,7 @@ func (c *ProjectsTransferConfigsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5781,7 +5766,7 @@ func (c *ProjectsTransferConfigsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
+	//       "description": "Required. The BigQuery project id for which transfer configs should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5927,7 +5912,7 @@ func (c *ProjectsTransferConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6097,7 +6082,7 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6246,7 +6231,7 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6392,7 +6377,7 @@ func (c *ProjectsTransferConfigsRunsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6541,7 +6526,7 @@ func (c *ProjectsTransferConfigsRunsGetCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6643,7 +6628,7 @@ type ProjectsTransferConfigsRunsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns information about running and completed jobs.
+// List: Returns information about running and completed transfer runs.
 //
 // - parent: Name of transfer configuration for which transfer runs
 //   should be retrieved. Format of transfer configuration resource name
@@ -6738,7 +6723,7 @@ func (c *ProjectsTransferConfigsRunsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6800,7 +6785,7 @@ func (c *ProjectsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns information about running and completed jobs.",
+	//   "description": "Returns information about running and completed transfer runs.",
 	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}/runs",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.transferConfigs.runs.list",
@@ -6907,7 +6892,7 @@ type ProjectsTransferConfigsRunsTransferLogsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns user facing log messages for the data transfer run.
+// List: Returns log messages for the transfer run.
 //
 // - parent: Transfer run name in the form:
 //   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
@@ -6989,7 +6974,7 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7051,7 +7036,7 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns user facing log messages for the data transfer run.",
+	//   "description": "Returns log messages for the transfer run.",
 	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}/runs/{runsId}/transferLogs",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.transferConfigs.runs.transferLogs.list",

@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -127,6 +127,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Searchanalytics = NewSearchanalyticsService(s)
 	s.Sitemaps = NewSitemapsService(s)
 	s.Sites = NewSitesService(s)
+	s.UrlInspection = NewUrlInspectionService(s)
 	s.UrlTestingTools = NewUrlTestingToolsService(s)
 	return s, nil
 }
@@ -141,6 +142,8 @@ type Service struct {
 	Sitemaps *SitemapsService
 
 	Sites *SitesService
+
+	UrlInspection *UrlInspectionService
 
 	UrlTestingTools *UrlTestingToolsService
 }
@@ -179,6 +182,27 @@ type SitesService struct {
 	s *Service
 }
 
+func NewUrlInspectionService(s *Service) *UrlInspectionService {
+	rs := &UrlInspectionService{s: s}
+	rs.Index = NewUrlInspectionIndexService(s)
+	return rs
+}
+
+type UrlInspectionService struct {
+	s *Service
+
+	Index *UrlInspectionIndexService
+}
+
+func NewUrlInspectionIndexService(s *Service) *UrlInspectionIndexService {
+	rs := &UrlInspectionIndexService{s: s}
+	return rs
+}
+
+type UrlInspectionIndexService struct {
+	s *Service
+}
+
 func NewUrlTestingToolsService(s *Service) *UrlTestingToolsService {
 	rs := &UrlTestingToolsService{s: s}
 	rs.MobileFriendlyTest = NewUrlTestingToolsMobileFriendlyTestService(s)
@@ -198,6 +222,154 @@ func NewUrlTestingToolsMobileFriendlyTestService(s *Service) *UrlTestingToolsMob
 
 type UrlTestingToolsMobileFriendlyTestService struct {
 	s *Service
+}
+
+// AmpInspectionResult: AMP inspection result of the live page or the
+// current information from Google's index, depending on whether you
+// requested a live inspection or not.
+type AmpInspectionResult struct {
+	// AmpIndexStatusVerdict: Index status of the AMP URL.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
+	//   "PASS" - Equivalent to "Valid" for the page or item in Search
+	// Console.
+	//   "PARTIAL" - Equivalent to "Valid with warnings" for the page or
+	// item in Search Console.
+	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
+	// Search Console.
+	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
+	// Console.
+	AmpIndexStatusVerdict string `json:"ampIndexStatusVerdict,omitempty"`
+
+	// AmpUrl: URL of the AMP that was inspected. If the submitted URL is a
+	// desktop page that refers to an AMP version, the AMP version will be
+	// inspected.
+	AmpUrl string `json:"ampUrl,omitempty"`
+
+	// IndexingState: Whether or not the page blocks indexing through a
+	// noindex rule.
+	//
+	// Possible values:
+	//   "AMP_INDEXING_STATE_UNSPECIFIED" - Unknown indexing status.
+	//   "AMP_INDEXING_ALLOWED" - Indexing allowed.
+	//   "BLOCKED_DUE_TO_NOINDEX" - Indexing not allowed, 'noindex'
+	// detected.
+	//   "BLOCKED_DUE_TO_EXPIRED_UNAVAILABLE_AFTER" - Indexing not allowed,
+	// 'unavailable_after' date expired.
+	IndexingState string `json:"indexingState,omitempty"`
+
+	// Issues: A list of zero or more AMP issues found for the inspected
+	// URL.
+	Issues []*AmpIssue `json:"issues,omitempty"`
+
+	// LastCrawlTime: Last time this AMP version was crawled by Google.
+	// Absent if the URL was never crawled successfully.
+	LastCrawlTime string `json:"lastCrawlTime,omitempty"`
+
+	// PageFetchState: Whether or not Google could fetch the AMP.
+	//
+	// Possible values:
+	//   "PAGE_FETCH_STATE_UNSPECIFIED" - Unknown fetch state.
+	//   "SUCCESSFUL" - Successful fetch.
+	//   "SOFT_404" - Soft 404.
+	//   "BLOCKED_ROBOTS_TXT" - Blocked by robots.txt.
+	//   "NOT_FOUND" - Not found (404).
+	//   "ACCESS_DENIED" - Blocked due to unauthorized request (401).
+	//   "SERVER_ERROR" - Server error (5xx).
+	//   "REDIRECT_ERROR" - Redirection error.
+	//   "ACCESS_FORBIDDEN" - Blocked due to access forbidden (403).
+	//   "BLOCKED_4XX" - Blocked due to other 4xx issue (not 403, 404).
+	//   "INTERNAL_CRAWL_ERROR" - Internal error.
+	//   "INVALID_URL" - Invalid URL.
+	PageFetchState string `json:"pageFetchState,omitempty"`
+
+	// RobotsTxtState: Whether or not the page is blocked to Google by a
+	// robots.txt rule.
+	//
+	// Possible values:
+	//   "ROBOTS_TXT_STATE_UNSPECIFIED" - Unknown robots.txt state,
+	// typically because the page wasn't fetched or found, or because
+	// robots.txt itself couldn't be reached.
+	//   "ALLOWED" - Crawl allowed by robots.txt.
+	//   "DISALLOWED" - Crawl blocked by robots.txt.
+	RobotsTxtState string `json:"robotsTxtState,omitempty"`
+
+	// Verdict: The status of the most severe error on the page. If a page
+	// has both warnings and errors, the page status is error. Error status
+	// means the page cannot be shown in Search results.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
+	//   "PASS" - Equivalent to "Valid" for the page or item in Search
+	// Console.
+	//   "PARTIAL" - Equivalent to "Valid with warnings" for the page or
+	// item in Search Console.
+	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
+	// Search Console.
+	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
+	// Console.
+	Verdict string `json:"verdict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AmpIndexStatusVerdict") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AmpIndexStatusVerdict") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AmpInspectionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod AmpInspectionResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AmpIssue: AMP issue.
+type AmpIssue struct {
+	// IssueMessage: Brief description of this issue.
+	IssueMessage string `json:"issueMessage,omitempty"`
+
+	// Severity: Severity of this issue: WARNING or ERROR.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unknown severity.
+	//   "WARNING" - Warning.
+	//   "ERROR" - Error.
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IssueMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IssueMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AmpIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod AmpIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type ApiDataRow struct {
@@ -276,6 +448,8 @@ type ApiDimensionFilter struct {
 	//   "NOT_EQUALS"
 	//   "CONTAINS"
 	//   "NOT_CONTAINS"
+	//   "INCLUDING_REGEX"
+	//   "EXCLUDING_REGEX"
 	Operator string `json:"operator,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
@@ -364,6 +538,37 @@ func (s *BlockedResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DetectedItems: Rich Results items grouped by type.
+type DetectedItems struct {
+	// Items: List of Rich Results items.
+	Items []*Item `json:"items,omitempty"`
+
+	// RichResultType: Rich Results type
+	RichResultType string `json:"richResultType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DetectedItems) MarshalJSON() ([]byte, error) {
+	type NoMethod DetectedItems
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Image: Describe image data.
 type Image struct {
 	// Data: Image data in format determined by the mime type. Currently,
@@ -397,6 +602,238 @@ func (s *Image) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IndexStatusInspectionResult: Results of index status inspection for
+// either the live page or the version in Google's index, depending on
+// whether you requested a live inspection or not. For more information,
+// see the Index coverage report documentation
+// (https://support.google.com/webmasters/answer/7440203).
+type IndexStatusInspectionResult struct {
+	// CoverageState: Could Google find and index the page. More details
+	// about page indexing appear in 'indexing_state'.
+	CoverageState string `json:"coverageState,omitempty"`
+
+	// CrawledAs: Primary crawler that was used by Google to crawl your
+	// site.
+	//
+	// Possible values:
+	//   "CRAWLING_USER_AGENT_UNSPECIFIED" - Unknown user agent.
+	//   "DESKTOP" - Desktop user agent.
+	//   "MOBILE" - Mobile user agent.
+	CrawledAs string `json:"crawledAs,omitempty"`
+
+	// GoogleCanonical: The URL of the page that Google selected as
+	// canonical. If the page was not indexed, this field is absent.
+	GoogleCanonical string `json:"googleCanonical,omitempty"`
+
+	// IndexingState: Whether or not the page blocks indexing through a
+	// noindex rule.
+	//
+	// Possible values:
+	//   "INDEXING_STATE_UNSPECIFIED" - Unknown indexing status.
+	//   "INDEXING_ALLOWED" - Indexing allowed.
+	//   "BLOCKED_BY_META_TAG" - Indexing not allowed, 'noindex' detected in
+	// 'robots' meta tag.
+	//   "BLOCKED_BY_HTTP_HEADER" - Indexing not allowed, 'noindex' detected
+	// in 'X-Robots-Tag' http header.
+	//   "BLOCKED_BY_ROBOTS_TXT" - Indexing not allowed, No: 'noindex'
+	// detected in robots.txt.
+	IndexingState string `json:"indexingState,omitempty"`
+
+	// LastCrawlTime: Last time this URL was crawled by Google using the
+	// primary crawler
+	// (https://support.google.com/webmasters/answer/7440203#primary_crawler).
+	// Absent if the URL was never crawled successfully.
+	LastCrawlTime string `json:"lastCrawlTime,omitempty"`
+
+	// PageFetchState: Whether or not Google could retrieve the page from
+	// your server. Equivalent to "page fetch"
+	// (https://support.google.com/webmasters/answer/9012289#index_coverage)
+	// in the URL inspection report.
+	//
+	// Possible values:
+	//   "PAGE_FETCH_STATE_UNSPECIFIED" - Unknown fetch state.
+	//   "SUCCESSFUL" - Successful fetch.
+	//   "SOFT_404" - Soft 404.
+	//   "BLOCKED_ROBOTS_TXT" - Blocked by robots.txt.
+	//   "NOT_FOUND" - Not found (404).
+	//   "ACCESS_DENIED" - Blocked due to unauthorized request (401).
+	//   "SERVER_ERROR" - Server error (5xx).
+	//   "REDIRECT_ERROR" - Redirection error.
+	//   "ACCESS_FORBIDDEN" - Blocked due to access forbidden (403).
+	//   "BLOCKED_4XX" - Blocked due to other 4xx issue (not 403, 404).
+	//   "INTERNAL_CRAWL_ERROR" - Internal error.
+	//   "INVALID_URL" - Invalid URL.
+	PageFetchState string `json:"pageFetchState,omitempty"`
+
+	// ReferringUrls: URLs that link to the inspected URL, directly and
+	// indirectly.
+	ReferringUrls []string `json:"referringUrls,omitempty"`
+
+	// RobotsTxtState: Whether or not the page is blocked to Google by a
+	// robots.txt rule.
+	//
+	// Possible values:
+	//   "ROBOTS_TXT_STATE_UNSPECIFIED" - Unknown robots.txt state,
+	// typically because the page wasn't fetched or found, or because
+	// robots.txt itself couldn't be reached.
+	//   "ALLOWED" - Crawl allowed by robots.txt.
+	//   "DISALLOWED" - Crawl blocked by robots.txt.
+	RobotsTxtState string `json:"robotsTxtState,omitempty"`
+
+	// Sitemap: Any sitemaps that this URL was listed in, as known by
+	// Google. Not guaranteed to be an exhaustive list, especially if Google
+	// did not discover this URL through a sitemap. Absent if no sitemaps
+	// were found.
+	Sitemap []string `json:"sitemap,omitempty"`
+
+	// UserCanonical: The URL that your page or site declares as canonical
+	// (https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls?#define-canonical).
+	// If you did not declare a canonical URL, this field is absent.
+	UserCanonical string `json:"userCanonical,omitempty"`
+
+	// Verdict: High level verdict about whether the URL *is* indexed
+	// (indexed status), or *can be* indexed (live inspection).
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
+	//   "PASS" - Equivalent to "Valid" for the page or item in Search
+	// Console.
+	//   "PARTIAL" - Equivalent to "Valid with warnings" for the page or
+	// item in Search Console.
+	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
+	// Search Console.
+	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
+	// Console.
+	Verdict string `json:"verdict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CoverageState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CoverageState") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IndexStatusInspectionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod IndexStatusInspectionResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InspectUrlIndexRequest: Index inspection request.
+type InspectUrlIndexRequest struct {
+	// InspectionUrl: Required. URL to inspect. Must be under the property
+	// specified in "site_url".
+	InspectionUrl string `json:"inspectionUrl,omitempty"`
+
+	// LanguageCode: Optional. An IETF BCP-47
+	// (https://en.wikipedia.org/wiki/IETF_language_tag) language code
+	// representing the requested language for translated issue messages,
+	// e.g. "en-US", "or "de-CH". Default value is "en-US".
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// SiteUrl: Required. The URL of the property as defined in Search
+	// Console. **Examples:** `http://www.example.com/` for a URL-prefix
+	// property, or `sc-domain:example.com` for a Domain property.
+	SiteUrl string `json:"siteUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InspectionUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InspectionUrl") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InspectUrlIndexRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InspectUrlIndexRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InspectUrlIndexResponse: Index-Status inspection response.
+type InspectUrlIndexResponse struct {
+	// InspectionResult: URL inspection results.
+	InspectionResult *UrlInspectionResult `json:"inspectionResult,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "InspectionResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InspectionResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InspectUrlIndexResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod InspectUrlIndexResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Item: A specific rich result found on the page.
+type Item struct {
+	// Issues: A list of zero or more rich result issues found for this
+	// instance.
+	Issues []*RichResultsIssue `json:"issues,omitempty"`
+
+	// Name: The user-provided name of this item.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Issues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Issues") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Item) MarshalJSON() ([]byte, error) {
+	type NoMethod Item
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MobileFriendlyIssue: Mobile-friendly issue.
 type MobileFriendlyIssue struct {
 	// Rule: Rule violated.
@@ -407,7 +844,7 @@ type MobileFriendlyIssue struct {
 	//   "USES_INCOMPATIBLE_PLUGINS" - Plugins incompatible with mobile
 	// devices are being used. [Learn more]
 	// (https://support.google.com/webmasters/answer/6352293#flash_usage).
-	//   "CONFIGURE_VIEWPORT" - Viewsport is not specified using the meta
+	//   "CONFIGURE_VIEWPORT" - Viewport is not specified using the meta
 	// viewport tag. [Learn more]
 	// (https://support.google.com/webmasters/answer/6352293#viewport_not_configured).
 	//   "FIXED_WIDTH_VIEWPORT" - Viewport defined to a fixed width. [Learn
@@ -447,6 +884,110 @@ func (s *MobileFriendlyIssue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MobileUsabilityInspectionResult: Mobile-usability inspection results.
+type MobileUsabilityInspectionResult struct {
+	// Issues: A list of zero or more mobile-usability issues detected for
+	// this URL.
+	Issues []*MobileUsabilityIssue `json:"issues,omitempty"`
+
+	// Verdict: High-level mobile-usability inspection result for this URL.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
+	//   "PASS" - Equivalent to "Valid" for the page or item in Search
+	// Console.
+	//   "PARTIAL" - Equivalent to "Valid with warnings" for the page or
+	// item in Search Console.
+	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
+	// Search Console.
+	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
+	// Console.
+	Verdict string `json:"verdict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Issues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Issues") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MobileUsabilityInspectionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod MobileUsabilityInspectionResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MobileUsabilityIssue: Mobile-usability issue.
+type MobileUsabilityIssue struct {
+	// IssueType: Mobile-usability issue type.
+	//
+	// Possible values:
+	//   "MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED" - Unknown issue. Sorry,
+	// we don't have any description for the rule that was broken.
+	//   "USES_INCOMPATIBLE_PLUGINS" - Plugins incompatible with mobile
+	// devices are being used. [Learn more]
+	// (https://support.google.com/webmasters/answer/6352293#flash_usage#error-list).
+	//   "CONFIGURE_VIEWPORT" - Viewport is not specified using the meta
+	// viewport tag. [Learn more]
+	// (https://support.google.com/webmasters/answer/6352293#viewport_not_configured#error-list).
+	//   "FIXED_WIDTH_VIEWPORT" - Viewport defined to a fixed width. [Learn
+	// more]
+	// (https://support.google.com/webmasters/answer/6352293#fixed-width_viewport#error-list).
+	//   "SIZE_CONTENT_TO_VIEWPORT" - Content not sized to viewport. [Learn
+	// more]
+	// (https://support.google.com/webmasters/answer/6352293#content_not_sized_to_viewport#error-list).
+	//   "USE_LEGIBLE_FONT_SIZES" - Font size is too small for easy reading
+	// on a small screen. [Learn More]
+	// (https://support.google.com/webmasters/answer/6352293#small_font_size#error-list).
+	//   "TAP_TARGETS_TOO_CLOSE" - Touch elements are too close to each
+	// other. [Learn more]
+	// (https://support.google.com/webmasters/answer/6352293#touch_elements_too_close#error-list).
+	IssueType string `json:"issueType,omitempty"`
+
+	// Message: Additional information regarding the issue.
+	Message string `json:"message,omitempty"`
+
+	// Severity: Not returned; reserved for future use.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unknown severity.
+	//   "WARNING" - Warning.
+	//   "ERROR" - Error.
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IssueType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IssueType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MobileUsabilityIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod MobileUsabilityIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ResourceIssue: Information about a resource with issue.
 type ResourceIssue struct {
 	// BlockedResource: Describes a blocked resource issue.
@@ -472,6 +1013,90 @@ type ResourceIssue struct {
 
 func (s *ResourceIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RichResultsInspectionResult: Rich-Results inspection result,
+// including any rich results found at this URL.
+type RichResultsInspectionResult struct {
+	// DetectedItems: A list of zero or more rich results detected on this
+	// page. Rich results that cannot even be parsed due to syntactic issues
+	// will not be listed here.
+	DetectedItems []*DetectedItems `json:"detectedItems,omitempty"`
+
+	// Verdict: High-level rich results inspection result for this URL.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
+	//   "PASS" - Equivalent to "Valid" for the page or item in Search
+	// Console.
+	//   "PARTIAL" - Equivalent to "Valid with warnings" for the page or
+	// item in Search Console.
+	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
+	// Search Console.
+	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
+	// Console.
+	Verdict string `json:"verdict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectedItems") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedItems") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RichResultsInspectionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod RichResultsInspectionResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RichResultsIssue: Severity and status of a single issue affecting a
+// single rich result instance on a page.
+type RichResultsIssue struct {
+	// IssueMessage: Rich Results issue type.
+	IssueMessage string `json:"issueMessage,omitempty"`
+
+	// Severity: Severity of this issue: WARNING, or ERROR. Items with an
+	// issue of status ERROR cannot appear with rich result features in
+	// Google Search results.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unknown severity.
+	//   "WARNING" - Warning.
+	//   "ERROR" - Error.
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IssueMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IssueMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RichResultsIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod RichResultsIssue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -629,7 +1254,9 @@ type SearchAnalyticsQueryRequest struct {
 	//   "WEB"
 	//   "IMAGE"
 	//   "VIDEO"
-	//   "NEWS"
+	//   "NEWS" - News tab in search.
+	//   "DISCOVER" - Discover.
+	//   "GOOGLE_NEWS" - Google News (news.google.com or mobile app).
 	SearchType string `json:"searchType,omitempty"`
 
 	// StartDate:  [Required] Start date of the requested date range, in
@@ -640,6 +1267,18 @@ type SearchAnalyticsQueryRequest struct {
 	// StartRow: [Optional; Default is 0] Zero-based index of the first row
 	// in the response. Must be a non-negative number.
 	StartRow int64 `json:"startRow,omitempty"`
+
+	// Type: Optional. [Optional; Default is \"web\"] Type of report: search
+	// type, or either Discover or Gnews.
+	//
+	// Possible values:
+	//   "WEB"
+	//   "IMAGE"
+	//   "VIDEO"
+	//   "NEWS" - News tab in search.
+	//   "DISCOVER" - Discover.
+	//   "GOOGLE_NEWS" - Google News (news.google.com or mobile app).
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AggregationType") to
 	// unconditionally include in API requests. By default, fields with
@@ -818,6 +1457,49 @@ type TestStatus struct {
 
 func (s *TestStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod TestStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UrlInspectionResult: URL inspection result, including all inspection
+// results.
+type UrlInspectionResult struct {
+	// AmpResult: Result of the AMP analysis. Absent if the page is not an
+	// AMP page.
+	AmpResult *AmpInspectionResult `json:"ampResult,omitempty"`
+
+	// IndexStatusResult: Result of the index status analysis.
+	IndexStatusResult *IndexStatusInspectionResult `json:"indexStatusResult,omitempty"`
+
+	// InspectionResultLink: Link to Search Console URL inspection.
+	InspectionResultLink string `json:"inspectionResultLink,omitempty"`
+
+	// MobileUsabilityResult: Result of the Mobile usability analysis.
+	MobileUsabilityResult *MobileUsabilityInspectionResult `json:"mobileUsabilityResult,omitempty"`
+
+	// RichResultsResult: Result of the Rich Results analysis. Absent if
+	// there are no rich results found.
+	RichResultsResult *RichResultsInspectionResult `json:"richResultsResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AmpResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AmpResult") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UrlInspectionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod UrlInspectionResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1044,7 +1726,7 @@ func (c *SearchanalyticsQueryCall) Header() http.Header {
 
 func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1149,7 +1831,9 @@ type SitemapsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a sitemap from this site.
+// Delete: Deletes a sitemap from the Sitemaps report. Does not stop
+// Google from crawling this sitemap or the URLs that were previously
+// crawled in the deleted sitemap.
 //
 // - feedpath: The URL of the actual sitemap. For example:
 //   `http://www.example.com/sitemap.xml`.
@@ -1189,7 +1873,7 @@ func (c *SitemapsDeleteCall) Header() http.Header {
 
 func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1224,7 +1908,7 @@ func (c *SitemapsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes a sitemap from this site.",
+	//   "description": "Deletes a sitemap from the Sitemaps report. Does not stop Google from crawling this sitemap or the URLs that were previously crawled in the deleted sitemap.",
 	//   "flatPath": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
 	//   "httpMethod": "DELETE",
 	//   "id": "webmasters.sitemaps.delete",
@@ -1316,7 +2000,7 @@ func (c *SitemapsGetCall) Header() http.Header {
 
 func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1481,7 +2165,7 @@ func (c *SitemapsListCall) Header() http.Header {
 
 func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1626,7 +2310,7 @@ func (c *SitemapsSubmitCall) Header() http.Header {
 
 func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1737,7 +2421,7 @@ func (c *SitesAddCall) Header() http.Header {
 
 func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1842,7 +2526,7 @@ func (c *SitesDeleteCall) Header() http.Header {
 
 func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1957,7 +2641,7 @@ func (c *SitesGetCall) Header() http.Header {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2099,7 +2783,7 @@ func (c *SitesListCall) Header() http.Header {
 
 func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2176,6 +2860,132 @@ func (c *SitesListCall) Do(opts ...googleapi.CallOption) (*SitesListResponse, er
 
 }
 
+// method id "searchconsole.urlInspection.index.inspect":
+
+type UrlInspectionIndexInspectCall struct {
+	s                      *Service
+	inspecturlindexrequest *InspectUrlIndexRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Inspect: Index inspection.
+func (r *UrlInspectionIndexService) Inspect(inspecturlindexrequest *InspectUrlIndexRequest) *UrlInspectionIndexInspectCall {
+	c := &UrlInspectionIndexInspectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.inspecturlindexrequest = inspecturlindexrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UrlInspectionIndexInspectCall) Fields(s ...googleapi.Field) *UrlInspectionIndexInspectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UrlInspectionIndexInspectCall) Context(ctx context.Context) *UrlInspectionIndexInspectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UrlInspectionIndexInspectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UrlInspectionIndexInspectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.inspecturlindexrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/urlInspection/index:inspect")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "searchconsole.urlInspection.index.inspect" call.
+// Exactly one of *InspectUrlIndexResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *InspectUrlIndexResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UrlInspectionIndexInspectCall) Do(opts ...googleapi.CallOption) (*InspectUrlIndexResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &InspectUrlIndexResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Index inspection.",
+	//   "flatPath": "v1/urlInspection/index:inspect",
+	//   "httpMethod": "POST",
+	//   "id": "searchconsole.urlInspection.index.inspect",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/urlInspection/index:inspect",
+	//   "request": {
+	//     "$ref": "InspectUrlIndexRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "InspectUrlIndexResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/webmasters",
+	//     "https://www.googleapis.com/auth/webmasters.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "searchconsole.urlTestingTools.mobileFriendlyTest.run":
 
 type UrlTestingToolsMobileFriendlyTestRunCall struct {
@@ -2220,7 +3030,7 @@ func (c *UrlTestingToolsMobileFriendlyTestRunCall) Header() http.Header {
 
 func (c *UrlTestingToolsMobileFriendlyTestRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

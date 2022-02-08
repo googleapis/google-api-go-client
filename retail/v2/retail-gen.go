@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -575,8 +575,7 @@ type GoogleCloudRetailV2AddFulfillmentPlacesRequest struct {
 	// AllowMissing: If set to true, and the Product is not found, the
 	// fulfillment information will still be processed and retained for at
 	// most 1 day and processed once the Product is created. If set to
-	// false, an INVALID_ARGUMENT error is returned if the Product is not
-	// found.
+	// false, a NOT_FOUND error is returned if the Product is not found.
 	AllowMissing bool `json:"allowMissing,omitempty"`
 
 	// PlaceIds: Required. The IDs for this type, such as the store IDs for
@@ -584,10 +583,10 @@ type GoogleCloudRetailV2AddFulfillmentPlacesRequest struct {
 	// added for this type. Duplicate IDs will be automatically ignored. At
 	// least 1 value is required, and a maximum of 2000 values are allowed.
 	// Each value must be a string with a length limit of 10 characters,
-	// matching the pattern [a-zA-Z0-9_-]+, such as "store1" or "REGION-2".
-	// Otherwise, an INVALID_ARGUMENT error is returned. If the total number
-	// of place IDs exceeds 2000 for this type after adding, then the update
-	// will be rejected.
+	// matching the pattern `[a-zA-Z0-9_-]+`, such as "store1" or
+	// "REGION-2". Otherwise, an INVALID_ARGUMENT error is returned. If the
+	// total number of place IDs exceeds 2000 for this type after adding,
+	// then the update will be rejected.
 	PlaceIds []string `json:"placeIds,omitempty"`
 
 	// Type: Required. The fulfillment type, including commonly used types
@@ -624,7 +623,7 @@ func (s *GoogleCloudRetailV2AddFulfillmentPlacesRequest) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudRetailV2AddFulfillmentPlacesResponse: Response of the
-// RemoveFulfillmentPlacesRequest. Currently empty because there is no
+// AddFulfillmentPlacesRequest. Currently empty because there is no
 // meaningful response populated from the AddFulfillmentPlaces method.
 type GoogleCloudRetailV2AddFulfillmentPlacesResponse struct {
 }
@@ -1027,10 +1026,9 @@ type GoogleCloudRetailV2CustomAttribute struct {
 	Indexable bool `json:"indexable,omitempty"`
 
 	// Numbers: The numerical values of this custom attribute. For example,
-	// `[2.3, 15.4]` when the key is "lengths_cm". At most 400 values are
-	// allowed.Otherwise, an INVALID_ARGUMENT error is returned. Exactly one
-	// of text or numbers should be set. Otherwise, an INVALID_ARGUMENT
-	// error is returned.
+	// `[2.3, 15.4]` when the key is "lengths_cm". Exactly one of text or
+	// numbers should be set. Otherwise, an INVALID_ARGUMENT error is
+	// returned.
 	Numbers []float64 `json:"numbers,omitempty"`
 
 	// Searchable: If true, custom attribute values are searchable by text
@@ -1040,11 +1038,9 @@ type GoogleCloudRetailV2CustomAttribute struct {
 	Searchable bool `json:"searchable,omitempty"`
 
 	// Text: The textual values of this custom attribute. For example,
-	// `["yellow", "green"]` when the key is "color". At most 400 values are
-	// allowed. Empty values are not allowed. Each value must be a UTF-8
-	// encoded string with a length limit of 256 characters. Otherwise, an
-	// INVALID_ARGUMENT error is returned. Exactly one of text or numbers
-	// should be set. Otherwise, an INVALID_ARGUMENT error is returned.
+	// `["yellow", "green"]` when the key is "color". Exactly one of text or
+	// numbers should be set. Otherwise, an INVALID_ARGUMENT error is
+	// returned.
 	Text []string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Indexable") to
@@ -1078,8 +1074,8 @@ type GoogleCloudRetailV2FulfillmentInfo struct {
 	// FulfillmentInfo.type.pickup-in-store or the region IDs for
 	// FulfillmentInfo.type.same-day-delivery. A maximum of 3000 values are
 	// allowed. Each value must be a string with a length limit of 30
-	// characters, matching the pattern [a-zA-Z0-9_-]+, such as "store1" or
-	// "REGION-2". Otherwise, an INVALID_ARGUMENT error is returned.
+	// characters, matching the pattern `[a-zA-Z0-9_-]+`, such as "store1"
+	// or "REGION-2". Otherwise, an INVALID_ARGUMENT error is returned.
 	PlaceIds []string `json:"placeIds,omitempty"`
 
 	// Type: The fulfillment type, including commonly used types (such as
@@ -1126,7 +1122,10 @@ type GoogleCloudRetailV2GcsSource struct {
 	// (https://cloud.google.com/retail/recommendations-ai/docs/upload-catalog#mc).
 	// Supported values for user events imports: * `user_event` (default):
 	// One JSON UserEvent per line. * `user_event_ga360`: Using
-	// https://support.google.com/analytics/answer/3437719.
+	// https://support.google.com/analytics/answer/3437719. Supported values
+	// for control imports: * 'control' (default): One JSON Control per
+	// line. Supported values for catalog attribute imports: *
+	// 'catalog_attribute' (default): One CSV CatalogAttribute per line.
 	DataSchema string `json:"dataSchema,omitempty"`
 
 	// InputUris: Required. Google Cloud Storage URIs to input files. URI
@@ -1423,8 +1422,10 @@ type GoogleCloudRetailV2ImportProductsRequest struct {
 	//   "INCREMENTAL" - Inserts new products or updates existing products.
 	//   "FULL" - Calculates diff and replaces the entire product dataset.
 	// Existing products may be deleted if they are not present in the
-	// source location. Can only be while using BigQuerySource. Add the IAM
-	// permission "BigQuery Data Viewer" for
+	// source location. Can only be set while using BigQuerySource. And the
+	// BigQuery dataset must be created in the data location "us (multiple
+	// regions in United States)", otherwise a PERMISSION_DENIED error is
+	// thrown. Add the IAM permission "BigQuery Data Viewer" for
 	// cloud-retail-customer-data-access@system.gserviceaccount.com before
 	// using this feature otherwise an error is thrown. This feature is only
 	// available for users who have Retail Search enabled. Please submit a
@@ -1435,7 +1436,7 @@ type GoogleCloudRetailV2ImportProductsRequest struct {
 	// RequestId: Unique identifier provided by client, within the ancestor
 	// dataset scope. Ensures idempotency and used for request
 	// deduplication. Server-generated if unspecified. Up to 128 characters
-	// long and must match the pattern: "[a-zA-Z0-9_]+". This is returned as
+	// long and must match the pattern: `[a-zA-Z0-9_]+`. This is returned as
 	// Operation.name in ImportMetadata. Only supported when
 	// ImportProductsRequest.reconciliation_mode is set to `FULL`.
 	RequestId string `json:"requestId,omitempty"`
@@ -1920,8 +1921,7 @@ type GoogleCloudRetailV2PriceInfo struct {
 
 	// Price: Price of the product. Google Merchant Center property price
 	// (https://support.google.com/merchants/answer/6324371). Schema.org
-	// property Offer.priceSpecification
-	// (https://schema.org/priceSpecification).
+	// property Offer.price (https://schema.org/price).
 	Price float64 `json:"price,omitempty"`
 
 	// PriceEffectiveTime: The timestamp when the price starts to be
@@ -2040,7 +2040,11 @@ type GoogleCloudRetailV2Product struct {
 	// INVALID_ARGUMENT error is returned: * Max entries count: 200. * The
 	// key must be a UTF-8 encoded string with a length limit of 128
 	// characters. * For indexable attribute, the key must match the
-	// pattern: a-zA-Z0-9*. For example, key0LikeThis or KEY_1_LIKE_THIS.
+	// pattern: `a-zA-Z0-9*`. For example, `key0LikeThis` or
+	// `KEY_1_LIKE_THIS`. * For text attributes, at most 400 values are
+	// allowed. Empty values are not allowed. Each value must be a UTF-8
+	// encoded string with a length limit of 256 characters. * For number
+	// attributes, at most 400 values are allowed.
 	Attributes map[string]GoogleCloudRetailV2CustomAttribute `json:"attributes,omitempty"`
 
 	// Audience: The target group associated with a given audience (e.g.
@@ -2048,9 +2052,10 @@ type GoogleCloudRetailV2Product struct {
 	Audience *GoogleCloudRetailV2Audience `json:"audience,omitempty"`
 
 	// Availability: The online availability of the Product. Default to
-	// Availability.IN_STOCK. Google Merchant Center Property availability
+	// Availability.IN_STOCK. Corresponding properties: Google Merchant
+	// Center property availability
 	// (https://support.google.com/merchants/answer/6324448). Schema.org
-	// Property Offer.availability (https://schema.org/availability).
+	// property Offer.availability (https://schema.org/availability).
 	//
 	// Possible values:
 	//   "AVAILABILITY_UNSPECIFIED" - Default product availability. Default
@@ -2072,9 +2077,9 @@ type GoogleCloudRetailV2Product struct {
 	// Brands: The brands of the product. A maximum of 30 brands are
 	// allowed. Each brand must be a UTF-8 encoded string with a length
 	// limit of 1,000 characters. Otherwise, an INVALID_ARGUMENT error is
-	// returned. Google Merchant Center property brand
-	// (https://support.google.com/merchants/answer/6324351). Schema.org
-	// property Product.brand (https://schema.org/brand).
+	// returned. Corresponding properties: Google Merchant Center property
+	// brand (https://support.google.com/merchants/answer/6324351).
+	// Schema.org property Product.brand (https://schema.org/brand).
 	Brands []string `json:"brands,omitempty"`
 
 	// Categories: Product categories. This field is repeated for supporting
@@ -2090,46 +2095,52 @@ type GoogleCloudRetailV2Product struct {
 	// otherwise an INVALID_ARGUMENT error is returned. At most 250 values
 	// are allowed per Product. Empty values are not allowed. Each value
 	// must be a UTF-8 encoded string with a length limit of 5,000
-	// characters. Otherwise, an INVALID_ARGUMENT error is returned. Google
-	// Merchant Center property google_product_category. Schema.org property
-	// [Product.category] (https://schema.org/category).
-	// [mc_google_product_category]:
+	// characters. Otherwise, an INVALID_ARGUMENT error is returned.
+	// Corresponding properties: Google Merchant Center property
+	// google_product_category. Schema.org property [Product.category]
+	// (https://schema.org/category). [mc_google_product_category]:
 	// https://support.google.com/merchants/answer/6324436
 	Categories []string `json:"categories,omitempty"`
 
 	// CollectionMemberIds: The id of the collection members when type is
-	// Type.COLLECTION. Should not set it for other types. A maximum of 1000
-	// values are allowed. Otherwise, an INVALID_ARGUMENT error is return.
+	// Type.COLLECTION. Non-existent product ids are allowed. The type of
+	// the members must be either Type.PRIMARY or Type.VARIANT otherwise and
+	// INVALID_ARGUMENT error is thrown. Should not set it for other types.
+	// A maximum of 1000 values are allowed. Otherwise, an INVALID_ARGUMENT
+	// error is return.
 	CollectionMemberIds []string `json:"collectionMemberIds,omitempty"`
 
-	// ColorInfo: The color of the product. Google Merchant Center property
-	// color (https://support.google.com/merchants/answer/6324487).
-	// Schema.org property Product.color (https://schema.org/color).
+	// ColorInfo: The color of the product. Corresponding properties: Google
+	// Merchant Center property color
+	// (https://support.google.com/merchants/answer/6324487). Schema.org
+	// property Product.color (https://schema.org/color).
 	ColorInfo *GoogleCloudRetailV2ColorInfo `json:"colorInfo,omitempty"`
 
 	// Conditions: The condition of the product. Strongly encouraged to use
-	// the standard values: "new", "refurbished", "used". A maximum of 5
-	// values are allowed per Product. Each value must be a UTF-8 encoded
+	// the standard values: "new", "refurbished", "used". A maximum of 1
+	// value is allowed per Product. Each value must be a UTF-8 encoded
 	// string with a length limit of 128 characters. Otherwise, an
-	// INVALID_ARGUMENT error is returned. Google Merchant Center property
-	// condition (https://support.google.com/merchants/answer/6324469).
-	// Schema.org property Offer.itemCondition
-	// (https://schema.org/itemCondition).
+	// INVALID_ARGUMENT error is returned. Corresponding properties: Google
+	// Merchant Center property condition
+	// (https://support.google.com/merchants/answer/6324469). Schema.org
+	// property Offer.itemCondition (https://schema.org/itemCondition).
 	Conditions []string `json:"conditions,omitempty"`
 
 	// Description: Product description. This field must be a UTF-8 encoded
 	// string with a length limit of 5,000 characters. Otherwise, an
-	// INVALID_ARGUMENT error is returned. Google Merchant Center property
-	// description (https://support.google.com/merchants/answer/6324468).
-	// schema.org property Product.description
-	// (https://schema.org/description).
+	// INVALID_ARGUMENT error is returned. Corresponding properties: Google
+	// Merchant Center property description
+	// (https://support.google.com/merchants/answer/6324468). Schema.org
+	// property Product.description (https://schema.org/description).
 	Description string `json:"description,omitempty"`
 
 	// ExpireTime: The timestamp when this product becomes unavailable for
 	// SearchService.Search. If it is set, the Product is not available for
 	// SearchService.Search after expire_time. However, the product can
 	// still be retrieved by ProductService.GetProduct and
-	// ProductService.ListProducts. Google Merchant Center property
+	// ProductService.ListProducts. expire_time must be later than
+	// available_time and publish_time, otherwise an INVALID_ARGUMENT error
+	// is thrown. Corresponding properties: Google Merchant Center property
 	// expiration_date
 	// (https://support.google.com/merchants/answer/6324499).
 	ExpireTime string `json:"expireTime,omitempty"`
@@ -2143,13 +2154,13 @@ type GoogleCloudRetailV2Product struct {
 	// Gtin: The Global Trade Item Number (GTIN) of the product. This field
 	// must be a UTF-8 encoded string with a length limit of 128 characters.
 	// Otherwise, an INVALID_ARGUMENT error is returned. This field must be
-	// a Unigram. Otherwise, an INVALID_ARGUMENT error is returned. Google
-	// Merchant Center property gtin
+	// a Unigram. Otherwise, an INVALID_ARGUMENT error is returned.
+	// Corresponding properties: Google Merchant Center property gtin
 	// (https://support.google.com/merchants/answer/6324461). Schema.org
-	// property Product.isbn (https://schema.org/isbn) or Product.gtin8
-	// (https://schema.org/gtin8) or Product.gtin12
-	// (https://schema.org/gtin12) or Product.gtin13
-	// (https://schema.org/gtin13) or Product.gtin14
+	// property Product.isbn (https://schema.org/isbn), Product.gtin8
+	// (https://schema.org/gtin8), Product.gtin12
+	// (https://schema.org/gtin12), Product.gtin13
+	// (https://schema.org/gtin13), or Product.gtin14
 	// (https://schema.org/gtin14). If the value is not a valid GTIN, an
 	// INVALID_ARGUMENT error is returned.
 	Gtin string `json:"gtin,omitempty"`
@@ -2159,20 +2170,21 @@ type GoogleCloudRetailV2Product struct {
 	// `projects/*/locations/global/catalogs/default_catalog/branches/default
 	// _branch/products/id_1`. This field must be a UTF-8 encoded string
 	// with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT
-	// error is returned. Google Merchant Center property id
-	// (https://support.google.com/merchants/answer/6324405). Schema.org
-	// Property Product.sku (https://schema.org/sku).
+	// error is returned. Corresponding properties: Google Merchant Center
+	// property id (https://support.google.com/merchants/answer/6324405).
+	// Schema.org property Product.sku (https://schema.org/sku).
 	Id string `json:"id,omitempty"`
 
 	// Images: Product images for the product.Highly recommended to put the
-	// main image to the first. A maximum of 300 images are allowed. Google
-	// Merchant Center property image_link
+	// main image to the first. A maximum of 300 images are allowed.
+	// Corresponding properties: Google Merchant Center property image_link
 	// (https://support.google.com/merchants/answer/6324350). Schema.org
 	// property Product.image (https://schema.org/image).
 	Images []*GoogleCloudRetailV2Image `json:"images,omitempty"`
 
 	// LanguageCode: Language of the title/description and other string
-	// attributes. Use language tags defined by BCP 47. For product
+	// attributes. Use language tags defined by BCP 47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). For product
 	// prediction, this field is ignored and the model automatically detects
 	// the text language. The Product can include text in different
 	// languages, but duplicating Products to provide text in multiple
@@ -2183,8 +2195,8 @@ type GoogleCloudRetailV2Product struct {
 	// Materials: The material of the product. For example, "leather",
 	// "wooden". A maximum of 20 values are allowed. Each value must be a
 	// UTF-8 encoded string with a length limit of 128 characters.
-	// Otherwise, an INVALID_ARGUMENT error is returned. Google Merchant
-	// Center property material
+	// Otherwise, an INVALID_ARGUMENT error is returned. Corresponding
+	// properties: Google Merchant Center property material
 	// (https://support.google.com/merchants/answer/6324410). Schema.org
 	// property Product.material (https://schema.org/material).
 	Materials []string `json:"materials,omitempty"`
@@ -2198,13 +2210,14 @@ type GoogleCloudRetailV2Product struct {
 	// "striped", "polka dot", "paisley". A maximum of 20 values are allowed
 	// per Product. Each value must be a UTF-8 encoded string with a length
 	// limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is
-	// returned. Google Merchant Center property pattern
-	// (https://support.google.com/merchants/answer/6324483). Schema.org
-	// property Product.pattern (https://schema.org/pattern).
+	// returned. Corresponding properties: Google Merchant Center property
+	// pattern (https://support.google.com/merchants/answer/6324483).
+	// Schema.org property Product.pattern (https://schema.org/pattern).
 	Patterns []string `json:"patterns,omitempty"`
 
-	// PriceInfo: Product price and cost information. Google Merchant Center
-	// property price (https://support.google.com/merchants/answer/6324371).
+	// PriceInfo: Product price and cost information. Corresponding
+	// properties: Google Merchant Center property price
+	// (https://support.google.com/merchants/answer/6324371).
 	PriceInfo *GoogleCloudRetailV2PriceInfo `json:"priceInfo,omitempty"`
 
 	// PrimaryProductId: Variant group identifier. Must be an id, with the
@@ -2212,17 +2225,16 @@ type GoogleCloudRetailV2Product struct {
 	// For Type.PRIMARY Products, this field can only be empty or set to the
 	// same value as id. For VARIANT Products, this field cannot be empty. A
 	// maximum of 2,000 products are allowed to share the same Type.PRIMARY
-	// Product. Otherwise, an INVALID_ARGUMENT error is returned. Google
-	// Merchant Center Property item_group_id
-	// (https://support.google.com/merchants/answer/6324507). Schema.org
-	// Property Product.inProductGroupWithID
-	// (https://schema.org/inProductGroupWithID). This field must be enabled
-	// before it can be used. Learn more
-	// (/recommendations-ai/docs/catalog#item-group-id).
+	// Product. Otherwise, an INVALID_ARGUMENT error is returned.
+	// Corresponding properties: Google Merchant Center property
+	// item_group_id (https://support.google.com/merchants/answer/6324507).
+	// Schema.org property Product.inProductGroupWithID
+	// (https://schema.org/inProductGroupWithID).
 	PrimaryProductId string `json:"primaryProductId,omitempty"`
 
 	// Promotions: The promotions applied to the product. A maximum of 10
-	// values are allowed per Product.
+	// values are allowed per Product. Only Promotion.promotion_id will be
+	// used, other fields will be ignored if set.
 	Promotions []*GoogleCloudRetailV2Promotion `json:"promotions,omitempty"`
 
 	// PublishTime: The timestamp when the product is published by the
@@ -2262,12 +2274,12 @@ type GoogleCloudRetailV2Product struct {
 	// both size system and size type are empty, while size value is "32
 	// inches". A maximum of 20 values are allowed per Product. Each value
 	// must be a UTF-8 encoded string with a length limit of 128 characters.
-	// Otherwise, an INVALID_ARGUMENT error is returned. Google Merchant
-	// Center property size
+	// Otherwise, an INVALID_ARGUMENT error is returned. Corresponding
+	// properties: Google Merchant Center property size
 	// (https://support.google.com/merchants/answer/6324492), size_type
-	// (https://support.google.com/merchants/answer/6324497) and size_system
-	// (https://support.google.com/merchants/answer/6324502). Schema.org
-	// property Product.size (https://schema.org/size).
+	// (https://support.google.com/merchants/answer/6324497), and
+	// size_system (https://support.google.com/merchants/answer/6324502).
+	// Schema.org property Product.size (https://schema.org/size).
 	Sizes []string `json:"sizes,omitempty"`
 
 	// Tags: Custom tags associated with the product. At most 250 values are
@@ -2275,24 +2287,26 @@ type GoogleCloudRetailV2Product struct {
 	// length limit of 1,000 characters. Otherwise, an INVALID_ARGUMENT
 	// error is returned. This tag can be used for filtering recommendation
 	// results by passing the tag as part of the PredictRequest.filter.
-	// Google Merchant Center property custom_label_0–4
+	// Corresponding properties: Google Merchant Center property
+	// custom_label_0–4
 	// (https://support.google.com/merchants/answer/6324473).
 	Tags []string `json:"tags,omitempty"`
 
 	// Title: Required. Product title. This field must be a UTF-8 encoded
 	// string with a length limit of 1,000 characters. Otherwise, an
-	// INVALID_ARGUMENT error is returned. Google Merchant Center property
-	// title (https://support.google.com/merchants/answer/6324415).
-	// Schema.org property Product.name (https://schema.org/name).
+	// INVALID_ARGUMENT error is returned. Corresponding properties: Google
+	// Merchant Center property title
+	// (https://support.google.com/merchants/answer/6324415). Schema.org
+	// property Product.name (https://schema.org/name).
 	Title string `json:"title,omitempty"`
 
 	// Ttl: Input only. The TTL (time to live) of the product. If it is set,
-	// expire_time is set as current timestamp plus ttl. The derived
-	// expire_time is returned in the output and ttl is left blank when
-	// retrieving the Product. If it is set, the product is not available
-	// for SearchService.Search after current timestamp plus ttl. However,
-	// the product can still be retrieved by ProductService.GetProduct and
-	// ProductService.ListProducts.
+	// it must be a non-negative value, and expire_time is set as current
+	// timestamp plus ttl. The derived expire_time is returned in the output
+	// and ttl is left blank when retrieving the Product. If it is set, the
+	// product is not available for SearchService.Search after current
+	// timestamp plus ttl. However, the product can still be retrieved by
+	// ProductService.GetProduct and ProductService.ListProducts.
 	Ttl string `json:"ttl,omitempty"`
 
 	// Type: Immutable. The type of the product. Default to
@@ -2318,7 +2332,7 @@ type GoogleCloudRetailV2Product struct {
 	// otherwise the service performance could be significantly degraded.
 	// This field must be a UTF-8 encoded string with a length limit of
 	// 5,000 characters. Otherwise, an INVALID_ARGUMENT error is returned.
-	// Google Merchant Center property link
+	// Corresponding properties: Google Merchant Center property link
 	// (https://support.google.com/merchants/answer/6324416). Schema.org
 	// property Offer.url (https://schema.org/url).
 	Uri string `json:"uri,omitempty"`
@@ -2471,12 +2485,12 @@ func (s *GoogleCloudRetailV2ProductInputConfig) MarshalJSON() ([]byte, error) {
 type GoogleCloudRetailV2ProductLevelConfig struct {
 	// IngestionProductType: The type of Products allowed to be ingested
 	// into the catalog. Acceptable values are: * `primary` (default): You
-	// can only ingest Product.Type.PRIMARY Products. This means
-	// Product.primary_product_id can only be empty or set to the same value
-	// as Product.id. * `variant`: You can only ingest Product.Type.VARIANT
-	// Products. This means Product.primary_product_id cannot be empty. If
-	// this field is set to an invalid value other than these, an
-	// INVALID_ARGUMENT error is returned. If this field is `variant` and
+	// can ingest Products of all types. When ingesting a Product, its type
+	// will default to Product.Type.PRIMARY if unset. * `variant`: You can
+	// only ingest Product.Type.VARIANT Products. This means
+	// Product.primary_product_id cannot be empty. If this field is set to
+	// an invalid value other than these, an INVALID_ARGUMENT error is
+	// returned. If this field is `variant` and
 	// merchant_center_product_id_field is `itemGroupId`, an
 	// INVALID_ARGUMENT error is returned. See Using product levels
 	// (https://cloud.google.com/retail/recommendations-ai/docs/catalog#product-levels)
@@ -2525,9 +2539,9 @@ func (s *GoogleCloudRetailV2ProductLevelConfig) MarshalJSON() ([]byte, error) {
 // GoogleCloudRetailV2Promotion: Promotion information.
 type GoogleCloudRetailV2Promotion struct {
 	// PromotionId: ID of the promotion. For example, "free gift". The value
-	// value must be a UTF-8 encoded string with a length limit of 128
-	// characters, and match the pattern: a-zA-Z*. For example, id0LikeThis
-	// or ID_1_LIKE_THIS. Otherwise, an INVALID_ARGUMENT error is returned.
+	// must be a UTF-8 encoded string with a length limit of 128 characters,
+	// and match the pattern: `a-zA-Z*`. For example, id0LikeThis or
+	// ID_1_LIKE_THIS. Otherwise, an INVALID_ARGUMENT error is returned.
 	// Google Merchant Center property promotion
 	// (https://support.google.com/merchants/answer/7050148).
 	PromotionId string `json:"promotionId,omitempty"`
@@ -2854,16 +2868,15 @@ type GoogleCloudRetailV2RemoveFulfillmentPlacesRequest struct {
 	// AllowMissing: If set to true, and the Product is not found, the
 	// fulfillment information will still be processed and retained for at
 	// most 1 day and processed once the Product is created. If set to
-	// false, an INVALID_ARGUMENT error is returned if the Product is not
-	// found.
+	// false, a NOT_FOUND error is returned if the Product is not found.
 	AllowMissing bool `json:"allowMissing,omitempty"`
 
 	// PlaceIds: Required. The IDs for this type, such as the store IDs for
 	// "pickup-in-store" or the region IDs for "same-day-delivery", to be
 	// removed for this type. At least 1 value is required, and a maximum of
 	// 2000 values are allowed. Each value must be a string with a length
-	// limit of 10 characters, matching the pattern [a-zA-Z0-9_-]+, such as
-	// "store1" or "REGION-2". Otherwise, an INVALID_ARGUMENT error is
+	// limit of 10 characters, matching the pattern `[a-zA-Z0-9_-]+`, such
+	// as "store1" or "REGION-2". Otherwise, an INVALID_ARGUMENT error is
 	// returned.
 	PlaceIds []string `json:"placeIds,omitempty"`
 
@@ -2917,7 +2930,12 @@ type GoogleCloudRetailV2RemoveFulfillmentPlacesResponse struct {
 type GoogleCloudRetailV2SearchRequest struct {
 	// BoostSpec: Boost specification to boost certain products. See more
 	// details at this user guide
-	// (https://cloud.google.com/retail/docs/boosting).
+	// (https://cloud.google.com/retail/docs/boosting). Notice that if both
+	// ServingConfig.boost_control_ids and [SearchRequest.boost_spec] are
+	// set, the boost conditions from both places are evaluated. If a search
+	// request matches multiple boost conditions, the final boost score is
+	// equal to the sum of the boost scores from all matched boost
+	// conditions.
 	BoostSpec *GoogleCloudRetailV2SearchRequestBoostSpec `json:"boostSpec,omitempty"`
 
 	// Branch: The branch resource name, such as
@@ -2993,6 +3011,9 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// token. Otherwise, an INVALID_ARGUMENT error is returned.
 	PageToken string `json:"pageToken,omitempty"`
 
+	// PersonalizationSpec: The specification for personalization.
+	PersonalizationSpec *GoogleCloudRetailV2SearchRequestPersonalizationSpec `json:"personalizationSpec,omitempty"`
+
 	// Query: Raw search query.
 	Query string `json:"query,omitempty"`
 
@@ -3002,26 +3023,51 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// (https://cloud.google.com/retail/docs/result-size#query_expansion).
 	QueryExpansionSpec *GoogleCloudRetailV2SearchRequestQueryExpansionSpec `json:"queryExpansionSpec,omitempty"`
 
+	// SearchMode: The search mode of the search request. If not specified,
+	// a single search request triggers both product search and faceted
+	// search.
+	//
+	// Possible values:
+	//   "SEARCH_MODE_UNSPECIFIED" - Default value. In this case both
+	// product search and faceted search will be performed. Both
+	// [SearchResponse.SearchResult] and [SearchResponse.Facet] will be
+	// returned.
+	//   "PRODUCT_SEARCH_ONLY" - Only product search will be performed. The
+	// faceted search will be disabled. Only [SearchResponse.SearchResult]
+	// will be returned. [SearchResponse.Facet] will not be returned, even
+	// if SearchRequest.facet_specs or SearchRequest.dynamic_facet_spec is
+	// set.
+	//   "FACETED_SEARCH_ONLY" - Only faceted search will be performed. The
+	// product search will be disabled. When in this mode, one or both of
+	// SearchRequest.facet_spec and SearchRequest.dynamic_facet_spec should
+	// be set. Otherwise, an INVALID_ARGUMENT error is returned. Only
+	// [SearchResponse.Facet] will be returned.
+	// [SearchResponse.SearchResult] will not be returned.
+	SearchMode string `json:"searchMode,omitempty"`
+
 	// UserInfo: User information.
 	UserInfo *GoogleCloudRetailV2UserInfo `json:"userInfo,omitempty"`
 
 	// VariantRollupKeys: The keys to fetch and rollup the matching variant
-	// Products attributes. The attributes from all the matching variant
-	// Products are merged and de-duplicated. Notice that rollup variant
-	// Products attributes will lead to extra query latency. Maximum number
-	// of keys is 10. For FulfillmentInfo, a fulfillment type and a
-	// fulfillment ID must be provided in the format of
-	// "fulfillmentType.fulfillmentId". E.g., in "pickupInStore.store123",
-	// "pickupInStore" is fulfillment type and "store123" is the store ID.
-	// Supported keys are: * colorFamilies * price * originalPrice *
-	// discount * attributes.key, where key is any key in the
-	// Product.attributes map. * pickupInStore.id, where id is any
-	// FulfillmentInfo.place_ids for FulfillmentInfo.type "pickup-in-store".
-	// * shipToStore.id, where id is any FulfillmentInfo.place_ids for
-	// FulfillmentInfo.type "ship-to-store". * sameDayDelivery.id, where id
+	// Products attributes, FulfillmentInfo or LocalInventorys attributes.
+	// The attributes from all the matching variant Products or
+	// LocalInventorys are merged and de-duplicated. Notice that rollup
+	// attributes will lead to extra query latency. Maximum number of keys
+	// is 30. For FulfillmentInfo, a fulfillment type and a fulfillment ID
+	// must be provided in the format of "fulfillmentType.fulfillmentId".
+	// E.g., in "pickupInStore.store123", "pickupInStore" is fulfillment
+	// type and "store123" is the store ID. Supported keys are: *
+	// colorFamilies * price * originalPrice * discount * variantId *
+	// inventory(place_id,price) * inventory(place_id,original_price) *
+	// inventory(place_id,attributes.key), where key is any key in the
+	// Product.inventories.attributes map. * attributes.key, where key is
+	// any key in the Product.attributes map. * pickupInStore.id, where id
 	// is any FulfillmentInfo.place_ids for FulfillmentInfo.type
-	// "same-day-delivery". * nextDayDelivery.id, where id is any
-	// FulfillmentInfo.place_ids for FulfillmentInfo.type
+	// "pickup-in-store". * shipToStore.id, where id is any
+	// FulfillmentInfo.place_ids for FulfillmentInfo.type "ship-to-store". *
+	// sameDayDelivery.id, where id is any FulfillmentInfo.place_ids for
+	// FulfillmentInfo.type "same-day-delivery". * nextDayDelivery.id, where
+	// id is any FulfillmentInfo.place_ids for FulfillmentInfo.type
 	// "next-day-delivery". * customFulfillment1.id, where id is any
 	// FulfillmentInfo.place_ids for FulfillmentInfo.type "custom-type-1". *
 	// customFulfillment2.id, where id is any FulfillmentInfo.place_ids for
@@ -3039,9 +3085,10 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// example, this could be implemented with an HTTP cookie, which should
 	// be able to uniquely identify a visitor on a single device. This
 	// unique identifier should not change if the visitor logs in or out of
-	// the website. The field must be a UTF-8 encoded string with a length
-	// limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is
-	// returned.
+	// the website. This should be the same identifier as
+	// UserEvent.visitor_id. The field must be a UTF-8 encoded string with a
+	// length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error
+	// is returned.
 	VisitorId string `json:"visitorId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoostSpec") to
@@ -3294,8 +3341,10 @@ type GoogleCloudRetailV2SearchRequestFacetSpecFacetKey struct {
 	// "pickupInStore" * "shipToStore" * "sameDayDelivery" *
 	// "nextDayDelivery" * "customFulfillment1" * "customFulfillment2" *
 	// "customFulfillment3" * "customFulfillment4" * "customFulfillment5" *
-	// numerical_field = * "price" * "discount" * "rating" * "ratingCount" *
-	// "attributes.key"
+	// "inventory(place_id,attributes.key)" * numerical_field = * "price" *
+	// "discount" * "rating" * "ratingCount" * "attributes.key" *
+	// "inventory(place_id,price)" * "inventory(place_id,original_price)" *
+	// "inventory(place_id,attributes.key)"
 	Key string `json:"key,omitempty"`
 
 	// OrderBy: The order in which Facet.values are returned. Allowed values
@@ -3363,6 +3412,40 @@ func (s *GoogleCloudRetailV2SearchRequestFacetSpecFacetKey) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2SearchRequestPersonalizationSpec: The
+// specification for personalization.
+type GoogleCloudRetailV2SearchRequestPersonalizationSpec struct {
+	// Mode: Defaults to Mode.AUTO.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value. Defaults to Mode.AUTO.
+	//   "AUTO" - Let CRS decide whether to use personalization.
+	//   "DISABLED" - Disable personalization.
+	Mode string `json:"mode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Mode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Mode") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2SearchRequestPersonalizationSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2SearchRequestPersonalizationSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2SearchRequestQueryExpansionSpec: Specification to
 // determine under which conditions query expansion should occur.
 type GoogleCloudRetailV2SearchRequestQueryExpansionSpec struct {
@@ -3408,6 +3491,11 @@ func (s *GoogleCloudRetailV2SearchRequestQueryExpansionSpec) MarshalJSON() ([]by
 // GoogleCloudRetailV2SearchResponse: Response message for
 // SearchService.Search method.
 type GoogleCloudRetailV2SearchResponse struct {
+	// AppliedControls: The fully qualified resource name of applied
+	// controls
+	// (https://cloud.google.com/retail/docs/serving-control-rules).
+	AppliedControls []string `json:"appliedControls,omitempty"`
+
 	// AttributionToken: A unique search token. This should be included in
 	// the UserEvent logs resulting from this search, which enables accurate
 	// attribution of search model performance.
@@ -3446,7 +3534,7 @@ type GoogleCloudRetailV2SearchResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AttributionToken") to
+	// ForceSendFields is a list of field names (e.g. "AppliedControls") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3454,7 +3542,7 @@ type GoogleCloudRetailV2SearchResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AttributionToken") to
+	// NullFields is a list of field names (e.g. "AppliedControls") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -3696,8 +3784,7 @@ type GoogleCloudRetailV2SetInventoryRequest struct {
 	// AllowMissing: If set to true, and the Product with name Product.name
 	// is not found, the inventory update will still be processed and
 	// retained for at most 1 day until the Product is created. If set to
-	// false, an INVALID_ARGUMENT error is returned if the Product is not
-	// found.
+	// false, a NOT_FOUND error is returned if the Product is not found.
 	AllowMissing bool `json:"allowMissing,omitempty"`
 
 	// Inventory: Required. The inventory information to update. The
@@ -3723,10 +3810,9 @@ type GoogleCloudRetailV2SetInventoryRequest struct {
 	Inventory *GoogleCloudRetailV2Product `json:"inventory,omitempty"`
 
 	// SetMask: Indicates which inventory fields in the provided Product to
-	// update. If not set or set with empty paths, all inventory fields will
-	// be updated. If an unsupported or unknown field is provided, an
-	// INVALID_ARGUMENT error is returned and the entire update will be
-	// ignored.
+	// update. At least one field must be provided. If an unsupported or
+	// unknown field is provided, an INVALID_ARGUMENT error is returned and
+	// the entire update will be ignored.
 	SetMask string `json:"setMask,omitempty"`
 
 	// SetTime: The time when the request is issued, used to prevent
@@ -3768,11 +3854,15 @@ type GoogleCloudRetailV2SetInventoryResponse struct {
 // with customers' website.
 type GoogleCloudRetailV2UserEvent struct {
 	// Attributes: Extra user event features to include in the
-	// recommendation model. The key must be a UTF-8 encoded string with a
-	// length limit of 5,000 characters. Otherwise, an INVALID_ARGUMENT
-	// error is returned. For product recommendation, an example of extra
-	// user information is traffic_channel, i.e. how user arrives at the
-	// site. Users can arrive at the site by coming to the site directly, or
+	// recommendation model. This field needs to pass all below criteria,
+	// otherwise an INVALID_ARGUMENT error is returned: * The key must be a
+	// UTF-8 encoded string with a length limit of 5,000 characters. * For
+	// text attributes, at most 400 values are allowed. Empty values are not
+	// allowed. Each value must be a UTF-8 encoded string with a length
+	// limit of 256 characters. * For number attributes, at most 400 values
+	// are allowed. For product recommendation, an example of extra user
+	// information is traffic_channel, i.e. how user arrives at the site.
+	// Users can arrive at the site by coming to the site directly, or
 	// coming through Google search, and etc.
 	Attributes map[string]GoogleCloudRetailV2CustomAttribute `json:"attributes,omitempty"`
 
@@ -3797,11 +3887,9 @@ type GoogleCloudRetailV2UserEvent struct {
 	// `purchase-complete`, or `shopping-cart-page-view` events.
 	CartId string `json:"cartId,omitempty"`
 
-	// CompletionDetail: The main completion details related to the event.
-	// In a `completion` event, this field represents the completions
-	// returned to the end user and the clicked completion by the end user.
-	// In a `search` event, it represents the search event happens after
-	// clicking completion.
+	// CompletionDetail: The main auto-completion details related to the
+	// event. This field should be set for `search` event when autocomplete
+	// function is enabled and the user clicks a suggestion for search.
 	CompletionDetail *GoogleCloudRetailV2CompletionDetail `json:"completionDetail,omitempty"`
 
 	// EventTime: Only required for UserEventService.ImportUserEvents
@@ -3810,12 +3898,11 @@ type GoogleCloudRetailV2UserEvent struct {
 
 	// EventType: Required. User event type. Allowed values are: *
 	// `add-to-cart`: Products being added to cart. * `category-page-view`:
-	// Special pages such as sale or promotion pages viewed. * `completion`:
-	// Completion query result showed/clicked. * `detail-page-view`:
-	// Products detail page viewed. * `home-page-view`: Homepage viewed. *
-	// `promotion-offered`: Promotion is offered to a user. *
-	// `promotion-not-offered`: Promotion is not offered to a user. *
-	// `purchase-complete`: User finishing a purchase. * `search`: Product
+	// Special pages such as sale or promotion pages viewed. *
+	// `detail-page-view`: Products detail page viewed. * `home-page-view`:
+	// Homepage viewed. * `promotion-offered`: Promotion is offered to a
+	// user. * `promotion-not-offered`: Promotion is not offered to a user.
+	// * `purchase-complete`: User finishing a purchase. * `search`: Product
 	// search. * `shopping-cart-page-view`: User viewing a shopping cart.
 	EventType string `json:"eventType,omitempty"`
 
@@ -3872,10 +3959,10 @@ type GoogleCloudRetailV2UserEvent struct {
 
 	// ProductDetails: The main product details related to the event. This
 	// field is required for the following event types: * `add-to-cart` *
-	// `detail-page-view` * `purchase-complete` In a `search` event, this
-	// field represents the products returned to the end user on the current
-	// page (the end user may have not finished browsing the whole page
-	// yet). When a new page is returned to the end user, after
+	// `detail-page-view` * `purchase-complete` * `search` In a `search`
+	// event, this field represents the products returned to the end user on
+	// the current page (the end user may have not finished browsing the
+	// whole page yet). When a new page is returned to the end user, after
 	// pagination/filtering/ordering even for the same query, a new `search`
 	// event with different product_details is desired. The end user may
 	// have not finished browsing the whole page yet.
@@ -4127,15 +4214,22 @@ type GoogleCloudRetailV2alphaAddFulfillmentPlacesMetadata struct {
 }
 
 // GoogleCloudRetailV2alphaAddFulfillmentPlacesResponse: Response of the
-// RemoveFulfillmentPlacesRequest. Currently empty because there is no
+// AddFulfillmentPlacesRequest. Currently empty because there is no
 // meaningful response populated from the AddFulfillmentPlaces method.
 type GoogleCloudRetailV2alphaAddFulfillmentPlacesResponse struct {
 }
 
-// GoogleCloudRetailV2alphaEnrollSolutionMetadata: Metadata related to
-// the EnrollSolution method. This will be returned by the
-// google.longrunning.Operation.metadata field.
-type GoogleCloudRetailV2alphaEnrollSolutionMetadata struct {
+// GoogleCloudRetailV2alphaAddLocalInventoriesMetadata: Metadata related
+// to the progress of the AddLocalInventories operation. Currently empty
+// because there is no meaningful metadata populated from the
+// AddLocalInventories method.
+type GoogleCloudRetailV2alphaAddLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2alphaAddLocalInventoriesResponse: Response of the
+// AddLocalInventories API. Currently empty because there is no
+// meaningful response populated from the AddLocalInventories method.
+type GoogleCloudRetailV2alphaAddLocalInventoriesResponse struct {
 }
 
 // GoogleCloudRetailV2alphaExportErrorsConfig: Configuration of
@@ -4562,6 +4656,19 @@ type GoogleCloudRetailV2alphaRemoveFulfillmentPlacesMetadata struct {
 type GoogleCloudRetailV2alphaRemoveFulfillmentPlacesResponse struct {
 }
 
+// GoogleCloudRetailV2alphaRemoveLocalInventoriesMetadata: Metadata
+// related to the progress of the RemoveLocalInventories operation.
+// Currently empty because there is no meaningful metadata populated
+// from the RemoveLocalInventories method.
+type GoogleCloudRetailV2alphaRemoveLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2alphaRemoveLocalInventoriesResponse: Response of
+// the RemoveLocalInventories API. Currently empty because there is no
+// meaningful response populated from the RemoveLocalInventories method.
+type GoogleCloudRetailV2alphaRemoveLocalInventoriesResponse struct {
+}
+
 // GoogleCloudRetailV2alphaSetInventoryMetadata: Metadata related to the
 // progress of the SetInventory operation. Currently empty because there
 // is no meaningful metadata populated from the SetInventory method.
@@ -4618,7 +4725,7 @@ type GoogleCloudRetailV2betaAddFulfillmentPlacesMetadata struct {
 }
 
 // GoogleCloudRetailV2betaAddFulfillmentPlacesResponse: Response of the
-// RemoveFulfillmentPlacesRequest. Currently empty because there is no
+// AddFulfillmentPlacesRequest. Currently empty because there is no
 // meaningful response populated from the AddFulfillmentPlaces method.
 type GoogleCloudRetailV2betaAddFulfillmentPlacesResponse struct {
 }
@@ -5337,10 +5444,10 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Dataset(dataset string) *Pr
 
 // DeviceType sets the optional parameter "deviceType": The device type
 // context for completion suggestions. It is useful to apply different
-// suggestions on different device types, e.g. DESKTOP, MOBILE. If it is
-// empty, the suggestions are across all device types. Supported
-// formats: * UNKNOWN_DEVICE_TYPE * DESKTOP * MOBILE * A customized
-// string starts with OTHER_, e.g. OTHER_IPHONE.
+// suggestions on different device types, e.g. `DESKTOP`, `MOBILE`. If
+// it is empty, the suggestions are across all device types. Supported
+// formats: * `UNKNOWN_DEVICE_TYPE` * `DESKTOP` * `MOBILE` * A
+// customized string starts with `OTHER_`, e.g. `OTHER_IPHONE`.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType string) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("deviceType", deviceType)
 	return c
@@ -5423,7 +5530,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5508,7 +5615,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "deviceType": {
-	//       "description": "The device type context for completion suggestions. It is useful to apply different suggestions on different device types, e.g. DESKTOP, MOBILE. If it is empty, the suggestions are across all device types. Supported formats: * UNKNOWN_DEVICE_TYPE * DESKTOP * MOBILE * A customized string starts with OTHER_, e.g. OTHER_IPHONE.",
+	//       "description": "The device type context for completion suggestions. It is useful to apply different suggestions on different device types, e.g. `DESKTOP`, `MOBILE`. If it is empty, the suggestions are across all device types. Supported formats: * `UNKNOWN_DEVICE_TYPE` * `DESKTOP` * `MOBILE` * A customized string starts with `OTHER_`, e.g. `OTHER_IPHONE`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5609,7 +5716,7 @@ func (c *ProjectsLocationsCatalogsGetDefaultBranchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsGetDefaultBranchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5780,7 +5887,7 @@ func (c *ProjectsLocationsCatalogsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5958,7 +6065,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6130,7 +6237,7 @@ func (c *ProjectsLocationsCatalogsSetDefaultBranchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsSetDefaultBranchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6283,7 +6390,7 @@ func (c *ProjectsLocationsCatalogsBranchesOperationsGetCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsBranchesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6433,7 +6540,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6590,7 +6697,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6744,7 +6851,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6892,7 +6999,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsCatalogsBranchesProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7036,7 +7143,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7242,7 +7349,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsListCall) Header() http.Header
 
 func (c *ProjectsLocationsCatalogsBranchesProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7444,7 +7551,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7610,7 +7717,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) H
 
 func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7774,7 +7881,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) Header() htt
 
 func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7921,7 +8028,7 @@ func (c *ProjectsLocationsCatalogsCompletionDataImportCall) Header() http.Header
 
 func (c *ProjectsLocationsCatalogsCompletionDataImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8074,7 +8181,7 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8250,7 +8357,7 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8432,7 +8539,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPlacementsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8546,9 +8653,9 @@ type ProjectsLocationsCatalogsPlacementsSearchCall struct {
 // - placement: The resource name of the search engine placement, such
 //   as
 //   `projects/*/locations/global/catalogs/default_catalog/placements/def
-//   ault_search`. This field is used to identify the set of models that
-//   will be used to make the search. We currently support one placement
-//   with the following ID: * `default_search`.
+//   ault_search`. This field is used to identify the serving
+//   configuration name and the set of models that will be used to make
+//   the search.
 func (r *ProjectsLocationsCatalogsPlacementsService) Search(placement string, googlecloudretailv2searchrequest *GoogleCloudRetailV2SearchRequest) *ProjectsLocationsCatalogsPlacementsSearchCall {
 	c := &ProjectsLocationsCatalogsPlacementsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -8583,7 +8690,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPlacementsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8657,7 +8764,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. The resource name of the search engine placement, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the set of models that will be used to make the search. We currently support one placement with the following ID: * `default_search`.",
+	//       "description": "Required. The resource name of the search engine placement, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -8784,7 +8891,7 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsCollectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8942,7 +9049,7 @@ func (c *ProjectsLocationsCatalogsUserEventsImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9089,7 +9196,7 @@ func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9239,7 +9346,7 @@ func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9382,7 +9489,7 @@ func (c *ProjectsLocationsCatalogsUserEventsWriteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9535,7 +9642,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9711,7 +9818,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -465,7 +465,7 @@
           }
         },
         "delete": {
-          "description": "Deletes a location. If this location cannot be deleted using the API and it is marked so in the `google.mybusiness.businessinformation.v1.LocationState`, use the [Google My Business](https://business.google.com/manage/) website.",
+          "description": "Deletes a location. If this location cannot be deleted using the API and it is marked so in the `google.mybusiness.businessinformation.v1.LocationState`, use the [Google Business Profile](https://business.google.com/manage/) website.",
           "flatPath": "v1/locations/{locationsId}",
           "httpMethod": "DELETE",
           "id": "mybusinessbusinessinformation.locations.delete",
@@ -662,7 +662,7 @@
       }
     }
   },
-  "revision": "20210824",
+  "revision": "20220201",
   "rootUrl": "https://mybusinessbusinessinformation.googleapis.com/",
   "schemas": {
     "AdWordsLocationExtensions": {
@@ -961,7 +961,7 @@
       "type": "object"
     },
     "Date": {
-      "description": "Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values * A month and day value, with a zero year, such as an anniversary * A year on its own, with zero month and day values * A year and month value, with a zero day, such as a credit card expiration date Related types are google.type.TimeOfDay and `google.protobuf.Timestamp`.",
+      "description": "Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values * A month and day, with a zero year (e.g., an anniversary) * A year on its own, with a zero month and a zero day * A year and month, with a zero day (e.g., a credit card expiration date) Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp",
       "id": "Date",
       "properties": {
         "day": {
@@ -1163,7 +1163,7 @@
         },
         "latlng": {
           "$ref": "LatLng",
-          "description": "Optional. User-provided latitude and longitude. When creating a location, this field is ignored if the provided address geocodes successfully. This field is only returned on get requests if the user-provided `latlng` value was accepted during create, or the `latlng` value was updated through the Google My Business website. This field can only be updated by approved clients."
+          "description": "Optional. User-provided latitude and longitude. When creating a location, this field is ignored if the provided address geocodes successfully. This field is only returned on get requests if the user-provided `latlng` value was accepted during create, or the `latlng` value was updated through the Google Business Profile website. This field can only be updated by approved clients."
         },
         "metadata": {
           "$ref": "Metadata",
@@ -1242,6 +1242,11 @@
       "properties": {
         "canDelete": {
           "description": "Output only. Indicates whether the location can be deleted using the API.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "canHaveBusinessCalls": {
+          "description": "Output only. Indicates if the listing is eligible for business calls.",
           "readOnly": true,
           "type": "boolean"
         },

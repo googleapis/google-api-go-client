@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -290,38 +290,38 @@ type ProjectsLocationsReplaysResultsService struct {
 }
 
 // GoogleCloudPolicysimulatorV1AccessStateDiff: A summary and comparison
-// of the member's access under the current (baseline) policies and the
-// proposed (simulated) policies for a single access tuple.
+// of the principal's access under the current (baseline) policies and
+// the proposed (simulated) policies for a single access tuple.
 type GoogleCloudPolicysimulatorV1AccessStateDiff struct {
-	// AccessChange: How the member's access, specified in the AccessState
-	// field, changed between the current (baseline) policies and proposed
-	// (simulated) policies.
+	// AccessChange: How the principal's access, specified in the
+	// AccessState field, changed between the current (baseline) policies
+	// and proposed (simulated) policies.
 	//
 	// Possible values:
-	//   "ACCESS_CHANGE_TYPE_UNSPECIFIED" - The access change is
-	// unspecified.
-	//   "NO_CHANGE" - The member's access did not change. This includes the
-	// case where both baseline and simulated are UNKNOWN, but the unknown
-	// information is equivalent.
-	//   "UNKNOWN_CHANGE" - The member's access under both the current
+	//   "ACCESS_CHANGE_TYPE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "NO_CHANGE" - The principal's access did not change. This includes
+	// the case where both baseline and simulated are UNKNOWN, but the
+	// unknown information is equivalent.
+	//   "UNKNOWN_CHANGE" - The principal's access under both the current
 	// policies and the proposed policies is `UNKNOWN`, but the unknown
 	// information differs between them.
-	//   "ACCESS_REVOKED" - The member had access under the current policies
-	// (`GRANTED`), but will no longer have access after the proposed
-	// changes (`NOT_GRANTED`).
-	//   "ACCESS_GAINED" - The member did not have access under the current
-	// policies (`NOT_GRANTED`), but will have access after the proposed
-	// changes (`GRANTED`).
+	//   "ACCESS_REVOKED" - The principal had access under the current
+	// policies (`GRANTED`), but will no longer have access after the
+	// proposed changes (`NOT_GRANTED`).
+	//   "ACCESS_GAINED" - The principal did not have access under the
+	// current policies (`NOT_GRANTED`), but will have access after the
+	// proposed changes (`GRANTED`).
 	//   "ACCESS_MAYBE_REVOKED" - This result can occur for the following
-	// reasons: * The member had access under the current policies
+	// reasons: * The principal had access under the current policies
 	// (`GRANTED`), but their access after the proposed changes is
-	// `UNKNOWN`. * The member's access under the current policies is
+	// `UNKNOWN`. * The principal's access under the current policies is
 	// `UNKNOWN`, but they will not have access after the proposed changes
 	// (`NOT_GRANTED`).
 	//   "ACCESS_MAYBE_GAINED" - This result can occur for the following
-	// reasons: * The member did not have access under the current policies
-	// (`NOT_GRANTED`), but their access after the proposed changes is
-	// `UNKNOWN`. * The member's access under the current policies is
+	// reasons: * The principal did not have access under the current
+	// policies (`NOT_GRANTED`), but their access after the proposed changes
+	// is `UNKNOWN`. * The principal's access under the current policies is
 	// `UNKNOWN`, but they will have access after the proposed changes
 	// (`GRANTED`).
 	AccessChange string `json:"accessChange,omitempty"`
@@ -360,7 +360,7 @@ func (s *GoogleCloudPolicysimulatorV1AccessStateDiff) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudPolicysimulatorV1AccessTuple: Information about the
-// member, resource, and permission to check.
+// principal, resource, and permission to check.
 type GoogleCloudPolicysimulatorV1AccessTuple struct {
 	// FullResourceName: Required. The full resource name that identifies
 	// the resource. For example,
@@ -371,18 +371,18 @@ type GoogleCloudPolicysimulatorV1AccessTuple struct {
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
 	// Permission: Required. The IAM permission to check for the specified
-	// member and resource. For a complete list of IAM permissions, see
+	// principal and resource. For a complete list of IAM permissions, see
 	// https://cloud.google.com/iam/help/permissions/reference. For a
 	// complete list of predefined IAM roles and the permissions in each
 	// role, see https://cloud.google.com/iam/help/roles/reference.
 	Permission string `json:"permission,omitempty"`
 
-	// Principal: Required. The member, or principal, whose access you want
-	// to check, in the form of the email address that represents that
-	// member. For example, `alice@example.com` or
-	// `my-service-account@my-project.iam.gserviceaccount.com`. The member
-	// must be a Google Account or a service account. Other types of members
-	// are not supported.
+	// Principal: Required. The principal whose access you want to check, in
+	// the form of the email address that represents that principal. For
+	// example, `alice@example.com` or
+	// `my-service-account@my-project.iam.gserviceaccount.com`. The
+	// principal must be a Google Account or a service account. Other types
+	// of principals are not supported.
 	Principal string `json:"principal,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
@@ -410,21 +410,22 @@ func (s *GoogleCloudPolicysimulatorV1AccessTuple) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudPolicysimulatorV1BindingExplanation: Details about how a
-// binding in a policy affects a member's ability to use a permission.
+// binding in a policy affects a principal's ability to use a
+// permission.
 type GoogleCloudPolicysimulatorV1BindingExplanation struct {
 	// Access: Required. Indicates whether _this binding_ provides the
-	// specified permission to the specified member for the specified
-	// resource. This field does _not_ indicate whether the member actually
-	// has the permission for the resource. There might be another binding
-	// that overrides this binding. To determine whether the member actually
-	// has the permission, use the `access` field in the
+	// specified permission to the specified principal for the specified
+	// resource. This field does _not_ indicate whether the principal
+	// actually has the permission for the resource. There might be another
+	// binding that overrides this binding. To determine whether the
+	// principal actually has the permission, use the `access` field in the
 	// TroubleshootIamPolicyResponse.
 	//
 	// Possible values:
-	//   "ACCESS_STATE_UNSPECIFIED" - The access state is not specified.
-	//   "GRANTED" - The member has the permission.
-	//   "NOT_GRANTED" - The member does not have the permission.
-	//   "UNKNOWN_CONDITIONAL" - The member has the permission only if a
+	//   "ACCESS_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "GRANTED" - The principal has the permission.
+	//   "NOT_GRANTED" - The principal does not have the permission.
+	//   "UNKNOWN_CONDITIONAL" - The principal has the permission only if a
 	// condition expression evaluates to `true`.
 	//   "UNKNOWN_INFO_DENIED" - The user who created the Replay does not
 	// have access to all of the policies that Policy Simulator needs to
@@ -437,17 +438,18 @@ type GoogleCloudPolicysimulatorV1BindingExplanation struct {
 	// https://cloud.google.com/iam/docs/conditions-overview.
 	Condition *GoogleTypeExpr `json:"condition,omitempty"`
 
-	// Memberships: Indicates whether each member in the binding includes
-	// the member specified in the request, either directly or indirectly.
-	// Each key identifies a member in the binding, and each value indicates
-	// whether the member in the binding includes the member in the request.
-	// For example, suppose that a binding includes the following members: *
-	// `user:alice@example.com` * `group:product-eng@example.com` The member
-	// in the replayed access tuple is `user:bob@example.com`. This user is
-	// a member of the group `group:product-eng@example.com`. For the first
-	// member in the binding, the key is `user:alice@example.com`, and the
-	// `membership` field in the value is set to `MEMBERSHIP_NOT_INCLUDED`.
-	// For the second member in the binding, the key is
+	// Memberships: Indicates whether each principal in the binding includes
+	// the principal specified in the request, either directly or
+	// indirectly. Each key identifies a principal in the binding, and each
+	// value indicates whether the principal in the binding includes the
+	// principal in the request. For example, suppose that a binding
+	// includes the following principals: * `user:alice@example.com` *
+	// `group:product-eng@example.com` The principal in the replayed access
+	// tuple is `user:bob@example.com`. This user is a principal of the
+	// group `group:product-eng@example.com`. For the first principal in the
+	// binding, the key is `user:alice@example.com`, and the `membership`
+	// field in the value is set to `MEMBERSHIP_NOT_INCLUDED`. For the
+	// second principal in the binding, the key is
 	// `group:product-eng@example.com`, and the `membership` field in the
 	// value is set to `MEMBERSHIP_INCLUDED`.
 	Memberships map[string]GoogleCloudPolicysimulatorV1BindingExplanationAnnotatedMembership `json:"memberships,omitempty"`
@@ -456,7 +458,8 @@ type GoogleCloudPolicysimulatorV1BindingExplanation struct {
 	// for the entire policy.
 	//
 	// Possible values:
-	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Reserved for future use.
+	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Default value. This value is
+	// unused.
 	//   "NORMAL" - The data point has a limited effect on the result.
 	// Changing the data point is unlikely to affect the overall
 	// determination.
@@ -474,8 +477,8 @@ type GoogleCloudPolicysimulatorV1BindingExplanation struct {
 	// contains the specified permission.
 	//
 	// Possible values:
-	//   "ROLE_PERMISSION_UNSPECIFIED" - The inclusion of the permission is
-	// not specified.
+	//   "ROLE_PERMISSION_UNSPECIFIED" - Default value. This value is
+	// unused.
 	//   "ROLE_PERMISSION_INCLUDED" - The permission is included in the
 	// role.
 	//   "ROLE_PERMISSION_NOT_INCLUDED" - The permission is not included in
@@ -489,7 +492,8 @@ type GoogleCloudPolicysimulatorV1BindingExplanation struct {
 	// entire policy.
 	//
 	// Possible values:
-	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Reserved for future use.
+	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Default value. This value is
+	// unused.
 	//   "NORMAL" - The data point has a limited effect on the result.
 	// Changing the data point is unlikely to affect the overall
 	// determination.
@@ -521,30 +525,32 @@ func (s *GoogleCloudPolicysimulatorV1BindingExplanation) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudPolicysimulatorV1BindingExplanationAnnotatedMembership:
-// Details about whether the binding includes the member.
+// Details about whether the binding includes the principal.
 type GoogleCloudPolicysimulatorV1BindingExplanationAnnotatedMembership struct {
-	// Membership: Indicates whether the binding includes the member.
+	// Membership: Indicates whether the binding includes the principal.
 	//
 	// Possible values:
-	//   "MEMBERSHIP_UNSPECIFIED" - The membership is not specified.
-	//   "MEMBERSHIP_INCLUDED" - The binding includes the member. The member
-	// can be included directly or indirectly. For example: * A member is
-	// included directly if that member is listed in the binding. * A member
-	// is included indirectly if that member is in a Google group or Google
-	// Workspace domain that is listed in the binding.
+	//   "MEMBERSHIP_UNSPECIFIED" - Default value. This value is unused.
+	//   "MEMBERSHIP_INCLUDED" - The binding includes the principal. The
+	// principal can be included directly or indirectly. For example: * A
+	// principal is included directly if that principal is listed in the
+	// binding. * A principal is included indirectly if that principal is in
+	// a Google group or Google Workspace domain that is listed in the
+	// binding.
 	//   "MEMBERSHIP_NOT_INCLUDED" - The binding does not include the
-	// member.
+	// principal.
 	//   "MEMBERSHIP_UNKNOWN_INFO_DENIED" - The user who created the Replay
 	// is not allowed to access the binding.
-	//   "MEMBERSHIP_UNKNOWN_UNSUPPORTED" - The member is an unsupported
+	//   "MEMBERSHIP_UNKNOWN_UNSUPPORTED" - The principal is an unsupported
 	// type. Only Google Accounts and service accounts are supported.
 	Membership string `json:"membership,omitempty"`
 
-	// Relevance: The relevance of the member's status to the overall
+	// Relevance: The relevance of the principal's status to the overall
 	// determination for the binding.
 	//
 	// Possible values:
-	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Reserved for future use.
+	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Default value. This value is
+	// unused.
 	//   "NORMAL" - The data point has a limited effect on the result.
 	// Changing the data point is unlikely to affect the overall
 	// determination.
@@ -579,14 +585,14 @@ func (s *GoogleCloudPolicysimulatorV1BindingExplanationAnnotatedMembership) Mars
 // of policies, listed in ExplainedPolicy, resulted in a certain
 // AccessState when replaying an access tuple.
 type GoogleCloudPolicysimulatorV1ExplainedAccess struct {
-	// AccessState: Whether the member in the access tuple has permission to
-	// access the resource in the access tuple under the given policies.
+	// AccessState: Whether the principal in the access tuple has permission
+	// to access the resource in the access tuple under the given policies.
 	//
 	// Possible values:
-	//   "ACCESS_STATE_UNSPECIFIED" - The access state is not specified.
-	//   "GRANTED" - The member has the permission.
-	//   "NOT_GRANTED" - The member does not have the permission.
-	//   "UNKNOWN_CONDITIONAL" - The member has the permission only if a
+	//   "ACCESS_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "GRANTED" - The principal has the permission.
+	//   "NOT_GRANTED" - The principal does not have the permission.
+	//   "UNKNOWN_CONDITIONAL" - The principal has the permission only if a
 	// condition expression evaluates to `true`.
 	//   "UNKNOWN_INFO_DENIED" - The user who created the Replay does not
 	// have access to all of the policies that Policy Simulator needs to
@@ -630,18 +636,18 @@ func (s *GoogleCloudPolicysimulatorV1ExplainedAccess) MarshalJSON() ([]byte, err
 // specific IAM Policy contributed to the access check.
 type GoogleCloudPolicysimulatorV1ExplainedPolicy struct {
 	// Access: Indicates whether _this policy_ provides the specified
-	// permission to the specified member for the specified resource. This
-	// field does _not_ indicate whether the member actually has the
+	// permission to the specified principal for the specified resource.
+	// This field does _not_ indicate whether the principal actually has the
 	// permission for the resource. There might be another policy that
-	// overrides this policy. To determine whether the member actually has
-	// the permission, use the `access` field in the
+	// overrides this policy. To determine whether the principal actually
+	// has the permission, use the `access` field in the
 	// TroubleshootIamPolicyResponse.
 	//
 	// Possible values:
-	//   "ACCESS_STATE_UNSPECIFIED" - The access state is not specified.
-	//   "GRANTED" - The member has the permission.
-	//   "NOT_GRANTED" - The member does not have the permission.
-	//   "UNKNOWN_CONDITIONAL" - The member has the permission only if a
+	//   "ACCESS_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "GRANTED" - The principal has the permission.
+	//   "NOT_GRANTED" - The principal does not have the permission.
+	//   "UNKNOWN_CONDITIONAL" - The principal has the permission only if a
 	// condition expression evaluates to `true`.
 	//   "UNKNOWN_INFO_DENIED" - The user who created the Replay does not
 	// have access to all of the policies that Policy Simulator needs to
@@ -649,9 +655,9 @@ type GoogleCloudPolicysimulatorV1ExplainedPolicy struct {
 	Access string `json:"access,omitempty"`
 
 	// BindingExplanations: Details about how each binding in the policy
-	// affects the member's ability, or inability, to use the permission for
-	// the resource. If the user who created the Replay does not have access
-	// to the policy, this field is omitted.
+	// affects the principal's ability, or inability, to use the permission
+	// for the resource. If the user who created the Replay does not have
+	// access to the policy, this field is omitted.
 	BindingExplanations []*GoogleCloudPolicysimulatorV1BindingExplanation `json:"bindingExplanations,omitempty"`
 
 	// FullResourceName: The full resource name that identifies the
@@ -673,7 +679,8 @@ type GoogleCloudPolicysimulatorV1ExplainedPolicy struct {
 	// Replay does not have access to the policy, this field is omitted.
 	//
 	// Possible values:
-	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Reserved for future use.
+	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Default value. This value is
+	// unused.
 	//   "NORMAL" - The data point has a limited effect on the result.
 	// Changing the data point is unlikely to affect the overall
 	// determination.
@@ -764,7 +771,7 @@ type GoogleCloudPolicysimulatorV1Replay struct {
 	// State: Output only. The current state of the `Replay`.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - The state is unspecified.
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
 	//   "PENDING" - The `Replay` has not started yet.
 	//   "RUNNING" - The `Replay` is currently running.
 	//   "SUCCEEDED" - The `Replay` has successfully completed.
@@ -850,13 +857,13 @@ func (s *GoogleCloudPolicysimulatorV1ReplayConfig) MarshalJSON() ([]byte, error)
 // GoogleCloudPolicysimulatorV1ReplayDiff: The difference between the
 // results of evaluating an access tuple under the current (baseline)
 // policies and under the proposed (simulated) policies. This difference
-// explains how a member's access could change if the proposed policies
-// were applied.
+// explains how a principal's access could change if the proposed
+// policies were applied.
 type GoogleCloudPolicysimulatorV1ReplayDiff struct {
-	// AccessDiff: A summary and comparison of the member's access under the
-	// current (baseline) policies and the proposed (simulated) policies for
-	// a single access tuple. The evaluation of the member's access is
-	// reported in the AccessState field.
+	// AccessDiff: A summary and comparison of the principal's access under
+	// the current (baseline) policies and the proposed (simulated) policies
+	// for a single access tuple. The evaluation of the principal's access
+	// is reported in the AccessState field.
 	AccessDiff *GoogleCloudPolicysimulatorV1AccessStateDiff `json:"accessDiff,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessDiff") to
@@ -915,12 +922,12 @@ func (s *GoogleCloudPolicysimulatorV1ReplayOperationMetadata) MarshalJSON() ([]b
 // single access tuple against a simulated state.
 type GoogleCloudPolicysimulatorV1ReplayResult struct {
 	// AccessTuple: The access tuple that was replayed. This field includes
-	// information about the member, resource, and permission that were
+	// information about the principal, resource, and permission that were
 	// involved in the access attempt.
 	AccessTuple *GoogleCloudPolicysimulatorV1AccessTuple `json:"accessTuple,omitempty"`
 
-	// Diff: The difference between the member's access under the current
-	// (baseline) policies and the member's access under the proposed
+	// Diff: The difference between the principal's access under the current
+	// (baseline) policies and the principal's access under the proposed
 	// (simulated) policies. This field is only included for access tuples
 	// that were successfully replayed and had different results under the
 	// current policies and the proposed policies.
@@ -1291,19 +1298,20 @@ func (s *GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleIamV1Binding: Associates `members` with a `role`.
+// GoogleIamV1Binding: Associates `members`, or principals, with a
+// `role`.
 type GoogleIamV1Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *GoogleTypeExpr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
+	// Members: Specifies the principals requesting access for a Cloud
 	// Platform resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
@@ -1337,8 +1345,8 @@ type GoogleIamV1Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1367,16 +1375,16 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 // GoogleIamV1Policy: An Identity and Access Management (IAM) policy,
 // which specifies access controls for Google Cloud resources. A
 // `Policy` is a collection of `bindings`. A `binding` binds one or more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts, Google groups, and domains (such as G Suite). A `role` is a
-// named list of permissions; each `role` can be an IAM predefined role
-// or a user-created custom role. For some types of Google Cloud
-// resources, a `binding` can also specify a `condition`, which is a
-// logical expression that allows access to a resource only if the
-// expression evaluates to `true`. A condition can add constraints based
-// on attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// `members`, or principals, to a single `role`. Principals can be user
+// accounts, service accounts, Google groups, and domains (such as G
+// Suite). A `role` is a named list of permissions; each `role` can be
+// an IAM predefined role or a user-created custom role. For some types
+// of Google Cloud resources, a `binding` can also specify a
+// `condition`, which is a logical expression that allows access to a
+// resource only if the expression evaluates to `true`. A condition can
+// add constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -1403,9 +1411,15 @@ type GoogleIamV1Policy struct {
 	// policy.
 	AuditConfigs []*GoogleIamV1AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*GoogleIamV1Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -1607,15 +1621,6 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeDate: Represents a whole or partial calendar date, such as
-// a birthday. The time of day and time zone are either specified
-// elsewhere or are insignificant. The date is relative to the Gregorian
-// Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
 type GoogleTypeDate struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -1763,7 +1768,7 @@ func (c *FoldersLocationsReplaysCreateCall) Header() http.Header {
 
 func (c *FoldersLocationsReplaysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1920,7 +1925,7 @@ func (c *FoldersLocationsReplaysGetCall) Header() http.Header {
 
 func (c *FoldersLocationsReplaysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2090,7 +2095,7 @@ func (c *FoldersLocationsReplaysResultsListCall) Header() http.Header {
 
 func (c *FoldersLocationsReplaysResultsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2272,7 +2277,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2451,7 +2456,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2621,7 +2626,7 @@ func (c *OrganizationsLocationsReplaysCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsReplaysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2778,7 +2783,7 @@ func (c *OrganizationsLocationsReplaysGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsReplaysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2948,7 +2953,7 @@ func (c *OrganizationsLocationsReplaysResultsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsReplaysResultsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3121,7 +3126,7 @@ func (c *ProjectsLocationsReplaysCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsReplaysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3278,7 +3283,7 @@ func (c *ProjectsLocationsReplaysGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsReplaysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3448,7 +3453,7 @@ func (c *ProjectsLocationsReplaysResultsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsReplaysResultsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

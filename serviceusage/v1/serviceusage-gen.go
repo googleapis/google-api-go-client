@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1008,11 +1008,19 @@ func (s *ContextRule) MarshalJSON() ([]byte, error) {
 }
 
 // Control: Selects and configures the service controller used by the
-// service. The service controller handles features like abuse, quota,
-// billing, logging, monitoring, etc.
+// service. The service controller handles two things: - **What is
+// allowed:** for each API request, Chemist checks the project status,
+// activation status, abuse status, billing status, service status,
+// location restrictions, VPC Service Controls, SuperQuota, and other
+// policies. - **What has happened:** for each API response, Chemist
+// reports the telemetry data to analytics, auditing, billing, eventing,
+// logging, monitoring, sawmill, and tracing. Chemist also accepts
+// telemetry data not associated with API traffic, such as billing
+// metrics. Example: control: environment: servicecontrol.googleapis.com
 type Control struct {
-	// Environment: The service control environment to use. If empty, no
-	// control plane feature (like quota and billing) will be enabled.
+	// Environment: The service controller environment to use. If empty, no
+	// control plane feature (like quota and billing) will be enabled. The
+	// recommended value for most services is servicecontrol.googleapis.com
 	Environment string `json:"environment,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
@@ -2841,7 +2849,7 @@ type MetricDescriptor struct {
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
 	// applicable terms, and have their projects allowlisted. Alpha releases
-	// don’t have to be feature complete, no SLAs are provided, and there
+	// don't have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
 	// for limited-use tests -- just like they would in normal production
@@ -2854,7 +2862,7 @@ type MetricDescriptor struct {
 	//   "GA" - GA features are open to all developers and are considered
 	// stable and fully qualified for production use.
 	//   "DEPRECATED" - Deprecated features are scheduled to be shut down
-	// and removed. For more information, see the “Deprecation Policy”
+	// and removed. For more information, see the "Deprecation Policy"
 	// section of our [Terms of Service](https://cloud.google.com/terms/)
 	// and the [Google Cloud Platform Subject to the Deprecation
 	// Policy](https://cloud.google.com/terms/deprecation) documentation.
@@ -3019,7 +3027,7 @@ type MetricDescriptorMetadata struct {
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
 	// applicable terms, and have their projects allowlisted. Alpha releases
-	// don’t have to be feature complete, no SLAs are provided, and there
+	// don't have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
 	// for limited-use tests -- just like they would in normal production
@@ -3032,7 +3040,7 @@ type MetricDescriptorMetadata struct {
 	//   "GA" - GA features are open to all developers and are considered
 	// stable and fully qualified for production use.
 	//   "DEPRECATED" - Deprecated features are scheduled to be shut down
-	// and removed. For more information, see the “Deprecation Policy”
+	// and removed. For more information, see the "Deprecation Policy"
 	// section of our [Terms of Service](https://cloud.google.com/terms/)
 	// and the [Google Cloud Platform Subject to the Deprecation
 	// Policy](https://cloud.google.com/terms/deprecation) documentation.
@@ -3214,7 +3222,7 @@ type MonitoredResourceDescriptor struct {
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
 	// applicable terms, and have their projects allowlisted. Alpha releases
-	// don’t have to be feature complete, no SLAs are provided, and there
+	// don't have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
 	// for limited-use tests -- just like they would in normal production
@@ -3227,7 +3235,7 @@ type MonitoredResourceDescriptor struct {
 	//   "GA" - GA features are open to all developers and are considered
 	// stable and fully qualified for production use.
 	//   "DEPRECATED" - Deprecated features are scheduled to be shut down
-	// and removed. For more information, see the “Deprecation Policy”
+	// and removed. For more information, see the "Deprecation Policy"
 	// section of our [Terms of Service](https://cloud.google.com/terms/)
 	// and the [Google Cloud Platform Subject to the Deprecation
 	// Policy](https://cloud.google.com/terms/deprecation) documentation.
@@ -4299,7 +4307,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4443,7 +4451,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4589,7 +4597,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4769,7 +4777,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4942,7 +4950,7 @@ func (c *ServicesBatchEnableCall) Header() http.Header {
 
 func (c *ServicesBatchEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5109,7 +5117,7 @@ func (c *ServicesBatchGetCall) Header() http.Header {
 
 func (c *ServicesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5262,7 +5270,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5410,7 +5418,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5566,7 +5574,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5748,7 +5756,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -648,6 +648,65 @@ func (s *GoogleDatastoreAdminV1CommonMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata: Metadata
+// for Datastore to Firestore migration operations. The
+// DatastoreFirestoreMigration operation is not started by the end-user
+// via an explicit "creation" method. This is an intentional deviation
+// from the LRO design pattern. This singleton resource can be accessed
+// at: "projects/{project_id}/operations/datastore-firestore-migration"
+type GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata struct {
+	// MigrationState: The current state of migration from Cloud Datastore
+	// to Cloud Firestore in Datastore mode.
+	//
+	// Possible values:
+	//   "MIGRATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "RUNNING" - The migration is running.
+	//   "PAUSED" - The migration is paused.
+	//   "COMPLETE" - The migration is complete.
+	MigrationState string `json:"migrationState,omitempty"`
+
+	// MigrationStep: The current step of migration from Cloud Datastore to
+	// Cloud Firestore in Datastore mode.
+	//
+	// Possible values:
+	//   "MIGRATION_STEP_UNSPECIFIED" - Unspecified.
+	//   "PREPARE" - Pre-migration: the database is prepared for migration.
+	//   "START" - Start of migration.
+	//   "APPLY_WRITES_SYNCHRONOUSLY" - Writes are applied synchronously to
+	// at least one replica.
+	//   "COPY_AND_VERIFY" - Data is copied to Cloud Firestore and then
+	// verified to match the data in Cloud Datastore.
+	//   "REDIRECT_EVENTUALLY_CONSISTENT_READS" - Eventually-consistent
+	// reads are redirected to Cloud Firestore.
+	//   "REDIRECT_STRONGLY_CONSISTENT_READS" - Strongly-consistent reads
+	// are redirected to Cloud Firestore.
+	//   "REDIRECT_WRITES" - Writes are redirected to Cloud Firestore.
+	MigrationStep string `json:"migrationStep,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MigrationState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MigrationState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDatastoreAdminV1EntityFilter: Identifies a subset of entities
 // in a project. This is specified as combinations of kinds and
 // namespaces (either or both of which may be all, as described in the
@@ -1097,6 +1156,133 @@ func (s *GoogleDatastoreAdminV1ListIndexesResponse) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDatastoreAdminV1MigrationProgressEvent: An event signifying the
+// start of a new step in a migration from Cloud Datastore to Cloud
+// Firestore in Datastore mode
+// (https://cloud.google.com/datastore/docs/upgrade-to-firestore).
+type GoogleDatastoreAdminV1MigrationProgressEvent struct {
+	// PrepareStepDetails: Details for the `PREPARE` step.
+	PrepareStepDetails *GoogleDatastoreAdminV1PrepareStepDetails `json:"prepareStepDetails,omitempty"`
+
+	// RedirectWritesStepDetails: Details for the `REDIRECT_WRITES` step.
+	RedirectWritesStepDetails *GoogleDatastoreAdminV1RedirectWritesStepDetails `json:"redirectWritesStepDetails,omitempty"`
+
+	// Step: The step that is starting. An event with step set to `START`
+	// indicates that the migration has been reverted back to the initial
+	// pre-migration state.
+	//
+	// Possible values:
+	//   "MIGRATION_STEP_UNSPECIFIED" - Unspecified.
+	//   "PREPARE" - Pre-migration: the database is prepared for migration.
+	//   "START" - Start of migration.
+	//   "APPLY_WRITES_SYNCHRONOUSLY" - Writes are applied synchronously to
+	// at least one replica.
+	//   "COPY_AND_VERIFY" - Data is copied to Cloud Firestore and then
+	// verified to match the data in Cloud Datastore.
+	//   "REDIRECT_EVENTUALLY_CONSISTENT_READS" - Eventually-consistent
+	// reads are redirected to Cloud Firestore.
+	//   "REDIRECT_STRONGLY_CONSISTENT_READS" - Strongly-consistent reads
+	// are redirected to Cloud Firestore.
+	//   "REDIRECT_WRITES" - Writes are redirected to Cloud Firestore.
+	Step string `json:"step,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrepareStepDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrepareStepDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1MigrationProgressEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1MigrationProgressEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDatastoreAdminV1MigrationStateEvent: An event signifying a
+// change in state of a migration from Cloud Datastore to Cloud
+// Firestore in Datastore mode
+// (https://cloud.google.com/datastore/docs/upgrade-to-firestore).
+type GoogleDatastoreAdminV1MigrationStateEvent struct {
+	// State: The new state of the migration.
+	//
+	// Possible values:
+	//   "MIGRATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "RUNNING" - The migration is running.
+	//   "PAUSED" - The migration is paused.
+	//   "COMPLETE" - The migration is complete.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1MigrationStateEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1MigrationStateEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDatastoreAdminV1PrepareStepDetails: Details for the `PREPARE`
+// step.
+type GoogleDatastoreAdminV1PrepareStepDetails struct {
+	// ConcurrencyMode: The concurrency mode this database will use when it
+	// reaches the `REDIRECT_WRITES` step.
+	//
+	// Possible values:
+	//   "CONCURRENCY_MODE_UNSPECIFIED" - Unspecified.
+	//   "PESSIMISTIC" - Pessimistic concurrency.
+	//   "OPTIMISTIC" - Optimistic concurrency.
+	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConcurrencyMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConcurrencyMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1PrepareStepDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1PrepareStepDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDatastoreAdminV1Progress: Measures the progress of a particular
 // metric.
 type GoogleDatastoreAdminV1Progress struct {
@@ -1127,6 +1313,41 @@ type GoogleDatastoreAdminV1Progress struct {
 
 func (s *GoogleDatastoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1Progress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDatastoreAdminV1RedirectWritesStepDetails: Details for the
+// `REDIRECT_WRITES` step.
+type GoogleDatastoreAdminV1RedirectWritesStepDetails struct {
+	// ConcurrencyMode: Ths concurrency mode for this database.
+	//
+	// Possible values:
+	//   "CONCURRENCY_MODE_UNSPECIFIED" - Unspecified.
+	//   "PESSIMISTIC" - Pessimistic concurrency.
+	//   "OPTIMISTIC" - Optimistic concurrency.
+	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConcurrencyMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConcurrencyMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1RedirectWritesStepDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1RedirectWritesStepDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2688,7 +2909,7 @@ func (c *ProjectsAllocateIdsCall) Header() http.Header {
 
 func (c *ProjectsAllocateIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2830,7 +3051,7 @@ func (c *ProjectsBeginTransactionCall) Header() http.Header {
 
 func (c *ProjectsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2973,7 +3194,7 @@ func (c *ProjectsCommitCall) Header() http.Header {
 
 func (c *ProjectsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3122,7 +3343,7 @@ func (c *ProjectsExportCall) Header() http.Header {
 
 func (c *ProjectsExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3269,7 +3490,7 @@ func (c *ProjectsImportCall) Header() http.Header {
 
 func (c *ProjectsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3411,7 +3632,7 @@ func (c *ProjectsLookupCall) Header() http.Header {
 
 func (c *ProjectsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3554,7 +3775,7 @@ func (c *ProjectsReserveIdsCall) Header() http.Header {
 
 func (c *ProjectsReserveIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3696,7 +3917,7 @@ func (c *ProjectsRollbackCall) Header() http.Header {
 
 func (c *ProjectsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3838,7 +4059,7 @@ func (c *ProjectsRunQueryCall) Header() http.Header {
 
 func (c *ProjectsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3988,7 +4209,7 @@ func (c *ProjectsIndexesCreateCall) Header() http.Header {
 
 func (c *ProjectsIndexesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4138,7 +4359,7 @@ func (c *ProjectsIndexesDeleteCall) Header() http.Header {
 
 func (c *ProjectsIndexesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4292,7 +4513,7 @@ func (c *ProjectsIndexesGetCall) Header() http.Header {
 
 func (c *ProjectsIndexesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4468,7 +4689,7 @@ func (c *ProjectsIndexesListCall) Header() http.Header {
 
 func (c *ProjectsIndexesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4650,7 +4871,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4786,7 +5007,7 @@ func (c *ProjectsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4932,7 +5153,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5109,7 +5330,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

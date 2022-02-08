@@ -339,6 +339,134 @@
                 }
               }
             },
+            "batches": {
+              "methods": {
+                "create": {
+                  "description": "Creates a batch workload that executes asynchronously.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/batches",
+                  "httpMethod": "POST",
+                  "id": "dataproc.projects.locations.batches.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "batchId": {
+                      "description": "Optional. The ID to use for the batch, which will become the final component of the batch's resource name.This value must be 4-63 characters. Valid characters are /[a-z][0-9]-/.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent resource where this batch will be created.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "description": "Optional. A unique ID used to identify the request. If the service receives two CreateBatchRequest (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.CreateBatchRequest)s with the same request_id, the second request is ignored and the Operation that corresponds to the first Batch created and stored in the backend is returned.Recommendation: Set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The value must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/batches",
+                  "request": {
+                    "$ref": "Batch"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes the batch workload resource. If the batch is not in terminal state, the delete fails and the response returns FAILED_PRECONDITION.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/batches/{batchesId}",
+                  "httpMethod": "DELETE",
+                  "id": "dataproc.projects.locations.batches.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the batch resource to delete.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/batches/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Gets the batch workload resource representation.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/batches/{batchesId}",
+                  "httpMethod": "GET",
+                  "id": "dataproc.projects.locations.batches.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the batch to retrieve.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/batches/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "Batch"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists batch workloads.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/batches",
+                  "httpMethod": "GET",
+                  "id": "dataproc.projects.locations.batches.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "Optional. The maximum number of batches to return in each response. The service may return fewer than this value. The default page size is 20; the maximum page size is 1000.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. A page token received from a previous ListBatches call. Provide this token to retrieve the subsequent page.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent, which owns this collection of batches.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/batches",
+                  "response": {
+                    "$ref": "ListBatchesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "workflowTemplates": {
               "methods": {
                 "create": {
@@ -351,7 +479,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The resource name of the region or location, as described in https://cloud.google.com/apis/design/resource_names. For projects.regions.workflowTemplates,create, the resource name of the region has the following format: projects/{project_id}/regions/{region} For projects.locations.workflowTemplates.create, the resource name of the location has the following format: projects/{project_id}/locations/{location}",
+                      "description": "Required. The resource name of the region or location, as described in https://cloud.google.com/apis/design/resource_names. For projects.regions.workflowTemplates.create, the resource name of the region has the following format: projects/{project_id}/regions/{region} For projects.locations.workflowTemplates.create, the resource name of the location has the following format: projects/{project_id}/locations/{location}",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2020,7 +2148,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The resource name of the region or location, as described in https://cloud.google.com/apis/design/resource_names. For projects.regions.workflowTemplates,create, the resource name of the region has the following format: projects/{project_id}/regions/{region} For projects.locations.workflowTemplates.create, the resource name of the location has the following format: projects/{project_id}/locations/{location}",
+                      "description": "Required. The resource name of the region or location, as described in https://cloud.google.com/apis/design/resource_names. For projects.regions.workflowTemplates.create, the resource name of the region has the following format: projects/{project_id}/regions/{region} For projects.locations.workflowTemplates.create, the resource name of the location has the following format: projects/{project_id}/locations/{location}",
                       "location": "path",
                       "pattern": "^projects/[^/]+/regions/[^/]+$",
                       "required": true,
@@ -2316,7 +2444,7 @@
       }
     }
   },
-  "revision": "20210902",
+  "revision": "20220201",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2357,6 +2485,13 @@
           "description": "Required. The policy id.The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). Cannot begin or end with underscore or hyphen. Must consist of between 3 and 50 characters.",
           "type": "string"
         },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. The labels to associate with this autoscaling policy. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with an autoscaling policy.",
+          "type": "object"
+        },
         "name": {
           "description": "Output only. The \"resource name\" of the autoscaling policy, as described in https://cloud.google.com/apis/design/resource_names. For projects.regions.autoscalingPolicies, the resource name of the policy has the following format: projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_id} For projects.locations.autoscalingPolicies, the resource name of the policy has the following format: projects/{project_id}/locations/{location}/autoscalingPolicies/{policy_id}",
           "readOnly": true,
@@ -2381,6 +2516,10 @@
           "description": "Optional. Duration between scaling events. A scaling period starts after the update operation from the previous event has completed.Bounds: 2m, 1d. Default: 2m.",
           "format": "google-duration",
           "type": "string"
+        },
+        "sparkStandaloneConfig": {
+          "$ref": "SparkStandaloneAutoscalingConfig",
+          "description": "Optional. Spark Standalone autoscaling configuration"
         },
         "yarnConfig": {
           "$ref": "BasicYarnAutoscalingConfig",
@@ -2417,6 +2556,117 @@
           "description": "Optional. Minimum scale-up threshold as a fraction of total cluster size before scaling occurs. For example, in a 20-worker cluster, a threshold of 0.1 means the autoscaler must recommend at least a 2-worker scale-up for the cluster to scale. A threshold of 0 means the autoscaler will scale up on any recommended change.Bounds: 0.0, 1.0. Default: 0.0.",
           "format": "double",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Batch": {
+      "description": "A representation of a batch workload in the service.",
+      "id": "Batch",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The time when the batch was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "creator": {
+          "description": "Output only. The email address of the user who created the batch.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "environmentConfig": {
+          "$ref": "EnvironmentConfig",
+          "description": "Optional. Environment configuration for the batch execution."
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. The labels to associate with this batch. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a batch.",
+          "type": "object"
+        },
+        "name": {
+          "description": "Output only. The resource name of the batch.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "operation": {
+          "description": "Output only. The resource name of the operation associated with this batch.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "pysparkBatch": {
+          "$ref": "PySparkBatch",
+          "description": "Optional. PySpark batch config."
+        },
+        "runtimeConfig": {
+          "$ref": "RuntimeConfig",
+          "description": "Optional. Runtime configuration for the batch execution."
+        },
+        "runtimeInfo": {
+          "$ref": "RuntimeInfo",
+          "description": "Output only. Runtime information about batch execution.",
+          "readOnly": true
+        },
+        "sparkBatch": {
+          "$ref": "SparkBatch",
+          "description": "Optional. Spark batch config."
+        },
+        "sparkRBatch": {
+          "$ref": "SparkRBatch",
+          "description": "Optional. SparkR batch config."
+        },
+        "sparkSqlBatch": {
+          "$ref": "SparkSqlBatch",
+          "description": "Optional. SparkSql batch config."
+        },
+        "state": {
+          "description": "Output only. The state of the batch.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "RUNNING",
+            "CANCELLING",
+            "CANCELLED",
+            "SUCCEEDED",
+            "FAILED"
+          ],
+          "enumDescriptions": [
+            "The batch state is unknown.",
+            "The batch is created before running.",
+            "The batch is running.",
+            "The batch is cancelling.",
+            "The batch cancellation was successful.",
+            "The batch completed successfully.",
+            "The batch is no longer running due to an error."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "stateHistory": {
+          "description": "Output only. Historical state information for the batch.",
+          "items": {
+            "$ref": "StateHistory"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "stateMessage": {
+          "description": "Output only. Batch state details, such as a failure description if the state is FAILED.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "stateTime": {
+          "description": "Output only. The time when the batch entered a current state.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "uuid": {
+          "description": "Output only. A batch UUID (Unique Universal Identifier). The service generates this value when it creates the batch.",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -2477,22 +2727,22 @@
       "type": "object"
     },
     "Binding": {
-      "description": "Associates members with a role.",
+      "description": "Associates members, or principals, with a role.",
       "id": "Binding",
       "properties": {
         "condition": {
           "$ref": "Expr",
-          "description": "The condition that is associated with this binding.If the condition evaluates to true, then this binding applies to the current request.If the condition evaluates to false, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the members in this binding.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies)."
+          "description": "The condition that is associated with this binding.If the condition evaluates to true, then this binding applies to the current request.If the condition evaluates to false, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies)."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource. members can have the following values: allUsers: A special identifier that represents anyone who is on the internet; with or without a Google account. allAuthenticatedUsers: A special identifier that represents anyone who is authenticated with a Google account or a service account. user:{emailid}: An email address that represents a specific Google account. For example, alice@example.com . serviceAccount:{emailid}: An email address that represents a service account. For example, my-other-app@appspot.gserviceaccount.com. group:{emailid}: An email address that represents a Google group. For example, admins@example.com. deleted:user:{emailid}?uid={uniqueid}: An email address (plus unique identifier) representing a user that has been recently deleted. For example, alice@example.com?uid=123456789012345678901. If the user is recovered, this value reverts to user:{emailid} and the recovered user retains the role in the binding. deleted:serviceAccount:{emailid}?uid={uniqueid}: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901. If the service account is undeleted, this value reverts to serviceAccount:{emailid} and the undeleted service account retains the role in the binding. deleted:group:{emailid}?uid={uniqueid}: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, admins@example.com?uid=123456789012345678901. If the group is recovered, this value reverts to group:{emailid} and the recovered group retains the role in the binding. domain:{domain}: The G Suite domain (primary) that represents all the users of that domain. For example, google.com or example.com.",
+          "description": "Specifies the principals requesting access for a Cloud Platform resource. members can have the following values: allUsers: A special identifier that represents anyone who is on the internet; with or without a Google account. allAuthenticatedUsers: A special identifier that represents anyone who is authenticated with a Google account or a service account. user:{emailid}: An email address that represents a specific Google account. For example, alice@example.com . serviceAccount:{emailid}: An email address that represents a service account. For example, my-other-app@appspot.gserviceaccount.com. group:{emailid}: An email address that represents a Google group. For example, admins@example.com. deleted:user:{emailid}?uid={uniqueid}: An email address (plus unique identifier) representing a user that has been recently deleted. For example, alice@example.com?uid=123456789012345678901. If the user is recovered, this value reverts to user:{emailid} and the recovered user retains the role in the binding. deleted:serviceAccount:{emailid}?uid={uniqueid}: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901. If the service account is undeleted, this value reverts to serviceAccount:{emailid} and the undeleted service account retains the role in the binding. deleted:group:{emailid}?uid={uniqueid}: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, admins@example.com?uid=123456789012345678901. If the group is recovered, this value reverts to group:{emailid} and the recovered group retains the role in the binding. domain:{domain}: The G Suite domain (primary) that represents all the users of that domain. For example, google.com or example.com.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to members. For example, roles/viewer, roles/editor, or roles/owner.",
+          "description": "Role that is assigned to the list of members, or principals. For example, roles/viewer, roles/editor, or roles/owner.",
           "type": "string"
         }
       },
@@ -2564,6 +2814,10 @@
         "configBucket": {
           "description": "Optional. A Cloud Storage bucket used to stage job dependencies, config files, and job driver console output. If you do not specify a staging bucket, Cloud Dataproc will determine a Cloud Storage location (US, ASIA, or EU) for your cluster's staging bucket according to the Compute Engine zone where your cluster is deployed, and then create and manage this project-level, per-location bucket (see Dataproc staging and temp buckets (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/staging-bucket)). This field requires a Cloud Storage bucket name, not a gs://... URI to a Cloud Storage bucket.",
           "type": "string"
+        },
+        "dataprocMetricConfig": {
+          "$ref": "DataprocMetricConfig",
+          "description": "Optional. The configuration(s) for a dataproc metric(s)."
         },
         "encryptionConfig": {
           "$ref": "EncryptionConfig",
@@ -2808,7 +3062,7 @@
           "enumDescriptions": [
             "The cluster state is unknown.",
             "The cluster is being created and set up. It is not ready for use.",
-            "The cluster is currently running and healthy. It is ready for use.",
+            "The cluster is currently running and healthy. It is ready for use.Note: The cluster state changes from \"creating\" to \"running\" status after the master node(s), first two primary worker nodes (and the last primary worker node if primary workers \u003e 2) are running.",
             "The cluster encountered an error. It is not ready for use.",
             "The cluster has encountered an error while being updated. Jobs can be submitted to the cluster, but the cluster cannot be updated.",
             "The cluster is being deleted. It cannot be used.",
@@ -2855,6 +3109,20 @@
       },
       "type": "object"
     },
+    "DataprocMetricConfig": {
+      "description": "Contains dataproc metric config.",
+      "id": "DataprocMetricConfig",
+      "properties": {
+        "metrics": {
+          "description": "Required. Metrics to be enabled.",
+          "items": {
+            "$ref": "Metric"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "DiagnoseClusterRequest": {
       "description": "A request to collect cluster diagnostic information.",
       "id": "DiagnoseClusterRequest",
@@ -2884,6 +3152,10 @@
         },
         "bootDiskType": {
           "description": "Optional. Type of the boot disk (default is \"pd-standard\"). Valid values: \"pd-balanced\" (Persistent Disk Balanced Solid State Drive), \"pd-ssd\" (Persistent Disk Solid State Drive), or \"pd-standard\" (Persistent Disk Hard Disk Drive). See Disk types (https://cloud.google.com/compute/docs/disks#disk-types).",
+          "type": "string"
+        },
+        "localSsdInterface": {
+          "description": "Optional. Interface type of local SSDs (default is \"scsi\"). Valid values: \"scsi\" (Small Computer System Interface), \"nvme\" (Non-Volatile Memory Express). See local SSD performance (https://cloud.google.com/compute/docs/disks/local-ssd#performance).",
           "type": "string"
         },
         "numLocalSsds": {
@@ -2926,6 +3198,51 @@
           "description": "Output only. The map of port descriptions to URLs. Will only be populated if enable_http_port_access is true.",
           "readOnly": true,
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "EnvironmentConfig": {
+      "description": "Environment configuration for a workload.",
+      "id": "EnvironmentConfig",
+      "properties": {
+        "executionConfig": {
+          "$ref": "ExecutionConfig",
+          "description": "Optional. Execution configuration for a workload."
+        },
+        "peripheralsConfig": {
+          "$ref": "PeripheralsConfig",
+          "description": "Optional. Peripherals configuration that workload has access to."
+        }
+      },
+      "type": "object"
+    },
+    "ExecutionConfig": {
+      "description": "Execution configuration for a workload.",
+      "id": "ExecutionConfig",
+      "properties": {
+        "kmsKey": {
+          "description": "Optional. The Cloud KMS key to use for encryption.",
+          "type": "string"
+        },
+        "networkTags": {
+          "description": "Optional. Tags used for network traffic control.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "networkUri": {
+          "description": "Optional. Network URI to connect workload to.",
+          "type": "string"
+        },
+        "serviceAccount": {
+          "description": "Optional. Service account that used to execute workload.",
+          "type": "string"
+        },
+        "subnetworkUri": {
+          "description": "Optional. Subnetwork URI to connect workload to.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3049,7 +3366,7 @@
       "id": "GetPolicyOptions",
       "properties": {
         "requestedPolicyVersion": {
-          "description": "Optional. The policy format version to be returned.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).",
+          "description": "Optional. The maximum policy version that will be used to format the policy.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset.The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).",
           "format": "int32",
           "type": "integer"
         }
@@ -3503,12 +3820,12 @@
       "id": "JobScheduling",
       "properties": {
         "maxFailuresPerHour": {
-          "description": "Optional. Maximum number of times per hour a driver may be restarted as a result of driver exiting with non-zero code before job is reported failed.A job may be reported as thrashing if driver exits with non-zero code 4 times within 10 minute window.Maximum value is 10.",
+          "description": "Optional. Maximum number of times per hour a driver may be restarted as a result of driver exiting with non-zero code before job is reported failed.A job may be reported as thrashing if driver exits with non-zero code 4 times within 10 minute window.Maximum value is 10.Note: Currently, this restartable job option is not supported in Dataproc workflow template (https://cloud.google.com/dataproc/docs/concepts/workflows/using-workflows#adding_jobs_to_a_template) jobs.",
           "format": "int32",
           "type": "integer"
         },
         "maxFailuresTotal": {
-          "description": "Optional. Maximum number of times in total a driver may be restarted as a result of driver exiting with non-zero code before job is reported failed. Maximum value is 240.",
+          "description": "Optional. Maximum number of times in total a driver may be restarted as a result of driver exiting with non-zero code before job is reported failed. Maximum value is 240.Note: Currently, this restartable job option is not supported in Dataproc workflow template (https://cloud.google.com/dataproc/docs/concepts/workflows/using-workflows#adding_jobs_to_a_template) jobs.",
           "format": "int32",
           "type": "integer"
         }
@@ -3695,6 +4012,24 @@
       },
       "type": "object"
     },
+    "ListBatchesResponse": {
+      "description": "A list of batch workloads.",
+      "id": "ListBatchesResponse",
+      "properties": {
+        "batches": {
+          "description": "The batches from the specified collection.",
+          "items": {
+            "$ref": "Batch"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "A token, which can be sent as page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListClustersResponse": {
       "description": "The list of all clusters in a project.",
       "id": "ListClustersResponse",
@@ -3858,6 +4193,42 @@
       },
       "type": "object"
     },
+    "Metric": {
+      "description": "Metric source to enable along with any optional metrics for this source that override the dataproc defaults",
+      "id": "Metric",
+      "properties": {
+        "metricOverrides": {
+          "description": "Optional. Optional Metrics to override the dataproc default metrics configured for the metric source",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "metricSource": {
+          "description": "Required. MetricSource that should be enabled",
+          "enum": [
+            "METRIC_SOURCE_UNSPECIFIED",
+            "MONITORING_AGENT_DEFAULTS",
+            "HDFS",
+            "SPARK",
+            "YARN",
+            "SPARK_HISTORY_SERVER",
+            "HIVESERVER2"
+          ],
+          "enumDescriptions": [
+            "Required unspecified metric source",
+            "all default monitoring agent metrics that are published with prefix \"agent.googleapis.com\" when we enable a monitoring agent in Compute Engine",
+            "Hdfs metric source",
+            "Spark metric source",
+            "Yarn metric source",
+            "Spark history server metric source",
+            "hiveserver2 metric source"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "NamespacedGkeDeploymentTarget": {
       "description": "A full, namespace-isolated deployment target for an existing GKE cluster.",
       "id": "NamespacedGkeDeploymentTarget",
@@ -4011,6 +4382,21 @@
       },
       "type": "object"
     },
+    "PeripheralsConfig": {
+      "description": "Auxiliary services configuration for a workload.",
+      "id": "PeripheralsConfig",
+      "properties": {
+        "metastoreService": {
+          "description": "Optional. Resource name of an existing Dataproc Metastore service.Example: projects/[project_id]/locations/[region]/services/[service_id]",
+          "type": "string"
+        },
+        "sparkHistoryServerConfig": {
+          "$ref": "SparkHistoryServerConfig",
+          "description": "Optional. The Spark History Server configuration for the workload."
+        }
+      },
+      "type": "object"
+    },
     "PigJob": {
       "description": "A Dataproc job for running Apache Pig (https://pig.apache.org/) queries on YARN.",
       "id": "PigJob",
@@ -4056,11 +4442,11 @@
       "type": "object"
     },
     "Policy": {
-      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources.A Policy is a collection of bindings. A binding binds one or more members to a single role. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A role is a named list of permissions; each role can be an IAM predefined role or a user-created custom role.For some types of Google Cloud resources, a binding can also specify a condition, which is a logical expression that allows access to a resource only if the expression evaluates to true. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).JSON example: { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } YAML example: bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the IAM documentation (https://cloud.google.com/iam/docs/).",
+      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources.A Policy is a collection of bindings. A binding binds one or more members, or principals, to a single role. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A role is a named list of permissions; each role can be an IAM predefined role or a user-created custom role.For some types of Google Cloud resources, a binding can also specify a condition, which is a logical expression that allows access to a resource only if the expression evaluates to true. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).JSON example: { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } YAML example: bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the IAM documentation (https://cloud.google.com/iam/docs/).",
       "id": "Policy",
       "properties": {
         "bindings": {
-          "description": "Associates a list of members to a role. Optionally, may specify a condition that determines how and when the bindings are applied. Each of the bindings must contain at least one member.",
+          "description": "Associates a list of members, or principals, with a role. Optionally, may specify a condition that determines how and when the bindings are applied. Each of the bindings must contain at least one principal.The bindings in a Policy can refer to up to 1,500 principals; up to 250 of these principals can be Google groups. Each occurrence of a principal counts towards these limits. For example, if the bindings grant 50 different roles to user:alice@example.com, and not to any other principal, then you can add another 1,450 principals to the bindings in the Policy.",
           "items": {
             "$ref": "Binding"
           },
@@ -4116,6 +4502,52 @@
         "queryList": {
           "$ref": "QueryList",
           "description": "A list of queries."
+        }
+      },
+      "type": "object"
+    },
+    "PySparkBatch": {
+      "description": "A configuration for running an Apache PySpark (https://spark.apache.org/docs/latest/api/python/getting_started/quickstart.html) batch workload.",
+      "id": "PySparkBatch",
+      "properties": {
+        "archiveUris": {
+          "description": "Optional. HCFS URIs of archives to be extracted into the working directory of each executor. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "args": {
+          "description": "Optional. The arguments to pass to the driver. Do not include arguments that can be set as batch properties, such as --conf, since a collision can occur that causes an incorrect batch submission.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "fileUris": {
+          "description": "Optional. HCFS URIs of files to be placed in the working directory of each executor.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "jarFileUris": {
+          "description": "Optional. HCFS URIs of jar files to add to the classpath of the Spark driver and tasks.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "mainPythonFileUri": {
+          "description": "Required. The HCFS URI of the main Python file to use as the Spark driver. Must be a .py file.",
+          "type": "string"
+        },
+        "pythonFileUris": {
+          "description": "Optional. HCFS file URIs of Python files to pass to the PySpark framework. Supported file types: .py, .egg, and .zip.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -4250,6 +4682,53 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "RuntimeConfig": {
+      "description": "Runtime configuration for a workload.",
+      "id": "RuntimeConfig",
+      "properties": {
+        "containerImage": {
+          "description": "Optional. Optional custom container image for the job runtime environment. If not specified, a default container image will be used.",
+          "type": "string"
+        },
+        "properties": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. A mapping of property names to values, which are used to configure workload execution.",
+          "type": "object"
+        },
+        "version": {
+          "description": "Optional. Version of the batch runtime.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RuntimeInfo": {
+      "description": "Runtime information about workload execution.",
+      "id": "RuntimeInfo",
+      "properties": {
+        "diagnosticOutputUri": {
+          "description": "Output only. A URI pointing to the location of the diagnostics tarball.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "endpoints": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Output only. Map of remote access endpoints (such as web interfaces and APIs) to their URIs.",
+          "readOnly": true,
+          "type": "object"
+        },
+        "outputUri": {
+          "description": "Output only. A URI pointing to the location of the stdout and stderr of the workload.",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -4413,8 +4892,62 @@
       },
       "type": "object"
     },
+    "SparkBatch": {
+      "description": "A configuration for running an Apache Spark (https://spark.apache.org/) batch workload.",
+      "id": "SparkBatch",
+      "properties": {
+        "archiveUris": {
+          "description": "Optional. HCFS URIs of archives to be extracted into the working directory of each executor. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "args": {
+          "description": "Optional. The arguments to pass to the driver. Do not include arguments that can be set as batch properties, such as --conf, since a collision can occur that causes an incorrect batch submission.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "fileUris": {
+          "description": "Optional. HCFS URIs of files to be placed in the working directory of each executor.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "jarFileUris": {
+          "description": "Optional. HCFS URIs of jar files to add to the classpath of the Spark driver and tasks.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "mainClass": {
+          "description": "Optional. The name of the driver main class. The jar file that contains the class must be in the classpath or specified in jar_file_uris.",
+          "type": "string"
+        },
+        "mainJarFileUri": {
+          "description": "Optional. The HCFS URI of the jar file that contains the main class.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SparkHistoryServerConfig": {
+      "description": "Spark History Server configuration for the workload.",
+      "id": "SparkHistoryServerConfig",
+      "properties": {
+        "dataprocCluster": {
+          "description": "Optional. Resource name of an existing Dataproc Cluster to act as a Spark History Server for the workload.Example: projects/[project_id]/regions/[region]/clusters/[cluster_name]",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SparkJob": {
-      "description": "A Dataproc job for running Apache Spark (http://spark.apache.org/) applications on YARN.",
+      "description": "A Dataproc job for running Apache Spark (https://spark.apache.org/) applications on YARN.",
       "id": "SparkJob",
       "properties": {
         "archiveUris": {
@@ -4467,6 +5000,38 @@
       },
       "type": "object"
     },
+    "SparkRBatch": {
+      "description": "A configuration for running an Apache SparkR (https://spark.apache.org/docs/latest/sparkr.html) batch workload.",
+      "id": "SparkRBatch",
+      "properties": {
+        "archiveUris": {
+          "description": "Optional. HCFS URIs of archives to be extracted into the working directory of each executor. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "args": {
+          "description": "Optional. The arguments to pass to the Spark driver. Do not include arguments that can be set as batch properties, such as --conf, since a collision can occur that causes an incorrect batch submission.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "fileUris": {
+          "description": "Optional. HCFS URIs of files to be placed in the working directory of each executor.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "mainRFileUri": {
+          "description": "Required. The HCFS URI of the main R file to use as the driver. Must be a .R or .r file.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SparkRJob": {
       "description": "A Dataproc job for running Apache SparkR (https://spark.apache.org/docs/latest/sparkr.html) applications on YARN.",
       "id": "SparkRJob",
@@ -4510,8 +5075,33 @@
       },
       "type": "object"
     },
+    "SparkSqlBatch": {
+      "description": "A configuration for running Apache Spark SQL (https://spark.apache.org/sql/) queries as a batch workload.",
+      "id": "SparkSqlBatch",
+      "properties": {
+        "jarFileUris": {
+          "description": "Optional. HCFS URIs of jar files to be added to the Spark CLASSPATH.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "queryFileUri": {
+          "description": "Required. The HCFS URI of the script that contains Spark SQL queries to execute.",
+          "type": "string"
+        },
+        "queryVariables": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. Mapping of query variable names to values (equivalent to the Spark SQL command: SET name=\"value\";).",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "SparkSqlJob": {
-      "description": "A Dataproc job for running Apache Spark SQL (http://spark.apache.org/sql/) queries.",
+      "description": "A Dataproc job for running Apache Spark SQL (https://spark.apache.org/sql/) queries.",
       "id": "SparkSqlJob",
       "properties": {
         "jarFileUris": {
@@ -4550,6 +5140,38 @@
       },
       "type": "object"
     },
+    "SparkStandaloneAutoscalingConfig": {
+      "description": "Basic autoscaling configurations for Spark Standalone.",
+      "id": "SparkStandaloneAutoscalingConfig",
+      "properties": {
+        "gracefulDecommissionTimeout": {
+          "description": "Required. Timeout for Spark graceful decommissioning of spark workers. Specifies the duration to wait for spark worker to complete spark decomissioning tasks before forcefully removing workers. Only applicable to downscaling operations.Bounds: 0s, 1d.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "scaleDownFactor": {
+          "description": "Required. Fraction of required executors to remove from Spark Serverless clusters. A scale-down factor of 1.0 will result in scaling down so that there are no more executors for the Spark Job.(more aggressive scaling). A scale-down factor closer to 0 will result in a smaller magnitude of scaling donw (less aggressive scaling).Bounds: 0.0, 1.0.",
+          "format": "double",
+          "type": "number"
+        },
+        "scaleDownMinWorkerFraction": {
+          "description": "Optional. Minimum scale-down threshold as a fraction of total cluster size before scaling occurs. For example, in a 20-worker cluster, a threshold of 0.1 means the autoscaler must recommend at least a 2 worker scale-down for the cluster to scale. A threshold of 0 means the autoscaler will scale down on any recommended change.Bounds: 0.0, 1.0. Default: 0.0.",
+          "format": "double",
+          "type": "number"
+        },
+        "scaleUpFactor": {
+          "description": "Required. Fraction of required workers to add to Spark Standalone clusters. A scale-up factor of 1.0 will result in scaling up so that there are no more required workers for the Spark Job (more aggressive scaling). A scale-up factor closer to 0 will result in a smaller magnitude of scaling up (less aggressive scaling).Bounds: 0.0, 1.0.",
+          "format": "double",
+          "type": "number"
+        },
+        "scaleUpMinWorkerFraction": {
+          "description": "Optional. Minimum scale-up threshold as a fraction of total cluster size before scaling occurs. For example, in a 20-worker cluster, a threshold of 0.1 means the autoscaler must recommend at least a 2-worker scale-up for the cluster to scale. A threshold of 0 means the autoscaler will scale up on any recommended change.Bounds: 0.0, 1.0. Default: 0.0.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "StartClusterRequest": {
       "description": "A request to start a cluster.",
       "id": "StartClusterRequest",
@@ -4560,6 +5182,47 @@
         },
         "requestId": {
           "description": "Optional. A unique ID used to identify the request. If the server receives two StartClusterRequest (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.StartClusterRequest)s with the same id, then the second request will be ignored and the first google.longrunning.Operation created and stored in the backend is returned.Recommendation: Set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The ID must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "StateHistory": {
+      "description": "Historical state information.",
+      "id": "StateHistory",
+      "properties": {
+        "state": {
+          "description": "Output only. The state of the batch at this point in history.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "RUNNING",
+            "CANCELLING",
+            "CANCELLED",
+            "SUCCEEDED",
+            "FAILED"
+          ],
+          "enumDescriptions": [
+            "The batch state is unknown.",
+            "The batch is created before running.",
+            "The batch is running.",
+            "The batch is cancelling.",
+            "The batch cancellation was successful.",
+            "The batch completed successfully.",
+            "The batch is no longer running due to an error."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "stateMessage": {
+          "description": "Output only. Details about the state at this point in history.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "stateStartTime": {
+          "description": "Output only. The time when the batch entered the historical state.",
+          "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         }
       },

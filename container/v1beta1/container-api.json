@@ -232,7 +232,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name (project, location, cluster id) of the cluster to complete IP rotation. Specified in the format `projects/*/locations/*/clusters/*`.",
+                      "description": "The name (project, location, cluster name) of the cluster to complete IP rotation. Specified in the format `projects/*/locations/*/clusters/*`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -368,7 +368,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "The cluster (project, location, cluster id) to get keys for. Specified in the format `projects/*/locations/*/clusters/*`.",
+                      "description": "The cluster (project, location, cluster name) to get keys for. Specified in the format `projects/*/locations/*/clusters/*`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -453,7 +453,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name (project, location, cluster id) of the cluster to set legacy abac. Specified in the format `projects/*/locations/*/clusters/*`.",
+                      "description": "The name (project, location, cluster name) of the cluster to set legacy abac. Specified in the format `projects/*/locations/*/clusters/*`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -537,7 +537,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name (project, location, cluster id) of the cluster to set maintenance policy. Specified in the format `projects/*/locations/*/clusters/*`.",
+                      "description": "The name (project, location, cluster name) of the cluster to set maintenance policy. Specified in the format `projects/*/locations/*/clusters/*`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -621,7 +621,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name (project, location, cluster id) of the cluster to set networking policy. Specified in the format `projects/*/locations/*/clusters/*`.",
+                      "description": "The name (project, location, cluster name) of the cluster to set networking policy. Specified in the format `projects/*/locations/*/clusters/*`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -649,7 +649,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name (project, location, cluster id) of the cluster to set labels. Specified in the format `projects/*/locations/*/clusters/*`.",
+                      "description": "The name (project, location, cluster name) of the cluster to set labels. Specified in the format `projects/*/locations/*/clusters/*`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -677,7 +677,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name (project, location, cluster id) of the cluster to start IP rotation. Specified in the format `projects/*/locations/*/clusters/*`.",
+                      "description": "The name (project, location, cluster name) of the cluster to start IP rotation. Specified in the format `projects/*/locations/*/clusters/*`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -765,7 +765,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "The parent (project, location, cluster id) where the node pool will be created. Specified in the format `projects/*/locations/*/clusters/*`.",
+                          "description": "The parent (project, location, cluster name) where the node pool will be created. Specified in the format `projects/*/locations/*/clusters/*`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                           "required": true,
@@ -888,7 +888,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The parent (project, location, cluster id) where the node pools will be listed. Specified in the format `projects/*/locations/*/clusters/*`.",
+                          "description": "The parent (project, location, cluster name) where the node pools will be listed. Specified in the format `projects/*/locations/*/clusters/*`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                           "required": true,
@@ -1067,7 +1067,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "The cluster (project, location, cluster id) to get the discovery document for. Specified in the format `projects/*/locations/*/clusters/*`.",
+                          "description": "The cluster (project, location, cluster name) to get the discovery document for. Specified in the format `projects/*/locations/*/clusters/*`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                           "required": true,
@@ -2134,7 +2134,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The parent (project, location, cluster id) where the node pools will be listed. Specified in the format `projects/*/locations/*/clusters/*`.",
+                          "description": "The parent (project, location, cluster name) where the node pools will be listed. Specified in the format `projects/*/locations/*/clusters/*`.",
                           "location": "query",
                           "type": "string"
                         },
@@ -2484,7 +2484,7 @@
       }
     }
   },
-  "revision": "20210906",
+  "revision": "20220114",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2531,6 +2531,10 @@
           "$ref": "GcpFilestoreCsiDriverConfig",
           "description": "Configuration for the GCP Filestore CSI driver."
         },
+        "gkeBackupAgentConfig": {
+          "$ref": "GkeBackupAgentConfig",
+          "description": "Configuration for the Backup for GKE agent addon."
+        },
         "horizontalPodAutoscaling": {
           "$ref": "HorizontalPodAutoscaling",
           "description": "Configuration for the horizontal pod autoscaling feature, which increases or decreases the number of replica pods a replication controller has based on the resource usage of the existing pods."
@@ -2554,6 +2558,18 @@
         "networkPolicyConfig": {
           "$ref": "NetworkPolicyConfig",
           "description": "Configuration for NetworkPolicy. This only tracks whether the addon is enabled or not on the Master, it does not track whether network policy is enabled for the nodes."
+        }
+      },
+      "type": "object"
+    },
+    "AdvancedMachineFeatures": {
+      "description": "Specifies options for controlling advanced machine features.",
+      "id": "AdvancedMachineFeatures",
+      "properties": {
+        "threadsPerCore": {
+          "description": "The number of threads per physical core. To disable simultaneous multithreading (SMT) set this to 1. If unset, the maximum number of threads supported per core by the underlying processor is assumed.",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2802,7 +2818,7 @@
         },
         "confidentialNodes": {
           "$ref": "ConfidentialNodes",
-          "description": "Configuration of Confidential Nodes"
+          "description": "Configuration of Confidential Nodes. All the nodes in the cluster will be Confidential VM once enabled."
         },
         "createTime": {
           "description": "[Output only] The time the cluster was created, in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.",
@@ -2924,6 +2940,10 @@
         "masterIpv4CidrBlock": {
           "description": "The IP prefix in CIDR notation to use for the hosted master network. This prefix will be used for assigning private IP addresses to the master or set of masters, as well as the ILB VIP. This field is deprecated, use private_cluster_config.master_ipv4_cidr_block instead.",
           "type": "string"
+        },
+        "meshCertificates": {
+          "$ref": "MeshCertificates",
+          "description": "Configuration for issuance of mTLS keys and certificates to Kubernetes pods."
         },
         "monitoringConfig": {
           "$ref": "MonitoringConfig",
@@ -3147,10 +3167,6 @@
           "$ref": "AuthenticatorGroupsConfig",
           "description": "AuthenticatorGroupsConfig specifies the config for the cluster security groups settings."
         },
-        "desiredAutopilot": {
-          "$ref": "Autopilot",
-          "description": "The desired Autopilot configuration for the cluster."
-        },
         "desiredBinaryAuthorization": {
           "$ref": "BinaryAuthorization",
           "description": "The desired configuration options for the Binary Authorization feature."
@@ -3188,6 +3204,10 @@
         "desiredDnsConfig": {
           "$ref": "DNSConfig",
           "description": "DNSConfig contains clusterDNS config for this cluster."
+        },
+        "desiredGcfsConfig": {
+          "$ref": "GcfsConfig",
+          "description": "The desired GCFS config for the cluster."
         },
         "desiredIdentityServiceConfig": {
           "$ref": "IdentityServiceConfig",
@@ -3231,6 +3251,10 @@
         "desiredMasterVersion": {
           "description": "The Kubernetes version to change the master to. The only valid value is the latest supported version. Users may specify either explicit versions offered by Kubernetes Engine or version aliases, which have the following behavior: - \"latest\": picks the highest valid Kubernetes version - \"1.X\": picks the highest valid patch+gke.N patch in the 1.X version - \"1.X.Y\": picks the highest valid gke.N patch in the 1.X.Y version - \"1.X.Y-gke.N\": picks an explicit Kubernetes version - \"-\": picks the default Kubernetes version",
           "type": "string"
+        },
+        "desiredMeshCertificates": {
+          "$ref": "MeshCertificates",
+          "description": "Configuration for issuance of mTLS keys and certificates to Kubernetes pods."
         },
         "desiredMonitoringConfig": {
           "$ref": "MonitoringConfig",
@@ -3324,7 +3348,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name (project, location, cluster id) of the cluster to complete IP rotation. Specified in the format `projects/*/locations/*/clusters/*`.",
+          "description": "The name (project, location, cluster name) of the cluster to complete IP rotation. Specified in the format `projects/*/locations/*/clusters/*`.",
           "type": "string"
         },
         "projectId": {
@@ -3343,7 +3367,7 @@
       "id": "ConfidentialNodes",
       "properties": {
         "enabled": {
-          "description": "Whether Confidential Nodes feature is enabled for all nodes in this cluster.",
+          "description": "Whether Confidential Nodes feature is enabled.",
           "type": "boolean"
         }
       },
@@ -3407,7 +3431,7 @@
           "description": "Required. The node pool to create."
         },
         "parent": {
-          "description": "The parent (project, location, cluster id) where the node pool will be created. Specified in the format `projects/*/locations/*/clusters/*`.",
+          "description": "The parent (project, location, cluster name) where the node pool will be created. Specified in the format `projects/*/locations/*/clusters/*`.",
           "type": "string"
         },
         "projectId": {
@@ -3562,12 +3586,49 @@
       },
       "type": "object"
     },
+    "Filter": {
+      "description": "Allows filtering to one or more specific event types. If event types are present, those and only those event types will be transmitted to the cluster. Other types will be skipped. If no filter is specified, or no event types are present, all event types will be sent",
+      "id": "Filter",
+      "properties": {
+        "eventType": {
+          "description": "Event types to allowlist.",
+          "items": {
+            "enum": [
+              "EVENT_TYPE_UNSPECIFIED",
+              "UPGRADE_AVAILABLE_EVENT",
+              "UPGRADE_EVENT",
+              "SECURITY_BULLETIN_EVENT"
+            ],
+            "enumDescriptions": [
+              "Not set, will be ignored.",
+              "Corresponds with UpgradeAvailableEvent.",
+              "Corresponds with UpgradeEvent.",
+              "Corresponds with SecurityBulletinEvent."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GcePersistentDiskCsiDriverConfig": {
       "description": "Configuration for the Compute Engine PD CSI driver.",
       "id": "GcePersistentDiskCsiDriverConfig",
       "properties": {
         "enabled": {
           "description": "Whether the Compute Engine PD CSI driver is enabled for this cluster.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GcfsConfig": {
+      "description": "GcfsConfig contains configurations of Google Container File System.",
+      "id": "GcfsConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether to use GCFS.",
           "type": "boolean"
         }
       },
@@ -3652,6 +3713,17 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GkeBackupAgentConfig": {
+      "description": "Configuration for the Backup for GKE Agent.",
+      "id": "GkeBackupAgentConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether the Backup for GKE agent is enabled for this cluster.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -4063,6 +4135,27 @@
       },
       "type": "object"
     },
+    "MaintenanceExclusionOptions": {
+      "description": "Represents the Maintenance exclusion option.",
+      "id": "MaintenanceExclusionOptions",
+      "properties": {
+        "scope": {
+          "description": "Scope specifies the upgrade scope which upgrades are blocked by the exclusion.",
+          "enum": [
+            "NO_UPGRADES",
+            "NO_MINOR_UPGRADES",
+            "NO_MINOR_OR_NODE_UPGRADES"
+          ],
+          "enumDescriptions": [
+            "NO_UPGRADES excludes all upgrades, including patch upgrades and minor upgrades across control planes and nodes. This is the default exclusion behavior.",
+            "NO_MINOR_UPGRADES excludes all minor upgrades for the cluster, only patches are allowed.",
+            "NO_MINOR_OR_NODE_UPGRADES excludes all minor upgrades for the cluster, and also exclude all node pool upgrades. Only control plane patches are allowed."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "MaintenancePolicy": {
       "description": "MaintenancePolicy defines the maintenance policy to be used for the cluster.",
       "id": "MaintenancePolicy",
@@ -4096,6 +4189,17 @@
         "recurringWindow": {
           "$ref": "RecurringTimeWindow",
           "description": "RecurringWindow specifies some number of recurring time periods for maintenance to occur. The time windows may be overlapping. If no maintenance windows are set, maintenance can occur at any time."
+        }
+      },
+      "type": "object"
+    },
+    "ManagedPrometheusConfig": {
+      "description": "ManagedPrometheusConfig defines the configuration for Google Cloud Managed Service for Prometheus.",
+      "id": "ManagedPrometheusConfig",
+      "properties": {
+        "enabled": {
+          "description": "Enable Managed Collection.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -4166,6 +4270,17 @@
       },
       "type": "object"
     },
+    "MeshCertificates": {
+      "description": "Configuration for issuance of mTLS keys and certificates to Kubernetes pods.",
+      "id": "MeshCertificates",
+      "properties": {
+        "enableCertificates": {
+          "description": "enable_certificates controls issuance of workload mTLS certificates. If set, the GKE Workload Identity Certificates controller and node agent will be deployed in the cluster, which can then be configured by creating a WorkloadCertificateConfig Custom Resource. Requires Workload Identity (workload_pool must be non-empty).",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "Metric": {
       "description": "Progress metric is (string, int|float|string) pair.",
       "id": "Metric",
@@ -4222,6 +4337,10 @@
         "componentConfig": {
           "$ref": "MonitoringComponentConfig",
           "description": "Monitoring components configuration"
+        },
+        "managedPrometheusConfig": {
+          "$ref": "ManagedPrometheusConfig",
+          "description": "Enable Google Cloud Managed Service for Prometheus in the cluster."
         }
       },
       "type": "object"
@@ -4350,6 +4469,10 @@
           },
           "type": "array"
         },
+        "advancedMachineFeatures": {
+          "$ref": "AdvancedMachineFeatures",
+          "description": "Advanced features for the Compute Engine VM."
+        },
         "bootDiskKmsKey": {
           "description": " The Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool. This should be of the form projects/[KEY_PROJECT_ID]/locations/[LOCATION]/keyRings/[RING_NAME]/cryptoKeys/[KEY_NAME]. For more information about protecting resources with Cloud KMS Keys please see: https://cloud.google.com/compute/docs/disks/customer-managed-encryption",
           "type": "string"
@@ -4366,6 +4489,10 @@
         "ephemeralStorageConfig": {
           "$ref": "EphemeralStorageConfig",
           "description": "Parameters for the ephemeral storage filesystem. If unspecified, ephemeral storage is backed by the boot disk."
+        },
+        "gcfsConfig": {
+          "$ref": "GcfsConfig",
+          "description": "GCFS (Google Container File System) configs."
         },
         "gvnic": {
           "$ref": "VirtualNIC",
@@ -4441,6 +4568,10 @@
           "$ref": "ShieldedInstanceConfig",
           "description": "Shielded Instance options."
         },
+        "spot": {
+          "description": "Spot flag for enabling Spot VM, which is a rebrand of the existing preemptible flag.",
+          "type": "boolean"
+        },
         "tags": {
           "description": "The list of instance tags applied to all nodes. Tags are used to identify valid sources or targets for network firewalls and are specified by the client during cluster or node pool creation. Each tag within the list must comply with RFC1035.",
           "items": {
@@ -4465,7 +4596,12 @@
     "NodeConfigDefaults": {
       "description": "Subset of NodeConfig message that has defaults.",
       "id": "NodeConfigDefaults",
-      "properties": {},
+      "properties": {
+        "gcfsConfig": {
+          "$ref": "GcfsConfig",
+          "description": "GCFS (Google Container File System, a.k.a Riptide) options."
+        }
+      },
       "type": "object"
     },
     "NodeKubeletConfig": {
@@ -4481,7 +4617,7 @@
           "type": "string"
         },
         "cpuManagerPolicy": {
-          "description": "Control the CPU management policy on the node. See https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/ The following values are allowed. - \"none\": the default, which represents the existing scheduling behavior. - \"static\": allows pods with certain resource characteristics to be granted increased CPU affinity and exclusivity on the node. The default value is 'none' if unspecified.",
+          "description": "Control the CPU management policy on the node. See https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/ The following values are allowed. * \"none\": the default, which represents the existing scheduling behavior. * \"static\": allows pods with certain resource characteristics to be granted increased CPU affinity and exclusivity on the node. The default value is 'none' if unspecified.",
           "type": "string"
         }
       },
@@ -4592,6 +4728,10 @@
         "networkConfig": {
           "$ref": "NodeNetworkConfig",
           "description": "Networking configuration for this NodePool. If specified, it overrides the cluster-level defaults."
+        },
+        "placementPolicy": {
+          "$ref": "PlacementPolicy",
+          "description": "Specifies the node placement policy."
         },
         "podIpv4CidrSize": {
           "description": "[Output only] The pod CIDR block size per node in this node pool.",
@@ -4901,6 +5041,25 @@
       },
       "type": "object"
     },
+    "PlacementPolicy": {
+      "description": "PlacementPolicy defines the placement policy used by the node pool.",
+      "id": "PlacementPolicy",
+      "properties": {
+        "type": {
+          "description": "The type of placement.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "COMPACT"
+          ],
+          "enumDescriptions": [
+            "TYPE_UNSPECIFIED specifies no requirements on nodes placement.",
+            "COMPACT specifies node placement in the same availability domain to ensure low communication latency."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "PodSecurityPolicyConfig": {
       "description": "Configuration for the PodSecurityPolicy feature.",
       "id": "PodSecurityPolicyConfig",
@@ -4965,6 +5124,10 @@
         "enabled": {
           "description": "Enable notifications for Pub/Sub.",
           "type": "boolean"
+        },
+        "filter": {
+          "$ref": "Filter",
+          "description": "Allows filtering to one or more specific event types. If no filter is specified, or if a filter is specified with no event types, all event types will be sent"
         },
         "topic": {
           "description": "The desired Pub/Sub topic to which notifications will be sent by GKE. Format is `projects/{project}/topics/{topic}`.",
@@ -5176,6 +5339,62 @@
       },
       "type": "object"
     },
+    "SecurityBulletinEvent": {
+      "description": "SecurityBulletinEvent is a notification sent to customers when a security bulletin has been posted that they are vulnerable to.",
+      "id": "SecurityBulletinEvent",
+      "properties": {
+        "affectedSupportedMinors": {
+          "description": "The GKE minor versions affected by this vulnerability.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "briefDescription": {
+          "description": "A brief description of the bulletin. See the bulletin pointed to by the bulletin_uri field for an expanded description.",
+          "type": "string"
+        },
+        "bulletinId": {
+          "description": "The ID of the bulletin corresponding to the vulnerability.",
+          "type": "string"
+        },
+        "bulletinUri": {
+          "description": "The URI link to the bulletin on the website for more information.",
+          "type": "string"
+        },
+        "cveIds": {
+          "description": "The CVEs associated with this bulletin.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "manualStepsRequired": {
+          "description": "If this field is specified, it means there are manual steps that the user must take to make their clusters safe.",
+          "type": "boolean"
+        },
+        "patchedVersions": {
+          "description": "The GKE versions where this vulnerability is patched.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "resourceTypeAffected": {
+          "description": "The resource type (node/control plane) that has the vulnerability. Multiple notifications (1 notification per resource type) will be sent for a vulnerability that affects \u003e 1 resource type.",
+          "type": "string"
+        },
+        "severity": {
+          "description": "The severity of this bulletin as it relates to GKE.",
+          "type": "string"
+        },
+        "suggestedUpgradeTarget": {
+          "description": "This represents a version selected from the patched_versions field that the cluster receiving this notification should most likely want to upgrade to based on its current version. Note that if this notification is being received by a given cluster, it means that this version is currently available as an upgrade target in that cluster's location.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ServerConfig": {
       "description": "Kubernetes Engine service configuration.",
       "id": "ServerConfig",
@@ -5277,7 +5496,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name (project, location, cluster id) of the cluster to set labels. Specified in the format `projects/*/locations/*/clusters/*`.",
+          "description": "The name (project, location, cluster name) of the cluster to set labels. Specified in the format `projects/*/locations/*/clusters/*`.",
           "type": "string"
         },
         "projectId": {
@@ -5311,7 +5530,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "The name (project, location, cluster id) of the cluster to set legacy abac. Specified in the format `projects/*/locations/*/clusters/*`.",
+          "description": "The name (project, location, cluster name) of the cluster to set legacy abac. Specified in the format `projects/*/locations/*/clusters/*`.",
           "type": "string"
         },
         "projectId": {
@@ -5395,7 +5614,7 @@
           "description": "Required. The maintenance policy to be set for the cluster. An empty field clears the existing maintenance policy."
         },
         "name": {
-          "description": "The name (project, location, cluster id) of the cluster to set maintenance policy. Specified in the format `projects/*/locations/*/clusters/*`.",
+          "description": "The name (project, location, cluster name) of the cluster to set maintenance policy. Specified in the format `projects/*/locations/*/clusters/*`.",
           "type": "string"
         },
         "projectId": {
@@ -5488,7 +5707,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name (project, location, cluster id) of the cluster to set networking policy. Specified in the format `projects/*/locations/*/clusters/*`.",
+          "description": "The name (project, location, cluster name) of the cluster to set networking policy. Specified in the format `projects/*/locations/*/clusters/*`.",
           "type": "string"
         },
         "networkPolicy": {
@@ -5635,7 +5854,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name (project, location, cluster id) of the cluster to start IP rotation. Specified in the format `projects/*/locations/*/clusters/*`.",
+          "description": "The name (project, location, cluster name) of the cluster to start IP rotation. Specified in the format `projects/*/locations/*/clusters/*`.",
           "type": "string"
         },
         "projectId": {
@@ -5764,6 +5983,10 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "maintenanceExclusionOptions": {
+          "$ref": "MaintenanceExclusionOptions",
+          "description": "MaintenanceExclusionOptions provides maintenance exclusion related options."
+        },
         "startTime": {
           "description": "The time that the window first starts.",
           "format": "google-datetime",
@@ -5852,6 +6075,10 @@
         "clusterId": {
           "description": "Required. Deprecated. The name of the cluster to upgrade. This field has been deprecated and replaced by the name field.",
           "type": "string"
+        },
+        "gcfsConfig": {
+          "$ref": "GcfsConfig",
+          "description": "GCFS config."
         },
         "gvnic": {
           "$ref": "VirtualNIC",

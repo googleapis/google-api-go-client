@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -240,9 +240,9 @@ type SignupUrlsService struct {
 	s *Service
 }
 
-// AdvancedSecurityOverrides: Security policies set to the most secure
-// values by default. To maintain the security posture of a device, we
-// don't recommend overriding any of the default values.
+// AdvancedSecurityOverrides: Security policies set to secure values by
+// default. To maintain the security posture of a device, we don't
+// recommend overriding any of the default values.
 type AdvancedSecurityOverrides struct {
 	// CommonCriteriaMode: Controls Common Criteria Mode—security
 	// standards defined in the Common Criteria for Information Technology
@@ -444,7 +444,7 @@ type Application struct {
 	ManagedProperties []*ManagedProperty `json:"managedProperties,omitempty"`
 
 	// Name: The name of the app in the form
-	// enterprises/{enterpriseId}/applications/{package_name}.
+	// enterprises/{enterprise}/applications/{package_name}.
 	Name string `json:"name,omitempty"`
 
 	// Permissions: The permissions required by the app.
@@ -1369,9 +1369,12 @@ type Device struct {
 	//   "DEVICE_STATE_UNSPECIFIED" - This value is disallowed.
 	//   "ACTIVE" - The device is active.
 	//   "DISABLED" - The device is disabled.
-	//   "DELETED" - The device was deleted. This state will never be
-	// returned by an API call, but is used in the final status report
-	// published to Cloud Pub/Sub when the device acknowledges the deletion.
+	//   "DELETED" - The device was deleted. This state is never returned by
+	// an API call, but is used in the final status report when the device
+	// acknowledges the deletion. If the device is deleted via the API call,
+	// this state is published to Pub/Sub. If the user deletes the work
+	// profile or resets the device, the device state will remain unknown to
+	// the server.
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
 	AppliedState string `json:"appliedState,omitempty"`
@@ -1509,9 +1512,12 @@ type Device struct {
 	//   "DEVICE_STATE_UNSPECIFIED" - This value is disallowed.
 	//   "ACTIVE" - The device is active.
 	//   "DISABLED" - The device is disabled.
-	//   "DELETED" - The device was deleted. This state will never be
-	// returned by an API call, but is used in the final status report
-	// published to Cloud Pub/Sub when the device acknowledges the deletion.
+	//   "DELETED" - The device was deleted. This state is never returned by
+	// an API call, but is used in the final status report when the device
+	// acknowledges the deletion. If the device is deleted via the API call,
+	// this state is published to Pub/Sub. If the user deletes the work
+	// profile or resets the device, the device state will remain unknown to
+	// the server.
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
 	State string `json:"state,omitempty"`
@@ -2028,6 +2034,14 @@ type HardwareInfo struct {
 	// DeviceBasebandVersion: Baseband version. For example,
 	// MDM9625_104662.22.05.34p.
 	DeviceBasebandVersion string `json:"deviceBasebandVersion,omitempty"`
+
+	// EnterpriseSpecificId: Output only. ID that uniquely identifies a
+	// personally-owned device in a particular organization. On the same
+	// physical device when enrolled with the same organization, this ID
+	// persists across setups and even factory resets. This ID is available
+	// on personally-owned devices with a work profile on devices running
+	// Android 12 and above.
+	EnterpriseSpecificId string `json:"enterpriseSpecificId,omitempty"`
 
 	// GpuShutdownTemperatures: GPU shutdown temperature thresholds in
 	// Celsius for each GPU on the device.
@@ -3432,9 +3446,9 @@ type Policy struct {
 	// disabled. Also mutes the device.
 	AdjustVolumeDisabled bool `json:"adjustVolumeDisabled,omitempty"`
 
-	// AdvancedSecurityOverrides: Security policies set to the most secure
-	// values by default. To maintain the security posture of a device, we
-	// don't recommend overriding any of the default values.
+	// AdvancedSecurityOverrides: Security policies set to secure values by
+	// default. To maintain the security posture of a device, we don't
+	// recommend overriding any of the default values.
 	AdvancedSecurityOverrides *AdvancedSecurityOverrides `json:"advancedSecurityOverrides,omitempty"`
 
 	// AlwaysOnVpnPackage: Configuration for an always-on VPN connection.
@@ -3507,6 +3521,37 @@ type Policy struct {
 	// over bluetooth_config_disabled because bluetooth_config_disabled can
 	// be bypassed by the user.
 	BluetoothDisabled bool `json:"bluetoothDisabled,omitempty"`
+
+	// CameraAccess: Controls the use of the camera and whether the user has
+	// access to the camera access toggle.
+	//
+	// Possible values:
+	//   "CAMERA_ACCESS_UNSPECIFIED" - If camera_disabled is true, this is
+	// equivalent to CAMERA_ACCESS_DISABLED. Otherwise, this is equivalent
+	// to CAMERA_ACCESS_USER_CHOICE.
+	//   "CAMERA_ACCESS_USER_CHOICE" - The field
+	// camera_disabled(google.android.devicemanagement.v1.Policy.camera_disab
+	// led] is ignored. This is the default device behaviour: all cameras on
+	// the device are available. On Android 12 and above, the user can use
+	// the camera access toggle.
+	//   "CAMERA_ACCESS_DISABLED" - The field
+	// camera_disabled(google.android.devicemanagement.v1.Policy.camera_disab
+	// led] is ignored. All cameras on the device are disabled (for fully
+	// managed devices, this applies device-wide and for work profiles this
+	// applies only to the work profile).There are no explicit restrictions
+	// placed on the camera access toggle on Android 12 and above: on fully
+	// managed devices, the camera access toggle has no effect as all
+	// cameras are disabled. On devices with a work profile, this toggle has
+	// no effect on apps in the work profile, but it affects apps outside
+	// the work profile.
+	//   "CAMERA_ACCESS_ENFORCED" - The field
+	// camera_disabled(google.android.devicemanagement.v1.Policy.camera_disab
+	// led] is ignored. All cameras on the device are available. On fully
+	// managed devices running Android 12 and above, the user is unable to
+	// use the camera access toggle. On devices which are not fully managed
+	// or which run Android 11 or below, this is equivalent to
+	// CAMERA_ACCESS_USER_CHOICE.
+	CameraAccess string `json:"cameraAccess,omitempty"`
 
 	// CameraDisabled: Whether all cameras on the device are disabled.
 	CameraDisabled bool `json:"cameraDisabled,omitempty"`
@@ -3665,6 +3710,33 @@ type Policy struct {
 	// until the device locks. A value of 0 means there is no restriction.
 	MaximumTimeToLock int64 `json:"maximumTimeToLock,omitempty,string"`
 
+	// MicrophoneAccess: Controls the use of the microphone and whether the
+	// user has access to the microphone access toggle. This applies only on
+	// fully managed devices.
+	//
+	// Possible values:
+	//   "MICROPHONE_ACCESS_UNSPECIFIED" - If unmute_microphone_disabled is
+	// true, this is equivalent to MICROPHONE_ACCESS_DISABLED. Otherwise,
+	// this is equivalent to MICROPHONE_ACCESS_USER_CHOICE.
+	//   "MICROPHONE_ACCESS_USER_CHOICE" - The field
+	// unmute_microphone_disabled(google.android.devicemanagement.v1.Policy.u
+	// nmute_microphone_disabled] is ignored. This is the default device
+	// behaviour: the microphone on the device is available. On Android 12
+	// and above, the user can use the microphone access toggle.
+	//   "MICROPHONE_ACCESS_DISABLED" - The field
+	// unmute_microphone_disabled(google.android.devicemanagement.v1.Policy.u
+	// nmute_microphone_disabled] is ignored. The microphone on the device
+	// is disabled (for fully managed devices, this applies device-wide).The
+	// microphone access toggle has no effect as the microphone is disabled.
+	//   "MICROPHONE_ACCESS_ENFORCED" - The field
+	// unmute_microphone_disabled(google.android.devicemanagement.v1.Policy.u
+	// nmute_microphone_disabled] is ignored. The microphone on the device
+	// is available. On devices running Android 12 and above, the user is
+	// unable to use the microphone access toggle. On devices which run
+	// Android 11 or below, this is equivalent to
+	// MICROPHONE_ACCESS_USER_CHOICE.
+	MicrophoneAccess string `json:"microphoneAccess,omitempty"`
+
 	// MinimumApiLevel: The minimum allowed Android API level.
 	MinimumApiLevel int64 `json:"minimumApiLevel,omitempty"`
 
@@ -3767,6 +3839,23 @@ type Policy struct {
 	// PolicyEnforcementRules: Rules that define the behavior when a
 	// particular policy can not be applied on device
 	PolicyEnforcementRules []*PolicyEnforcementRule `json:"policyEnforcementRules,omitempty"`
+
+	// PreferentialNetworkService: Controls whether preferential network
+	// service is enabled on the work profile. For example, an organization
+	// may have an agreement with a carrier that all of the work data from
+	// its employees' devices will be sent via a network service dedicated
+	// for enterprise use. An example of a supported preferential network
+	// service is the enterprise slice on 5G networks. This has no effect on
+	// fully managed devices.
+	//
+	// Possible values:
+	//   "PREFERENTIAL_NETWORK_SERVICE_UNSPECIFIED" - Unspecified. Defaults
+	// to PREFERENTIAL_NETWORK_SERVICES_DISABLED.
+	//   "PREFERENTIAL_NETWORK_SERVICE_DISABLED" - Preferential network
+	// service is disabled on the work profile.
+	//   "PREFERENTIAL_NETWORK_SERVICE_ENABLED" - Preferential network
+	// service is enabled on the work profile.
+	PreferentialNetworkService string `json:"preferentialNetworkService,omitempty"`
 
 	// PrivateKeySelectionEnabled: Allows showing UI on a device for a user
 	// to choose a private key alias if there are no matching rules in
@@ -4998,7 +5087,7 @@ func (c *EnterprisesCreateCall) Header() http.Header {
 
 func (c *EnterprisesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5148,7 +5237,7 @@ func (c *EnterprisesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5292,7 +5381,7 @@ func (c *EnterprisesGetCall) Header() http.Header {
 
 func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5467,7 +5556,7 @@ func (c *EnterprisesListCall) Header() http.Header {
 
 func (c *EnterprisesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5651,7 +5740,7 @@ func (c *EnterprisesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5818,7 +5907,7 @@ func (c *EnterprisesApplicationsGetCall) Header() http.Header {
 
 func (c *EnterprisesApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5982,7 +6071,7 @@ func (c *EnterprisesDevicesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6147,7 +6236,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6287,7 +6376,7 @@ func (c *EnterprisesDevicesIssueCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesIssueCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6453,7 +6542,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6631,7 +6720,7 @@ func (c *EnterprisesDevicesPatchCall) Header() http.Header {
 
 func (c *EnterprisesDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6786,7 +6875,7 @@ func (c *EnterprisesDevicesOperationsCancelCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6921,7 +7010,7 @@ func (c *EnterprisesDevicesOperationsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7066,7 +7155,7 @@ func (c *EnterprisesDevicesOperationsGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7242,7 +7331,7 @@ func (c *EnterprisesDevicesOperationsListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7417,7 +7506,7 @@ func (c *EnterprisesEnrollmentTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7559,7 +7648,7 @@ func (c *EnterprisesEnrollmentTokensDeleteCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7693,7 +7782,7 @@ func (c *EnterprisesPoliciesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7837,7 +7926,7 @@ func (c *EnterprisesPoliciesGetCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7998,7 +8087,7 @@ func (c *EnterprisesPoliciesListCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8176,7 +8265,7 @@ func (c *EnterprisesPoliciesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8325,7 +8414,7 @@ func (c *EnterprisesWebAppsCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8466,7 +8555,7 @@ func (c *EnterprisesWebAppsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8610,7 +8699,7 @@ func (c *EnterprisesWebAppsGetCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8771,7 +8860,7 @@ func (c *EnterprisesWebAppsListCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8949,7 +9038,7 @@ func (c *EnterprisesWebAppsPatchCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9099,7 +9188,7 @@ func (c *EnterprisesWebTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9254,7 +9343,7 @@ func (c *SignupUrlsCreateCall) Header() http.Header {
 
 func (c *SignupUrlsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

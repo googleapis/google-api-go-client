@@ -213,9 +213,6 @@ func TestCancelUploadFast(t *testing.T) {
 
 	tr := &interruptibleTransport{
 		buf: make([]byte, 0, mediaSize),
-		// Shouldn't really need an event, but sometimes the test loses the
-		// race. So, this is just a filler event.
-		events: []event{{"bytes 0-9/*", http.StatusServiceUnavailable}},
 	}
 
 	pr := progressRecorder{}
@@ -308,6 +305,9 @@ func TestRetry_EachChunkHasItsOwnRetryDeadline(t *testing.T) {
 	)
 	media := strings.NewReader(strings.Repeat("a", mediaSize))
 
+	// This transport returns multiple errors on both the first chunk and third
+	// chunk of the upload. If the timeout were not reset between chunks, the
+	// errors on the third chunk would not retry and cause a failure.
 	tr := &interruptibleTransport{
 		buf: make([]byte, 0, mediaSize),
 		events: []event{
@@ -323,23 +323,24 @@ func TestRetry_EachChunkHasItsOwnRetryDeadline(t *testing.T) {
 			// cum: 1s sleep <-- resets because it's a new chunk
 			{"bytes 90-179/*", 308},
 			// cum: 1s sleep <-- resets because it's a new chunk
+			{"bytes 180-269/*", http.StatusServiceUnavailable},
+			// cum: 1s sleep on later chunk
+			{"bytes 180-269/*", http.StatusServiceUnavailable},
+			// cum: 2s sleep on later chunk
 			{"bytes 180-269/*", 308},
-			// cum: 1s sleep <-- resets because it's a new chunk
+			// cum: 3s sleep <-- resets because it's a new chunk
 			{"bytes 270-299/300", 200},
 		},
 		bodies: bodyTracker{},
 	}
 
 	rx := &ResumableUpload{
-		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize),
-		MediaType: "text/plain",
-		Callback:  func(int64) {},
+		Client:             &http.Client{Transport: tr},
+		Media:              NewMediaBuffer(media, chunkSize),
+		MediaType:          "text/plain",
+		Callback:           func(int64) {},
+		ChunkRetryDeadline: 5 * time.Second,
 	}
-
-	oldRetryDeadline := retryDeadline
-	retryDeadline = 5 * time.Second
-	defer func() { retryDeadline = oldRetryDeadline }()
 
 	oldBackoff := backoff
 	backoff = func() Backoff { return new(PauseOneSecond) }

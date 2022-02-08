@@ -1004,11 +1004,11 @@
       }
     }
   },
-  "revision": "20210916",
+  "revision": "20220104",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdvancedSecurityOverrides": {
-      "description": "Security policies set to the most secure values by default. To maintain the security posture of a device, we don't recommend overriding any of the default values.",
+      "description": "Security policies set to secure values by default. To maintain the security posture of a device, we don't recommend overriding any of the default values.",
       "id": "AdvancedSecurityOverrides",
       "properties": {
         "commonCriteriaMode": {
@@ -1140,7 +1140,7 @@
           "type": "array"
         },
         "name": {
-          "description": "The name of the app in the form enterprises/{enterpriseId}/applications/{package_name}.",
+          "description": "The name of the app in the form enterprises/{enterprise}/applications/{package_name}.",
           "type": "string"
         },
         "permissions": {
@@ -1807,7 +1807,7 @@
             "This value is disallowed.",
             "The device is active.",
             "The device is disabled.",
-            "The device was deleted. This state will never be returned by an API call, but is used in the final status report published to Cloud Pub/Sub when the device acknowledges the deletion.",
+            "The device was deleted. This state is never returned by an API call, but is used in the final status report when the device acknowledges the deletion. If the device is deleted via the API call, this state is published to Pub/Sub. If the user deletes the work profile or resets the device, the device state will remain unknown to the server.",
             "The device is being provisioned. Newly enrolled devices are in this state until they have a policy applied."
           ],
           "type": "string"
@@ -1967,7 +1967,7 @@
             "This value is disallowed.",
             "The device is active.",
             "The device is disabled.",
-            "The device was deleted. This state will never be returned by an API call, but is used in the final status report published to Cloud Pub/Sub when the device acknowledges the deletion.",
+            "The device was deleted. This state is never returned by an API call, but is used in the final status report when the device acknowledges the deletion. If the device is deleted via the API call, this state is published to Pub/Sub. If the user deletes the work profile or resets the device, the device state will remain unknown to the server.",
             "The device is being provisioned. Newly enrolled devices are in this state until they have a policy applied."
           ],
           "type": "string"
@@ -2323,6 +2323,11 @@
         },
         "deviceBasebandVersion": {
           "description": "Baseband version. For example, MDM9625_104662.22.05.34p.",
+          "type": "string"
+        },
+        "enterpriseSpecificId": {
+          "description": "Output only. ID that uniquely identifies a personally-owned device in a particular organization. On the same physical device when enrolled with the same organization, this ID persists across setups and even factory resets. This ID is available on personally-owned devices with a work profile on devices running Android 12 and above.",
+          "readOnly": true,
           "type": "string"
         },
         "gpuShutdownTemperatures": {
@@ -3305,7 +3310,7 @@
         },
         "advancedSecurityOverrides": {
           "$ref": "AdvancedSecurityOverrides",
-          "description": "Security policies set to the most secure values by default. To maintain the security posture of a device, we don't recommend overriding any of the default values."
+          "description": "Security policies set to secure values by default. To maintain the security posture of a device, we don't recommend overriding any of the default values."
         },
         "alwaysOnVpnPackage": {
           "$ref": "AlwaysOnVpnPackage",
@@ -3386,6 +3391,22 @@
         "bluetoothDisabled": {
           "description": "Whether bluetooth is disabled. Prefer this setting over bluetooth_config_disabled because bluetooth_config_disabled can be bypassed by the user.",
           "type": "boolean"
+        },
+        "cameraAccess": {
+          "description": "Controls the use of the camera and whether the user has access to the camera access toggle.",
+          "enum": [
+            "CAMERA_ACCESS_UNSPECIFIED",
+            "CAMERA_ACCESS_USER_CHOICE",
+            "CAMERA_ACCESS_DISABLED",
+            "CAMERA_ACCESS_ENFORCED"
+          ],
+          "enumDescriptions": [
+            "If camera_disabled is true, this is equivalent to CAMERA_ACCESS_DISABLED. Otherwise, this is equivalent to CAMERA_ACCESS_USER_CHOICE.",
+            "The field camera_disabled(google.android.devicemanagement.v1.Policy.camera_disabled] is ignored. This is the default device behaviour: all cameras on the device are available. On Android 12 and above, the user can use the camera access toggle.",
+            "The field camera_disabled(google.android.devicemanagement.v1.Policy.camera_disabled] is ignored. All cameras on the device are disabled (for fully managed devices, this applies device-wide and for work profiles this applies only to the work profile).There are no explicit restrictions placed on the camera access toggle on Android 12 and above: on fully managed devices, the camera access toggle has no effect as all cameras are disabled. On devices with a work profile, this toggle has no effect on apps in the work profile, but it affects apps outside the work profile.",
+            "The field camera_disabled(google.android.devicemanagement.v1.Policy.camera_disabled] is ignored. All cameras on the device are available. On fully managed devices running Android 12 and above, the user is unable to use the camera access toggle. On devices which are not fully managed or which run Android 11 or below, this is equivalent to CAMERA_ACCESS_USER_CHOICE."
+          ],
+          "type": "string"
         },
         "cameraDisabled": {
           "description": "Whether all cameras on the device are disabled.",
@@ -3568,6 +3589,22 @@
           "format": "int64",
           "type": "string"
         },
+        "microphoneAccess": {
+          "description": "Controls the use of the microphone and whether the user has access to the microphone access toggle. This applies only on fully managed devices.",
+          "enum": [
+            "MICROPHONE_ACCESS_UNSPECIFIED",
+            "MICROPHONE_ACCESS_USER_CHOICE",
+            "MICROPHONE_ACCESS_DISABLED",
+            "MICROPHONE_ACCESS_ENFORCED"
+          ],
+          "enumDescriptions": [
+            "If unmute_microphone_disabled is true, this is equivalent to MICROPHONE_ACCESS_DISABLED. Otherwise, this is equivalent to MICROPHONE_ACCESS_USER_CHOICE.",
+            "The field unmute_microphone_disabled(google.android.devicemanagement.v1.Policy.unmute_microphone_disabled] is ignored. This is the default device behaviour: the microphone on the device is available. On Android 12 and above, the user can use the microphone access toggle.",
+            "The field unmute_microphone_disabled(google.android.devicemanagement.v1.Policy.unmute_microphone_disabled] is ignored. The microphone on the device is disabled (for fully managed devices, this applies device-wide).The microphone access toggle has no effect as the microphone is disabled.",
+            "The field unmute_microphone_disabled(google.android.devicemanagement.v1.Policy.unmute_microphone_disabled] is ignored. The microphone on the device is available. On devices running Android 12 and above, the user is unable to use the microphone access toggle. On devices which run Android 11 or below, this is equivalent to MICROPHONE_ACCESS_USER_CHOICE."
+          ],
+          "type": "string"
+        },
         "minimumApiLevel": {
           "description": "The minimum allowed Android API level.",
           "format": "int32",
@@ -3677,6 +3714,20 @@
             "$ref": "PolicyEnforcementRule"
           },
           "type": "array"
+        },
+        "preferentialNetworkService": {
+          "description": "Controls whether preferential network service is enabled on the work profile. For example, an organization may have an agreement with a carrier that all of the work data from its employees' devices will be sent via a network service dedicated for enterprise use. An example of a supported preferential network service is the enterprise slice on 5G networks. This has no effect on fully managed devices.",
+          "enum": [
+            "PREFERENTIAL_NETWORK_SERVICE_UNSPECIFIED",
+            "PREFERENTIAL_NETWORK_SERVICE_DISABLED",
+            "PREFERENTIAL_NETWORK_SERVICE_ENABLED"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Defaults to PREFERENTIAL_NETWORK_SERVICES_DISABLED.",
+            "Preferential network service is disabled on the work profile.",
+            "Preferential network service is enabled on the work profile."
+          ],
+          "type": "string"
         },
         "privateKeySelectionEnabled": {
           "description": "Allows showing UI on a device for a user to choose a private key alias if there are no matching rules in ChoosePrivateKeyRules. For devices below Android P, setting this may leave enterprise keys vulnerable.",

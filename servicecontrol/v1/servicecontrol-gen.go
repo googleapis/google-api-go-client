@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -928,10 +928,10 @@ func (s *ConsumerInfo) MarshalJSON() ([]byte, error) {
 
 // Distribution: Distribution represents a frequency distribution of
 // double-valued sample points. It contains the size of the population
-// of sample points plus additional optional information: - the
-// arithmetic mean of the samples - the minimum and maximum of the
-// samples - the sum-squared-deviation of the samples, used to compute
-// variance - a histogram of the values of the sample points
+// of sample points plus additional optional information: * the
+// arithmetic mean of the samples * the minimum and maximum of the
+// samples * the sum-squared-deviation of the samples, used to compute
+// variance * a histogram of the values of the sample points
 type Distribution struct {
 	// BucketCounts: The number of samples in each histogram bucket.
 	// `bucket_counts` are optional. If present, they must sum to the
@@ -2000,14 +2000,14 @@ type QuotaOperation struct {
 	// google.example.library.v1.LibraryService.CreateShelf
 	MethodName string `json:"methodName,omitempty"`
 
-	// OperationId: Identity of the operation. This is expected to be unique
-	// within the scope of the service that generated the operation, and
-	// guarantees idempotency in case of retries. In order to ensure best
-	// performance and latency in the Quota backends, operation_ids are
-	// optimally associated with time, so that related operations can be
-	// accessed fast in storage. For this reason, the recommended token for
-	// services that intend to operate at a high QPS is Unix time in nanos +
-	// UUID
+	// OperationId: Identity of the operation. For Allocation Quota, this is
+	// expected to be unique within the scope of the service that generated
+	// the operation, and guarantees idempotency in case of retries. In
+	// order to ensure best performance and latency in the Quota backends,
+	// operation_ids are optimally associated with time, so that related
+	// operations can be accessed fast in storage. For this reason, the
+	// recommended token for services that intend to operate at a high QPS
+	// is Unix time in nanos + UUID
 	OperationId string `json:"operationId,omitempty"`
 
 	// QuotaMetrics: Represents information about this operation. Each
@@ -2042,11 +2042,8 @@ type QuotaOperation struct {
 	//   "CHECK_ONLY" - For AllocateQuota request, only checks if there is
 	// enough quota available and does not change the available quota. No
 	// lock is placed on the available quota either.
-	//   "QUERY_ONLY" - Unimplemented. When used in AllocateQuotaRequest,
-	// this returns the effective quota limit(s) in the response, and no
-	// quota check will be performed. Not supported for other requests, and
-	// even for AllocateQuotaRequest, this is currently supported only for
-	// allowlisted services.
+	//   "QUERY_ONLY" - Deprecated. Please use QueryLimits API to query
+	// quota limits.
 	//   "ADJUST_ONLY" - The operation allocates quota for the amount
 	// specified in the service configuration or specified using the quota
 	// metrics. If the requested amount is higher than the available quota,
@@ -2448,7 +2445,8 @@ type Resource struct {
 
 	// Type: The type of the resource. The syntax is platform-specific
 	// because different platforms define their resources differently. For
-	// Google APIs, the type format must be "{service}/{kind}".
+	// Google APIs, the type format must be "{service}/{kind}", such as
+	// "pubsub.googleapis.com/Topic".
 	Type string `json:"type,omitempty"`
 
 	// Uid: The unique identifier of the resource. UID is unique in the time
@@ -2924,7 +2922,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3082,7 +3080,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3238,7 +3236,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

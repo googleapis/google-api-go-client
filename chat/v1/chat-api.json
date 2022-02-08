@@ -108,10 +108,15 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
               "location": "path",
               "pattern": "^dms/[^/]+$",
               "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+              "location": "query",
               "type": "string"
             },
             "threadKey": {
@@ -138,10 +143,15 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
               "location": "path",
               "pattern": "^dms/[^/]+$",
               "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+              "location": "query",
               "type": "string"
             },
             "threadKey": {
@@ -172,10 +182,15 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+                  "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
                   "location": "path",
                   "pattern": "^dms/[^/]+/conversations/[^/]+$",
                   "required": true,
+                  "type": "string"
+                },
+                "requestId": {
+                  "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+                  "location": "query",
                   "type": "string"
                 },
                 "threadKey": {
@@ -235,10 +250,15 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
               "location": "path",
               "pattern": "^rooms/[^/]+$",
               "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+              "location": "query",
               "type": "string"
             },
             "threadKey": {
@@ -265,10 +285,15 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
               "location": "path",
               "pattern": "^rooms/[^/]+$",
               "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+              "location": "query",
               "type": "string"
             },
             "threadKey": {
@@ -299,10 +324,15 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+                  "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
                   "location": "path",
                   "pattern": "^rooms/[^/]+/conversations/[^/]+$",
                   "required": true,
+                  "type": "string"
+                },
+                "requestId": {
+                  "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+                  "location": "query",
                   "type": "string"
                 },
                 "threadKey": {
@@ -335,7 +365,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Required. Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+              "description": "Required. Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
               "location": "path",
               "pattern": "^spaces/[^/]+$",
               "required": true,
@@ -381,10 +411,15 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
               "location": "path",
               "pattern": "^spaces/[^/]+$",
               "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+              "location": "query",
               "type": "string"
             },
             "threadKey": {
@@ -415,7 +450,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the membership to be retrieved, in the form \"spaces/*/members/*\". Example: spaces/AAAAMpdlehY/members/105115627578887013105",
+                  "description": "Required. Resource name of the membership to be retrieved, in the form \"spaces/*/members/*\". Example: spaces/AAAAAAAAAAAA/members/111111111111111111111",
                   "location": "path",
                   "pattern": "^spaces/[^/]+/members/[^/]+$",
                   "required": true,
@@ -448,7 +483,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The resource name of the space for which membership list is to be fetched, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+                  "description": "Required. The resource name of the space for which membership list is to be fetched, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
                   "location": "path",
                   "pattern": "^spaces/[^/]+$",
                   "required": true,
@@ -474,10 +509,15 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+                  "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
                   "location": "path",
                   "pattern": "^spaces/[^/]+$",
                   "required": true,
+                  "type": "string"
+                },
+                "requestId": {
+                  "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+                  "location": "query",
                   "type": "string"
                 },
                 "threadKey": {
@@ -504,7 +544,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the message to be deleted, in the form \"spaces/*/messages/*\" Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+                  "description": "Required. Resource name of the message to be deleted, in the form \"spaces/*/messages/*\" Example: spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB",
                   "location": "path",
                   "pattern": "^spaces/[^/]+/messages/[^/]+$",
                   "required": true,
@@ -526,7 +566,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the message to be retrieved, in the form \"spaces/*/messages/*\". Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+                  "description": "Required. Resource name of the message to be retrieved, in the form \"spaces/*/messages/*\". Example: spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB",
                   "location": "path",
                   "pattern": "^spaces/[^/]+/messages/[^/]+$",
                   "required": true,
@@ -548,13 +588,14 @@
               ],
               "parameters": {
                 "name": {
+                  "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`",
                   "location": "path",
                   "pattern": "^spaces/[^/]+/messages/[^/]+$",
                   "required": true,
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Required. The field paths to be updated, comma separated if there are multiple. Currently supported field paths: * text * cards",
+                  "description": "Required. The field paths to be updated, comma separated if there are multiple. Currently supported field paths: * text * cards * gsuite_message_integration_render_data * attachment",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -601,7 +642,7 @@
       }
     }
   },
-  "revision": "20210911",
+  "revision": "20220126",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -633,13 +674,15 @@
             "TYPE_UNSPECIFIED",
             "NEW_MESSAGE",
             "UPDATE_MESSAGE",
+            "UPDATE_USER_MESSAGE_CARDS",
             "REQUEST_CONFIG"
           ],
           "enumDescriptions": [
             "Default type; will be handled as NEW_MESSAGE.",
             "Post as a new message in the topic.",
             "Update the bot's message. This is only permitted on a CARD_CLICKED event where the message sender type is BOT.",
-            "Update a message, with cards only. (Only after a MESSAGE event with a matched url, or a CARD_CLICKED event on a human created message)."
+            "Update the cards on a user's message. This is only permitted as a response to a MESSAGE event with a matched url, or a CARD_CLICKED event where the message sender type is HUMAN. Text will be ignored.",
+            "Privately ask the user for additional auth or config."
           ],
           "type": "string"
         },
@@ -1059,7 +1102,7 @@
           "type": "string"
         },
         "eventTime": {
-          "description": "The timestamp indicating when the event was dispatched.",
+          "description": "The timestamp indicating when the event occurred.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -1141,6 +1184,25 @@
         "driveFileId": {
           "description": "The id for the drive file, for use with the Drive API.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamiteIntegrationLogEntry": {
+      "description": "JSON payload of error messages. If the Cloud Logging API is enabled, these error messages are logged to [Google Cloud Logging](https://cloud.google.com/logging/docs).",
+      "id": "DynamiteIntegrationLogEntry",
+      "properties": {
+        "deployment": {
+          "description": "The deployment that caused the error. For Chat bots built in Apps Script, this is the deployment ID defined by Apps Script.",
+          "type": "string"
+        },
+        "deploymentFunction": {
+          "description": "The unencrypted `callback_method` name that was running when the error was encountered.",
+          "type": "string"
+        },
+        "error": {
+          "$ref": "Status",
+          "description": "The error code and message."
         }
       },
       "type": "object"
@@ -2270,6 +2332,17 @@
       },
       "type": "object"
     },
+    "MatchedUrl": {
+      "description": "A matched url in a Chat message. Chat bots can unfurl matched URLs. For more information, refer to [Unfurl links](/chat/how-tos/link-unfurling).",
+      "id": "MatchedUrl",
+      "properties": {
+        "url": {
+          "description": "The url that was matched.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Media": {
       "description": "Media resource.",
       "id": "Media",
@@ -2286,19 +2359,20 @@
       "id": "Membership",
       "properties": {
         "createTime": {
-          "description": "The creation time of the membership a.k.a the time at which the member joined the space, if applicable.",
+          "description": "Output only. The creation time of the membership a.k.a. the time at which the member joined the space, if applicable.",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "member": {
           "$ref": "User",
-          "description": "A user in Google Chat."
+          "description": "A user in Google Chat. Represents a [person](https://developers.google.com/people/api/rest/v1/people) in the People API. Format: `users/{person}`"
         },
         "name": {
           "type": "string"
         },
         "state": {
-          "description": "State of the membership.",
+          "description": "Output only. State of the membership.",
           "enum": [
             "MEMBERSHIP_STATE_UNSPECIFIED",
             "JOINED",
@@ -2311,6 +2385,7 @@
             "The user has been invited, is able to join the space, but currently has not joined.",
             "The user is not a member of the space, has not been invited and is not able to join the space."
           ],
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -2365,7 +2440,12 @@
           "readOnly": true,
           "type": "string"
         },
+        "matchedUrl": {
+          "$ref": "MatchedUrl",
+          "description": "A URL in `spaces.messages.text` that matches a link unfurling pattern. For more information, refer to [Unfurl links](/chat/how-tos/link-unfurling)."
+        },
         "name": {
+          "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`",
           "type": "string"
         },
         "previewText": {
@@ -2494,23 +2574,25 @@
       "id": "Space",
       "properties": {
         "displayName": {
-          "description": "Output only. The display name (only if the space is of type `ROOM`). Please note that this field might not be populated in direct messages between humans.",
+          "description": "The space's display name. For direct messages between humans, this field might be empty.",
           "type": "string"
         },
         "name": {
-          "description": "Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAMpdlehYs",
+          "description": "Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
           "type": "string"
         },
         "singleUserBotDm": {
-          "description": "Whether the space is a DM between a bot and a single human.",
+          "description": "Output only. Whether the space is a DM between a bot and a single human.",
+          "readOnly": true,
           "type": "boolean"
         },
         "threaded": {
-          "description": "Whether the messages are threaded in this space.",
+          "description": "Output only. Whether the messages are threaded in this space.",
+          "readOnly": true,
           "type": "boolean"
         },
         "type": {
-          "description": "Output only. The type of a space. This is deprecated. Use `single_user_bot_dm` instead.",
+          "description": "Deprecated. Use `single_user_bot_dm` instead. Output only. The type of a space.",
           "enum": [
             "TYPE_UNSPECIFIED",
             "ROOM",
@@ -2519,8 +2601,35 @@
           "enumDescriptions": [
             "",
             "Conversations between two or more humans.",
-            "1:1 Direct Message between a human and a Chat bot, where all messages are flat."
+            "1:1 Direct Message between a human and a Chat bot, where all messages are flat. Note that this does not include direct messages between two humans."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Status": {
+      "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
+      "id": "Status",
+      "properties": {
+        "code": {
+          "description": "The status code, which should be an enum value of google.rpc.Code.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "details": {
+          "description": "A list of messages that carry the error details. There is a common set of message types for APIs to use.",
+          "items": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "message": {
+          "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
           "type": "string"
         }
       },
@@ -2569,7 +2678,7 @@
       "id": "Thread",
       "properties": {
         "name": {
-          "description": "Resource name, in the form \"spaces/*/threads/*\". Example: spaces/AAAAMpdlehY/threads/UMxbHmzDlr4",
+          "description": "Resource name, in the form \"spaces/*/threads/*\". Example: spaces/AAAAAAAAAAA/threads/TTTTTTTTTTT",
           "type": "string"
         }
       },
@@ -2613,7 +2722,7 @@
           "type": "string"
         },
         "domainId": {
-          "description": "Obfuscated domain information.",
+          "description": "Unique identifier of the user's Google Workspace domain.",
           "type": "string"
         },
         "isAnonymous": {
@@ -2621,7 +2730,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "Resource name, in the format \"users/*\".",
+          "description": "Resource name for a Google Chat user. Formatted as `users/AAAAAAAAAAA`. Represents a [person](https://developers.google.com/people/api/rest/v1/people#Person) in the People API.",
           "type": "string"
         },
         "type": {

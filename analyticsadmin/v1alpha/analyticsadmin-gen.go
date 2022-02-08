@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -193,6 +193,7 @@ func NewPropertiesService(s *Service) *PropertiesService {
 	rs.ConversionEvents = NewPropertiesConversionEventsService(s)
 	rs.CustomDimensions = NewPropertiesCustomDimensionsService(s)
 	rs.CustomMetrics = NewPropertiesCustomMetricsService(s)
+	rs.DataStreams = NewPropertiesDataStreamsService(s)
 	rs.DisplayVideo360AdvertiserLinkProposals = NewPropertiesDisplayVideo360AdvertiserLinkProposalsService(s)
 	rs.DisplayVideo360AdvertiserLinks = NewPropertiesDisplayVideo360AdvertiserLinksService(s)
 	rs.FirebaseLinks = NewPropertiesFirebaseLinksService(s)
@@ -214,6 +215,8 @@ type PropertiesService struct {
 
 	CustomMetrics *PropertiesCustomMetricsService
 
+	DataStreams *PropertiesDataStreamsService
+
 	DisplayVideo360AdvertiserLinkProposals *PropertiesDisplayVideo360AdvertiserLinkProposalsService
 
 	DisplayVideo360AdvertiserLinks *PropertiesDisplayVideo360AdvertiserLinksService
@@ -231,22 +234,10 @@ type PropertiesService struct {
 
 func NewPropertiesAndroidAppDataStreamsService(s *Service) *PropertiesAndroidAppDataStreamsService {
 	rs := &PropertiesAndroidAppDataStreamsService{s: s}
-	rs.MeasurementProtocolSecrets = NewPropertiesAndroidAppDataStreamsMeasurementProtocolSecretsService(s)
 	return rs
 }
 
 type PropertiesAndroidAppDataStreamsService struct {
-	s *Service
-
-	MeasurementProtocolSecrets *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsService
-}
-
-func NewPropertiesAndroidAppDataStreamsMeasurementProtocolSecretsService(s *Service) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsService {
-	rs := &PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsService{s: s}
-	return rs
-}
-
-type PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsService struct {
 	s *Service
 }
 
@@ -274,6 +265,27 @@ func NewPropertiesCustomMetricsService(s *Service) *PropertiesCustomMetricsServi
 }
 
 type PropertiesCustomMetricsService struct {
+	s *Service
+}
+
+func NewPropertiesDataStreamsService(s *Service) *PropertiesDataStreamsService {
+	rs := &PropertiesDataStreamsService{s: s}
+	rs.MeasurementProtocolSecrets = NewPropertiesDataStreamsMeasurementProtocolSecretsService(s)
+	return rs
+}
+
+type PropertiesDataStreamsService struct {
+	s *Service
+
+	MeasurementProtocolSecrets *PropertiesDataStreamsMeasurementProtocolSecretsService
+}
+
+func NewPropertiesDataStreamsMeasurementProtocolSecretsService(s *Service) *PropertiesDataStreamsMeasurementProtocolSecretsService {
+	rs := &PropertiesDataStreamsMeasurementProtocolSecretsService{s: s}
+	return rs
+}
+
+type PropertiesDataStreamsMeasurementProtocolSecretsService struct {
 	s *Service
 }
 
@@ -315,22 +327,10 @@ type PropertiesGoogleAdsLinksService struct {
 
 func NewPropertiesIosAppDataStreamsService(s *Service) *PropertiesIosAppDataStreamsService {
 	rs := &PropertiesIosAppDataStreamsService{s: s}
-	rs.MeasurementProtocolSecrets = NewPropertiesIosAppDataStreamsMeasurementProtocolSecretsService(s)
 	return rs
 }
 
 type PropertiesIosAppDataStreamsService struct {
-	s *Service
-
-	MeasurementProtocolSecrets *PropertiesIosAppDataStreamsMeasurementProtocolSecretsService
-}
-
-func NewPropertiesIosAppDataStreamsMeasurementProtocolSecretsService(s *Service) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsService {
-	rs := &PropertiesIosAppDataStreamsMeasurementProtocolSecretsService{s: s}
-	return rs
-}
-
-type PropertiesIosAppDataStreamsMeasurementProtocolSecretsService struct {
 	s *Service
 }
 
@@ -345,22 +345,10 @@ type PropertiesUserLinksService struct {
 
 func NewPropertiesWebDataStreamsService(s *Service) *PropertiesWebDataStreamsService {
 	rs := &PropertiesWebDataStreamsService{s: s}
-	rs.MeasurementProtocolSecrets = NewPropertiesWebDataStreamsMeasurementProtocolSecretsService(s)
 	return rs
 }
 
 type PropertiesWebDataStreamsService struct {
-	s *Service
-
-	MeasurementProtocolSecrets *PropertiesWebDataStreamsMeasurementProtocolSecretsService
-}
-
-func NewPropertiesWebDataStreamsMeasurementProtocolSecretsService(s *Service) *PropertiesWebDataStreamsMeasurementProtocolSecretsService {
-	rs := &PropertiesWebDataStreamsMeasurementProtocolSecretsService{s: s}
-	return rs
-}
-
-type PropertiesWebDataStreamsMeasurementProtocolSecretsService struct {
 	s *Service
 }
 
@@ -458,6 +446,50 @@ func (s *GoogleAnalyticsAdminV1alphaAccountSummary) MarshalJSON() ([]byte, error
 	type NoMethod GoogleAnalyticsAdminV1alphaAccountSummary
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest:
+// Request message for AcknowledgeUserDataCollection RPC.
+type GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest struct {
+	// Acknowledgement: Required. An acknowledgement that the caller of this
+	// method understands the terms of user data collection. This field must
+	// contain the exact value: "I acknowledge that I have the necessary
+	// privacy disclosures and rights from my end users for the collection
+	// and processing of their data, including the association of such data
+	// with the visitation information Google Analytics collects from my
+	// site and/or app property."
+	Acknowledgement string `json:"acknowledgement,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Acknowledgement") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Acknowledgement") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse:
+// Response message for AcknowledgeUserDataCollection RPC.
+type GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // GoogleAnalyticsAdminV1alphaAndroidAppDataStream: A resource message
@@ -573,14 +605,14 @@ type GoogleAnalyticsAdminV1alphaArchiveCustomMetricRequest struct {
 // summarize a principal's effective roles.
 type GoogleAnalyticsAdminV1alphaAuditUserLink struct {
 	// DirectRoles: Roles directly assigned to this user for this entity.
-	// Format: predefinedRoles/read Excludes roles that are inherited from
+	// Format: predefinedRoles/viewer Excludes roles that are inherited from
 	// an account (if this is for a property), group, or organization admin
 	// role.
 	DirectRoles []string `json:"directRoles,omitempty"`
 
 	// EffectiveRoles: Union of all permissions a user has at this account
 	// or property (includes direct permissions, group-inherited
-	// permissions, etc.). Format: predefinedRoles/read
+	// permissions, etc.). Format: predefinedRoles/viewer
 	EffectiveRoles []string `json:"effectiveRoles,omitempty"`
 
 	// EmailAddress: Email address of the linked user
@@ -947,10 +979,6 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// Account: A snapshot of an Account resource in change history.
 	Account *GoogleAnalyticsAdminV1alphaAccount `json:"account,omitempty"`
 
-	// AndroidAppDataStream: A snapshot of an AndroidAppDataStream resource
-	// in change history.
-	AndroidAppDataStream *GoogleAnalyticsAdminV1alphaAndroidAppDataStream `json:"androidAppDataStream,omitempty"`
-
 	// ConversionEvent: A snapshot of a ConversionEvent resource in change
 	// history.
 	ConversionEvent *GoogleAnalyticsAdminV1alphaConversionEvent `json:"conversionEvent,omitempty"`
@@ -966,6 +994,9 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// DataRetentionSettings: A snapshot of a data retention settings
 	// resource in change history.
 	DataRetentionSettings *GoogleAnalyticsAdminV1alphaDataRetentionSettings `json:"dataRetentionSettings,omitempty"`
+
+	// DataStream: A snapshot of a DataStream resource in change history.
+	DataStream *GoogleAnalyticsAdminV1alphaDataStream `json:"dataStream,omitempty"`
 
 	// DisplayVideo360AdvertiserLink: A snapshot of a
 	// DisplayVideo360AdvertiserLink resource in change history.
@@ -987,20 +1018,12 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// in change history.
 	GoogleSignalsSettings *GoogleAnalyticsAdminV1alphaGoogleSignalsSettings `json:"googleSignalsSettings,omitempty"`
 
-	// IosAppDataStream: A snapshot of an IosAppDataStream resource in
-	// change history.
-	IosAppDataStream *GoogleAnalyticsAdminV1alphaIosAppDataStream `json:"iosAppDataStream,omitempty"`
-
 	// MeasurementProtocolSecret: A snapshot of a MeasurementProtocolSecret
 	// resource in change history.
 	MeasurementProtocolSecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret `json:"measurementProtocolSecret,omitempty"`
 
 	// Property: A snapshot of a Property resource in change history.
 	Property *GoogleAnalyticsAdminV1alphaProperty `json:"property,omitempty"`
-
-	// WebDataStream: A snapshot of a WebDataStream resource in change
-	// history.
-	WebDataStream *GoogleAnalyticsAdminV1alphaWebDataStream `json:"webDataStream,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
 	// unconditionally include in API requests. By default, fields with
@@ -1291,6 +1314,16 @@ type GoogleAnalyticsAdminV1alphaCustomMetric struct {
 	// event-scoped metrics.
 	ParameterName string `json:"parameterName,omitempty"`
 
+	// RestrictedMetricType: Optional. Types of restricted data that this
+	// metric may contain. Required for metrics with CURRENCY measurement
+	// unit. Must be empty for metrics with a non-CURRENCY measurement unit.
+	//
+	// Possible values:
+	//   "RESTRICTED_METRIC_TYPE_UNSPECIFIED" - Type unknown or unspecified.
+	//   "COST_DATA" - Metric reports cost data.
+	//   "REVENUE_DATA" - Metric reports revenue data.
+	RestrictedMetricType []string `json:"restrictedMetricType,omitempty"`
+
 	// Scope: Required. Immutable. The scope of this custom metric.
 	//
 	// Possible values:
@@ -1438,6 +1471,186 @@ func (s *GoogleAnalyticsAdminV1alphaDataSharingSettings) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaDataStream: A resource message
+// representing a data stream.
+type GoogleAnalyticsAdminV1alphaDataStream struct {
+	// AndroidAppStreamData: Data specific to Android app streams. Must be
+	// populated if type is ANDROID_APP_DATA_STREAM.
+	AndroidAppStreamData *GoogleAnalyticsAdminV1alphaDataStreamAndroidAppStreamData `json:"androidAppStreamData,omitempty"`
+
+	// CreateTime: Output only. Time when this stream was originally
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: Human-readable display name for the Data Stream.
+	// Required for web data streams. The max allowed display name length is
+	// 255 UTF-16 code units.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// IosAppStreamData: Data specific to iOS app streams. Must be populated
+	// if type is IOS_APP_DATA_STREAM.
+	IosAppStreamData *GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData `json:"iosAppStreamData,omitempty"`
+
+	// Name: Output only. Resource name of this Data Stream. Format:
+	// properties/{property_id}/dataStreams/{stream_id} Example:
+	// "properties/1000/dataStreams/2000"
+	Name string `json:"name,omitempty"`
+
+	// Type: Required. Immutable. The type of this DataStream resource.
+	//
+	// Possible values:
+	//   "DATA_STREAM_TYPE_UNSPECIFIED" - Type unknown or not specified.
+	//   "WEB_DATA_STREAM" - Web data stream.
+	//   "ANDROID_APP_DATA_STREAM" - Android app data stream.
+	//   "IOS_APP_DATA_STREAM" - iOS app data stream.
+	Type string `json:"type,omitempty"`
+
+	// UpdateTime: Output only. Time when stream payload fields were last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// WebStreamData: Data specific to web streams. Must be populated if
+	// type is WEB_DATA_STREAM.
+	WebStreamData *GoogleAnalyticsAdminV1alphaDataStreamWebStreamData `json:"webStreamData,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AndroidAppStreamData") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AndroidAppStreamData") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaDataStream) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaDataStream
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaDataStreamAndroidAppStreamData: Data
+// specific to Android app streams.
+type GoogleAnalyticsAdminV1alphaDataStreamAndroidAppStreamData struct {
+	// FirebaseAppId: Output only. ID of the corresponding Android app in
+	// Firebase, if any. This ID can change if the Android app is deleted
+	// and recreated.
+	FirebaseAppId string `json:"firebaseAppId,omitempty"`
+
+	// PackageName: Immutable. The package name for the app being measured.
+	// Example: "com.example.myandroidapp"
+	PackageName string `json:"packageName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FirebaseAppId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FirebaseAppId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaDataStreamAndroidAppStreamData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaDataStreamAndroidAppStreamData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData: Data specific
+// to iOS app streams.
+type GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData struct {
+	// BundleId: Required. Immutable. The Apple App Store Bundle ID for the
+	// app Example: "com.example.myiosapp"
+	BundleId string `json:"bundleId,omitempty"`
+
+	// FirebaseAppId: Output only. ID of the corresponding iOS app in
+	// Firebase, if any. This ID can change if the iOS app is deleted and
+	// recreated.
+	FirebaseAppId string `json:"firebaseAppId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BundleId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BundleId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaDataStreamWebStreamData: Data specific to
+// web streams.
+type GoogleAnalyticsAdminV1alphaDataStreamWebStreamData struct {
+	// DefaultUri: Immutable. Domain name of the web app being measured, or
+	// empty. Example: "http://www.google.com", "https://www.google.com"
+	DefaultUri string `json:"defaultUri,omitempty"`
+
+	// FirebaseAppId: Output only. ID of the corresponding web app in
+	// Firebase, if any. This ID can change if the web app is deleted and
+	// recreated.
+	FirebaseAppId string `json:"firebaseAppId,omitempty"`
+
+	// MeasurementId: Output only. Analytics "Measurement ID", without the
+	// "G-" prefix. Example: "G-1A2BCD345E" would just be "1A2BCD345E"
+	MeasurementId string `json:"measurementId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DefaultUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaDataStreamWebStreamData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaDataStreamWebStreamData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaDeleteUserLinkRequest: Request message for
 // DeleteUserLink RPC.
 type GoogleAnalyticsAdminV1alphaDeleteUserLinkRequest struct {
@@ -1492,7 +1705,7 @@ type GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink struct {
 
 	// CostDataSharingEnabled: Immutable. Enables the import of cost data
 	// from Display & Video 360 into the GA4 property. This can only be
-	// enabled if campaign_data_import_enabled is enabled. After link
+	// enabled if campaign_data_sharing_enabled is enabled. After link
 	// creation, this can only be updated from the Display & Video 360
 	// product. If this field is not set on create, it will be defaulted to
 	// true.
@@ -1534,7 +1747,7 @@ func (s *GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink) MarshalJSON()
 }
 
 // GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal: A
-// proposal for a link between an GA4 property and a Display & Video 360
+// proposal for a link between a GA4 property and a Display & Video 360
 // advertiser. A proposal is converted to a
 // DisplayVideo360AdvertiserLink once approved. Google Analytics admins
 // approve inbound proposals while Display & Video 360 admins approve
@@ -1561,7 +1774,7 @@ type GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal struct {
 
 	// CostDataSharingEnabled: Immutable. Enables the import of cost data
 	// from Display & Video 360. This can only be enabled if
-	// campaign_data_import_enabled is enabled. If this field is not set on
+	// campaign_data_sharing_enabled is enabled. If this field is not set on
 	// create, it will be defaulted to true.
 	CostDataSharingEnabled bool `json:"costDataSharingEnabled,omitempty"`
 
@@ -1613,97 +1826,7 @@ func (s *GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal) Marsh
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings: Singleton
-// resource under a WebDataStream, configuring measurement of additional
-// site interactions and content.
-type GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings struct {
-	// FileDownloadsEnabled: If enabled, capture a file download event each
-	// time a link is clicked with a common document, compressed file,
-	// application, video, or audio extension.
-	FileDownloadsEnabled bool `json:"fileDownloadsEnabled,omitempty"`
-
-	// Name: Output only. Resource name of this Data Stream. Format:
-	// properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasuremen
-	// tSettings Example:
-	// "properties/1000/webDataStreams/2000/enhancedMeasurementSettings"
-	Name string `json:"name,omitempty"`
-
-	// OutboundClicksEnabled: If enabled, capture an outbound click event
-	// each time a visitor clicks a link that leads them away from your
-	// domain.
-	OutboundClicksEnabled bool `json:"outboundClicksEnabled,omitempty"`
-
-	// PageChangesEnabled: If enabled, capture a page view event each time
-	// the website changes the browser history state.
-	PageChangesEnabled bool `json:"pageChangesEnabled,omitempty"`
-
-	// PageLoadsEnabled: Output only. If enabled, capture a page view event
-	// each time a page loads.
-	PageLoadsEnabled bool `json:"pageLoadsEnabled,omitempty"`
-
-	// PageViewsEnabled: Output only. If enabled, capture a page view event
-	// each time a page loads or the website changes the browser history
-	// state.
-	PageViewsEnabled bool `json:"pageViewsEnabled,omitempty"`
-
-	// ScrollsEnabled: If enabled, capture scroll events each time a visitor
-	// gets to the bottom of a page.
-	ScrollsEnabled bool `json:"scrollsEnabled,omitempty"`
-
-	// SearchQueryParameter: Required. URL query parameters to interpret as
-	// site search parameters. Max length is 1024 characters. Must not be
-	// empty.
-	SearchQueryParameter string `json:"searchQueryParameter,omitempty"`
-
-	// SiteSearchEnabled: If enabled, capture a view search results event
-	// each time a visitor performs a search on your site (based on a query
-	// parameter).
-	SiteSearchEnabled bool `json:"siteSearchEnabled,omitempty"`
-
-	// StreamEnabled: Indicates whether Enhanced Measurement Settings will
-	// be used to automatically measure interactions and content on this web
-	// stream. Changing this value does not affect the settings themselves,
-	// but determines whether they are respected.
-	StreamEnabled bool `json:"streamEnabled,omitempty"`
-
-	// UriQueryParameter: Additional URL query parameters. Max length is
-	// 1024 characters.
-	UriQueryParameter string `json:"uriQueryParameter,omitempty"`
-
-	// VideoEngagementEnabled: If enabled, capture video play, progress, and
-	// complete events as visitors view embedded videos on your site.
-	VideoEngagementEnabled bool `json:"videoEngagementEnabled,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "FileDownloadsEnabled") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FileDownloadsEnabled") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleAnalyticsAdminV1alphaFirebaseLink: A link between an GA4
+// GoogleAnalyticsAdminV1alphaFirebaseLink: A link between a GA4
 // property and a Firebase project.
 type GoogleAnalyticsAdminV1alphaFirebaseLink struct {
 	// CreateTime: Output only. Time when this FirebaseLink was originally
@@ -1749,10 +1872,13 @@ func (s *GoogleAnalyticsAdminV1alphaFirebaseLink) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleAnalyticsAdminV1alphaGlobalSiteTag: Read-only resource with the
-// tag for sending data from a website to a WebDataStream.
+// tag for sending data from a website to a DataStream. Only present for
+// web DataStream resources.
 type GoogleAnalyticsAdminV1alphaGlobalSiteTag struct {
 	// Name: Output only. Resource name for this GlobalSiteTag resource.
-	// Format: properties/{propertyId}/globalSiteTag
+	// Format:
+	// properties/{property_id}/dataStreams/{stream_id}/globalSiteTag
+	// Example: "properties/123/dataStreams/456/globalSiteTag"
 	Name string `json:"name,omitempty"`
 
 	// Snippet: Immutable. JavaScript code snippet to be pasted as the first
@@ -1786,7 +1912,7 @@ func (s *GoogleAnalyticsAdminV1alphaGlobalSiteTag) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1alphaGoogleAdsLink: A link between an GA4
+// GoogleAnalyticsAdminV1alphaGoogleAdsLink: A link between a GA4
 // property and a Google Ads account.
 type GoogleAnalyticsAdminV1alphaGoogleAdsLink struct {
 	// AdsPersonalizationEnabled: Enable personalized advertising features
@@ -2261,6 +2387,44 @@ type GoogleAnalyticsAdminV1alphaListCustomMetricsResponse struct {
 
 func (s *GoogleAnalyticsAdminV1alphaListCustomMetricsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListCustomMetricsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaListDataStreamsResponse: Response message
+// for ListDataStreams RPC.
+type GoogleAnalyticsAdminV1alphaListDataStreamsResponse struct {
+	// DataStreams: List of DataStreams.
+	DataStreams []*GoogleAnalyticsAdminV1alphaDataStream `json:"dataStreams,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DataStreams") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataStreams") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListDataStreamsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListDataStreamsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2792,10 +2956,10 @@ func (s *GoogleAnalyticsAdminV1alphaProperty) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAnalyticsAdminV1alphaPropertySummary: A virtual resource
-// representing metadata for an GA4 property.
+// representing metadata for a GA4 property.
 type GoogleAnalyticsAdminV1alphaPropertySummary struct {
 	// DisplayName: Display name for the property referred to in this
-	// account summary.
+	// property summary.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Property: Resource name of property referred to by this property
@@ -2944,9 +3108,6 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	// or not specified.
 	//   "ACCOUNT" - Account resource
 	//   "PROPERTY" - Property resource
-	//   "WEB_DATA_STREAM" - WebDataStream resource
-	//   "ANDROID_APP_DATA_STREAM" - AndroidAppDataStream resource
-	//   "IOS_APP_DATA_STREAM" - IosAppDataStream resource
 	//   "FIREBASE_LINK" - FirebaseLink resource
 	//   "GOOGLE_ADS_LINK" - GoogleAdsLink resource
 	//   "GOOGLE_SIGNALS_SETTINGS" - GoogleSignalsSettings resource
@@ -2955,6 +3116,11 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "CUSTOM_DIMENSION" - CustomDimension resource
 	//   "CUSTOM_METRIC" - CustomMetric resource
 	//   "DATA_RETENTION_SETTINGS" - DataRetentionSettings resource
+	//   "DISPLAY_VIDEO_360_ADVERTISER_LINK" - DisplayVideo360AdvertiserLink
+	// resource
+	//   "DISPLAY_VIDEO_360_ADVERTISER_LINK_PROPOSAL" -
+	// DisplayVideo360AdvertiserLinkProposal resource
+	//   "DATA_STREAM" - DataStream resource
 	ResourceType []string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -3052,12 +3218,12 @@ func (s *GoogleAnalyticsAdminV1alphaUpdateUserLinkRequest) MarshalJSON() ([]byte
 // a user's permissions on an Account or Property resource.
 type GoogleAnalyticsAdminV1alphaUserLink struct {
 	// DirectRoles: Roles directly assigned to this user for this account or
-	// property. Valid values: predefinedRoles/read
-	// predefinedRoles/collaborate predefinedRoles/edit
-	// predefinedRoles/admin Excludes roles that are inherited from a
-	// higher-level entity, group, or organization admin role. A UserLink
-	// that is updated to have an empty list of direct_roles will be
-	// deleted.
+	// property. Valid values: predefinedRoles/viewer
+	// predefinedRoles/analyst predefinedRoles/editor predefinedRoles/admin
+	// predefinedRoles/no-cost-data predefinedRoles/no-revenue-data Excludes
+	// roles that are inherited from a higher-level entity, group, or
+	// organization admin role. A UserLink that is updated to have an empty
+	// list of direct_roles will be deleted.
 	DirectRoles []string `json:"directRoles,omitempty"`
 
 	// EmailAddress: Immutable. Email address of the user to link
@@ -3105,7 +3271,7 @@ type GoogleAnalyticsAdminV1alphaWebDataStream struct {
 	DefaultUri string `json:"defaultUri,omitempty"`
 
 	// DisplayName: Required. Human-readable display name for the Data
-	// Stream. The max allowed display name length is 100 UTF-16 code units.
+	// Stream. The max allowed display name length is 255 UTF-16 code units.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// FirebaseAppId: Output only. ID of the corresponding web app in
@@ -3238,7 +3404,7 @@ func (c *AccountSummariesListCall) Header() http.Header {
 
 func (c *AccountSummariesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3405,7 +3571,7 @@ func (c *AccountsDeleteCall) Header() http.Header {
 
 func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3549,7 +3715,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3700,7 +3866,7 @@ func (c *AccountsGetDataSharingSettingsCall) Header() http.Header {
 
 func (c *AccountsGetDataSharingSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3877,7 +4043,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4053,7 +4219,7 @@ func (c *AccountsPatchCall) Header() http.Header {
 
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4198,7 +4364,7 @@ func (c *AccountsProvisionAccountTicketCall) Header() http.Header {
 
 func (c *AccountsProvisionAccountTicketCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4332,7 +4498,7 @@ func (c *AccountsSearchChangeHistoryEventsCall) Header() http.Header {
 
 func (c *AccountsSearchChangeHistoryEventsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4504,7 +4670,7 @@ func (c *AccountsUserLinksAuditCall) Header() http.Header {
 
 func (c *AccountsUserLinksAuditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4675,7 +4841,7 @@ func (c *AccountsUserLinksBatchCreateCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4823,7 +4989,7 @@ func (c *AccountsUserLinksBatchDeleteCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4985,7 +5151,7 @@ func (c *AccountsUserLinksBatchGetCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5135,7 +5301,7 @@ func (c *AccountsUserLinksBatchUpdateCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5291,7 +5457,7 @@ func (c *AccountsUserLinksCreateCall) Header() http.Header {
 
 func (c *AccountsUserLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5437,7 +5603,7 @@ func (c *AccountsUserLinksDeleteCall) Header() http.Header {
 
 func (c *AccountsUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5580,7 +5746,7 @@ func (c *AccountsUserLinksGetCall) Header() http.Header {
 
 func (c *AccountsUserLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5747,7 +5913,7 @@ func (c *AccountsUserLinksListCall) Header() http.Header {
 
 func (c *AccountsUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5919,7 +6085,7 @@ func (c *AccountsUserLinksPatchCall) Header() http.Header {
 
 func (c *AccountsUserLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6014,6 +6180,155 @@ func (c *AccountsUserLinksPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAn
 
 }
 
+// method id "analyticsadmin.properties.acknowledgeUserDataCollection":
+
+type PropertiesAcknowledgeUserDataCollectionCall struct {
+	s                                                               *Service
+	property                                                        string
+	googleanalyticsadminv1alphaacknowledgeuserdatacollectionrequest *GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// AcknowledgeUserDataCollection: Acknowledges the terms of user data
+// collection for the specified property. This acknowledgement must be
+// completed (either in the Google Analytics UI or via this API) before
+// MeasurementProtocolSecret resources may be created.
+//
+// - property: The property for which to acknowledge user data
+//   collection.
+func (r *PropertiesService) AcknowledgeUserDataCollection(property string, googleanalyticsadminv1alphaacknowledgeuserdatacollectionrequest *GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest) *PropertiesAcknowledgeUserDataCollectionCall {
+	c := &PropertiesAcknowledgeUserDataCollectionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.property = property
+	c.googleanalyticsadminv1alphaacknowledgeuserdatacollectionrequest = googleanalyticsadminv1alphaacknowledgeuserdatacollectionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAcknowledgeUserDataCollectionCall) Fields(s ...googleapi.Field) *PropertiesAcknowledgeUserDataCollectionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAcknowledgeUserDataCollectionCall) Context(ctx context.Context) *PropertiesAcknowledgeUserDataCollectionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAcknowledgeUserDataCollectionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAcknowledgeUserDataCollectionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaacknowledgeuserdatacollectionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+property}:acknowledgeUserDataCollection")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"property": c.property,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.acknowledgeUserDataCollection" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesAcknowledgeUserDataCollectionCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Acknowledges the terms of user data collection for the specified property. This acknowledgement must be completed (either in the Google Analytics UI or via this API) before MeasurementProtocolSecret resources may be created.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}:acknowledgeUserDataCollection",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.acknowledgeUserDataCollection",
+	//   "parameterOrder": [
+	//     "property"
+	//   ],
+	//   "parameters": {
+	//     "property": {
+	//       "description": "Required. The property for which to acknowledge user data collection.",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+property}:acknowledgeUserDataCollection",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
 // method id "analyticsadmin.properties.create":
 
 type PropertiesCreateCall struct {
@@ -6059,7 +6374,7 @@ func (c *PropertiesCreateCall) Header() http.Header {
 
 func (c *PropertiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6195,7 +6510,7 @@ func (c *PropertiesDeleteCall) Header() http.Header {
 
 func (c *PropertiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6340,7 +6655,7 @@ func (c *PropertiesGetCall) Header() http.Header {
 
 func (c *PropertiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6491,7 +6806,7 @@ func (c *PropertiesGetDataRetentionSettingsCall) Header() http.Header {
 
 func (c *PropertiesGetDataRetentionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6642,7 +6957,7 @@ func (c *PropertiesGetGoogleSignalsSettingsCall) Header() http.Header {
 
 func (c *PropertiesGetGoogleSignalsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6756,11 +7071,15 @@ func (r *PropertiesService) List() *PropertiesListCall {
 
 // Filter sets the optional parameter "filter": Required. An expression
 // for filtering the results of the request. Fields eligible for
-// filtering are: `parent:`(The resource name of the parent account) or
-// `firebase_project:`(The id or number of the linked firebase project).
-// Some examples of filters: ``` | Filter | Description |
+// filtering are: `parent:`(The resource name of the parent
+// account/property) or `ancestor:`(The resource name of the parent
+// account) or `firebase_project:`(The id or number of the linked
+// firebase project). Some examples of filters: ``` | Filter |
+// Description |
 // |-----------------------------|---------------------------------------
 // ----| | parent:accounts/123 | The account with account id: 123. | |
+// parent:properties/123 | The property with property id: 123. | |
+// ancestor:accounts/123 | The account with account id: 123. | |
 // firebase_project:project-id | The firebase project with id:
 // project-id. | | firebase_project:123 | The firebase project with
 // number: 123. | ```
@@ -6835,7 +7154,7 @@ func (c *PropertiesListCall) Header() http.Header {
 
 func (c *PropertiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6903,7 +7222,7 @@ func (c *PropertiesListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsA
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required. An expression for filtering the results of the request. Fields eligible for filtering are: `parent:`(The resource name of the parent account) or `firebase_project:`(The id or number of the linked firebase project). Some examples of filters: ``` | Filter | Description | |-----------------------------|-------------------------------------------| | parent:accounts/123 | The account with account id: 123. | | firebase_project:project-id | The firebase project with id: project-id. | | firebase_project:123 | The firebase project with number: 123. | ```",
+	//       "description": "Required. An expression for filtering the results of the request. Fields eligible for filtering are: `parent:`(The resource name of the parent account/property) or `ancestor:`(The resource name of the parent account) or `firebase_project:`(The id or number of the linked firebase project). Some examples of filters: ``` | Filter | Description | |-----------------------------|-------------------------------------------| | parent:accounts/123 | The account with account id: 123. | | parent:properties/123 | The property with property id: 123. | | ancestor:accounts/123 | The account with account id: 123. | | firebase_project:project-id | The firebase project with id: project-id. | | firebase_project:123 | The firebase project with number: 123. | ```",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7016,7 +7335,7 @@ func (c *PropertiesPatchCall) Header() http.Header {
 
 func (c *PropertiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7177,7 +7496,7 @@ func (c *PropertiesUpdateDataRetentionSettingsCall) Header() http.Header {
 
 func (c *PropertiesUpdateDataRetentionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7340,7 +7659,7 @@ func (c *PropertiesUpdateGoogleSignalsSettingsCall) Header() http.Header {
 
 func (c *PropertiesUpdateGoogleSignalsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7490,7 +7809,7 @@ func (c *PropertiesAndroidAppDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7635,7 +7954,7 @@ func (c *PropertiesAndroidAppDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7808,7 +8127,7 @@ func (c *PropertiesAndroidAppDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7993,7 +8312,7 @@ func (c *PropertiesAndroidAppDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8095,809 +8414,6 @@ func (c *PropertiesAndroidAppDataStreamsPatchCall) Do(opts ...googleapi.CallOpti
 
 }
 
-// method id "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.create":
-
-type PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsCreateCall struct {
-	s                                                    *Service
-	parent                                               string
-	googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-	urlParams_                                           gensupport.URLParams
-	ctx_                                                 context.Context
-	header_                                              http.Header
-}
-
-// Create: Creates a measurement protocol secret.
-//
-// - parent: The parent resource where this secret will be created. Any
-//   type of stream (WebDataStream, IosAppDataStream,
-//   AndroidAppDataStream) may be a parent. Format:
-//   properties/{property}/webDataStreams/{webDataStream}.
-func (r *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsService) Create(parent string, googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsCreateCall {
-	c := &PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googleanalyticsadminv1alphameasurementprotocolsecret = googleanalyticsadminv1alphameasurementprotocolsecret
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsCreateCall) Fields(s ...googleapi.Field) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsCreateCall) Context(ctx context.Context) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphameasurementprotocolsecret)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/measurementProtocolSecrets")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.create" call.
-// Exactly one of *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a measurement protocol secret.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}/measurementProtocolSecrets",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource where this secret will be created. Any type of stream (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a parent. Format: properties/{property}/webDataStreams/{webDataStream}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/androidAppDataStreams/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/measurementProtocolSecrets",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
-}
-
-// method id "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.delete":
-
-type PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes target MeasurementProtocolSecret.
-//
-// - name: The name of the MeasurementProtocolSecret to delete. Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets/{measurementProtocolSecret} Note: Any type of stream
-//   (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a
-//   parent.
-func (r *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsService) Delete(name string) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsDeleteCall {
-	c := &PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsDeleteCall) Fields(s ...googleapi.Field) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsDeleteCall) Context(ctx context.Context) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes target MeasurementProtocolSecret.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the MeasurementProtocolSecret to delete. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets/{measurementProtocolSecret} Note: Any type of stream (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a parent.",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/androidAppDataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
-}
-
-// method id "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.get":
-
-type PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Lookup for a single "GA4" MeasurementProtocolSecret.
-//
-// - name: The name of the measurement protocol secret to lookup.
-//   Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets/{measurementProtocolSecret} Note: Any type of stream
-//   (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a
-//   parent.
-func (r *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsService) Get(name string) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsGetCall {
-	c := &PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsGetCall) Fields(s ...googleapi.Field) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsGetCall) IfNoneMatch(entityTag string) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsGetCall) Context(ctx context.Context) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.get" call.
-// Exactly one of *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lookup for a single \"GA4\" MeasurementProtocolSecret.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the measurement protocol secret to lookup. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets/{measurementProtocolSecret} Note: Any type of stream (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a parent.",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/androidAppDataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.list":
-
-type PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Returns child MeasurementProtocolSecrets under the specified
-// parent Property.
-//
-// - parent: The resource name of the parent stream. Any type of stream
-//   (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a
-//   parent. Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets.
-func (r *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsService) List(parent string) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall {
-	c := &PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. If unspecified, at most 10 resources will be
-// returned. The maximum value is 10. Higher values will be coerced to
-// the maximum.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall) PageSize(pageSize int64) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListMeasurementProtocolSecrets` call.
-// Provide this to retrieve the subsequent page. When paginating, all
-// other parameters provided to `ListMeasurementProtocolSecrets` must
-// match the call that provided the page token.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall) PageToken(pageToken string) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall) Fields(s ...googleapi.Field) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall) IfNoneMatch(entityTag string) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall) Context(ctx context.Context) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/measurementProtocolSecrets")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.list" call.
-// Exactly one of
-// *GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse.Ser
-// verResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns child MeasurementProtocolSecrets under the specified parent Property.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}/measurementProtocolSecrets",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. If unspecified, at most 10 resources will be returned. The maximum value is 10. Higher values will be coerced to the maximum.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListMeasurementProtocolSecrets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMeasurementProtocolSecrets` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the parent stream. Any type of stream (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a parent. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/androidAppDataStreams/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/measurementProtocolSecrets",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.patch":
-
-type PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsPatchCall struct {
-	s                                                    *Service
-	name                                                 string
-	googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-	urlParams_                                           gensupport.URLParams
-	ctx_                                                 context.Context
-	header_                                              http.Header
-}
-
-// Patch: Updates a measurement protocol secret.
-//
-// - name: Output only. Resource name of this secret. This secret may be
-//   a child of any type of stream. Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets/{measurementProtocolSecret}.
-func (r *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsService) Patch(name string, googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsPatchCall {
-	c := &PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleanalyticsadminv1alphameasurementprotocolsecret = googleanalyticsadminv1alphameasurementprotocolsecret
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to be updated. Omitted fields will not be updated.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsPatchCall) UpdateMask(updateMask string) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsPatchCall) Fields(s ...googleapi.Field) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsPatchCall) Context(ctx context.Context) *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphameasurementprotocolsecret)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.patch" call.
-// Exactly one of *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesAndroidAppDataStreamsMeasurementProtocolSecretsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates a measurement protocol secret.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.androidAppDataStreams.measurementProtocolSecrets.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of this secret. This secret may be a child of any type of stream. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/androidAppDataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to be updated. Omitted fields will not be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
-}
-
 // method id "analyticsadmin.properties.conversionEvents.create":
 
 type PropertiesConversionEventsCreateCall struct {
@@ -8947,7 +8463,7 @@ func (c *PropertiesConversionEventsCreateCall) Header() http.Header {
 
 func (c *PropertiesConversionEventsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9091,7 +8607,7 @@ func (c *PropertiesConversionEventsDeleteCall) Header() http.Header {
 
 func (c *PropertiesConversionEventsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9236,7 +8752,7 @@ func (c *PropertiesConversionEventsGetCall) Header() http.Header {
 
 func (c *PropertiesConversionEventsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9406,7 +8922,7 @@ func (c *PropertiesConversionEventsListCall) Header() http.Header {
 
 func (c *PropertiesConversionEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9580,7 +9096,7 @@ func (c *PropertiesCustomDimensionsArchiveCall) Header() http.Header {
 
 func (c *PropertiesCustomDimensionsArchiveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9722,7 +9238,7 @@ func (c *PropertiesCustomDimensionsCreateCall) Header() http.Header {
 
 func (c *PropertiesCustomDimensionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9876,7 +9392,7 @@ func (c *PropertiesCustomDimensionsGetCall) Header() http.Header {
 
 func (c *PropertiesCustomDimensionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10044,7 +9560,7 @@ func (c *PropertiesCustomDimensionsListCall) Header() http.Header {
 
 func (c *PropertiesCustomDimensionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10227,7 +9743,7 @@ func (c *PropertiesCustomDimensionsPatchCall) Header() http.Header {
 
 func (c *PropertiesCustomDimensionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10378,7 +9894,7 @@ func (c *PropertiesCustomMetricsArchiveCall) Header() http.Header {
 
 func (c *PropertiesCustomMetricsArchiveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10520,7 +10036,7 @@ func (c *PropertiesCustomMetricsCreateCall) Header() http.Header {
 
 func (c *PropertiesCustomMetricsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10673,7 +10189,7 @@ func (c *PropertiesCustomMetricsGetCall) Header() http.Header {
 
 func (c *PropertiesCustomMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10840,7 +10356,7 @@ func (c *PropertiesCustomMetricsListCall) Header() http.Header {
 
 func (c *PropertiesCustomMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11022,7 +10538,7 @@ func (c *PropertiesCustomMetricsPatchCall) Header() http.Header {
 
 func (c *PropertiesCustomMetricsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11123,6 +10639,1739 @@ func (c *PropertiesCustomMetricsPatchCall) Do(opts ...googleapi.CallOption) (*Go
 
 }
 
+// method id "analyticsadmin.properties.dataStreams.create":
+
+type PropertiesDataStreamsCreateCall struct {
+	s                                     *Service
+	parent                                string
+	googleanalyticsadminv1alphadatastream *GoogleAnalyticsAdminV1alphaDataStream
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Create: Creates a DataStream.
+//
+// - parent: Example format: properties/1234.
+func (r *PropertiesDataStreamsService) Create(parent string, googleanalyticsadminv1alphadatastream *GoogleAnalyticsAdminV1alphaDataStream) *PropertiesDataStreamsCreateCall {
+	c := &PropertiesDataStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alphadatastream = googleanalyticsadminv1alphadatastream
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsCreateCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsCreateCall) Context(ctx context.Context) *PropertiesDataStreamsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphadatastream)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/dataStreams")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.create" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaDataStream or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAnalyticsAdminV1alphaDataStream.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesDataStreamsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaDataStream, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaDataStream{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a DataStream.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.dataStreams.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Example format: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/dataStreams",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaDataStream"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaDataStream"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.delete":
+
+type PropertiesDataStreamsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a DataStream on a property.
+//
+// - name: The name of the DataStream to delete. Example format:
+//   properties/1234/dataStreams/5678.
+func (r *PropertiesDataStreamsService) Delete(name string) *PropertiesDataStreamsDeleteCall {
+	c := &PropertiesDataStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsDeleteCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsDeleteCall) Context(ctx context.Context) *PropertiesDataStreamsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesDataStreamsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a DataStream on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "analyticsadmin.properties.dataStreams.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the DataStream to delete. Example format: properties/1234/dataStreams/5678",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.get":
+
+type PropertiesDataStreamsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Lookup for a single DataStream.
+//
+// - name: The name of the DataStream to get. Example format:
+//   properties/1234/dataStreams/5678.
+func (r *PropertiesDataStreamsService) Get(name string) *PropertiesDataStreamsGetCall {
+	c := &PropertiesDataStreamsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsGetCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesDataStreamsGetCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsGetCall) Context(ctx context.Context) *PropertiesDataStreamsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.get" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaDataStream or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAnalyticsAdminV1alphaDataStream.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesDataStreamsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaDataStream, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaDataStream{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lookup for a single DataStream.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.dataStreams.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the DataStream to get. Example format: properties/1234/dataStreams/5678",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaDataStream"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.getGlobalSiteTag":
+
+type PropertiesDataStreamsGetGlobalSiteTagCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetGlobalSiteTag: Returns the Site Tag for the specified web stream.
+// Site Tags are immutable singletons.
+//
+// - name: The name of the site tag to lookup. Note that site tags are
+//   singletons and do not have unique IDs. Format:
+//   properties/{property_id}/dataStreams/{stream_id}/globalSiteTag
+//   Example: "properties/123/dataStreams/456/globalSiteTag".
+func (r *PropertiesDataStreamsService) GetGlobalSiteTag(name string) *PropertiesDataStreamsGetGlobalSiteTagCall {
+	c := &PropertiesDataStreamsGetGlobalSiteTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsGetGlobalSiteTagCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsGetGlobalSiteTagCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesDataStreamsGetGlobalSiteTagCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsGetGlobalSiteTagCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsGetGlobalSiteTagCall) Context(ctx context.Context) *PropertiesDataStreamsGetGlobalSiteTagCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsGetGlobalSiteTagCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsGetGlobalSiteTagCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.getGlobalSiteTag" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaGlobalSiteTag or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaGlobalSiteTag.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsGetGlobalSiteTagCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaGlobalSiteTag, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaGlobalSiteTag{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the Site Tag for the specified web stream. Site Tags are immutable singletons.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/globalSiteTag",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.dataStreams.getGlobalSiteTag",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the site tag to lookup. Note that site tags are singletons and do not have unique IDs. Format: properties/{property_id}/dataStreams/{stream_id}/globalSiteTag Example: \"properties/123/dataStreams/456/globalSiteTag\"",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/globalSiteTag$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaGlobalSiteTag"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.list":
+
+type PropertiesDataStreamsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists DataStreams on a property.
+//
+// - parent: Example format: properties/1234.
+func (r *PropertiesDataStreamsService) List(parent string) *PropertiesDataStreamsListCall {
+	c := &PropertiesDataStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of resources to return. If unspecified, at most 50 resources will be
+// returned. The maximum value is 200 (higher values will be coerced to
+// the maximum).
+func (c *PropertiesDataStreamsListCall) PageSize(pageSize int64) *PropertiesDataStreamsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDataStreams` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListDataStreams` must match the call that provided the
+// page token.
+func (c *PropertiesDataStreamsListCall) PageToken(pageToken string) *PropertiesDataStreamsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsListCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesDataStreamsListCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsListCall) Context(ctx context.Context) *PropertiesDataStreamsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/dataStreams")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.list" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaListDataStreamsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaListDataStreamsResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListDataStreamsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListDataStreamsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists DataStreams on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.dataStreams.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200 (higher values will be coerced to the maximum).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListDataStreams` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDataStreams` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Example format: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/dataStreams",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListDataStreamsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesDataStreamsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListDataStreamsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticsadmin.properties.dataStreams.patch":
+
+type PropertiesDataStreamsPatchCall struct {
+	s                                     *Service
+	name                                  string
+	googleanalyticsadminv1alphadatastream *GoogleAnalyticsAdminV1alphaDataStream
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Patch: Updates a DataStream on a property.
+//
+// - name: Output only. Resource name of this Data Stream. Format:
+//   properties/{property_id}/dataStreams/{stream_id} Example:
+//   "properties/1000/dataStreams/2000".
+func (r *PropertiesDataStreamsService) Patch(name string, googleanalyticsadminv1alphadatastream *GoogleAnalyticsAdminV1alphaDataStream) *PropertiesDataStreamsPatchCall {
+	c := &PropertiesDataStreamsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphadatastream = googleanalyticsadminv1alphadatastream
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to be updated. Omitted fields will not be updated. To
+// replace the entire entity, use one path with the string "*" to match
+// all fields.
+func (c *PropertiesDataStreamsPatchCall) UpdateMask(updateMask string) *PropertiesDataStreamsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsPatchCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsPatchCall) Context(ctx context.Context) *PropertiesDataStreamsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphadatastream)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.patch" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaDataStream or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAnalyticsAdminV1alphaDataStream.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesDataStreamsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaDataStream, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaDataStream{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a DataStream on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "analyticsadmin.properties.dataStreams.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of this Data Stream. Format: properties/{property_id}/dataStreams/{stream_id} Example: \"properties/1000/dataStreams/2000\"",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaDataStream"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaDataStream"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.create":
+
+type PropertiesDataStreamsMeasurementProtocolSecretsCreateCall struct {
+	s                                                    *Service
+	parent                                               string
+	googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// Create: Creates a measurement protocol secret.
+//
+// - parent: The parent resource where this secret will be created.
+//   Format: properties/{property}/dataStreams/{dataStream}.
+func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Create(parent string, googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall {
+	c := &PropertiesDataStreamsMeasurementProtocolSecretsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alphameasurementprotocolsecret = googleanalyticsadminv1alphameasurementprotocolsecret
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) Context(ctx context.Context) *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphameasurementprotocolsecret)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/measurementProtocolSecrets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.create" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a measurement protocol secret.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/measurementProtocolSecrets",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource where this secret will be created. Format: properties/{property}/dataStreams/{dataStream}",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/measurementProtocolSecrets",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.delete":
+
+type PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes target MeasurementProtocolSecret.
+//
+// - name: The name of the MeasurementProtocolSecret to delete. Format:
+//   properties/{property}/dataStreams/{dataStream}/measurementProtocolSe
+//   crets/{measurementProtocolSecret}.
+func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Delete(name string) *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall {
+	c := &PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) Context(ctx context.Context) *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes target MeasurementProtocolSecret.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the MeasurementProtocolSecret to delete. Format: properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.get":
+
+type PropertiesDataStreamsMeasurementProtocolSecretsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Lookup for a single "GA4" MeasurementProtocolSecret.
+//
+// - name: The name of the measurement protocol secret to lookup.
+//   Format:
+//   properties/{property}/dataStreams/{dataStream}/measurementProtocolSe
+//   crets/{measurementProtocolSecret}.
+func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Get(name string) *PropertiesDataStreamsMeasurementProtocolSecretsGetCall {
+	c := &PropertiesDataStreamsMeasurementProtocolSecretsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsMeasurementProtocolSecretsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsMeasurementProtocolSecretsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) Context(ctx context.Context) *PropertiesDataStreamsMeasurementProtocolSecretsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.get" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lookup for a single \"GA4\" MeasurementProtocolSecret.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the measurement protocol secret to lookup. Format: properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.list":
+
+type PropertiesDataStreamsMeasurementProtocolSecretsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns child MeasurementProtocolSecrets under the specified
+// parent Property.
+//
+// - parent: The resource name of the parent stream. Format:
+//   properties/{property}/dataStreams/{dataStream}/measurementProtocolSe
+//   crets.
+func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) List(parent string) *PropertiesDataStreamsMeasurementProtocolSecretsListCall {
+	c := &PropertiesDataStreamsMeasurementProtocolSecretsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of resources to return. If unspecified, at most 10 resources will be
+// returned. The maximum value is 10. Higher values will be coerced to
+// the maximum.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) PageSize(pageSize int64) *PropertiesDataStreamsMeasurementProtocolSecretsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListMeasurementProtocolSecrets` call.
+// Provide this to retrieve the subsequent page. When paginating, all
+// other parameters provided to `ListMeasurementProtocolSecrets` must
+// match the call that provided the page token.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) PageToken(pageToken string) *PropertiesDataStreamsMeasurementProtocolSecretsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsMeasurementProtocolSecretsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsMeasurementProtocolSecretsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Context(ctx context.Context) *PropertiesDataStreamsMeasurementProtocolSecretsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/measurementProtocolSecrets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.list" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse.Ser
+// verResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns child MeasurementProtocolSecrets under the specified parent Property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/measurementProtocolSecrets",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of resources to return. If unspecified, at most 10 resources will be returned. The maximum value is 10. Higher values will be coerced to the maximum.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListMeasurementProtocolSecrets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMeasurementProtocolSecrets` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the parent stream. Format: properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/measurementProtocolSecrets",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.patch":
+
+type PropertiesDataStreamsMeasurementProtocolSecretsPatchCall struct {
+	s                                                    *Service
+	name                                                 string
+	googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// Patch: Updates a measurement protocol secret.
+//
+// - name: Output only. Resource name of this secret. This secret may be
+//   a child of any type of stream. Format:
+//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
+//   ocolSecrets/{measurementProtocolSecret}.
+func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Patch(name string, googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
+	c := &PropertiesDataStreamsMeasurementProtocolSecretsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphameasurementprotocolsecret = googleanalyticsadminv1alphameasurementprotocolsecret
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated. Omitted fields will not be updated.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) UpdateMask(updateMask string) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Context(ctx context.Context) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphameasurementprotocolsecret)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.patch" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a measurement protocol secret.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of this secret. This secret may be a child of any type of stream. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated. Omitted fields will not be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
 // method id "analyticsadmin.properties.displayVideo360AdvertiserLinkProposals.approve":
 
 type PropertiesDisplayVideo360AdvertiserLinkProposalsApproveCall struct {
@@ -11175,7 +12424,7 @@ func (c *PropertiesDisplayVideo360AdvertiserLinkProposalsApproveCall) Header() h
 
 func (c *PropertiesDisplayVideo360AdvertiserLinkProposalsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11326,7 +12575,7 @@ func (c *PropertiesDisplayVideo360AdvertiserLinkProposalsCancelCall) Header() ht
 
 func (c *PropertiesDisplayVideo360AdvertiserLinkProposalsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11471,7 +12720,7 @@ func (c *PropertiesDisplayVideo360AdvertiserLinkProposalsCreateCall) Header() ht
 
 func (c *PropertiesDisplayVideo360AdvertiserLinkProposalsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11617,7 +12866,7 @@ func (c *PropertiesDisplayVideo360AdvertiserLinkProposalsDeleteCall) Header() ht
 
 func (c *PropertiesDisplayVideo360AdvertiserLinkProposalsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11762,7 +13011,7 @@ func (c *PropertiesDisplayVideo360AdvertiserLinkProposalsGetCall) Header() http.
 
 func (c *PropertiesDisplayVideo360AdvertiserLinkProposalsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11932,7 +13181,7 @@ func (c *PropertiesDisplayVideo360AdvertiserLinkProposalsListCall) Header() http
 
 func (c *PropertiesDisplayVideo360AdvertiserLinkProposalsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12109,7 +13358,7 @@ func (c *PropertiesDisplayVideo360AdvertiserLinksCreateCall) Header() http.Heade
 
 func (c *PropertiesDisplayVideo360AdvertiserLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12253,7 +13502,7 @@ func (c *PropertiesDisplayVideo360AdvertiserLinksDeleteCall) Header() http.Heade
 
 func (c *PropertiesDisplayVideo360AdvertiserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12397,7 +13646,7 @@ func (c *PropertiesDisplayVideo360AdvertiserLinksGetCall) Header() http.Header {
 
 func (c *PropertiesDisplayVideo360AdvertiserLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12566,7 +13815,7 @@ func (c *PropertiesDisplayVideo360AdvertiserLinksListCall) Header() http.Header 
 
 func (c *PropertiesDisplayVideo360AdvertiserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12751,7 +14000,7 @@ func (c *PropertiesDisplayVideo360AdvertiserLinksPatchCall) Header() http.Header
 
 func (c *PropertiesDisplayVideo360AdvertiserLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12903,7 +14152,7 @@ func (c *PropertiesFirebaseLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13046,7 +14295,7 @@ func (c *PropertiesFirebaseLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13210,7 +14459,7 @@ func (c *PropertiesFirebaseLinksListCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13382,7 +14631,7 @@ func (c *PropertiesGoogleAdsLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13524,7 +14773,7 @@ func (c *PropertiesGoogleAdsLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13686,7 +14935,7 @@ func (c *PropertiesGoogleAdsLinksListCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13870,7 +15119,7 @@ func (c *PropertiesGoogleAdsLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14020,7 +15269,7 @@ func (c *PropertiesIosAppDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14165,7 +15414,7 @@ func (c *PropertiesIosAppDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14338,7 +15587,7 @@ func (c *PropertiesIosAppDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14523,7 +15772,7 @@ func (c *PropertiesIosAppDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14625,809 +15874,6 @@ func (c *PropertiesIosAppDataStreamsPatchCall) Do(opts ...googleapi.CallOption) 
 
 }
 
-// method id "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.create":
-
-type PropertiesIosAppDataStreamsMeasurementProtocolSecretsCreateCall struct {
-	s                                                    *Service
-	parent                                               string
-	googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-	urlParams_                                           gensupport.URLParams
-	ctx_                                                 context.Context
-	header_                                              http.Header
-}
-
-// Create: Creates a measurement protocol secret.
-//
-// - parent: The parent resource where this secret will be created. Any
-//   type of stream (WebDataStream, IosAppDataStream,
-//   AndroidAppDataStream) may be a parent. Format:
-//   properties/{property}/webDataStreams/{webDataStream}.
-func (r *PropertiesIosAppDataStreamsMeasurementProtocolSecretsService) Create(parent string, googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsCreateCall {
-	c := &PropertiesIosAppDataStreamsMeasurementProtocolSecretsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googleanalyticsadminv1alphameasurementprotocolsecret = googleanalyticsadminv1alphameasurementprotocolsecret
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsCreateCall) Fields(s ...googleapi.Field) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsCreateCall) Context(ctx context.Context) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphameasurementprotocolsecret)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/measurementProtocolSecrets")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.create" call.
-// Exactly one of *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a measurement protocol secret.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}/measurementProtocolSecrets",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource where this secret will be created. Any type of stream (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a parent. Format: properties/{property}/webDataStreams/{webDataStream}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/iosAppDataStreams/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/measurementProtocolSecrets",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
-}
-
-// method id "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.delete":
-
-type PropertiesIosAppDataStreamsMeasurementProtocolSecretsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes target MeasurementProtocolSecret.
-//
-// - name: The name of the MeasurementProtocolSecret to delete. Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets/{measurementProtocolSecret} Note: Any type of stream
-//   (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a
-//   parent.
-func (r *PropertiesIosAppDataStreamsMeasurementProtocolSecretsService) Delete(name string) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsDeleteCall {
-	c := &PropertiesIosAppDataStreamsMeasurementProtocolSecretsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsDeleteCall) Fields(s ...googleapi.Field) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsDeleteCall) Context(ctx context.Context) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes target MeasurementProtocolSecret.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the MeasurementProtocolSecret to delete. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets/{measurementProtocolSecret} Note: Any type of stream (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a parent.",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/iosAppDataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
-}
-
-// method id "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.get":
-
-type PropertiesIosAppDataStreamsMeasurementProtocolSecretsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Lookup for a single "GA4" MeasurementProtocolSecret.
-//
-// - name: The name of the measurement protocol secret to lookup.
-//   Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets/{measurementProtocolSecret} Note: Any type of stream
-//   (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a
-//   parent.
-func (r *PropertiesIosAppDataStreamsMeasurementProtocolSecretsService) Get(name string) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsGetCall {
-	c := &PropertiesIosAppDataStreamsMeasurementProtocolSecretsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsGetCall) Fields(s ...googleapi.Field) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsGetCall) IfNoneMatch(entityTag string) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsGetCall) Context(ctx context.Context) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.get" call.
-// Exactly one of *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lookup for a single \"GA4\" MeasurementProtocolSecret.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the measurement protocol secret to lookup. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets/{measurementProtocolSecret} Note: Any type of stream (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a parent.",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/iosAppDataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.list":
-
-type PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Returns child MeasurementProtocolSecrets under the specified
-// parent Property.
-//
-// - parent: The resource name of the parent stream. Any type of stream
-//   (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a
-//   parent. Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets.
-func (r *PropertiesIosAppDataStreamsMeasurementProtocolSecretsService) List(parent string) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall {
-	c := &PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. If unspecified, at most 10 resources will be
-// returned. The maximum value is 10. Higher values will be coerced to
-// the maximum.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall) PageSize(pageSize int64) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListMeasurementProtocolSecrets` call.
-// Provide this to retrieve the subsequent page. When paginating, all
-// other parameters provided to `ListMeasurementProtocolSecrets` must
-// match the call that provided the page token.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall) PageToken(pageToken string) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall) Fields(s ...googleapi.Field) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall) IfNoneMatch(entityTag string) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall) Context(ctx context.Context) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/measurementProtocolSecrets")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.list" call.
-// Exactly one of
-// *GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse.Ser
-// verResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns child MeasurementProtocolSecrets under the specified parent Property.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}/measurementProtocolSecrets",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. If unspecified, at most 10 resources will be returned. The maximum value is 10. Higher values will be coerced to the maximum.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListMeasurementProtocolSecrets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMeasurementProtocolSecrets` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the parent stream. Any type of stream (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a parent. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/iosAppDataStreams/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/measurementProtocolSecrets",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.patch":
-
-type PropertiesIosAppDataStreamsMeasurementProtocolSecretsPatchCall struct {
-	s                                                    *Service
-	name                                                 string
-	googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-	urlParams_                                           gensupport.URLParams
-	ctx_                                                 context.Context
-	header_                                              http.Header
-}
-
-// Patch: Updates a measurement protocol secret.
-//
-// - name: Output only. Resource name of this secret. This secret may be
-//   a child of any type of stream. Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets/{measurementProtocolSecret}.
-func (r *PropertiesIosAppDataStreamsMeasurementProtocolSecretsService) Patch(name string, googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsPatchCall {
-	c := &PropertiesIosAppDataStreamsMeasurementProtocolSecretsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleanalyticsadminv1alphameasurementprotocolsecret = googleanalyticsadminv1alphameasurementprotocolsecret
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to be updated. Omitted fields will not be updated.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsPatchCall) UpdateMask(updateMask string) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsPatchCall) Fields(s ...googleapi.Field) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsPatchCall) Context(ctx context.Context) *PropertiesIosAppDataStreamsMeasurementProtocolSecretsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphameasurementprotocolsecret)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.patch" call.
-// Exactly one of *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesIosAppDataStreamsMeasurementProtocolSecretsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates a measurement protocol secret.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.iosAppDataStreams.measurementProtocolSecrets.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of this secret. This secret may be a child of any type of stream. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/iosAppDataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to be updated. Omitted fields will not be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
-}
-
 // method id "analyticsadmin.properties.userLinks.audit":
 
 type PropertiesUserLinksAuditCall struct {
@@ -15482,7 +15928,7 @@ func (c *PropertiesUserLinksAuditCall) Header() http.Header {
 
 func (c *PropertiesUserLinksAuditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15653,7 +16099,7 @@ func (c *PropertiesUserLinksBatchCreateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15801,7 +16247,7 @@ func (c *PropertiesUserLinksBatchDeleteCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15963,7 +16409,7 @@ func (c *PropertiesUserLinksBatchGetCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16113,7 +16559,7 @@ func (c *PropertiesUserLinksBatchUpdateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16269,7 +16715,7 @@ func (c *PropertiesUserLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16415,7 +16861,7 @@ func (c *PropertiesUserLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16558,7 +17004,7 @@ func (c *PropertiesUserLinksGetCall) Header() http.Header {
 
 func (c *PropertiesUserLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16725,7 +17171,7 @@ func (c *PropertiesUserLinksListCall) Header() http.Header {
 
 func (c *PropertiesUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16897,7 +17343,7 @@ func (c *PropertiesUserLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesUserLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17042,7 +17488,7 @@ func (c *PropertiesWebDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17186,7 +17632,7 @@ func (c *PropertiesWebDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17331,7 +17777,7 @@ func (c *PropertiesWebDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17423,314 +17869,6 @@ func (c *PropertiesWebDataStreamsGetCall) Do(opts ...googleapi.CallOption) (*Goo
 
 }
 
-// method id "analyticsadmin.properties.webDataStreams.getEnhancedMeasurementSettings":
-
-type PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetEnhancedMeasurementSettings: Returns the singleton enhanced
-// measurement settings for this web stream. Note that the stream must
-// enable enhanced measurement for these settings to take effect.
-//
-// - name: The name of the settings to lookup. Format:
-//   properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasurem
-//   entSettings Example:
-//   "properties/1000/webDataStreams/2000/enhancedMeasurementSettings".
-func (r *PropertiesWebDataStreamsService) GetEnhancedMeasurementSettings(name string) *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall {
-	c := &PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) Fields(s ...googleapi.Field) *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) IfNoneMatch(entityTag string) *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) Context(ctx context.Context) *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.webDataStreams.getEnhancedMeasurementSettings" call.
-// Exactly one of
-// *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns the singleton enhanced measurement settings for this web stream. Note that the stream must enable enhanced measurement for these settings to take effect.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/enhancedMeasurementSettings",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.webDataStreams.getEnhancedMeasurementSettings",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the settings to lookup. Format: properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasurementSettings Example: \"properties/1000/webDataStreams/2000/enhancedMeasurementSettings\"",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/webDataStreams/[^/]+/enhancedMeasurementSettings$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "analyticsadmin.properties.webDataStreams.getGlobalSiteTag":
-
-type PropertiesWebDataStreamsGetGlobalSiteTagCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetGlobalSiteTag: Returns the Site Tag for the specified web stream.
-// Site Tags are immutable singletons.
-//
-// - name: The name of the site tag to lookup. Note that site tags are
-//   singletons and do not have unique IDs. Format:
-//   properties/{property_id}/webDataStreams/{stream_id}/globalSiteTag
-//   Example: "properties/123/webDataStreams/456/globalSiteTag".
-func (r *PropertiesWebDataStreamsService) GetGlobalSiteTag(name string) *PropertiesWebDataStreamsGetGlobalSiteTagCall {
-	c := &PropertiesWebDataStreamsGetGlobalSiteTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) Fields(s ...googleapi.Field) *PropertiesWebDataStreamsGetGlobalSiteTagCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) IfNoneMatch(entityTag string) *PropertiesWebDataStreamsGetGlobalSiteTagCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) Context(ctx context.Context) *PropertiesWebDataStreamsGetGlobalSiteTagCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.webDataStreams.getGlobalSiteTag" call.
-// Exactly one of *GoogleAnalyticsAdminV1alphaGlobalSiteTag or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1alphaGlobalSiteTag.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaGlobalSiteTag, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaGlobalSiteTag{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns the Site Tag for the specified web stream. Site Tags are immutable singletons.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/globalSiteTag",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.webDataStreams.getGlobalSiteTag",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the site tag to lookup. Note that site tags are singletons and do not have unique IDs. Format: properties/{property_id}/webDataStreams/{stream_id}/globalSiteTag Example: \"properties/123/webDataStreams/456/globalSiteTag\"",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/webDataStreams/[^/]+/globalSiteTag$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaGlobalSiteTag"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
-}
-
 // method id "analyticsadmin.properties.webDataStreams.list":
 
 type PropertiesWebDataStreamsListCall struct {
@@ -17812,7 +17950,7 @@ func (c *PropertiesWebDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17996,7 +18134,7 @@ func (c *PropertiesWebDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18090,975 +18228,6 @@ func (c *PropertiesWebDataStreamsPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaWebDataStream"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
-}
-
-// method id "analyticsadmin.properties.webDataStreams.updateEnhancedMeasurementSettings":
-
-type PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall struct {
-	s                                                      *Service
-	name                                                   string
-	googleanalyticsadminv1alphaenhancedmeasurementsettings *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings
-	urlParams_                                             gensupport.URLParams
-	ctx_                                                   context.Context
-	header_                                                http.Header
-}
-
-// UpdateEnhancedMeasurementSettings: Updates the singleton enhanced
-// measurement settings for this web stream. Note that the stream must
-// enable enhanced measurement for these settings to take effect.
-//
-// - name: Output only. Resource name of this Data Stream. Format:
-//   properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasurem
-//   entSettings Example:
-//   "properties/1000/webDataStreams/2000/enhancedMeasurementSettings".
-func (r *PropertiesWebDataStreamsService) UpdateEnhancedMeasurementSettings(name string, googleanalyticsadminv1alphaenhancedmeasurementsettings *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings) *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall {
-	c := &PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleanalyticsadminv1alphaenhancedmeasurementsettings = googleanalyticsadminv1alphaenhancedmeasurementsettings
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Field names must be in snake case
-// (e.g., "field_to_update"). Omitted fields will not be updated. To
-// replace the entire entity, use one path with the string "*" to match
-// all fields.
-func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) UpdateMask(updateMask string) *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) Fields(s ...googleapi.Field) *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) Context(ctx context.Context) *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaenhancedmeasurementsettings)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.webDataStreams.updateEnhancedMeasurementSettings" call.
-// Exactly one of
-// *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the singleton enhanced measurement settings for this web stream. Note that the stream must enable enhanced measurement for these settings to take effect.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/enhancedMeasurementSettings",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.webDataStreams.updateEnhancedMeasurementSettings",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of this Data Stream. Format: properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasurementSettings Example: \"properties/1000/webDataStreams/2000/enhancedMeasurementSettings\"",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/webDataStreams/[^/]+/enhancedMeasurementSettings$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
-}
-
-// method id "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.create":
-
-type PropertiesWebDataStreamsMeasurementProtocolSecretsCreateCall struct {
-	s                                                    *Service
-	parent                                               string
-	googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-	urlParams_                                           gensupport.URLParams
-	ctx_                                                 context.Context
-	header_                                              http.Header
-}
-
-// Create: Creates a measurement protocol secret.
-//
-// - parent: The parent resource where this secret will be created. Any
-//   type of stream (WebDataStream, IosAppDataStream,
-//   AndroidAppDataStream) may be a parent. Format:
-//   properties/{property}/webDataStreams/{webDataStream}.
-func (r *PropertiesWebDataStreamsMeasurementProtocolSecretsService) Create(parent string, googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) *PropertiesWebDataStreamsMeasurementProtocolSecretsCreateCall {
-	c := &PropertiesWebDataStreamsMeasurementProtocolSecretsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googleanalyticsadminv1alphameasurementprotocolsecret = googleanalyticsadminv1alphameasurementprotocolsecret
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsCreateCall) Fields(s ...googleapi.Field) *PropertiesWebDataStreamsMeasurementProtocolSecretsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsCreateCall) Context(ctx context.Context) *PropertiesWebDataStreamsMeasurementProtocolSecretsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphameasurementprotocolsecret)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/measurementProtocolSecrets")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.create" call.
-// Exactly one of *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a measurement protocol secret.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/measurementProtocolSecrets",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource where this secret will be created. Any type of stream (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a parent. Format: properties/{property}/webDataStreams/{webDataStream}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/webDataStreams/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/measurementProtocolSecrets",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
-}
-
-// method id "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.delete":
-
-type PropertiesWebDataStreamsMeasurementProtocolSecretsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes target MeasurementProtocolSecret.
-//
-// - name: The name of the MeasurementProtocolSecret to delete. Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets/{measurementProtocolSecret} Note: Any type of stream
-//   (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a
-//   parent.
-func (r *PropertiesWebDataStreamsMeasurementProtocolSecretsService) Delete(name string) *PropertiesWebDataStreamsMeasurementProtocolSecretsDeleteCall {
-	c := &PropertiesWebDataStreamsMeasurementProtocolSecretsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsDeleteCall) Fields(s ...googleapi.Field) *PropertiesWebDataStreamsMeasurementProtocolSecretsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsDeleteCall) Context(ctx context.Context) *PropertiesWebDataStreamsMeasurementProtocolSecretsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes target MeasurementProtocolSecret.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the MeasurementProtocolSecret to delete. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets/{measurementProtocolSecret} Note: Any type of stream (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a parent.",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/webDataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
-}
-
-// method id "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.get":
-
-type PropertiesWebDataStreamsMeasurementProtocolSecretsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Lookup for a single "GA4" MeasurementProtocolSecret.
-//
-// - name: The name of the measurement protocol secret to lookup.
-//   Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets/{measurementProtocolSecret} Note: Any type of stream
-//   (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a
-//   parent.
-func (r *PropertiesWebDataStreamsMeasurementProtocolSecretsService) Get(name string) *PropertiesWebDataStreamsMeasurementProtocolSecretsGetCall {
-	c := &PropertiesWebDataStreamsMeasurementProtocolSecretsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsGetCall) Fields(s ...googleapi.Field) *PropertiesWebDataStreamsMeasurementProtocolSecretsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsGetCall) IfNoneMatch(entityTag string) *PropertiesWebDataStreamsMeasurementProtocolSecretsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsGetCall) Context(ctx context.Context) *PropertiesWebDataStreamsMeasurementProtocolSecretsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.get" call.
-// Exactly one of *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lookup for a single \"GA4\" MeasurementProtocolSecret.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the measurement protocol secret to lookup. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets/{measurementProtocolSecret} Note: Any type of stream (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a parent.",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/webDataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.list":
-
-type PropertiesWebDataStreamsMeasurementProtocolSecretsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Returns child MeasurementProtocolSecrets under the specified
-// parent Property.
-//
-// - parent: The resource name of the parent stream. Any type of stream
-//   (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a
-//   parent. Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets.
-func (r *PropertiesWebDataStreamsMeasurementProtocolSecretsService) List(parent string) *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall {
-	c := &PropertiesWebDataStreamsMeasurementProtocolSecretsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. If unspecified, at most 10 resources will be
-// returned. The maximum value is 10. Higher values will be coerced to
-// the maximum.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall) PageSize(pageSize int64) *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListMeasurementProtocolSecrets` call.
-// Provide this to retrieve the subsequent page. When paginating, all
-// other parameters provided to `ListMeasurementProtocolSecrets` must
-// match the call that provided the page token.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall) PageToken(pageToken string) *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall) Fields(s ...googleapi.Field) *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall) IfNoneMatch(entityTag string) *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall) Context(ctx context.Context) *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/measurementProtocolSecrets")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.list" call.
-// Exactly one of
-// *GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse.Ser
-// verResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns child MeasurementProtocolSecrets under the specified parent Property.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/measurementProtocolSecrets",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. If unspecified, at most 10 resources will be returned. The maximum value is 10. Higher values will be coerced to the maximum.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListMeasurementProtocolSecrets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMeasurementProtocolSecrets` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the parent stream. Any type of stream (WebDataStream, IosAppDataStream, AndroidAppDataStream) may be a parent. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/webDataStreams/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/measurementProtocolSecrets",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.patch":
-
-type PropertiesWebDataStreamsMeasurementProtocolSecretsPatchCall struct {
-	s                                                    *Service
-	name                                                 string
-	googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-	urlParams_                                           gensupport.URLParams
-	ctx_                                                 context.Context
-	header_                                              http.Header
-}
-
-// Patch: Updates a measurement protocol secret.
-//
-// - name: Output only. Resource name of this secret. This secret may be
-//   a child of any type of stream. Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets/{measurementProtocolSecret}.
-func (r *PropertiesWebDataStreamsMeasurementProtocolSecretsService) Patch(name string, googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) *PropertiesWebDataStreamsMeasurementProtocolSecretsPatchCall {
-	c := &PropertiesWebDataStreamsMeasurementProtocolSecretsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleanalyticsadminv1alphameasurementprotocolsecret = googleanalyticsadminv1alphameasurementprotocolsecret
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to be updated. Omitted fields will not be updated.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsPatchCall) UpdateMask(updateMask string) *PropertiesWebDataStreamsMeasurementProtocolSecretsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsPatchCall) Fields(s ...googleapi.Field) *PropertiesWebDataStreamsMeasurementProtocolSecretsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsPatchCall) Context(ctx context.Context) *PropertiesWebDataStreamsMeasurementProtocolSecretsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphameasurementprotocolsecret)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.patch" call.
-// Exactly one of *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PropertiesWebDataStreamsMeasurementProtocolSecretsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates a measurement protocol secret.",
-	//   "flatPath": "v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.webDataStreams.measurementProtocolSecrets.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of this secret. This secret may be a child of any type of stream. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/webDataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to be updated. Omitted fields will not be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"

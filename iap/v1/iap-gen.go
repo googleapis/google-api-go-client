@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -234,6 +234,10 @@ type AccessSettings struct {
 	// apps hosted in tenant projects. INTERNAL_ONLY.
 	PolicyDelegationSettings *PolicyDelegationSettings `json:"policyDelegationSettings,omitempty"`
 
+	// ReauthSettings: Settings to configure reauthentication policies in
+	// IAP.
+	ReauthSettings *ReauthSettings `json:"reauthSettings,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CorsSettings") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -296,19 +300,19 @@ func (s *ApplicationSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
+	// Members: Specifies the principals requesting access for a Cloud
 	// Platform resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
@@ -342,8 +346,8 @@ type Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -623,13 +627,17 @@ func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
-	// RequestedPolicyVersion: Optional. The policy format version to be
-	// returned. Valid values are 0, 1, and 3. Requests specifying an
-	// invalid value will be rejected. Requests for policies with any
-	// conditional bindings must specify version 3. Policies without any
-	// conditional bindings may specify any valid value or leave the field
-	// unset. To learn which resources support conditions in their IAM
-	// policies, see the IAM documentation
+	// RequestedPolicyVersion: Optional. The maximum policy version that
+	// will be used to format the policy. Valid values are 0, 1, and 3.
+	// Requests specifying an invalid value will be rejected. Requests for
+	// policies with any conditional role bindings must specify version 3.
+	// Policies with no conditional role bindings may specify any valid
+	// value or leave the field unset. The policy in the response might use
+	// the policy version that you specified, or it might use a lower policy
+	// version. For example, if you specify version 3, but the policy has no
+	// conditional role bindings, the response uses version 1. To learn
+	// which resources support conditions in their IAM policies, see the IAM
+	// documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
@@ -846,17 +854,17 @@ func (s *OAuthSettings) MarshalJSON() ([]byte, error) {
 
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members` to
-// a single `role`. Members can be user accounts, service accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of permissions; each `role` can be an IAM predefined role or a
-// user-created custom role. For some types of Google Cloud resources, a
-// `binding` can also specify a `condition`, which is a logical
-// expression that allows access to a resource only if the expression
-// evaluates to `true`. A condition can add constraints based on
-// attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -879,9 +887,15 @@ func (s *OAuthSettings) MarshalJSON() ([]byte, error) {
 // For a description of IAM and its features, see the IAM documentation
 // (https://cloud.google.com/iam/docs/).
 type Policy struct {
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -1030,6 +1044,62 @@ type PolicyName struct {
 
 func (s *PolicyName) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyName
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReauthSettings: Configuration for IAP reauthentication policies.
+type ReauthSettings struct {
+	// MaxAge: Reauth session lifetime, how long before a user has to
+	// reauthenticate again.
+	MaxAge string `json:"maxAge,omitempty"`
+
+	// Method: Reauth method required by the policy.
+	//
+	// Possible values:
+	//   "METHOD_UNSPECIFIED" - Reauthentication disabled.
+	//   "LOGIN" - Mimicks the behavior as if the user had logged out and
+	// tried to log in again. Users with 2SV (step verification) enabled
+	// will see their 2SV challenges if they did not opt to have their
+	// second factor responses saved. Apps Core (GSuites) admins can
+	// configure settings to disable 2SV cookies and require 2-step
+	// verification for all Apps Core users in their domains.
+	//   "PASSWORD" - User must type their password.
+	//   "SECURE_KEY" - User must use their secure key 2nd factor device.
+	Method string `json:"method,omitempty"`
+
+	// PolicyType: How IAP determines the effective policy in cases of
+	// hierarchial policies. Policies are merged from higher in the
+	// hierarchy to lower in the hierarchy.
+	//
+	// Possible values:
+	//   "POLICY_TYPE_UNSPECIFIED" - Default value. This value is
+	// unused/invalid.
+	//   "MINIMUM" - This policy acts as a minimum to other policies, lower
+	// in the hierarchy. Effective policy may only be the same or stricter.
+	//   "DEFAULT" - This policy acts as a default if no other reauth policy
+	// is set.
+	PolicyType string `json:"policyType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxAge") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxAge") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReauthSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ReauthSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1217,10 +1287,10 @@ type ProjectsBrandsCreateCall struct {
 // Create: Constructs a new OAuth brand for the project if one does not
 // exist. The created brand is "internal only", meaning that OAuth
 // clients created under it only accept requests from users who belong
-// to the same G Suite organization as the project. The brand is created
-// in an un-reviewed status. NOTE: The "internal only" status can be
-// manually changed in the Google Cloud console. Requires that a brand
-// does not already exist for the project, and that the specified
+// to the same Google Workspace organization as the project. The brand
+// is created in an un-reviewed status. NOTE: The "internal only" status
+// can be manually changed in the Google Cloud Console. Requires that a
+// brand does not already exist for the project, and that the specified
 // support email is owned by the caller.
 //
 // - parent: GCP Project number/id under which the brand is to be
@@ -1259,7 +1329,7 @@ func (c *ProjectsBrandsCreateCall) Header() http.Header {
 
 func (c *ProjectsBrandsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1323,7 +1393,7 @@ func (c *ProjectsBrandsCreateCall) Do(opts ...googleapi.CallOption) (*Brand, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Constructs a new OAuth brand for the project if one does not exist. The created brand is \"internal only\", meaning that OAuth clients created under it only accept requests from users who belong to the same G Suite organization as the project. The brand is created in an un-reviewed status. NOTE: The \"internal only\" status can be manually changed in the Google Cloud console. Requires that a brand does not already exist for the project, and that the specified support email is owned by the caller.",
+	//   "description": "Constructs a new OAuth brand for the project if one does not exist. The created brand is \"internal only\", meaning that OAuth clients created under it only accept requests from users who belong to the same Google Workspace organization as the project. The brand is created in an un-reviewed status. NOTE: The \"internal only\" status can be manually changed in the Google Cloud Console. Requires that a brand does not already exist for the project, and that the specified support email is owned by the caller.",
 	//   "flatPath": "v1/projects/{projectsId}/brands",
 	//   "httpMethod": "POST",
 	//   "id": "iap.projects.brands.create",
@@ -1411,7 +1481,7 @@ func (c *ProjectsBrandsGetCall) Header() http.Header {
 
 func (c *ProjectsBrandsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1558,7 +1628,7 @@ func (c *ProjectsBrandsListCall) Header() http.Header {
 
 func (c *ProjectsBrandsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1699,7 +1769,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) Header() http.Header
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1845,7 +1915,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) Header() http.Header
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1992,7 +2062,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) Header() http.Header {
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2158,7 +2228,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) Header() http.Header {
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2333,7 +2403,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Header() http.H
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2480,7 +2550,7 @@ func (c *V1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2634,7 +2704,7 @@ func (c *V1GetIapSettingsCall) Header() http.Header {
 
 func (c *V1GetIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2776,7 +2846,7 @@ func (c *V1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2923,7 +2993,7 @@ func (c *V1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3076,7 +3146,7 @@ func (c *V1UpdateIapSettingsCall) Header() http.Header {
 
 func (c *V1UpdateIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

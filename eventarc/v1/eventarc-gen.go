@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -150,8 +150,10 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.ChannelConnections = NewProjectsLocationsChannelConnectionsService(s)
 	rs.Channels = NewProjectsLocationsChannelsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.Providers = NewProjectsLocationsProvidersService(s)
 	rs.Triggers = NewProjectsLocationsTriggersService(s)
 	return rs
 }
@@ -159,11 +161,24 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	ChannelConnections *ProjectsLocationsChannelConnectionsService
+
 	Channels *ProjectsLocationsChannelsService
 
 	Operations *ProjectsLocationsOperationsService
 
+	Providers *ProjectsLocationsProvidersService
+
 	Triggers *ProjectsLocationsTriggersService
+}
+
+func NewProjectsLocationsChannelConnectionsService(s *Service) *ProjectsLocationsChannelConnectionsService {
+	rs := &ProjectsLocationsChannelConnectionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsChannelConnectionsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsChannelsService(s *Service) *ProjectsLocationsChannelsService {
@@ -181,6 +196,15 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsProvidersService(s *Service) *ProjectsLocationsProvidersService {
+	rs := &ProjectsLocationsProvidersService{s: s}
+	return rs
+}
+
+type ProjectsLocationsProvidersService struct {
 	s *Service
 }
 
@@ -290,19 +314,19 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
+	// Members: Specifies the principals requesting access for a Cloud
 	// Platform resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
@@ -336,8 +360,8 @@ type Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -366,7 +390,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // CloudRun: Represents a Cloud Run destination.
 type CloudRun struct {
 	// Path: Optional. The relative path on the Cloud Run service the events
-	// should be sent to. The value must conform to the definition of URI
+	// should be sent to. The value must conform to the definition of a URI
 	// path segment (section 3.3 of RFC2396). Examples: "/route", "route",
 	// "route/subroute".
 	Path string `json:"path,omitempty"`
@@ -377,7 +401,7 @@ type CloudRun struct {
 	// Service: Required. The name of the Cloud Run service being addressed.
 	// See
 	// https://cloud.google.com/run/docs/reference/rest/v1/namespaces.services.
-	// Only services located in the same project of the trigger object can
+	// Only services located in the same project as the trigger object can
 	// be addressed.
 	Service string `json:"service,omitempty"`
 
@@ -406,11 +430,20 @@ func (s *CloudRun) MarshalJSON() ([]byte, error) {
 
 // Destination: Represents a target of an invocation over HTTP.
 type Destination struct {
-	// CloudRun: Cloud Run fully-managed service that receives the events.
-	// The service should be running in the same project of the trigger.
+	// CloudFunction: The Cloud Function resource name. Only Cloud Functions
+	// V2 is supported. Format:
+	// projects/{project}/locations/{location}/functions/{function}
+	CloudFunction string `json:"cloudFunction,omitempty"`
+
+	// CloudRun: Cloud Run fully-managed resource that receives the events.
+	// The resource should be in the same project as the trigger.
 	CloudRun *CloudRun `json:"cloudRun,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CloudRun") to
+	// Gke: A GKE service capable of receiving events. The service should be
+	// running in the same project as the trigger.
+	Gke *GKE `json:"gke,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudFunction") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -418,10 +451,10 @@ type Destination struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CloudRun") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CloudFunction") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -475,6 +508,52 @@ type EventFilter struct {
 
 func (s *EventFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod EventFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventType: A representation of the event type resource.
+type EventType struct {
+	// Description: Output only. Human friendly description of what the
+	// event type is about. For example "Bucket created in Cloud Storage".
+	Description string `json:"description,omitempty"`
+
+	// EventSchemaUri: Output only. URI for the event schema. For example
+	// "https://github.com/googleapis/google-cloudevents/blob/master/proto/go
+	// ogle/events/cloud/storage/v1/events.proto"
+	EventSchemaUri string `json:"eventSchemaUri,omitempty"`
+
+	// FilteringAttributes: Output only. Filtering attributes for the event
+	// type.
+	FilteringAttributes []*FilteringAttribute `json:"filteringAttributes,omitempty"`
+
+	// Type: Output only. The full name of the event type (for example,
+	// "google.cloud.storage.object.v1.finalized"). In the form of
+	// {provider-id}.{resource}.{version}.{verb}. Types MUST be versioned
+	// and event schemas are guaranteed to remain backward compatible within
+	// one version. Note that event type versions and API versions do not
+	// need to match.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventType) MarshalJSON() ([]byte, error) {
+	type NoMethod EventType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -535,6 +614,96 @@ type Expr struct {
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FilteringAttribute: A representation of the FilteringAttribute
+// resource. Filtering attributes are per event type.
+type FilteringAttribute struct {
+	// Attribute: Output only. Attribute used for filtering the event type.
+	Attribute string `json:"attribute,omitempty"`
+
+	// Description: Output only. Description of the purpose of the
+	// attribute.
+	Description string `json:"description,omitempty"`
+
+	// PathPatternSupported: Output only. If true, the attribute accepts
+	// matching expressions in the Eventarc PathPattern format.
+	PathPatternSupported bool `json:"pathPatternSupported,omitempty"`
+
+	// Required: Output only. If true, the triggers for this provider should
+	// always specify a filter on these attributes. Trigger creation will
+	// fail otherwise.
+	Required bool `json:"required,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attribute") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attribute") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FilteringAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod FilteringAttribute
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GKE: Represents a GKE destination.
+type GKE struct {
+	// Cluster: Required. The name of the cluster the GKE service is running
+	// in. The cluster must be running in the same project as the trigger
+	// being created.
+	Cluster string `json:"cluster,omitempty"`
+
+	// Location: Required. The name of the Google Compute Engine in which
+	// the cluster resides, which can either be compute zone (for example,
+	// us-central1-a) for the zonal clusters or region (for example,
+	// us-central1) for regional clusters.
+	Location string `json:"location,omitempty"`
+
+	// Namespace: Required. The namespace the GKE service is running in.
+	Namespace string `json:"namespace,omitempty"`
+
+	// Path: Optional. The relative path on the GKE service the events
+	// should be sent to. The value must conform to the definition of a URI
+	// path segment (section 3.3 of RFC2396). Examples: "/route", "route",
+	// "route/subroute".
+	Path string `json:"path,omitempty"`
+
+	// Service: Required. Name of the GKE service.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cluster") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cluster") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GKE) MarshalJSON() ([]byte, error) {
+	type NoMethod GKE
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -724,7 +893,49 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListTriggersResponse: The response message for the ListTriggers
+// ListProvidersResponse: The response message for the `ListProviders`
+// method.
+type ListProvidersResponse struct {
+	// NextPageToken: A page token that can be sent to ListProviders to
+	// request the next page. If this is empty, then there are no more
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Providers: The requested providers, up to the number specified in
+	// `page_size`.
+	Providers []*Provider `json:"providers,omitempty"`
+
+	// Unreachable: Unreachable resources, if any.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListProvidersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListProvidersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListTriggersResponse: The response message for the `ListTriggers`
 // method.
 type ListTriggersResponse struct {
 	// NextPageToken: A page token that can be sent to ListTriggers to
@@ -870,17 +1081,17 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members` to
-// a single `role`. Members can be user accounts, service accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of permissions; each `role` can be an IAM predefined role or a
-// user-created custom role. For some types of Google Cloud resources, a
-// `binding` can also specify a `condition`, which is a logical
-// expression that allows access to a resource only if the expression
-// evaluates to `true`. A condition can add constraints based on
-// attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -907,9 +1118,15 @@ type Policy struct {
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -972,20 +1189,61 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Provider: A representation of the Provider resource.
+type Provider struct {
+	// DisplayName: Output only. Human friendly name for the Provider. For
+	// example "Cloud Storage".
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EventTypes: Output only. Event types for this provider.
+	EventTypes []*EventType `json:"eventTypes,omitempty"`
+
+	// Name: Output only. In
+	// `projects/{project}/locations/{location}/providers/{provider-id}`
+	// format.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Provider) MarshalJSON() ([]byte, error) {
+	type NoMethod Provider
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Pubsub: Represents a Pub/Sub transport.
 type Pubsub struct {
 	// Subscription: Output only. The name of the Pub/Sub subscription
-	// created and managed by Eventarc system as a transport for the event
+	// created and managed by Eventarc as a transport for the event
 	// delivery. Format:
 	// `projects/{PROJECT_ID}/subscriptions/{SUBSCRIPTION_NAME}`.
 	Subscription string `json:"subscription,omitempty"`
 
 	// Topic: Optional. The name of the Pub/Sub topic created and managed by
-	// Eventarc system as a transport for the event delivery. Format:
-	// `projects/{PROJECT_ID}/topics/{TOPIC_NAME}`. You may set an existing
+	// Eventarc as a transport for the event delivery. Format:
+	// `projects/{PROJECT_ID}/topics/{TOPIC_NAME}`. You can set an existing
 	// topic for triggers of the type
-	// `google.cloud.pubsub.topic.v1.messagePublished` only. The topic you
-	// provide here will not be deleted by Eventarc at trigger deletion.
+	// `google.cloud.pubsub.topic.v1.messagePublished`. The topic you
+	// provide here is not deleted by Eventarc at trigger deletion.
 	Topic string `json:"topic,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Subscription") to
@@ -1115,10 +1373,10 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Transport: Represents the transport intermediaries created for the
-// trigger in order to deliver events.
+// trigger to deliver events.
 type Transport struct {
-	// Pubsub: The Pub/Sub topic and subscription used by Eventarc as
-	// delivery intermediary.
+	// Pubsub: The Pub/Sub topic and subscription used by Eventarc as a
+	// transport intermediary.
 	Pubsub *Pubsub `json:"pubsub,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Pubsub") to
@@ -1154,13 +1412,13 @@ type Trigger struct {
 	Destination *Destination `json:"destination,omitempty"`
 
 	// Etag: Output only. This checksum is computed by the server based on
-	// the value of other fields, and may be sent only on create requests to
-	// ensure the client has an up-to-date value before proceeding.
+	// the value of other fields, and might be sent only on create requests
+	// to ensure that the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
 	// EventFilters: Required. null The list of filters that applies to
-	// event attributes. Only events that match all the provided filters
-	// will be sent to the destination.
+	// event attributes. Only events that match all the provided filters are
+	// sent to the destination.
 	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
 
 	// Labels: Optional. User labels attached to the triggers that can be
@@ -1168,31 +1426,31 @@ type Trigger struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Required. The resource name of the trigger. Must be unique
-	// within the location on the project and must be in
+	// within the location of the project and must be in
 	// `projects/{project}/locations/{location}/triggers/{trigger}` format.
 	Name string `json:"name,omitempty"`
 
 	// ServiceAccount: Optional. The IAM service account email associated
 	// with the trigger. The service account represents the identity of the
-	// trigger. The principal who calls this API must have
+	// trigger. The principal who calls this API must have the
 	// `iam.serviceAccounts.actAs` permission in the service account. See
 	// https://cloud.google.com/iam/docs/understanding-service-accounts?hl=en#sa_common
 	// for more information. For Cloud Run destinations, this service
 	// account is used to generate identity tokens when invoking the
 	// service. See
 	// https://cloud.google.com/run/docs/triggering/pubsub-push#create-service-account
-	// for information on how to invoke authenticated Cloud Run services. In
-	// order to create Audit Log triggers, the service account should also
-	// have `roles/eventarc.eventReceiver` IAM role.
+	// for information on how to invoke authenticated Cloud Run services. To
+	// create Audit Log triggers, the service account should also have the
+	// `roles/eventarc.eventReceiver` IAM role.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
-	// Transport: Optional. In order to deliver messages, Eventarc may use
-	// other GCP products as transport intermediary. This field contains a
+	// Transport: Optional. To deliver messages, Eventarc might use other
+	// GCP products as a transport intermediary. This field contains a
 	// reference to that transport intermediary. This information can be
 	// used for debugging purposes.
 	Transport *Transport `json:"transport,omitempty"`
 
-	// Uid: Output only. Server assigned unique identifier for the trigger.
+	// Uid: Output only. Server-assigned unique identifier for the trigger.
 	// The value is a UUID4 string and guaranteed to remain unchanged until
 	// the resource is deleted.
 	Uid string `json:"uid,omitempty"`
@@ -1284,7 +1542,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1456,7 +1714,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1582,6 +1840,475 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+// method id "eventarc.projects.locations.channelConnections.getIamPolicy":
+
+type ProjectsLocationsChannelConnectionsGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
+// set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
+func (r *ProjectsLocationsChannelConnectionsService) GetIamPolicy(resource string) *ProjectsLocationsChannelConnectionsGetIamPolicyCall {
+	c := &ProjectsLocationsChannelConnectionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsChannelConnectionsGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsChannelConnectionsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsChannelConnectionsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsChannelConnectionsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "eventarc.projects.locations.channelConnections.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/channelConnections/{channelConnectionsId}:getIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "eventarc.projects.locations.channelConnections.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "options.requestedPolicyVersion": {
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/channelConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "eventarc.projects.locations.channelConnections.setIamPolicy":
+
+type ProjectsLocationsChannelConnectionsSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
+func (r *ProjectsLocationsChannelConnectionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsChannelConnectionsSetIamPolicyCall {
+	c := &ProjectsLocationsChannelConnectionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsChannelConnectionsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsChannelConnectionsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsChannelConnectionsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsChannelConnectionsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsChannelConnectionsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChannelConnectionsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "eventarc.projects.locations.channelConnections.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsChannelConnectionsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/channelConnections/{channelConnectionsId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "eventarc.projects.locations.channelConnections.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/channelConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "eventarc.projects.locations.channelConnections.testIamPermissions":
+
+type ProjectsLocationsChannelConnectionsTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsChannelConnectionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsChannelConnectionsTestIamPermissionsCall {
+	c := &ProjectsLocationsChannelConnectionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsChannelConnectionsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsChannelConnectionsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsChannelConnectionsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsChannelConnectionsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsChannelConnectionsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChannelConnectionsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "eventarc.projects.locations.channelConnections.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsChannelConnectionsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/channelConnections/{channelConnectionsId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "eventarc.projects.locations.channelConnections.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/channelConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "eventarc.projects.locations.channels.getIamPolicy":
 
 type ProjectsLocationsChannelsGetIamPolicyCall struct {
@@ -1607,13 +2334,17 @@ func (r *ProjectsLocationsChannelsService) GetIamPolicy(resource string) *Projec
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsChannelsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsChannelsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -1657,7 +2388,7 @@ func (c *ProjectsLocationsChannelsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsChannelsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1728,7 +2459,7 @@ func (c *ProjectsLocationsChannelsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1804,7 +2535,7 @@ func (c *ProjectsLocationsChannelsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsChannelsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1953,7 +2684,7 @@ func (c *ProjectsLocationsChannelsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsChannelsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2104,7 +2835,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2247,7 +2978,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2392,7 +3123,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2568,7 +3299,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2695,6 +3426,374 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
+// method id "eventarc.projects.locations.providers.get":
+
+type ProjectsLocationsProvidersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a single Provider.
+//
+// - name: The name of the provider to get.
+func (r *ProjectsLocationsProvidersService) Get(name string) *ProjectsLocationsProvidersGetCall {
+	c := &ProjectsLocationsProvidersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProvidersGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvidersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProvidersGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProvidersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProvidersGetCall) Context(ctx context.Context) *ProjectsLocationsProvidersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProvidersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvidersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "eventarc.projects.locations.providers.get" call.
+// Exactly one of *Provider or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Provider.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvidersGetCall) Do(opts ...googleapi.CallOption) (*Provider, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Provider{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a single Provider.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/providers/{providersId}",
+	//   "httpMethod": "GET",
+	//   "id": "eventarc.projects.locations.providers.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the provider to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/providers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Provider"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "eventarc.projects.locations.providers.list":
+
+type ProjectsLocationsProvidersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List providers.
+//
+// - parent: The parent of the provider to get.
+func (r *ProjectsLocationsProvidersService) List(parent string) *ProjectsLocationsProvidersListCall {
+	c := &ProjectsLocationsProvidersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter field that
+// the list request will filter on.
+func (c *ProjectsLocationsProvidersListCall) Filter(filter string) *ProjectsLocationsProvidersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The sorting order of
+// the resources returned. Value should be a comma-separated list of
+// fields. The default sorting oder is ascending. To specify descending
+// order for a field, append a `desc` suffix; for example: `name desc,
+// _id`.
+func (c *ProjectsLocationsProvidersListCall) OrderBy(orderBy string) *ProjectsLocationsProvidersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of providers to return on each page.
+func (c *ProjectsLocationsProvidersListCall) PageSize(pageSize int64) *ProjectsLocationsProvidersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token;
+// provide the value from the `next_page_token` field in a previous
+// `ListProviders` call to retrieve the subsequent page. When
+// paginating, all other parameters provided to `ListProviders` must
+// match the call that provided the page token.
+func (c *ProjectsLocationsProvidersListCall) PageToken(pageToken string) *ProjectsLocationsProvidersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProvidersListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvidersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProvidersListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProvidersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProvidersListCall) Context(ctx context.Context) *ProjectsLocationsProvidersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProvidersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvidersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/providers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "eventarc.projects.locations.providers.list" call.
+// Exactly one of *ListProvidersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListProvidersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvidersListCall) Do(opts ...googleapi.CallOption) (*ListProvidersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListProvidersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List providers.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/providers",
+	//   "httpMethod": "GET",
+	//   "id": "eventarc.projects.locations.providers.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter field that the list request will filter on.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "The sorting order of the resources returned. Value should be a comma-separated list of fields. The default sorting oder is ascending. To specify descending order for a field, append a `desc` suffix; for example: `name desc, _id`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of providers to return on each page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The page token; provide the value from the `next_page_token` field in a previous `ListProviders` call to retrieve the subsequent page. When paginating, all other parameters provided to `ListProviders` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent of the provider to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/providers",
+	//   "response": {
+	//     "$ref": "ListProvidersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProvidersListCall) Pages(ctx context.Context, f func(*ListProvidersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "eventarc.projects.locations.triggers.create":
 
 type ProjectsLocationsTriggersCreateCall struct {
@@ -2724,8 +3823,7 @@ func (c *ProjectsLocationsTriggersCreateCall) TriggerId(triggerId string) *Proje
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not actually
-// post it.
+// set, validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsTriggersCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -2758,7 +3856,7 @@ func (c *ProjectsLocationsTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2843,7 +3941,7 @@ func (c *ProjectsLocationsTriggersCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not actually post it.",
+	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -2898,8 +3996,7 @@ func (c *ProjectsLocationsTriggersDeleteCall) Etag(etag string) *ProjectsLocatio
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not actually
-// post it.
+// set, validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsTriggersDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -2932,7 +4029,7 @@ func (c *ProjectsLocationsTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3017,7 +4114,7 @@ func (c *ProjectsLocationsTriggersDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not actually post it.",
+	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -3090,7 +4187,7 @@ func (c *ProjectsLocationsTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3204,13 +4301,17 @@ func (r *ProjectsLocationsTriggersService) GetIamPolicy(resource string) *Projec
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsTriggersGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsTriggersGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -3254,7 +4355,7 @@ func (c *ProjectsLocationsTriggersGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3325,7 +4426,7 @@ func (c *ProjectsLocationsTriggersGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3370,9 +4471,9 @@ func (r *ProjectsLocationsTriggersService) List(parent string) *ProjectsLocation
 }
 
 // OrderBy sets the optional parameter "orderBy": The sorting order of
-// the resources returned. Value should be a comma separated list of
-// fields. The default sorting oder is ascending. To specify descending
-// order for a field, append a ` desc` suffix; for example: `name desc,
+// the resources returned. Value should be a comma-separated list of
+// fields. The default sorting order is ascending. To specify descending
+// order for a field, append a `desc` suffix; for example: `name desc,
 // trigger_id`.
 func (c *ProjectsLocationsTriggersListCall) OrderBy(orderBy string) *ProjectsLocationsTriggersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -3433,7 +4534,7 @@ func (c *ProjectsLocationsTriggersListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3504,7 +4605,7 @@ func (c *ProjectsLocationsTriggersListCall) Do(opts ...googleapi.CallOption) (*L
 	//   ],
 	//   "parameters": {
 	//     "orderBy": {
-	//       "description": "The sorting order of the resources returned. Value should be a comma separated list of fields. The default sorting oder is ascending. To specify descending order for a field, append a ` desc` suffix; for example: `name desc, trigger_id`.",
+	//       "description": "The sorting order of the resources returned. Value should be a comma-separated list of fields. The default sorting order is ascending. To specify descending order for a field, append a `desc` suffix; for example: `name desc, trigger_id`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3573,7 +4674,7 @@ type ProjectsLocationsTriggersPatchCall struct {
 // Patch: Update a single trigger.
 //
 // - name: The resource name of the trigger. Must be unique within the
-//   location on the project and must be in
+//   location of the project and must be in
 //   `projects/{project}/locations/{location}/triggers/{trigger}`
 //   format.
 func (r *ProjectsLocationsTriggersService) Patch(name string, trigger *Trigger) *ProjectsLocationsTriggersPatchCall {
@@ -3592,17 +4693,16 @@ func (c *ProjectsLocationsTriggersPatchCall) AllowMissing(allowMissing bool) *Pr
 }
 
 // UpdateMask sets the optional parameter "updateMask": The fields to be
-// updated; only fields explicitly provided will be updated. If no field
-// mask is provided, all provided fields in the request will be updated.
-// To update all fields, provide a field mask of "*".
+// updated; only fields explicitly provided are updated. If no field
+// mask is provided, all provided fields in the request are updated. To
+// update all fields, provide a field mask of "*".
 func (c *ProjectsLocationsTriggersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTriggersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not actually
-// post it.
+// set, validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsTriggersPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -3635,7 +4735,7 @@ func (c *ProjectsLocationsTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3713,20 +4813,20 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of the trigger. Must be unique within the location on the project and must be in `projects/{project}/locations/{location}/triggers/{trigger}` format.",
+	//       "description": "Required. The resource name of the trigger. Must be unique within the location of the project and must be in `projects/{project}/locations/{location}/triggers/{trigger}` format.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The fields to be updated; only fields explicitly provided will be updated. If no field mask is provided, all provided fields in the request will be updated. To update all fields, provide a field mask of \"*\".",
+	//       "description": "The fields to be updated; only fields explicitly provided are updated. If no field mask is provided, all provided fields in the request are updated. To update all fields, provide a field mask of \"*\".",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not actually post it.",
+	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -3797,7 +4897,7 @@ func (c *ProjectsLocationsTriggersSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3946,7 +5046,7 @@ func (c *ProjectsLocationsTriggersTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -24,7 +24,7 @@
   "baseUrl": "https://logging.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Logging",
-  "description": "Writes log entries and manages your Cloud Logging configuration. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the documentation at https://cloud.google.com/logging/docs.",
+  "description": "Writes log entries and manages your Cloud Logging configuration.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/logging/docs/",
   "fullyEncodeReservedExpansion": true,
@@ -118,6 +118,64 @@
   "protocol": "rest",
   "resources": {
     "billingAccounts": {
+      "methods": {
+        "getCmekSettings": {
+          "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "flatPath": "v2/billingAccounts/{billingAccountsId}/cmekSettings",
+          "httpMethod": "GET",
+          "id": "logging.billingAccounts.getCmekSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+              "location": "path",
+              "pattern": "^billingAccounts/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}/cmekSettings",
+          "response": {
+            "$ref": "CmekSettings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+            "https://www.googleapis.com/auth/logging.admin",
+            "https://www.googleapis.com/auth/logging.read"
+          ]
+        },
+        "getSettings": {
+          "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "flatPath": "v2/billingAccounts/{billingAccountsId}/settings",
+          "httpMethod": "GET",
+          "id": "logging.billingAccounts.getSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+              "location": "path",
+              "pattern": "^billingAccounts/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}/settings",
+          "response": {
+            "$ref": "Settings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+            "https://www.googleapis.com/auth/logging.admin",
+            "https://www.googleapis.com/auth/logging.read"
+          ]
+        }
+      },
       "resources": {
         "buckets": {
           "methods": {
@@ -188,7 +246,7 @@
         "exclusions": {
           "methods": {
             "create": {
-              "description": "Creates a new exclusion in a specified parent resource. Only log entries belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.",
+              "description": "Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.",
               "flatPath": "v2/billingAccounts/{billingAccountsId}/exclusions",
               "httpMethod": "POST",
               "id": "logging.billingAccounts.exclusions.create",
@@ -217,7 +275,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes an exclusion.",
+              "description": "Deletes an exclusion in the _Default sink.",
               "flatPath": "v2/billingAccounts/{billingAccountsId}/exclusions/{exclusionsId}",
               "httpMethod": "DELETE",
               "id": "logging.billingAccounts.exclusions.delete",
@@ -243,7 +301,7 @@
               ]
             },
             "get": {
-              "description": "Gets the description of an exclusion.",
+              "description": "Gets the description of an exclusion in the _Default sink.",
               "flatPath": "v2/billingAccounts/{billingAccountsId}/exclusions/{exclusionsId}",
               "httpMethod": "GET",
               "id": "logging.billingAccounts.exclusions.get",
@@ -271,7 +329,7 @@
               ]
             },
             "list": {
-              "description": "Lists all the exclusions in a parent resource.",
+              "description": "Lists all the exclusions on the _Default sink in a parent resource.",
               "flatPath": "v2/billingAccounts/{billingAccountsId}/exclusions",
               "httpMethod": "GET",
               "id": "logging.billingAccounts.exclusions.list",
@@ -310,7 +368,7 @@
               ]
             },
             "patch": {
-              "description": "Changes one or more properties of an existing exclusion.",
+              "description": "Changes one or more properties of an existing exclusion in the _Default sink.",
               "flatPath": "v2/billingAccounts/{billingAccountsId}/exclusions/{exclusionsId}",
               "httpMethod": "PATCH",
               "id": "logging.billingAccounts.exclusions.patch",
@@ -1216,7 +1274,7 @@
     "exclusions": {
       "methods": {
         "create": {
-          "description": "Creates a new exclusion in a specified parent resource. Only log entries belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.",
+          "description": "Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.",
           "flatPath": "v2/{v2Id}/{v2Id1}/exclusions",
           "httpMethod": "POST",
           "id": "logging.exclusions.create",
@@ -1245,7 +1303,7 @@
           ]
         },
         "delete": {
-          "description": "Deletes an exclusion.",
+          "description": "Deletes an exclusion in the _Default sink.",
           "flatPath": "v2/{v2Id}/{v2Id1}/exclusions/{exclusionsId}",
           "httpMethod": "DELETE",
           "id": "logging.exclusions.delete",
@@ -1271,7 +1329,7 @@
           ]
         },
         "get": {
-          "description": "Gets the description of an exclusion.",
+          "description": "Gets the description of an exclusion in the _Default sink.",
           "flatPath": "v2/{v2Id}/{v2Id1}/exclusions/{exclusionsId}",
           "httpMethod": "GET",
           "id": "logging.exclusions.get",
@@ -1299,7 +1357,7 @@
           ]
         },
         "list": {
-          "description": "Lists all the exclusions in a parent resource.",
+          "description": "Lists all the exclusions on the _Default sink in a parent resource.",
           "flatPath": "v2/{v2Id}/{v2Id1}/exclusions",
           "httpMethod": "GET",
           "id": "logging.exclusions.list",
@@ -1338,7 +1396,7 @@
           ]
         },
         "patch": {
-          "description": "Changes one or more properties of an existing exclusion.",
+          "description": "Changes one or more properties of an existing exclusion in the _Default sink.",
           "flatPath": "v2/{v2Id}/{v2Id1}/exclusions/{exclusionsId}",
           "httpMethod": "PATCH",
           "id": "logging.exclusions.patch",
@@ -1375,11 +1433,69 @@
       }
     },
     "folders": {
+      "methods": {
+        "getCmekSettings": {
+          "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "flatPath": "v2/folders/{foldersId}/cmekSettings",
+          "httpMethod": "GET",
+          "id": "logging.folders.getCmekSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+              "location": "path",
+              "pattern": "^folders/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}/cmekSettings",
+          "response": {
+            "$ref": "CmekSettings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+            "https://www.googleapis.com/auth/logging.admin",
+            "https://www.googleapis.com/auth/logging.read"
+          ]
+        },
+        "getSettings": {
+          "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "flatPath": "v2/folders/{foldersId}/settings",
+          "httpMethod": "GET",
+          "id": "logging.folders.getSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+              "location": "path",
+              "pattern": "^folders/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}/settings",
+          "response": {
+            "$ref": "Settings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+            "https://www.googleapis.com/auth/logging.admin",
+            "https://www.googleapis.com/auth/logging.read"
+          ]
+        }
+      },
       "resources": {
         "exclusions": {
           "methods": {
             "create": {
-              "description": "Creates a new exclusion in a specified parent resource. Only log entries belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.",
+              "description": "Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.",
               "flatPath": "v2/folders/{foldersId}/exclusions",
               "httpMethod": "POST",
               "id": "logging.folders.exclusions.create",
@@ -1408,7 +1524,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes an exclusion.",
+              "description": "Deletes an exclusion in the _Default sink.",
               "flatPath": "v2/folders/{foldersId}/exclusions/{exclusionsId}",
               "httpMethod": "DELETE",
               "id": "logging.folders.exclusions.delete",
@@ -1434,7 +1550,7 @@
               ]
             },
             "get": {
-              "description": "Gets the description of an exclusion.",
+              "description": "Gets the description of an exclusion in the _Default sink.",
               "flatPath": "v2/folders/{foldersId}/exclusions/{exclusionsId}",
               "httpMethod": "GET",
               "id": "logging.folders.exclusions.get",
@@ -1462,7 +1578,7 @@
               ]
             },
             "list": {
-              "description": "Lists all the exclusions in a parent resource.",
+              "description": "Lists all the exclusions on the _Default sink in a parent resource.",
               "flatPath": "v2/folders/{foldersId}/exclusions",
               "httpMethod": "GET",
               "id": "logging.folders.exclusions.list",
@@ -1501,7 +1617,7 @@
               ]
             },
             "patch": {
-              "description": "Changes one or more properties of an existing exclusion.",
+              "description": "Changes one or more properties of an existing exclusion in the _Default sink.",
               "flatPath": "v2/folders/{foldersId}/exclusions/{exclusionsId}",
               "httpMethod": "PATCH",
               "id": "logging.folders.exclusions.patch",
@@ -3029,7 +3145,7 @@
     "organizations": {
       "methods": {
         "getCmekSettings": {
-          "description": "Gets the Logs Router CMEK settings for the given resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.See Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
           "flatPath": "v2/organizations/{organizationsId}/cmekSettings",
           "httpMethod": "GET",
           "id": "logging.organizations.getCmekSettings",
@@ -3038,7 +3154,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.",
+              "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
               "location": "path",
               "pattern": "^organizations/[^/]+$",
               "required": true,
@@ -3056,8 +3172,36 @@
             "https://www.googleapis.com/auth/logging.read"
           ]
         },
+        "getSettings": {
+          "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "flatPath": "v2/organizations/{organizationsId}/settings",
+          "httpMethod": "GET",
+          "id": "logging.organizations.getSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+              "location": "path",
+              "pattern": "^organizations/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}/settings",
+          "response": {
+            "$ref": "Settings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+            "https://www.googleapis.com/auth/logging.admin",
+            "https://www.googleapis.com/auth/logging.read"
+          ]
+        },
         "updateCmekSettings": {
-          "description": "Updates the Logs Router CMEK settings for the given resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled.See Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "description": "Updates the Log Router CMEK settings for the given resource.Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
           "flatPath": "v2/organizations/{organizationsId}/cmekSettings",
           "httpMethod": "PATCH",
           "id": "logging.organizations.updateCmekSettings",
@@ -3066,7 +3210,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Required. The resource name for the CMEK settings to update. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.",
+              "description": "Required. The resource name for the CMEK settings to update. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.",
               "location": "path",
               "pattern": "^organizations/[^/]+$",
               "required": true,
@@ -3090,13 +3234,48 @@
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/logging.admin"
           ]
+        },
+        "updateSettings": {
+          "description": "Updates the Log Router settings for the given resource.Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled. 4) location_id is not supported by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "flatPath": "v2/organizations/{organizationsId}/settings",
+          "httpMethod": "PATCH",
+          "id": "logging.organizations.updateSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.",
+              "location": "path",
+              "pattern": "^organizations/[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "updateMask": {
+              "description": "Optional. Field mask identifying which fields from settings should be updated. A field will be overwritten if and only if it is in the update mask. Output only fields cannot be updated.See FieldMask for more information.For example: \"updateMask=kmsKeyName\"",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}/settings",
+          "request": {
+            "$ref": "Settings"
+          },
+          "response": {
+            "$ref": "Settings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/logging.admin"
+          ]
         }
       },
       "resources": {
         "exclusions": {
           "methods": {
             "create": {
-              "description": "Creates a new exclusion in a specified parent resource. Only log entries belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.",
+              "description": "Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.",
               "flatPath": "v2/organizations/{organizationsId}/exclusions",
               "httpMethod": "POST",
               "id": "logging.organizations.exclusions.create",
@@ -3125,7 +3304,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes an exclusion.",
+              "description": "Deletes an exclusion in the _Default sink.",
               "flatPath": "v2/organizations/{organizationsId}/exclusions/{exclusionsId}",
               "httpMethod": "DELETE",
               "id": "logging.organizations.exclusions.delete",
@@ -3151,7 +3330,7 @@
               ]
             },
             "get": {
-              "description": "Gets the description of an exclusion.",
+              "description": "Gets the description of an exclusion in the _Default sink.",
               "flatPath": "v2/organizations/{organizationsId}/exclusions/{exclusionsId}",
               "httpMethod": "GET",
               "id": "logging.organizations.exclusions.get",
@@ -3179,7 +3358,7 @@
               ]
             },
             "list": {
-              "description": "Lists all the exclusions in a parent resource.",
+              "description": "Lists all the exclusions on the _Default sink in a parent resource.",
               "flatPath": "v2/organizations/{organizationsId}/exclusions",
               "httpMethod": "GET",
               "id": "logging.organizations.exclusions.list",
@@ -3218,7 +3397,7 @@
               ]
             },
             "patch": {
-              "description": "Changes one or more properties of an existing exclusion.",
+              "description": "Changes one or more properties of an existing exclusion in the _Default sink.",
               "flatPath": "v2/organizations/{organizationsId}/exclusions/{exclusionsId}",
               "httpMethod": "PATCH",
               "id": "logging.organizations.exclusions.patch",
@@ -4089,11 +4268,69 @@
       }
     },
     "projects": {
+      "methods": {
+        "getCmekSettings": {
+          "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "flatPath": "v2/projects/{projectsId}/cmekSettings",
+          "httpMethod": "GET",
+          "id": "logging.projects.getCmekSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+              "location": "path",
+              "pattern": "^projects/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}/cmekSettings",
+          "response": {
+            "$ref": "CmekSettings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+            "https://www.googleapis.com/auth/logging.admin",
+            "https://www.googleapis.com/auth/logging.read"
+          ]
+        },
+        "getSettings": {
+          "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "flatPath": "v2/projects/{projectsId}/settings",
+          "httpMethod": "GET",
+          "id": "logging.projects.getSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+              "location": "path",
+              "pattern": "^projects/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}/settings",
+          "response": {
+            "$ref": "Settings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+            "https://www.googleapis.com/auth/logging.admin",
+            "https://www.googleapis.com/auth/logging.read"
+          ]
+        }
+      },
       "resources": {
         "exclusions": {
           "methods": {
             "create": {
-              "description": "Creates a new exclusion in a specified parent resource. Only log entries belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.",
+              "description": "Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.",
               "flatPath": "v2/projects/{projectsId}/exclusions",
               "httpMethod": "POST",
               "id": "logging.projects.exclusions.create",
@@ -4122,7 +4359,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes an exclusion.",
+              "description": "Deletes an exclusion in the _Default sink.",
               "flatPath": "v2/projects/{projectsId}/exclusions/{exclusionsId}",
               "httpMethod": "DELETE",
               "id": "logging.projects.exclusions.delete",
@@ -4148,7 +4385,7 @@
               ]
             },
             "get": {
-              "description": "Gets the description of an exclusion.",
+              "description": "Gets the description of an exclusion in the _Default sink.",
               "flatPath": "v2/projects/{projectsId}/exclusions/{exclusionsId}",
               "httpMethod": "GET",
               "id": "logging.projects.exclusions.get",
@@ -4176,7 +4413,7 @@
               ]
             },
             "list": {
-              "description": "Lists all the exclusions in a parent resource.",
+              "description": "Lists all the exclusions on the _Default sink in a parent resource.",
               "flatPath": "v2/projects/{projectsId}/exclusions",
               "httpMethod": "GET",
               "id": "logging.projects.exclusions.list",
@@ -4215,7 +4452,7 @@
               ]
             },
             "patch": {
-              "description": "Changes one or more properties of an existing exclusion.",
+              "description": "Changes one or more properties of an existing exclusion in the _Default sink.",
               "flatPath": "v2/projects/{projectsId}/exclusions/{exclusionsId}",
               "httpMethod": "PATCH",
               "id": "logging.projects.exclusions.patch",
@@ -5417,7 +5654,7 @@
     "v2": {
       "methods": {
         "getCmekSettings": {
-          "description": "Gets the Logs Router CMEK settings for the given resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.See Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
           "flatPath": "v2/{v2Id}/{v2Id1}/cmekSettings",
           "httpMethod": "GET",
           "id": "logging.getCmekSettings",
@@ -5426,7 +5663,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.",
+              "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
               "location": "path",
               "pattern": "^[^/]+/[^/]+$",
               "required": true,
@@ -5444,8 +5681,36 @@
             "https://www.googleapis.com/auth/logging.read"
           ]
         },
+        "getSettings": {
+          "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "flatPath": "v2/{v2Id}/{v2Id1}/settings",
+          "httpMethod": "GET",
+          "id": "logging.getSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}/settings",
+          "response": {
+            "$ref": "Settings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+            "https://www.googleapis.com/auth/logging.admin",
+            "https://www.googleapis.com/auth/logging.read"
+          ]
+        },
         "updateCmekSettings": {
-          "description": "Updates the Logs Router CMEK settings for the given resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled.See Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "description": "Updates the Log Router CMEK settings for the given resource.Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
           "flatPath": "v2/{v2Id}/{v2Id1}/cmekSettings",
           "httpMethod": "PATCH",
           "id": "logging.updateCmekSettings",
@@ -5454,7 +5719,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Required. The resource name for the CMEK settings to update. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.",
+              "description": "Required. The resource name for the CMEK settings to update. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.",
               "location": "path",
               "pattern": "^[^/]+/[^/]+$",
               "required": true,
@@ -5478,11 +5743,46 @@
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/logging.admin"
           ]
+        },
+        "updateSettings": {
+          "description": "Updates the Log Router settings for the given resource.Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled. 4) location_id is not supported by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "flatPath": "v2/{v2Id}/{v2Id1}/settings",
+          "httpMethod": "PATCH",
+          "id": "logging.updateSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "updateMask": {
+              "description": "Optional. Field mask identifying which fields from settings should be updated. A field will be overwritten if and only if it is in the update mask. Output only fields cannot be updated.See FieldMask for more information.For example: \"updateMask=kmsKeyName\"",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}/settings",
+          "request": {
+            "$ref": "Settings"
+          },
+          "response": {
+            "$ref": "Settings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/logging.admin"
+          ]
         }
       }
     }
   },
-  "revision": "20210922",
+  "revision": "20220127",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BigQueryOptions": {
@@ -5527,11 +5827,11 @@
       "type": "object"
     },
     "CmekSettings": {
-      "description": "Describes the customer-managed encryption key (CMEK) settings associated with a project, folder, organization, billing account, or flexible resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.See Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+      "description": "Describes the customer-managed encryption key (CMEK) settings associated with a project, folder, organization, billing account, or flexible resource.Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
       "id": "CmekSettings",
       "properties": {
         "kmsKeyName": {
-          "description": "The resource name for the configured Cloud KMS key.KMS key name format: \"projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoKeys/[KEY]\" For example:\"projects/my-project/locations/us-central1/keyRings/my-ring/cryptoKeys/my-key\"To enable CMEK for the Logs Router, set this field to a valid kms_key_name for which the associated service account has the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key.The Cloud KMS key used by the Log Router can be updated by changing the kms_key_name to a new valid key name. Encryption operations that are in progress will be completed with the key that was in use when they started. Decryption operations will be completed using the key that was used at the time of encryption unless access to that key has been revoked.To disable CMEK for the Logs Router, set this field to an empty string.See Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "description": "The resource name for the configured Cloud KMS key.KMS key name format: \"projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoKeys/[KEY]\" For example:\"projects/my-project/locations/us-central1/keyRings/my-ring/cryptoKeys/my-key\"To enable CMEK for the Log Router, set this field to a valid kms_key_name for which the associated service account has the required cloudkms.cryptoKeyEncrypterDecrypter roles assigned for the key.The Cloud KMS key used by the Log Router can be updated by changing the kms_key_name to a new valid key name or disabled by setting the key name to an empty string. Encryption operations that are in progress will be completed with the key that was in use when they started. Decryption operations will be completed using the key that was used at the time of encryption unless access to that key has been revoked.To disable CMEK for the Log Router, set this field to an empty string.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
           "type": "string"
         },
         "name": {
@@ -5540,7 +5840,7 @@
           "type": "string"
         },
         "serviceAccountId": {
-          "description": "Output only. The service account that will be used by the Logs Router to access your Cloud KMS key.Before enabling CMEK for Logs Router, you must first assign the role roles/cloudkms.cryptoKeyEncrypterDecrypter to the service account that the Logs Router will use to access your Cloud KMS key. Use GetCmekSettings to obtain the service account ID.See Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+          "description": "Output only. The service account that will be used by the Log Router to access your Cloud KMS key.Before enabling CMEK for Log Router, you must first assign the cloudkms.cryptoKeyEncrypterDecrypter role to the service account that the Log Router will use to access your Cloud KMS key. Use GetCmekSettings to obtain the service account ID.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
           "readOnly": true,
           "type": "string"
         }
@@ -6056,6 +6356,10 @@
       "description": "Describes a repository in which log entries are stored.",
       "id": "LogBucket",
       "properties": {
+        "cmekSettings": {
+          "$ref": "CmekSettings",
+          "description": "The CMEK settings of the log bucket. If present, new log entries written to this log bucket are encrypted using the CMEK key provided in this configuration. If a log bucket has CMEK settings, the CMEK settings cannot be disabled later by updating the log bucket. Changing the KMS key is allowed."
+        },
         "createTime": {
           "description": "Output only. The creation timestamp of the bucket. This is not set for any of the default buckets.",
           "format": "google-datetime",
@@ -6076,7 +6380,7 @@
           "enumDescriptions": [
             "Unspecified state. This is only used/useful for distinguishing unset values.",
             "The normal and active state.",
-            "The bucket has been marked for deletion by the user."
+            "The resource has been marked for deletion by the user. For some resources (e.g. buckets), this can be reversed by an un-delete operation."
           ],
           "readOnly": true,
           "type": "string"
@@ -6267,7 +6571,7 @@
       "type": "object"
     },
     "LogExclusion": {
-      "description": "Specifies a set of log entries that are not to be stored in Cloud Logging. If your GCP resource receives a large volume of log entries, you can use exclusions to reduce your chargeable logs. Exclusions are processed after log sinks, so you can export log entries before they are excluded. Note that organization-level and folder-level exclusions don't apply to child resources, and that you can't exclude audit log entries.",
+      "description": "Specifies a set of log entries that are filtered out by a sink. If your Google Cloud resource receives a large volume of log entries, you can use exclusions to reduce your chargeable logs. Note that exclusions on organization-level and folder-level sinks don't apply to child resources. Note also that you cannot modify the _Required sink or exclude logs from it.",
       "id": "LogExclusion",
       "properties": {
         "createTime": {
@@ -6385,7 +6689,7 @@
           "description": "Optional. The metric descriptor associated with the logs-based metric. If unspecified, it uses a default metric descriptor with a DELTA metric kind, INT64 value type, with no labels and a unit of \"1\". Such a metric counts the number of log entries matching the filter expression.The name, type, and description fields in the metric_descriptor are output only, and is constructed using the name and description field in the LogMetric.To create a logs-based metric that records a distribution of log values, a DELTA metric kind with a DISTRIBUTION value type must be used along with a value_extractor expression in the LogMetric.Each label in the metric descriptor must have a matching label name as the key and an extractor expression as the value in the label_extractors map.The metric_kind and value_type fields in the metric_descriptor cannot be updated once initially configured. New labels can be added in the metric_descriptor, but existing labels cannot be modified except for their description."
         },
         "name": {
-          "description": "Required. The client-assigned metric identifier. Examples: \"error_count\", \"nginx/requests\".Metric identifiers are limited to 100 characters and can include only the following characters: A-Z, a-z, 0-9, and the special characters _-.,+!*',()%/. The forward-slash character (/) denotes a hierarchy of name pieces, and it cannot be the first character of the name.The metric identifier in this field must not be URL-encoded (https://en.wikipedia.org/wiki/Percent-encoding). However, when the metric identifier appears as the [METRIC_ID] part of a metric_name API parameter, then the metric identifier must be URL-encoded. Example: \"projects/my-project/metrics/nginx%2Frequests\".",
+          "description": "Required. The client-assigned metric identifier. Examples: \"error_count\", \"nginx/requests\".Metric identifiers are limited to 100 characters and can include only the following characters: A-Z, a-z, 0-9, and the special characters _-.,+!*',()%/. The forward-slash character (/) denotes a hierarchy of name pieces, and it cannot be the first character of the name.This field is the [METRIC_ID] part of a metric resource name in the format \"projects/PROJECT_ID/metrics/METRIC_ID\". Example: If the resource name of a metric is \"projects/my-project/metrics/nginx%2Frequests\", this field's value is \"nginx/requests\".",
           "type": "string"
         },
         "updateTime": {
@@ -6479,7 +6783,7 @@
           "type": "string"
         },
         "writerIdentity": {
-          "description": "Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is set by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.",
+          "description": "Output only. An IAM identity—a service account or group—under which Cloud Logging writes the exported log entries to the sink's destination. This field is set by sinks.create and sinks.update based on the value of unique_writer_identity in those methods.Until you grant this identity write-access to the destination, log entry exports from this sink will fail. For more information, see Granting Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource). Consult the destination service's documentation to determine the appropriate IAM roles to assign to the identity.Sinks that have a destination that is a log bucket in the same project as the sink do not have a writer_identity and no additional permissions are required.",
           "readOnly": true,
           "type": "string"
         }
@@ -6666,7 +6970,7 @@
       "type": "object"
     },
     "MonitoredResource": {
-      "description": "An object representing a resource that can be used for monitoring, logging, billing, or other purposes. Examples include virtual machine instances, databases, and storage devices such as disks. The type field identifies a MonitoredResourceDescriptor object that describes the resource's schema. Information in the labels field identifies the actual resource and its attributes according to the schema. For example, a particular Compute Engine VM instance could be represented by the following object, because the MonitoredResourceDescriptor for \"gce_instance\" has labels \"instance_id\" and \"zone\": { \"type\": \"gce_instance\", \"labels\": { \"instance_id\": \"12345678901234\", \"zone\": \"us-central1-a\" }} ",
+      "description": "An object representing a resource that can be used for monitoring, logging, billing, or other purposes. Examples include virtual machine instances, databases, and storage devices such as disks. The type field identifies a MonitoredResourceDescriptor object that describes the resource's schema. Information in the labels field identifies the actual resource and its attributes according to the schema. For example, a particular Compute Engine VM instance could be represented by the following object, because the MonitoredResourceDescriptor for \"gce_instance\" has labels \"project_id\", \"instance_id\" and \"zone\": { \"type\": \"gce_instance\", \"labels\": { \"project_id\": \"my-project\", \"instance_id\": \"12345678901234\", \"zone\": \"us-central1-a\" }} ",
       "id": "MonitoredResource",
       "properties": {
         "labels": {
@@ -6677,7 +6981,7 @@
           "type": "object"
         },
         "type": {
-          "description": "Required. The monitored resource type. This field must match the type field of a MonitoredResourceDescriptor object. For example, the type of a Compute Engine VM instance is gce_instance.",
+          "description": "Required. The monitored resource type. This field must match the type field of a MonitoredResourceDescriptor object. For example, the type of a Compute Engine VM instance is gce_instance. Some descriptors include the service name in the type; for example, the type of a Datastream stream is datastream.googleapis.com/Stream.",
           "type": "string"
         }
       },
@@ -6944,6 +7248,26 @@
         "wasLoadingRequest": {
           "description": "Whether this was a loading request for the instance.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "Settings": {
+      "description": "Describes the settings associated with a project, folder, organization, billing account, or flexible resource.",
+      "id": "Settings",
+      "properties": {
+        "disableDefaultSink": {
+          "description": "Optional. If set to true, the _Default sink in newly created projects and folders will created in a disabled state. This can be used to automatically disable log ingestion if there is already an aggregated sink configured in the hierarchy. The _Default sink can be re-enabled manually if needed.",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Output only. The resource name of the settings.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "storageLocation": {
+          "description": "Optional. The Cloud region that will be used for _Default and _Required log buckets for newly created projects and folders. For example europe-west1. This setting does not affect the location of custom log buckets.",
+          "type": "string"
         }
       },
       "type": "object"

@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -120,6 +120,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Operations = NewOperationsService(s)
+	s.Projects = NewProjectsService(s)
 	s.Speech = NewSpeechService(s)
 	return s, nil
 }
@@ -130,6 +131,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Operations *OperationsService
+
+	Projects *ProjectsService
 
 	Speech *SpeechService
 }
@@ -150,6 +153,51 @@ type OperationsService struct {
 	s *Service
 }
 
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	rs.Locations = NewProjectsLocationsService(s)
+	return rs
+}
+
+type ProjectsService struct {
+	s *Service
+
+	Locations *ProjectsLocationsService
+}
+
+func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
+	rs := &ProjectsLocationsService{s: s}
+	rs.CustomClasses = NewProjectsLocationsCustomClassesService(s)
+	rs.PhraseSets = NewProjectsLocationsPhraseSetsService(s)
+	return rs
+}
+
+type ProjectsLocationsService struct {
+	s *Service
+
+	CustomClasses *ProjectsLocationsCustomClassesService
+
+	PhraseSets *ProjectsLocationsPhraseSetsService
+}
+
+func NewProjectsLocationsCustomClassesService(s *Service) *ProjectsLocationsCustomClassesService {
+	rs := &ProjectsLocationsCustomClassesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCustomClassesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsPhraseSetsService(s *Service) *ProjectsLocationsPhraseSetsService {
+	rs := &ProjectsLocationsPhraseSetsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPhraseSetsService struct {
+	s *Service
+}
+
 func NewSpeechService(s *Service) *SpeechService {
 	rs := &SpeechService{s: s}
 	return rs
@@ -157,6 +205,196 @@ func NewSpeechService(s *Service) *SpeechService {
 
 type SpeechService struct {
 	s *Service
+}
+
+// ClassItem: An item of the class.
+type ClassItem struct {
+	// Value: The class item's value.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClassItem) MarshalJSON() ([]byte, error) {
+	type NoMethod ClassItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateCustomClassRequest: Message sent by the client for the
+// `CreateCustomClass` method.
+type CreateCustomClassRequest struct {
+	// CustomClass: Required. The custom class to create.
+	CustomClass *CustomClass `json:"customClass,omitempty"`
+
+	// CustomClassId: Required. The ID to use for the custom class, which
+	// will become the final component of the custom class' resource name.
+	// This value should be 4-63 characters, and valid characters are
+	// /a-z-/.
+	CustomClassId string `json:"customClassId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomClass") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomClass") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateCustomClassRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateCustomClassRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreatePhraseSetRequest: Message sent by the client for the
+// `CreatePhraseSet` method.
+type CreatePhraseSetRequest struct {
+	// PhraseSet: Required. The phrase set to create.
+	PhraseSet *PhraseSet `json:"phraseSet,omitempty"`
+
+	// PhraseSetId: Required. The ID to use for the phrase set, which will
+	// become the final component of the phrase set's resource name. This
+	// value should be 4-63 characters, and valid characters are /a-z-/.
+	PhraseSetId string `json:"phraseSetId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PhraseSet") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PhraseSet") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreatePhraseSetRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreatePhraseSetRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomClass: A set of words or phrases that represents a common
+// concept likely to appear in your audio, for example a list of
+// passenger ship names. CustomClass items can be substituted into
+// placeholders that you set in PhraseSet phrases.
+type CustomClass struct {
+	// CustomClassId: If this custom class is a resource, the
+	// custom_class_id is the resource id of the CustomClass. Case
+	// sensitive.
+	CustomClassId string `json:"customClassId,omitempty"`
+
+	// Items: A collection of class items.
+	Items []*ClassItem `json:"items,omitempty"`
+
+	// Name: The resource name of the custom class.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomClassId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomClassId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomClass) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomClass
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// ListCustomClassesResponse: Message returned to the client by the
+// `ListCustomClasses` method.
+type ListCustomClassesResponse struct {
+	// CustomClasses: The custom classes.
+	CustomClasses []*CustomClass `json:"customClasses,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomClasses") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomClasses") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCustomClassesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCustomClassesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for
@@ -192,6 +430,44 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPhraseSetResponse: Message returned to the client by the
+// `ListPhraseSet` method.
+type ListPhraseSetResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PhraseSets: The phrase set.
+	PhraseSets []*PhraseSet `json:"phraseSets,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPhraseSetResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPhraseSetResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -283,6 +559,13 @@ func (s *LongRunningRecognizeRequest) MarshalJSON() ([]byte, error) {
 // in the `result.response` field of the `Operation` returned by the
 // `GetOperation` call of the `google::longrunning::Operations` service.
 type LongRunningRecognizeResponse struct {
+	// OutputConfig: Original output config if present in the request.
+	OutputConfig *TranscriptOutputConfig `json:"outputConfig,omitempty"`
+
+	// OutputError: If the transcript output fails this field contains the
+	// relevant error.
+	OutputError *Status `json:"outputError,omitempty"`
+
 	// Results: Sequential list of transcription results corresponding to
 	// sequential portions of audio.
 	Results []*SpeechRecognitionResult `json:"results,omitempty"`
@@ -291,7 +574,7 @@ type LongRunningRecognizeResponse struct {
 	// corresponding request.
 	TotalBilledTime string `json:"totalBilledTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Results") to
+	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -299,10 +582,10 @@ type LongRunningRecognizeResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Results") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "OutputConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -376,6 +659,145 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Phrase: A phrases containing words and phrase "hints" so that the
+// speech recognition is more likely to recognize them. This can be used
+// to improve the accuracy for specific words and phrases, for example,
+// if specific commands are typically spoken by the user. This can also
+// be used to add additional words to the vocabulary of the recognizer.
+// See usage limits
+// (https://cloud.google.com/speech-to-text/quotas#content). List items
+// can also include pre-built or custom classes containing groups of
+// words that represent common concepts that occur in natural language.
+// For example, rather than providing a phrase hint for every month of
+// the year (e.g. "i was born in january", "i was born in febuary",
+// ...), use the pre-built `$MONTH` class improves the likelihood of
+// correctly transcribing audio that includes months (e.g. "i was born
+// in $month"). To refer to pre-built classes, use the class' symbol
+// prepended with `$` e.g. `$MONTH`. To refer to custom classes that
+// were defined inline in the request, set the class's `custom_class_id`
+// to a string unique to all class resources and inline classes. Then
+// use the class' id wrapped in $`{...}` e.g. "${my-months}". To refer
+// to custom classes resources, use the class' id wrapped in `${}` (e.g.
+// `${my-months}`). Speech-to-Text supports three locations: `global`,
+// `us` (US North America), and `eu` (Europe). If you are calling the
+// `speech.googleapis.com` endpoint, use the `global` location. To
+// specify a region, use a regional endpoint
+// (/speech-to-text/docs/endpoints) with matching `us` or `eu` location
+// value.
+type Phrase struct {
+	// Boost: Hint Boost. Overrides the boost set at the phrase set level.
+	// Positive value will increase the probability that a specific phrase
+	// will be recognized over other similar sounding phrases. The higher
+	// the boost, the higher the chance of false positive recognition as
+	// well. Negative boost will simply be ignored. Though `boost` can
+	// accept a wide range of positive values, most use cases are best
+	// served with values between 0 and 20. We recommend using a binary
+	// search approach to finding the optimal value for your use case.
+	// Speech recognition will skip PhraseSets with a boost value of 0.
+	Boost float64 `json:"boost,omitempty"`
+
+	// Value: The phrase itself.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Boost") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Boost") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Phrase) MarshalJSON() ([]byte, error) {
+	type NoMethod Phrase
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Phrase) UnmarshalJSON(data []byte) error {
+	type NoMethod Phrase
+	var s1 struct {
+		Boost gensupport.JSONFloat64 `json:"boost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Boost = float64(s1.Boost)
+	return nil
+}
+
+// PhraseSet: Provides "hints" to the speech recognizer to favor
+// specific words and phrases in the results.
+type PhraseSet struct {
+	// Boost: Hint Boost. Positive value will increase the probability that
+	// a specific phrase will be recognized over other similar sounding
+	// phrases. The higher the boost, the higher the chance of false
+	// positive recognition as well. Negative boost values would correspond
+	// to anti-biasing. Anti-biasing is not enabled, so negative boost will
+	// simply be ignored. Though `boost` can accept a wide range of positive
+	// values, most use cases are best served with values between 0
+	// (exclusive) and 20. We recommend using a binary search approach to
+	// finding the optimal value for your use case. Speech recognition will
+	// skip PhraseSets with a boost value of 0.
+	Boost float64 `json:"boost,omitempty"`
+
+	// Name: The resource name of the phrase set.
+	Name string `json:"name,omitempty"`
+
+	// Phrases: A list of word and phrases.
+	Phrases []*Phrase `json:"phrases,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Boost") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Boost") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PhraseSet) MarshalJSON() ([]byte, error) {
+	type NoMethod PhraseSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *PhraseSet) UnmarshalJSON(data []byte) error {
+	type NoMethod PhraseSet
+	var s1 struct {
+		Boost gensupport.JSONFloat64 `json:"boost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Boost = float64(s1.Boost)
+	return nil
+}
+
 // RecognitionAudio: Contains audio data in the encoding specified in
 // the `RecognitionConfig`. Either `content` or `uri` must be supplied.
 // Supplying both or neither returns google.rpc.Code.INVALID_ARGUMENT.
@@ -423,6 +845,26 @@ func (s *RecognitionAudio) MarshalJSON() ([]byte, error) {
 // RecognitionConfig: Provides information to the recognizer that
 // specifies how to process the request.
 type RecognitionConfig struct {
+	// Adaptation: Speech adaptation configuration improves the accuracy of
+	// speech recognition. For more information, see the speech adaptation
+	// (https://cloud.google.com/speech-to-text/docs/adaptation)
+	// documentation. When speech adaptation is set it supersedes the
+	// `speech_contexts` field.
+	Adaptation *SpeechAdaptation `json:"adaptation,omitempty"`
+
+	// AlternativeLanguageCodes: A list of up to 3 additional BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tags, listing
+	// possible alternative languages of the supplied audio. See Language
+	// Support (https://cloud.google.com/speech-to-text/docs/languages) for
+	// a list of the currently supported language codes. If alternative
+	// languages are listed, recognition result will contain recognition in
+	// the most likely language detected including the main language_code.
+	// The recognition result will include the language tag of the language
+	// detected in the audio. Note: This feature is only supported for Voice
+	// Command and Voice Search use cases and performance may vary for other
+	// use cases (e.g., phone call transcription).
+	AlternativeLanguageCodes []string `json:"alternativeLanguageCodes,omitempty"`
+
 	// AudioChannelCount: The number of channels in the input audio data.
 	// ONLY set this for MULTI-CHANNEL recognition. Valid values for
 	// LINEAR16 and FLAC are `1`-`8`. Valid values for OGG_OPUS are
@@ -459,6 +901,28 @@ type RecognitionConfig struct {
 	// request is billed cumulatively for all channels recognized:
 	// `audio_channel_count` multiplied by the length of the audio.
 	EnableSeparateRecognitionPerChannel bool `json:"enableSeparateRecognitionPerChannel,omitempty"`
+
+	// EnableSpokenEmojis: The spoken emoji behavior for the call If not
+	// set, uses default behavior based on model of choice If 'true', adds
+	// spoken emoji formatting for the request. This will replace spoken
+	// emojis with the corresponding Unicode symbols in the final
+	// transcript. If 'false', spoken emojis are not replaced.
+	EnableSpokenEmojis bool `json:"enableSpokenEmojis,omitempty"`
+
+	// EnableSpokenPunctuation: The spoken punctuation behavior for the call
+	// If not set, uses default behavior based on model of choice e.g.
+	// command_and_search will enable spoken punctuation by default If
+	// 'true', replaces spoken punctuation with the corresponding symbols in
+	// the request. For example, "how are you question mark" becomes "how
+	// are you?". See
+	// https://cloud.google.com/speech-to-text/docs/spoken-punctuation for
+	// support. If 'false', spoken punctuation is not replaced.
+	EnableSpokenPunctuation bool `json:"enableSpokenPunctuation,omitempty"`
+
+	// EnableWordConfidence: If `true`, the top result includes a list of
+	// words and the confidence for those words. If `false`, no word-level
+	// confidence information is returned. The default is `false`.
+	EnableWordConfidence bool `json:"enableWordConfidence,omitempty"`
 
 	// EnableWordTimeOffsets: If `true`, the top result includes a list of
 	// words and the start and end time offsets (timestamps) for those
@@ -502,6 +966,9 @@ type RecognitionConfig struct {
 	// words, each RTP header is replaced with a single byte containing the
 	// block length. Only Speex wideband is supported. `sample_rate_hertz`
 	// must be 16000.
+	//   "WEBM_OPUS" - Opus encoded audio frames in WebM container
+	// ([OggOpus](https://wiki.xiph.org/OggOpus)). `sample_rate_hertz` must
+	// be one of 8000, 12000, 16000, 24000, or 48000.
 	Encoding string `json:"encoding,omitempty"`
 
 	// LanguageCode: Required. The language of the supplied audio as a
@@ -535,7 +1002,10 @@ type RecognitionConfig struct {
 	// This is a premium model that costs more than the standard rate.
 	// default Best for audio that is not one of the specific audio models.
 	// For example, long-form audio. Ideally the audio is high-fidelity,
-	// recorded at a 16khz or greater sampling rate.
+	// recorded at a 16khz or greater sampling rate. medical_conversation
+	// Best for audio that originated from a conversation between a medical
+	// provider and patient. medical_dictation Best for audio that
+	// originated from dictation notes by a medical provider.
 	Model string `json:"model,omitempty"`
 
 	// ProfanityFilter: If set to `true`, the server will attempt to filter
@@ -567,21 +1037,20 @@ type RecognitionConfig struct {
 	// model.
 	UseEnhanced bool `json:"useEnhanced,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AudioChannelCount")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Adaptation") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AudioChannelCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Adaptation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -816,9 +1285,60 @@ func (s *SpeakerDiarizationConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SpeechAdaptation: Speech adaptation configuration.
+type SpeechAdaptation struct {
+	// CustomClasses: A collection of custom classes. To specify the classes
+	// inline, leave the class' `name` blank and fill in the rest of its
+	// fields, giving it a unique `custom_class_id`. Refer to the inline
+	// defined class in phrase hints by its `custom_class_id`.
+	CustomClasses []*CustomClass `json:"customClasses,omitempty"`
+
+	// PhraseSetReferences: A collection of phrase set resource names to
+	// use.
+	PhraseSetReferences []string `json:"phraseSetReferences,omitempty"`
+
+	// PhraseSets: A collection of phrase sets. To specify the hints inline,
+	// leave the phrase set's `name` blank and fill in the rest of its
+	// fields. Any phrase set can use any custom class.
+	PhraseSets []*PhraseSet `json:"phraseSets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomClasses") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomClasses") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpeechAdaptation) MarshalJSON() ([]byte, error) {
+	type NoMethod SpeechAdaptation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SpeechContext: Provides "hints" to the speech recognizer to favor
 // specific words and phrases in the results.
 type SpeechContext struct {
+	// Boost: Hint Boost. Positive value will increase the probability that
+	// a specific phrase will be recognized over other similar sounding
+	// phrases. The higher the boost, the higher the chance of false
+	// positive recognition as well. Negative boost values would correspond
+	// to anti-biasing. Anti-biasing is not enabled, so negative boost will
+	// simply be ignored. Though `boost` can accept a wide range of positive
+	// values, most use cases are best served with values between 0 and 20.
+	// We recommend using a binary search approach to finding the optimal
+	// value for your use case.
+	Boost float64 `json:"boost,omitempty"`
+
 	// Phrases: A list of strings containing words and phrases "hints" so
 	// that the speech recognition is more likely to recognize them. This
 	// can be used to improve the accuracy for specific words and phrases,
@@ -833,7 +1353,7 @@ type SpeechContext struct {
 	// includes months.
 	Phrases []string `json:"phrases,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Phrases") to
+	// ForceSendFields is a list of field names (e.g. "Boost") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -841,8 +1361,8 @@ type SpeechContext struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Phrases") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Boost") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -854,6 +1374,20 @@ func (s *SpeechContext) MarshalJSON() ([]byte, error) {
 	type NoMethod SpeechContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SpeechContext) UnmarshalJSON(data []byte) error {
+	type NoMethod SpeechContext
+	var s1 struct {
+		Boost gensupport.JSONFloat64 `json:"boost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Boost = float64(s1.Boost)
+	return nil
 }
 
 // SpeechRecognitionAlternative: Alternative hypotheses (a.k.a. n-best
@@ -928,6 +1462,16 @@ type SpeechRecognitionResult struct {
 	// channel. For audio_channel_count = N, its output values can range
 	// from '1' to 'N'.
 	ChannelTag int64 `json:"channelTag,omitempty"`
+
+	// LanguageCode: Output only. The BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag of the
+	// language in this result. This language code was detected to have the
+	// most likelihood of being spoken in the audio.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// ResultEndTime: Time offset of the end of this result relative to the
+	// beginning of the audio.
+	ResultEndTime string `json:"resultEndTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
 	// unconditionally include in API requests. By default, fields with
@@ -1029,6 +1573,15 @@ func (s *TranscriptOutputConfig) MarshalJSON() ([]byte, error) {
 
 // WordInfo: Word-specific information for recognized words.
 type WordInfo struct {
+	// Confidence: The confidence estimate between 0.0 and 1.0. A higher
+	// number indicates an estimated greater likelihood that the recognized
+	// words are correct. This field is set only for the top alternative of
+	// a non-streaming result or, of a streaming result where
+	// `is_final=true`. This field is not guaranteed to be accurate and
+	// users should not rely on it to be always provided. The default of 0.0
+	// is a sentinel value indicating `confidence` was not set.
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// EndTime: Time offset relative to the beginning of the audio, and
 	// corresponding to the end of the spoken word. This field is only set
 	// if `enable_word_time_offsets=true` and only in the top hypothesis.
@@ -1053,7 +1606,7 @@ type WordInfo struct {
 	// Word: The word corresponding to this set of information.
 	Word string `json:"word,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1061,7 +1614,7 @@ type WordInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// NullFields is a list of field names (e.g. "Confidence") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1074,6 +1627,20 @@ func (s *WordInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod WordInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *WordInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod WordInfo
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // method id "speech.operations.get":
@@ -1135,7 +1702,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1314,7 +1881,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1433,6 +2000,1598 @@ func (c *OperationsListCall) Pages(ctx context.Context, f func(*ListOperationsRe
 	}
 }
 
+// method id "speech.projects.locations.customClasses.create":
+
+type ProjectsLocationsCustomClassesCreateCall struct {
+	s                        *Service
+	parent                   string
+	createcustomclassrequest *CreateCustomClassRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Create: Create a custom class.
+//
+// - parent: The parent resource where this custom class will be
+//   created. Format:
+//   `projects/{project}/locations/{location}/customClasses`
+//   Speech-to-Text supports three locations: `global`, `us` (US North
+//   America), and `eu` (Europe). If you are calling the
+//   `speech.googleapis.com` endpoint, use the `global` location. To
+//   specify a region, use a regional endpoint
+//   (/speech-to-text/docs/endpoints) with matching `us` or `eu`
+//   location value.
+func (r *ProjectsLocationsCustomClassesService) Create(parent string, createcustomclassrequest *CreateCustomClassRequest) *ProjectsLocationsCustomClassesCreateCall {
+	c := &ProjectsLocationsCustomClassesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.createcustomclassrequest = createcustomclassrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomClassesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomClassesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomClassesCreateCall) Context(ctx context.Context) *ProjectsLocationsCustomClassesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomClassesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomClassesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createcustomclassrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customClasses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "speech.projects.locations.customClasses.create" call.
+// Exactly one of *CustomClass or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CustomClass.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomClassesCreateCall) Do(opts ...googleapi.CallOption) (*CustomClass, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CustomClass{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a custom class.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customClasses",
+	//   "httpMethod": "POST",
+	//   "id": "speech.projects.locations.customClasses.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource where this custom class will be created. Format: `projects/{project}/locations/{location}/customClasses` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customClasses",
+	//   "request": {
+	//     "$ref": "CreateCustomClassRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CustomClass"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "speech.projects.locations.customClasses.delete":
+
+type ProjectsLocationsCustomClassesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a custom class.
+//
+// - name: The name of the custom class to delete. Format:
+//   `projects/{project}/locations/{location}/customClasses/{custom_class
+//   }` Speech-to-Text supports three locations: `global`, `us` (US
+//   North America), and `eu` (Europe). If you are calling the
+//   `speech.googleapis.com` endpoint, use the `global` location. To
+//   specify a region, use a regional endpoint
+//   (/speech-to-text/docs/endpoints) with matching `us` or `eu`
+//   location value.
+func (r *ProjectsLocationsCustomClassesService) Delete(name string) *ProjectsLocationsCustomClassesDeleteCall {
+	c := &ProjectsLocationsCustomClassesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomClassesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomClassesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomClassesDeleteCall) Context(ctx context.Context) *ProjectsLocationsCustomClassesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomClassesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomClassesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "speech.projects.locations.customClasses.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsCustomClassesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete a custom class.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customClasses/{customClassesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "speech.projects.locations.customClasses.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the custom class to delete. Format: `projects/{project}/locations/{location}/customClasses/{custom_class}` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/customClasses/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "speech.projects.locations.customClasses.get":
+
+type ProjectsLocationsCustomClassesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a custom class.
+//
+// - name: The name of the custom class to retrieve. Format:
+//   `projects/{project}/locations/{location}/customClasses/{custom_class
+//   }`.
+func (r *ProjectsLocationsCustomClassesService) Get(name string) *ProjectsLocationsCustomClassesGetCall {
+	c := &ProjectsLocationsCustomClassesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomClassesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomClassesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCustomClassesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCustomClassesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomClassesGetCall) Context(ctx context.Context) *ProjectsLocationsCustomClassesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomClassesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomClassesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "speech.projects.locations.customClasses.get" call.
+// Exactly one of *CustomClass or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CustomClass.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomClassesGetCall) Do(opts ...googleapi.CallOption) (*CustomClass, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CustomClass{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a custom class.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customClasses/{customClassesId}",
+	//   "httpMethod": "GET",
+	//   "id": "speech.projects.locations.customClasses.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the custom class to retrieve. Format: `projects/{project}/locations/{location}/customClasses/{custom_class}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/customClasses/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "CustomClass"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "speech.projects.locations.customClasses.list":
+
+type ProjectsLocationsCustomClassesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List custom classes.
+//
+// - parent: The parent, which owns this collection of custom classes.
+//   Format: `projects/{project}/locations/{location}/customClasses`
+//   Speech-to-Text supports three locations: `global`, `us` (US North
+//   America), and `eu` (Europe). If you are calling the
+//   `speech.googleapis.com` endpoint, use the `global` location. To
+//   specify a region, use a regional endpoint
+//   (/speech-to-text/docs/endpoints) with matching `us` or `eu`
+//   location value.
+func (r *ProjectsLocationsCustomClassesService) List(parent string) *ProjectsLocationsCustomClassesListCall {
+	c := &ProjectsLocationsCustomClassesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of custom classes to return. The service may return fewer than this
+// value. If unspecified, at most 50 custom classes will be returned.
+// The maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsCustomClassesListCall) PageSize(pageSize int64) *ProjectsLocationsCustomClassesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListCustomClass` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListCustomClass` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsCustomClassesListCall) PageToken(pageToken string) *ProjectsLocationsCustomClassesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomClassesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomClassesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCustomClassesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCustomClassesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomClassesListCall) Context(ctx context.Context) *ProjectsLocationsCustomClassesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomClassesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomClassesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customClasses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "speech.projects.locations.customClasses.list" call.
+// Exactly one of *ListCustomClassesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCustomClassesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomClassesListCall) Do(opts ...googleapi.CallOption) (*ListCustomClassesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListCustomClassesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List custom classes.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customClasses",
+	//   "httpMethod": "GET",
+	//   "id": "speech.projects.locations.customClasses.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of custom classes to return. The service may return fewer than this value. If unspecified, at most 50 custom classes will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListCustomClass` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListCustomClass` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent, which owns this collection of custom classes. Format: `projects/{project}/locations/{location}/customClasses` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customClasses",
+	//   "response": {
+	//     "$ref": "ListCustomClassesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCustomClassesListCall) Pages(ctx context.Context, f func(*ListCustomClassesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "speech.projects.locations.customClasses.patch":
+
+type ProjectsLocationsCustomClassesPatchCall struct {
+	s           *Service
+	name        string
+	customclass *CustomClass
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Patch: Update a custom class.
+//
+// - name: The resource name of the custom class.
+func (r *ProjectsLocationsCustomClassesService) Patch(name string, customclass *CustomClass) *ProjectsLocationsCustomClassesPatchCall {
+	c := &ProjectsLocationsCustomClassesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.customclass = customclass
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *ProjectsLocationsCustomClassesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCustomClassesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomClassesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomClassesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomClassesPatchCall) Context(ctx context.Context) *ProjectsLocationsCustomClassesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomClassesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomClassesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customclass)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "speech.projects.locations.customClasses.patch" call.
+// Exactly one of *CustomClass or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CustomClass.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomClassesPatchCall) Do(opts ...googleapi.CallOption) (*CustomClass, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CustomClass{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a custom class.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customClasses/{customClassesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "speech.projects.locations.customClasses.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the custom class.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/customClasses/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "CustomClass"
+	//   },
+	//   "response": {
+	//     "$ref": "CustomClass"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "speech.projects.locations.phraseSets.create":
+
+type ProjectsLocationsPhraseSetsCreateCall struct {
+	s                      *Service
+	parent                 string
+	createphrasesetrequest *CreatePhraseSetRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Create: Create a set of phrase hints. Each item in the set can be a
+// single word or a multi-word phrase. The items in the PhraseSet are
+// favored by the recognition model when you send a call that includes
+// the PhraseSet.
+//
+// - parent: The parent resource where this phrase set will be created.
+//   Format: `projects/{project}/locations/{location}/phraseSets`
+//   Speech-to-Text supports three locations: `global`, `us` (US North
+//   America), and `eu` (Europe). If you are calling the
+//   `speech.googleapis.com` endpoint, use the `global` location. To
+//   specify a region, use a regional endpoint
+//   (/speech-to-text/docs/endpoints) with matching `us` or `eu`
+//   location value.
+func (r *ProjectsLocationsPhraseSetsService) Create(parent string, createphrasesetrequest *CreatePhraseSetRequest) *ProjectsLocationsPhraseSetsCreateCall {
+	c := &ProjectsLocationsPhraseSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.createphrasesetrequest = createphrasesetrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPhraseSetsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsPhraseSetsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPhraseSetsCreateCall) Context(ctx context.Context) *ProjectsLocationsPhraseSetsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPhraseSetsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPhraseSetsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createphrasesetrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/phraseSets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "speech.projects.locations.phraseSets.create" call.
+// Exactly one of *PhraseSet or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PhraseSet.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPhraseSetsCreateCall) Do(opts ...googleapi.CallOption) (*PhraseSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PhraseSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a set of phrase hints. Each item in the set can be a single word or a multi-word phrase. The items in the PhraseSet are favored by the recognition model when you send a call that includes the PhraseSet.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/phraseSets",
+	//   "httpMethod": "POST",
+	//   "id": "speech.projects.locations.phraseSets.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource where this phrase set will be created. Format: `projects/{project}/locations/{location}/phraseSets` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/phraseSets",
+	//   "request": {
+	//     "$ref": "CreatePhraseSetRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PhraseSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "speech.projects.locations.phraseSets.delete":
+
+type ProjectsLocationsPhraseSetsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a phrase set.
+//
+// - name: The name of the phrase set to delete. Format:
+//   `projects/{project}/locations/{location}/phraseSets/{phrase_set}`.
+func (r *ProjectsLocationsPhraseSetsService) Delete(name string) *ProjectsLocationsPhraseSetsDeleteCall {
+	c := &ProjectsLocationsPhraseSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPhraseSetsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsPhraseSetsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPhraseSetsDeleteCall) Context(ctx context.Context) *ProjectsLocationsPhraseSetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPhraseSetsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPhraseSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "speech.projects.locations.phraseSets.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsPhraseSetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete a phrase set.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/phraseSets/{phraseSetsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "speech.projects.locations.phraseSets.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the phrase set to delete. Format: `projects/{project}/locations/{location}/phraseSets/{phrase_set}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/phraseSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "speech.projects.locations.phraseSets.get":
+
+type ProjectsLocationsPhraseSetsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a phrase set.
+//
+// - name: The name of the phrase set to retrieve. Format:
+//   `projects/{project}/locations/{location}/phraseSets/{phrase_set}`
+//   Speech-to-Text supports three locations: `global`, `us` (US North
+//   America), and `eu` (Europe). If you are calling the
+//   `speech.googleapis.com` endpoint, use the `global` location. To
+//   specify a region, use a regional endpoint
+//   (/speech-to-text/docs/endpoints) with matching `us` or `eu`
+//   location value.
+func (r *ProjectsLocationsPhraseSetsService) Get(name string) *ProjectsLocationsPhraseSetsGetCall {
+	c := &ProjectsLocationsPhraseSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPhraseSetsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPhraseSetsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPhraseSetsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPhraseSetsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPhraseSetsGetCall) Context(ctx context.Context) *ProjectsLocationsPhraseSetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPhraseSetsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPhraseSetsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "speech.projects.locations.phraseSets.get" call.
+// Exactly one of *PhraseSet or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PhraseSet.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPhraseSetsGetCall) Do(opts ...googleapi.CallOption) (*PhraseSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PhraseSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a phrase set.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/phraseSets/{phraseSetsId}",
+	//   "httpMethod": "GET",
+	//   "id": "speech.projects.locations.phraseSets.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the phrase set to retrieve. Format: `projects/{project}/locations/{location}/phraseSets/{phrase_set}` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/phraseSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "PhraseSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "speech.projects.locations.phraseSets.list":
+
+type ProjectsLocationsPhraseSetsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List phrase sets.
+//
+// - parent: The parent, which owns this collection of phrase set.
+//   Format: `projects/{project}/locations/{location}` Speech-to-Text
+//   supports three locations: `global`, `us` (US North America), and
+//   `eu` (Europe). If you are calling the `speech.googleapis.com`
+//   endpoint, use the `global` location. To specify a region, use a
+//   regional endpoint (/speech-to-text/docs/endpoints) with matching
+//   `us` or `eu` location value.
+func (r *ProjectsLocationsPhraseSetsService) List(parent string) *ProjectsLocationsPhraseSetsListCall {
+	c := &ProjectsLocationsPhraseSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of phrase sets to return. The service may return fewer than this
+// value. If unspecified, at most 50 phrase sets will be returned. The
+// maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsPhraseSetsListCall) PageSize(pageSize int64) *ProjectsLocationsPhraseSetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListPhraseSet` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListPhraseSet` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsPhraseSetsListCall) PageToken(pageToken string) *ProjectsLocationsPhraseSetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPhraseSetsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPhraseSetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPhraseSetsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPhraseSetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPhraseSetsListCall) Context(ctx context.Context) *ProjectsLocationsPhraseSetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPhraseSetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPhraseSetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/phraseSets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "speech.projects.locations.phraseSets.list" call.
+// Exactly one of *ListPhraseSetResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListPhraseSetResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPhraseSetsListCall) Do(opts ...googleapi.CallOption) (*ListPhraseSetResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPhraseSetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List phrase sets.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/phraseSets",
+	//   "httpMethod": "GET",
+	//   "id": "speech.projects.locations.phraseSets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of phrase sets to return. The service may return fewer than this value. If unspecified, at most 50 phrase sets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListPhraseSet` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPhraseSet` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent, which owns this collection of phrase set. Format: `projects/{project}/locations/{location}` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/phraseSets",
+	//   "response": {
+	//     "$ref": "ListPhraseSetResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPhraseSetsListCall) Pages(ctx context.Context, f func(*ListPhraseSetResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "speech.projects.locations.phraseSets.patch":
+
+type ProjectsLocationsPhraseSetsPatchCall struct {
+	s          *Service
+	name       string
+	phraseset  *PhraseSet
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Update a phrase set.
+//
+// - name: The resource name of the phrase set.
+func (r *ProjectsLocationsPhraseSetsService) Patch(name string, phraseset *PhraseSet) *ProjectsLocationsPhraseSetsPatchCall {
+	c := &ProjectsLocationsPhraseSetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.phraseset = phraseset
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *ProjectsLocationsPhraseSetsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsPhraseSetsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPhraseSetsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsPhraseSetsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPhraseSetsPatchCall) Context(ctx context.Context) *ProjectsLocationsPhraseSetsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPhraseSetsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPhraseSetsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.phraseset)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "speech.projects.locations.phraseSets.patch" call.
+// Exactly one of *PhraseSet or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PhraseSet.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPhraseSetsPatchCall) Do(opts ...googleapi.CallOption) (*PhraseSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PhraseSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a phrase set.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/phraseSets/{phraseSetsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "speech.projects.locations.phraseSets.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the phrase set.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/phraseSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "PhraseSet"
+	//   },
+	//   "response": {
+	//     "$ref": "PhraseSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "speech.speech.longrunningrecognize":
 
 type SpeechLongrunningrecognizeCall struct {
@@ -1482,7 +3641,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1608,7 +3767,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

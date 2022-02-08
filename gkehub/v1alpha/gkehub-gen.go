@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -151,6 +151,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Features = NewProjectsLocationsFeaturesService(s)
+	rs.Fleets = NewProjectsLocationsFleetsService(s)
 	rs.Memberships = NewProjectsLocationsMembershipsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	return rs
@@ -160,6 +161,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Features *ProjectsLocationsFeaturesService
+
+	Fleets *ProjectsLocationsFleetsService
 
 	Memberships *ProjectsLocationsMembershipsService
 
@@ -172,6 +175,15 @@ func NewProjectsLocationsFeaturesService(s *Service) *ProjectsLocationsFeaturesS
 }
 
 type ProjectsLocationsFeaturesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsFleetsService(s *Service) *ProjectsLocationsFleetsService {
+	rs := &ProjectsLocationsFleetsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsFleetsService struct {
 	s *Service
 }
 
@@ -191,6 +203,79 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 
 type ProjectsLocationsOperationsService struct {
 	s *Service
+}
+
+// AnthosObservabilityMembershipSpec: **Anthosobservability**:
+// Per-Membership Feature spec.
+type AnthosObservabilityMembershipSpec struct {
+	// DoNotOptimizeMetrics: use full of metrics rather than optimized
+	// metrics. See
+	// https://cloud.google.com/anthos/clusters/docs/on-prem/1.8/concepts/logging-and-monitoring#optimized_metrics_default_metrics
+	DoNotOptimizeMetrics bool `json:"doNotOptimizeMetrics,omitempty"`
+
+	// EnableStackdriverOnApplications: enable collecting and reporting
+	// metrics and logs from user apps See
+	// go/onyx-application-metrics-logs-user-guide
+	EnableStackdriverOnApplications bool `json:"enableStackdriverOnApplications,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DoNotOptimizeMetrics") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DoNotOptimizeMetrics") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnthosObservabilityMembershipSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod AnthosObservabilityMembershipSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppDevExperienceFeatureSpec: Spec for App Dev Experience Feature.
+type AppDevExperienceFeatureSpec struct {
+}
+
+// AppDevExperienceFeatureState: State for App Dev Exp Feature.
+type AppDevExperienceFeatureState struct {
+	// NetworkingInstallSucceeded: Status of subcomponent that detects
+	// configured Service Mesh resources.
+	NetworkingInstallSucceeded *Status `json:"networkingInstallSucceeded,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "NetworkingInstallSucceeded") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "NetworkingInstallSucceeded") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppDevExperienceFeatureState) MarshalJSON() ([]byte, error) {
+	type NoMethod AppDevExperienceFeatureState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -290,19 +375,77 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Authority: Authority encodes how Google will recognize identities
+// from this Membership. See the workload identity documentation for
+// more details:
+// https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
+type Authority struct {
+	// IdentityProvider: Output only. An identity provider that reflects the
+	// `issuer` in the workload identity pool.
+	IdentityProvider string `json:"identityProvider,omitempty"`
+
+	// Issuer: Optional. A JSON Web Token (JWT) issuer URI. `issuer` must
+	// start with `https://` and be a valid URL with length <2000
+	// characters. If set, then Google will allow valid OIDC tokens from
+	// this issuer to authenticate within the workload_identity_pool. OIDC
+	// discovery will be performed on this URI to validate tokens from the
+	// issuer. Clearing `issuer` disables Workload Identity. `issuer` cannot
+	// be directly modified; it must be cleared (and Workload Identity
+	// disabled) before using a new issuer (and re-enabling Workload
+	// Identity).
+	Issuer string `json:"issuer,omitempty"`
+
+	// OidcJwks: Optional. OIDC verification keys for this Membership in
+	// JWKS format (RFC 7517). When this field is set, OIDC discovery will
+	// NOT be performed on `issuer`, and instead OIDC tokens will be
+	// validated using this field.
+	OidcJwks string `json:"oidcJwks,omitempty"`
+
+	// WorkloadIdentityPool: Output only. The name of the workload identity
+	// pool in which `issuer` will be recognized. There is a single Workload
+	// Identity Pool per Hub that is shared between all Memberships that
+	// belong to that Hub. For a Hub hosted in {PROJECT_ID}, the workload
+	// pool format is `{PROJECT_ID}.hub.id.goog`, although this is subject
+	// to change in newer versions of this API.
+	WorkloadIdentityPool string `json:"workloadIdentityPool,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IdentityProvider") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IdentityProvider") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Authority) MarshalJSON() ([]byte, error) {
+	type NoMethod Authority
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
+	// Members: Specifies the principals requesting access for a Cloud
 	// Platform resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
@@ -336,8 +479,8 @@ type Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -404,24 +547,69 @@ func (s *CloudAuditLoggingFeatureSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CommonFeatureSpec: CommonFeatureSpec contains Hub-wide configuration
-// information
-type CommonFeatureSpec struct {
-	// Cloudauditlogging: Cloud Audit Logging-specific spec.
-	Cloudauditlogging *CloudAuditLoggingFeatureSpec `json:"cloudauditlogging,omitempty"`
+// CloudBuildMembershipSpec: **Cloud Build**: Configurations for each
+// Cloud Build enabled cluster.
+type CloudBuildMembershipSpec struct {
+	// SecurityPolicy: Whether it is allowed to run the privileged builds on
+	// the cluster or not.
+	//
+	// Possible values:
+	//   "SECURITY_POLICY_UNSPECIFIED" - Unspecified policy
+	//   "NON_PRIVILEGED" - Privileged build pods are disallowed
+	//   "PRIVILEGED" - Privileged build pods are allowed
+	SecurityPolicy string `json:"securityPolicy,omitempty"`
 
-	// Multiclusteringress: Multicluster Ingress-specific spec.
-	Multiclusteringress *MultiClusterIngressFeatureSpec `json:"multiclusteringress,omitempty"`
+	// Version: Version of the cloud build software on the cluster.
+	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Cloudauditlogging")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "SecurityPolicy") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Cloudauditlogging") to
+	// NullFields is a list of field names (e.g. "SecurityPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudBuildMembershipSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudBuildMembershipSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CommonFeatureSpec: CommonFeatureSpec contains Hub-wide configuration
+// information
+type CommonFeatureSpec struct {
+	// Appdevexperience: Appdevexperience specific spec.
+	Appdevexperience *AppDevExperienceFeatureSpec `json:"appdevexperience,omitempty"`
+
+	// Cloudauditlogging: Cloud Audit Logging-specific spec.
+	Cloudauditlogging *CloudAuditLoggingFeatureSpec `json:"cloudauditlogging,omitempty"`
+
+	// Multiclusteringress: Multicluster Ingress-specific spec.
+	Multiclusteringress *MultiClusterIngressFeatureSpec `json:"multiclusteringress,omitempty"`
+
+	// Workloadcertificate: Workload Certificate spec.
+	Workloadcertificate *FeatureSpec `json:"workloadcertificate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Appdevexperience") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -440,13 +628,16 @@ func (s *CommonFeatureSpec) MarshalJSON() ([]byte, error) {
 // CommonFeatureState: CommonFeatureState contains Hub-wide Feature
 // status information.
 type CommonFeatureState struct {
+	// Appdevexperience: Appdevexperience specific state.
+	Appdevexperience *AppDevExperienceFeatureState `json:"appdevexperience,omitempty"`
+
 	// Servicemesh: Service Mesh-specific state.
 	Servicemesh *ServiceMeshFeatureState `json:"servicemesh,omitempty"`
 
 	// State: Output only. The "running state" of the Feature in this Hub.
 	State *FeatureState `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Servicemesh") to
+	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -454,12 +645,13 @@ type CommonFeatureState struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Servicemesh") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Appdevexperience") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -566,18 +758,27 @@ func (s *ConfigManagementBinauthzVersion) MarshalJSON() ([]byte, error) {
 
 // ConfigManagementConfigSync: Configuration for Config Sync
 type ConfigManagementConfigSync struct {
+	// Enabled: Enables the installation of ConfigSync. If set to true,
+	// ConfigSync resources will be created and the other ConfigSync fields
+	// will be applied if exist. If set to false, all other ConfigSync
+	// fields will be ignored, ConfigSync resources will be deleted. If
+	// omitted, ConfigSync resources will be managed depends on the presence
+	// of git field.
+	Enabled bool `json:"enabled,omitempty"`
+
 	// Git: Git repo configuration for the cluster.
 	Git *ConfigManagementGitConfig `json:"git,omitempty"`
 
-	// ResourceRequirements: Specifies CPU and memory limits for containers,
-	// keyed by container name
-	ResourceRequirements map[string]ConfigManagementContainerResourceRequirements `json:"resourceRequirements,omitempty"`
+	// PreventDrift: Set to true to enable the Config Sync admission webhook
+	// to prevent drifts. If set to `false`, disables the Config Sync
+	// admission webhook and does not prevent drifts.
+	PreventDrift bool `json:"preventDrift,omitempty"`
 
 	// SourceFormat: Specifies whether the Config Sync Repo is in
 	// “hierarchical” or “unstructured” mode.
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Git") to
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -585,8 +786,8 @@ type ConfigManagementConfigSync struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Git") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -783,42 +984,6 @@ func (s *ConfigManagementConfigSyncVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigManagementContainerResourceRequirements: ResourceRequirements
-// allows to override the CPU and memory resource requirements of a
-// container.
-type ConfigManagementContainerResourceRequirements struct {
-	// ContainerName: Name of the container
-	ContainerName string `json:"containerName,omitempty"`
-
-	// CpuLimit: Allows to override the CPU limit of a container
-	CpuLimit *ConfigManagementQuantity `json:"cpuLimit,omitempty"`
-
-	// MemoryLimit: Allows to override the memory limit of a container
-	MemoryLimit *ConfigManagementQuantity `json:"memoryLimit,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContainerName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContainerName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ConfigManagementContainerResourceRequirements) MarshalJSON() ([]byte, error) {
-	type NoMethod ConfigManagementContainerResourceRequirements
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ConfigManagementErrorResource: Model for a config file in the git
 // repo with an associated Sync error
 type ConfigManagementErrorResource struct {
@@ -927,24 +1092,19 @@ type ConfigManagementGitConfig struct {
 	// with the Git repo.
 	HttpsProxy string `json:"httpsProxy,omitempty"`
 
-	// NoSslVerify: Enable or disable the SSL certificate verification
-	// Default: false.
-	NoSslVerify bool `json:"noSslVerify,omitempty"`
-
 	// PolicyDir: The path within the Git repository that represents the top
 	// level of the repo to sync. Default: the root directory of the
 	// repository.
 	PolicyDir string `json:"policyDir,omitempty"`
 
 	// SecretType: Type of secret configured for access to the Git repo.
+	// Must be one of ssh, cookiefile, gcenode, token, gcpserviceaccount or
+	// none. The validation of this is case-sensitive. Required.
 	SecretType string `json:"secretType,omitempty"`
 
 	// SyncBranch: The branch of the repository to sync from. Default:
 	// master.
 	SyncBranch string `json:"syncBranch,omitempty"`
-
-	// SyncDepth: The depth of git commits synced by the git-sync container.
-	SyncDepth int64 `json:"syncDepth,omitempty,string"`
 
 	// SyncRepo: The URL of the Git repository to use as the source of
 	// truth.
@@ -1454,36 +1614,6 @@ func (s *ConfigManagementPolicyControllerVersion) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigManagementQuantity: The view model of a single quantity, e.g.
-// "800 MiB". Corresponds to
-// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/generated.proto
-type ConfigManagementQuantity struct {
-	// String: Stringified version of the quantity, e.g., "800 MiB".
-	String string `json:"string,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "String") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "String") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ConfigManagementQuantity) MarshalJSON() ([]byte, error) {
-	type NoMethod ConfigManagementQuantity
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ConfigManagementSyncError: An ACM created error representing a
 // problem syncing configurations
 type ConfigManagementSyncError struct {
@@ -1580,6 +1710,70 @@ type ConfigManagementSyncState struct {
 
 func (s *ConfigManagementSyncState) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigManagementSyncState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConnectAgentResource: ConnectAgentResource represents a Kubernetes
+// resource manifest for Connect Agent deployment.
+type ConnectAgentResource struct {
+	// Manifest: YAML manifest of the resource.
+	Manifest string `json:"manifest,omitempty"`
+
+	// Type: Kubernetes type of the resource.
+	Type *TypeMeta `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Manifest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Manifest") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectAgentResource) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectAgentResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EdgeCluster: EdgeCluster contains information specific to Google Edge
+// Clusters.
+type EdgeCluster struct {
+	// ResourceLink: Immutable. Self-link of the GCP resource for the Edge
+	// Cluster. For example:
+	// //edgecontainer.googleapis.com/projects/my-project/locations/us-west1-
+	// a/clusters/my-cluster
+	ResourceLink string `json:"resourceLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceLink") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceLink") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EdgeCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod EdgeCluster
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1779,6 +1973,45 @@ func (s *FeatureResourceState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FeatureSpec: **Workload Certificate**: The Hub-wide input for the
+// WorkloadCertificate feature.
+type FeatureSpec struct {
+	// DefaultConfig: Specifies default membership spec. Users can override
+	// the default in the member_configs for each member.
+	DefaultConfig *MembershipSpec `json:"defaultConfig,omitempty"`
+
+	// ProvisionGoogleCa: Immutable. Specifies CA configuration.
+	//
+	// Possible values:
+	//   "GOOGLE_CA_PROVISIONING_UNSPECIFIED" - Disable default Google
+	// managed CA.
+	//   "DISABLED" - Disable default Google managed CA.
+	//   "ENABLED" - Use default Google managed CA.
+	ProvisionGoogleCa string `json:"provisionGoogleCa,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DefaultConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FeatureSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod FeatureSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FeatureState: FeatureState describes the high-level state of a
 // Feature. It may be used to describe a Feature's state at the
 // environ-level, or per-membershop, depending on the context.
@@ -1824,6 +2057,144 @@ type FeatureState struct {
 
 func (s *FeatureState) MarshalJSON() ([]byte, error) {
 	type NoMethod FeatureState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Fleet: Fleet contains the Fleet-wide metadata and configuration.
+type Fleet struct {
+	// CreateTime: Output only. When the Fleet was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeleteTime: Output only. When the Fleet was deleted.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// DisplayName: Optional. A user-assigned display name of the Fleet.
+	// When present, it must be between 4 to 30 characters. Allowed
+	// characters are: lowercase and uppercase letters, numbers, hyphen,
+	// single-quote, double-quote, space, and exclamation point. Example:
+	// `Production Fleet`
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FleetName: The name for the fleet. The name must meet the following
+	// constraints: + The name of a fleet should be unique within the
+	// organization; + It must consist of lower case alphanumeric characters
+	// or `-`; + The length of the name must be less than or equal to 63; +
+	// Unicode names must be expressed in Punycode format (rfc3492).
+	// Examples: + prod-fleet + xn--wlq33vhyw9jb （Punycode form for
+	// "生产环境")
+	FleetName string `json:"fleetName,omitempty"`
+
+	// Name: Output only. The full, unique resource name of this fleet in
+	// the format of
+	// `projects/{project}/locations/{location}/fleets/{fleet}`. Each GCP
+	// project can have at most one fleet resource, named "default".
+	Name string `json:"name,omitempty"`
+
+	// Uid: Output only. Google-generated UUID for this resource. This is
+	// unique across all Fleet resources. If a Fleet resource is deleted and
+	// another resource with the same name is created, it gets a different
+	// uid.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. When the Fleet was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Fleet) MarshalJSON() ([]byte, error) {
+	type NoMethod Fleet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenerateConnectManifestResponse: GenerateConnectManifestResponse
+// contains manifest information for installing/upgrading a Connect
+// agent.
+type GenerateConnectManifestResponse struct {
+	// Manifest: The ordered list of Kubernetes resources that need to be
+	// applied to the cluster for GKE Connect agent installation/upgrade.
+	Manifest []*ConnectAgentResource `json:"manifest,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Manifest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Manifest") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenerateConnectManifestResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateConnectManifestResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GkeCluster: GkeCluster contains information specific to GKE clusters.
+type GkeCluster struct {
+	// ClusterMissing: Output only. If cluster_missing is set then it
+	// denotes that the GKE cluster no longer exists in the GKE Control
+	// Plane.
+	ClusterMissing bool `json:"clusterMissing,omitempty"`
+
+	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
+	// cluster. For example:
+	// //container.googleapis.com/projects/my-project/locations/us-west1-a/cl
+	// usters/my-cluster Zonal clusters are also supported.
+	ResourceLink string `json:"resourceLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterMissing") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterMissing") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GkeCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeCluster
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2045,6 +2416,167 @@ func (s *IdentityServiceOidcConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// KubernetesMetadata: KubernetesMetadata provides informational
+// metadata for Memberships representing Kubernetes clusters.
+type KubernetesMetadata struct {
+	// KubernetesApiServerVersion: Output only. Kubernetes API server
+	// version string as reported by `/version`.
+	KubernetesApiServerVersion string `json:"kubernetesApiServerVersion,omitempty"`
+
+	// MemoryMb: Output only. The total memory capacity as reported by the
+	// sum of all Kubernetes nodes resources, defined in MB.
+	MemoryMb int64 `json:"memoryMb,omitempty"`
+
+	// NodeCount: Output only. Node count as reported by Kubernetes nodes
+	// resources.
+	NodeCount int64 `json:"nodeCount,omitempty"`
+
+	// NodeProviderId: Output only. Node providerID as reported by the first
+	// node in the list of nodes on the Kubernetes endpoint. On Kubernetes
+	// platforms that support zero-node clusters (like GKE-on-GCP), the
+	// node_count will be zero and the node_provider_id will be empty.
+	NodeProviderId string `json:"nodeProviderId,omitempty"`
+
+	// UpdateTime: Output only. The time at which these details were last
+	// updated. This update_time is different from the Membership-level
+	// update_time since EndpointDetails are updated internally for API
+	// consumers.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// VcpuCount: Output only. vCPU count as reported by Kubernetes nodes
+	// resources.
+	VcpuCount int64 `json:"vcpuCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "KubernetesApiServerVersion") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "KubernetesApiServerVersion") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KubernetesMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod KubernetesMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KubernetesResource: KubernetesResource contains the YAML manifests
+// and configuration for Membership Kubernetes resources in the cluster.
+// After CreateMembership or UpdateMembership, these resources should be
+// re-applied in the cluster.
+type KubernetesResource struct {
+	// ConnectResources: Output only. The Kubernetes resources for
+	// installing the GKE Connect agent This field is only populated in the
+	// Membership returned from a successful long-running operation from
+	// CreateMembership or UpdateMembership. It is not populated during
+	// normal GetMembership or ListMemberships requests. To get the resource
+	// manifest after the initial registration, the caller should make a
+	// UpdateMembership call with an empty field mask.
+	ConnectResources []*ResourceManifest `json:"connectResources,omitempty"`
+
+	// MembershipCrManifest: Input only. The YAML representation of the
+	// Membership CR. This field is ignored for GKE clusters where Hub can
+	// read the CR directly. Callers should provide the CR that is currently
+	// present in the cluster during CreateMembership or UpdateMembership,
+	// or leave this field empty if none exists. The CR manifest is used to
+	// validate the cluster has not been registered with another Membership.
+	MembershipCrManifest string `json:"membershipCrManifest,omitempty"`
+
+	// MembershipResources: Output only. Additional Kubernetes resources
+	// that need to be applied to the cluster after Membership creation, and
+	// after every update. This field is only populated in the Membership
+	// returned from a successful long-running operation from
+	// CreateMembership or UpdateMembership. It is not populated during
+	// normal GetMembership or ListMemberships requests. To get the resource
+	// manifest after the initial registration, the caller should make a
+	// UpdateMembership call with an empty field mask.
+	MembershipResources []*ResourceManifest `json:"membershipResources,omitempty"`
+
+	// ResourceOptions: Optional. Options for Kubernetes resource
+	// generation.
+	ResourceOptions *ResourceOptions `json:"resourceOptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectResources") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KubernetesResource) MarshalJSON() ([]byte, error) {
+	type NoMethod KubernetesResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAdminClusterMembershipsResponse: Response message for the
+// `GkeHub.ListAdminClusterMemberships` method.
+type ListAdminClusterMembershipsResponse struct {
+	// AdminClusterMemberships: The list of matching Memberships of admin
+	// clusters.
+	AdminClusterMemberships []*Membership `json:"adminClusterMemberships,omitempty"`
+
+	// NextPageToken: A token to request the next page of resources from the
+	// `ListAdminClusterMemberships` method. The value of an empty string
+	// means that there are no more resources to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: List of locations that could not be reached while
+	// fetching this list.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdminClusterMemberships") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdminClusterMemberships")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAdminClusterMembershipsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAdminClusterMembershipsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListFeaturesResponse: Response message for the `GkeHub.ListFeatures`
 // method.
 type ListFeaturesResponse struct {
@@ -2116,6 +2648,48 @@ type ListLocationsResponse struct {
 
 func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListMembershipsResponse: Response message for the
+// `GkeHub.ListMemberships` method.
+type ListMembershipsResponse struct {
+	// NextPageToken: A token to request the next page of resources from the
+	// `ListMemberships` method. The value of an empty string means that
+	// there are no more resources to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Resources: The list of matching Memberships.
+	Resources []*Membership `json:"resources,omitempty"`
+
+	// Unreachable: List of locations that could not be reached while
+	// fetching this list.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListMembershipsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMembershipsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2207,16 +2781,71 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MembershipFeatureSpec: MembershipFeatureSpec contains configuration
-// information for a single Membership.
-type MembershipFeatureSpec struct {
-	// Configmanagement: Config Management-specific spec.
-	Configmanagement *ConfigManagementMembershipSpec `json:"configmanagement,omitempty"`
+// Membership: Membership contains information about a member cluster.
+type Membership struct {
+	// Authority: Optional. How to identify workloads from this Membership.
+	// See the documentation on Workload Identity for more details:
+	// https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
+	Authority *Authority `json:"authority,omitempty"`
 
-	// Identityservice: Identity Service-specific spec.
-	Identityservice *IdentityServiceMembershipSpec `json:"identityservice,omitempty"`
+	// CreateTime: Output only. When the Membership was created.
+	CreateTime string `json:"createTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Configmanagement") to
+	// DeleteTime: Output only. When the Membership was deleted.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// Description: Output only. Description of this membership, limited to
+	// 63 characters. Must match the regex: `a-zA-Z0-9*` This field is
+	// present for legacy purposes.
+	Description string `json:"description,omitempty"`
+
+	// Endpoint: Optional. Endpoint information to reach this member.
+	Endpoint *MembershipEndpoint `json:"endpoint,omitempty"`
+
+	// ExternalId: Optional. An externally-generated and managed ID for this
+	// Membership. This ID may be modified after creation, but this is not
+	// recommended. The ID must match the regex: `a-zA-Z0-9*` If this
+	// Membership represents a Kubernetes cluster, this value should be set
+	// to the UID of the `kube-system` namespace object.
+	ExternalId string `json:"externalId,omitempty"`
+
+	// Labels: Optional. GCP labels for this membership.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// LastConnectionTime: Output only. For clusters using Connect, the
+	// timestamp of the most recent connection established with Google
+	// Cloud. This time is updated every several minutes, not continuously.
+	// For clusters that do not use GKE Connect, or that have never
+	// connected successfully, this field will be unset.
+	LastConnectionTime string `json:"lastConnectionTime,omitempty"`
+
+	// Name: Output only. The full, unique name of this Membership resource
+	// in the format `projects/*/locations/*/memberships/{membership_id}`,
+	// set during creation. `membership_id` must be a valid RFC 1123
+	// compliant DNS label: 1. At most 63 characters in length 2. It must
+	// consist of lower case alphanumeric characters or `-` 3. It must start
+	// and end with an alphanumeric character Which can be expressed as the
+	// regex: `[a-z0-9]([-a-z0-9]*[a-z0-9])?`, with a maximum length of 63
+	// characters.
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. State of the Membership resource.
+	State *MembershipState `json:"state,omitempty"`
+
+	// UniqueId: Output only. Google-generated UUID for this resource. This
+	// is unique across all Membership resources. If a Membership resource
+	// is deleted and another resource with the same name is created, it
+	// gets a different unique_id.
+	UniqueId string `json:"uniqueId,omitempty"`
+
+	// UpdateTime: Output only. When the Membership was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Authority") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2224,7 +2853,109 @@ type MembershipFeatureSpec struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Configmanagement") to
+	// NullFields is a list of field names (e.g. "Authority") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Membership) MarshalJSON() ([]byte, error) {
+	type NoMethod Membership
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MembershipEndpoint: MembershipEndpoint contains information needed to
+// contact a Kubernetes API, endpoint and any additional Kubernetes
+// metadata.
+type MembershipEndpoint struct {
+	// EdgeCluster: Optional. Specific information for a Google Edge
+	// cluster.
+	EdgeCluster *EdgeCluster `json:"edgeCluster,omitempty"`
+
+	// GkeCluster: Optional. Specific information for a GKE-on-GCP cluster.
+	GkeCluster *GkeCluster `json:"gkeCluster,omitempty"`
+
+	// KubernetesMetadata: Output only. Useful Kubernetes-specific metadata.
+	KubernetesMetadata *KubernetesMetadata `json:"kubernetesMetadata,omitempty"`
+
+	// KubernetesResource: Optional. The in-cluster Kubernetes Resources
+	// that should be applied for a correctly registered cluster, in the
+	// steady state. These resources: * Ensure that the cluster is
+	// exclusively registered to one and only one Hub Membership. *
+	// Propagate Workload Pool Information available in the Membership
+	// Authority field. * Ensure proper initial configuration of default Hub
+	// Features.
+	KubernetesResource *KubernetesResource `json:"kubernetesResource,omitempty"`
+
+	// MultiCloudCluster: Optional. Specific information for a GKE
+	// Multi-Cloud cluster.
+	MultiCloudCluster *MultiCloudCluster `json:"multiCloudCluster,omitempty"`
+
+	// OnPremCluster: Optional. Specific information for a GKE On-Prem
+	// cluster. An onprem user-cluster who has no resourceLink is not
+	// allowed to use this field, it should have a nil "type" instead.
+	OnPremCluster *OnPremCluster `json:"onPremCluster,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EdgeCluster") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EdgeCluster") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MembershipEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipEndpoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MembershipFeatureSpec: MembershipFeatureSpec contains configuration
+// information for a single Membership.
+type MembershipFeatureSpec struct {
+	// Anthosobservability: Anthos Observability-specific spec
+	Anthosobservability *AnthosObservabilityMembershipSpec `json:"anthosobservability,omitempty"`
+
+	// Cloudbuild: Cloud Build-specific spec
+	Cloudbuild *CloudBuildMembershipSpec `json:"cloudbuild,omitempty"`
+
+	// Configmanagement: Config Management-specific spec.
+	Configmanagement *ConfigManagementMembershipSpec `json:"configmanagement,omitempty"`
+
+	// Identityservice: Identity Service-specific spec.
+	Identityservice *IdentityServiceMembershipSpec `json:"identityservice,omitempty"`
+
+	// Mesh: Anthos Service Mesh-specific spec
+	Mesh *ServiceMeshMembershipSpec `json:"mesh,omitempty"`
+
+	// Policycontroller: Policy Controller spec.
+	Policycontroller *PolicycontrollerMembershipSpec `json:"policycontroller,omitempty"`
+
+	// Workloadcertificate: Workload Certificate spec.
+	Workloadcertificate *MembershipSpec `json:"workloadcertificate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Anthosobservability")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Anthosobservability") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2243,6 +2974,9 @@ func (s *MembershipFeatureSpec) MarshalJSON() ([]byte, error) {
 // MembershipFeatureState: MembershipFeatureState contains Feature
 // status information for a single Membership.
 type MembershipFeatureState struct {
+	// Appdevexperience: Appdevexperience specific state.
+	Appdevexperience *AppDevExperienceFeatureState `json:"appdevexperience,omitempty"`
+
 	// Configmanagement: Config Management-specific state.
 	Configmanagement *ConfigManagementMembershipState `json:"configmanagement,omitempty"`
 
@@ -2252,13 +2986,16 @@ type MembershipFeatureState struct {
 	// Metering: Metering-specific spec.
 	Metering *MeteringMembershipState `json:"metering,omitempty"`
 
+	// Policycontroller: Policycontroller-specific state.
+	Policycontroller *PolicycontrollerMembershipState `json:"policycontroller,omitempty"`
+
 	// Servicemesh: Service Mesh-specific state.
 	Servicemesh *ServiceMeshMembershipState `json:"servicemesh,omitempty"`
 
 	// State: The high-level state of this Feature for a single membership.
 	State *FeatureState `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Configmanagement") to
+	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2266,7 +3003,7 @@ type MembershipFeatureState struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Configmanagement") to
+	// NullFields is a list of field names (e.g. "Appdevexperience") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2278,6 +3015,81 @@ type MembershipFeatureState struct {
 
 func (s *MembershipFeatureState) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipFeatureState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MembershipSpec: **Workload Certificate**: The membership-specific
+// input for WorkloadCertificate feature.
+type MembershipSpec struct {
+	// CertificateManagement: Specifies workload certificate management.
+	//
+	// Possible values:
+	//   "CERTIFICATE_MANAGEMENT_UNSPECIFIED" - Disable workload certificate
+	// feature.
+	//   "DISABLED" - Disable workload certificate feature.
+	//   "ENABLED" - Enable workload certificate feature.
+	CertificateManagement string `json:"certificateManagement,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificateManagement") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertificateManagement") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MembershipSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MembershipState: MembershipState describes the state of a Membership
+// resource.
+type MembershipState struct {
+	// Code: Output only. The current state of the Membership resource.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - The code is not set.
+	//   "CREATING" - The cluster is being registered.
+	//   "READY" - The cluster is registered.
+	//   "DELETING" - The cluster is being unregistered.
+	//   "UPDATING" - The Membership is being updated.
+	//   "SERVICE_UPDATING" - The Membership is being updated by the Hub
+	// Service.
+	Code string `json:"code,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MembershipState) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2330,6 +3142,46 @@ func (s *MeteringMembershipState) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MultiCloudCluster: MultiCloudCluster contains information specific to
+// GKE Multi-Cloud clusters.
+type MultiCloudCluster struct {
+	// ClusterMissing: Output only. If cluster_missing is set then it
+	// denotes that API(gkemulticloud.googleapis.com) resource for this GKE
+	// Multi-Cloud cluster no longer exists.
+	ClusterMissing bool `json:"clusterMissing,omitempty"`
+
+	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
+	// Multi-Cloud cluster. For example:
+	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
+	// a/awsClusters/my-cluster
+	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
+	// a/azureClusters/my-cluster
+	ResourceLink string `json:"resourceLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterMissing") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterMissing") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultiCloudCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiCloudCluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MultiClusterIngressFeatureSpec: **Multi-cluster Ingress**: The
 // configuration for the MultiClusterIngress feature.
 type MultiClusterIngressFeatureSpec struct {
@@ -2366,6 +3218,48 @@ type MultiClusterIngressFeatureSpec struct {
 
 func (s *MultiClusterIngressFeatureSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiClusterIngressFeatureSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OnPremCluster: OnPremCluster contains information specific to GKE
+// On-Prem clusters.
+type OnPremCluster struct {
+	// AdminCluster: Immutable. Whether the cluster is an admin cluster.
+	AdminCluster bool `json:"adminCluster,omitempty"`
+
+	// ClusterMissing: Output only. If cluster_missing is set then it
+	// denotes that API(gkeonprem.googleapis.com) resource for this GKE
+	// On-Prem cluster no longer exists.
+	ClusterMissing bool `json:"clusterMissing,omitempty"`
+
+	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
+	// On-Prem cluster. For example:
+	// //gkeonprem.googleapis.com/projects/my-project/locations/us-west1-a/vm
+	// wareClusters/my-cluster
+	// //gkeonprem.googleapis.com/projects/my-project/locations/us-west1-a/ba
+	// reMetalClusters/my-cluster
+	ResourceLink string `json:"resourceLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdminCluster") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdminCluster") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OnPremCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod OnPremCluster
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2486,17 +3380,17 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members` to
-// a single `role`. Members can be user accounts, service accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of permissions; each `role` can be an IAM predefined role or a
-// user-created custom role. For some types of Google Cloud resources, a
-// `binding` can also specify a `condition`, which is a logical
-// expression that allows access to a resource only if the expression
-// evaluates to `true`. A condition can add constraints based on
-// attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -2523,9 +3417,15 @@ type Policy struct {
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -2584,6 +3484,367 @@ type Policy struct {
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicycontrollerMembershipSpec: **Policy Controller**: Configuration
+// for a single cluster. Intended to parallel the PolicyController CR.
+type PolicycontrollerMembershipSpec struct {
+	// PolicyControllerHubConfig: Policy Controller configuration for the
+	// cluster.
+	PolicyControllerHubConfig *PolicycontrollerPolicyControllerHubConfig `json:"policyControllerHubConfig,omitempty"`
+
+	// Version: Version of Policy Controller installed.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PolicyControllerHubConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "PolicyControllerHubConfig") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicycontrollerMembershipSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicycontrollerMembershipSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicycontrollerMembershipState: **Policy Controller**: State for a
+// single cluster.
+type PolicycontrollerMembershipState struct {
+	// ClusterName: The user-defined name for the cluster used by
+	// ClusterSelectors to group clusters together. This should match
+	// Membership's membership_name, unless the user installed PC on the
+	// cluster manually prior to enabling the PC hub feature. Unique within
+	// a Policy Controller installation.
+	ClusterName string `json:"clusterName,omitempty"`
+
+	// MembershipSpec: Membership configuration in the cluster. This
+	// represents the actual state in the cluster, while the MembershipSpec
+	// in the FeatureSpec represents the intended state
+	MembershipSpec *PolicycontrollerMembershipSpec `json:"membershipSpec,omitempty"`
+
+	// PolicyControllerHubState: Policy Controller state observed by the
+	// Policy Controller Hub
+	PolicyControllerHubState *PolicycontrollerPolicyControllerHubState `json:"policyControllerHubState,omitempty"`
+
+	// State: The lifecycle state Policy Controller is in.
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - The lifecycle state is unspecified.
+	//   "NOT_INSTALLED" - The PC does not exist on the given cluster, and
+	// no k8s resources of any type that are associated with the PC should
+	// exist there. The cluster does not possess a membership with the PCH.
+	//   "INSTALLING" - The PCH possesses a Membership, however the PC is
+	// not fully installed on the cluster. In this state the hub can be
+	// expected to be taking actions to install the PC on the cluster.
+	//   "ACTIVE" - The PC is fully installed on the cluster and in an
+	// operational mode. In this state PCH will be reconciling state with
+	// the PC, and the PC will be performing it’s operational tasks per
+	// that software. Entering a READY state requires that the hub has
+	// confirmed the PC is installed and its pods are operational with the
+	// version of the PC the PCH expects.
+	//   "UPDATING" - The PC is fully installed, but in the process of
+	// changing the configuration (including changing the version of PC
+	// either up and down, or modifying the manifests of PC) of the
+	// resources running on the cluster. The PCH has a Membership, is aware
+	// of the version the cluster should be running in, but has not
+	// confirmed for itself that the PC is running with that version.
+	//   "DECOMISSIONING" - The PC may have resources on the cluster, but
+	// the PCH wishes to remove the Membership. The Membership still exists.
+	//   "CLUSTER_ERROR" - The PC is not operational, and the PCH is unable
+	// to act to make it operational. Entering a CLUSTER_ERROR state happens
+	// automatically when the PCH determines that a PC installed on the
+	// cluster is non-operative or that the cluster does not meet
+	// requirements set for the PCH to administer the cluster but has
+	// nevertheless been given an instruction to do so (such as
+	// ‘install’).
+	//   "HUB_ERROR" - In this state, the PC may still be operational, and
+	// only the PCH is unable to act. The hub should not issue instructions
+	// to change the PC state, or otherwise interfere with the on-cluster
+	// resources. Entering a HUB_ERROR state happens automatically when the
+	// PCH determines the hub is in an unhealthy state and it wishes to
+	// ‘take hands off’ to avoid corrupting the PC or other data.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicycontrollerMembershipState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicycontrollerMembershipState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicycontrollerPolicyControllerHubConfig: Configuration for Policy
+// Controller
+type PolicycontrollerPolicyControllerHubConfig struct {
+	// AuditIntervalSeconds: Sets the interval for Policy Controller Audit
+	// Scans (in seconds). When set to 0, this disables audit functionality
+	// altogether.
+	AuditIntervalSeconds int64 `json:"auditIntervalSeconds,omitempty,string"`
+
+	// ExemptableNamespaces: The set of namespaces that are excluded from
+	// Policy Controller checks. Namespaces do not need to currently exist
+	// on the cluster.
+	ExemptableNamespaces []string `json:"exemptableNamespaces,omitempty"`
+
+	// InstallSpec: The install_spec represents the intended state specified
+	// by the latest request that mutated install_spec in the feature spec,
+	// not the lifecycle state of the feature observed by the Hub feature
+	// controller that is reported in the feature state.
+	//
+	// Possible values:
+	//   "INSTALL_SPEC_UNSPECIFIED" - Spec is unknown.
+	//   "INSTALL_SPEC_NOT_INSTALLED" - Request to uninstall Policy
+	// Controller.
+	//   "INSTALL_SPEC_ENABLED" - Request to install and enable Policy
+	// Controller.
+	//   "INSTALL_SPEC_DISABLED" - Request to disable Policy Controller. If
+	// Policy Controller is not installed, it will be installed but
+	// disabled.
+	InstallSpec string `json:"installSpec,omitempty"`
+
+	// LogDeniesEnabled: Logs all denies and dry run failures.
+	LogDeniesEnabled bool `json:"logDeniesEnabled,omitempty"`
+
+	// MutationEnabled: Enables the ability to mutate resources using Policy
+	// Controller.
+	MutationEnabled bool `json:"mutationEnabled,omitempty"`
+
+	// ReferentialRulesEnabled: Enables the ability to use Constraint
+	// Templates that reference to objects other than the object currently
+	// being evaluated.
+	ReferentialRulesEnabled bool `json:"referentialRulesEnabled,omitempty"`
+
+	// TemplateLibraryConfig: Configures the library templates to install
+	// along with Policy Controller.
+	TemplateLibraryConfig *PolicycontrollerTemplateLibraryConfig `json:"templateLibraryConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuditIntervalSeconds") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuditIntervalSeconds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicycontrollerPolicyControllerHubConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicycontrollerPolicyControllerHubConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicycontrollerPolicyControllerHubState: State of the Policy
+// Controller.
+type PolicycontrollerPolicyControllerHubState struct {
+	// DeploymentStates: Map from deployment name to deployment state.
+	// Example deployments are gatekeeper-controller-manager,
+	// gatekeeper-audit deployment, and gatekeeper-mutation.
+	DeploymentStates map[string]string `json:"deploymentStates,omitempty"`
+
+	// Version: The version of Gatekeeper Policy Controller deployed.
+	Version *PolicycontrollerPolicyControllerHubVersion `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeploymentStates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeploymentStates") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicycontrollerPolicyControllerHubState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicycontrollerPolicyControllerHubState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicycontrollerPolicyControllerHubVersion: The build version of
+// Gatekeeper that Policy Controller is using.
+type PolicycontrollerPolicyControllerHubVersion struct {
+	// Version: The gatekeeper image tag that is composed of ACM version,
+	// git tag, build number.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Version") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Version") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicycontrollerPolicyControllerHubVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicycontrollerPolicyControllerHubVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicycontrollerTemplateLibraryConfig: The config specifying which
+// default library templates to install.
+type PolicycontrollerTemplateLibraryConfig struct {
+	// Included: Whether the standard template library should be installed
+	// or not.
+	Included bool `json:"included,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Included") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Included") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicycontrollerTemplateLibraryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicycontrollerTemplateLibraryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResourceManifest: ResourceManifest represents a single Kubernetes
+// resource to be applied to the cluster.
+type ResourceManifest struct {
+	// ClusterScoped: Whether the resource provided in the manifest is
+	// `cluster_scoped`. If unset, the manifest is assumed to be namespace
+	// scoped. This field is used for REST mapping when applying the
+	// resource in a cluster.
+	ClusterScoped bool `json:"clusterScoped,omitempty"`
+
+	// Manifest: YAML manifest of the resource.
+	Manifest string `json:"manifest,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterScoped") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterScoped") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceManifest) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceManifest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResourceOptions: ResourceOptions represent options for Kubernetes
+// resource generation.
+type ResourceOptions struct {
+	// ConnectVersion: Optional. The Connect agent version to use for
+	// connect_resources. Defaults to the latest GKE Connect version. The
+	// version must be a currently supported version, obsolete versions will
+	// be rejected.
+	ConnectVersion string `json:"connectVersion,omitempty"`
+
+	// K8sVersion: Optional. Major version of the Kubernetes cluster. This
+	// is only used to determine which version to use for the
+	// CustomResourceDefinition resources, `apiextensions/v1beta1`
+	// or`apiextensions/v1`.
+	K8sVersion string `json:"k8sVersion,omitempty"`
+
+	// V1beta1Crd: Optional. Use `apiextensions/v1beta1` instead of
+	// `apiextensions/v1` for CustomResourceDefinition resources. This
+	// option should be set for clusters with Kubernetes apiserver versions
+	// <1.16.
+	V1beta1Crd bool `json:"v1beta1Crd,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2679,6 +3940,51 @@ func (s *ServiceMeshAnalysisMessageBase) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ServiceMeshControlPlaneManagement: Status of control plane
+// management.
+type ServiceMeshControlPlaneManagement struct {
+	// Details: Explanation of state.
+	Details []*ServiceMeshStatusDetails `json:"details,omitempty"`
+
+	// State: LifecycleState of control plane management.
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - Unspecified
+	//   "DISABLED" - DISABLED means that the component is not enabled.
+	//   "FAILED_PRECONDITION" - FAILED_PRECONDITION means that provisioning
+	// cannot proceed because of some characteristic of the member cluster.
+	//   "PROVISIONING" - PROVISIONING means that provisioning is in
+	// progress.
+	//   "ACTIVE" - ACTIVE means that the component is ready for use.
+	//   "STALLED" - STALLED means that provisioning could not be done.
+	//   "NEEDS_ATTENTION" - NEEDS_ATTENTION means that the component is
+	// ready, but some user intervention is required. (For example that the
+	// user should migrate workloads to a new control plane revision.)
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceMeshControlPlaneManagement) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshControlPlaneManagement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ServiceMeshFeatureState: **Service Mesh**: State for the whole Hub,
 // as analyzed by the Service Mesh Hub Controller.
 type ServiceMeshFeatureState struct {
@@ -2710,12 +4016,54 @@ func (s *ServiceMeshFeatureState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ServiceMeshMembershipSpec: **Service Mesh**: Spec for a single
+// Membership for the servicemesh feature
+type ServiceMeshMembershipSpec struct {
+	// ControlPlane: Enables automatic control plane management.
+	//
+	// Possible values:
+	//   "CONTROL_PLANE_MANAGEMENT_UNSPECIFIED" - Unspecified
+	//   "AUTOMATIC" - Google should provision a control plane revision and
+	// make it available in the cluster. Google will enroll this revision in
+	// a release channel and keep it up to date. The control plane revision
+	// may be a managed service, or a managed install.
+	//   "MANUAL" - User will manually configure the control plane (e.g. via
+	// CLI, or via the ControlPlaneRevision KRM API)
+	ControlPlane string `json:"controlPlane,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ControlPlane") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ControlPlane") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceMeshMembershipSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshMembershipSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ServiceMeshMembershipState: **Service Mesh**: State for a single
 // Membership, as analyzed by the Service Mesh Hub Controller.
 type ServiceMeshMembershipState struct {
 	// AnalysisMessages: Output only. Results of running Service Mesh
 	// analyzers.
 	AnalysisMessages []*ServiceMeshAnalysisMessage `json:"analysisMessages,omitempty"`
+
+	// ControlPlaneManagement: Output only. Status of control plane
+	// management
+	ControlPlaneManagement *ServiceMeshControlPlaneManagement `json:"controlPlaneManagement,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisMessages") to
 	// unconditionally include in API requests. By default, fields with
@@ -2737,6 +4085,38 @@ type ServiceMeshMembershipState struct {
 
 func (s *ServiceMeshMembershipState) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceMeshMembershipState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshStatusDetails: Structured and human-readable details for a
+// status.
+type ServiceMeshStatusDetails struct {
+	// Code: A machine-readable code that further describes a broad status.
+	Code string `json:"code,omitempty"`
+
+	// Details: Human-readable explanation of code.
+	Details string `json:"details,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceMeshStatusDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshStatusDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2819,6 +4199,49 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Status: Status specifies state for the subcomponent.
+type Status struct {
+	// Code: Code specifies AppDevExperienceFeature's subcomponent ready
+	// state.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Not set.
+	//   "OK" - AppDevExperienceFeature's specified subcomponent is ready.
+	//   "FAILED" - AppDevExperienceFeature's specified subcomponent ready
+	// state is false. This means AppDevExperienceFeature has encountered an
+	// issue that blocks all, or a portion, of its normal operation. See the
+	// `description` for more details.
+	//   "UNKNOWN" - AppDevExperienceFeature's specified subcomponent has a
+	// pending or unknown state.
+	Code string `json:"code,omitempty"`
+
+	// Description: Description is populated if Code is Failed, explaining
+	// why it has failed.
+	Description string `json:"description,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
 // method.
 type TestIamPermissionsRequest struct {
@@ -2885,6 +4308,38 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TypeMeta: TypeMeta is the type information needed for content
+// unmarshalling of Kubernetes resources in the manifest.
+type TypeMeta struct {
+	// ApiVersion: APIVersion of the resource (e.g. v1).
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// Kind: Kind of the resource (e.g. Deployment).
+	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TypeMeta) MarshalJSON() ([]byte, error) {
+	type NoMethod TypeMeta
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "gkehub.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
@@ -2942,7 +4397,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3114,7 +4569,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3313,7 +4768,7 @@ func (c *ProjectsLocationsFeaturesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3391,14 +4846,14 @@ func (c *ProjectsLocationsFeaturesCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent (project and location) where the Feature will be created. Specified in the format `projects/*/locations/*`.",
+	//       "description": "Required. The parent (project and location) where the Feature will be created. Specified in the format `projects/*/locations/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3490,7 +4945,7 @@ func (c *ProjectsLocationsFeaturesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3563,7 +5018,7 @@ func (c *ProjectsLocationsFeaturesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "The Feature resource name in the format `projects/*/locations/*/features/*`.",
+	//       "description": "Required. The Feature resource name in the format `projects/*/locations/*/features/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/features/[^/]+$",
 	//       "required": true,
@@ -3644,7 +5099,7 @@ func (c *ProjectsLocationsFeaturesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3715,7 +5170,7 @@ func (c *ProjectsLocationsFeaturesGetCall) Do(opts ...googleapi.CallOption) (*Fe
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The Feature resource name in the format `projects/*/locations/*/features/*`",
+	//       "description": "Required. The Feature resource name in the format `projects/*/locations/*/features/*`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/features/[^/]+$",
 	//       "required": true,
@@ -3758,13 +5213,17 @@ func (r *ProjectsLocationsFeaturesService) GetIamPolicy(resource string) *Projec
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsFeaturesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsFeaturesGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -3808,7 +5267,7 @@ func (c *ProjectsLocationsFeaturesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3879,7 +5338,7 @@ func (c *ProjectsLocationsFeaturesGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3997,7 +5456,7 @@ func (c *ProjectsLocationsFeaturesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4089,7 +5548,7 @@ func (c *ProjectsLocationsFeaturesListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent (project and location) where the Features will be listed. Specified in the format `projects/*/locations/*`.",
+	//       "description": "Required. The parent (project and location) where the Features will be listed. Specified in the format `projects/*/locations/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -4201,7 +5660,7 @@ func (c *ProjectsLocationsFeaturesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4274,14 +5733,14 @@ func (c *ProjectsLocationsFeaturesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The Feature resource name in the format `projects/*/locations/*/features/*`.",
+	//       "description": "Required. The Feature resource name in the format `projects/*/locations/*/features/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/features/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4358,7 +5817,7 @@ func (c *ProjectsLocationsFeaturesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4507,7 +5966,7 @@ func (c *ProjectsLocationsFeaturesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4601,6 +6060,1311 @@ func (c *ProjectsLocationsFeaturesTestIamPermissionsCall) Do(opts ...googleapi.C
 
 }
 
+// method id "gkehub.projects.locations.fleets.create":
+
+type ProjectsLocationsFleetsCreateCall struct {
+	s          *Service
+	parent     string
+	fleet      *Fleet
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a fleet.
+//
+// - parent: The parent (project and location) where the Fleet will be
+//   created. Specified in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsFleetsService) Create(parent string, fleet *Fleet) *ProjectsLocationsFleetsCreateCall {
+	c := &ProjectsLocationsFleetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.fleet = fleet
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFleetsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsFleetsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFleetsCreateCall) Context(ctx context.Context) *ProjectsLocationsFleetsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFleetsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFleetsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.fleet)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/fleets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.fleets.create" call.
+// Exactly one of *Fleet or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Fleet.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsFleetsCreateCall) Do(opts ...googleapi.CallOption) (*Fleet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Fleet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a fleet.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/fleets",
+	//   "httpMethod": "POST",
+	//   "id": "gkehub.projects.locations.fleets.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) where the Fleet will be created. Specified in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/fleets",
+	//   "request": {
+	//     "$ref": "Fleet"
+	//   },
+	//   "response": {
+	//     "$ref": "Fleet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkehub.projects.locations.fleets.delete":
+
+type ProjectsLocationsFleetsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Removes a Fleet. There must be no memberships remaining in
+// the Fleet.
+//
+// - name: The Fleet resource name in the format
+//   `projects/*/locations/*/fleets/*`.
+func (r *ProjectsLocationsFleetsService) Delete(name string) *ProjectsLocationsFleetsDeleteCall {
+	c := &ProjectsLocationsFleetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFleetsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsFleetsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFleetsDeleteCall) Context(ctx context.Context) *ProjectsLocationsFleetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFleetsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFleetsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.fleets.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsFleetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes a Fleet. There must be no memberships remaining in the Fleet.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/fleets/{fleetsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "gkehub.projects.locations.fleets.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The Fleet resource name in the format `projects/*/locations/*/fleets/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/fleets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkehub.projects.locations.fleets.get":
+
+type ProjectsLocationsFleetsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the details of a fleet.
+//
+// - name: The Fleet resource name in the format
+//   `projects/*/locations/*/fleets/*`.
+func (r *ProjectsLocationsFleetsService) Get(name string) *ProjectsLocationsFleetsGetCall {
+	c := &ProjectsLocationsFleetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFleetsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsFleetsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsFleetsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsFleetsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFleetsGetCall) Context(ctx context.Context) *ProjectsLocationsFleetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFleetsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFleetsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.fleets.get" call.
+// Exactly one of *Fleet or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Fleet.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsFleetsGetCall) Do(opts ...googleapi.CallOption) (*Fleet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Fleet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the details of a fleet.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/fleets/{fleetsId}",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.fleets.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The Fleet resource name in the format `projects/*/locations/*/fleets/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/fleets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "Fleet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkehub.projects.locations.fleets.patch":
+
+type ProjectsLocationsFleetsPatchCall struct {
+	s          *Service
+	name       string
+	fleet      *Fleet
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a fleet.
+//
+// - name: Output only. The full, unique resource name of this fleet in
+//   the format of
+//   `projects/{project}/locations/{location}/fleets/{fleet}`. Each GCP
+//   project can have at most one fleet resource, named "default".
+func (r *ProjectsLocationsFleetsService) Patch(name string, fleet *Fleet) *ProjectsLocationsFleetsPatchCall {
+	c := &ProjectsLocationsFleetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.fleet = fleet
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// fields to be updated;
+func (c *ProjectsLocationsFleetsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFleetsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFleetsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsFleetsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFleetsPatchCall) Context(ctx context.Context) *ProjectsLocationsFleetsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFleetsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFleetsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.fleet)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.fleets.patch" call.
+// Exactly one of *Fleet or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Fleet.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsFleetsPatchCall) Do(opts ...googleapi.CallOption) (*Fleet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Fleet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a fleet.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/fleets/{fleetsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "gkehub.projects.locations.fleets.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The full, unique resource name of this fleet in the format of `projects/{project}/locations/{location}/fleets/{fleet}`. Each GCP project can have at most one fleet resource, named \"default\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/fleets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The fields to be updated;",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "Fleet"
+	//   },
+	//   "response": {
+	//     "$ref": "Fleet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkehub.projects.locations.memberships.create":
+
+type ProjectsLocationsMembershipsCreateCall struct {
+	s          *Service
+	parent     string
+	membership *Membership
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new Membership. **This is currently only supported
+// for GKE clusters on Google Cloud**. To register other clusters,
+// follow the instructions at
+// https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster.
+//
+// - parent: The parent (project and location) where the Memberships
+//   will be created. Specified in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsMembershipsService) Create(parent string, membership *Membership) *ProjectsLocationsMembershipsCreateCall {
+	c := &ProjectsLocationsMembershipsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.membership = membership
+	return c
+}
+
+// MembershipId sets the optional parameter "membershipId": Required.
+// Client chosen ID for the membership. `membership_id` must be a valid
+// RFC 1123 compliant DNS label: 1. At most 63 characters in length 2.
+// It must consist of lower case alphanumeric characters or `-` 3. It
+// must start and end with an alphanumeric character Which can be
+// expressed as the regex: `[a-z0-9]([-a-z0-9]*[a-z0-9])?`, with a
+// maximum length of 63 characters.
+func (c *ProjectsLocationsMembershipsCreateCall) MembershipId(membershipId string) *ProjectsLocationsMembershipsCreateCall {
+	c.urlParams_.Set("membershipId", membershipId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMembershipsCreateCall) RequestId(requestId string) *ProjectsLocationsMembershipsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsCreateCall) Context(ctx context.Context) *ProjectsLocationsMembershipsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.membership)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/memberships")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new Membership. **This is currently only supported for GKE clusters on Google Cloud**. To register other clusters, follow the instructions at https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships",
+	//   "httpMethod": "POST",
+	//   "id": "gkehub.projects.locations.memberships.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "membershipId": {
+	//       "description": "Required. Client chosen ID for the membership. `membership_id` must be a valid RFC 1123 compliant DNS label: 1. At most 63 characters in length 2. It must consist of lower case alphanumeric characters or `-` 3. It must start and end with an alphanumeric character Which can be expressed as the regex: `[a-z0-9]([-a-z0-9]*[a-z0-9])?`, with a maximum length of 63 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) where the Memberships will be created. Specified in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/memberships",
+	//   "request": {
+	//     "$ref": "Membership"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkehub.projects.locations.memberships.delete":
+
+type ProjectsLocationsMembershipsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Removes a Membership. **This is currently only supported for
+// GKE clusters on Google Cloud**. To unregister other clusters, follow
+// the instructions at
+// https://cloud.google.com/anthos/multicluster-management/connect/unregistering-a-cluster.
+//
+// - name: The Membership resource name in the format
+//   `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsService) Delete(name string) *ProjectsLocationsMembershipsDeleteCall {
+	c := &ProjectsLocationsMembershipsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMembershipsDeleteCall) RequestId(requestId string) *ProjectsLocationsMembershipsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsDeleteCall) Context(ctx context.Context) *ProjectsLocationsMembershipsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes a Membership. **This is currently only supported for GKE clusters on Google Cloud**. To unregister other clusters, follow the instructions at https://cloud.google.com/anthos/multicluster-management/connect/unregistering-a-cluster.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships/{membershipsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "gkehub.projects.locations.memberships.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The Membership resource name in the format `projects/*/locations/*/memberships/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/memberships/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkehub.projects.locations.memberships.generateConnectManifest":
+
+type ProjectsLocationsMembershipsGenerateConnectManifestCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GenerateConnectManifest: Generates the manifest for deployment of the
+// GKE connect agent. **This method is used internally by
+// Google-provided libraries.** Most clients should not need to call
+// this method directly.
+//
+// - name: The Membership resource name the Agent will associate with,
+//   in the format `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsService) GenerateConnectManifest(name string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c := &ProjectsLocationsMembershipsGenerateConnectManifestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ImagePullSecretContent sets the optional parameter
+// "imagePullSecretContent": The image pull secret content for the
+// registry, if not public.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) ImagePullSecretContent(imagePullSecretContent string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("imagePullSecretContent", imagePullSecretContent)
+	return c
+}
+
+// IsUpgrade sets the optional parameter "isUpgrade": If true, generate
+// the resources for upgrade only. Some resources generated only for
+// installation (e.g. secrets) will be excluded.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) IsUpgrade(isUpgrade bool) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("isUpgrade", fmt.Sprint(isUpgrade))
+	return c
+}
+
+// Namespace sets the optional parameter "namespace": Namespace for GKE
+// Connect agent resources. Defaults to `gke-connect`. The Connect Agent
+// is authorized automatically when run in the default namespace.
+// Otherwise, explicit authorization must be granted with an additional
+// IAM binding.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Namespace(namespace string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("namespace", namespace)
+	return c
+}
+
+// Proxy sets the optional parameter "proxy": URI of a proxy if
+// connectivity from the agent to gkeconnect.googleapis.com requires the
+// use of a proxy. Format must be in the form
+// `http(s)://{proxy_address}`, depending on the HTTP/HTTPS protocol
+// supported by the proxy. This will direct the connect agent's outbound
+// traffic through a HTTP(S) proxy.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Proxy(proxy string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("proxy", proxy)
+	return c
+}
+
+// Registry sets the optional parameter "registry": The registry to
+// fetch the connect agent image from. Defaults to gcr.io/gkeconnect.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Registry(registry string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("registry", registry)
+	return c
+}
+
+// Version sets the optional parameter "version": The Connect agent
+// version to use. Defaults to the most current version.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Version(version string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("version", version)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Context(ctx context.Context) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:generateConnectManifest")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.generateConnectManifest" call.
+// Exactly one of *GenerateConnectManifestResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GenerateConnectManifestResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Do(opts ...googleapi.CallOption) (*GenerateConnectManifestResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GenerateConnectManifestResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates the manifest for deployment of the GKE connect agent. **This method is used internally by Google-provided libraries.** Most clients should not need to call this method directly.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships/{membershipsId}:generateConnectManifest",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.memberships.generateConnectManifest",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "imagePullSecretContent": {
+	//       "description": "Optional. The image pull secret content for the registry, if not public.",
+	//       "format": "byte",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "isUpgrade": {
+	//       "description": "Optional. If true, generate the resources for upgrade only. Some resources generated only for installation (e.g. secrets) will be excluded.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Required. The Membership resource name the Agent will associate with, in the format `projects/*/locations/*/memberships/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/memberships/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "namespace": {
+	//       "description": "Optional. Namespace for GKE Connect agent resources. Defaults to `gke-connect`. The Connect Agent is authorized automatically when run in the default namespace. Otherwise, explicit authorization must be granted with an additional IAM binding.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "proxy": {
+	//       "description": "Optional. URI of a proxy if connectivity from the agent to gkeconnect.googleapis.com requires the use of a proxy. Format must be in the form `http(s)://{proxy_address}`, depending on the HTTP/HTTPS protocol supported by the proxy. This will direct the connect agent's outbound traffic through a HTTP(S) proxy.",
+	//       "format": "byte",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "registry": {
+	//       "description": "Optional. The registry to fetch the connect agent image from. Defaults to gcr.io/gkeconnect.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "version": {
+	//       "description": "Optional. The Connect agent version to use. Defaults to the most current version.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:generateConnectManifest",
+	//   "response": {
+	//     "$ref": "GenerateConnectManifestResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkehub.projects.locations.memberships.get":
+
+type ProjectsLocationsMembershipsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the details of a Membership.
+//
+// - name: The Membership resource name in the format
+//   `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsService) Get(name string) *ProjectsLocationsMembershipsGetCall {
+	c := &ProjectsLocationsMembershipsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsMembershipsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsGetCall) Context(ctx context.Context) *ProjectsLocationsMembershipsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.get" call.
+// Exactly one of *Membership or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Membership.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsGetCall) Do(opts ...googleapi.CallOption) (*Membership, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Membership{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the details of a Membership.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships/{membershipsId}",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.memberships.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The Membership resource name in the format `projects/*/locations/*/memberships/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/memberships/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "Membership"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "gkehub.projects.locations.memberships.getIamPolicy":
 
 type ProjectsLocationsMembershipsGetIamPolicyCall struct {
@@ -4626,13 +7390,17 @@ func (r *ProjectsLocationsMembershipsService) GetIamPolicy(resource string) *Pro
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsMembershipsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsMembershipsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -4676,7 +7444,7 @@ func (c *ProjectsLocationsMembershipsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4747,7 +7515,7 @@ func (c *ProjectsLocationsMembershipsGetIamPolicyCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4763,6 +7531,633 @@ func (c *ProjectsLocationsMembershipsGetIamPolicyCall) Do(opts ...googleapi.Call
 	//   "path": "v1alpha/{+resource}:getIamPolicy",
 	//   "response": {
 	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkehub.projects.locations.memberships.list":
+
+type ProjectsLocationsMembershipsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Memberships in a given project and location.
+//
+// - parent: The parent (project and location) where the Memberships
+//   will be listed. Specified in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsMembershipsService) List(parent string) *ProjectsLocationsMembershipsListCall {
+	c := &ProjectsLocationsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Lists Memberships that
+// match the filter expression, following the syntax outlined in
+// https://google.aip.dev/160. Examples: - Name is `bar` in project
+// `foo-proj` and location `global`: name =
+// "projects/foo-proj/locations/global/membership/bar" - Memberships
+// that have a label called `foo`: labels.foo:* - Memberships that have
+// a label called `foo` whose value is `bar`: labels.foo = bar -
+// Memberships in the CREATING state: state = CREATING
+func (c *ProjectsLocationsMembershipsListCall) Filter(filter string) *ProjectsLocationsMembershipsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": One or more fields to
+// compare and use to sort the output. See
+// https://google.aip.dev/132#ordering.
+func (c *ProjectsLocationsMembershipsListCall) OrderBy(orderBy string) *ProjectsLocationsMembershipsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": When requesting a
+// 'page' of resources, `page_size` specifies number of resources to
+// return. If unspecified or set to 0, all resources will be returned.
+func (c *ProjectsLocationsMembershipsListCall) PageSize(pageSize int64) *ProjectsLocationsMembershipsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned by
+// previous call to `ListMemberships` which specifies the position in
+// the list from where to continue listing the resources.
+func (c *ProjectsLocationsMembershipsListCall) PageToken(pageToken string) *ProjectsLocationsMembershipsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsMembershipsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsListCall) Context(ctx context.Context) *ProjectsLocationsMembershipsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/memberships")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.list" call.
+// Exactly one of *ListMembershipsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListMembershipsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembershipsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListMembershipsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Memberships in a given project and location.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.memberships.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Lists Memberships that match the filter expression, following the syntax outlined in https://google.aip.dev/160. Examples: - Name is `bar` in project `foo-proj` and location `global`: name = \"projects/foo-proj/locations/global/membership/bar\" - Memberships that have a label called `foo`: labels.foo:* - Memberships that have a label called `foo` whose value is `bar`: labels.foo = bar - Memberships in the CREATING state: state = CREATING",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. One or more fields to compare and use to sort the output. See https://google.aip.dev/132#ordering.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. When requesting a 'page' of resources, `page_size` specifies number of resources to return. If unspecified or set to 0, all resources will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token returned by previous call to `ListMemberships` which specifies the position in the list from where to continue listing the resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) where the Memberships will be listed. Specified in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/memberships",
+	//   "response": {
+	//     "$ref": "ListMembershipsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMembershipsListCall) Pages(ctx context.Context, f func(*ListMembershipsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "gkehub.projects.locations.memberships.listAdmin":
+
+type ProjectsLocationsMembershipsListAdminCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListAdmin: Lists Memberships of admin clusters in a given project and
+// location. **This method is only used internally**.
+//
+// - parent: The parent (project and location) where the Memberships of
+//   admin cluster will be listed. Specified in the format
+//   `projects/*/locations/*`.
+func (r *ProjectsLocationsMembershipsService) ListAdmin(parent string) *ProjectsLocationsMembershipsListAdminCall {
+	c := &ProjectsLocationsMembershipsListAdminCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Lists Memberships of
+// admin clusters that match the filter expression.
+func (c *ProjectsLocationsMembershipsListAdminCall) Filter(filter string) *ProjectsLocationsMembershipsListAdminCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": One or more fields to
+// compare and use to sort the output. See
+// https://google.aip.dev/132#ordering.
+func (c *ProjectsLocationsMembershipsListAdminCall) OrderBy(orderBy string) *ProjectsLocationsMembershipsListAdminCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": When requesting a
+// 'page' of resources, `page_size` specifies number of resources to
+// return. If unspecified or set to 0, all resources will be returned.
+func (c *ProjectsLocationsMembershipsListAdminCall) PageSize(pageSize int64) *ProjectsLocationsMembershipsListAdminCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned by
+// previous call to `ListAdminClusterMemberships` which specifies the
+// position in the list from where to continue listing the resources.
+func (c *ProjectsLocationsMembershipsListAdminCall) PageToken(pageToken string) *ProjectsLocationsMembershipsListAdminCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsListAdminCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsListAdminCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsMembershipsListAdminCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsListAdminCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsListAdminCall) Context(ctx context.Context) *ProjectsLocationsMembershipsListAdminCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsListAdminCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsListAdminCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/memberships:listAdmin")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.listAdmin" call.
+// Exactly one of *ListAdminClusterMembershipsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListAdminClusterMembershipsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsMembershipsListAdminCall) Do(opts ...googleapi.CallOption) (*ListAdminClusterMembershipsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListAdminClusterMembershipsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Memberships of admin clusters in a given project and location. **This method is only used internally**.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships:listAdmin",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.memberships.listAdmin",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Lists Memberships of admin clusters that match the filter expression.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. One or more fields to compare and use to sort the output. See https://google.aip.dev/132#ordering.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. When requesting a 'page' of resources, `page_size` specifies number of resources to return. If unspecified or set to 0, all resources will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token returned by previous call to `ListAdminClusterMemberships` which specifies the position in the list from where to continue listing the resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) where the Memberships of admin cluster will be listed. Specified in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/memberships:listAdmin",
+	//   "response": {
+	//     "$ref": "ListAdminClusterMembershipsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMembershipsListAdminCall) Pages(ctx context.Context, f func(*ListAdminClusterMembershipsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "gkehub.projects.locations.memberships.patch":
+
+type ProjectsLocationsMembershipsPatchCall struct {
+	s          *Service
+	name       string
+	membership *Membership
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing Membership.
+//
+// - name: The Membership resource name in the format
+//   `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsService) Patch(name string, membership *Membership) *ProjectsLocationsMembershipsPatchCall {
+	c := &ProjectsLocationsMembershipsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.membership = membership
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMembershipsPatchCall) RequestId(requestId string) *ProjectsLocationsMembershipsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Mask
+// of fields to update.
+func (c *ProjectsLocationsMembershipsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMembershipsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsPatchCall) Context(ctx context.Context) *ProjectsLocationsMembershipsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.membership)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing Membership.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships/{membershipsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "gkehub.projects.locations.memberships.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The Membership resource name in the format `projects/*/locations/*/memberships/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/memberships/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Mask of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "Membership"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -4823,7 +8218,7 @@ func (c *ProjectsLocationsMembershipsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4972,7 +8367,7 @@ func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) Header() http.Heade
 
 func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5123,7 +8518,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5266,7 +8661,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5411,7 +8806,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5587,7 +8982,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

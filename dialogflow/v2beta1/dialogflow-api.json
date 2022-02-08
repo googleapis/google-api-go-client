@@ -1070,7 +1070,7 @@
                           ]
                         },
                         "detectIntent": {
-                          "description": "Processes a natural language query and returns structured, actionable data as a result. This method is not idempotent, because it may cause contexts and session entity types to be updated, which in turn might affect results of future queries. Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
+                          "description": "Processes a natural language query and returns structured, actionable data as a result. This method is not idempotent, because it may cause contexts and session entity types to be updated, which in turn might affect results of future queries. If you might use [Agent Assist](https://cloud.google.com/dialogflow/docs/#aa) or other CCAI products now or in the future, consider using AnalyzeContent instead of `DetectIntent`. `AnalyzeContent` has additional functionality for Agent Assist and other CCAI products. Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
                           "flatPath": "v2beta1/projects/{projectsId}/agent/environments/{environmentsId}/users/{usersId}/sessions/{sessionsId}:detectIntent",
                           "httpMethod": "POST",
                           "id": "dialogflow.projects.agent.environments.users.sessions.detectIntent",
@@ -2101,7 +2101,7 @@
                   ]
                 },
                 "detectIntent": {
-                  "description": "Processes a natural language query and returns structured, actionable data as a result. This method is not idempotent, because it may cause contexts and session entity types to be updated, which in turn might affect results of future queries. Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
+                  "description": "Processes a natural language query and returns structured, actionable data as a result. This method is not idempotent, because it may cause contexts and session entity types to be updated, which in turn might affect results of future queries. If you might use [Agent Assist](https://cloud.google.com/dialogflow/docs/#aa) or other CCAI products now or in the future, consider using AnalyzeContent instead of `DetectIntent`. `AnalyzeContent` has additional functionality for Agent Assist and other CCAI products. Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
                   "flatPath": "v2beta1/projects/{projectsId}/agent/sessions/{sessionsId}:detectIntent",
                   "httpMethod": "POST",
                   "id": "dialogflow.projects.agent.sessions.detectIntent",
@@ -4825,7 +4825,7 @@
                               ]
                             },
                             "detectIntent": {
-                              "description": "Processes a natural language query and returns structured, actionable data as a result. This method is not idempotent, because it may cause contexts and session entity types to be updated, which in turn might affect results of future queries. Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
+                              "description": "Processes a natural language query and returns structured, actionable data as a result. This method is not idempotent, because it may cause contexts and session entity types to be updated, which in turn might affect results of future queries. If you might use [Agent Assist](https://cloud.google.com/dialogflow/docs/#aa) or other CCAI products now or in the future, consider using AnalyzeContent instead of `DetectIntent`. `AnalyzeContent` has additional functionality for Agent Assist and other CCAI products. Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
                               "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/agent/environments/{environmentsId}/users/{usersId}/sessions/{sessionsId}:detectIntent",
                               "httpMethod": "POST",
                               "id": "dialogflow.projects.locations.agent.environments.users.sessions.detectIntent",
@@ -5491,7 +5491,7 @@
                       ]
                     },
                     "detectIntent": {
-                      "description": "Processes a natural language query and returns structured, actionable data as a result. This method is not idempotent, because it may cause contexts and session entity types to be updated, which in turn might affect results of future queries. Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
+                      "description": "Processes a natural language query and returns structured, actionable data as a result. This method is not idempotent, because it may cause contexts and session entity types to be updated, which in turn might affect results of future queries. If you might use [Agent Assist](https://cloud.google.com/dialogflow/docs/#aa) or other CCAI products now or in the future, consider using AnalyzeContent instead of `DetectIntent`. `AnalyzeContent` has additional functionality for Agent Assist and other CCAI products. Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
                       "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/agent/sessions/{sessionsId}:detectIntent",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agent.sessions.detectIntent",
@@ -7315,7 +7315,7 @@
       }
     }
   },
-  "revision": "20210918",
+  "revision": "20220119",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -7609,7 +7609,7 @@
       "id": "GoogleCloudDialogflowCxV3EnvironmentTestCasesConfig",
       "properties": {
         "enableContinuousRun": {
-          "description": "Whether to run test cases in TestCasesConfig.test_cases periodically. Default false. If set to ture, run once a day.",
+          "description": "Whether to run test cases in TestCasesConfig.test_cases periodically. Default false. If set to true, run once a day.",
           "type": "boolean"
         },
         "enablePredeploymentRun": {
@@ -8231,6 +8231,10 @@
           "description": "Always present for WebhookRequest. Ignored for WebhookResponse. The unique identifier of the current page. Format: `projects//locations//agents//flows//pages/`.",
           "type": "string"
         },
+        "displayName": {
+          "description": "Always present for WebhookRequest. Ignored for WebhookResponse. The display name of the current page.",
+          "type": "string"
+        },
         "formInfo": {
           "$ref": "GoogleCloudDialogflowCxV3PageInfoFormInfo",
           "description": "Optional for both WebhookRequest and WebhookResponse. Information about the form."
@@ -8371,6 +8375,10 @@
           "$ref": "GoogleCloudDialogflowCxV3ResponseMessagePlayAudio",
           "description": "Signal that the client should play an audio clip hosted at a client-specific URI. Dialogflow uses this to construct mixed_audio. However, Dialogflow itself does not try to read or process the URI in any way."
         },
+        "telephonyTransferCall": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall",
+          "description": "A signal that the client should transfer the phone call connected to this agent to a third-party endpoint."
+        },
         "text": {
           "$ref": "GoogleCloudDialogflowCxV3ResponseMessageText",
           "description": "Returns a text response."
@@ -8480,6 +8488,17 @@
         },
         "audioUri": {
           "description": "Required. URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall": {
+      "description": "Represents the signal that telles the client to transfer the phone call connected to the agent to a third-party endpoint.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall",
+      "properties": {
+        "phoneNumber": {
+          "description": "Transfer the call to a phone number in [E.164 format](https://en.wikipedia.org/wiki/E.164).",
           "type": "string"
         }
       },
@@ -9278,7 +9297,7 @@
       "id": "GoogleCloudDialogflowCxV3beta1EnvironmentTestCasesConfig",
       "properties": {
         "enableContinuousRun": {
-          "description": "Whether to run test cases in TestCasesConfig.test_cases periodically. Default false. If set to ture, run once a day.",
+          "description": "Whether to run test cases in TestCasesConfig.test_cases periodically. Default false. If set to true, run once a day.",
           "type": "boolean"
         },
         "enablePredeploymentRun": {
@@ -9900,6 +9919,10 @@
           "description": "Always present for WebhookRequest. Ignored for WebhookResponse. The unique identifier of the current page. Format: `projects//locations//agents//flows//pages/`.",
           "type": "string"
         },
+        "displayName": {
+          "description": "Always present for WebhookRequest. Ignored for WebhookResponse. The display name of the current page.",
+          "type": "string"
+        },
         "formInfo": {
           "$ref": "GoogleCloudDialogflowCxV3beta1PageInfoFormInfo",
           "description": "Optional for both WebhookRequest and WebhookResponse. Information about the form."
@@ -10040,6 +10063,10 @@
           "$ref": "GoogleCloudDialogflowCxV3beta1ResponseMessagePlayAudio",
           "description": "Signal that the client should play an audio clip hosted at a client-specific URI. Dialogflow uses this to construct mixed_audio. However, Dialogflow itself does not try to read or process the URI in any way."
         },
+        "telephonyTransferCall": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall",
+          "description": "A signal that the client should transfer the phone call connected to this agent to a third-party endpoint."
+        },
         "text": {
           "$ref": "GoogleCloudDialogflowCxV3beta1ResponseMessageText",
           "description": "Returns a text response."
@@ -10149,6 +10176,17 @@
         },
         "audioUri": {
           "description": "Required. URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall": {
+      "description": "Represents the signal that telles the client to transfer the phone call connected to the agent to a third-party endpoint.",
+      "id": "GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall",
+      "properties": {
+        "phoneNumber": {
+          "description": "Transfer the call to a phone number in [E.164 format](https://en.wikipedia.org/wiki/E.164).",
           "type": "string"
         }
       },
@@ -10966,6 +11004,20 @@
           "description": "The suggestion results payload that this notification refers to.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2SuggestionResult"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2ImportDocumentsResponse": {
+      "description": "Response message for Documents.ImportDocuments.",
+      "id": "GoogleCloudDialogflowV2ImportDocumentsResponse",
+      "properties": {
+        "warnings": {
+          "description": "Includes details about skipped documents or any other warnings.",
+          "items": {
+            "$ref": "GoogleRpcStatus"
           },
           "type": "array"
         }
@@ -11886,6 +11938,10 @@
       "description": "Metadata in google::longrunning::Operation for Knowledge operations.",
       "id": "GoogleCloudDialogflowV2KnowledgeOperationMetadata",
       "properties": {
+        "knowledgeBase": {
+          "description": "The name of the knowledge base interacted with during the operation.",
+          "type": "string"
+        },
         "state": {
           "description": "Output only. The current state of this operation.",
           "enum": [
@@ -11915,7 +11971,7 @@
           "type": "string"
         },
         "createTime": {
-          "description": "Output only. The time when the message was created.",
+          "description": "Output only. The time when the message was created in Contact Center AI.",
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
@@ -11930,7 +11986,7 @@
           "readOnly": true
         },
         "name": {
-          "description": "The unique identifier of the message. Format: `projects//locations//conversations//messages/`.",
+          "description": "Optional. The unique identifier of the message. Format: `projects//locations//conversations//messages/`.",
           "type": "string"
         },
         "participant": {
@@ -11954,6 +12010,16 @@
           ],
           "readOnly": true,
           "type": "string"
+        },
+        "sendTime": {
+          "description": "Optional. The time when the message was sent.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "sentimentAnalysis": {
+          "$ref": "GoogleCloudDialogflowV2SentimentAnalysisResult",
+          "description": "Output only. The sentiment analysis result for the message.",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -12150,6 +12216,26 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2SmartReplyAnswer": {
+      "description": "Represents a smart reply answer.",
+      "id": "GoogleCloudDialogflowV2SmartReplyAnswer",
+      "properties": {
+        "answerRecord": {
+          "description": "The name of answer record, in the format of \"projects//locations//answerRecords/\"",
+          "type": "string"
+        },
+        "confidence": {
+          "description": "Smart reply confidence. The system's confidence score that this reply is a good match for this conversation, as a value from 0.0 (completely uncertain) to 1.0 (completely certain).",
+          "format": "float",
+          "type": "number"
+        },
+        "reply": {
+          "description": "The content of the reply.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2SuggestArticlesResponse": {
       "description": "The response message for Participants.SuggestArticles.",
       "id": "GoogleCloudDialogflowV2SuggestArticlesResponse",
@@ -12196,6 +12282,30 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2SuggestSmartRepliesResponse": {
+      "description": "The response message for Participants.SuggestSmartReplies.",
+      "id": "GoogleCloudDialogflowV2SuggestSmartRepliesResponse",
+      "properties": {
+        "contextSize": {
+          "description": "Number of messages prior to and including latest_message to compile the suggestion. It may be smaller than the SuggestSmartRepliesRequest.context_size field in the request if there aren't that many messages in the conversation.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "latestMessage": {
+          "description": "The name of the latest conversation message used to compile suggestion for. Format: `projects//locations//conversations//messages/`.",
+          "type": "string"
+        },
+        "smartReplyAnswers": {
+          "description": "Output only. Multiple reply options provided by smart reply service. The order is based on the rank of the model prediction. The maximum number of the returned replies is set in SmartReplyConfig.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2SmartReplyAnswer"
+          },
+          "readOnly": true,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2SuggestionResult": {
       "description": "One response of different type of suggestion response which is used in the response of Participants.AnalyzeContent and Participants.AnalyzeContent, as well as HumanAgentAssistantEvent.",
       "id": "GoogleCloudDialogflowV2SuggestionResult",
@@ -12211,6 +12321,10 @@
         "suggestFaqAnswersResponse": {
           "$ref": "GoogleCloudDialogflowV2SuggestFaqAnswersResponse",
           "description": "SuggestFaqAnswersResponse if request is for FAQ_ANSWER."
+        },
+        "suggestSmartRepliesResponse": {
+          "$ref": "GoogleCloudDialogflowV2SuggestSmartRepliesResponse",
+          "description": "SuggestSmartRepliesResponse if request is for SMART_REPLY."
         }
       },
       "type": "object"
@@ -12366,9 +12480,9 @@
           ],
           "enumDescriptions": [
             "Not specified. This value should never be used.",
-            "Standard tier.",
-            "Enterprise tier (Essentials).",
-            "Enterprise tier (Plus)."
+            "Trial Edition, previously known as Standard Edition.",
+            "Essentials Edition, previously known as Enterprise Essential Edition.",
+            "Essentials Edition (same as TIER_ENTERPRISE), previously known as Enterprise Plus Edition."
           ],
           "type": "string"
         },
@@ -12474,6 +12588,10 @@
       "description": "The request message for Participants.AnalyzeContent.",
       "id": "GoogleCloudDialogflowV2beta1AnalyzeContentRequest",
       "properties": {
+        "assistQueryParams": {
+          "$ref": "GoogleCloudDialogflowV2beta1AssistQueryParameters",
+          "description": "Parameters for a human assist query."
+        },
         "eventInput": {
           "$ref": "GoogleCloudDialogflowV2beta1EventInput",
           "description": "An input event to send to Dialogflow."
@@ -12655,6 +12773,20 @@
         "uri": {
           "description": "The article URI.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1AssistQueryParameters": {
+      "description": "Represents the parameters of human assist query.",
+      "id": "GoogleCloudDialogflowV2beta1AssistQueryParameters",
+      "properties": {
+        "documentsMetadataFilters": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Key-value filters on the metadata of documents returned by article suggestion. If specified, article suggestion only returns suggested documents that match all filters in their Document.metadata. Multiple values for a metadata key should be concatenated by comma. For example, filters to match all documents that have 'US' or 'CA' in their market metadata values and 'agent' in their user metadata values will be ``` documents_metadata_filters { key: \"market\" value: \"US,CA\" } documents_metadata_filters { key: \"user\" value: \"agent\" } ```",
+          "type": "object"
         }
       },
       "type": "object"
@@ -13762,6 +13894,18 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessConfig": {
+      "description": "Config to process conversation.",
+      "id": "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessConfig",
+      "properties": {
+        "recentSentencesCount": {
+          "description": "Number of recent non-small-talk sentences to use as context for article and FAQ suggestion",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigMessageAnalysisConfig": {
       "description": "Configuration for analyses to run on each conversation message.",
       "id": "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigMessageAnalysisConfig",
@@ -13802,6 +13946,10 @@
         "conversationModelConfig": {
           "$ref": "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig",
           "description": "Configs of custom conversation model."
+        },
+        "conversationProcessConfig": {
+          "$ref": "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessConfig",
+          "description": "Configs for processing conversation."
         },
         "enableEventBasedSuggestion": {
           "description": "Automatically iterates all participants and tries to compile suggestions. Supported features: ARTICLE_SUGGESTION, FAQ, DIALOGFLOW_ASSIST.",
@@ -15470,6 +15618,10 @@
       "description": "Metadata in google::longrunning::Operation for Knowledge operations.",
       "id": "GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata",
       "properties": {
+        "knowledgeBase": {
+          "description": "The name of the knowledge base interacted with during the operation.",
+          "type": "string"
+        },
         "state": {
           "description": "Required. Output only. The current state of this operation.",
           "enum": [
@@ -15937,6 +16089,13 @@
       "description": "Represents a conversation participant (human agent, virtual agent, end-user).",
       "id": "GoogleCloudDialogflowV2beta1Participant",
       "properties": {
+        "documentsMetadataFilters": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. Key-value filters on the metadata of documents returned by article suggestion. If specified, article suggestion only returns suggested documents that match all filters in their Document.metadata. Multiple values for a metadata key should be concatenated by comma. For example, filters to match all documents that have 'US' or 'CA' in their market metadata values and 'agent' in their user metadata values will be ``` documents_metadata_filters { key: \"market\" value: \"US,CA\" } documents_metadata_filters { key: \"user\" value: \"agent\" } ```",
+          "type": "object"
+        },
         "name": {
           "description": "Optional. The unique identifier of this participant. Format: `projects//locations//conversations//participants/`.",
           "type": "string"
@@ -16393,7 +16552,7 @@
       "id": "GoogleCloudDialogflowV2beta1SpeechToTextConfig",
       "properties": {
         "speechModelVariant": {
-          "description": "Optional. The speech model used in speech to text. `SPEECH_MODEL_VARIANT_UNSPECIFIED`, `USE_BEST_AVAILABLE` will be treated as `USE_ENHANCED`. It can be overridden in AnalyzeContentRequest and StreamingAnalyzeContentRequest request.",
+          "description": "The speech model used in speech to text. `SPEECH_MODEL_VARIANT_UNSPECIFIED`, `USE_BEST_AVAILABLE` will be treated as `USE_ENHANCED`. It can be overridden in AnalyzeContentRequest and StreamingAnalyzeContentRequest request. If enhanced model variant is specified and an enhanced version of the specified model for the language does not exist, then it would emit an error.",
           "enum": [
             "SPEECH_MODEL_VARIANT_UNSPECIFIED",
             "USE_BEST_AVAILABLE",
@@ -16430,6 +16589,10 @@
       "description": "The request message for Participants.SuggestArticles.",
       "id": "GoogleCloudDialogflowV2beta1SuggestArticlesRequest",
       "properties": {
+        "assistQueryParams": {
+          "$ref": "GoogleCloudDialogflowV2beta1AssistQueryParameters",
+          "description": "Optional. Parameters for a human assist query."
+        },
         "contextSize": {
           "description": "Optional. Max number of messages prior to and including latest_message to use as context when compiling the suggestion. By default 20 and at most 50.",
           "format": "int32",
@@ -16469,6 +16632,10 @@
       "description": "The request message for Participants.SuggestFaqAnswers.",
       "id": "GoogleCloudDialogflowV2beta1SuggestFaqAnswersRequest",
       "properties": {
+        "assistQueryParams": {
+          "$ref": "GoogleCloudDialogflowV2beta1AssistQueryParameters",
+          "description": "Optional. Parameters for a human assist query."
+        },
         "contextSize": {
           "description": "Optional. Max number of messages prior to and including [latest_message] to use as context when compiling the suggestion. By default 20 and at most 50.",
           "format": "int32",

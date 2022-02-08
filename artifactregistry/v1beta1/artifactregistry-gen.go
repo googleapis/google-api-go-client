@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -238,72 +238,19 @@ type ProjectsLocationsRepositoriesPackagesVersionsService struct {
 	s *Service
 }
 
-// AptArtifact: A detailed representation of an Apt artifact.
-// Information in the record is derived from the archive's control file.
-// See https://www.debian.org/doc/debian-policy/ch-controlfields.html
-type AptArtifact struct {
-	// Architecture: Output only. Operating system architecture of the
-	// artifact.
-	Architecture string `json:"architecture,omitempty"`
-
-	// Component: Output only. Repository component of the artifact.
-	Component string `json:"component,omitempty"`
-
-	// ControlFile: Output only. Contents of the artifact's control metadata
-	// file.
-	ControlFile string `json:"controlFile,omitempty"`
-
-	// Name: Output only. The Artifact Registry resource name of the
-	// artifact.
-	Name string `json:"name,omitempty"`
-
-	// PackageName: Output only. The Apt package name of the artifact.
-	PackageName string `json:"packageName,omitempty"`
-
-	// PackageType: Output only. An artifact is a binary or source package.
-	//
-	// Possible values:
-	//   "PACKAGE_TYPE_UNSPECIFIED" - Package type is not specified.
-	//   "BINARY" - Binary package.
-	//   "SOURCE" - Source package.
-	PackageType string `json:"packageType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Architecture") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Architecture") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AptArtifact) MarshalJSON() ([]byte, error) {
-	type NoMethod AptArtifact
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
+	// Members: Specifies the principals requesting access for a Cloud
 	// Platform resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
@@ -337,8 +284,8 @@ type Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -494,6 +441,7 @@ type Hash struct {
 	// Possible values:
 	//   "HASH_TYPE_UNSPECIFIED" - Unspecified.
 	//   "SHA256" - SHA256 hash.
+	//   "MD5" - MD5 hash.
 	Type string `json:"type,omitempty"`
 
 	// Value: The hash value.
@@ -518,200 +466,6 @@ type Hash struct {
 
 func (s *Hash) MarshalJSON() ([]byte, error) {
 	type NoMethod Hash
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ImportAptArtifactsErrorInfo: Error information explaining why a
-// package was not imported.
-type ImportAptArtifactsErrorInfo struct {
-	// Error: The detailed error status.
-	Error *Status `json:"error,omitempty"`
-
-	// GcsSource: Google Cloud Storage location requested.
-	GcsSource *ImportAptArtifactsGcsSource `json:"gcsSource,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Error") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Error") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImportAptArtifactsErrorInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod ImportAptArtifactsErrorInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ImportAptArtifactsGcsSource: Google Cloud Storage location where the
-// artifacts currently reside.
-type ImportAptArtifactsGcsSource struct {
-	// Uris: Cloud Storage paths URI (e.g., gs://my_bucket//my_object).
-	Uris []string `json:"uris,omitempty"`
-
-	// UseWildcards: Supports URI wildcards for matching multiple objects
-	// from a single URI.
-	UseWildcards bool `json:"useWildcards,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Uris") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Uris") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImportAptArtifactsGcsSource) MarshalJSON() ([]byte, error) {
-	type NoMethod ImportAptArtifactsGcsSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ImportAptArtifactsResponse: The response message from importing
-// artifacts.
-type ImportAptArtifactsResponse struct {
-	// AptArtifacts: The Apt artifacts updated.
-	AptArtifacts []*AptArtifact `json:"aptArtifacts,omitempty"`
-
-	// Errors: Detailed error info for packages that were not imported.
-	Errors []*ImportAptArtifactsErrorInfo `json:"errors,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AptArtifacts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AptArtifacts") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImportAptArtifactsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ImportAptArtifactsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ImportYumArtifactsErrorInfo: Error information explaining why a
-// package was not imported.
-type ImportYumArtifactsErrorInfo struct {
-	// Error: The detailed error status.
-	Error *Status `json:"error,omitempty"`
-
-	// GcsSource: Google Cloud Storage location requested.
-	GcsSource *ImportYumArtifactsGcsSource `json:"gcsSource,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Error") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Error") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImportYumArtifactsErrorInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod ImportYumArtifactsErrorInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ImportYumArtifactsGcsSource: Google Cloud Storage location where the
-// artifacts currently reside.
-type ImportYumArtifactsGcsSource struct {
-	// Uris: Cloud Storage paths URI (e.g., gs://my_bucket//my_object).
-	Uris []string `json:"uris,omitempty"`
-
-	// UseWildcards: Supports URI wildcards for matching multiple objects
-	// from a single URI.
-	UseWildcards bool `json:"useWildcards,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Uris") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Uris") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImportYumArtifactsGcsSource) MarshalJSON() ([]byte, error) {
-	type NoMethod ImportYumArtifactsGcsSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ImportYumArtifactsResponse: The response message from importing
-// artifacts.
-type ImportYumArtifactsResponse struct {
-	// Errors: Detailed error info for packages that were not imported.
-	Errors []*ImportYumArtifactsErrorInfo `json:"errors,omitempty"`
-
-	// YumArtifacts: The yum artifacts updated.
-	YumArtifacts []*YumArtifact `json:"yumArtifacts,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Errors") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Errors") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImportYumArtifactsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ImportYumArtifactsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1091,17 +845,17 @@ func (s *Package) MarshalJSON() ([]byte, error) {
 
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members` to
-// a single `role`. Members can be user accounts, service accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of permissions; each `role` can be an IAM predefined role or a
-// user-created custom role. For some types of Google Cloud resources, a
-// `binding` can also specify a `condition`, which is a logical
-// expression that allows access to a resource only if the expression
-// evaluates to `true`. A condition can add constraints based on
-// attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -1124,9 +878,15 @@ func (s *Package) MarshalJSON() ([]byte, error) {
 // For a description of IAM and its features, see the IAM documentation
 // (https://cloud.google.com/iam/docs/).
 type Policy struct {
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -1205,7 +965,6 @@ type Repository struct {
 	//   "DOCKER" - Docker package format.
 	//   "MAVEN" - Maven package format.
 	//   "NPM" - NPM package format.
-	//   "PYPI" - PyPI package format. Deprecated, use PYTHON instead.
 	//   "APT" - APT package format.
 	//   "YUM" - YUM package format.
 	//   "PYTHON" - Python package format.
@@ -1347,7 +1106,8 @@ type Tag struct {
 
 	// Version: The name of the version the tag refers to, for example:
 	// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/ve
-	// rsions/sha256:5243811"
+	// rsions/sha256:5243811" If the package or version ID parts contain
+	// slashes, the slashes are escaped.
 	Version string `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1443,122 +1203,6 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UploadAptArtifactMediaResponse: The response to upload an artifact.
-type UploadAptArtifactMediaResponse struct {
-	// Operation: Operation to be returned to the user.
-	Operation *Operation `json:"operation,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Operation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Operation") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadAptArtifactMediaResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadAptArtifactMediaResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadAptArtifactResponse: The response of the completed artifact
-// upload operation. This response is contained in the Operation and
-// available to users.
-type UploadAptArtifactResponse struct {
-	// AptArtifacts: The Apt artifacts updated.
-	AptArtifacts []*AptArtifact `json:"aptArtifacts,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AptArtifacts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AptArtifacts") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadAptArtifactResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadAptArtifactResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadYumArtifactMediaResponse: The response to upload an artifact.
-type UploadYumArtifactMediaResponse struct {
-	// Operation: Operation to be returned to the user.
-	Operation *Operation `json:"operation,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Operation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Operation") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadYumArtifactMediaResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadYumArtifactMediaResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadYumArtifactResponse: The response of the completed artifact
-// upload operation. This response is contained in the Operation and
-// available to users.
-type UploadYumArtifactResponse struct {
-	// YumArtifacts: The Apt artifacts updated.
-	YumArtifacts []*YumArtifact `json:"yumArtifacts,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "YumArtifacts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "YumArtifacts") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadYumArtifactResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadYumArtifactResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Version: The body of a version resource. A version resource
 // represents a collection of components, such as files and other data.
 // This may correspond to a version in many package management schemes.
@@ -1606,50 +1250,6 @@ type Version struct {
 
 func (s *Version) MarshalJSON() ([]byte, error) {
 	type NoMethod Version
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// YumArtifact: A detailed representation of a Yum artifact.
-type YumArtifact struct {
-	// Architecture: Output only. Operating system architecture of the
-	// artifact.
-	Architecture string `json:"architecture,omitempty"`
-
-	// Name: Output only. The Artifact Registry resource name of the
-	// artifact.
-	Name string `json:"name,omitempty"`
-
-	// PackageName: Output only. The yum package name of the artifact.
-	PackageName string `json:"packageName,omitempty"`
-
-	// PackageType: Output only. An artifact is a binary or source package.
-	//
-	// Possible values:
-	//   "PACKAGE_TYPE_UNSPECIFIED" - Package type is not specified.
-	//   "BINARY" - Binary package (.rpm). .rpm
-	//   "SOURCE" - Source package (.srpm).
-	PackageType string `json:"packageType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Architecture") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Architecture") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *YumArtifact) MarshalJSON() ([]byte, error) {
-	type NoMethod YumArtifact
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1711,7 +1311,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1884,7 +1484,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2070,7 +1670,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2218,7 +1818,7 @@ func (c *ProjectsLocationsRepositoriesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2291,7 +1891,7 @@ func (c *ProjectsLocationsRepositoriesCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The name of the parent resource where the repository will be created.",
+	//       "description": "Required. The name of the parent resource where the repository will be created.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2366,7 +1966,7 @@ func (c *ProjectsLocationsRepositoriesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2434,7 +2034,7 @@ func (c *ProjectsLocationsRepositoriesDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the repository to delete.",
+	//       "description": "Required. The name of the repository to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -2509,7 +2109,7 @@ func (c *ProjectsLocationsRepositoriesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2580,7 +2180,7 @@ func (c *ProjectsLocationsRepositoriesGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the repository to retrieve.",
+	//       "description": "Required. The name of the repository to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -2622,13 +2222,17 @@ func (r *ProjectsLocationsRepositoriesService) GetIamPolicy(resource string) *Pr
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsRepositoriesGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -2672,7 +2276,7 @@ func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2743,7 +2347,7 @@ func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2790,7 +2394,7 @@ func (r *ProjectsLocationsRepositoriesService) List(parent string) *ProjectsLoca
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of repositories to return.
+// of repositories to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2840,7 +2444,7 @@ func (c *ProjectsLocationsRepositoriesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2911,7 +2515,7 @@ func (c *ProjectsLocationsRepositoriesListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of repositories to return.",
+	//       "description": "The maximum number of repositories to return. Maximum page size is 1,000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2922,7 +2526,7 @@ func (c *ProjectsLocationsRepositoriesListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the parent resource whose repositories will be listed.",
+	//       "description": "Required. The name of the parent resource whose repositories will be listed.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3019,7 +2623,7 @@ func (c *ProjectsLocationsRepositoriesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3169,7 +2773,7 @@ func (c *ProjectsLocationsRepositoriesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3314,7 +2918,7 @@ func (c *ProjectsLocationsRepositoriesTestIamPermissionsCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3466,7 +3070,7 @@ func (c *ProjectsLocationsRepositoriesFilesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesFilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3641,7 +3245,7 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesFilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3815,7 +3419,7 @@ func (c *ProjectsLocationsRepositoriesPackagesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPackagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3883,7 +3487,7 @@ func (c *ProjectsLocationsRepositoriesPackagesDeleteCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the package to delete.",
+	//       "description": "Required. The name of the package to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/packages/[^/]+$",
 	//       "required": true,
@@ -3958,7 +3562,7 @@ func (c *ProjectsLocationsRepositoriesPackagesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPackagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4029,7 +3633,7 @@ func (c *ProjectsLocationsRepositoriesPackagesGetCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the package to retrieve.",
+	//       "description": "Required. The name of the package to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/packages/[^/]+$",
 	//       "required": true,
@@ -4070,7 +3674,7 @@ func (r *ProjectsLocationsRepositoriesPackagesService) List(parent string) *Proj
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of packages to return.
+// of packages to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesPackagesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesPackagesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4120,7 +3724,7 @@ func (c *ProjectsLocationsRepositoriesPackagesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPackagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4191,7 +3795,7 @@ func (c *ProjectsLocationsRepositoriesPackagesListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of packages to return.",
+	//       "description": "The maximum number of packages to return. Maximum page size is 1,000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4202,7 +3806,7 @@ func (c *ProjectsLocationsRepositoriesPackagesListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the parent resource whose packages will be listed.",
+	//       "description": "Required. The name of the parent resource whose packages will be listed.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -4298,7 +3902,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4443,7 +4047,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4586,7 +4190,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4709,7 +4313,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Filter(filter string
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of tags to return.
+// of tags to return. Maximum page size is 10,000.
 func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesPackagesTagsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4759,7 +4363,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Header() http.Header
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4835,7 +4439,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of tags to return.",
+	//       "description": "The maximum number of tags to return. Maximum page size is 10,000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4946,7 +4550,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5101,7 +4705,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsDeleteCall) Header() http.
 
 func (c *ProjectsLocationsRepositoriesPackagesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5263,7 +4867,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsGetCall) Header() http.Hea
 
 func (c *ProjectsLocationsRepositoriesPackagesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5389,15 +4993,15 @@ func (r *ProjectsLocationsRepositoriesPackagesVersionsService) List(parent strin
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sorting field and
-// order
+// OrderBy sets the optional parameter "orderBy": The field to order the
+// results by.
 func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) OrderBy(orderBy string) *ProjectsLocationsRepositoriesPackagesVersionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of versions to return.
+// of versions to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesPackagesVersionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5461,7 +5065,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) Header() http.He
 
 func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5532,12 +5136,12 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "orderBy": {
-	//       "description": "Optional. Sorting field and order",
+	//       "description": "Optional. The field to order the results by.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of versions to return.",
+	//       "description": "The maximum number of versions to return. Maximum page size is 1,000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

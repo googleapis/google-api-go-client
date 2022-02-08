@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -278,9 +278,12 @@ type ActionResponse struct {
 	//   "NEW_MESSAGE" - Post as a new message in the topic.
 	//   "UPDATE_MESSAGE" - Update the bot's message. This is only permitted
 	// on a CARD_CLICKED event where the message sender type is BOT.
-	//   "REQUEST_CONFIG" - Update a message, with cards only. (Only after a
-	// MESSAGE event with a matched url, or a CARD_CLICKED event on a human
-	// created message).
+	//   "UPDATE_USER_MESSAGE_CARDS" - Update the cards on a user's message.
+	// This is only permitted as a response to a MESSAGE event with a
+	// matched url, or a CARD_CLICKED event where the message sender type is
+	// HUMAN. Text will be ignored.
+	//   "REQUEST_CONFIG" - Privately ask the user for additional auth or
+	// config.
 	Type string `json:"type,omitempty"`
 
 	// Url: URL for users to auth or config. (Only for REQUEST_CONFIG
@@ -1011,7 +1014,7 @@ type DeprecatedEvent struct {
 	//   "CANCEL_DIALOG" - For native cancellation button.
 	DialogEventType string `json:"dialogEventType,omitempty"`
 
-	// EventTime: The timestamp indicating when the event was dispatched.
+	// EventTime: The timestamp indicating when the event occurred.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// IsDialogEvent: Whether or not this event is related to dialogs
@@ -1166,6 +1169,44 @@ type DriveDataRef struct {
 
 func (s *DriveDataRef) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveDataRef
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DynamiteIntegrationLogEntry: JSON payload of error messages. If the
+// Cloud Logging API is enabled, these error messages are logged to
+// Google Cloud Logging (https://cloud.google.com/logging/docs).
+type DynamiteIntegrationLogEntry struct {
+	// Deployment: The deployment that caused the error. For Chat bots built
+	// in Apps Script, this is the deployment ID defined by Apps Script.
+	Deployment string `json:"deployment,omitempty"`
+
+	// DeploymentFunction: The unencrypted `callback_method` name that was
+	// running when the error was encountered.
+	DeploymentFunction string `json:"deploymentFunction,omitempty"`
+
+	// Error: The error code and message.
+	Error *Status `json:"error,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Deployment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Deployment") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DynamiteIntegrationLogEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamiteIntegrationLogEntry
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2854,6 +2895,36 @@ func (s *ListSpacesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MatchedUrl: A matched url in a Chat message. Chat bots can unfurl
+// matched URLs. For more information, refer to Unfurl links
+// (/chat/how-tos/link-unfurling).
+type MatchedUrl struct {
+	// Url: The url that was matched.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Url") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Url") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MatchedUrl) MarshalJSON() ([]byte, error) {
+	type NoMethod MatchedUrl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Media: Media resource.
 type Media struct {
 	// ResourceName: Name of the media resource.
@@ -2888,16 +2959,18 @@ func (s *Media) MarshalJSON() ([]byte, error) {
 
 // Membership: Represents a membership relation in Google Chat.
 type Membership struct {
-	// CreateTime: The creation time of the membership a.k.a the time at
-	// which the member joined the space, if applicable.
+	// CreateTime: Output only. The creation time of the membership a.k.a.
+	// the time at which the member joined the space, if applicable.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Member: A user in Google Chat.
+	// Member: A user in Google Chat. Represents a person
+	// (https://developers.google.com/people/api/rest/v1/people) in the
+	// People API. Format: `users/{person}`
 	Member *User `json:"member,omitempty"`
 
 	Name string `json:"name,omitempty"`
 
-	// State: State of the membership.
+	// State: Output only. State of the membership.
 	//
 	// Possible values:
 	//   "MEMBERSHIP_STATE_UNSPECIFIED" - Default, do not use.
@@ -2972,6 +3045,13 @@ type Message struct {
 	// field will be same as create_time.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 
+	// MatchedUrl: A URL in `spaces.messages.text` that matches a link
+	// unfurling pattern. For more information, refer to Unfurl links
+	// (/chat/how-tos/link-unfurling).
+	MatchedUrl *MatchedUrl `json:"matchedUrl,omitempty"`
+
+	// Name: Resource name in the form `spaces/*/messages/*`. Example:
+	// `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`
 	Name string `json:"name,omitempty"`
 
 	// PreviewText: Text for generating preview chips. This text will not be
@@ -3191,30 +3271,31 @@ func (s *SlashCommandMetadata) MarshalJSON() ([]byte, error) {
 // Space: A space in Google Chat. Spaces are conversations between two
 // or more users or 1:1 messages between a user and a Chat bot.
 type Space struct {
-	// DisplayName: Output only. The display name (only if the space is of
-	// type `ROOM`). Please note that this field might not be populated in
-	// direct messages between humans.
+	// DisplayName: The space's display name. For direct messages between
+	// humans, this field might be empty.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Resource name of the space, in the form "spaces/*". Example:
-	// spaces/AAAAMpdlehYs
+	// spaces/AAAAAAAAAAAA
 	Name string `json:"name,omitempty"`
 
-	// SingleUserBotDm: Whether the space is a DM between a bot and a single
-	// human.
+	// SingleUserBotDm: Output only. Whether the space is a DM between a bot
+	// and a single human.
 	SingleUserBotDm bool `json:"singleUserBotDm,omitempty"`
 
-	// Threaded: Whether the messages are threaded in this space.
+	// Threaded: Output only. Whether the messages are threaded in this
+	// space.
 	Threaded bool `json:"threaded,omitempty"`
 
-	// Type: Output only. The type of a space. This is deprecated. Use
-	// `single_user_bot_dm` instead.
+	// Type: Deprecated. Use `single_user_bot_dm` instead. Output only. The
+	// type of a space.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED"
 	//   "ROOM" - Conversations between two or more humans.
 	//   "DM" - 1:1 Direct Message between a human and a Chat bot, where all
-	// messages are flat.
+	// messages are flat. Note that this does not include direct messages
+	// between two humans.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3240,6 +3321,50 @@ type Space struct {
 
 func (s *Space) MarshalJSON() ([]byte, error) {
 	type NoMethod Space
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Status: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3334,7 +3459,7 @@ func (s *TextParagraph) MarshalJSON() ([]byte, error) {
 // Thread: A thread in Google Chat.
 type Thread struct {
 	// Name: Resource name, in the form "spaces/*/threads/*". Example:
-	// spaces/AAAAMpdlehY/threads/UMxbHmzDlr4
+	// spaces/AAAAAAAAAAA/threads/TTTTTTTTTTT
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -3425,14 +3550,17 @@ type User struct {
 	// DisplayName: The user's display name.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// DomainId: Obfuscated domain information.
+	// DomainId: Unique identifier of the user's Google Workspace domain.
 	DomainId string `json:"domainId,omitempty"`
 
 	// IsAnonymous: True when the user is deleted or the user's profile is
 	// not visible.
 	IsAnonymous bool `json:"isAnonymous,omitempty"`
 
-	// Name: Resource name, in the format "users/*".
+	// Name: Resource name for a Google Chat user. Formatted as
+	// `users/AAAAAAAAAAA`. Represents a person
+	// (https://developers.google.com/people/api/rest/v1/people#Person) in
+	// the People API.
 	Name string `json:"name,omitempty"`
 
 	// Type: User type.
@@ -3556,11 +3684,20 @@ type DmsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall {
 	c := &DmsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *DmsMessagesCall) RequestId(requestId string) *DmsMessagesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -3605,7 +3742,7 @@ func (c *DmsMessagesCall) Header() http.Header {
 
 func (c *DmsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3678,10 +3815,15 @@ func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^dms/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
@@ -3716,11 +3858,20 @@ type DmsWebhooksCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall {
 	c := &DmsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *DmsWebhooksCall) RequestId(requestId string) *DmsWebhooksCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -3765,7 +3916,7 @@ func (c *DmsWebhooksCall) Header() http.Header {
 
 func (c *DmsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3838,10 +3989,15 @@ func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^dms/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
@@ -3876,11 +4032,20 @@ type DmsConversationsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *DmsConversationsService) Messages(parent string, message *Message) *DmsConversationsMessagesCall {
 	c := &DmsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *DmsConversationsMessagesCall) RequestId(requestId string) *DmsConversationsMessagesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -3925,7 +4090,7 @@ func (c *DmsConversationsMessagesCall) Header() http.Header {
 
 func (c *DmsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3998,10 +4163,15 @@ func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Messag
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^dms/[^/]+/conversations/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
@@ -4080,7 +4250,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4198,11 +4368,20 @@ type RoomsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesCall {
 	c := &RoomsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *RoomsMessagesCall) RequestId(requestId string) *RoomsMessagesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -4247,7 +4426,7 @@ func (c *RoomsMessagesCall) Header() http.Header {
 
 func (c *RoomsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4320,10 +4499,15 @@ func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^rooms/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
@@ -4358,11 +4542,20 @@ type RoomsWebhooksCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksCall {
 	c := &RoomsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *RoomsWebhooksCall) RequestId(requestId string) *RoomsWebhooksCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -4407,7 +4600,7 @@ func (c *RoomsWebhooksCall) Header() http.Header {
 
 func (c *RoomsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4480,10 +4673,15 @@ func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^rooms/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
@@ -4518,11 +4716,20 @@ type RoomsConversationsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *RoomsConversationsService) Messages(parent string, message *Message) *RoomsConversationsMessagesCall {
 	c := &RoomsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *RoomsConversationsMessagesCall) RequestId(requestId string) *RoomsConversationsMessagesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -4567,7 +4774,7 @@ func (c *RoomsConversationsMessagesCall) Header() http.Header {
 
 func (c *RoomsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4640,10 +4847,15 @@ func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Mess
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^rooms/[^/]+/conversations/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
@@ -4677,7 +4889,7 @@ type SpacesGetCall struct {
 // Get: Returns a space.
 //
 // - name: Resource name of the space, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAAA.
 func (r *SpacesService) Get(name string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4721,7 +4933,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4792,7 +5004,7 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -4875,7 +5087,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4996,11 +5208,20 @@ type SpacesWebhooksCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhooksCall {
 	c := &SpacesWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *SpacesWebhooksCall) RequestId(requestId string) *SpacesWebhooksCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -5045,7 +5266,7 @@ func (c *SpacesWebhooksCall) Header() http.Header {
 
 func (c *SpacesWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5118,10 +5339,15 @@ func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
@@ -5156,7 +5382,7 @@ type SpacesMembersGetCall struct {
 //
 // - name: Resource name of the membership to be retrieved, in the form
 //   "spaces/*/members/*". Example:
-//   spaces/AAAAMpdlehY/members/105115627578887013105.
+//   spaces/AAAAAAAAAAAA/members/111111111111111111111.
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	c := &SpacesMembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5200,7 +5426,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5271,7 +5497,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the membership to be retrieved, in the form \"spaces/*/members/*\". Example: spaces/AAAAMpdlehY/members/105115627578887013105",
+	//       "description": "Required. Resource name of the membership to be retrieved, in the form \"spaces/*/members/*\". Example: spaces/AAAAAAAAAAAA/members/111111111111111111111",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/members/[^/]+$",
 	//       "required": true,
@@ -5300,7 +5526,7 @@ type SpacesMembersListCall struct {
 // List: Lists human memberships in a space.
 //
 // - parent: The resource name of the space for which membership list is
-//   to be fetched, in the form "spaces/*". Example: spaces/AAAAMpdlehY.
+//   to be fetched, in the form "spaces/*". Example: spaces/AAAAAAAAAAAA.
 func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 	c := &SpacesMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5359,7 +5585,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5441,7 +5667,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the space for which membership list is to be fetched, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. The resource name of the space for which membership list is to be fetched, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -5491,11 +5717,20 @@ type SpacesMessagesCreateCall struct {
 // Create: Creates a message.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesMessagesCreateCall {
 	c := &SpacesMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -5540,7 +5775,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5613,10 +5848,15 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
@@ -5650,7 +5890,7 @@ type SpacesMessagesDeleteCall struct {
 //
 // - name: Resource name of the message to be deleted, in the form
 //   "spaces/*/messages/*" Example:
-//   spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4.
+//   spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
 func (r *SpacesMessagesService) Delete(name string) *SpacesMessagesDeleteCall {
 	c := &SpacesMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5684,7 +5924,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5752,7 +5992,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the message to be deleted, in the form \"spaces/*/messages/*\" Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+	//       "description": "Required. Resource name of the message to be deleted, in the form \"spaces/*/messages/*\" Example: spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -5782,7 +6022,7 @@ type SpacesMessagesGetCall struct {
 //
 // - name: Resource name of the message to be retrieved, in the form
 //   "spaces/*/messages/*". Example:
-//   spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4.
+//   spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
 func (r *SpacesMessagesService) Get(name string) *SpacesMessagesGetCall {
 	c := &SpacesMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5826,7 +6066,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5897,7 +6137,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the message to be retrieved, in the form \"spaces/*/messages/*\". Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+	//       "description": "Required. Resource name of the message to be retrieved, in the form \"spaces/*/messages/*\". Example: spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -5925,7 +6165,8 @@ type SpacesMessagesUpdateCall struct {
 
 // Update: Updates a message.
 //
-// - name: .
+// - name: Resource name in the form `spaces/*/messages/*`. Example:
+//   `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
 func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMessagesUpdateCall {
 	c := &SpacesMessagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5935,7 +6176,8 @@ func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMes
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
 // field paths to be updated, comma separated if there are multiple.
-// Currently supported field paths: * text * cards
+// Currently supported field paths: * text * cards *
+// gsuite_message_integration_render_data * attachment
 func (c *SpacesMessagesUpdateCall) UpdateMask(updateMask string) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5968,7 +6210,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6041,13 +6283,14 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
+	//       "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to be updated, comma separated if there are multiple. Currently supported field paths: * text * cards",
+	//       "description": "Required. The field paths to be updated, comma separated if there are multiple. Currently supported field paths: * text * cards * gsuite_message_integration_render_data * attachment",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6123,7 +6366,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

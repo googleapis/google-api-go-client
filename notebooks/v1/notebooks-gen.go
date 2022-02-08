@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -280,19 +280,19 @@ func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
+	// Members: Specifies the principals requesting access for a Cloud
 	// Platform resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
@@ -326,8 +326,8 @@ type Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -395,7 +395,7 @@ func (s *ContainerImage) MarshalJSON() ([]byte, error) {
 // DataprocParameters: Parameters used in Dataproc JobType executions.
 type DataprocParameters struct {
 	// Cluster: URI for cluster used to run Dataproc execution. Format:
-	// 'projects/{PROJECT_ID}/regions/{REGION}/clusters/{CLUSTER_NAME}
+	// `projects/{PROJECT_ID}/regions/{REGION}/clusters/{CLUSTER_NAME}`
 	Cluster string `json:"cluster,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cluster") to
@@ -742,8 +742,8 @@ type ExecutionTemplate struct {
 
 	// InputNotebookFile: Path to the notebook file to execute. Must be in a
 	// Google Cloud Storage bucket. Format:
-	// gs://{bucket_name}/{folder}/{notebook_file_name} Ex:
-	// gs://notebook_user/scheduled_notebooks/sentiment_notebook.ipynb
+	// `gs://{bucket_name}/{folder}/{notebook_file_name}` Ex:
+	// `gs://notebook_user/scheduled_notebooks/sentiment_notebook.ipynb`
 	InputNotebookFile string `json:"inputNotebookFile,omitempty"`
 
 	// JobType: The type of Job to be used on this execution.
@@ -755,6 +755,11 @@ type ExecutionTemplate struct {
 	//   "DATAPROC" - Run execution on a cluster with Dataproc as a job.
 	// https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs
 	JobType string `json:"jobType,omitempty"`
+
+	// KernelSpec: Name of the kernel spec to use. This must be specified if
+	// the kernel spec name on the execution target does not match the name
+	// in the input notebook file.
+	KernelSpec string `json:"kernelSpec,omitempty"`
 
 	// Labels: Labels for execution. If execution is scheduled, a field
 	// included will be 'nbs-scheduled'. Otherwise, it is an immediate
@@ -784,8 +789,8 @@ type ExecutionTemplate struct {
 
 	// OutputNotebookFolder: Path to the notebook folder to write to. Must
 	// be in a Google Cloud Storage bucket path. Format:
-	// gs://{bucket_name}/{folder} Ex:
-	// gs://notebook_user/scheduled_notebooks
+	// `gs://{bucket_name}/{folder}` Ex:
+	// `gs://notebook_user/scheduled_notebooks`
 	OutputNotebookFolder string `json:"outputNotebookFolder,omitempty"`
 
 	// Parameters: Parameters used within the 'input_notebook_file'
@@ -797,7 +802,8 @@ type ExecutionTemplate struct {
 	// https://papermill.readthedocs.io/en/latest/usage-parameterize.html on
 	// how to specifying parameters in the input notebook and pass them here
 	// in an YAML file. Ex:
-	// gs://notebook_user/scheduled_notebooks/sentiment_notebook_params.yaml
+	// `gs://notebook_user/scheduled_notebooks/sentiment_notebook_params.yaml
+	// `
 	ParamsYamlFile string `json:"paramsYamlFile,omitempty"`
 
 	// ScaleTier: Required. Scale tier of the hardware used for notebook
@@ -1120,7 +1126,7 @@ type Instance struct {
 
 	// PostStartupScript: Path to a Bash script that automatically runs
 	// after a notebook instance fully boots up. The path must be a URL or
-	// Cloud Storage path (gs://path-to-file/file-name).
+	// Cloud Storage path (`gs://path-to-file/file-name`).
 	PostStartupScript string `json:"postStartupScript,omitempty"`
 
 	// ProxyUri: Output only. The proxy endpoint that is used to access the
@@ -1151,8 +1157,8 @@ type Instance struct {
 	// scopes, you need at least: https://www.googleapis.com/auth/compute
 	ServiceAccountScopes []string `json:"serviceAccountScopes,omitempty"`
 
-	// ShieldedInstanceConfig: Optional. Shielded VM configuration. [Images
-	// using supported Shielded VM features]
+	// ShieldedInstanceConfig: Optional. Shielded VM configuration. Images
+	// using supported Shielded VM features
 	// (https://cloud.google.com/compute/docs/instances/modifying-shielded-vm).
 	ShieldedInstanceConfig *ShieldedInstanceConfig `json:"shieldedInstanceConfig,omitempty"`
 
@@ -1170,6 +1176,8 @@ type Instance struct {
 	//   "UPGRADING" - The instance is upgrading.
 	//   "INITIALIZING" - The instance is being created.
 	//   "REGISTERING" - The instance is getting registered.
+	//   "SUSPENDING" - The instance is suspending.
+	//   "SUSPENDED" - The instance is suspended.
 	State string `json:"state,omitempty"`
 
 	// Subnet: The name of the subnet that this instance is in. Format:
@@ -1349,11 +1357,11 @@ type ListExecutionsResponse struct {
 	// the last result in the next list call.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Unreachable: Executions IDs that could not be reached. For example,
+	// Unreachable: Executions IDs that could not be reached. For example:
 	// ['projects/{project_id}/location/{location}/executions/imagenet_test1'
 	// ,
 	// 'projects/{project_id}/location/{location}/executions/classifier_train
-	// 1'].
+	// 1']
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1548,11 +1556,11 @@ type ListSchedulesResponse struct {
 	// Schedules: A list of returned instances.
 	Schedules []*Schedule `json:"schedules,omitempty"`
 
-	// Unreachable: Schedules that could not be reached. For example,
+	// Unreachable: Schedules that could not be reached. For example:
 	// ['projects/{project_id}/location/{location}/schedules/monthly_digest',
 	//
 	// 'projects/{project_id}/location/{location}/schedules/weekly_sentiment'
-	// ].
+	// ]
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1900,17 +1908,17 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members` to
-// a single `role`. Members can be user accounts, service accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of permissions; each `role` can be an IAM predefined role or a
-// user-created custom role. For some types of Google Cloud resources, a
-// `binding` can also specify a `condition`, which is a logical
-// expression that allows access to a resource only if the expression
-// evaluates to `true`. A condition can add constraints based on
-// attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -1933,9 +1941,15 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // For a description of IAM and its features, see the IAM documentation
 // (https://cloud.google.com/iam/docs/).
 type Policy struct {
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -2475,7 +2489,7 @@ func (s *RuntimeShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
 // software inside the runtime. The properties to set on runtime.
 // Properties keys are specified in `key:value` format, for example: *
 // `idle_shutdown: true` * `idle_shutdown_timeout: 180` *
-// `report-system-health: true`
+// `enable_health_monitoring: true`
 type RuntimeSoftwareConfig struct {
 	// CustomGpuDriverPath: Specify a custom Cloud Storage path where the
 	// GPU driver is stored. If not specified, we'll automatically choose
@@ -2497,6 +2511,10 @@ type RuntimeSoftwareConfig struct {
 	// InstallGpuDriver: Install Nvidia Driver automatically.
 	InstallGpuDriver bool `json:"installGpuDriver,omitempty"`
 
+	// Kernels: Optional. Use a list of container images to use as Kernels
+	// in the notebook instance.
+	Kernels []*ContainerImage `json:"kernels,omitempty"`
+
 	// NotebookUpgradeSchedule: Cron expression in UTC timezone, used to
 	// schedule instance auto upgrade. Please follow the cron format
 	// (https://en.wikipedia.org/wiki/Cron).
@@ -2504,7 +2522,7 @@ type RuntimeSoftwareConfig struct {
 
 	// PostStartupScript: Path to a Bash script that automatically runs
 	// after a notebook instance fully boots up. The path must be a URL or
-	// Cloud Storage path (gs://path-to-file/file-name).
+	// Cloud Storage path (`gs://path-to-file/file-name`).
 	PostStartupScript string `json:"postStartupScript,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomGpuDriverPath")
@@ -2635,6 +2653,7 @@ type SchedulerAcceleratorConfig struct {
 	//   "NVIDIA_TESLA_V100" - Nvidia Tesla V100 GPU.
 	//   "NVIDIA_TESLA_P4" - Nvidia Tesla P4 GPU.
 	//   "NVIDIA_TESLA_T4" - Nvidia Tesla T4 GPU.
+	//   "NVIDIA_TESLA_A100" - Nvidia Tesla A100 GPU.
 	//   "TPU_V2" - TPU v2.
 	//   "TPU_V3" - TPU v3.
 	Type string `json:"type,omitempty"`
@@ -3045,6 +3064,68 @@ func (s *UpdateInstanceConfigRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateInstanceMetadataItemsRequest: Request for adding/changing
+// metadata items for an instance.
+type UpdateInstanceMetadataItemsRequest struct {
+	// Items: Metadata items to add/update for the instance.
+	Items map[string]string `json:"items,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateInstanceMetadataItemsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateInstanceMetadataItemsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateInstanceMetadataItemsResponse: Response for adding/changing
+// metadata items for an instance.
+type UpdateInstanceMetadataItemsResponse struct {
+	// Items: Map of items that were added/updated to/in the metadata.
+	Items map[string]string `json:"items,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateInstanceMetadataItemsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateInstanceMetadataItemsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UpdateShieldedInstanceConfigRequest: Request for updating the
 // Shielded Instance config for a notebook instance. You can only use
 // this method on a stopped instance
@@ -3149,11 +3230,22 @@ func (s *UpgradeHistoryEntry) MarshalJSON() ([]byte, error) {
 // UpgradeInstanceInternalRequest: Request for upgrading a notebook
 // instance from within the VM
 type UpgradeInstanceInternalRequest struct {
+	// Type: Optional. The optional UpgradeType. Setting this field will
+	// search for additional compute images to upgrade this instance.
+	//
+	// Possible values:
+	//   "UPGRADE_TYPE_UNSPECIFIED" - Upgrade type is not specified.
+	//   "UPGRADE_FRAMEWORK" - Upgrade ML framework.
+	//   "UPGRADE_OS" - Upgrade Operating System.
+	//   "UPGRADE_CUDA" - Upgrade CUDA.
+	//   "UPGRADE_ALL" - Upgrade All (OS, Framework and CUDA).
+	Type string `json:"type,omitempty"`
+
 	// VmId: Required. The VM hardware token for authenticating the VM.
 	// https://cloud.google.com/compute/docs/instances/verifying-instance-identity
 	VmId string `json:"vmId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "VmId") to
+	// ForceSendFields is a list of field names (e.g. "Type") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3161,7 +3253,7 @@ type UpgradeInstanceInternalRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "VmId") to include in API
+	// NullFields is a list of field names (e.g. "Type") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3178,10 +3270,46 @@ func (s *UpgradeInstanceInternalRequest) MarshalJSON() ([]byte, error) {
 
 // UpgradeInstanceRequest: Request for upgrading a notebook instance
 type UpgradeInstanceRequest struct {
+	// Type: Optional. The optional UpgradeType. Setting this field will
+	// search for additional compute images to upgrade this instance.
+	//
+	// Possible values:
+	//   "UPGRADE_TYPE_UNSPECIFIED" - Upgrade type is not specified.
+	//   "UPGRADE_FRAMEWORK" - Upgrade ML framework.
+	//   "UPGRADE_OS" - Upgrade Operating System.
+	//   "UPGRADE_CUDA" - Upgrade CUDA.
+	//   "UPGRADE_ALL" - Upgrade All (OS, Framework and CUDA).
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpgradeInstanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeInstanceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // VertexAIParameters: Parameters used in Vertex AI JobType executions.
 type VertexAIParameters struct {
+	// Env: Environment variables. At most 100 environment variables can be
+	// specified and unique. Example: GCP_BUCKET=gs://my-bucket/samples/
+	Env map[string]string `json:"env,omitempty"`
+
 	// Network: The full name of the Compute Engine network
 	// (/compute/docs/networks-and-firewalls#networks) to which the Job
 	// should be peered. For example,
@@ -3194,7 +3322,7 @@ type VertexAIParameters struct {
 	// network.
 	Network string `json:"network,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Network") to
+	// ForceSendFields is a list of field names (e.g. "Env") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3202,8 +3330,8 @@ type VertexAIParameters struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Network") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Env") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -3259,8 +3387,8 @@ type VirtualMachineConfig struct {
 	// configuration for this runtime.
 	AcceleratorConfig *RuntimeAcceleratorConfig `json:"acceleratorConfig,omitempty"`
 
-	// ContainerImages: Optional. Use a list of container images to start
-	// the notebook instance.
+	// ContainerImages: Optional. Use a list of container images to use as
+	// Kernels in the notebook instance.
 	ContainerImages []*ContainerImage `json:"containerImages,omitempty"`
 
 	// DataDisk: Required. Data disk option configuration settings.
@@ -3466,7 +3594,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3638,7 +3766,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3822,7 +3950,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3969,7 +4097,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4114,7 +4242,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4275,7 +4403,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4451,7 +4579,7 @@ func (c *ProjectsLocationsExecutionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4598,7 +4726,7 @@ func (c *ProjectsLocationsExecutionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsExecutionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4743,7 +4871,7 @@ func (c *ProjectsLocationsExecutionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4854,7 +4982,7 @@ func (r *ProjectsLocationsExecutionsService) List(parent string) *ProjectsLocati
 
 // Filter sets the optional parameter "filter": Filter applied to
 // resulting executions. Currently only supports filtering executions by
-// a specified schedule_id. Format: "schedule_id="
+// a specified schedule_id. Format: `schedule_id=`
 func (c *ProjectsLocationsExecutionsListCall) Filter(filter string) *ProjectsLocationsExecutionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4918,7 +5046,7 @@ func (c *ProjectsLocationsExecutionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsExecutionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4989,7 +5117,7 @@ func (c *ProjectsLocationsExecutionsListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter applied to resulting executions. Currently only supports filtering executions by a specified schedule_id. Format: \"schedule_id=\"",
+	//       "description": "Filter applied to resulting executions. Currently only supports filtering executions by a specified schedule_id. Format: `schedule_id=`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5104,7 +5232,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5250,7 +5378,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5394,7 +5522,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5508,13 +5636,17 @@ func (r *ProjectsLocationsInstancesService) GetIamPolicy(resource string) *Proje
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsInstancesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsInstancesGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -5558,7 +5690,7 @@ func (c *ProjectsLocationsInstancesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5629,7 +5761,7 @@ func (c *ProjectsLocationsInstancesGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5711,7 +5843,7 @@ func (c *ProjectsLocationsInstancesGetInstanceHealthCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetInstanceHealthCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5821,6 +5953,21 @@ func (r *ProjectsLocationsInstancesService) IsUpgradeable(notebookInstance strin
 	return c
 }
 
+// Type sets the optional parameter "type": The optional UpgradeType.
+// Setting this field will search for additional compute images to
+// upgrade this instance.
+//
+// Possible values:
+//   "UPGRADE_TYPE_UNSPECIFIED" - Upgrade type is not specified.
+//   "UPGRADE_FRAMEWORK" - Upgrade ML framework.
+//   "UPGRADE_OS" - Upgrade Operating System.
+//   "UPGRADE_CUDA" - Upgrade CUDA.
+//   "UPGRADE_ALL" - Upgrade All (OS, Framework and CUDA).
+func (c *ProjectsLocationsInstancesIsUpgradeableCall) Type(type_ string) *ProjectsLocationsInstancesIsUpgradeableCall {
+	c.urlParams_.Set("type", type_)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5858,7 +6005,7 @@ func (c *ProjectsLocationsInstancesIsUpgradeableCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesIsUpgradeableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5933,6 +6080,25 @@ func (c *ProjectsLocationsInstancesIsUpgradeableCall) Do(opts ...googleapi.CallO
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "type": {
+	//       "description": "Optional. The optional UpgradeType. Setting this field will search for additional compute images to upgrade this instance.",
+	//       "enum": [
+	//         "UPGRADE_TYPE_UNSPECIFIED",
+	//         "UPGRADE_FRAMEWORK",
+	//         "UPGRADE_OS",
+	//         "UPGRADE_CUDA",
+	//         "UPGRADE_ALL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Upgrade type is not specified.",
+	//         "Upgrade ML framework.",
+	//         "Upgrade Operating System.",
+	//         "Upgrade CUDA.",
+	//         "Upgrade All (OS, Framework and CUDA)."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -6019,7 +6185,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6192,7 +6358,7 @@ func (c *ProjectsLocationsInstancesRegisterCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6338,7 +6504,7 @@ func (c *ProjectsLocationsInstancesReportCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6481,7 +6647,7 @@ func (c *ProjectsLocationsInstancesResetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6624,7 +6790,7 @@ func (c *ProjectsLocationsInstancesRollbackCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6767,7 +6933,7 @@ func (c *ProjectsLocationsInstancesSetAcceleratorCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesSetAcceleratorCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6913,7 +7079,7 @@ func (c *ProjectsLocationsInstancesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7056,7 +7222,7 @@ func (c *ProjectsLocationsInstancesSetLabelsCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesSetLabelsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7199,7 +7365,7 @@ func (c *ProjectsLocationsInstancesSetMachineTypeCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesSetMachineTypeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7342,7 +7508,7 @@ func (c *ProjectsLocationsInstancesStartCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesStartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7485,7 +7651,7 @@ func (c *ProjectsLocationsInstancesStopCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7634,7 +7800,7 @@ func (c *ProjectsLocationsInstancesTestIamPermissionsCall) Header() http.Header 
 
 func (c *ProjectsLocationsInstancesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7777,7 +7943,7 @@ func (c *ProjectsLocationsInstancesUpdateConfigCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7871,6 +8037,150 @@ func (c *ProjectsLocationsInstancesUpdateConfigCall) Do(opts ...googleapi.CallOp
 
 }
 
+// method id "notebooks.projects.locations.instances.updateMetadataItems":
+
+type ProjectsLocationsInstancesUpdateMetadataItemsCall struct {
+	s                                  *Service
+	name                               string
+	updateinstancemetadataitemsrequest *UpdateInstanceMetadataItemsRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// UpdateMetadataItems: Add/update metadata items for an instance.
+//
+// - name: Format:
+//   `projects/{project_id}/locations/{location}/instances/{instance_id}`.
+func (r *ProjectsLocationsInstancesService) UpdateMetadataItems(name string, updateinstancemetadataitemsrequest *UpdateInstanceMetadataItemsRequest) *ProjectsLocationsInstancesUpdateMetadataItemsCall {
+	c := &ProjectsLocationsInstancesUpdateMetadataItemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.updateinstancemetadataitemsrequest = updateinstancemetadataitemsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesUpdateMetadataItemsCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesUpdateMetadataItemsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesUpdateMetadataItemsCall) Context(ctx context.Context) *ProjectsLocationsInstancesUpdateMetadataItemsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesUpdateMetadataItemsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesUpdateMetadataItemsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateinstancemetadataitemsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:updateMetadataItems")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.instances.updateMetadataItems" call.
+// Exactly one of *UpdateInstanceMetadataItemsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *UpdateInstanceMetadataItemsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInstancesUpdateMetadataItemsCall) Do(opts ...googleapi.CallOption) (*UpdateInstanceMetadataItemsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &UpdateInstanceMetadataItemsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add/update metadata items for an instance.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:updateMetadataItems",
+	//   "httpMethod": "PATCH",
+	//   "id": "notebooks.projects.locations.instances.updateMetadataItems",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Format: `projects/{project_id}/locations/{location}/instances/{instance_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:updateMetadataItems",
+	//   "request": {
+	//     "$ref": "UpdateInstanceMetadataItemsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "UpdateInstanceMetadataItemsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "notebooks.projects.locations.instances.updateShieldedInstanceConfig":
 
 type ProjectsLocationsInstancesUpdateShieldedInstanceConfigCall struct {
@@ -7921,7 +8231,7 @@ func (c *ProjectsLocationsInstancesUpdateShieldedInstanceConfigCall) Header() ht
 
 func (c *ProjectsLocationsInstancesUpdateShieldedInstanceConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8064,7 +8374,7 @@ func (c *ProjectsLocationsInstancesUpgradeCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesUpgradeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8208,7 +8518,7 @@ func (c *ProjectsLocationsInstancesUpgradeInternalCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesUpgradeInternalCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8359,7 +8669,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8502,7 +8812,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8647,7 +8957,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8823,7 +9133,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9004,7 +9314,7 @@ func (c *ProjectsLocationsRuntimesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRuntimesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9150,7 +9460,7 @@ func (c *ProjectsLocationsRuntimesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRuntimesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9295,7 +9605,7 @@ func (c *ProjectsLocationsRuntimesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRuntimesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9384,6 +9694,180 @@ func (c *ProjectsLocationsRuntimesGetCall) Do(opts ...googleapi.CallOption) (*Ru
 
 }
 
+// method id "notebooks.projects.locations.runtimes.getIamPolicy":
+
+type ProjectsLocationsRuntimesGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
+// set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
+func (r *ProjectsLocationsRuntimesService) GetIamPolicy(resource string) *ProjectsLocationsRuntimesGetIamPolicyCall {
+	c := &ProjectsLocationsRuntimesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsRuntimesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsRuntimesGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRuntimesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsRuntimesGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRuntimesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsRuntimesGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRuntimesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsRuntimesGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRuntimesGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRuntimesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.runtimes.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsRuntimesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}:getIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "notebooks.projects.locations.runtimes.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "options.requestedPolicyVersion": {
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "notebooks.projects.locations.runtimes.list":
 
 type ProjectsLocationsRuntimesListCall struct {
@@ -9456,7 +9940,7 @@ func (c *ProjectsLocationsRuntimesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRuntimesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9626,7 +10110,7 @@ func (c *ProjectsLocationsRuntimesReportEventCall) Header() http.Header {
 
 func (c *ProjectsLocationsRuntimesReportEventCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9769,7 +10253,7 @@ func (c *ProjectsLocationsRuntimesResetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRuntimesResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9863,6 +10347,152 @@ func (c *ProjectsLocationsRuntimesResetCall) Do(opts ...googleapi.CallOption) (*
 
 }
 
+// method id "notebooks.projects.locations.runtimes.setIamPolicy":
+
+type ProjectsLocationsRuntimesSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
+func (r *ProjectsLocationsRuntimesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRuntimesSetIamPolicyCall {
+	c := &ProjectsLocationsRuntimesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRuntimesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsRuntimesSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRuntimesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsRuntimesSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRuntimesSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRuntimesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.runtimes.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsRuntimesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "notebooks.projects.locations.runtimes.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "notebooks.projects.locations.runtimes.start":
 
 type ProjectsLocationsRuntimesStartCall struct {
@@ -9915,7 +10545,7 @@ func (c *ProjectsLocationsRuntimesStartCall) Header() http.Header {
 
 func (c *ProjectsLocationsRuntimesStartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10061,7 +10691,7 @@ func (c *ProjectsLocationsRuntimesStopCall) Header() http.Header {
 
 func (c *ProjectsLocationsRuntimesStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10204,7 +10834,7 @@ func (c *ProjectsLocationsRuntimesSwitchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRuntimesSwitchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10298,6 +10928,155 @@ func (c *ProjectsLocationsRuntimesSwitchCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "notebooks.projects.locations.runtimes.testIamPermissions":
+
+type ProjectsLocationsRuntimesTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsRuntimesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRuntimesTestIamPermissionsCall {
+	c := &ProjectsLocationsRuntimesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRuntimesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsRuntimesTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRuntimesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsRuntimesTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRuntimesTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRuntimesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.runtimes.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRuntimesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "notebooks.projects.locations.runtimes.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "notebooks.projects.locations.schedules.create":
 
 type ProjectsLocationsSchedulesCreateCall struct {
@@ -10354,7 +11133,7 @@ func (c *ProjectsLocationsSchedulesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsSchedulesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10500,7 +11279,7 @@ func (c *ProjectsLocationsSchedulesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsSchedulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10644,7 +11423,7 @@ func (c *ProjectsLocationsSchedulesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsSchedulesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10819,7 +11598,7 @@ func (c *ProjectsLocationsSchedulesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsSchedulesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11000,7 +11779,7 @@ func (c *ProjectsLocationsSchedulesTriggerCall) Header() http.Header {
 
 func (c *ProjectsLocationsSchedulesTriggerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

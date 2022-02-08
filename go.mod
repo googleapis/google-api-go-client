@@ -7,7 +7,6 @@ require (
 	github.com/google/go-cmp v0.5.7
 	github.com/googleapis/gax-go/v2 v2.1.1
 	go.opencensus.io v0.23.0
-	// TODO(codyoss): unfreeze after min version of 1.14
 	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c

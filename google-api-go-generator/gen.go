@@ -124,7 +124,8 @@ func (e *compileError) Error() string {
 
 // skipAPIGeneration is a set of APIs to not generate when generating all clients.
 var skipAPIGeneration = map[string]bool{
-	"sql:v1beta4": true,
+	"sql:v1beta4":      true,
+	"playintegrity:v1": true,
 }
 
 func main() {

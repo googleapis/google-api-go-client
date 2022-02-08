@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -459,11 +460,11 @@ type CancelOperationRequest struct {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values * A month and day, with a
+// zero year (e.g., an anniversary) * A year on its own, with a zero
+// month and a zero day * A year and month, with a zero day (e.g., a
+// credit card expiration date) Related types: * google.type.TimeOfDay *
+// google.type.DateTime * google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -972,7 +973,8 @@ func (s *LoggingConfig) MarshalJSON() ([]byte, error) {
 }
 
 // MetadataOptions: Specifies the metadata options for running a
-// transfer.
+// transfer. These options only apply to transfers involving a POSIX
+// filesystem and are ignored for other transfers.
 type MetadataOptions struct {
 	// Acl: Specifies how each object's ACLs should be preserved for
 	// transfers between Google Cloud Storage buckets. If unspecified, the
@@ -989,13 +991,12 @@ type MetadataOptions struct {
 	// ess) must not be enabled on either the source or destination buckets.
 	Acl string `json:"acl,omitempty"`
 
-	// Gid: Specifies how each file's GID attribute should be handled by the
-	// transfer. If unspecified, the default behavior is the same as
-	// GID_SKIP when the source is a POSIX file system.
+	// Gid: Specifies how each file's POSIX group ID (GID) attribute should
+	// be handled by the transfer. By default, GID is not preserved.
 	//
 	// Possible values:
 	//   "GID_UNSPECIFIED" - GID behavior is unspecified.
-	//   "GID_SKIP" - Skip GID during a transfer job.
+	//   "GID_SKIP" - Do not preserve GID during a transfer job.
 	//   "GID_NUMBER" - Preserve GID during a transfer job.
 	Gid string `json:"gid,omitempty"`
 
@@ -1015,12 +1016,11 @@ type MetadataOptions struct {
 	KmsKey string `json:"kmsKey,omitempty"`
 
 	// Mode: Specifies how each file's mode attribute should be handled by
-	// the transfer. If unspecified, the default behavior is the same as
-	// MODE_SKIP when the source is a POSIX file system.
+	// the transfer. By default, mode is not preserved.
 	//
 	// Possible values:
 	//   "MODE_UNSPECIFIED" - Mode behavior is unspecified.
-	//   "MODE_SKIP" - Skip mode during a transfer job.
+	//   "MODE_SKIP" - Do not preserve mode during a transfer job.
 	//   "MODE_PRESERVE" - Preserve mode during a transfer job.
 	Mode string `json:"mode,omitempty"`
 
@@ -1043,14 +1043,12 @@ type MetadataOptions struct {
 	//   "STORAGE_CLASS_ARCHIVE" - Set the storage class to ARCHIVE.
 	StorageClass string `json:"storageClass,omitempty"`
 
-	// Symlink: Specifies how symlinks should be handled by the transfer. If
-	// unspecified, the default behavior is the same as SYMLINK_SKIP when
-	// the source is a POSIX file system.
+	// Symlink: Specifies how symlinks should be handled by the transfer. By
+	// default, symlinks are not preserved.
 	//
 	// Possible values:
-	//   "SYMLINK_UNSPECIFIED" - Symlink behavior is unspecified. The
-	// default behavior is to skip symlinks during a transfer job.
-	//   "SYMLINK_SKIP" - Skip symlinks during a transfer job.
+	//   "SYMLINK_UNSPECIFIED" - Symlink behavior is unspecified.
+	//   "SYMLINK_SKIP" - Do not preserve symlinks during a transfer job.
 	//   "SYMLINK_PRESERVE" - Preserve symlinks during a transfer job.
 	Symlink string `json:"symlink,omitempty"`
 
@@ -1068,13 +1066,12 @@ type MetadataOptions struct {
 	// temporary hold status.
 	TemporaryHold string `json:"temporaryHold,omitempty"`
 
-	// Uid: Specifies how each file's UID attribute should be handled by the
-	// transfer. If unspecified, the default behavior is the same as
-	// UID_SKIP when the source is a POSIX file system.
+	// Uid: Specifies how each file's POSIX user ID (UID) attribute should
+	// be handled by the transfer. By default, UID is not preserved.
 	//
 	// Possible values:
 	//   "UID_UNSPECIFIED" - UID behavior is unspecified.
-	//   "UID_SKIP" - Skip UID during a transfer job.
+	//   "UID_SKIP" - Do not preserve UID during a transfer job.
 	//   "UID_NUMBER" - Preserve UID during a transfer job.
 	Uid string `json:"uid,omitempty"`
 
@@ -1899,7 +1896,7 @@ type TransferOptions struct {
 	DeleteObjectsUniqueInSink bool `json:"deleteObjectsUniqueInSink,omitempty"`
 
 	// MetadataOptions: Represents the selected metadata options for a
-	// transfer job.
+	// transfer job. This feature is in Preview.
 	MetadataOptions *MetadataOptions `json:"metadataOptions,omitempty"`
 
 	// OverwriteObjectsAlreadyExistingInSink: When to overwrite objects that
@@ -2122,7 +2119,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2273,7 +2270,7 @@ func (c *ProjectsAgentPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2418,7 +2415,7 @@ func (c *ProjectsAgentPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2561,7 +2558,7 @@ func (c *ProjectsAgentPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2732,7 +2729,7 @@ func (c *ProjectsAgentPoolsListCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2916,7 +2913,7 @@ func (c *ProjectsAgentPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3060,7 +3057,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3200,7 +3197,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3373,7 +3370,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3541,7 +3538,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3686,7 +3683,7 @@ func (c *TransferJobsRunCall) Header() http.Header {
 
 func (c *TransferJobsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3846,7 +3843,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3999,7 +3996,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4172,7 +4169,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4348,7 +4345,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4490,7 +4487,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -27,7 +27,6 @@ import (
 	"unicode"
 
 	"google.golang.org/api/google-api-go-generator/internal/disco"
-	"google.golang.org/api/internal/version"
 )
 
 const (
@@ -50,6 +49,7 @@ var (
 	baseURL        = flag.String("base_url", "", "(optional) Override the default service API URL. If empty, the service's root URL will be used.")
 	headerPath     = flag.String("header_path", "", "If non-empty, prepend the contents of this file to generated services.")
 
+	internalPkg       = flag.String("internal_pkg", "google.golang.org/api/internal", "Go package path of the 'internal' support package.")
 	gensupportPkg     = flag.String("gensupport_pkg", "google.golang.org/api/internal/gensupport", "Go package path of the 'api/internal/gensupport' support package.")
 	googleapiPkg      = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
 	optionPkg         = flag.String("option_pkg", "google.golang.org/api/option", "Go package path of the 'api/option' support package.")
@@ -124,7 +124,8 @@ func (e *compileError) Error() string {
 
 // skipAPIGeneration is a set of APIs to not generate when generating all clients.
 var skipAPIGeneration = map[string]bool{
-	"sql:v1beta4": true,
+	"sql:v1beta4":      true,
+	"playintegrity:v1": true,
 }
 
 func main() {
@@ -706,6 +707,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 		pkg   string
 		lname string
 	}{
+		{*internalPkg, "internal"},
 		{*gensupportPkg, "gensupport"},
 		{*googleapiPkg, "googleapi"},
 		{*optionPkg, "option"},
@@ -2071,7 +2073,7 @@ func (meth *Method) generateCode() {
 
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
 	pn(`reqHeaders := make(http.Header)`)
-	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/%s")`, version.Repo)
+	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)`)
 	pn("for k, v := range c.header_ {")
 	pn(" reqHeaders[k] = v")
 	pn("}")

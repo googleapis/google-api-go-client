@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -184,11 +185,9 @@ type ProjectsLocationsOperationsService struct {
 func NewProjectsLocationsRepositoriesService(s *Service) *ProjectsLocationsRepositoriesService {
 	rs := &ProjectsLocationsRepositoriesService{s: s}
 	rs.AptArtifacts = NewProjectsLocationsRepositoriesAptArtifactsService(s)
-	rs.Aptartifacts = NewProjectsLocationsRepositoriesAptartifactsService(s)
 	rs.Files = NewProjectsLocationsRepositoriesFilesService(s)
 	rs.Packages = NewProjectsLocationsRepositoriesPackagesService(s)
 	rs.YumArtifacts = NewProjectsLocationsRepositoriesYumArtifactsService(s)
-	rs.Yumartifacts = NewProjectsLocationsRepositoriesYumartifactsService(s)
 	return rs
 }
 
@@ -197,15 +196,11 @@ type ProjectsLocationsRepositoriesService struct {
 
 	AptArtifacts *ProjectsLocationsRepositoriesAptArtifactsService
 
-	Aptartifacts *ProjectsLocationsRepositoriesAptartifactsService
-
 	Files *ProjectsLocationsRepositoriesFilesService
 
 	Packages *ProjectsLocationsRepositoriesPackagesService
 
 	YumArtifacts *ProjectsLocationsRepositoriesYumArtifactsService
-
-	Yumartifacts *ProjectsLocationsRepositoriesYumartifactsService
 }
 
 func NewProjectsLocationsRepositoriesAptArtifactsService(s *Service) *ProjectsLocationsRepositoriesAptArtifactsService {
@@ -214,15 +209,6 @@ func NewProjectsLocationsRepositoriesAptArtifactsService(s *Service) *ProjectsLo
 }
 
 type ProjectsLocationsRepositoriesAptArtifactsService struct {
-	s *Service
-}
-
-func NewProjectsLocationsRepositoriesAptartifactsService(s *Service) *ProjectsLocationsRepositoriesAptartifactsService {
-	rs := &ProjectsLocationsRepositoriesAptartifactsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsRepositoriesAptartifactsService struct {
 	s *Service
 }
 
@@ -274,15 +260,6 @@ func NewProjectsLocationsRepositoriesYumArtifactsService(s *Service) *ProjectsLo
 }
 
 type ProjectsLocationsRepositoriesYumArtifactsService struct {
-	s *Service
-}
-
-func NewProjectsLocationsRepositoriesYumartifactsService(s *Service) *ProjectsLocationsRepositoriesYumartifactsService {
-	rs := &ProjectsLocationsRepositoriesYumartifactsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsRepositoriesYumartifactsService struct {
 	s *Service
 }
 
@@ -1423,8 +1400,8 @@ type Repository struct {
 	Format string `json:"format,omitempty"`
 
 	// KmsKeyName: The Cloud KMS resource name of the customer managed
-	// encryption key that’s used to encrypt the contents of the
-	// Repository. Has the form:
+	// encryption key that's used to encrypt the contents of the Repository.
+	// Has the form:
 	// `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-
 	// key`. This value may not be changed after the Repository has been
 	// created.
@@ -1949,7 +1926,7 @@ func (c *ProjectsGetProjectSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetProjectSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2096,7 +2073,7 @@ func (c *ProjectsUpdateProjectSettingsCall) Header() http.Header {
 
 func (c *ProjectsUpdateProjectSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2253,7 +2230,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2426,7 +2403,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2612,7 +2589,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2760,7 +2737,7 @@ func (c *ProjectsLocationsRepositoriesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2908,7 +2885,7 @@ func (c *ProjectsLocationsRepositoriesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3051,7 +3028,7 @@ func (c *ProjectsLocationsRepositoriesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3218,7 +3195,7 @@ func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3386,7 +3363,7 @@ func (c *ProjectsLocationsRepositoriesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3565,7 +3542,7 @@ func (c *ProjectsLocationsRepositoriesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3715,7 +3692,7 @@ func (c *ProjectsLocationsRepositoriesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3860,7 +3837,7 @@ func (c *ProjectsLocationsRepositoriesTestIamPermissionsCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4007,7 +3984,7 @@ func (c *ProjectsLocationsRepositoriesAptArtifactsImportCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesAptArtifactsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4101,9 +4078,9 @@ func (c *ProjectsLocationsRepositoriesAptArtifactsImportCall) Do(opts ...googlea
 
 }
 
-// method id "artifactregistry.projects.locations.repositories.aptartifacts.upload":
+// method id "artifactregistry.projects.locations.repositories.aptArtifacts.upload":
 
-type ProjectsLocationsRepositoriesAptartifactsUploadCall struct {
+type ProjectsLocationsRepositoriesAptArtifactsUploadCall struct {
 	s                        *Service
 	parent                   string
 	uploadaptartifactrequest *UploadAptArtifactRequest
@@ -4120,8 +4097,8 @@ type ProjectsLocationsRepositoriesAptartifactsUploadCall struct {
 //
 // - parent: The name of the parent resource where the artifacts will be
 //   uploaded.
-func (r *ProjectsLocationsRepositoriesAptartifactsService) Upload(parent string, uploadaptartifactrequest *UploadAptArtifactRequest) *ProjectsLocationsRepositoriesAptartifactsUploadCall {
-	c := &ProjectsLocationsRepositoriesAptartifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsRepositoriesAptArtifactsService) Upload(parent string, uploadaptartifactrequest *UploadAptArtifactRequest) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
+	c := &ProjectsLocationsRepositoriesAptArtifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.uploadaptartifactrequest = uploadaptartifactrequest
 	return c
@@ -4135,7 +4112,7 @@ func (r *ProjectsLocationsRepositoriesAptartifactsService) Upload(parent string,
 // unless a MediaOption generated by googleapi.ContentType is
 // supplied.
 // At most one of Media and ResumableMedia may be set.
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsRepositoriesAptartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
 	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
 	return c
 }
@@ -4149,7 +4126,7 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Media(r io.Reader,
 // identifies the MIME media type of the upload, such as "image/png". If
 // mediaType is "", it will be auto-detected. The provided ctx will
 // supersede any context previously provided to the Context method.
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsRepositoriesAptartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
 	c.ctx_ = ctx
 	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
 	return c
@@ -4159,7 +4136,7 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) ResumableMedia(ctx
 // after every chunk. It should be a low-latency function in order to
 // not slow down the upload operation. This should only be called when
 // using ResumableMedia (as opposed to Media).
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsRepositoriesAptartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
 	c.mediaInfo_.SetProgressUpdater(pu)
 	return c
 }
@@ -4167,7 +4144,7 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) ProgressUpdater(pu
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesAptartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4177,23 +4154,23 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Fields(s ...google
 // canceled.
 // This context will supersede any context previously provided to the
 // ResumableMedia method.
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesAptartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Header() http.Header {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4230,14 +4207,14 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) doRequest(alt stri
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "artifactregistry.projects.locations.repositories.aptartifacts.upload" call.
+// Do executes the "artifactregistry.projects.locations.repositories.aptArtifacts.upload" call.
 // Exactly one of *UploadAptArtifactMediaResponse or error will be
 // non-nil. Any non-2xx status code is an error. Response headers are in
 // either *UploadAptArtifactMediaResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Do(opts ...googleapi.CallOption) (*UploadAptArtifactMediaResponse, error) {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Do(opts ...googleapi.CallOption) (*UploadAptArtifactMediaResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4288,7 +4265,7 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Do(opts ...googlea
 	//   "description": "Directly uploads an Apt artifact. The returned Operation will complete once the resources are uploaded. Package, Version, and File resources are created based on the imported artifact. Imported artifacts that conflict with existing resources are ignored.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/aptArtifacts:create",
 	//   "httpMethod": "POST",
-	//   "id": "artifactregistry.projects.locations.repositories.aptartifacts.upload",
+	//   "id": "artifactregistry.projects.locations.repositories.aptArtifacts.upload",
 	//   "mediaUpload": {
 	//     "accept": [
 	//       "*/*"
@@ -4384,7 +4361,7 @@ func (c *ProjectsLocationsRepositoriesFilesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesFilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4561,7 +4538,7 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesFilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4735,7 +4712,7 @@ func (c *ProjectsLocationsRepositoriesPackagesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPackagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4878,7 +4855,7 @@ func (c *ProjectsLocationsRepositoriesPackagesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPackagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5040,7 +5017,7 @@ func (c *ProjectsLocationsRepositoriesPackagesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPackagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5218,7 +5195,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5363,7 +5340,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5506,7 +5483,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5679,7 +5656,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Header() http.Header
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5866,7 +5843,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6021,7 +5998,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsDeleteCall) Header() http.
 
 func (c *ProjectsLocationsRepositoriesPackagesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6183,7 +6160,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsGetCall) Header() http.Hea
 
 func (c *ProjectsLocationsRepositoriesPackagesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6381,7 +6358,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) Header() http.He
 
 func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6575,7 +6552,7 @@ func (c *ProjectsLocationsRepositoriesYumArtifactsImportCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesYumArtifactsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6669,9 +6646,9 @@ func (c *ProjectsLocationsRepositoriesYumArtifactsImportCall) Do(opts ...googlea
 
 }
 
-// method id "artifactregistry.projects.locations.repositories.yumartifacts.upload":
+// method id "artifactregistry.projects.locations.repositories.yumArtifacts.upload":
 
-type ProjectsLocationsRepositoriesYumartifactsUploadCall struct {
+type ProjectsLocationsRepositoriesYumArtifactsUploadCall struct {
 	s                        *Service
 	parent                   string
 	uploadyumartifactrequest *UploadYumArtifactRequest
@@ -6688,8 +6665,8 @@ type ProjectsLocationsRepositoriesYumartifactsUploadCall struct {
 //
 // - parent: The name of the parent resource where the artifacts will be
 //   uploaded.
-func (r *ProjectsLocationsRepositoriesYumartifactsService) Upload(parent string, uploadyumartifactrequest *UploadYumArtifactRequest) *ProjectsLocationsRepositoriesYumartifactsUploadCall {
-	c := &ProjectsLocationsRepositoriesYumartifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsRepositoriesYumArtifactsService) Upload(parent string, uploadyumartifactrequest *UploadYumArtifactRequest) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
+	c := &ProjectsLocationsRepositoriesYumArtifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.uploadyumartifactrequest = uploadyumartifactrequest
 	return c
@@ -6703,7 +6680,7 @@ func (r *ProjectsLocationsRepositoriesYumartifactsService) Upload(parent string,
 // unless a MediaOption generated by googleapi.ContentType is
 // supplied.
 // At most one of Media and ResumableMedia may be set.
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsRepositoriesYumartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
 	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
 	return c
 }
@@ -6717,7 +6694,7 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Media(r io.Reader,
 // identifies the MIME media type of the upload, such as "image/png". If
 // mediaType is "", it will be auto-detected. The provided ctx will
 // supersede any context previously provided to the Context method.
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsRepositoriesYumartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
 	c.ctx_ = ctx
 	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
 	return c
@@ -6727,7 +6704,7 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) ResumableMedia(ctx
 // after every chunk. It should be a low-latency function in order to
 // not slow down the upload operation. This should only be called when
 // using ResumableMedia (as opposed to Media).
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsRepositoriesYumartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
 	c.mediaInfo_.SetProgressUpdater(pu)
 	return c
 }
@@ -6735,7 +6712,7 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) ProgressUpdater(pu
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesYumartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -6745,23 +6722,23 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Fields(s ...google
 // canceled.
 // This context will supersede any context previously provided to the
 // ResumableMedia method.
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesYumartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Header() http.Header {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6798,14 +6775,14 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) doRequest(alt stri
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "artifactregistry.projects.locations.repositories.yumartifacts.upload" call.
+// Do executes the "artifactregistry.projects.locations.repositories.yumArtifacts.upload" call.
 // Exactly one of *UploadYumArtifactMediaResponse or error will be
 // non-nil. Any non-2xx status code is an error. Response headers are in
 // either *UploadYumArtifactMediaResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Do(opts ...googleapi.CallOption) (*UploadYumArtifactMediaResponse, error) {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) Do(opts ...googleapi.CallOption) (*UploadYumArtifactMediaResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6856,7 +6833,7 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Do(opts ...googlea
 	//   "description": "Directly uploads a Yum artifact. The returned Operation will complete once the resources are uploaded. Package, Version, and File resources are created based on the imported artifact. Imported artifacts that conflict with existing resources are ignored.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/yumArtifacts:create",
 	//   "httpMethod": "POST",
-	//   "id": "artifactregistry.projects.locations.repositories.yumartifacts.upload",
+	//   "id": "artifactregistry.projects.locations.repositories.yumArtifacts.upload",
 	//   "mediaUpload": {
 	//     "accept": [
 	//       "*/*"

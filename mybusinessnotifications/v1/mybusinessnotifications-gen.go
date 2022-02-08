@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -173,8 +174,11 @@ type NotificationSetting struct {
 	// notification will provide the resource name of question and answer.
 	//   "DUPLICATE_LOCATION" - Indicates whether there is a change in
 	// location metadata's duplicate location field.
-	//   "LOSS_OF_VOICE_OF_MERCHANT" - Indicates whether the location has a
-	// loss in voice of merchant status. Call GetVoiceOfMerchantState rpc
+	//   "LOSS_OF_VOICE_OF_MERCHANT" - Deprecated: Migrate the existing
+	// usages of this value to the more expanded
+	// "VOICE_OF_MERCHANT_UPDATED".
+	//   "VOICE_OF_MERCHANT_UPDATED" - Indicates whether the location has an
+	// update in voice of merchant status. Call GetVoiceOfMerchantState rpc
 	// for more details
 	NotificationTypes []string `json:"notificationTypes,omitempty"`
 
@@ -271,7 +275,7 @@ func (c *AccountsGetNotificationSettingCall) Header() http.Header {
 
 func (c *AccountsGetNotificationSettingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -420,7 +424,7 @@ func (c *AccountsUpdateNotificationSettingCall) Header() http.Header {
 
 func (c *AccountsUpdateNotificationSettingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

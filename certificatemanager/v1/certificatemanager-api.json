@@ -14,7 +14,7 @@
   "canonicalName": "Certificate Manager",
   "description": "",
   "discoveryVersion": "v1",
-  "documentationLink": "https://cloud.google.com/",
+  "documentationLink": "https://cloud.google.com/certificate-manager",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -975,7 +975,7 @@
       }
     }
   },
-  "revision": "20220119",
+  "revision": "20220202",
   "rootUrl": "https://certificatemanager.googleapis.com/",
   "schemas": {
     "AuthorizationAttemptInfo": {

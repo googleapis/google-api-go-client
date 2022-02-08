@@ -11,10 +11,7 @@
   "commitMessagePrefix": "chore(all): ",
   "commitMessageAction": "update",
   "groupName": "all",
-  "ignoreDeps": [
-    "golang.org/x/net",
-    "google.golang.org/grpc"
-  ],
+  "ignoreDeps": [],
   "force": {
     "constraints": {
       "go": "1.17"

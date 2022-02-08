@@ -16,5 +16,4 @@ require (
 	google.golang.org/appengine v1.6.7
 	google.golang.org/genproto v0.0.0-20220204002441-d6cc3cc0770e
 	google.golang.org/grpc v1.40.1
-	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 )

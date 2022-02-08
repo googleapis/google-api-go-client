@@ -13,8 +13,8 @@ import (
 	"strings"
 	"testing"
 
-	root "google.golang.org/api"
 	"google.golang.org/api/google-api-go-generator/internal/disco"
+	"google.golang.org/api/internal"
 )
 
 var updateGolden = flag.Bool("update_golden", false, "If true, causes TestAPIs to update golden files")
@@ -59,7 +59,7 @@ func TestAPIs(t *testing.T) {
 			}
 			goldenFile := filepath.Join("testdata", name+".want")
 			if *updateGolden {
-				clean := strings.Replace(string(clean), fmt.Sprintf("gdcl/%s", root.Version), "gdcl/00000000", -1)
+				clean := strings.Replace(string(clean), fmt.Sprintf("gdcl/%s", internal.Version), "gdcl/00000000", -1)
 				if err := ioutil.WriteFile(goldenFile, []byte(clean), 0644); err != nil {
 					t.Fatal(err)
 				}
@@ -68,7 +68,7 @@ func TestAPIs(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			wantStr := strings.Replace(string(want), "gdcl/00000000", fmt.Sprintf("gdcl/%s", root.Version), -1)
+			wantStr := strings.Replace(string(want), "gdcl/00000000", fmt.Sprintf("gdcl/%s", internal.Version), -1)
 			if !bytes.Equal([]byte(wantStr), clean) {
 				tf, _ := ioutil.TempFile("", "api-"+name+"-got-json.")
 				if _, err := tf.Write(clean); err != nil {

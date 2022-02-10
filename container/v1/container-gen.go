@@ -897,6 +897,9 @@ type Cluster struct {
 	// Id: Output only. Unique id for the cluster.
 	Id string `json:"id,omitempty"`
 
+	// IdentityServiceConfig: Configuration for Identity Service component.
+	IdentityServiceConfig *IdentityServiceConfig `json:"identityServiceConfig,omitempty"`
+
 	// InitialClusterVersion: The initial Kubernetes version for this
 	// cluster. Valid versions are those found in validMasterVersions
 	// returned by getServerConfig. The version can be upgraded over time;
@@ -1254,6 +1257,10 @@ type ClusterUpdate struct {
 
 	// DesiredGcfsConfig: The desired GCFS config for the cluster
 	DesiredGcfsConfig *GcfsConfig `json:"desiredGcfsConfig,omitempty"`
+
+	// DesiredIdentityServiceConfig: The desired Identity Service component
+	// configuration.
+	DesiredIdentityServiceConfig *IdentityServiceConfig `json:"desiredIdentityServiceConfig,omitempty"`
 
 	// DesiredImageType: The desired image type for the node pool. NOTE: Set
 	// the "desired_node_pool" field as well.
@@ -2304,6 +2311,36 @@ type IPAllocationPolicy struct {
 
 func (s *IPAllocationPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod IPAllocationPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceConfig: IdentityServiceConfig is configuration for
+// Identity Service which allows customers to use external identity
+// providers with the K8S API
+type IdentityServiceConfig struct {
+	// Enabled: Whether to enable the Identity Service component
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

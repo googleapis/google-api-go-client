@@ -295,6 +295,45 @@ func (s *AddGroupMigrationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ApplianceVersion: Describes an appliance version.
+type ApplianceVersion struct {
+	// Critical: Determine whether it's critical to upgrade the appliance to
+	// this version.
+	Critical bool `json:"critical,omitempty"`
+
+	// ReleaseNotesUri: Link to a page that contains the version release
+	// notes.
+	ReleaseNotesUri string `json:"releaseNotesUri,omitempty"`
+
+	// Uri: A link for downloading the version.
+	Uri string `json:"uri,omitempty"`
+
+	// Version: The appliance version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Critical") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Critical") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplianceVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplianceVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AppliedLicense: AppliedLicense holds the license data returned by
 // adaptation module report.
 type AppliedLicense struct {
@@ -330,6 +369,41 @@ type AppliedLicense struct {
 
 func (s *AppliedLicense) MarshalJSON() ([]byte, error) {
 	type NoMethod AppliedLicense
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AvailableUpdates: Holds informatiom about the available versions for
+// upgrade.
+type AvailableUpdates struct {
+	// InPlaceUpdate: The latest version for in place update. The current
+	// appliance can be updated to this version using the API or m4c CLI.
+	InPlaceUpdate *ApplianceVersion `json:"inPlaceUpdate,omitempty"`
+
+	// NewDeployableAppliance: The newest deployable version of the
+	// appliance. The current appliance can't be updated into this version,
+	// and the owner must manually deploy this OVA to a new appliance.
+	NewDeployableAppliance *ApplianceVersion `json:"newDeployableAppliance,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InPlaceUpdate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InPlaceUpdate") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AvailableUpdates) MarshalJSON() ([]byte, error) {
+	type NoMethod AvailableUpdates
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -371,7 +445,7 @@ type CloneJob struct {
 	// Clone Job's state.
 	Error *Status `json:"error,omitempty"`
 
-	// Name: The name of the clone.
+	// Name: Output only. The name of the clone.
 	Name string `json:"name,omitempty"`
 
 	// State: Output only. State of the clone job.
@@ -775,6 +849,21 @@ func (s *CutoverJob) MarshalJSON() ([]byte, error) {
 // datacenter (an OVA vm installed by the user) to connect the
 // Datacenter to GCP and support vm migration data transfer.
 type DatacenterConnector struct {
+	// ApplianceInfrastructureVersion: Output only. Appliance OVA version.
+	// This is the OVA which is manually installed by the user and contains
+	// the infrastructure for the automatically updatable components on the
+	// appliance.
+	ApplianceInfrastructureVersion string `json:"applianceInfrastructureVersion,omitempty"`
+
+	// ApplianceSoftwareVersion: Output only. Appliance last installed
+	// update bundle version. This is the version of the automatically
+	// updatable components on the appliance.
+	ApplianceSoftwareVersion string `json:"applianceSoftwareVersion,omitempty"`
+
+	// AvailableVersions: Output only. The available versions for updating
+	// this appliance.
+	AvailableVersions *AvailableUpdates `json:"availableVersions,omitempty"`
+
 	// Bucket: Output only. The communication channel between the datacenter
 	// connector and GCP.
 	Bucket string `json:"bucket,omitempty"`
@@ -822,6 +911,10 @@ type DatacenterConnector struct {
 	// an API call.
 	UpdateTime string `json:"updateTime,omitempty"`
 
+	// UpgradeStatus: Output only. The status of the current / last
+	// upgradeAppliance operation.
+	UpgradeStatus *UpgradeStatus `json:"upgradeStatus,omitempty"`
+
 	// Version: The version running in the DatacenterConnector. This is
 	// supplied by the OVA connector during the registration process and can
 	// not be modified.
@@ -831,20 +924,22 @@ type DatacenterConnector struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Bucket") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ApplianceInfrastructureVersion") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Bucket") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "ApplianceInfrastructureVersion") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -872,8 +967,7 @@ type FetchInventoryResponse struct {
 	// queried (if the result is from the cache).
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VmwareVms: Output only. The description of the VMs in a Source of
-	// type Vmware.
+	// VmwareVms: The description of the VMs in a Source of type Vmware.
 	VmwareVms *VmwareVmsDetails `json:"vmwareVms,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -921,7 +1015,7 @@ type Group struct {
 	// can be updated.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The Group name.
+	// Name: Output only. The Group name.
 	Name string `json:"name,omitempty"`
 
 	// UpdateTime: Output only. The update time timestamp.
@@ -2102,7 +2196,7 @@ type TargetProject struct {
 	// Description: The target project's description.
 	Description string `json:"description,omitempty"`
 
-	// Name: The name of the target project.
+	// Name: Output only. The name of the target project.
 	Name string `json:"name,omitempty"`
 
 	// Project: The target project ID (number) or project name.
@@ -2135,6 +2229,95 @@ type TargetProject struct {
 
 func (s *TargetProject) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetProject
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpgradeApplianceRequest: Request message for 'UpgradeAppliance'
+// request.
+type UpgradeApplianceRequest struct {
+	// RequestId: A request ID to identify requests. Specify a unique
+	// request ID so that if you must retry your request, the server will
+	// know to ignore the request if it has already been completed. The
+	// server will guarantee that for at least 60 minutes after the first
+	// request. For example, consider a situation where you make an initial
+	// request and t he request times out. If you make the request again
+	// with the same request ID, the server can check if original operation
+	// with the same request ID was received, and if so, will ignore the
+	// second request. This prevents clients from accidentally creating
+	// duplicate commitments. The request ID must be a valid UUID with the
+	// exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpgradeApplianceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeApplianceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpgradeStatus: UpgradeStatus contains information about
+// upgradeAppliance operation.
+type UpgradeStatus struct {
+	// Error: Provides details on the state of the upgrade operation in case
+	// of an error.
+	Error *Status `json:"error,omitempty"`
+
+	// PreviousVersion: The version from which we upgraded.
+	PreviousVersion string `json:"previousVersion,omitempty"`
+
+	// StartTime: The time the operation was started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: The state of the upgradeAppliance operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state was not sampled by the health
+	// checks yet.
+	//   "RUNNING" - The upgrade has started.
+	//   "FAILED" - The upgrade failed.
+	//   "SUCCEEDED" - The upgrade finished successfully.
+	State string `json:"state,omitempty"`
+
+	// Version: The version to upgrade to.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Error") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpgradeStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2382,7 +2565,7 @@ type VmwareVmDetails struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// GuestDescription: The VM's OS. See for example
-	// https://pubs.vmware.com/vi-sdk/visdk250/ReferenceGuide/vim.vm.GuestOsDescriptor.GuestOsIdentifier.html
+	// https://vdc-repo.vmware.com/vmwb-repository/dcr-public/da47f910-60ac-438b-8b9b-6122f4d14524/16b7274a-bf8b-4b4c-a05e-746f2aa93c8c/doc/vim.vm.GuestOsDescriptor.GuestOsIdentifier.html
 	// for types of strings this might hold.
 	GuestDescription string `json:"guestDescription,omitempty"`
 
@@ -3663,7 +3846,7 @@ type ProjectsLocationsGroupsPatchCall struct {
 
 // Patch: Updates the parameters of a single Group.
 //
-// - name: The Group name.
+// - name: Output only. The Group name.
 func (r *ProjectsLocationsGroupsService) Patch(name string, group *Group) *ProjectsLocationsGroupsPatchCall {
 	c := &ProjectsLocationsGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3799,7 +3982,7 @@ func (c *ProjectsLocationsGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The Group name.",
+	//       "description": "Output only. The Group name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -6358,6 +6541,149 @@ func (c *ProjectsLocationsSourcesDatacenterConnectorsListCall) Pages(ctx context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "vmmigration.projects.locations.sources.datacenterConnectors.upgradeAppliance":
+
+type ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall struct {
+	s                       *Service
+	datacenterConnector     string
+	upgradeappliancerequest *UpgradeApplianceRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// UpgradeAppliance: Upgrades the appliance relate to this
+// DatacenterConnector to the in-place updateable version.
+//
+// - datacenterConnector: The DatacenterConnector name.
+func (r *ProjectsLocationsSourcesDatacenterConnectorsService) UpgradeAppliance(datacenterConnector string, upgradeappliancerequest *UpgradeApplianceRequest) *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall {
+	c := &ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.datacenterConnector = datacenterConnector
+	c.upgradeappliancerequest = upgradeappliancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall) Context(ctx context.Context) *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.upgradeappliancerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+datacenterConnector}:upgradeAppliance")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"datacenterConnector": c.datacenterConnector,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.datacenterConnectors.upgradeAppliance" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Upgrades the appliance relate to this DatacenterConnector to the in-place updateable version.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sources/{sourcesId}/datacenterConnectors/{datacenterConnectorsId}:upgradeAppliance",
+	//   "httpMethod": "POST",
+	//   "id": "vmmigration.projects.locations.sources.datacenterConnectors.upgradeAppliance",
+	//   "parameterOrder": [
+	//     "datacenterConnector"
+	//   ],
+	//   "parameters": {
+	//     "datacenterConnector": {
+	//       "description": "Required. The DatacenterConnector name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/sources/[^/]+/datacenterConnectors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+datacenterConnector}:upgradeAppliance",
+	//   "request": {
+	//     "$ref": "UpgradeApplianceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "vmmigration.projects.locations.sources.migratingVms.create":
@@ -10702,7 +11028,7 @@ type ProjectsLocationsTargetProjectsPatchCall struct {
 // TargetProject is a global resource; hence the only supported value
 // for location is `global`.
 //
-// - name: The name of the target project.
+// - name: Output only. The name of the target project.
 func (r *ProjectsLocationsTargetProjectsService) Patch(name string, targetproject *TargetProject) *ProjectsLocationsTargetProjectsPatchCall {
 	c := &ProjectsLocationsTargetProjectsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10838,7 +11164,7 @@ func (c *ProjectsLocationsTargetProjectsPatchCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the target project.",
+	//       "description": "Output only. The name of the target project.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/targetProjects/[^/]+$",
 	//       "required": true,

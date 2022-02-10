@@ -863,6 +863,10 @@ type SasPortalDeviceMetadata struct {
 	// more details.
 	InterferenceCoordinationGroup string `json:"interferenceCoordinationGroup,omitempty"`
 
+	// NrqzValidated: Output only. Whether a CPI has validated to have
+	// coordinated with the National Quiet Zone office.
+	NrqzValidated bool `json:"nrqzValidated,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AntennaModel") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

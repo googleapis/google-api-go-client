@@ -320,11 +320,11 @@ func (s *DatabaseConfig) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values * A month and day, with a
+// zero year (e.g., an anniversary) * A year on its own, with a zero
+// month and a zero day * A year and month, with a zero day (e.g., a
+// credit card expiration date) Related types: * google.type.TimeOfDay *
+// google.type.DateTime * google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -1153,6 +1153,12 @@ func (s *PrivateClusterConfig) MarshalJSON() ([]byte, error) {
 // PrivateEnvironmentConfig: The configuration information for
 // configuring a Private IP Cloud Composer environment.
 type PrivateEnvironmentConfig struct {
+	// CloudComposerConnectionSubnetwork: Optional. When specified, the
+	// environment will use Private Service Connect instead of VPC peerings
+	// to connect to Cloud SQL in the Tenant Project, and the PSC endpoint
+	// in the Customer Project will use an IP address from this subnetwork.
+	CloudComposerConnectionSubnetwork string `json:"cloudComposerConnectionSubnetwork,omitempty"`
+
 	// CloudComposerNetworkIpv4CidrBlock: Optional. The CIDR block from
 	// which IP range for Cloud Composer Network in tenant project will be
 	// reserved. Needs to be disjoint from
@@ -1195,7 +1201,7 @@ type PrivateEnvironmentConfig struct {
 	WebServerIpv4ReservedRange string `json:"webServerIpv4ReservedRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "CloudComposerNetworkIpv4CidrBlock") to unconditionally include in
+	// "CloudComposerConnectionSubnetwork") to unconditionally include in
 	// API requests. By default, fields with empty or default values are
 	// omitted from API requests. However, any non-pointer, non-interface
 	// field appearing in ForceSendFields will be sent to the server
@@ -1204,7 +1210,7 @@ type PrivateEnvironmentConfig struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "CloudComposerNetworkIpv4CidrBlock") to include in API requests with
+	// "CloudComposerConnectionSubnetwork") to include in API requests with
 	// the JSON null value. By default, fields with empty values are omitted
 	// from API requests. However, any field with an empty value appearing
 	// in NullFields will be sent to the server as null. It is an error if a

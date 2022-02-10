@@ -8866,6 +8866,17 @@ func (c *CustomersChromePrintersListCall) Filter(filter string) *CustomersChrome
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": The order to sort
+// results by. Must be one of display_name, description, make_and_model,
+// or create_time. Default order is ascending, but descending order can
+// be returned by appending "desc" to the order_by field. For instance,
+// "description desc" will return the printers sorted by description in
+// descending order.
+func (c *CustomersChromePrintersListCall) OrderBy(orderBy string) *CustomersChromePrintersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // OrgUnitId sets the optional parameter "orgUnitId": Organization Unit
 // that we want to list the printers for. When org_unit is not present
 // in the request then all printers of the customer are returned (or
@@ -9001,6 +9012,11 @@ func (c *CustomersChromePrintersListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "Search query. Search syntax is shared between this api and Admin Console printers pages.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "The order to sort results by. Must be one of display_name, description, make_and_model, or create_time. Default order is ascending, but descending order can be returned by appending \"desc\" to the order_by field. For instance, \"description desc\" will return the printers sorted by description in descending order.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -398,11 +398,11 @@ func (s *DatabaseConfig) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values * A month and day, with a
+// zero year (e.g., an anniversary) * A year on its own, with a zero
+// month and a zero day * A year and month, with a zero day (e.g., a
+// credit card expiration date) Related types: * google.type.TimeOfDay *
+// google.type.DateTime * google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -1588,14 +1588,13 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // StoreEnvironmentStateResponse: Store environment state response.
 type StoreEnvironmentStateResponse struct {
-	// SnapshotLocation: The fully-resolved Cloud Storage location of the
-	// created snapshot, e.g.:
-	// "gs://my-bucket/snapshots/project_id/location/environment_uuid/timesta
-	// mp". This field is populated only if the snapshot creation was
-	// successful.
-	SnapshotLocation string `json:"snapshotLocation,omitempty"`
+	// SnapshotPath: The fully-resolved Cloud Storage path of the created
+	// snapshot, e.g.:
+	// "gs://my-bucket/snapshots/project_location_environment_timestamp".
+	// This field is populated only if the snapshot creation was successful.
+	SnapshotPath string `json:"snapshotPath,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SnapshotLocation") to
+	// ForceSendFields is a list of field names (e.g. "SnapshotPath") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1603,13 +1602,12 @@ type StoreEnvironmentStateResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SnapshotLocation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "SnapshotPath") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

@@ -483,6 +483,9 @@ type GoogleCloudRecommenderV1beta1Impact struct {
 	// SecurityProjection: Use with CategoryType.SECURITY
 	SecurityProjection *GoogleCloudRecommenderV1beta1SecurityProjection `json:"securityProjection,omitempty"`
 
+	// SustainabilityProjection: Use with CategoryType.SUSTAINABILITY
+	SustainabilityProjection *GoogleCloudRecommenderV1beta1SustainabilityProjection `json:"sustainabilityProjection,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1447,6 +1450,54 @@ func (s *GoogleCloudRecommenderV1beta1SecurityProjection) MarshalJSON() ([]byte,
 	type NoMethod GoogleCloudRecommenderV1beta1SecurityProjection
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecommenderV1beta1SustainabilityProjection: Contains
+// metadata about how much sustainability a recommendation can save or
+// incur.
+type GoogleCloudRecommenderV1beta1SustainabilityProjection struct {
+	// Duration: Duration for which this sustanability applies.
+	Duration string `json:"duration,omitempty"`
+
+	// KgCO2e: Carbon Footprint generated in kg of CO2 equivalent. Chose
+	// kg_c_o2e so that the name renders correctly in camelCase (kgCO2e).
+	KgCO2e float64 `json:"kgCO2e,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Duration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Duration") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1SustainabilityProjection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1SustainabilityProjection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecommenderV1beta1SustainabilityProjection) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecommenderV1beta1SustainabilityProjection
+	var s1 struct {
+		KgCO2e gensupport.JSONFloat64 `json:"kgCO2e"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.KgCO2e = float64(s1.KgCO2e)
+	return nil
 }
 
 // GoogleCloudRecommenderV1beta1ValueMatcher: Contains various matching

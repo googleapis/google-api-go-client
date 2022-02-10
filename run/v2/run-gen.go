@@ -797,7 +797,7 @@ type GoogleCloudRunOpV2Revision struct {
 	// allow use of preview features in that stage. On read, describes
 	// whether the resource uses preview features. Launch Stages are defined
 	// at Google Cloud Platform Launch Stages
-	// (http://cloud.google.com/terms/launch-stages).
+	// (https://cloud.google.com/terms/launch-stages).
 	//
 	// Possible values:
 	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
@@ -815,7 +815,7 @@ type GoogleCloudRunOpV2Revision struct {
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
 	// applicable terms, and have their projects allowlisted. Alpha releases
-	// don’t have to be feature complete, no SLAs are provided, and there
+	// don't have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
 	// for limited-use tests -- just like they would in normal production
@@ -828,7 +828,7 @@ type GoogleCloudRunOpV2Revision struct {
 	//   "GA" - GA features are open to all developers and are considered
 	// stable and fully qualified for production use.
 	//   "DEPRECATED" - Deprecated features are scheduled to be shut down
-	// and removed. For more information, see the “Deprecation Policy”
+	// and removed. For more information, see the "Deprecation Policy"
 	// section of our [Terms of Service](https://cloud.google.com/terms/)
 	// and the [Google Cloud Platform Subject to the Deprecation
 	// Policy](https://cloud.google.com/terms/deprecation) documentation.
@@ -1133,7 +1133,7 @@ type GoogleCloudRunOpV2Service struct {
 	// some annotations using 'run.googleapis.com' or 'serving.knative.dev'
 	// namespaces. This field follows Kubernetes annotations' namespacing,
 	// limits, and rules. More info:
-	// http://kubernetes.io/docs/user-guide/annotations
+	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// BinaryAuthorization: Settings for the Binary Authorization feature.
@@ -1216,7 +1216,7 @@ type GoogleCloudRunOpV2Service struct {
 	LatestReadyRevision string `json:"latestReadyRevision,omitempty"`
 
 	// LaunchStage: The launch stage as defined by Google Cloud Platform
-	// Launch Stages (http://cloud.google.com/terms/launch-stages). Cloud
+	// Launch Stages (https://cloud.google.com/terms/launch-stages). Cloud
 	// Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA
 	// is assumed.
 	//
@@ -1236,7 +1236,7 @@ type GoogleCloudRunOpV2Service struct {
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
 	// applicable terms, and have their projects allowlisted. Alpha releases
-	// don’t have to be feature complete, no SLAs are provided, and there
+	// don't have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
 	// for limited-use tests -- just like they would in normal production
@@ -1249,7 +1249,7 @@ type GoogleCloudRunOpV2Service struct {
 	//   "GA" - GA features are open to all developers and are considered
 	// stable and fully qualified for production use.
 	//   "DEPRECATED" - Deprecated features are scheduled to be shut down
-	// and removed. For more information, see the “Deprecation Policy”
+	// and removed. For more information, see the "Deprecation Policy"
 	// section of our [Terms of Service](https://cloud.google.com/terms/)
 	// and the [Google Cloud Platform Subject to the Deprecation
 	// Policy](https://cloud.google.com/terms/deprecation) documentation.
@@ -2519,29 +2519,35 @@ type ProjectsLocationsOperationsListCall struct {
 // the name binding is the parent resource, without the operations
 // collection id.
 //
-// - name: The name of the operation's parent resource.
+// - name: To query for all of the operations for a project.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter for matching
+// the completed or in-progress operations. The supported formats of
+// *filter* are: To query for only completed operations: done:true To
+// query for only ongoing operations: done:false Must be empty to query
+// for all of the latest operations for the given parent project.
 func (c *ProjectsLocationsOperationsListCall) Filter(filter string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of records that should be returned. Requested page size cannot exceed
+// 100. If not set or set to less than or equal to 0, the default page
+// size is 100. .
 func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": Token identifying
+// which result to start with, which is returned by a previous list
+// call.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2656,25 +2662,25 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "Optional. A filter for matching the completed or in-progress operations. The supported formats of *filter* are: To query for only completed operations: done:true To query for only ongoing operations: done:false Must be empty to query for all of the latest operations for the given parent project.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the operation's parent resource.",
+	//       "description": "Required. To query for all of the operations for a project.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of records that should be returned. Requested page size cannot exceed 100. If not set or set to less than or equal to 0, the default page size is 100. .",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "Token identifying which result to start with, which is returned by a previous list call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

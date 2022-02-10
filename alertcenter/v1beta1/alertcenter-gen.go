@@ -687,6 +687,8 @@ type AppsOutage struct {
 	//   "FALSE_POSITIVE" - Further assessment indicated no customer impact.
 	//   "PARTIALLY_RESOLVED" - The incident has been partially resolved.
 	//   "MERGED" - The incident was merged into a parent.
+	//   "DOWNGRADED" - The incident has lower impact than initially
+	// anticipated.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DashboardUri") to
@@ -1543,7 +1545,7 @@ func (s *MatchInfo) MarshalJSON() ([]byte, error) {
 
 // MergeInfo: New alert tracking numbers.
 type MergeInfo struct {
-	// NewAlertId: New alert ID. Reference the
+	// NewAlertId: Optional. New alert ID. Reference the
 	// [google.apps.alertcenter.Alert] with this ID for the current state.
 	NewAlertId string `json:"newAlertId,omitempty"`
 

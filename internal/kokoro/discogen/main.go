@@ -138,6 +138,7 @@ func hasChanges(dir string) (bool, error) {
 
 // makePR commits local changes and makes a regen PR.
 func makePR(ctx context.Context, accessToken, dir string) error {
+	log.Println("creating commit and pushing")
 	c := exec.Command("/bin/bash", "-c", `
 	set -ex
 	
@@ -156,10 +157,13 @@ func makePR(ctx context.Context, accessToken, dir string) error {
 		fmt.Sprintf("BRANCH_NAME=%s", branchName),
 	}
 	c.Dir = dir
+	c.Stderr = os.Stderr
+	c.Stdout = os.Stdout
 	if err := c.Run(); err != nil {
 		return err
 	}
 
+	log.Println("creating pull request")
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: accessToken},
 	)

@@ -88,6 +88,7 @@ func setGitCreds(githubName, githubEmail, githubUsername, accessToken string) er
 		fmt.Sprintf("HOME=%s", os.Getenv("HOME")),
 	}
 	c.Stdout = os.Stdout
+	c.Stderr = os.Stderr
 	if err := c.Run(); err != nil {
 		return err
 	}
@@ -98,6 +99,7 @@ func setGitCreds(githubName, githubEmail, githubUsername, accessToken string) er
 		fmt.Sprintf("HOME=%s", os.Getenv("HOME")),
 	}
 	c.Stdout = os.Stdout
+	c.Stderr = os.Stderr
 	return c.Run()
 }
 

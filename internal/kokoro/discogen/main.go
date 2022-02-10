@@ -83,11 +83,23 @@ func setGitCreds(githubName, githubEmail, githubUsername, accessToken string) er
 		return err
 	}
 	c := exec.Command("git", "config", "--global", "user.name", githubName)
+	c.Env = []string{
+		fmt.Sprintf("PATH=%s", os.Getenv("PATH")),
+		fmt.Sprintf("HOME=%s", os.Getenv("HOME")),
+	}
+	c.Stdout = os.Stdout
+	c.Stderr = os.Stderr
 	if err := c.Run(); err != nil {
 		return err
 	}
 
 	c = exec.Command("git", "config", "--global", "user.email", githubEmail)
+	c.Env = []string{
+		fmt.Sprintf("PATH=%s", os.Getenv("PATH")),
+		fmt.Sprintf("HOME=%s", os.Getenv("HOME")),
+	}
+	c.Stdout = os.Stdout
+	c.Stderr = os.Stderr
 	return c.Run()
 }
 
@@ -155,6 +167,8 @@ func makePR(ctx context.Context, accessToken, dir string) error {
 	c.Env = []string{
 		fmt.Sprintf("COMMIT_TITLE=%s", commitTitle),
 		fmt.Sprintf("BRANCH_NAME=%s", branchName),
+		fmt.Sprintf("PATH=%s", os.Getenv("PATH")),
+		fmt.Sprintf("HOME=%s", os.Getenv("HOME")),
 	}
 	c.Dir = dir
 	c.Stderr = os.Stderr

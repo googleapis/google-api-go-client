@@ -16,4 +16,5 @@ set -x
 cd github/google-api-go-client
 export DISCOVERY_DIR=$(pwd)
 
+cd internal/kokoro/discogen
 go run google.golang.org/api/internal/kokoro/discogen

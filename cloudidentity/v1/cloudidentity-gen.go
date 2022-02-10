@@ -2622,61 +2622,6 @@ func (s *UpdateMembershipRolesParams) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UserInvitation: The `UserInvitation` resource represents an email
-// that can be sent to an unmanaged user account inviting them to join
-// the customer's Google Workspace or Cloud Identity account. An
-// unmanaged account shares an email address domain with the Google
-// Workspace or Cloud Identity account but is not managed by it yet. If
-// the user accepts the `UserInvitation`, the user account will become
-// managed.
-type UserInvitation struct {
-	// MailsSentCount: Number of invitation emails sent to the user.
-	MailsSentCount int64 `json:"mailsSentCount,omitempty,string"`
-
-	// Name: Shall be of the form
-	// `customers/{customer}/userinvitations/{user_email_address}`.
-	Name string `json:"name,omitempty"`
-
-	// State: State of the `UserInvitation`.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - The default value. This value is used if the
-	// state is omitted.
-	//   "NOT_YET_SENT" - The `UserInvitation` has been created and is ready
-	// for sending as an email.
-	//   "INVITED" - The user has been invited by email.
-	//   "ACCEPTED" - The user has accepted the invitation and is part of
-	// the organization.
-	//   "DECLINED" - The user declined the invitation.
-	State string `json:"state,omitempty"`
-
-	// UpdateTime: Time when the `UserInvitation` was last updated.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MailsSentCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MailsSentCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UserInvitation) MarshalJSON() ([]byte, error) {
-	type NoMethod UserInvitation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // method id "cloudidentity.devices.cancelWipe":
 
 type DevicesCancelWipeCall struct {

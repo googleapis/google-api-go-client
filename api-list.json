@@ -554,6 +554,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/bare-metal",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "baremetalsolution:v2",
+      "name": "baremetalsolution",
+      "version": "v2",
+      "title": "Bare Metal Solution API",
+      "description": "Bare Metal Solution provides hardware to run specialized workloads with low latency on Google Cloud.",
+      "discoveryRestUrl": "https://baremetalsolution.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/bare-metal",
       "preferred": true
     },
     {
@@ -3890,21 +3905,6 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/android/work/play/custom-app-api/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "playintegrity:v1",
-      "name": "playintegrity",
-      "version": "v1",
-      "title": "Google Play Integrity API",
-      "description": "Play Integrity",
-      "discoveryRestUrl": "https://playintegrity.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developer.android.com/google/play/integrity",
       "preferred": true
     },
     {

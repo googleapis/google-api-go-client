@@ -212,6 +212,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "List filter.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "Requested page size. Server may return fewer items than requested. If unspecified, the server will pick an appropriate default.",
                       "format": "int32",
@@ -234,6 +239,40 @@
                   "path": "v2/{+parent}/instances",
                   "response": {
                     "$ref": "ListInstancesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Update details of a single server.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}",
+                  "httpMethod": "PATCH",
+                  "id": "baremetalsolution.projects.locations.instances.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Output only. The resource name of this `Instance`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. Format: `projects/{project}/locations/{location}/instances/{instance}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The list of fields to update. The only currently supported fields are: `labels`",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "request": {
+                    "$ref": "Instance"
+                  },
+                  "response": {
+                    "$ref": "Operation"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -305,6 +344,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "List filter.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "Requested page size. The server might return fewer items than requested. If unspecified, server will pick an appropriate default.",
                       "format": "int32",
@@ -331,125 +375,36 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
-                }
-              }
-            },
-            "operations": {
-              "methods": {
-                "cancel": {
-                  "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
-                  "httpMethod": "POST",
-                  "id": "baremetalsolution.projects.locations.operations.cancel",
+                },
+                "patch": {
+                  "description": "Update details of a single network.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/networks/{networksId}",
+                  "httpMethod": "PATCH",
+                  "id": "baremetalsolution.projects.locations.networks.patch",
                   "parameterOrder": [
                     "name"
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name of the operation resource to be cancelled.",
+                      "description": "Output only. The resource name of this `Network`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. Format: `projects/{project}/locations/{location}/networks/{network}`",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/networks/[^/]+$",
                       "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The list of fields to update. The only currently supported fields are: `labels`",
+                      "format": "google-fieldmask",
+                      "location": "query",
                       "type": "string"
                     }
                   },
-                  "path": "v2/{+name}:cancel",
+                  "path": "v2/{+name}",
                   "request": {
-                    "$ref": "CancelOperationRequest"
+                    "$ref": "Network"
                   },
-                  "response": {
-                    "$ref": "Empty"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "delete": {
-                  "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
-                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-                  "httpMethod": "DELETE",
-                  "id": "baremetalsolution.projects.locations.operations.delete",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "The name of the operation resource to be deleted.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}",
-                  "response": {
-                    "$ref": "Empty"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "get": {
-                  "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-                  "httpMethod": "GET",
-                  "id": "baremetalsolution.projects.locations.operations.get",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "The name of the operation resource.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}",
                   "response": {
                     "$ref": "Operation"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "list": {
-                  "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
-                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/operations",
-                  "httpMethod": "GET",
-                  "id": "baremetalsolution.projects.locations.operations.list",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "filter": {
-                      "description": "The standard list filter.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "name": {
-                      "description": "The name of the operation's parent resource.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    },
-                    "pageSize": {
-                      "description": "The standard list page size.",
-                      "format": "int32",
-                      "location": "query",
-                      "type": "integer"
-                    },
-                    "pageToken": {
-                      "description": "The standard list page token.",
-                      "location": "query",
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}/operations",
-                  "response": {
-                    "$ref": "ListOperationsResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -551,6 +506,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "List filter.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "The maximum number of items to return.",
                       "format": "int32",
@@ -650,6 +610,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "List filter.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "Requested page size. The server might return fewer items than requested. If unspecified, server will pick an appropriate default.",
                       "format": "int32",
@@ -694,7 +659,7 @@
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "The list of fields to update. The only currently supported fields are: `snapshot_auto_delete_behavior` `snapshot_schedule_policy_name`",
+                      "description": "The list of fields to update. The only currently supported fields are: `snapshot_auto_delete_behavior` `snapshot_schedule_policy_name` 'labels'",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -716,7 +681,7 @@
                 "luns": {
                   "methods": {
                     "get": {
-                      "description": "Get details of a single storage lun.",
+                      "description": "Get details of a single storage logical unit number(LUN).",
                       "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes/{volumesId}/luns/{lunsId}",
                       "httpMethod": "GET",
                       "id": "baremetalsolution.projects.locations.volumes.luns.get",
@@ -931,15 +896,9 @@
       }
     }
   },
-  "revision": "20211207",
+  "revision": "20220119",
   "rootUrl": "https://baremetalsolution.googleapis.com/",
   "schemas": {
-    "CancelOperationRequest": {
-      "description": "The request message for Operations.CancelOperation.",
-      "id": "CancelOperationRequest",
-      "properties": {},
-      "type": "object"
-    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
@@ -959,6 +918,10 @@
         "hyperthreadingEnabled": {
           "description": "True if you enable hyperthreading for the server, otherwise false. The default value is false.",
           "type": "boolean"
+        },
+        "id": {
+          "description": "An identifier for the `Instance`, generated by the backend.",
+          "type": "string"
         },
         "interactiveSerialConsoleEnabled": {
           "description": "True if the interactive serial console feature is enabled for the instance, false otherwise. The default value is false.",
@@ -1112,24 +1075,6 @@
       },
       "type": "object"
     },
-    "ListOperationsResponse": {
-      "description": "The response message for Operations.ListOperations.",
-      "id": "ListOperationsResponse",
-      "properties": {
-        "nextPageToken": {
-          "description": "The standard List next-page token.",
-          "type": "string"
-        },
-        "operations": {
-          "description": "A list of operations that matches the specified filter in the request.",
-          "items": {
-            "$ref": "Operation"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "ListSnapshotSchedulePoliciesResponse": {
       "description": "Response message containing the list of snapshot schedule policies.",
       "id": "ListSnapshotSchedulePoliciesResponse",
@@ -1240,6 +1185,10 @@
           "description": "Display if this LUN is a boot LUN.",
           "type": "boolean"
         },
+        "id": {
+          "description": "An identifier for the LUN, generated by the backend.",
+          "type": "string"
+        },
         "multiprotocolType": {
           "description": "The LUN multiprotocol type ensures the characteristics of the LUN are optimized for each operating system.",
           "enum": [
@@ -1317,9 +1266,20 @@
           "description": "The cidr of the Network.",
           "type": "string"
         },
+        "id": {
+          "description": "An identifier for the `Network`, generated by the backend.",
+          "type": "string"
+        },
         "ipAddress": {
           "description": "IP address configured.",
           "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels as key value pairs.",
+          "type": "object"
         },
         "macAddress": {
           "description": "List of physical interfaces.",
@@ -1329,12 +1289,12 @@
           "type": "array"
         },
         "name": {
-          "description": "Output only. The resource name of this `Network`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. Format: `projects/{project}/locations/{location}/networks/{network}` This field will contain the same value as field \"network\", which will soon be deprecated. Please use this field to reference the name of the network resource.",
+          "description": "Output only. The resource name of this `Network`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. Format: `projects/{project}/locations/{location}/networks/{network}`",
           "readOnly": true,
           "type": "string"
         },
-        "network": {
-          "description": "Name of the network.",
+        "servicesCidr": {
+          "description": "IP range for reserved for services (e.g. NFS).",
           "type": "string"
         },
         "state": {
@@ -1346,7 +1306,7 @@
           ],
           "enumDescriptions": [
             "The Network is in an unknown state.",
-            "The Network is being provisioning.",
+            "The Network is provisioning.",
             "The Network has been provisioned."
           ],
           "type": "string"
@@ -1485,13 +1445,24 @@
           "description": "The description of the snapshot schedule policy.",
           "type": "string"
         },
+        "id": {
+          "description": "An identifier for the snapshot schedule policy, generated by the backend.",
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels as key value pairs.",
+          "type": "object"
+        },
         "name": {
           "description": "Output only. The name of the snapshot schedule policy.",
           "readOnly": true,
           "type": "string"
         },
         "schedules": {
-          "description": "The snapshot schedules contained in this policy. You can specify a maxiumum of 5 schedules.",
+          "description": "The snapshot schedules contained in this policy. You can specify a maximum of 5 schedules.",
           "items": {
             "$ref": "Schedule"
           },
@@ -1548,8 +1519,8 @@
           ],
           "enumDescriptions": [
             "The unspecified state.",
-            "The vrf is being provisioning.",
-            "The vrf is being provisioning."
+            "The vrf is provisioning.",
+            "The vrf is provisioned."
           ],
           "type": "string"
         },
@@ -1596,6 +1567,17 @@
           "description": "The current size of this storage volume, in GiB, including space reserved for snapshots. This size might be different than the requested size if the storage volume has been configured with auto grow or auto shrink.",
           "format": "int64",
           "type": "string"
+        },
+        "id": {
+          "description": "An identifier for the `Volume`, generated by the backend.",
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels as key value pairs.",
+          "type": "object"
         },
         "name": {
           "description": "Output only. The resource name of this `Volume`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. Format: `projects/{project}/locations/{location}/volumes/{volume}`",
@@ -1674,12 +1656,17 @@
       "id": "VolumeSnapshot",
       "properties": {
         "createTime": {
-          "description": "Optional. The creation time of the storage volume snapshot.",
+          "description": "Output only. The creation time of the storage volume snapshot.",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "description": {
           "description": "The description of the storage volume snapshot.",
+          "type": "string"
+        },
+        "id": {
+          "description": "An identifier for the snapshot, generated by the backend.",
           "type": "string"
         },
         "name": {

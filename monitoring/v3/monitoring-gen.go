@@ -3665,6 +3665,22 @@ type MetricThreshold struct {
 	// alerted on quickly.
 	Duration string `json:"duration,omitempty"`
 
+	// EvaluationMissingData: A condition control that determines how
+	// metric-threshold conditions are evaluated when data stops arriving.
+	//
+	// Possible values:
+	//   "EVALUATION_MISSING_DATA_UNSPECIFIED" - An unspecified evaluation
+	// missing data option, if used, it will default to
+	// EVALUATION_MISSING_DATA_ACTIVE.
+	//   "EVALUATION_MISSING_DATA_INACTIVE" - If there is no data to
+	// evaluate the condition, then evaluate the condition as false.
+	//   "EVALUATION_MISSING_DATA_ACTIVE" - If there is no data to evaluate
+	// the condition, then evaluate the condition as true. The default for
+	// conditions with a duration value.
+	//   "EVALUATION_MISSING_DATA_NO_OP" - Do not evaluate the condition to
+	// any value if there is no data.
+	EvaluationMissingData string `json:"evaluationMissingData,omitempty"`
+
 	// Filter: Required. A filter
 	// (https://cloud.google.com/monitoring/api/v3/filters) that identifies
 	// which time series should be compared with the threshold.The filter is
@@ -3937,6 +3953,22 @@ type MonitoringQueryLanguageCondition struct {
 	// alerts, but short enough that unhealthy states are detected and
 	// alerted on quickly.
 	Duration string `json:"duration,omitempty"`
+
+	// EvaluationMissingData: A condition control that determines how
+	// metric-threshold conditions are evaluated when data stops arriving.
+	//
+	// Possible values:
+	//   "EVALUATION_MISSING_DATA_UNSPECIFIED" - An unspecified evaluation
+	// missing data option, if used, it will default to
+	// EVALUATION_MISSING_DATA_ACTIVE.
+	//   "EVALUATION_MISSING_DATA_INACTIVE" - If there is no data to
+	// evaluate the condition, then evaluate the condition as false.
+	//   "EVALUATION_MISSING_DATA_ACTIVE" - If there is no data to evaluate
+	// the condition, then evaluate the condition as true. The default for
+	// conditions with a duration value.
+	//   "EVALUATION_MISSING_DATA_NO_OP" - Do not evaluate the condition to
+	// any value if there is no data.
+	EvaluationMissingData string `json:"evaluationMissingData,omitempty"`
 
 	// Query: Monitoring Query Language
 	// (https://cloud.google.com/monitoring/mql) query that outputs a

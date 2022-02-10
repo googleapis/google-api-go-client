@@ -2013,6 +2013,10 @@ type LogEntry struct {
 	// as 000000000000004a.
 	SpanId string `json:"spanId,omitempty"`
 
+	// Split: Optional. Information indicating this LogEntry is part of a
+	// sequence of multiple log entries split from a single LogEntry.
+	Split *LogSplit `json:"split,omitempty"`
+
 	// TextPayload: The log entry payload, represented as a Unicode string
 	// (UTF-8).
 	TextPayload string `json:"textPayload,omitempty"`
@@ -2527,6 +2531,47 @@ func (s *LogSink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LogSplit: Additional information used to correlate multiple log
+// entries. Used when a single LogEntry would exceed the Google Cloud
+// Logging size limit and is split across multiple log entries.
+type LogSplit struct {
+	// Index: The index of this LogEntry in the sequence of split log
+	// entries. Log entries are given |index| values 0, 1, ..., n-1 for a
+	// sequence of n log entries.
+	Index int64 `json:"index,omitempty"`
+
+	// TotalSplits: The total number of log entries that the original
+	// LogEntry was split into.
+	TotalSplits int64 `json:"totalSplits,omitempty"`
+
+	// Uid: A globally unique identifier for all log entries in a sequence
+	// of split log entries. All log entries with the same |LogSplit.uid|
+	// are assumed to be part of the same sequence of split log entries.
+	Uid string `json:"uid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Index") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Index") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LogSplit) MarshalJSON() ([]byte, error) {
+	type NoMethod LogSplit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LogView: Describes a view over log entries in a bucket.
 type LogView struct {
 	// CreateTime: Output only. The creation timestamp of the view.
@@ -2619,7 +2664,7 @@ type MetricDescriptor struct {
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
 	// applicable terms, and have their projects allowlisted. Alpha releases
-	// don’t have to be feature complete, no SLAs are provided, and there
+	// don't have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
 	// for limited-use tests -- just like they would in normal production
@@ -2632,7 +2677,7 @@ type MetricDescriptor struct {
 	//   "GA" - GA features are open to all developers and are considered
 	// stable and fully qualified for production use.
 	//   "DEPRECATED" - Deprecated features are scheduled to be shut down
-	// and removed. For more information, see the “Deprecation Policy”
+	// and removed. For more information, see the "Deprecation Policy"
 	// section of our Terms of Service (https://cloud.google.com/terms/) and
 	// the Google Cloud Platform Subject to the Deprecation Policy
 	// (https://cloud.google.com/terms/deprecation) documentation.
@@ -2792,7 +2837,7 @@ type MetricDescriptorMetadata struct {
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
 	// applicable terms, and have their projects allowlisted. Alpha releases
-	// don’t have to be feature complete, no SLAs are provided, and there
+	// don't have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
 	// for limited-use tests -- just like they would in normal production
@@ -2805,7 +2850,7 @@ type MetricDescriptorMetadata struct {
 	//   "GA" - GA features are open to all developers and are considered
 	// stable and fully qualified for production use.
 	//   "DEPRECATED" - Deprecated features are scheduled to be shut down
-	// and removed. For more information, see the “Deprecation Policy”
+	// and removed. For more information, see the "Deprecation Policy"
 	// section of our Terms of Service (https://cloud.google.com/terms/) and
 	// the Google Cloud Platform Subject to the Deprecation Policy
 	// (https://cloud.google.com/terms/deprecation) documentation.
@@ -2932,7 +2977,7 @@ type MonitoredResourceDescriptor struct {
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
 	// applicable terms, and have their projects allowlisted. Alpha releases
-	// don’t have to be feature complete, no SLAs are provided, and there
+	// don't have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
 	// for limited-use tests -- just like they would in normal production
@@ -2945,7 +2990,7 @@ type MonitoredResourceDescriptor struct {
 	//   "GA" - GA features are open to all developers and are considered
 	// stable and fully qualified for production use.
 	//   "DEPRECATED" - Deprecated features are scheduled to be shut down
-	// and removed. For more information, see the “Deprecation Policy”
+	// and removed. For more information, see the "Deprecation Policy"
 	// section of our Terms of Service (https://cloud.google.com/terms/) and
 	// the Google Cloud Platform Subject to the Deprecation Policy
 	// (https://cloud.google.com/terms/deprecation) documentation.
@@ -10597,6 +10642,181 @@ func (c *FoldersGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, er
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/logging.admin",
 	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.folders.updateSettings":
+
+type FoldersUpdateSettingsCall struct {
+	s          *Service
+	name       string
+	settings   *Settings
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateSettings: Updates the Log Router settings for the given
+// resource.Note: Settings for the Log Router can currently only be
+// configured for Google Cloud organizations. Once configured, it
+// applies to all projects and folders in the Google Cloud
+// organization.UpdateSettings will fail if 1) kms_key_name is invalid,
+// or 2) the associated service account does not have the required
+// roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key,
+// or 3) access to the key is disabled. 4) location_id is not supported
+// by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for
+// Log Router
+// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// for more information.
+//
+// - name: The resource name for the settings to update.
+//   "organizations/[ORGANIZATION_ID]/settings" For
+//   example:"organizations/12345/settings"Note: Settings for the Log
+//   Router can currently only be configured for Google Cloud
+//   organizations. Once configured, it applies to all projects and
+//   folders in the Google Cloud organization.
+func (r *FoldersService) UpdateSettings(name string, settings *Settings) *FoldersUpdateSettingsCall {
+	c := &FoldersUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.settings = settings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask
+// identifying which fields from settings should be updated. A field
+// will be overwritten if and only if it is in the update mask. Output
+// only fields cannot be updated.See FieldMask for more information.For
+// example: "updateMask=kmsKeyName"
+func (c *FoldersUpdateSettingsCall) UpdateMask(updateMask string) *FoldersUpdateSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersUpdateSettingsCall) Fields(s ...googleapi.Field) *FoldersUpdateSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersUpdateSettingsCall) Context(ctx context.Context) *FoldersUpdateSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersUpdateSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersUpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.settings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}/settings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.updateSettings" call.
+// Exactly one of *Settings or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Settings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Settings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the Log Router settings for the given resource.Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled. 4) location_id is not supported by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "flatPath": "v2/folders/{foldersId}/settings",
+	//   "httpMethod": "PATCH",
+	//   "id": "logging.folders.updateSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. Field mask identifying which fields from settings should be updated. A field will be overwritten if and only if it is in the update mask. Output only fields cannot be updated.See FieldMask for more information.For example: \"updateMask=kmsKeyName\"",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}/settings",
+	//   "request": {
+	//     "$ref": "Settings"
+	//   },
+	//   "response": {
+	//     "$ref": "Settings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
 	//   ]
 	// }
 

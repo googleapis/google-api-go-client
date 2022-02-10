@@ -173,6 +173,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.Datacollectors = NewOrganizationsDatacollectorsService(s)
 	rs.Deployments = NewOrganizationsDeploymentsService(s)
 	rs.Developers = NewOrganizationsDevelopersService(s)
+	rs.EndpointAttachments = NewOrganizationsEndpointAttachmentsService(s)
 	rs.Envgroups = NewOrganizationsEnvgroupsService(s)
 	rs.Environments = NewOrganizationsEnvironmentsService(s)
 	rs.HostQueries = NewOrganizationsHostQueriesService(s)
@@ -203,6 +204,8 @@ type OrganizationsService struct {
 	Deployments *OrganizationsDeploymentsService
 
 	Developers *OrganizationsDevelopersService
+
+	EndpointAttachments *OrganizationsEndpointAttachmentsService
 
 	Envgroups *OrganizationsEnvgroupsService
 
@@ -467,6 +470,15 @@ func NewOrganizationsDevelopersSubscriptionsService(s *Service) *OrganizationsDe
 }
 
 type OrganizationsDevelopersSubscriptionsService struct {
+	s *Service
+}
+
+func NewOrganizationsEndpointAttachmentsService(s *Service) *OrganizationsEndpointAttachmentsService {
+	rs := &OrganizationsEndpointAttachmentsService{s: s}
+	return rs
+}
+
+type OrganizationsEndpointAttachmentsService struct {
 	s *Service
 }
 
@@ -3945,6 +3957,50 @@ func (s *GoogleCloudApigeeV1DimensionMetric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1EndpointAttachment: Apigee Endpoint Attachment.
+type GoogleCloudApigeeV1EndpointAttachment struct {
+	// Host: Output only. Host that can be used in either HTTP Target
+	// Endpoint directly, or as the host in Target Server.
+	Host string `json:"host,omitempty"`
+
+	// Location: Required. Location of the endpoint attachment.
+	Location string `json:"location,omitempty"`
+
+	// Name: Name of the Endpoint Attachment in the following format:
+	// `organizations/{organization}/endpointAttachments/{endpoint_attachment
+	// }`.
+	Name string `json:"name,omitempty"`
+
+	// ServiceAttachment: Format: projects/*/regions/*/serviceAttachments/*
+	ServiceAttachment string `json:"serviceAttachment,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Host") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Host") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1EndpointAttachment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1EndpointAttachment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1EntityMetadata: Metadata common to many entities
 // in this API.
 type GoogleCloudApigeeV1EntityMetadata struct {
@@ -5660,6 +5716,46 @@ type GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse struct {
 
 func (s *GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ListEndpointAttachmentsResponse: Response for
+// ListEndpointAttachments method.
+type GoogleCloudApigeeV1ListEndpointAttachmentsResponse struct {
+	// EndpointAttachments: Endpoint Attachments in the specified
+	// organization.
+	EndpointAttachments []*GoogleCloudApigeeV1EndpointAttachment `json:"endpointAttachments,omitempty"`
+
+	// NextPageToken: Page token that you can include in a
+	// ListEndpointAttachments request to retrieve the next page. If
+	// omitted, no subsequent pages exist.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EndpointAttachments")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndpointAttachments") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ListEndpointAttachmentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListEndpointAttachmentsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -24169,6 +24265,644 @@ func (c *OrganizationsDevelopersSubscriptionsListCall) Do(opts ...googleapi.Call
 	//   ]
 	// }
 
+}
+
+// method id "apigee.organizations.endpointAttachments.create":
+
+type OrganizationsEndpointAttachmentsCreateCall struct {
+	s                                     *Service
+	parent                                string
+	googlecloudapigeev1endpointattachment *GoogleCloudApigeeV1EndpointAttachment
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Create: Creates an EndpointAttachment. **Note:** Not supported for
+// Apigee hybrid.
+//
+// - parent: The Organization this EndpointAttachment will be created
+//   in.
+func (r *OrganizationsEndpointAttachmentsService) Create(parent string, googlecloudapigeev1endpointattachment *GoogleCloudApigeeV1EndpointAttachment) *OrganizationsEndpointAttachmentsCreateCall {
+	c := &OrganizationsEndpointAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1endpointattachment = googlecloudapigeev1endpointattachment
+	return c
+}
+
+// EndpointAttachmentId sets the optional parameter
+// "endpointAttachmentId": The ID to use for the endpoint attachment. ID
+// must be a 1-20 characters string with lowercase letters and numbers
+// and must start with a letter.
+func (c *OrganizationsEndpointAttachmentsCreateCall) EndpointAttachmentId(endpointAttachmentId string) *OrganizationsEndpointAttachmentsCreateCall {
+	c.urlParams_.Set("endpointAttachmentId", endpointAttachmentId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEndpointAttachmentsCreateCall) Fields(s ...googleapi.Field) *OrganizationsEndpointAttachmentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEndpointAttachmentsCreateCall) Context(ctx context.Context) *OrganizationsEndpointAttachmentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEndpointAttachmentsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEndpointAttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1endpointattachment)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/endpointAttachments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.endpointAttachments.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEndpointAttachmentsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an EndpointAttachment. **Note:** Not supported for Apigee hybrid.",
+	//   "flatPath": "v1/organizations/{organizationsId}/endpointAttachments",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.endpointAttachments.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "endpointAttachmentId": {
+	//       "description": "The ID to use for the endpoint attachment. ID must be a 1-20 characters string with lowercase letters and numbers and must start with a letter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The Organization this EndpointAttachment will be created in.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/endpointAttachments",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1EndpointAttachment"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.endpointAttachments.delete":
+
+type OrganizationsEndpointAttachmentsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an endpoint attachment.
+//
+// - name: Name of the Endpoint Attachment in the following format:
+//   `organizations/{organization}/endpointAttachments/{endpoint_attachme
+//   nt}`.
+func (r *OrganizationsEndpointAttachmentsService) Delete(name string) *OrganizationsEndpointAttachmentsDeleteCall {
+	c := &OrganizationsEndpointAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEndpointAttachmentsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsEndpointAttachmentsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEndpointAttachmentsDeleteCall) Context(ctx context.Context) *OrganizationsEndpointAttachmentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEndpointAttachmentsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEndpointAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.endpointAttachments.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEndpointAttachmentsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an endpoint attachment.",
+	//   "flatPath": "v1/organizations/{organizationsId}/endpointAttachments/{endpointAttachmentsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.endpointAttachments.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the Endpoint Attachment in the following format: `organizations/{organization}/endpointAttachments/{endpoint_attachment}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/endpointAttachments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.endpointAttachments.get":
+
+type OrganizationsEndpointAttachmentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified EndpointAttachment.
+//
+// - name: Name of the Endpoint Attachment in the following format:
+//   `organizations/{organization}/endpointAttachments/{endpoint_attachme
+//   nt}`.
+func (r *OrganizationsEndpointAttachmentsService) Get(name string) *OrganizationsEndpointAttachmentsGetCall {
+	c := &OrganizationsEndpointAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEndpointAttachmentsGetCall) Fields(s ...googleapi.Field) *OrganizationsEndpointAttachmentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEndpointAttachmentsGetCall) IfNoneMatch(entityTag string) *OrganizationsEndpointAttachmentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEndpointAttachmentsGetCall) Context(ctx context.Context) *OrganizationsEndpointAttachmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEndpointAttachmentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEndpointAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.endpointAttachments.get" call.
+// Exactly one of *GoogleCloudApigeeV1EndpointAttachment or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudApigeeV1EndpointAttachment.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEndpointAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1EndpointAttachment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1EndpointAttachment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified EndpointAttachment.",
+	//   "flatPath": "v1/organizations/{organizationsId}/endpointAttachments/{endpointAttachmentsId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.endpointAttachments.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the Endpoint Attachment in the following format: `organizations/{organization}/endpointAttachments/{endpoint_attachment}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/endpointAttachments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1EndpointAttachment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.endpointAttachments.list":
+
+type OrganizationsEndpointAttachmentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the EndpointAttachments in the specified Organization.
+//
+// - parent: Name of the Organization for which to list Endpoint
+//   Attachments in the format: `organizations/{organization}`.
+func (r *OrganizationsEndpointAttachmentsService) List(parent string) *OrganizationsEndpointAttachmentsListCall {
+	c := &OrganizationsEndpointAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// Endpoint Attachments to return. If unspecified, at most 25
+// attachments will be returned.
+func (c *OrganizationsEndpointAttachmentsListCall) PageSize(pageSize int64) *OrganizationsEndpointAttachmentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token,
+// returned from a previous ListEndpointAttachments call, that you can
+// use to retrieve the next page.
+func (c *OrganizationsEndpointAttachmentsListCall) PageToken(pageToken string) *OrganizationsEndpointAttachmentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEndpointAttachmentsListCall) Fields(s ...googleapi.Field) *OrganizationsEndpointAttachmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEndpointAttachmentsListCall) IfNoneMatch(entityTag string) *OrganizationsEndpointAttachmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEndpointAttachmentsListCall) Context(ctx context.Context) *OrganizationsEndpointAttachmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEndpointAttachmentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEndpointAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/endpointAttachments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.endpointAttachments.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListEndpointAttachmentsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListEndpointAttachmentsResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEndpointAttachmentsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListEndpointAttachmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1ListEndpointAttachmentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the EndpointAttachments in the specified Organization.",
+	//   "flatPath": "v1/organizations/{organizationsId}/endpointAttachments",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.endpointAttachments.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of Endpoint Attachments to return. If unspecified, at most 25 attachments will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token, returned from a previous ListEndpointAttachments call, that you can use to retrieve the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the Organization for which to list Endpoint Attachments in the format: `organizations/{organization}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/endpointAttachments",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListEndpointAttachmentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsEndpointAttachmentsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListEndpointAttachmentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "apigee.organizations.envgroups.create":

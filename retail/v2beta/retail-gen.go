@@ -1600,8 +1600,12 @@ type GoogleCloudRetailV2betaBigQuerySource struct {
 	// Center
 	// (https://cloud.google.com/retail/recommendations-ai/docs/upload-catalog#mc).
 	// Supported values for user events imports: * `user_event` (default):
-	// One JSON UserEvent per line. * `user_event_ga360`: Using
-	// https://support.google.com/analytics/answer/3437719.
+	// One JSON UserEvent per line. * `user_event_ga360`: The schema is
+	// available here: https://support.google.com/analytics/answer/3437719.
+	// * `user_event_ga4`: This feature is in private preview. Please
+	// contact the support team for importing Google Analytics 4 events. The
+	// schema is available here:
+	// https://support.google.com/analytics/answer/7029846.
 	DataSchema string `json:"dataSchema,omitempty"`
 
 	// DatasetId: Required. The BigQuery data set to copy the data from with
@@ -6243,11 +6247,11 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // a birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values * A month and day, with a
+// zero year (e.g., an anniversary) * A year on its own, with a zero
+// month and a zero day * A year and month, with a zero day (e.g., a
+// credit card expiration date) Related types: * google.type.TimeOfDay *
+// google.type.DateTime * google.protobuf.Timestamp
 type GoogleTypeDate struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -6548,10 +6552,7 @@ type ProjectsLocationsCatalogsGetDefaultBranchCall struct {
 
 // GetDefaultBranch: Get which branch is currently default branch set by
 // CatalogService.SetDefaultBranch method under a specified parent
-// catalog. This feature is only available for users who have Retail
-// Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// catalog.
 //
 // - catalog: The parent catalog resource name, such as
 //   `projects/*/locations/global/catalogs/default_catalog`.
@@ -6662,7 +6663,7 @@ func (c *ProjectsLocationsCatalogsGetDefaultBranchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Get which branch is currently default branch set by CatalogService.SetDefaultBranch method under a specified parent catalog. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Get which branch is currently default branch set by CatalogService.SetDefaultBranch method under a specified parent catalog.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}:getDefaultBranch",
 	//   "httpMethod": "GET",
 	//   "id": "retail.projects.locations.catalogs.getDefaultBranch",
@@ -7079,10 +7080,7 @@ type ProjectsLocationsCatalogsSetDefaultBranchCall struct {
 // PredictionService will only return product IDs from branch
 // {newBranch}. * SearchService will only return product IDs from branch
 // {newBranch} (if branch is not explicitly set). * UserEventService
-// will only join events with products from branch {newBranch}. This
-// feature is only available for users who have Retail Search enabled.
-// Please submit a form here (https://cloud.google.com/contact) to
-// contact cloud sales if you are interested in using Retail Search.
+// will only join events with products from branch {newBranch}.
 //
 // - catalog: Full resource name of the catalog, such as
 //   `projects/*/locations/global/catalogs/default_catalog`.
@@ -7184,7 +7182,7 @@ func (c *ProjectsLocationsCatalogsSetDefaultBranchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Set a specified branch id as default branch. API methods such as SearchService.Search, ProductService.GetProduct, ProductService.ListProducts will treat requests using \"default_branch\" to the actual branch id set as default. For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as default, setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent to setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/1`. Using multiple branches can be useful when developers would like to have a staging branch to test and verify for future usage. When it becomes ready, developers switch on the staging branch using this API while keeping using `projects/*/locations/*/catalogs/*/branches/default_branch` as SearchRequest.branch to route the traffic to this staging branch. CAUTION: If you have live predict/search traffic, switching the default branch could potentially cause outages if the ID space of the new branch is very different from the old one. More specifically: * PredictionService will only return product IDs from branch {newBranch}. * SearchService will only return product IDs from branch {newBranch} (if branch is not explicitly set). * UserEventService will only join events with products from branch {newBranch}. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Set a specified branch id as default branch. API methods such as SearchService.Search, ProductService.GetProduct, ProductService.ListProducts will treat requests using \"default_branch\" to the actual branch id set as default. For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as default, setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent to setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/1`. Using multiple branches can be useful when developers would like to have a staging branch to test and verify for future usage. When it becomes ready, developers switch on the staging branch using this API while keeping using `projects/*/locations/*/catalogs/*/branches/default_branch` as SearchRequest.branch to route the traffic to this staging branch. CAUTION: If you have live predict/search traffic, switching the default branch could potentially cause outages if the ID space of the new branch is very different from the old one. More specifically: * PredictionService will only return product IDs from branch {newBranch}. * SearchService will only return product IDs from branch {newBranch} (if branch is not explicitly set). * UserEventService will only join events with products from branch {newBranch}.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}:setDefaultBranch",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.setDefaultBranch",

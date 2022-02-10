@@ -6405,8 +6405,11 @@ func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInse
 //   "all" - Notifications are sent to all guests.
 //   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications are sent. For calendar migration tasks,
-// consider using the Events.import method instead.
+//   "none" - No notifications are sent. Warning: Using the value none
+// can have significant adverse effects, including events not syncing to
+// external calendars or events being lost altogether for some users.
+// For calendar migration tasks, consider using the events.import method
+// instead.
 func (c *EventsInsertCall) SendUpdates(sendUpdates string) *EventsInsertCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -6554,7 +6557,7 @@ func (c *EventsInsertCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "enumDescriptions": [
 	//         "Notifications are sent to all guests.",
 	//         "Notifications are sent to non-Google Calendar guests only.",
-	//         "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
+	//         "No notifications are sent. Warning: Using the value none can have significant adverse effects, including events not syncing to external calendars or events being lost altogether for some users. For calendar migration tasks, consider using the events.import method instead."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

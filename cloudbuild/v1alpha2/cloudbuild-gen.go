@@ -1467,60 +1467,6 @@ func (s *FileHashes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDevtoolsCloudbuildV1BuildOptionsPoolOptionWorkerConfig:
-// Configuration per workload for both Private Pools and Hybrid Pools.
-type GoogleDevtoolsCloudbuildV1BuildOptionsPoolOptionWorkerConfig struct {
-	// DiskSizeGb: The disk size (in GB) which is requested for the build
-	// container. If unset, a value of 10 GB will be used.
-	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
-
-	// MemoryGb: The memory (in GB) which is requested for the build
-	// container. If unset, a value of 4 GB will be used.
-	MemoryGb float64 `json:"memoryGb,omitempty"`
-
-	// VcpuCount: The number of vCPUs which are requested for the build
-	// container. If unset, a value of 1 will be used.
-	VcpuCount float64 `json:"vcpuCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DiskSizeGb") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleDevtoolsCloudbuildV1BuildOptionsPoolOptionWorkerConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleDevtoolsCloudbuildV1BuildOptionsPoolOptionWorkerConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleDevtoolsCloudbuildV1BuildOptionsPoolOptionWorkerConfig) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleDevtoolsCloudbuildV1BuildOptionsPoolOptionWorkerConfig
-	var s1 struct {
-		MemoryGb  gensupport.JSONFloat64 `json:"memoryGb"`
-		VcpuCount gensupport.JSONFloat64 `json:"vcpuCount"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.MemoryGb = float64(s1.MemoryGb)
-	s.VcpuCount = float64(s1.VcpuCount)
-	return nil
-}
-
 // GoogleDevtoolsCloudbuildV2OperationMetadata: Represents the metadata
 // of the long-running operation.
 type GoogleDevtoolsCloudbuildV2OperationMetadata struct {
@@ -2083,9 +2029,6 @@ type PoolOption struct {
 	// WorkerPool. Format
 	// projects/{project}/locations/{location}/workerPools/{workerPoolId}
 	Name string `json:"name,omitempty"`
-
-	// WorkerConfig: Configuration per workload.
-	WorkerConfig *GoogleDevtoolsCloudbuildV1BuildOptionsPoolOptionWorkerConfig `json:"workerConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with

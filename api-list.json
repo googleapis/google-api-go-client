@@ -2132,6 +2132,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/dns/docs",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "dns:v2",
+      "name": "dns",
+      "version": "v2",
+      "title": "Cloud DNS API",
+      "description": "",
+      "discoveryRestUrl": "https://dns.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/dns/docs",
       "preferred": true
     },
     {

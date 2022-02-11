@@ -582,6 +582,8 @@ type GoogleDatastoreAdminV1PrepareStepDetails struct {
 	//   "CONCURRENCY_MODE_UNSPECIFIED" - Unspecified.
 	//   "PESSIMISTIC" - Pessimistic concurrency.
 	//   "OPTIMISTIC" - Optimistic concurrency.
+	//   "OPTIMISTIC_WITH_ENTITY_GROUPS" - Optimistic concurrency with
+	// entity groups.
 	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConcurrencyMode") to
@@ -651,6 +653,8 @@ type GoogleDatastoreAdminV1RedirectWritesStepDetails struct {
 	//   "CONCURRENCY_MODE_UNSPECIFIED" - Unspecified.
 	//   "PESSIMISTIC" - Pessimistic concurrency.
 	//   "OPTIMISTIC" - Optimistic concurrency.
+	//   "OPTIMISTIC_WITH_ENTITY_GROUPS" - Optimistic concurrency with
+	// entity groups.
 	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConcurrencyMode") to

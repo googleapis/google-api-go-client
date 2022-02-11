@@ -2361,10 +2361,17 @@ type IdentityServiceOidcConfig struct {
 	// ClientId: ID for OIDC client application.
 	ClientId string `json:"clientId,omitempty"`
 
+	// ClientSecret: Unencrypted OIDC client secret will be passed to the
+	// GKE Hub CLH.
+	ClientSecret string `json:"clientSecret,omitempty"`
+
 	// DeployCloudConsoleProxy: Flag to denote if reverse proxy is used to
 	// connect to auth provider. This flag should be set to true when
 	// provider is not reachable by Google Cloud Console.
 	DeployCloudConsoleProxy bool `json:"deployCloudConsoleProxy,omitempty"`
+
+	// EncryptedClientSecret: Output only. Encrypted OIDC Client secret
+	EncryptedClientSecret string `json:"encryptedClientSecret,omitempty"`
 
 	// ExtraParams: Comma-separated list of key-value pairs.
 	ExtraParams string `json:"extraParams,omitempty"`
@@ -2943,7 +2950,7 @@ type MembershipFeatureSpec struct {
 	Mesh *ServiceMeshMembershipSpec `json:"mesh,omitempty"`
 
 	// Policycontroller: Policy Controller spec.
-	Policycontroller *PolicycontrollerMembershipSpec `json:"policycontroller,omitempty"`
+	Policycontroller *PolicyControllerMembershipSpec `json:"policycontroller,omitempty"`
 
 	// Workloadcertificate: Workload Certificate spec.
 	Workloadcertificate *MembershipSpec `json:"workloadcertificate,omitempty"`
@@ -2988,7 +2995,7 @@ type MembershipFeatureState struct {
 	Metering *MeteringMembershipState `json:"metering,omitempty"`
 
 	// Policycontroller: Policycontroller-specific state.
-	Policycontroller *PolicycontrollerMembershipState `json:"policycontroller,omitempty"`
+	Policycontroller *PolicyControllerMembershipState `json:"policycontroller,omitempty"`
 
 	// Servicemesh: Service Mesh-specific state.
 	Servicemesh *ServiceMeshMembershipState `json:"servicemesh,omitempty"`
@@ -3489,12 +3496,12 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PolicycontrollerMembershipSpec: **Policy Controller**: Configuration
+// PolicyControllerMembershipSpec: **Policy Controller**: Configuration
 // for a single cluster. Intended to parallel the PolicyController CR.
-type PolicycontrollerMembershipSpec struct {
+type PolicyControllerMembershipSpec struct {
 	// PolicyControllerHubConfig: Policy Controller configuration for the
 	// cluster.
-	PolicyControllerHubConfig *PolicycontrollerPolicyControllerHubConfig `json:"policyControllerHubConfig,omitempty"`
+	PolicyControllerHubConfig *PolicyControllerPolicyControllerHubConfig `json:"policyControllerHubConfig,omitempty"`
 
 	// Version: Version of Policy Controller installed.
 	Version string `json:"version,omitempty"`
@@ -3518,15 +3525,15 @@ type PolicycontrollerMembershipSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicycontrollerMembershipSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicycontrollerMembershipSpec
+func (s *PolicyControllerMembershipSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerMembershipSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PolicycontrollerMembershipState: **Policy Controller**: State for a
+// PolicyControllerMembershipState: **Policy Controller**: State for a
 // single cluster.
-type PolicycontrollerMembershipState struct {
+type PolicyControllerMembershipState struct {
 	// ClusterName: The user-defined name for the cluster used by
 	// ClusterSelectors to group clusters together. This should match
 	// Membership's membership_name, unless the user installed PC on the
@@ -3537,11 +3544,11 @@ type PolicycontrollerMembershipState struct {
 	// MembershipSpec: Membership configuration in the cluster. This
 	// represents the actual state in the cluster, while the MembershipSpec
 	// in the FeatureSpec represents the intended state
-	MembershipSpec *PolicycontrollerMembershipSpec `json:"membershipSpec,omitempty"`
+	MembershipSpec *PolicyControllerMembershipSpec `json:"membershipSpec,omitempty"`
 
 	// PolicyControllerHubState: Policy Controller state observed by the
 	// Policy Controller Hub
-	PolicyControllerHubState *PolicycontrollerPolicyControllerHubState `json:"policyControllerHubState,omitempty"`
+	PolicyControllerHubState *PolicyControllerPolicyControllerHubState `json:"policyControllerHubState,omitempty"`
 
 	// State: The lifecycle state Policy Controller is in.
 	//
@@ -3599,15 +3606,15 @@ type PolicycontrollerMembershipState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicycontrollerMembershipState) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicycontrollerMembershipState
+func (s *PolicyControllerMembershipState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerMembershipState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PolicycontrollerPolicyControllerHubConfig: Configuration for Policy
+// PolicyControllerPolicyControllerHubConfig: Configuration for Policy
 // Controller
-type PolicycontrollerPolicyControllerHubConfig struct {
+type PolicyControllerPolicyControllerHubConfig struct {
 	// AuditIntervalSeconds: Sets the interval for Policy Controller Audit
 	// Scans (in seconds). When set to 0, this disables audit functionality
 	// altogether.
@@ -3648,7 +3655,7 @@ type PolicycontrollerPolicyControllerHubConfig struct {
 
 	// TemplateLibraryConfig: Configures the library templates to install
 	// along with Policy Controller.
-	TemplateLibraryConfig *PolicycontrollerTemplateLibraryConfig `json:"templateLibraryConfig,omitempty"`
+	TemplateLibraryConfig *PolicyControllerTemplateLibraryConfig `json:"templateLibraryConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AuditIntervalSeconds") to unconditionally include in API requests.
@@ -3669,22 +3676,22 @@ type PolicycontrollerPolicyControllerHubConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicycontrollerPolicyControllerHubConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicycontrollerPolicyControllerHubConfig
+func (s *PolicyControllerPolicyControllerHubConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerPolicyControllerHubConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PolicycontrollerPolicyControllerHubState: State of the Policy
+// PolicyControllerPolicyControllerHubState: State of the Policy
 // Controller.
-type PolicycontrollerPolicyControllerHubState struct {
+type PolicyControllerPolicyControllerHubState struct {
 	// DeploymentStates: Map from deployment name to deployment state.
 	// Example deployments are gatekeeper-controller-manager,
 	// gatekeeper-audit deployment, and gatekeeper-mutation.
 	DeploymentStates map[string]string `json:"deploymentStates,omitempty"`
 
 	// Version: The version of Gatekeeper Policy Controller deployed.
-	Version *PolicycontrollerPolicyControllerHubVersion `json:"version,omitempty"`
+	Version *PolicyControllerPolicyControllerHubVersion `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeploymentStates") to
 	// unconditionally include in API requests. By default, fields with
@@ -3704,15 +3711,15 @@ type PolicycontrollerPolicyControllerHubState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicycontrollerPolicyControllerHubState) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicycontrollerPolicyControllerHubState
+func (s *PolicyControllerPolicyControllerHubState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerPolicyControllerHubState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PolicycontrollerPolicyControllerHubVersion: The build version of
+// PolicyControllerPolicyControllerHubVersion: The build version of
 // Gatekeeper that Policy Controller is using.
-type PolicycontrollerPolicyControllerHubVersion struct {
+type PolicyControllerPolicyControllerHubVersion struct {
 	// Version: The gatekeeper image tag that is composed of ACM version,
 	// git tag, build number.
 	Version string `json:"version,omitempty"`
@@ -3734,15 +3741,15 @@ type PolicycontrollerPolicyControllerHubVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicycontrollerPolicyControllerHubVersion) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicycontrollerPolicyControllerHubVersion
+func (s *PolicyControllerPolicyControllerHubVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerPolicyControllerHubVersion
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PolicycontrollerTemplateLibraryConfig: The config specifying which
+// PolicyControllerTemplateLibraryConfig: The config specifying which
 // default library templates to install.
-type PolicycontrollerTemplateLibraryConfig struct {
+type PolicyControllerTemplateLibraryConfig struct {
 	// Included: Whether the standard template library should be installed
 	// or not.
 	Included bool `json:"included,omitempty"`
@@ -3764,8 +3771,8 @@ type PolicycontrollerTemplateLibraryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicycontrollerTemplateLibraryConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicycontrollerTemplateLibraryConfig
+func (s *PolicyControllerTemplateLibraryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerTemplateLibraryConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -2895,7 +2895,8 @@ type ServiceResolver struct {
 	Hostname string `json:"hostname,omitempty"`
 
 	// ServerCertificates: Required. A list of leaf server certificates used
-	// to authenticate HTTPS connections to the EKM replica.
+	// to authenticate HTTPS connections to the EKM replica. Currently, a
+	// maximum of 10 Certificate is supported.
 	ServerCertificates []*Certificate `json:"serverCertificates,omitempty"`
 
 	// ServiceDirectoryService: Required. The resource name of the Service

@@ -3924,6 +3924,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "playintegrity:v1",
+      "name": "playintegrity",
+      "version": "v1",
+      "title": "Google Play Integrity API",
+      "description": "Play Integrity",
+      "discoveryRestUrl": "https://playintegrity.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developer.android.com/google/play/integrity",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "policyanalyzer:v1beta1",
       "name": "policyanalyzer",
       "version": "v1beta1",

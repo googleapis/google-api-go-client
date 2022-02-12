@@ -1952,10 +1952,17 @@ type IdentityServiceOidcConfig struct {
 	// ClientId: ID for OIDC client application.
 	ClientId string `json:"clientId,omitempty"`
 
+	// ClientSecret: Unencrypted OIDC client secret will be passed to the
+	// GKE Hub CLH.
+	ClientSecret string `json:"clientSecret,omitempty"`
+
 	// DeployCloudConsoleProxy: Flag to denote if reverse proxy is used to
 	// connect to auth provider. This flag should be set to true when
 	// provider is not reachable by Google Cloud Console.
 	DeployCloudConsoleProxy bool `json:"deployCloudConsoleProxy,omitempty"`
+
+	// EncryptedClientSecret: Output only. Encrypted OIDC Client secret
+	EncryptedClientSecret string `json:"encryptedClientSecret,omitempty"`
 
 	// ExtraParams: Comma-separated list of key-value pairs.
 	ExtraParams string `json:"extraParams,omitempty"`
@@ -2184,6 +2191,9 @@ type MembershipFeatureSpec struct {
 
 	// Identityservice: Identity Service-specific spec.
 	Identityservice *IdentityServiceMembershipSpec `json:"identityservice,omitempty"`
+
+	// Policycontroller: Policy Controller spec.
+	Policycontroller *PolicyControllerMembershipSpec `json:"policycontroller,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Anthosobservability")
 	// to unconditionally include in API requests. By default, fields with

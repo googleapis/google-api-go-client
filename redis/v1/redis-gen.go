@@ -467,7 +467,7 @@ func (s *InputConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Instance: A Google Cloud Redis instance.
+// Instance: A Memorystore for Redis instance.
 type Instance struct {
 	// AlternativeLocationId: Optional. If specified, at least one node will
 	// be provisioned in this zone in addition to the zone specified in

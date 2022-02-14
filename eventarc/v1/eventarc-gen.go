@@ -433,7 +433,7 @@ func (s *CloudRun) MarshalJSON() ([]byte, error) {
 type Destination struct {
 	// CloudFunction: The Cloud Function resource name. Only Cloud Functions
 	// V2 is supported. Format:
-	// projects/{project}/locations/{location}/functions/{function}
+	// `projects/{project}/locations/{location}/functions/{function}`
 	CloudFunction string `json:"cloudFunction,omitempty"`
 
 	// CloudRun: Cloud Run fully-managed resource that receives the events.
@@ -487,6 +487,12 @@ type EventFilter struct {
 	// MUST provide a filter for the 'type' attribute.
 	Attribute string `json:"attribute,omitempty"`
 
+	// Operator: Optional. The operator used for matching the events with
+	// the value of the filter. If not specified, only events that have an
+	// exact key-value pair specified in the filter are matched. The only
+	// allowed value is `match-path-pattern`.
+	Operator string `json:"operator,omitempty"`
+
 	// Value: Required. The value for the attribute.
 	Value string `json:"value,omitempty"`
 
@@ -530,10 +536,10 @@ type EventType struct {
 
 	// Type: Output only. The full name of the event type (for example,
 	// "google.cloud.storage.object.v1.finalized"). In the form of
-	// {provider-id}.{resource}.{version}.{verb}. Types MUST be versioned
-	// and event schemas are guaranteed to remain backward compatible within
-	// one version. Note that event type versions and API versions do not
-	// need to match.
+	// {provider-specific-prefix}.{resource}.{version}.{verb}. Types MUST be
+	// versioned and event schemas are guaranteed to remain backward
+	// compatible within one version. Note that event type versions and API
+	// versions do not need to match.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -1200,7 +1206,7 @@ type Provider struct {
 	EventTypes []*EventType `json:"eventTypes,omitempty"`
 
 	// Name: Output only. In
-	// `projects/{project}/locations/{location}/providers/{provider-id}`
+	// `projects/{project}/locations/{location}/providers/{provider_id}`
 	// format.
 	Name string `json:"name,omitempty"`
 

@@ -883,6 +883,16 @@ func (s *GoogleChromePolicyV1ResolveResponse) MarshalJSON() ([]byte, error) {
 // GoogleChromePolicyV1ResolvedPolicy: The resolved value of a policy
 // for a given target.
 type GoogleChromePolicyV1ResolvedPolicy struct {
+	// AddedSourceKey: Output only. The added source key establishes at
+	// which level an entity was explicitly added for management. This is
+	// useful for certain type of policies that are only applied if they are
+	// explicitly added for management. For example: apps and networks. An
+	// entity can only be deleted from management in an Organizational Unit
+	// that it was explicitly added to. If this is not present it means that
+	// the policy is managed without the need to explicitly add an entity,
+	// for example: standard user or device policies.
+	AddedSourceKey *GoogleChromePolicyV1PolicyTargetKey `json:"addedSourceKey,omitempty"`
+
 	// SourceKey: Output only. The source resource from which this policy
 	// value is obtained. May be the same as `targetKey` if the policy is
 	// directly modified on the target, otherwise it would be another
@@ -897,7 +907,7 @@ type GoogleChromePolicyV1ResolvedPolicy struct {
 	// Value: Output only. The resolved value of the policy.
 	Value *GoogleChromePolicyV1PolicyValue `json:"value,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SourceKey") to
+	// ForceSendFields is a list of field names (e.g. "AddedSourceKey") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -905,12 +915,13 @@ type GoogleChromePolicyV1ResolvedPolicy struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SourceKey") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AddedSourceKey") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

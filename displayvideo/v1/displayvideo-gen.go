@@ -1172,12 +1172,12 @@ func (s *AdvertiserTargetingConfig) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_AGE_RANGE`.
 type AgeRangeAssignedTargetingOptionDetails struct {
-	// AgeRange: Output only. The age range of an audience. We only support
-	// targeting a continuous age range of an audience. Thus, the age range
-	// represented in this field can be 1) targeted solely, or, 2) part of a
-	// larger continuous age range. The reach of a continuous age range
-	// targeting can be expanded by also targeting an audience of an unknown
-	// age.
+	// AgeRange: The age range of an audience. We only support targeting a
+	// continuous age range of an audience. Thus, the age range represented
+	// in this field can be 1) targeted solely, or, 2) part of a larger
+	// continuous age range. The reach of a continuous age range targeting
+	// can be expanded by also targeting an audience of an unknown age.
+	// Output only in v1. Required in v2.
 	//
 	// Possible values:
 	//   "AGE_RANGE_UNSPECIFIED" - Default value when age range is not
@@ -2174,7 +2174,8 @@ func (s *AudienceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, err
 // is not supported. Remove all audio content type targeting options to
 // achieve this effect.
 type AudioContentTypeAssignedTargetingOptionDetails struct {
-	// AudioContentType: Output only. The audio content type.
+	// AudioContentType: The audio content type. Output only in v1. Required
+	// in v2.
 	//
 	// Possible values:
 	//   "AUDIO_CONTENT_TYPE_UNSPECIFIED" - Audio content type is not
@@ -4400,8 +4401,8 @@ type ContentInstreamPositionAssignedTargetingOptionDetails struct {
 	// audio content.
 	AdType string `json:"adType,omitempty"`
 
-	// ContentInstreamPosition: Output only. The content instream position
-	// for video or audio ads.
+	// ContentInstreamPosition: The content instream position for video or
+	// audio ads. Output only in v1. Required in v2.
 	//
 	// Possible values:
 	//   "CONTENT_INSTREAM_POSITION_UNSPECIFIED" - Content instream position
@@ -4514,8 +4515,8 @@ type ContentOutstreamPositionAssignedTargetingOptionDetails struct {
 	// audio content.
 	AdType string `json:"adType,omitempty"`
 
-	// ContentOutstreamPosition: Output only. The content outstream
-	// position.
+	// ContentOutstreamPosition: The content outstream position. Output only
+	// in v1. Required in v2.
 	//
 	// Possible values:
 	//   "CONTENT_OUTSTREAM_POSITION_UNSPECIFIED" - Content outstream
@@ -6155,7 +6156,8 @@ func (s *DeviceMakeModelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_DEVICE_TYPE`.
 type DeviceTypeAssignedTargetingOptionDetails struct {
-	// DeviceType: Output only. The display name of the device type.
+	// DeviceType: The display name of the device type. Output only in v1.
+	// Required in v2.
 	//
 	// Possible values:
 	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
@@ -6843,7 +6845,8 @@ type Empty struct {
 // of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_ENVIRONMENT`.
 type EnvironmentAssignedTargetingOptionDetails struct {
-	// Environment: Output only. The serving environment.
+	// Environment: The serving environment. Output only in v1. Required in
+	// v2.
 	//
 	// Possible values:
 	//   "ENVIRONMENT_UNSPECIFIED" - Default value when environment is not
@@ -7826,7 +7829,8 @@ func (s *FrequencyCap) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARTGETING_TYPE_GENDER`.
 type GenderAssignedTargetingOptionDetails struct {
-	// Gender: Output only. The gender of the audience.
+	// Gender: The gender of the audience. Output only in v1. Required in
+	// v2.
 	//
 	// Possible values:
 	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified
@@ -11541,7 +11545,8 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // Explicitly targeting all options is not supported. Remove all native
 // content position targeting options to achieve this effect.
 type NativeContentPositionAssignedTargetingOptionDetails struct {
-	// ContentPosition: Output only. The content position.
+	// ContentPosition: The content position. Output only in v1. Required in
+	// v2.
 	//
 	// Possible values:
 	//   "NATIVE_CONTENT_POSITION_UNSPECIFIED" - Native content position is
@@ -11839,7 +11844,8 @@ func (s *ObaIcon) MarshalJSON() ([]byte, error) {
 // details field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_OMID`.
 type OmidAssignedTargetingOptionDetails struct {
-	// Omid: Output only. The type of Open Measurement enabled inventory.
+	// Omid: The type of Open Measurement enabled inventory. Output only in
+	// v1. Required in v2.
 	//
 	// Possible values:
 	//   "OMID_UNSPECIFIED" - Default value when omid targeting is not
@@ -13837,8 +13843,8 @@ type SensitiveCategoryAssignedTargetingOptionDetails struct {
 	// be EXCLUDED.
 	ExcludedTargetingOptionId string `json:"excludedTargetingOptionId,omitempty"`
 
-	// SensitiveCategory: Output only. An enum for the DV360 Sensitive
-	// category content classifier.
+	// SensitiveCategory: An enum for the DV360 Sensitive category content
+	// classifier. Output only in v1. Required in v2.
 	//
 	// Possible values:
 	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - This enum is only a placeholder
@@ -14976,7 +14982,8 @@ type VideoPlayerSizeAssignedTargetingOptionDetails struct {
 	// targeting_type is `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
-	// VideoPlayerSize: Output only. The video player size.
+	// VideoPlayerSize: The video player size. Output only in v1. Required
+	// in v2.
 	//
 	// Possible values:
 	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not
@@ -15076,7 +15083,8 @@ type ViewabilityAssignedTargetingOptionDetails struct {
 	// for targeting the `VIEWABILITY_10_PERCENT_OR_MORE` option).
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
-	// Viewability: Output only. The predicted viewability percentage.
+	// Viewability: The predicted viewability percentage. Output only in v1.
+	// Required in v2.
 	//
 	// Possible values:
 	//   "VIEWABILITY_UNSPECIFIED" - Default value when viewability is not

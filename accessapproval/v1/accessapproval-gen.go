@@ -503,7 +503,7 @@ type DismissDecision struct {
 	DismissTime string `json:"dismissTime,omitempty"`
 
 	// Implicit: This field will be true if the ApprovalRequest was
-	// implcitly dismissed due to inaction by the access approval approvers
+	// implicitly dismissed due to inaction by the access approval approvers
 	// (the request is not acted on by the approvers before the exiration
 	// time).
 	Implicit bool `json:"implicit,omitempty"`

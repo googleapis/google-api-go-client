@@ -691,6 +691,16 @@ func (s *Contact) MarshalJSON() ([]byte, error) {
 // CreativeRequirements: Message captures data about the creatives in
 // the deal.
 type CreativeRequirements struct {
+	// CreativeFormat: Output only. The format of the creative, only
+	// applicable for programmatic guaranteed and preferred deals.
+	//
+	// Possible values:
+	//   "CREATIVE_FORMAT_UNSPECIFIED" - A placeholder for an unspecified
+	// creative format.
+	//   "DISPLAY" - Banner creatives such as image or HTML5 assets.
+	//   "VIDEO" - Video creatives that can be played in a video player.
+	CreativeFormat string `json:"creativeFormat,omitempty"`
+
 	// CreativePreApprovalPolicy: Output only. Specifies the creative
 	// pre-approval policy.
 	//
@@ -715,6 +725,10 @@ type CreativeRequirements struct {
 	// frame option.
 	CreativeSafeFrameCompatibility string `json:"creativeSafeFrameCompatibility,omitempty"`
 
+	// MaxAdDurationMs: Output only. The max duration of the video creative
+	// in milliseconds. only applicable for deals with video creatives.
+	MaxAdDurationMs int64 `json:"maxAdDurationMs,omitempty,string"`
+
 	// ProgrammaticCreativeSource: Output only. Specifies the creative
 	// source for programmatic deals. PUBLISHER means creative is provided
 	// by seller and ADVERTISER means creative is provided by the buyer.
@@ -726,22 +740,44 @@ type CreativeRequirements struct {
 	//   "PUBLISHER" - The publisher provides the creatives to be served.
 	ProgrammaticCreativeSource string `json:"programmaticCreativeSource,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "CreativePreApprovalPolicy") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// SkippableAdType: Output only. Skippable video ads allow viewers to
+	// skip ads after 5 seconds. Only applicable for deals with video
+	// creatives.
+	//
+	// Possible values:
+	//   "SKIPPABLE_AD_TYPE_UNSPECIFIED" - A placeholder for an unspecified
+	// skippable ad type.
+	//   "SKIPPABLE" - Video ad that can be skipped after 5 seconds. This
+	// value will appear in RTB bid requests as
+	// SkippableBidRequestType::REQUIRE_SKIPPABLE.
+	//   "INSTREAM_SELECT" - Video ad that can be skipped after 5 seconds,
+	// and is counted as engaged view after 30 seconds. The creative is
+	// hosted on YouTube only, and viewcount of the YouTube video increments
+	// after the engaged view. This value will appear in RTB bid requests as
+	// SkippableBidRequestType::REQUIRE_SKIPPABLE.
+	//   "NOT_SKIPPABLE" - This video ad is not skippable. This value will
+	// appear in RTB bid requests as
+	// SkippableBidRequestType::BLOCK_SKIPPABLE.
+	//   "ANY" - This video ad can be skipped after 5 seconds or
+	// not-skippable. This value will appear in RTB bid requests as
+	// SkippableBidRequestType::ALLOW_SKIPPABLE.
+	SkippableAdType string `json:"skippableAdType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreativeFormat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "CreativePreApprovalPolicy") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreativeFormat") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

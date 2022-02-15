@@ -6701,6 +6701,15 @@ func (r *AccountsChannelPartnerLinksCustomersService) List(parent string) *Accou
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filters applied to the
+// [CloudChannelService.ListCustomers] results. See
+// https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers
+// for more information.
+func (c *AccountsChannelPartnerLinksCustomersListCall) Filter(filter string) *AccountsChannelPartnerLinksCustomersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of customers to return. The service may return fewer than this value.
 // If unspecified, returns at most 10 customers. The maximum value is
@@ -6828,6 +6837,11 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) Do(opts ...googleapi.Call
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filters applied to the [CloudChannelService.ListCustomers] results. See https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers for more information.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
 	//       "format": "int32",
@@ -7657,6 +7671,15 @@ func (r *AccountsCustomersService) List(parent string) *AccountsCustomersListCal
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filters applied to the
+// [CloudChannelService.ListCustomers] results. See
+// https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers
+// for more information.
+func (c *AccountsCustomersListCall) Filter(filter string) *AccountsCustomersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of customers to return. The service may return fewer than this value.
 // If unspecified, returns at most 10 customers. The maximum value is
@@ -7784,6 +7807,11 @@ func (c *AccountsCustomersListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filters applied to the [CloudChannelService.ListCustomers] results. See https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers for more information.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
 	//       "format": "int32",

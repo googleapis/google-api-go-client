@@ -931,6 +931,85 @@ func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportSt
 type GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse struct {
 }
 
+// GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata: The metadata
+// proto of ResyncDataset method.
+type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// NewlyAddedDocuments: Returns the newly added document Cloud Storage
+	// prefix if the documents are founded in Cloud Storage while not in
+	// Document Service storage.
+	NewlyAddedDocuments []*GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataUpdatedDocument `json:"newlyAddedDocuments,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataUpdatedDocument:
+// The proto for updated document in resync pipeline.
+type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataUpdatedDocument struct {
+	// DestinationPrefix: The prefix of cloud storage, identifies the
+	// destination document which should be updated by resync pipeline.
+	DestinationPrefix string `json:"destinationPrefix,omitempty"`
+
+	// SourcePrefix: The prefix of cloud storage, identifies the original
+	// document which should be updated by resync pipeline.
+	SourcePrefix string `json:"sourcePrefix,omitempty"`
+
+	// Status: The final status of the documents which should be updated by
+	// resync pipeline.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationPrefix")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationPrefix") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataUpdatedDocument) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataUpdatedDocument
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ResyncDatasetResponse: The response
+// proto of ResyncDataset method.
+type GoogleCloudDocumentaiUiv1beta3ResyncDatasetResponse struct {
+}
+
 // GoogleCloudDocumentaiUiv1beta3RevisionReference: The revision
 // reference specifies which revision on the document to read.
 type GoogleCloudDocumentaiUiv1beta3RevisionReference struct {
@@ -2026,6 +2105,9 @@ type GoogleCloudDocumentaiV1DocumentPage struct {
 	// Provenance: The history of this page.
 	Provenance *GoogleCloudDocumentaiV1DocumentProvenance `json:"provenance,omitempty"`
 
+	// Symbols: A list of visually detected symbols on the page.
+	Symbols []*GoogleCloudDocumentaiV1DocumentPageSymbol `json:"symbols,omitempty"`
+
 	// Tables: A list of visually detected tables on the page.
 	Tables []*GoogleCloudDocumentaiV1DocumentPageTable `json:"tables,omitempty"`
 
@@ -2211,7 +2293,7 @@ type GoogleCloudDocumentaiV1DocumentPageDetectedLanguage struct {
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
 	// For more information, see
-	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -2576,6 +2658,39 @@ type GoogleCloudDocumentaiV1DocumentPageParagraph struct {
 
 func (s *GoogleCloudDocumentaiV1DocumentPageParagraph) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageParagraph
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DocumentPageSymbol: A detected symbol.
+type GoogleCloudDocumentaiV1DocumentPageSymbol struct {
+	// DetectedLanguages: A list of detected languages together with
+	// confidence.
+	DetectedLanguages []*GoogleCloudDocumentaiV1DocumentPageDetectedLanguage `json:"detectedLanguages,omitempty"`
+
+	// Layout: Layout for Symbol.
+	Layout *GoogleCloudDocumentaiV1DocumentPageLayout `json:"layout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedLanguages") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1DocumentPageSymbol) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentPageSymbol
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3114,7 +3229,8 @@ func (s *GoogleCloudDocumentaiV1DocumentStyleFontSize) UnmarshalJSON(data []byte
 // into the Document.text.
 type GoogleCloudDocumentaiV1DocumentTextAnchor struct {
 	// Content: Contains the content of the text span so that users do not
-	// have to look it up in the text_segments.
+	// have to look it up in the text_segments. It is always populated for
+	// formFields.
 	Content string `json:"content,omitempty"`
 
 	// TextSegments: The text segments from the Document.text.
@@ -4631,6 +4747,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPage struct {
 	// Provenance: The history of this page.
 	Provenance *GoogleCloudDocumentaiV1beta1DocumentProvenance `json:"provenance,omitempty"`
 
+	// Symbols: A list of visually detected symbols on the page.
+	Symbols []*GoogleCloudDocumentaiV1beta1DocumentPageSymbol `json:"symbols,omitempty"`
+
 	// Tables: A list of visually detected tables on the page.
 	Tables []*GoogleCloudDocumentaiV1beta1DocumentPageTable `json:"tables,omitempty"`
 
@@ -4816,7 +4935,7 @@ type GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage struct {
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
 	// For more information, see
-	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -5182,6 +5301,39 @@ type GoogleCloudDocumentaiV1beta1DocumentPageParagraph struct {
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentPageParagraph) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageParagraph
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentPageSymbol: A detected symbol.
+type GoogleCloudDocumentaiV1beta1DocumentPageSymbol struct {
+	// DetectedLanguages: A list of detected languages together with
+	// confidence.
+	DetectedLanguages []*GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage `json:"detectedLanguages,omitempty"`
+
+	// Layout: Layout for Symbol.
+	Layout *GoogleCloudDocumentaiV1beta1DocumentPageLayout `json:"layout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedLanguages") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta1DocumentPageSymbol) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageSymbol
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5721,7 +5873,8 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentStyleFontSize) UnmarshalJSON(data [
 // indexing into the Document.text.
 type GoogleCloudDocumentaiV1beta1DocumentTextAnchor struct {
 	// Content: Contains the content of the text span so that users do not
-	// have to look it up in the text_segments.
+	// have to look it up in the text_segments. It is always populated for
+	// formFields.
 	Content string `json:"content,omitempty"`
 
 	// TextSegments: The text segments from the Document.text.
@@ -6565,6 +6718,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPage struct {
 	// Provenance: The history of this page.
 	Provenance *GoogleCloudDocumentaiV1beta2DocumentProvenance `json:"provenance,omitempty"`
 
+	// Symbols: A list of visually detected symbols on the page.
+	Symbols []*GoogleCloudDocumentaiV1beta2DocumentPageSymbol `json:"symbols,omitempty"`
+
 	// Tables: A list of visually detected tables on the page.
 	Tables []*GoogleCloudDocumentaiV1beta2DocumentPageTable `json:"tables,omitempty"`
 
@@ -6750,7 +6906,7 @@ type GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage struct {
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
 	// For more information, see
-	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -7116,6 +7272,39 @@ type GoogleCloudDocumentaiV1beta2DocumentPageParagraph struct {
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentPageParagraph) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageParagraph
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentPageSymbol: A detected symbol.
+type GoogleCloudDocumentaiV1beta2DocumentPageSymbol struct {
+	// DetectedLanguages: A list of detected languages together with
+	// confidence.
+	DetectedLanguages []*GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage `json:"detectedLanguages,omitempty"`
+
+	// Layout: Layout for Symbol.
+	Layout *GoogleCloudDocumentaiV1beta2DocumentPageLayout `json:"layout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedLanguages") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta2DocumentPageSymbol) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageSymbol
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7655,7 +7844,8 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentStyleFontSize) UnmarshalJSON(data [
 // indexing into the Document.text.
 type GoogleCloudDocumentaiV1beta2DocumentTextAnchor struct {
 	// Content: Contains the content of the text span so that users do not
-	// have to look it up in the text_segments.
+	// have to look it up in the text_segments. It is always populated for
+	// formFields.
 	Content string `json:"content,omitempty"`
 
 	// TextSegments: The text segments from the Document.text.

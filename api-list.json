@@ -1113,6 +1113,36 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "cloudfunctions:v2alpha",
+      "name": "cloudfunctions",
+      "version": "v2alpha",
+      "title": "Cloud Functions API",
+      "description": "Manages lightweight user-provided functions executed in response to events.",
+      "discoveryRestUrl": "https://cloudfunctions.googleapis.com/$discovery/rest?version=v2alpha",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/functions",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "cloudfunctions:v2beta",
+      "name": "cloudfunctions",
+      "version": "v2beta",
+      "title": "Cloud Functions API",
+      "description": "Manages lightweight user-provided functions executed in response to events.",
+      "discoveryRestUrl": "https://cloudfunctions.googleapis.com/$discovery/rest?version=v2beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/functions",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "cloudfunctions:v1",
       "name": "cloudfunctions",
       "version": "v1",
@@ -1802,6 +1832,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/dataflow/docs/guides/data-pipelines",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "dataplex:v1",
+      "name": "dataplex",
+      "version": "v1",
+      "title": "Cloud Dataplex API",
+      "description": "Dataplex API is used to manage the lifecycle of data lakes.",
+      "discoveryRestUrl": "https://dataplex.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/dataplex/docs",
       "preferred": true
     },
     {
@@ -3479,6 +3524,21 @@
       "title": "My Business Account Management API",
       "description": "The My Business Account Management API provides an interface for managing access to a location on Google.",
       "discoveryRestUrl": "https://mybusinessaccountmanagement.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/my-business/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "mybusinessbusinesscalls:v1",
+      "name": "mybusinessbusinesscalls",
+      "version": "v1",
+      "title": "My Business Business Calls API",
+      "description": "The My Business Business Calls API manages business calls information of a location on Google.",
+      "discoveryRestUrl": "https://mybusinessbusinesscalls.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

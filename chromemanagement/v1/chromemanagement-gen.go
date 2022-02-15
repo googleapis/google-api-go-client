@@ -3360,7 +3360,7 @@ func (c *CustomersTelemetryDevicesListCall) Filter(filter string) *CustomersTele
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// results to return. Maximum and default are 100.
+// results to return. Default value is 100. Maximum value is 200.
 func (c *CustomersTelemetryDevicesListCall) PageSize(pageSize int64) *CustomersTelemetryDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3495,7 +3495,7 @@ func (c *CustomersTelemetryDevicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Maximum number of results to return. Maximum and default are 100.",
+	//       "description": "Maximum number of results to return. Default value is 100. Maximum value is 200.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

@@ -553,6 +553,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "Optional. Filters applied to the [CloudChannelService.ListCustomers] results. See https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers for more information.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
                       "format": "int32",
@@ -735,6 +740,11 @@
                 "parent"
               ],
               "parameters": {
+                "filter": {
+                  "description": "Optional. Filters applied to the [CloudChannelService.ListCustomers] results. See https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers for more information.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
                   "format": "int32",
@@ -1589,7 +1599,7 @@
       }
     }
   },
-  "revision": "20220209",
+  "revision": "20220212",
   "rootUrl": "https://cloudchannel.googleapis.com/",
   "schemas": {
     "GoogleCloudChannelV1ActivateEntitlementRequest": {

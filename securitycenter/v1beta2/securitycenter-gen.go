@@ -554,6 +554,9 @@ type Cve struct {
 	// https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-34527
 	References []*Reference `json:"references,omitempty"`
 
+	// UpstreamFixAvailable: Whether upstream fix is available for the CVE.
+	UpstreamFixAvailable bool `json:"upstreamFixAvailable,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Cvssv3") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1829,6 +1832,7 @@ type MitreAttack struct {
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
@@ -1889,6 +1893,7 @@ type MitreAttack struct {
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 
 	// Version: The MITRE ATT&CK version referenced by the above fields.

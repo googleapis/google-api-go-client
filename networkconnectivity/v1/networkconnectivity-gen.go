@@ -609,8 +609,10 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 }
 
 // Hub: A hub is a collection of spokes. A single hub can contain spokes
-// from multiple regions. However, all of a hub's spokes must be
-// associated with resources that reside in the same VPC network.
+// from multiple regions. However, if any of a hub's spokes use the data
+// transfer feature, the resources associated with those spokes must all
+// reside in the same VPC network. Spokes that do not use data transfer
+// can be associated with any VPC network in your project.
 type Hub struct {
 	// CreateTime: Output only. The time the hub was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -719,8 +721,9 @@ func (s *LinkedInterconnectAttachments) MarshalJSON() ([]byte, error) {
 }
 
 // LinkedRouterApplianceInstances: A collection of router appliance
-// instances. If you have multiple router appliance instances connected
-// to the same site, they should all be attached to the same spoke.
+// instances. If you configure multiple router appliance instances to
+// receive data from the same set of sites outside of Google Cloud, we
+// recommend that you associate those instances with the same spoke.
 type LinkedRouterApplianceInstances struct {
 	// Instances: The list of router appliance instances.
 	Instances []*RouterApplianceInstance `json:"instances,omitempty"`

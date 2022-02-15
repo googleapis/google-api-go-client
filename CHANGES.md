@@ -1,5 +1,19 @@
 # Changes
 
+## [0.69.0](https://github.com/googleapis/google-api-go-client/compare/v0.68.0...v0.69.0) (2022-02-15)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1443](https://github.com/googleapis/google-api-go-client/issues/1443) [#1439](https://github.com/googleapis/google-api-go-client/issues/1439) [#1438](https://github.com/googleapis/google-api-go-client/issues/1438) [#1437](https://github.com/googleapis/google-api-go-client/issues/1437)
+* bump grpc and x/net ([#1428](https://github.com/googleapis/google-api-go-client/issues/1428)) ([331bc9e](https://github.com/googleapis/google-api-go-client/commit/331bc9ececf37af4a07db7a6e00e67800b66a88a))
+
+
+### Bug Fixes
+
+* **gensupport:** cover ChunkRetryDeadline edge case ([#1430](https://github.com/googleapis/google-api-go-client/issues/1430)) ([ef89845](https://github.com/googleapis/google-api-go-client/commit/ef898456d14592574235bb839514bd549e1007ba))
+* **internal/kokoro:** path to module root to run discogen ([#1433](https://github.com/googleapis/google-api-go-client/issues/1433)) ([4499c41](https://github.com/googleapis/google-api-go-client/commit/4499c413cda13a7a638b34205941cdf367c3ae1a))
+
 ## [0.68.0](https://github.com/googleapis/google-api-go-client/compare/v0.67.0...v0.68.0) (2022-02-08)
 
 

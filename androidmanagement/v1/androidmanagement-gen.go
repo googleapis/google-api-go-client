@@ -1295,11 +1295,11 @@ func (s *CrossProfilePolicies) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: A full date, with
-// non-zero year, month, and day values A month and day value, with a
-// zero year, such as an anniversary A year on its own, with zero month
-// and day values A year and month value, with a zero day, such as a
-// credit card expiration dateRelated types are google.type.TimeOfDay
-// and google.protobuf.Timestamp.
+// non-zero year, month, and day values A month and day, with a zero
+// year (e.g., an anniversary) A year on its own, with a zero month and
+// a zero day A year and month, with a zero day (e.g., a credit card
+// expiration date)Related types: * google.type.TimeOfDay *
+// google.type.DateTime * google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -3659,8 +3659,9 @@ type Policy struct {
 	// screens.
 	//   "DISABLE_FINGERPRINT" - Disable fingerprint sensor on secure
 	// keyguard screens.
-	//   "DISABLE_REMOTE_INPUT" - Disable text entry into notifications on
-	// secure keyguard screens.
+	//   "DISABLE_REMOTE_INPUT" - On devices running Android 6 and below,
+	// disables text entry into notifications on secure keyguard screens.
+	// Has no effect on Android 7 and above.
 	//   "FACE" - Disable face authentication on secure keyguard screens.
 	//   "IRIS" - Disable iris authentication on secure keyguard screens.
 	//   "BIOMETRICS" - Disable all biometric authentication on secure

@@ -1161,7 +1161,8 @@ type GoogleCloudRunOpV2Service struct {
 	// DeleteTime: Output only. The deletion time.
 	DeleteTime string `json:"deleteTime,omitempty"`
 
-	// Description: User-provided description of the Service.
+	// Description: User-provided description of the Service. This field
+	// currently has a 512-character limit.
 	Description string `json:"description,omitempty"`
 
 	// Etag: Output only. A system-generated fingerprint for this version of

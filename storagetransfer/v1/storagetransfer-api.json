@@ -600,7 +600,7 @@
       }
     }
   },
-  "revision": "20220203",
+  "revision": "20220215",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AgentPool": {
@@ -1085,6 +1085,20 @@
             "Temporary hold behavior is unspecified.",
             "Do not set a temporary hold on the destination object.",
             "Preserve the object's original temporary hold status."
+          ],
+          "type": "string"
+        },
+        "timeCreated": {
+          "description": "Specifies how each object's `timeCreated` metadata is preserved for transfers between Google Cloud Storage buckets. If unspecified, the default behavior is the same as TIME_CREATED_SKIP.",
+          "enum": [
+            "TIME_CREATED_UNSPECIFIED",
+            "TIME_CREATED_SKIP",
+            "TIME_CREATED_PRESERVE_AS_CUSTOM_TIME"
+          ],
+          "enumDescriptions": [
+            "TimeCreated behavior is unspecified.",
+            "Do not preserve the `timeCreated` metadata from the source object.",
+            "Preserves the source object's `timeCreated` metadata in the `customTime` field in the destination object. Note that any value stored in the source object's `customTime` field will not be propagated to the destination object."
           ],
           "type": "string"
         },

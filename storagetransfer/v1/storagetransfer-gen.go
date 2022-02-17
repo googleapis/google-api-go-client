@@ -1066,6 +1066,20 @@ type MetadataOptions struct {
 	// temporary hold status.
 	TemporaryHold string `json:"temporaryHold,omitempty"`
 
+	// TimeCreated: Specifies how each object's `timeCreated` metadata is
+	// preserved for transfers between Google Cloud Storage buckets. If
+	// unspecified, the default behavior is the same as TIME_CREATED_SKIP.
+	//
+	// Possible values:
+	//   "TIME_CREATED_UNSPECIFIED" - TimeCreated behavior is unspecified.
+	//   "TIME_CREATED_SKIP" - Do not preserve the `timeCreated` metadata
+	// from the source object.
+	//   "TIME_CREATED_PRESERVE_AS_CUSTOM_TIME" - Preserves the source
+	// object's `timeCreated` metadata in the `customTime` field in the
+	// destination object. Note that any value stored in the source object's
+	// `customTime` field will not be propagated to the destination object.
+	TimeCreated string `json:"timeCreated,omitempty"`
+
 	// Uid: Specifies how each file's POSIX user ID (UID) attribute should
 	// be handled by the transfer. By default, UID is not preserved.
 	//

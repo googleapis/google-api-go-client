@@ -590,7 +590,7 @@
       }
     }
   },
-  "revision": "20220204",
+  "revision": "20220211",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "GoogleCloudRunOpV2BinaryAuthorization": {
@@ -1326,7 +1326,7 @@
           "type": "string"
         },
         "description": {
-          "description": "User-provided description of the Service.",
+          "description": "User-provided description of the Service. This field currently has a 512-character limit.",
           "type": "string"
         },
         "etag": {

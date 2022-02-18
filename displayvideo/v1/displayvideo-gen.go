@@ -5409,7 +5409,8 @@ func (s *Creative) MarshalJSON() ([]byte, error) {
 // source.
 type CreativeConfig struct {
 	// CreativeType: The type of creative that can be assigned to the
-	// inventory source.
+	// inventory source. Only the following types are supported: *
+	// `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_VIDEO`
 	//
 	// Possible values:
 	//   "CREATIVE_TYPE_UNSPECIFIED" - Type value is not specified or is
@@ -7761,9 +7762,9 @@ func (s *FloodlightGroup) MarshalJSON() ([]byte, error) {
 // FrequencyCap: Settings that control the number of times a user may be
 // shown with the same ad during a given time period.
 type FrequencyCap struct {
-	// MaxImpressions: The maximum number of times a user may be shown with
-	// the same ad during this period. Must be greater than 0. Required when
-	// unlimited is `false`.
+	// MaxImpressions: The maximum number of times a user may be shown the
+	// same ad during this period. Must be greater than 0. Required when
+	// unlimited is `false` and max_views is not set.
 	MaxImpressions int64 `json:"maxImpressions,omitempty"`
 
 	// TimeUnit: The time unit in which the frequency cap will be applied.
@@ -9679,8 +9680,9 @@ type LineItem struct {
 	// Flight: Required. The start and end time of the line item's flight.
 	Flight *LineItemFlight `json:"flight,omitempty"`
 
-	// FrequencyCap: Required. The frequency capping setting of the line
-	// item.
+	// FrequencyCap: Required. The impression frequency cap settings of the
+	// line item. The max_impressions field in this settings object must be
+	// used if assigning a limited cap.
 	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
 
 	// InsertionOrderId: Required. Immutable. The unique ID of the insertion

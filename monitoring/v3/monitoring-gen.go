@@ -1660,7 +1660,8 @@ type Documentation struct {
 	// Content: The text of the documentation, interpreted according to
 	// mime_type. The content may not exceed 8,192 Unicode characters and
 	// may not exceed more than 10,240 bytes when encoded in UTF-8 format,
-	// whichever is smaller.
+	// whichever is smaller. This text can be templatized by using variables
+	// (https://cloud.google.com/monitoring/alerts/doc-variables).
 	Content string `json:"content,omitempty"`
 
 	// MimeType: The format of the content field. Presently, only the value
@@ -5889,8 +5890,7 @@ type FoldersTimeSeriesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists time series that match a filter. This method does not
-// require a Workspace.
+// List: Lists time series that match a filter.
 //
 // - name: The project
 //   (https://cloud.google.com/monitoring/api/v3#project_name),
@@ -6549,7 +6549,7 @@ func (c *FoldersTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTimeS
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists time series that match a filter. This method does not require a Workspace.",
+	//   "description": "Lists time series that match a filter.",
 	//   "flatPath": "v3/folders/{foldersId}/timeSeries",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.folders.timeSeries.list",
@@ -6848,8 +6848,7 @@ type OrganizationsTimeSeriesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists time series that match a filter. This method does not
-// require a Workspace.
+// List: Lists time series that match a filter.
 //
 // - name: The project
 //   (https://cloud.google.com/monitoring/api/v3#project_name),
@@ -7508,7 +7507,7 @@ func (c *OrganizationsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists time series that match a filter. This method does not require a Workspace.",
+	//   "description": "Lists time series that match a filter.",
 	//   "flatPath": "v3/organizations/{organizationsId}/timeSeries",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.organizations.timeSeries.list",
@@ -10196,8 +10195,7 @@ type ProjectsMetricDescriptorsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a single metric descriptor. This method does not require a
-// Workspace.
+// Get: Gets a single metric descriptor.
 //
 // - name: The metric descriptor on which to execute the request. The
 //   format is:
@@ -10309,7 +10307,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Do(opts ...googleapi.CallOption) (*Me
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a single metric descriptor. This method does not require a Workspace.",
+	//   "description": "Gets a single metric descriptor.",
 	//   "flatPath": "v3/projects/{projectsId}/metricDescriptors/{metricDescriptorsId}",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.metricDescriptors.get",
@@ -10350,8 +10348,7 @@ type ProjectsMetricDescriptorsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists metric descriptors that match a filter. This method does
-// not require a Workspace.
+// List: Lists metric descriptors that match a filter.
 //
 // - name: The project
 //   (https://cloud.google.com/monitoring/api/v3#project_name) on which
@@ -10491,7 +10488,7 @@ func (c *ProjectsMetricDescriptorsListCall) Do(opts ...googleapi.CallOption) (*L
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists metric descriptors that match a filter. This method does not require a Workspace.",
+	//   "description": "Lists metric descriptors that match a filter.",
 	//   "flatPath": "v3/projects/{projectsId}/metricDescriptors",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.metricDescriptors.list",
@@ -10569,8 +10566,7 @@ type ProjectsMonitoredResourceDescriptorsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a single monitored resource descriptor. This method does
-// not require a Workspace.
+// Get: Gets a single monitored resource descriptor.
 //
 // - name: The monitored resource descriptor to get. The format is:
 //   projects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOUR
@@ -10681,7 +10677,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a single monitored resource descriptor. This method does not require a Workspace.",
+	//   "description": "Gets a single monitored resource descriptor.",
 	//   "flatPath": "v3/projects/{projectsId}/monitoredResourceDescriptors/{monitoredResourceDescriptorsId}",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.monitoredResourceDescriptors.get",
@@ -10722,8 +10718,7 @@ type ProjectsMonitoredResourceDescriptorsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists monitored resource descriptors that match a filter. This
-// method does not require a Workspace.
+// List: Lists monitored resource descriptors that match a filter.
 //
 // - name: The project
 //   (https://cloud.google.com/monitoring/api/v3#project_name) on which
@@ -10863,7 +10858,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists monitored resource descriptors that match a filter. This method does not require a Workspace.",
+	//   "description": "Lists monitored resource descriptors that match a filter.",
 	//   "flatPath": "v3/projects/{projectsId}/monitoredResourceDescriptors",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.monitoredResourceDescriptors.list",
@@ -12912,8 +12907,7 @@ type ProjectsTimeSeriesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists time series that match a filter. This method does not
-// require a Workspace.
+// List: Lists time series that match a filter.
 //
 // - name: The project
 //   (https://cloud.google.com/monitoring/api/v3#project_name),
@@ -13572,7 +13566,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists time series that match a filter. This method does not require a Workspace.",
+	//   "description": "Lists time series that match a filter.",
 	//   "flatPath": "v3/projects/{projectsId}/timeSeries",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.timeSeries.list",
@@ -13871,8 +13865,7 @@ type ProjectsTimeSeriesQueryCall struct {
 	header_                http.Header
 }
 
-// Query: Queries time series using Monitoring Query Language. This
-// method does not require a Workspace.
+// Query: Queries time series using Monitoring Query Language.
 //
 // - name: The project
 //   (https://cloud.google.com/monitoring/api/v3#project_name) on which
@@ -13976,7 +13969,7 @@ func (c *ProjectsTimeSeriesQueryCall) Do(opts ...googleapi.CallOption) (*QueryTi
 	}
 	return ret, nil
 	// {
-	//   "description": "Queries time series using Monitoring Query Language. This method does not require a Workspace.",
+	//   "description": "Queries time series using Monitoring Query Language.",
 	//   "flatPath": "v3/projects/{projectsId}/timeSeries:query",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.timeSeries.query",

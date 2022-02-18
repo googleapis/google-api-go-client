@@ -7730,7 +7730,7 @@
       }
     }
   },
-  "revision": "20220211",
+  "revision": "20220217",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -10680,7 +10680,7 @@
       "id": "CreativeConfig",
       "properties": {
         "creativeType": {
-          "description": "The type of creative that can be assigned to the inventory source.",
+          "description": "The type of creative that can be assigned to the inventory source. Only the following types are supported: * `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_VIDEO`",
           "enum": [
             "CREATIVE_TYPE_UNSPECIFIED",
             "CREATIVE_TYPE_STANDARD",
@@ -12594,7 +12594,7 @@
       "id": "FrequencyCap",
       "properties": {
         "maxImpressions": {
-          "description": "The maximum number of times a user may be shown with the same ad during this period. Must be greater than 0. Required when unlimited is `false`.",
+          "description": "The maximum number of times a user may be shown the same ad during this period. Must be greater than 0. Required when unlimited is `false` and max_views is not set.",
           "format": "int32",
           "type": "integer"
         },
@@ -14139,7 +14139,7 @@
         },
         "frequencyCap": {
           "$ref": "FrequencyCap",
-          "description": "Required. The frequency capping setting of the line item."
+          "description": "Required. The impression frequency cap settings of the line item. The max_impressions field in this settings object must be used if assigning a limited cap."
         },
         "insertionOrderId": {
           "description": "Required. Immutable. The unique ID of the insertion order that the line item belongs to.",

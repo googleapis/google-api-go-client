@@ -127,7 +127,6 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.Operations = NewOperationsService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -137,8 +136,6 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
-	Operations *OperationsService
-
 	Projects *ProjectsService
 }
 
@@ -147,15 +144,6 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
-}
-
-func NewOperationsService(s *Service) *OperationsService {
-	rs := &OperationsService{s: s}
-	return rs
-}
-
-type OperationsService struct {
-	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -172,6 +160,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Repositories = NewProjectsLocationsRepositoriesService(s)
 	return rs
 }
@@ -179,7 +168,18 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	Operations *ProjectsLocationsOperationsService
+
 	Repositories *ProjectsLocationsRepositoriesService
+}
+
+func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
+	rs := &ProjectsLocationsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsOperationsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsRepositoriesService(s *Service) *ProjectsLocationsRepositoriesService {
@@ -1734,155 +1734,6 @@ func (s *Version) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// method id "artifactregistry.operations.get":
-
-type OperationsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
-//
-// - name: The name of the operation resource.
-func (r *OperationsService) Get(name string) *OperationsGetCall {
-	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OperationsGetCall) IfNoneMatch(entityTag string) *OperationsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OperationsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "artifactregistry.operations.get" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "artifactregistry.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
-}
-
 // method id "artifactregistry.projects.getProjectSettings":
 
 type ProjectsGetProjectSettingsCall struct {
@@ -2182,6 +2033,155 @@ func (c *ProjectsUpdateProjectSettingsCall) Do(opts ...googleapi.CallOption) (*P
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "artifactregistry.projects.locations.operations.get":
+
+type ProjectsLocationsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
+	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "artifactregistry.projects.locations.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -4335,6 +4335,13 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Filter(filter string) *Proj
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": The field to order the
+// results by.
+func (c *ProjectsLocationsRepositoriesFilesListCall) OrderBy(orderBy string) *ProjectsLocationsRepositoriesFilesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of files to return.
 func (c *ProjectsLocationsRepositoriesFilesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesFilesListCall {
@@ -4458,6 +4465,11 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Do(opts ...googleapi.CallOp
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "An expression for filtering the results of the request. Filter rules are case insensitive. The fields eligible for filtering are: * `name` * `owner` An example of using a filter: * `name=\"projects/p1/locations/us-central1/repositories/repo1/files/a/b/*\"` --\u003e Files with an ID starting with \"a/b/\". * `owner=\"projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/1.0\"` --\u003e Files owned by the version `1.0` in package `pkg1`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "The field to order the results by.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -684,6 +684,36 @@ func (s *ChartOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CollapsibleGroup: A widget that groups the other widgets. All widgets
+// that are within the area spanned by the grouping widget are
+// considered member widgets.
+type CollapsibleGroup struct {
+	// Collapsed: The collapsed state of the widget on first page load.
+	Collapsed bool `json:"collapsed,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Collapsed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Collapsed") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CollapsibleGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod CollapsibleGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Column: Defines the layout properties and content for a column.
 type Column struct {
 	// Weight: The relative weight of this column. The column weight is used
@@ -2556,6 +2586,11 @@ type Widget struct {
 
 	// Blank: A blank space.
 	Blank *Empty `json:"blank,omitempty"`
+
+	// CollapsibleGroup: A widget that groups the other widgets. All widgets
+	// that are within the area spanned by the grouping widget are
+	// considered member widgets.
+	CollapsibleGroup *CollapsibleGroup `json:"collapsibleGroup,omitempty"`
 
 	// LogsPanel: A widget that shows a stream of logs.
 	LogsPanel *LogsPanel `json:"logsPanel,omitempty"`

@@ -1308,8 +1308,8 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "DATA_SOURCE_CONNECTION" - Output only. Connection to a data
 	// source. For example, a BigQuery connection.
 	//   "ROUTINE" - Output only. Routine, for example, a BigQuery routine.
-	//   "LAKE" - A Dataproc Metastore lake.
-	//   "ZONE" - A Dataproc Metastore zone.
+	//   "LAKE" - A Dataplex lake.
+	//   "ZONE" - A Dataplex zone.
 	//   "SERVICE" - A service, for example, a Dataproc Metastore service.
 	Type string `json:"type,omitempty"`
 

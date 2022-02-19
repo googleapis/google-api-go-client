@@ -842,6 +842,11 @@ type ExecutionTemplate struct {
 	// permission for the specified service account.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
+	// Tensorboard: The name of a Vertex AI [Tensorboard] resource to which
+	// this execution will upload Tensorboard logs. Format:
+	// `projects/{project}/locations/{location}/tensorboards/{tensorboard}`
+	Tensorboard string `json:"tensorboard,omitempty"`
+
 	// VertexAiParameters: Parameters used in Vertex AI JobType executions.
 	VertexAiParameters *VertexAIParameters `json:"vertexAiParameters,omitempty"`
 
@@ -2530,7 +2535,7 @@ type RuntimeSoftwareConfig struct {
 	// runtime. Default: 180 minutes
 	IdleShutdownTimeout int64 `json:"idleShutdownTimeout,omitempty"`
 
-	// InstallGpuDriver: Install Nvidia Driver automatically.
+	// InstallGpuDriver: Install Nvidia Driver automatically. Default: True
 	InstallGpuDriver bool `json:"installGpuDriver,omitempty"`
 
 	// Kernels: Optional. Use a list of container images to use as Kernels

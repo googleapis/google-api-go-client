@@ -1,5 +1,13 @@
 # Changes
 
+## [0.70.0](https://github.com/googleapis/google-api-go-client/compare/v0.69.0...v0.70.0) (2022-02-22)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1450](https://github.com/googleapis/google-api-go-client/issues/1450) [#1449](https://github.com/googleapis/google-api-go-client/issues/1449) [#1448](https://github.com/googleapis/google-api-go-client/issues/1448) [#1444](https://github.com/googleapis/google-api-go-client/issues/1444)
+* **transport:** add an env variable to disable DirectPath ([#1447](https://github.com/googleapis/google-api-go-client/issues/1447)) ([7bce545](https://github.com/googleapis/google-api-go-client/commit/7bce545d91c0e7d4c51962634dd40de39605f369))
+
 ## [0.69.0](https://github.com/googleapis/google-api-go-client/compare/v0.68.0...v0.69.0) (2022-02-15)
 
 

@@ -3763,6 +3763,10 @@ type MemInfo struct {
 	// CurrentLimitBytes: Instantenous memory limit in bytes.
 	CurrentLimitBytes uint64 `json:"currentLimitBytes,omitempty,string"`
 
+	// CurrentOoms: Number of Out of Memory (OOM) events recorded since the
+	// previous measurement.
+	CurrentOoms int64 `json:"currentOoms,omitempty,string"`
+
 	// CurrentRssBytes: Instantenous memory (RSS) size in bytes.
 	CurrentRssBytes uint64 `json:"currentRssBytes,omitempty,string"`
 

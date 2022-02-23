@@ -6606,6 +6606,8 @@ func (s *SpaceId) MarshalJSON() ([]byte, error) {
 type SpaceInfo struct {
 	AvatarInfo *AvatarInfo `json:"avatarInfo,omitempty"`
 
+	AvatarUrl string `json:"avatarUrl,omitempty"`
+
 	Description string `json:"description,omitempty"`
 
 	GroupId *GroupId `json:"groupId,omitempty"`
@@ -12426,8 +12428,8 @@ func (c *SettingsDatasourcesListCall) DebugOptionsEnableDebugging(debugOptionsEn
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// datasources to fetch in a request. The max value is 100. The default
-// value is 10
+// datasources to fetch in a request. The max value is 1000. The default
+// value is 1000.
 func (c *SettingsDatasourcesListCall) PageSize(pageSize int64) *SettingsDatasourcesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -12548,7 +12550,7 @@ func (c *SettingsDatasourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 	//       "type": "boolean"
 	//     },
 	//     "pageSize": {
-	//       "description": "Maximum number of datasources to fetch in a request. The max value is 100. The default value is 10",
+	//       "description": "Maximum number of datasources to fetch in a request. The max value is 1000. The default value is 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

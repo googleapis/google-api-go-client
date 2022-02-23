@@ -2446,6 +2446,7 @@ type RegionalTaxRateInfo struct {
 	//   "TAX_TIER_BOOKS_1"
 	//   "TAX_TIER_NEWS_1"
 	//   "TAX_TIER_NEWS_2"
+	//   "TAX_TIER_MUSIC_OR_AUDIO_1"
 	TaxTier string `json:"taxTier,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

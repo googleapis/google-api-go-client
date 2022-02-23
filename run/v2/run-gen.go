@@ -3381,8 +3381,9 @@ type ProjectsLocationsServicesListCall struct {
 
 // List: List Services.
 //
-// - parent: The location and project to list resources on. Format:
-//   projects/{projectnumber}/locations/{location}.
+// - parent: The location and project to list resources on. Location
+//   must be a valid GCP region, and may not be the "-" wildcard.
+//   Format: projects/{projectnumber}/locations/{location}.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3531,7 +3532,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The location and project to list resources on. Format: projects/{projectnumber}/locations/{location}",
+	//       "description": "Required. The location and project to list resources on. Location must be a valid GCP region, and may not be the \"-\" wildcard. Format: projects/{projectnumber}/locations/{location}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

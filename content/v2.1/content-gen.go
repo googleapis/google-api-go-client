@@ -602,8 +602,8 @@ type ShoppingadsprogramService struct {
 }
 
 // Account: Account data. After the creation of a new account it may
-// take a few minutes before it is fully operational. The methods
-// delete, insert, and update require the admin role.
+// take a few minutes before it's fully operational. The methods delete,
+// insert, and update require the admin role.
 type Account struct {
 	// AccountManagement: Output only. How the account is managed.
 	// Acceptable values are: - "manual" - "automatic"
@@ -700,16 +700,16 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 }
 
 type AccountAddress struct {
-	// Country: CLDR country code (e.g. "US"). All MCA sub-accounts inherit
-	// the country of their parent MCA by default, however the country can
-	// be updated for individual sub-accounts.
+	// Country: CLDR country code (for example, "US"). All MCA sub-accounts
+	// inherit the country of their parent MCA by default, however the
+	// country can be updated for individual sub-accounts.
 	Country string `json:"country,omitempty"`
 
 	// Locality: City, town or commune. May also include dependent
-	// localities or sublocalities (e.g. neighborhoods or suburbs).
+	// localities or sublocalities (for example, neighborhoods or suburbs).
 	Locality string `json:"locality,omitempty"`
 
-	// PostalCode: Postal code or ZIP (e.g. "94043").
+	// PostalCode: Postal code or ZIP (for example, "94043").
 	PostalCode string `json:"postalCode,omitempty"`
 
 	// Region: Top-level administrative subdivision of the country. For
@@ -1370,9 +1370,9 @@ func (s *AccountShippingImprovements) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AccountStatus: The status of an account, i.e., information about its
-// products, which is computed offline and not returned immediately at
-// insertion time.
+// AccountStatus: The status of an account, that is, information about
+// its products, which is computed offline and not returned immediately
+// at insertion time.
 type AccountStatus struct {
 	// AccountId: The ID of the account for which the status is reported.
 	AccountId string `json:"accountId,omitempty"`
@@ -1606,7 +1606,7 @@ type AccountTax struct {
 	// string "content#accountTax".
 	Kind string `json:"kind,omitempty"`
 
-	// Rules: Tax rules. Updating the tax rules will enable US taxes (not
+	// Rules: Tax rules. Updating the tax rules will enable "US" taxes (not
 	// reversible). Defining no rules is equivalent to not charging tax at
 	// all.
 	Rules []*AccountTaxTaxRule `json:"rules,omitempty"`
@@ -1639,7 +1639,7 @@ func (s *AccountTax) MarshalJSON() ([]byte, error) {
 }
 
 // AccountTaxTaxRule: Tax calculation rule to apply in a state or
-// province (USA only).
+// province (US only).
 type AccountTaxTaxRule struct {
 	// Country: Country code in which tax is applicable.
 	Country string `json:"country,omitempty"`
@@ -2632,15 +2632,15 @@ type Address struct {
 	AdministrativeArea string `json:"administrativeArea,omitempty"`
 
 	// City: Required. City, town or commune. May also include dependent
-	// localities or sublocalities (e.g. neighborhoods or suburbs).
+	// localities or sublocalities (for example, neighborhoods or suburbs).
 	City string `json:"city,omitempty"`
 
 	// Country: Required. CLDR country code
-	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml)
-	// (e.g. "US").
+	// (https://github.com/unicode-org/cldr/blob/latest/common/main/en.xml)
+	// (for example, "US").
 	Country string `json:"country,omitempty"`
 
-	// PostalCode: Required. Postal code or ZIP (e.g. "94043").
+	// PostalCode: Required. Postal code or ZIP (for example, "94043").
 	PostalCode string `json:"postalCode,omitempty"`
 
 	// StreetAddress: Street-level part of the address.
@@ -2888,13 +2888,13 @@ func (s *CaptureOrderResponse) MarshalJSON() ([]byte, error) {
 
 type CarrierRate struct {
 	// CarrierName: Carrier service, such as "UPS" or "Fedex". The list
-	// of supported carriers can be retrieved via the `getSupportedCarriers`
-	// method. Required.
+	// of supported carriers can be retrieved through the
+	// `getSupportedCarriers` method. Required.
 	CarrierName string `json:"carrierName,omitempty"`
 
 	// CarrierService: Carrier service, such as "ground" or "2 days".
-	// The list of supported services for a carrier can be retrieved via the
-	// `getSupportedCarriers` method. Required.
+	// The list of supported services for a carrier can be retrieved through
+	// the `getSupportedCarriers` method. Required.
 	CarrierService string `json:"carrierService,omitempty"`
 
 	// FlatAdjustment: Additive shipping rate modifier. Can be negative. For
@@ -2940,8 +2940,8 @@ func (s *CarrierRate) MarshalJSON() ([]byte, error) {
 }
 
 type CarriersCarrier struct {
-	// Country: The CLDR country code of the carrier (e.g., "US"). Always
-	// present.
+	// Country: The CLDR country code of the carrier (for example, "US").
+	// Always present.
 	Country string `json:"country,omitempty"`
 
 	// EddServices: A list of services supported for EDD (Estimated Delivery
@@ -2949,12 +2949,12 @@ type CarriersCarrier struct {
 	// WarehouseBasedDeliveryTime.carrierService.
 	EddServices []string `json:"eddServices,omitempty"`
 
-	// Name: The name of the carrier (e.g., "UPS"). Always present.
+	// Name: The name of the carrier (for example, "UPS"). Always present.
 	Name string `json:"name,omitempty"`
 
-	// Services: A list of supported services (e.g., "ground") for that
-	// carrier. Contains at least one service. This is the list of valid
-	// values for CarrierRate.carrierService.
+	// Services: A list of supported services (for example, "ground") for
+	// that carrier. Contains at least one service. This is the list of
+	// valid values for CarrierRate.carrierService.
 	Services []string `json:"services,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Country") to
@@ -3387,9 +3387,8 @@ type CutoffTime struct {
 	// placed to be processed in the same day. Required.
 	Minute int64 `json:"minute,omitempty"`
 
-	// Timezone: Timezone identifier for the cutoff time. A list of
-	// identifiers can be found in the AdWords API documentation. E.g.
-	// "Europe/Zurich". Required.
+	// Timezone: Timezone identifier for the cutoff time (for example,
+	// "Europe/Zurich"). List of identifiers. Required.
 	Timezone string `json:"timezone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Hour") to
@@ -3507,7 +3506,7 @@ type DatafeedFetchSchedule struct {
 	// Paused: Whether the scheduled fetch is paused or not.
 	Paused bool `json:"paused,omitempty"`
 
-	// TimeZone: Time zone used for schedule. UTC by default. E.g.,
+	// TimeZone: Time zone used for schedule. UTC by default. For example,
 	// "America/Los_Angeles".
 	TimeZone string `json:"timeZone,omitempty"`
 
@@ -3585,7 +3584,7 @@ func (s *DatafeedFormat) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DatafeedStatus: The status of a datafeed, i.e., the result of the
+// DatafeedStatus: The status of a datafeed, that is, the result of the
 // last retrieval of the datafeed computed asynchronously when the feed
 // processing is finished.
 type DatafeedStatus struct {
@@ -3658,7 +3657,7 @@ func (s *DatafeedStatus) MarshalJSON() ([]byte, error) {
 // DatafeedStatusError: An error occurring in the feed, like "invalid
 // price".
 type DatafeedStatusError struct {
-	// Code: The code of the error, e.g., "validation/invalid_value".
+	// Code: The code of the error, for example, "validation/invalid_value".
 	Code string `json:"code,omitempty"`
 
 	// Count: The number of occurrences of the error in the feed.
@@ -3668,7 +3667,7 @@ type DatafeedStatusError struct {
 	// product.
 	Examples []*DatafeedStatusExample `json:"examples,omitempty"`
 
-	// Message: The error message, e.g., "Invalid price".
+	// Message: The error message, for example, "Invalid price".
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -3734,7 +3733,7 @@ type DatafeedTarget struct {
 	Country string `json:"country,omitempty"`
 
 	// ExcludedDestinations: The list of destinations to exclude for this
-	// target (corresponds to unchecked check boxes in Merchant Center).
+	// target (corresponds to cleared check boxes in Merchant Center).
 	ExcludedDestinations []string `json:"excludedDestinations,omitempty"`
 
 	// IncludedDestinations: The list of destinations to include for this
@@ -4306,7 +4305,7 @@ type DeliveryTime struct {
 	// shipped. Must be greater than or equal to `minHandlingTimeInDays`.
 	MaxHandlingTimeInDays int64 `json:"maxHandlingTimeInDays,omitempty"`
 
-	// MaxTransitTimeInDays: Maximum number of business days that is spent
+	// MaxTransitTimeInDays: Maximum number of business days that are spent
 	// in transit. 0 means same day delivery, 1 means next day delivery.
 	// Must be greater than or equal to `minTransitTimeInDays`.
 	MaxTransitTimeInDays int64 `json:"maxTransitTimeInDays,omitempty"`
@@ -4316,7 +4315,7 @@ type DeliveryTime struct {
 	// shipped.
 	MinHandlingTimeInDays int64 `json:"minHandlingTimeInDays,omitempty"`
 
-	// MinTransitTimeInDays: Minimum number of business days that is spent
+	// MinTransitTimeInDays: Minimum number of business days that are spent
 	// in transit. 0 means same day delivery, 1 means next day delivery.
 	// Either `{min,max}TransitTimeInDays` or `transitTimeTable` must be
 	// set, but not both.
@@ -4731,8 +4730,8 @@ func (s *Headers) MarshalJSON() ([]byte, error) {
 }
 
 type HolidayCutoff struct {
-	// DeadlineDate: Date of the order deadline, in ISO 8601 format. E.g.
-	// "2016-11-29" for 29th November 2016. Required.
+	// DeadlineDate: Date of the order deadline, in ISO 8601 format. For
+	// example, "2016-11-29" for 29th November 2016. Required.
 	DeadlineDate string `json:"deadlineDate,omitempty"`
 
 	// DeadlineHour: Hour of the day on the deadline date until which the
@@ -4741,17 +4740,16 @@ type HolidayCutoff struct {
 	// Required.
 	DeadlineHour int64 `json:"deadlineHour,omitempty"`
 
-	// DeadlineTimezone: Timezone identifier for the deadline hour. A list
-	// of identifiers can be found in the AdWords API documentation. E.g.
-	// "Europe/Zurich". Required.
+	// DeadlineTimezone: Timezone identifier for the deadline hour (for
+	// example, "Europe/Zurich"). List of identifiers. Required.
 	DeadlineTimezone string `json:"deadlineTimezone,omitempty"`
 
 	// HolidayId: Unique identifier for the holiday. Required.
 	HolidayId string `json:"holidayId,omitempty"`
 
 	// VisibleFromDate: Date on which the deadline will become visible to
-	// consumers in ISO 8601 format. E.g. "2016-10-31" for 31st October
-	// 2016. Required.
+	// consumers in ISO 8601 format. For example, "2016-10-31" for 31st
+	// October 2016. Required.
 	VisibleFromDate string `json:"visibleFromDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeadlineDate") to
@@ -4779,18 +4777,18 @@ func (s *HolidayCutoff) MarshalJSON() ([]byte, error) {
 
 type HolidaysHoliday struct {
 	// CountryCode: The CLDR territory code of the country in which the
-	// holiday is available. E.g. "US", "DE", "GB". A holiday cutoff can
-	// only be configured in a shipping settings service with matching
+	// holiday is available. For example, "US", "DE", "GB". A holiday cutoff
+	// can only be configured in a shipping settings service with matching
 	// delivery country. Always present.
 	CountryCode string `json:"countryCode,omitempty"`
 
-	// Date: Date of the holiday, in ISO 8601 format. E.g. "2016-12-25" for
-	// Christmas 2016. Always present.
+	// Date: Date of the holiday, in ISO 8601 format. For example,
+	// "2016-12-25" for Christmas 2016. Always present.
 	Date string `json:"date,omitempty"`
 
 	// DeliveryGuaranteeDate: Date on which the order has to arrive at the
-	// customer's, in ISO 8601 format. E.g. "2016-12-24" for 24th December
-	// 2016. Always present.
+	// customer's, in ISO 8601 format. For example, "2016-12-24" for 24th
+	// December 2016. Always present.
 	DeliveryGuaranteeDate string `json:"deliveryGuaranteeDate,omitempty"`
 
 	// DeliveryGuaranteeHour: Hour of the day in the delivery location's
@@ -5043,7 +5041,7 @@ type LiaCountrySettings struct {
 	// About: The settings for the About page.
 	About *LiaAboutPageSettings `json:"about,omitempty"`
 
-	// Country: Required. CLDR country code (e.g. "US").
+	// Country: Required. CLDR country code (for example, "US").
 	Country string `json:"country,omitempty"`
 
 	// HostedLocalStorefrontActive: The status of the "Merchant hosted local
@@ -6297,7 +6295,7 @@ func (s *LocalinventoryCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 
 type LocationIdSet struct {
 	// LocationIds: A non-empty list of location IDs. They must all be of
-	// the same location type (e.g., state).
+	// the same location type (for example, state).
 	LocationIds []string `json:"locationIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LocationIds") to
@@ -6757,15 +6755,15 @@ func (s *MinimumOrderValueTableStoreCodeSetWithMov) MarshalJSON() ([]byte, error
 
 type MonetaryAmount struct {
 	// PriceAmount: The pre-tax or post-tax price depends on the location of
-	// the order. - For countries (e.g. US) where price attribute excludes
-	// tax, this field corresponds to the pre-tax value. - For coutries
-	// (e.g. France) where price attribute includes tax, this field
-	// corresponds to the post-tax value .
+	// the order. - For countries (for example, "US". where price attribute
+	// excludes tax, this field corresponds to the pre-tax value. - For
+	// coutries (for example, "France") where price attribute includes tax,
+	// this field corresponds to the post-tax value .
 	PriceAmount *Price `json:"priceAmount,omitempty"`
 
 	// TaxAmount: Tax value, present only for countries where price
-	// attribute excludes tax (e.g. US). No tax is referenced as 0 value
-	// with the corresponding `currency`.
+	// attribute excludes tax (for example, "US". No tax is referenced as 0
+	// value with the corresponding `currency`.
 	TaxAmount *Price `json:"taxAmount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PriceAmount") to
@@ -6949,7 +6947,7 @@ func (s *Order) MarshalJSON() ([]byte, error) {
 }
 
 type OrderAddress struct {
-	// Country: CLDR country code (e.g. "US").
+	// Country: CLDR country code (for example, "US").
 	Country string `json:"country,omitempty"`
 
 	// FullAddress: Strings representing the lines of the printed label for
@@ -6961,10 +6959,10 @@ type OrderAddress struct {
 	IsPostOfficeBox bool `json:"isPostOfficeBox,omitempty"`
 
 	// Locality: City, town or commune. May also include dependent
-	// localities or sublocalities (e.g. neighborhoods or suburbs).
+	// localities or sublocalities (for example, neighborhoods or suburbs).
 	Locality string `json:"locality,omitempty"`
 
-	// PostalCode: Postal Code or ZIP (e.g. "94043").
+	// PostalCode: Postal Code or ZIP (for example, "94043").
 	PostalCode string `json:"postalCode,omitempty"`
 
 	// RecipientName: Name of the recipient.
@@ -7017,7 +7015,7 @@ type OrderCancellation struct {
 	// Reason: The reason for the cancellation. Orders that are canceled
 	// with a noInventory reason will lead to the removal of the product
 	// from Buy on Google until you make an update to that product. This
-	// will not affect your Shopping ads. Acceptable values are: -
+	// won't affect your Shopping ads. Acceptable values are: -
 	// "autoPostInternal" - "autoPostInvalidBillingAddress" -
 	// "autoPostNoInventory" - "autoPostPriceError" -
 	// "autoPostUndeliverableShippingAddress" - "couponAbuse" -
@@ -7227,9 +7225,9 @@ type OrderLineItem struct {
 	Price *Price `json:"price,omitempty"`
 
 	// Product: Product data as seen by customer from the time of the order
-	// placement. Note that certain attributes values (e.g. title or gtin)
-	// might be reformatted and no longer match values submitted via product
-	// feed.
+	// placement. Note that certain attributes values (for example, title or
+	// gtin) might be reformatted and no longer match values submitted
+	// through product feed.
 	Product *OrderLineItemProduct `json:"product,omitempty"`
 
 	// QuantityCanceled: Number of items canceled.
@@ -7366,8 +7364,8 @@ type OrderLineItemProduct struct {
 	// placed.
 	ShownImage string `json:"shownImage,omitempty"`
 
-	// TargetCountry: The CLDR territory // code of the target country of
-	// the product.
+	// TargetCountry: The CLDR territory code of the target country of the
+	// product.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
 	// Title: The title of the product.
@@ -7725,7 +7723,7 @@ type OrderPromotion struct {
 	AppliedItems []*OrderPromotionItem `json:"appliedItems,omitempty"`
 
 	// EndTime: Promotion end time in ISO 8601 format. Date, time, and
-	// offset required, e.g., "2020-01-02T09:00:00+01:00" or
+	// offset required, for example, "2020-01-02T09:00:00+01:00" or
 	// "2020-01-02T09:00:00Z".
 	EndTime string `json:"endTime,omitempty"`
 
@@ -7747,7 +7745,7 @@ type OrderPromotion struct {
 	ShortTitle string `json:"shortTitle,omitempty"`
 
 	// StartTime: Promotion start time in ISO 8601 format. Date, time, and
-	// offset required, e.g., "2020-01-02T09:00:00+01:00" or
+	// offset required, for example, "2020-01-02T09:00:00+01:00" or
 	// "2020-01-02T09:00:00Z".
 	StartTime string `json:"startTime,omitempty"`
 
@@ -8049,9 +8047,9 @@ type OrderShipment struct {
 	// customers. For select supported carriers, Google also automatically
 	// updates the shipment status based on the provided shipment ID.
 	// *Note:* You can also use unsupported carriers, but emails to
-	// customers will not include the carrier name or tracking URL, and
-	// there will be no automatic order status updates. Supported carriers
-	// for US are: - "ups" (United Parcel Service) *automatic status
+	// customers won't include the carrier name or tracking URL, and there
+	// will be no automatic order status updates. Supported carriers for
+	// "US" are: - "ups" (United Parcel Service) *automatic status
 	// updates* - "usps" (United States Postal Service) *automatic status
 	// updates* - "fedex" (FedEx) *automatic status updates * - "dhl"
 	// (DHL eCommerce) *automatic status updates* (US only) - "ontrac"
@@ -8170,7 +8168,7 @@ func (s *OrderShipmentLineItemShipment) MarshalJSON() ([]byte, error) {
 type OrderShipmentScheduledDeliveryDetails struct {
 	// CarrierPhoneNumber: The phone number of the carrier fulfilling the
 	// delivery. The phone number is formatted as the international notation
-	// in ITU-T Recommendation E.123 (e.g., "+41 44 668 1800").
+	// in ITU-T Recommendation E.123 (for example, "+41 44 668 1800").
 	CarrierPhoneNumber string `json:"carrierPhoneNumber,omitempty"`
 
 	// ScheduledDate: The date a shipment is scheduled for delivery, in ISO
@@ -9111,7 +9109,7 @@ type OrderreturnsRefundOperation struct {
 	// FullRefund: If true, the item will be fully refunded. Allowed only
 	// when payment_type is FOP. Merchant can choose this refund option to
 	// indicate the full remaining amount of corresponding object to be
-	// refunded to the customer via FOP.
+	// refunded to the customer through FOP.
 	FullRefund bool `json:"fullRefund,omitempty"`
 
 	// PartialRefund: If this is set, the item will be partially refunded.
@@ -9538,9 +9536,10 @@ func (s *OrdersCancelTestOrderByCustomerResponse) MarshalJSON() ([]byte, error) 
 
 type OrdersCreateTestOrderRequest struct {
 	// Country: The CLDR territory code of the country of the test order to
-	// create. Affects the currency and addresses of orders created via
-	// `template_name`, or the addresses of orders created via `test_order`.
-	// Acceptable values are: - "US" - "FR" Defaults to `US`.
+	// create. Affects the currency and addresses of orders created through
+	// `template_name`, or the addresses of orders created through
+	// `test_order`. Acceptable values are: - "US" - "FR" Defaults to
+	// "US".
 	Country string `json:"country,omitempty"`
 
 	// TemplateName: The test order template to use. Specify as an
@@ -9704,14 +9703,14 @@ func (s *OrdersCustomBatchRequestEntryCreateTestReturnReturnItem) MarshalJSON() 
 }
 
 type OrdersCustomBatchRequestEntryRefundItemItem struct {
-	// Amount: The total amount that is refunded. (e.g. refunding $5 each
-	// for 2 products should be done by setting quantity to 2 and amount to
-	// 10$) In case of multiple refunds, this should be the amount you
-	// currently want to refund to the customer.
+	// Amount: The total amount that is refunded. (for example, refunding $5
+	// each for 2 products should be done by setting quantity to 2 and
+	// amount to 10$) In case of multiple refunds, this should be the amount
+	// you currently want to refund to the customer.
 	Amount *MonetaryAmount `json:"amount,omitempty"`
 
 	// FullRefund: If true, the full item will be refunded. If this is true,
-	// amount should not be provided and will be ignored.
+	// amount shouldn't be provided and will be ignored.
 	FullRefund bool `json:"fullRefund,omitempty"`
 
 	// LineItemId: The ID of the line item. Either lineItemId or productId
@@ -9754,7 +9753,7 @@ type OrdersCustomBatchRequestEntryRefundItemShipping struct {
 	Amount *Price `json:"amount,omitempty"`
 
 	// FullRefund: If set to true, all shipping costs for the order will be
-	// refunded. If this is true, amount should not be provided and will be
+	// refunded. If this is true, amount shouldn't be provided and will be
 	// ignored. If set to false, submit the amount of the partial shipping
 	// refund, excluding the shipping tax. The shipping tax is calculated
 	// and handled on Google's side.
@@ -10149,7 +10148,7 @@ type OrdersRefundOrderRequest struct {
 	Amount *MonetaryAmount `json:"amount,omitempty"`
 
 	// FullRefund: If true, the full order will be refunded, including
-	// shipping. If this is true, amount should not be provided and will be
+	// shipping. If this is true, amount shouldn't be provided and will be
 	// ignored.
 	FullRefund bool `json:"fullRefund,omitempty"`
 
@@ -10562,7 +10561,7 @@ func (s *OrdersShipLineItemsResponse) MarshalJSON() ([]byte, error) {
 type OrdersUpdateLineItemShippingDetailsRequest struct {
 	// DeliverByDate: Updated delivery by date, in ISO 8601 format. If not
 	// specified only ship by date is updated. Provided date should be
-	// within 1 year timeframe and can not be a date in the past.
+	// within 1 year timeframe and can't be a date in the past.
 	DeliverByDate string `json:"deliverByDate,omitempty"`
 
 	// LineItemId: The ID of the line item to set metadata. Either
@@ -10580,7 +10579,7 @@ type OrdersUpdateLineItemShippingDetailsRequest struct {
 
 	// ShipByDate: Updated ship by date, in ISO 8601 format. If not
 	// specified only deliver by date is updated. Provided date should be
-	// within 1 year timeframe and can not be a date in the past.
+	// within 1 year timeframe and can't be a date in the past.
 	ShipByDate string `json:"shipByDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeliverByDate") to
@@ -10860,12 +10859,12 @@ func (s *PaymentServiceProviderLinkInfo) MarshalJSON() ([]byte, error) {
 }
 
 type PickupCarrierService struct {
-	// CarrierName: The name of the pickup carrier (e.g., "UPS").
+	// CarrierName: The name of the pickup carrier (for example, "UPS").
 	// Required.
 	CarrierName string `json:"carrierName,omitempty"`
 
-	// ServiceName: The name of the pickup service (e.g., "Access point").
-	// Required.
+	// ServiceName: The name of the pickup service (for example, "Access
+	// point"). Required.
 	ServiceName string `json:"serviceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CarrierName") to
@@ -10892,15 +10891,16 @@ func (s *PickupCarrierService) MarshalJSON() ([]byte, error) {
 }
 
 type PickupServicesPickupService struct {
-	// CarrierName: The name of the carrier (e.g., "UPS"). Always present.
+	// CarrierName: The name of the carrier (for example, "UPS"). Always
+	// present.
 	CarrierName string `json:"carrierName,omitempty"`
 
-	// Country: The CLDR country code of the carrier (e.g., "US"). Always
-	// present.
+	// Country: The CLDR country code of the carrier (for example, "US").
+	// Always present.
 	Country string `json:"country,omitempty"`
 
-	// ServiceName: The name of the pickup service (e.g., "Access point").
-	// Always present.
+	// ServiceName: The name of the pickup service (for example, "Access
+	// point"). Always present.
 	ServiceName string `json:"serviceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CarrierName") to
@@ -11171,7 +11171,7 @@ type PosInventory struct {
 	Quantity int64 `json:"quantity,omitempty,string"`
 
 	// StoreCode: Required. The identifier of the merchant's store. Either a
-	// `storeCode` inserted via the API or the code of the store in a
+	// `storeCode` inserted through the API or the code of the store in a
 	// Business Profile.
 	StoreCode string `json:"storeCode,omitempty"`
 
@@ -11223,7 +11223,7 @@ type PosInventoryRequest struct {
 	Quantity int64 `json:"quantity,omitempty,string"`
 
 	// StoreCode: Required. The identifier of the merchant's store. Either a
-	// `storeCode` inserted via the API or the code of the store in a
+	// `storeCode` inserted through the API or the code of the store in a
 	// Business Profile.
 	StoreCode string `json:"storeCode,omitempty"`
 
@@ -11279,7 +11279,7 @@ type PosInventoryResponse struct {
 	Quantity int64 `json:"quantity,omitempty,string"`
 
 	// StoreCode: Required. The identifier of the merchant's store. Either a
-	// `storeCode` inserted via the API or the code of the store in a
+	// `storeCode` inserted through the API or the code of the store in a
 	// Business Profile.
 	StoreCode string `json:"storeCode,omitempty"`
 
@@ -11379,7 +11379,7 @@ type PosSale struct {
 	SaleId string `json:"saleId,omitempty"`
 
 	// StoreCode: Required. The identifier of the merchant's store. Either a
-	// `storeCode` inserted via the API or the code of the store in a
+	// `storeCode` inserted through the API or the code of the store in a
 	// Business Profile.
 	StoreCode string `json:"storeCode,omitempty"`
 
@@ -11435,7 +11435,7 @@ type PosSaleRequest struct {
 	SaleId string `json:"saleId,omitempty"`
 
 	// StoreCode: Required. The identifier of the merchant's store. Either a
-	// `storeCode` inserted via the API or the code of the store in a
+	// `storeCode` inserted through the API or the code of the store in a
 	// Business Profile.
 	StoreCode string `json:"storeCode,omitempty"`
 
@@ -11495,7 +11495,7 @@ type PosSaleResponse struct {
 	SaleId string `json:"saleId,omitempty"`
 
 	// StoreCode: Required. The identifier of the merchant's store. Either a
-	// `storeCode` inserted via the API or the code of the store in a
+	// `storeCode` inserted through the API or the code of the store in a
 	// Business Profile.
 	StoreCode string `json:"storeCode,omitempty"`
 
@@ -11788,10 +11788,11 @@ type Product struct {
 
 	// CustomAttributes: A list of custom (merchant-provided) attributes. It
 	// can also be used for submitting any attribute of the feed
-	// specification in its generic form (e.g., `{ "name": "size type",
-	// "value": "regular" }`). This is useful for submitting attributes not
-	// explicitly exposed by the API, such as additional attributes used for
-	// Buy on Google (formerly known as Shopping Actions).
+	// specification in its generic form (for example, `{ "name": "size
+	// type", "value": "regular" }`). This is useful for submitting
+	// attributes not explicitly exposed by the API, such as additional
+	// attributes used for Buy on Google (formerly known as Shopping
+	// Actions).
 	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
 
 	// CustomLabel0: Custom label 0 for custom grouping of items in a
@@ -11839,7 +11840,7 @@ type Product struct {
 	EnergyEfficiencyClass string `json:"energyEfficiencyClass,omitempty"`
 
 	// ExcludedDestinations: The list of destinations to exclude for this
-	// target (corresponds to unchecked check boxes in Merchant Center).
+	// target (corresponds to cleared check boxes in Merchant Center).
 	ExcludedDestinations []string `json:"excludedDestinations,omitempty"`
 
 	// ExpirationDate: Date on which the item should expire, as specified
@@ -11949,7 +11950,7 @@ type Product struct {
 	// the REST ID of the product, *not* this identifier.
 	OfferId string `json:"offerId,omitempty"`
 
-	// Pattern: The item's pattern (e.g. polka dots).
+	// Pattern: The item's pattern (for example, polka dots).
 	Pattern string `json:"pattern,omitempty"`
 
 	// PickupMethod: The pick up option for the item. Acceptable values are:
@@ -12043,7 +12044,7 @@ type Product struct {
 	// same `itemGroupId` value (see size definition).
 	Sizes []string `json:"sizes,omitempty"`
 
-	// Source: The source of the offer, i.e., how the offer was created.
+	// Source: The source of the offer, that is, how the offer was created.
 	// Acceptable values are: - "api" - "crawl" - "feed"
 	Source string `json:"source,omitempty"`
 
@@ -12248,13 +12249,13 @@ type ProductShipping struct {
 
 	// MaxHandlingTime: Maximum handling time (inclusive) between when the
 	// order is received and shipped in business days. 0 means that the
-	// order is shipped on the same day as it is received if it happens
+	// order is shipped on the same day as it's received if it happens
 	// before the cut-off time. Both maxHandlingTime and maxTransitTime are
 	// required if providing shipping speeds.
 	MaxHandlingTime int64 `json:"maxHandlingTime,omitempty,string"`
 
 	// MaxTransitTime: Maximum transit time (inclusive) between when the
-	// order has shipped and when it is delivered in business days. 0 means
+	// order has shipped and when it's delivered in business days. 0 means
 	// that the order is delivered on the same day as it ships. Both
 	// maxHandlingTime and maxTransitTime are required if providing shipping
 	// speeds.
@@ -12262,17 +12263,17 @@ type ProductShipping struct {
 
 	// MinHandlingTime: Minimum handling time (inclusive) between when the
 	// order is received and shipped in business days. 0 means that the
-	// order is shipped on the same day as it is received if it happens
+	// order is shipped on the same day as it's received if it happens
 	// before the cut-off time. minHandlingTime can only be present together
-	// with maxHandlingTime; but it is not required if maxHandlingTime is
+	// with maxHandlingTime; but it's not required if maxHandlingTime is
 	// present.
 	MinHandlingTime int64 `json:"minHandlingTime,omitempty,string"`
 
 	// MinTransitTime: Minimum transit time (inclusive) between when the
-	// order has shipped and when it is delivered in business days. 0 means
+	// order has shipped and when it's delivered in business days. 0 means
 	// that the order is delivered on the same day as it ships.
 	// minTransitTime can only be present together with maxTransitTime; but
-	// it is not required if maxTransitTime is present.
+	// it's not required if maxTransitTime is present.
 	MinTransitTime int64 `json:"minTransitTime,omitempty,string"`
 
 	// PostalCode: The postal code range that the shipping rate applies to,
@@ -12404,7 +12405,7 @@ func (s *ProductShippingWeight) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ProductStatus: The status of a product, i.e., information about a
+// ProductStatus: The status of a product, that is, information about a
 // product computed asynchronously.
 type ProductStatus struct {
 	// CreationDate: Date on which the item has been created, in ISO 8601
@@ -13437,8 +13438,8 @@ type RateGroup struct {
 	// within shipping service.
 	Name string `json:"name,omitempty"`
 
-	// SingleValue: The value of the rate group (e.g. flat rate $10). Can
-	// only be set if `mainTable` and `subtables` are not set.
+	// SingleValue: The value of the rate group (for example, flat rate
+	// $10). Can only be set if `mainTable` and `subtables` are not set.
 	SingleValue *Value `json:"singleValue,omitempty"`
 
 	// Subtables: A list of subtables referred to by `mainTable`. Can only
@@ -14773,14 +14774,14 @@ func (s *ReturnAddress) MarshalJSON() ([]byte, error) {
 }
 
 type ReturnAddressAddress struct {
-	// Country: CLDR country code (e.g. "US").
+	// Country: CLDR country code (for example, "US").
 	Country string `json:"country,omitempty"`
 
 	// Locality: City, town or commune. May also include dependent
-	// localities or sublocalities (e.g. neighborhoods or suburbs).
+	// localities or sublocalities (for example, neighborhoods or suburbs).
 	Locality string `json:"locality,omitempty"`
 
-	// PostalCode: Postal code or ZIP (e.g. "94043").
+	// PostalCode: Postal code or ZIP (for example, "94043").
 	PostalCode string `json:"postalCode,omitempty"`
 
 	// RecipientName: Name of the recipient to address returns to.
@@ -15989,8 +15990,8 @@ type Service struct {
 
 	// PickupService: The carrier-service pair delivering items to
 	// collection points. The list of supported pickup services can be
-	// retrieved via the `getSupportedPickupServices` method. Required if
-	// and only if the service delivery type is `pickup`.
+	// retrieved through the `getSupportedPickupServices` method. Required
+	// if and only if the service delivery type is `pickup`.
 	PickupService *PickupCarrierService `json:"pickupService,omitempty"`
 
 	// RateGroups: Shipping rate group definitions. Only the last one is
@@ -16056,9 +16057,9 @@ type SettlementReport struct {
 	// by Google, in ISO 8601 format.
 	TransferDate string `json:"transferDate,omitempty"`
 
-	// TransferIds: The list of bank identifiers used for the transfer. e.g.
-	// Trace ID for Federal Automated Clearing House (ACH). This may also be
-	// known as the Wire ID.
+	// TransferIds: The list of bank identifiers used for the transfer. For
+	// example, Trace ID for Federal Automated Clearing House (ACH). This
+	// may also be known as the Wire ID.
 	TransferIds []string `json:"transferIds,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -16243,7 +16244,7 @@ func (s *SettlementTransactionAmountCommission) MarshalJSON() ([]byte, error) {
 }
 
 type SettlementTransactionIdentifiers struct {
-	// AdjustmentId: The identifier of the adjustments, if it is available.
+	// AdjustmentId: The identifier of the adjustments, if it's available.
 	AdjustmentId string `json:"adjustmentId,omitempty"`
 
 	// MerchantOrderId: The merchant provided order ID.
@@ -17089,7 +17090,7 @@ func (s *TestOrder) MarshalJSON() ([]byte, error) {
 }
 
 type TestOrderAddress struct {
-	// Country: CLDR country code (e.g. "US").
+	// Country: CLDR country code (for example, "US").
 	Country string `json:"country,omitempty"`
 
 	// FullAddress: Strings representing the lines of the printed label for
@@ -17101,10 +17102,10 @@ type TestOrderAddress struct {
 	IsPostOfficeBox bool `json:"isPostOfficeBox,omitempty"`
 
 	// Locality: City, town or commune. May also include dependent
-	// localities or sublocalities (e.g. neighborhoods or suburbs).
+	// localities or sublocalities (for example, neighborhoods or suburbs).
 	Locality string `json:"locality,omitempty"`
 
-	// PostalCode: Postal Code or ZIP (e.g. "94043").
+	// PostalCode: Postal Code or ZIP (for example, "94043").
 	PostalCode string `json:"postalCode,omitempty"`
 
 	// RecipientName: Name of the recipient.
@@ -17247,7 +17248,7 @@ type TestOrderLineItemProduct struct {
 	// applicable. Otherwise, tax settings from Merchant Center are applied.
 	Price *Price `json:"price,omitempty"`
 
-	// TargetCountry: Required. The CLDR territory // code of the target
+	// TargetCountry: Required. The CLDR territory code of the target
 	// country of the product.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
@@ -17513,8 +17514,8 @@ func (s *TransitTableTransitTimeRowTransitTimeValue) MarshalJSON() ([]byte, erro
 }
 
 type UnitInvoice struct {
-	// AdditionalCharges: Additional charges for a unit, e.g. shipping
-	// costs.
+	// AdditionalCharges: Additional charges for a unit, for example,
+	// shipping costs.
 	AdditionalCharges []*UnitInvoiceAdditionalCharge `json:"additionalCharges,omitempty"`
 
 	// UnitPrice: [required] Pre-tax or post-tax price of one unit depending
@@ -17639,13 +17640,12 @@ type Value struct {
 	NoShipping bool `json:"noShipping,omitempty"`
 
 	// PricePercentage: A percentage of the price represented as a number in
-	// decimal notation (e.g., "5.4"). Can only be set if all other fields
-	// are not set.
+	// decimal notation (for example, "5.4"). Can only be set if all other
+	// fields are not set.
 	PricePercentage string `json:"pricePercentage,omitempty"`
 
 	// SubtableName: The name of a subtable. Can only be set in table cells
-	// (i.e., not for single values), and only if all other fields are not
-	// set.
+	// (not for single values), and only if all other fields are not set.
 	SubtableName string `json:"subtableName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CarrierRateName") to
@@ -17804,14 +17804,14 @@ func (s *Warehouse) MarshalJSON() ([]byte, error) {
 
 type WarehouseBasedDeliveryTime struct {
 	// Carrier: Required. Carrier, such as "UPS" or "Fedex". The list of
-	// supported carriers can be retrieved via the `listSupportedCarriers`
-	// method.
+	// supported carriers can be retrieved through the
+	// `listSupportedCarriers` method.
 	Carrier string `json:"carrier,omitempty"`
 
 	// CarrierService: Required. Carrier service, such as "ground" or "2
 	// days". The list of supported services for a carrier can be retrieved
-	// via the `listSupportedCarriers` method. The name of the service must
-	// be in the eddSupportedServices list.
+	// through the `listSupportedCarriers` method. The name of the service
+	// must be in the eddSupportedServices list.
 	CarrierService string `json:"carrierService,omitempty"`
 
 	// OriginAdministrativeArea: Shipping origin's state.
@@ -17822,7 +17822,7 @@ type WarehouseBasedDeliveryTime struct {
 
 	// OriginCountry: Shipping origin's country represented as a CLDR
 	// territory code
-	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml).
+	// (https://github.com/unicode-org/cldr/blob/latest/common/main/en.xml).
 	OriginCountry string `json:"originCountry,omitempty"`
 
 	// OriginPostalCode: Shipping origin.
@@ -18081,7 +18081,7 @@ func (r *AccountsService) Claimwebsite(merchantId uint64, accountId uint64) *Acc
 
 // Overwrite sets the optional parameter "overwrite": Only available to
 // selected merchants, for example multi-client accounts (MCAs) and
-// their sub-accounts. When set to `True`, this flag removes any
+// their sub-accounts. When set to `True`, this option removes any
 // existing claim on the requested website and replaces it with a claim
 // from the account that makes the request.
 func (c *AccountsClaimwebsiteCall) Overwrite(overwrite bool) *AccountsClaimwebsiteCall {
@@ -18200,7 +18200,7 @@ func (c *AccountsClaimwebsiteCall) Do(opts ...googleapi.CallOption) (*AccountsCl
 	//       "type": "string"
 	//     },
 	//     "overwrite": {
-	//       "description": "Only available to selected merchants, for example multi-client accounts (MCAs) and their sub-accounts. When set to `True`, this flag removes any existing claim on the requested website and replaces it with a claim from the account that makes the request.",
+	//       "description": "Only available to selected merchants, for example multi-client accounts (MCAs) and their sub-accounts. When set to `True`, this option removes any existing claim on the requested website and replaces it with a claim from the account that makes the request.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -18366,7 +18366,7 @@ func (r *AccountsService) Delete(merchantId uint64, accountId uint64) *AccountsD
 	return c
 }
 
-// Force sets the optional parameter "force": Flag to delete
+// Force sets the optional parameter "force": Option to delete
 // sub-accounts with products. The default value is false.
 func (c *AccountsDeleteCall) Force(force bool) *AccountsDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
@@ -18453,7 +18453,7 @@ func (c *AccountsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     },
 	//     "force": {
 	//       "default": "false",
-	//       "description": "Flag to delete sub-accounts with products. The default value is false.",
+	//       "description": "Option to delete sub-accounts with products. The default value is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -32107,7 +32107,7 @@ func (r *OrdersService) Gettestordertemplate(merchantId uint64, templateName str
 }
 
 // Country sets the optional parameter "country": The country of the
-// template to retrieve. Defaults to `US`.
+// template to retrieve. Defaults to "US".
 func (c *OrdersGettestordertemplateCall) Country(country string) *OrdersGettestordertemplateCall {
 	c.urlParams_.Set("country", country)
 	return c
@@ -32224,7 +32224,7 @@ func (c *OrdersGettestordertemplateCall) Do(opts ...googleapi.CallOption) (*Orde
 	//   ],
 	//   "parameters": {
 	//     "country": {
-	//       "description": "The country of the template to retrieve. Defaults to `US`.",
+	//       "description": "The country of the template to retrieve. Defaults to \"`US`\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -32283,14 +32283,14 @@ type OrdersInstorerefundlineitemCall struct {
 
 // Instorerefundlineitem: Deprecated. Notifies that item return and
 // refund was handled directly by merchant outside of Google payments
-// processing (e.g. cash refund done in store). Note: We recommend
-// calling the returnrefundlineitem method to refund in-store returns.
-// We will issue the refund directly to the customer. This helps to
-// prevent possible differences arising between merchant and Google
-// transaction records. We also recommend having the point of sale
-// system communicate with Google to ensure that customers do not
-// receive a double refund by first refunding via Google then via an
-// in-store return.
+// processing (for example, cash refund done in store). Note: We
+// recommend calling the returnrefundlineitem method to refund in-store
+// returns. We will issue the refund directly to the customer. This
+// helps to prevent possible differences arising between merchant and
+// Google transaction records. We also recommend having the point of
+// sale system communicate with Google to ensure that customers do not
+// receive a double refund by first refunding through Google then
+// through an in-store return.
 //
 // - merchantId: The ID of the account that manages the order. This
 //   cannot be a multi-client account.
@@ -32396,7 +32396,7 @@ func (c *OrdersInstorerefundlineitemCall) Do(opts ...googleapi.CallOption) (*Ord
 	}
 	return ret, nil
 	// {
-	//   "description": "Deprecated. Notifies that item return and refund was handled directly by merchant outside of Google payments processing (e.g. cash refund done in store). Note: We recommend calling the returnrefundlineitem method to refund in-store returns. We will issue the refund directly to the customer. This helps to prevent possible differences arising between merchant and Google transaction records. We also recommend having the point of sale system communicate with Google to ensure that customers do not receive a double refund by first refunding via Google then via an in-store return.",
+	//   "description": "Deprecated. Notifies that item return and refund was handled directly by merchant outside of Google payments processing (for example, cash refund done in store). Note: We recommend calling the returnrefundlineitem method to refund in-store returns. We will issue the refund directly to the customer. This helps to prevent possible differences arising between merchant and Google transaction records. We also recommend having the point of sale system communicate with Google to ensure that customers do not receive a double refund by first refunding through Google then through an in-store return.",
 	//   "flatPath": "{merchantId}/orders/{orderId}/inStoreRefundLineItem",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.instorerefundlineitem",
@@ -32505,10 +32505,10 @@ func (c *OrdersListCall) PlacedDateStart(placedDateStart string) *OrdersListCall
 }
 
 // Statuses sets the optional parameter "statuses": Obtains orders that
-// match any of the specified statuses. Please note that `active` is a
-// shortcut for `pendingShipment` and `partiallyShipped`, and
-// `completed` is a shortcut for `shipped`, `partiallyDelivered`,
-// `delivered`, `partiallyReturned`, `returned`, and `canceled`.
+// match any of the specified statuses. Note that `active` is a shortcut
+// for `pendingShipment` and `partiallyShipped`, and `completed` is a
+// shortcut for `shipped`, `partiallyDelivered`, `delivered`,
+// `partiallyReturned`, `returned`, and `canceled`.
 //
 // Possible values:
 //   "ACTIVE" - Return orders with status `active`. The `active` status
@@ -32678,7 +32678,7 @@ func (c *OrdersListCall) Do(opts ...googleapi.CallOption) (*OrdersListResponse, 
 	//       "type": "string"
 	//     },
 	//     "statuses": {
-	//       "description": "Obtains orders that match any of the specified statuses. Please note that `active` is a shortcut for `pendingShipment` and `partiallyShipped`, and `completed` is a shortcut for `shipped`, `partiallyDelivered`, `delivered`, `partiallyReturned`, `returned`, and `canceled`.",
+	//       "description": "Obtains orders that match any of the specified statuses. Note that `active` is a shortcut for `pendingShipment` and `partiallyShipped`, and `completed` is a shortcut for `shipped`, `partiallyDelivered`, `delivered`, `partiallyReturned`, `returned`, and `canceled`.",
 	//       "enum": [
 	//         "ACTIVE",
 	//         "COMPLETED",
@@ -33218,13 +33218,12 @@ type OrdersReturnrefundlineitemCall struct {
 }
 
 // Returnrefundlineitem: Returns and refunds a line item. Note that this
-// method can only be called on fully shipped orders. Please also note
-// that the Orderreturns API is the preferred way to handle returns
-// after you receive a return from a customer. You can use
-// Orderreturns.list or Orderreturns.get to search for the return, and
-// then use Orderreturns.processreturn to issue the refund. If the
-// return cannot be found, then we recommend using this API to issue a
-// refund.
+// method can only be called on fully shipped orders. The Orderreturns
+// API is the preferred way to handle returns after you receive a return
+// from a customer. You can use Orderreturns.list or Orderreturns.get to
+// search for the return, and then use Orderreturns.processreturn to
+// issue the refund. If the return cannot be found, then we recommend
+// using this API to issue a refund.
 //
 // - merchantId: The ID of the account that manages the order. This
 //   cannot be a multi-client account.
@@ -33330,7 +33329,7 @@ func (c *OrdersReturnrefundlineitemCall) Do(opts ...googleapi.CallOption) (*Orde
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns and refunds a line item. Note that this method can only be called on fully shipped orders. Please also note that the Orderreturns API is the preferred way to handle returns after you receive a return from a customer. You can use Orderreturns.list or Orderreturns.get to search for the return, and then use Orderreturns.processreturn to issue the refund. If the return cannot be found, then we recommend using this API to issue a refund.",
+	//   "description": "Returns and refunds a line item. Note that this method can only be called on fully shipped orders. The Orderreturns API is the preferred way to handle returns after you receive a return from a customer. You can use Orderreturns.list or Orderreturns.get to search for the return, and then use Orderreturns.processreturn to issue the refund. If the return cannot be found, then we recommend using this API to issue a refund.",
 	//   "flatPath": "{merchantId}/orders/{orderId}/returnRefundLineItem",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.returnrefundlineitem",
@@ -33382,7 +33381,7 @@ type OrdersSetlineitemmetadataCall struct {
 // Setlineitemmetadata: Sets (or overrides if it already exists)
 // merchant provided annotations in the form of key-value pairs. A
 // common use case would be to supply us with additional structured
-// information about a line item that cannot be provided via other
+// information about a line item that cannot be provided through other
 // methods. Submitted key-value pairs can be retrieved as part of the
 // orders resource.
 //
@@ -33490,7 +33489,7 @@ func (c *OrdersSetlineitemmetadataCall) Do(opts ...googleapi.CallOption) (*Order
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets (or overrides if it already exists) merchant provided annotations in the form of key-value pairs. A common use case would be to supply us with additional structured information about a line item that cannot be provided via other methods. Submitted key-value pairs can be retrieved as part of the orders resource.",
+	//   "description": "Sets (or overrides if it already exists) merchant provided annotations in the form of key-value pairs. A common use case would be to supply us with additional structured information about a line item that cannot be provided through other methods. Submitted key-value pairs can be retrieved as part of the orders resource.",
 	//   "flatPath": "{merchantId}/orders/{orderId}/setLineItemMetadata",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.setlineitemmetadata",
@@ -37496,7 +37495,7 @@ type PubsubnotificationsettingsUpdateCall struct {
 }
 
 // Update: Register a Merchant Center account for pubsub notifications.
-// Note that cloud topic name should not be provided as part of the
+// Note that cloud topic name shouldn't be provided as part of the
 // request.
 //
 // - merchantId: The ID of the account.
@@ -37598,7 +37597,7 @@ func (c *PubsubnotificationsettingsUpdateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Register a Merchant Center account for pubsub notifications. Note that cloud topic name should not be provided as part of the request.",
+	//   "description": "Register a Merchant Center account for pubsub notifications. Note that cloud topic name shouldn't be provided as part of the request.",
 	//   "flatPath": "{merchantId}/pubsubnotificationsettings",
 	//   "httpMethod": "PUT",
 	//   "id": "content.pubsubnotificationsettings.update",

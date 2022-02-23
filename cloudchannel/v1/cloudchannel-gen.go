@@ -2819,13 +2819,13 @@ func (s *GoogleCloudChannelV1StartPaidServiceRequest) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudChannelV1SubscriberEvent: Represents information which
-// resellers will get as part of notification from Cloud Pub/Sub.
+// resellers will get as part of notification from Pub/Sub.
 type GoogleCloudChannelV1SubscriberEvent struct {
-	// CustomerEvent: Customer event send as part of Pub/Sub event to
+	// CustomerEvent: Customer event sent as part of Pub/Sub event to
 	// partners.
 	CustomerEvent *GoogleCloudChannelV1CustomerEvent `json:"customerEvent,omitempty"`
 
-	// EntitlementEvent: Entitlement event send as part of Pub/Sub event to
+	// EntitlementEvent: Entitlement event sent as part of Pub/Sub event to
 	// partners.
 	EntitlementEvent *GoogleCloudChannelV1EntitlementEvent `json:"entitlementEvent,omitempty"`
 
@@ -3845,13 +3845,13 @@ func (s *GoogleCloudChannelV1alpha1RenewalSettings) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudChannelV1alpha1SubscriberEvent: Represents information
-// which resellers will get as part of notification from Cloud Pub/Sub.
+// which resellers will get as part of notification from Pub/Sub.
 type GoogleCloudChannelV1alpha1SubscriberEvent struct {
-	// CustomerEvent: Customer event send as part of Pub/Sub event to
+	// CustomerEvent: Customer event sent as part of Pub/Sub event to
 	// partners.
 	CustomerEvent *GoogleCloudChannelV1alpha1CustomerEvent `json:"customerEvent,omitempty"`
 
-	// EntitlementEvent: Entitlement event send as part of Pub/Sub event to
+	// EntitlementEvent: Entitlement event sent as part of Pub/Sub event to
 	// partners.
 	EntitlementEvent *GoogleCloudChannelV1alpha1EntitlementEvent `json:"entitlementEvent,omitempty"`
 

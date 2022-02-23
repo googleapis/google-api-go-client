@@ -29430,15 +29430,14 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) Override(override boo
 
 // SequencedRollout sets the optional parameter "sequencedRollout": Flag
 // that specifies whether to enable sequenced rollout. If set to `true`,
-// a best-effort attempt will be made to roll out the routing rules
-// corresponding to this deployment and the environment changes to add
-// this deployment in a safe order. This reduces the risk of downtime
-// that could be caused by changing the environment group's routing
-// before the new destination for the affected traffic is ready to
-// receive it. This should only be necessary if the new deployment will
-// be capturing traffic from another environment under a shared
-// environment group or if traffic will be rerouted to a different
-// environment due to a base path removal. The
+// the routing rules for this deployment and the environment changes to
+// add the deployment will be rolled out in a safe order. This reduces
+// the risk of downtime that could be caused by changing the environment
+// group's routing before the new destination for the affected traffic
+// is ready to receive it. This should only be necessary if the new
+// deployment will be capturing traffic from another environment under a
+// shared environment group or if traffic will be rerouted to a
+// different environment due to a base path removal. The
 // GenerateDeployChangeReport API (GenerateDeployChangeReport) may be
 // used to examine routing changes before issuing the deployment
 // request, and its response will indicate if a sequenced rollout is
@@ -29565,7 +29564,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) Do(opts ...googleapi.
 	//       "type": "boolean"
 	//     },
 	//     "sequencedRollout": {
-	//       "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, a best-effort attempt will be made to roll out the routing rules corresponding to this deployment and the environment changes to add this deployment in a safe order. This reduces the risk of downtime that could be caused by changing the environment group's routing before the new destination for the affected traffic is ready to receive it. This should only be necessary if the new deployment will be capturing traffic from another environment under a shared environment group or if traffic will be rerouted to a different environment due to a base path removal. The [GenerateDeployChangeReport API](GenerateDeployChangeReport) may be used to examine routing changes before issuing the deployment request, and its response will indicate if a sequenced rollout is recommended for the deployment.",
+	//       "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, the routing rules for this deployment and the environment changes to add the deployment will be rolled out in a safe order. This reduces the risk of downtime that could be caused by changing the environment group's routing before the new destination for the affected traffic is ready to receive it. This should only be necessary if the new deployment will be capturing traffic from another environment under a shared environment group or if traffic will be rerouted to a different environment due to a base path removal. The [GenerateDeployChangeReport API](GenerateDeployChangeReport) may be used to examine routing changes before issuing the deployment request, and its response will indicate if a sequenced rollout is recommended for the deployment.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -29765,16 +29764,15 @@ func (r *OrganizationsEnvironmentsApisRevisionsService) Undeploy(name string) *O
 
 // SequencedRollout sets the optional parameter "sequencedRollout": Flag
 // that specifies whether to enable sequenced rollout. If set to `true`,
-// a best-effort attempt will be made to remove the environment group
-// routing rules corresponding to this deployment before removing the
-// deployment from the runtime. This is likely to be a rare use case; it
-// is only needed when the intended effect of undeploying this proxy is
-// to cause the traffic it currently handles to be rerouted to some
-// other existing proxy in the environment group. The
-// GenerateUndeployChangeReport API (GenerateUndeployChangeReport) may
-// be used to examine routing changes before issuing the undeployment
-// request, and its response will indicate if a sequenced rollout is
-// recommended for the undeployment.
+// the environment group routing rules corresponding to this deployment
+// will be removed before removing the deployment from the runtime. This
+// is likely to be a rare use case; it is only needed when the intended
+// effect of undeploying this proxy is to cause the traffic it currently
+// handles to be rerouted to some other existing proxy in the
+// environment group. The GenerateUndeployChangeReport API
+// (GenerateUndeployChangeReport) may be used to examine routing changes
+// before issuing the undeployment request, and its response will
+// indicate if a sequenced rollout is recommended for the undeployment.
 func (c *OrganizationsEnvironmentsApisRevisionsUndeployCall) SequencedRollout(sequencedRollout bool) *OrganizationsEnvironmentsApisRevisionsUndeployCall {
 	c.urlParams_.Set("sequencedRollout", fmt.Sprint(sequencedRollout))
 	return c
@@ -29882,7 +29880,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsUndeployCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "sequencedRollout": {
-	//       "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, a best-effort attempt will be made to remove the environment group routing rules corresponding to this deployment before removing the deployment from the runtime. This is likely to be a rare use case; it is only needed when the intended effect of undeploying this proxy is to cause the traffic it currently handles to be rerouted to some other existing proxy in the environment group. The [GenerateUndeployChangeReport API](GenerateUndeployChangeReport) may be used to examine routing changes before issuing the undeployment request, and its response will indicate if a sequenced rollout is recommended for the undeployment.",
+	//       "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, the environment group routing rules corresponding to this deployment will be removed before removing the deployment from the runtime. This is likely to be a rare use case; it is only needed when the intended effect of undeploying this proxy is to cause the traffic it currently handles to be rerouted to some other existing proxy in the environment group. The [GenerateUndeployChangeReport API](GenerateUndeployChangeReport) may be used to examine routing changes before issuing the undeployment request, and its response will indicate if a sequenced rollout is recommended for the undeployment.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

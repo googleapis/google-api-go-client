@@ -1184,15 +1184,17 @@ type Location struct {
 	// can use to get in touch with the business.
 	PhoneNumbers *PhoneNumbers `json:"phoneNumbers,omitempty"`
 
-	// Profile: Required. Describes your business in your own voice and
+	// Profile: Optional. Describes your business in your own voice and
 	// shares with users the unique story of your business and offerings.
+	// This field is required for all categories except lodging categories
+	// (e.g. hotels, motels, inns).
 	Profile *Profile `json:"profile,omitempty"`
 
 	// RegularHours: Optional. Operating hours for the business.
 	RegularHours *BusinessHours `json:"regularHours,omitempty"`
 
-	// RelationshipData: Output only. All locations and chain related to
-	// this one.
+	// RelationshipData: Optional. All locations and chain related to this
+	// one.
 	RelationshipData *RelationshipData `json:"relationshipData,omitempty"`
 
 	// ServiceArea: Optional. Service area businesses provide their service

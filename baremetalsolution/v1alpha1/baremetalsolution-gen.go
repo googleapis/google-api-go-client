@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -331,8 +332,18 @@ type NetworkAddress struct {
 	// Address: IP address to be assigned to the server.
 	Address string `json:"address,omitempty"`
 
-	// NetworkId: Id of the network to use, within the same
-	// ProvisioningConfig request.
+	// ExistingNetworkId: Name of the existing network to use. Will be of
+	// the format at--vlan for pre-intake UI networks like for eg,
+	// at-123456-vlan001 or any user-defined name like for eg,
+	// my-network-name for networks provisioned using intake UI. The field
+	// is exclusively filled only in case of an already existing network.
+	// Mutually exclusive with network_id.
+	ExistingNetworkId string `json:"existingNetworkId,omitempty"`
+
+	// NetworkId: Name of the network to use, within the same
+	// ProvisioningConfig request. This represents a new network being
+	// provisioned in the same request. Can have any user-defined name like
+	// for eg, my-network-name. Mutually exclusive with existing_network_id.
 	NetworkId string `json:"networkId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
@@ -740,7 +751,7 @@ func (c *ProjectsLocationsSubmitProvisioningConfigCall) Header() http.Header {
 
 func (c *ProjectsLocationsSubmitProvisioningConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -915,7 +926,7 @@ func (c *ProjectsProvisioningQuotasListCall) Header() http.Header {
 
 func (c *ProjectsProvisioningQuotasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

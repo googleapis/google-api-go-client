@@ -3968,6 +3968,8 @@ type ServiceMeshControlPlaneManagement struct {
 	//   "NEEDS_ATTENTION" - NEEDS_ATTENTION means that the component is
 	// ready, but some user intervention is required. (For example that the
 	// user should migrate workloads to a new control plane revision.)
+	//   "DEGRADED" - DEGRADED means that the component is ready, but
+	// operating in a degraded state.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to

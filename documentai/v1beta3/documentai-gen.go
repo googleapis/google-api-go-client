@@ -1925,7 +1925,7 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 	// shards, entities in this list may cross shard boundaries.
 	Entities []*GoogleCloudDocumentaiV1beta1DocumentEntity `json:"entities,omitempty"`
 
-	// EntityRelations: Relationship among Document.entities.
+	// EntityRelations: Placeholder. Relationship among Document.entities.
 	EntityRelations []*GoogleCloudDocumentaiV1beta1DocumentEntityRelation `json:"entityRelations,omitempty"`
 
 	// Error: Any error that occurred while processing this document.
@@ -1939,7 +1939,7 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 	// Pages: Visual page layout for the Document.
 	Pages []*GoogleCloudDocumentaiV1beta1DocumentPage `json:"pages,omitempty"`
 
-	// Revisions: Revision history of this document.
+	// Revisions: Placeholder. Revision history of this document.
 	Revisions []*GoogleCloudDocumentaiV1beta1DocumentRevision `json:"revisions,omitempty"`
 
 	// ShardInfo: Information about the sharding if this document is sharded
@@ -1951,12 +1951,13 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 	// document.
 	Text string `json:"text,omitempty"`
 
-	// TextChanges: A list of text corrections made to [Document.text]. This
-	// is usually used for annotating corrections to OCR mistakes. Text
-	// changes for a given revision may not overlap with each other.
+	// TextChanges: Placeholder. A list of text corrections made to
+	// [Document.text]. This is usually used for annotating corrections to
+	// OCR mistakes. Text changes for a given revision may not overlap with
+	// each other.
 	TextChanges []*GoogleCloudDocumentaiV1beta1DocumentTextChange `json:"textChanges,omitempty"`
 
-	// TextStyles: Styles for the Document.text.
+	// TextStyles: Placeholder. Styles for the Document.text.
 	TextStyles []*GoogleCloudDocumentaiV1beta1DocumentStyle `json:"textStyles,omitempty"`
 
 	// Uri: Optional. Currently supports Google Cloud Storage URI of the
@@ -3838,7 +3839,7 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 	// shards, entities in this list may cross shard boundaries.
 	Entities []*GoogleCloudDocumentaiV1beta2DocumentEntity `json:"entities,omitempty"`
 
-	// EntityRelations: Relationship among Document.entities.
+	// EntityRelations: Placeholder. Relationship among Document.entities.
 	EntityRelations []*GoogleCloudDocumentaiV1beta2DocumentEntityRelation `json:"entityRelations,omitempty"`
 
 	// Error: Any error that occurred while processing this document.
@@ -3855,7 +3856,7 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 	// Pages: Visual page layout for the Document.
 	Pages []*GoogleCloudDocumentaiV1beta2DocumentPage `json:"pages,omitempty"`
 
-	// Revisions: Revision history of this document.
+	// Revisions: Placeholder. Revision history of this document.
 	Revisions []*GoogleCloudDocumentaiV1beta2DocumentRevision `json:"revisions,omitempty"`
 
 	// ShardInfo: Information about the sharding if this document is sharded
@@ -3867,12 +3868,13 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 	// document.
 	Text string `json:"text,omitempty"`
 
-	// TextChanges: A list of text corrections made to [Document.text]. This
-	// is usually used for annotating corrections to OCR mistakes. Text
-	// changes for a given revision may not overlap with each other.
+	// TextChanges: Placeholder. A list of text corrections made to
+	// [Document.text]. This is usually used for annotating corrections to
+	// OCR mistakes. Text changes for a given revision may not overlap with
+	// each other.
 	TextChanges []*GoogleCloudDocumentaiV1beta2DocumentTextChange `json:"textChanges,omitempty"`
 
-	// TextStyles: Styles for the Document.text.
+	// TextStyles: Placeholder. Styles for the Document.text.
 	TextStyles []*GoogleCloudDocumentaiV1beta2DocumentStyle `json:"textStyles,omitempty"`
 
 	// Uri: Optional. Currently supports Google Cloud Storage URI of the
@@ -6233,7 +6235,7 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// shards, entities in this list may cross shard boundaries.
 	Entities []*GoogleCloudDocumentaiV1beta3DocumentEntity `json:"entities,omitempty"`
 
-	// EntityRelations: Relationship among Document.entities.
+	// EntityRelations: Placeholder. Relationship among Document.entities.
 	EntityRelations []*GoogleCloudDocumentaiV1beta3DocumentEntityRelation `json:"entityRelations,omitempty"`
 
 	// Error: Any error that occurred while processing this document.
@@ -6247,7 +6249,7 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// Pages: Visual page layout for the Document.
 	Pages []*GoogleCloudDocumentaiV1beta3DocumentPage `json:"pages,omitempty"`
 
-	// Revisions: Revision history of this document.
+	// Revisions: Placeholder. Revision history of this document.
 	Revisions []*GoogleCloudDocumentaiV1beta3DocumentRevision `json:"revisions,omitempty"`
 
 	// ShardInfo: Information about the sharding if this document is sharded
@@ -6259,12 +6261,13 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// document.
 	Text string `json:"text,omitempty"`
 
-	// TextChanges: A list of text corrections made to [Document.text]. This
-	// is usually used for annotating corrections to OCR mistakes. Text
-	// changes for a given revision may not overlap with each other.
+	// TextChanges: Placeholder. A list of text corrections made to
+	// [Document.text]. This is usually used for annotating corrections to
+	// OCR mistakes. Text changes for a given revision may not overlap with
+	// each other.
 	TextChanges []*GoogleCloudDocumentaiV1beta3DocumentTextChange `json:"textChanges,omitempty"`
 
-	// TextStyles: Styles for the Document.text.
+	// TextStyles: Placeholder. Styles for the Document.text.
 	TextStyles []*GoogleCloudDocumentaiV1beta3DocumentStyle `json:"textStyles,omitempty"`
 
 	// Uri: Optional. Currently supports Google Cloud Storage URI of the
@@ -8458,6 +8461,12 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	// DisplayName: The display name of the processor version.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// KmsKeyName: The KMS key name used for encryption.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// KmsKeyVersionName: The KMS key version with which data is encrypted.
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
+
 	// Name: The resource name of the processor version. Format:
 	// `projects/{project}/locations/{location}/processors/{processor}/proces
 	// sorVersions/{processor_version}`
@@ -9416,8 +9425,8 @@ type GoogleTypePostalAddress struct {
 
 	// RegionCode: Required. CLDR region code of the country/region of the
 	// address. This is never inferred and it is up to the user to ensure
-	// the value is correct. See http://cldr.unicode.org/ and
-	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// the value is correct. See https://cldr.unicode.org/ and
+	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
 	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 

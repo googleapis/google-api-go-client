@@ -2960,12 +2960,13 @@ type Probe struct {
 	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
 
 	// PeriodSeconds: (Optional) How often (in seconds) to perform the
-	// probe. Default to 10 seconds. Minimum value is 1.
+	// probe. Default to 10 seconds. Minimum value is 1. Maximum value is
+	// 3600. Must be greater or equal than timeout_seconds.
 	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
 
 	// SuccessThreshold: (Optional) Minimum consecutive successes for the
 	// probe to be considered successful after having failed. Defaults to 1.
-	// Must be 1 for liveness. Minimum value is 1.
+	// Must be 1 for liveness and startup Probes.
 	SuccessThreshold int64 `json:"successThreshold,omitempty"`
 
 	// TcpSocket: (Optional) TCPSocket specifies an action involving a TCP
@@ -2974,7 +2975,8 @@ type Probe struct {
 	TcpSocket *TCPSocketAction `json:"tcpSocket,omitempty"`
 
 	// TimeoutSeconds: (Optional) Number of seconds after which the probe
-	// times out. Defaults to 1 second. Minimum value is 1. More info:
+	// times out. Defaults to 1 second. Minimum value is 1. Maximum value is
+	// 3600. Must be smaller than period_seconds. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
 

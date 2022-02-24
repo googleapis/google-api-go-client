@@ -4124,7 +4124,8 @@ type TransferOperationsListCall struct {
 //   optional. The valid values for `transferStatuses` are
 //   case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and
 //   ABORTED.
-// - name: Not used.
+// - name: The name of the type being listed; must be
+//   `transferOperations`.
 func (r *TransferOperationsService) List(name string, filter string) *TransferOperationsListCall {
 	c := &TransferOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4261,7 +4262,7 @@ func (c *TransferOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOper
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Not used.",
+	//       "description": "Required. The name of the type being listed; must be `transferOperations`.",
 	//       "location": "path",
 	//       "pattern": "^transferOperations$",
 	//       "required": true,

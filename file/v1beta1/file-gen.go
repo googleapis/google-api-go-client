@@ -349,11 +349,11 @@ func (s *DailyCycle) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values * A month and day, with a
+// zero year (e.g., an anniversary) * A year on its own, with a zero
+// month and a zero day * A year and month, with a zero day (e.g., a
+// credit card expiration date) Related types: * google.type.TimeOfDay *
+// google.type.DateTime * google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -501,6 +501,14 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// CreateTime: Output only. Timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// InstanceType: Optional. The instance_type of this instance of format:
+	// projects/{project_id}/locations/{location_id}/instanceTypes/{instance_
+	// type_id}. Instance Type represents a high-level tier or SKU of the
+	// service that this instance belong to. When enabled(eg: Maintenance
+	// Rollout), Rollout uses 'instance_type' along with 'software_versions'
+	// to determine whether instance needs an update or not.
+	InstanceType string `json:"instanceType,omitempty"`
+
 	// Labels: Optional. Resource labels to represent user provided
 	// metadata. Each label is a key-value pair, where both the key and the
 	// value are arbitrary strings provided by the user.
@@ -527,6 +535,12 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// s/{instance_id}` Note: Either project_id or project_number can be
 	// used, but keep it consistent with other APIs (e.g. RescheduleUpdate)
 	Name string `json:"name,omitempty"`
+
+	// NotificationParameters: Optional. notification_parameters are
+	// information that service producers may like to include that is not
+	// relevant to Rollout. This parameter will only be passed to Gamma and
+	// Cloud Logging for notification/logging purpose.
+	NotificationParameters map[string]string `json:"notificationParameters,omitempty"`
 
 	// ProducerMetadata: Output only. Custom string attributes used
 	// primarily to expose producer-specific information in monitoring
@@ -922,6 +936,9 @@ type Instance struct {
 
 	// Labels: Resource labels to represent user provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// MaxShareCount: Output only. The max number of shares allowed.
+	MaxShareCount int64 `json:"maxShareCount,omitempty,string"`
 
 	// Name: Output only. The resource name of the instance, in the format
 	// `projects/{project_id}/locations/{location_id}/instances/{instance_id}

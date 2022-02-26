@@ -646,7 +646,7 @@ type Function struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not specified. Invalid state.
 	//   "ACTIVE" - Function has been successfully deployed and is serving.
-	//   "FAILED" - Function deployment failed and the function isn’t
+	//   "FAILED" - Function deployment failed and the function is not
 	// serving.
 	//   "DEPLOYING" - Function is being created or updated.
 	//   "DELETING" - Function is being deleted.

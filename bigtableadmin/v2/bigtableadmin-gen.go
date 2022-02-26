@@ -9400,8 +9400,8 @@ func (c *ProjectsInstancesTablesListCall) PageToken(pageToken string) *ProjectsI
 }
 
 // View sets the optional parameter "view": The view to be applied to
-// the returned tables' fields. Only NAME_ONLY view (default) and
-// REPLICATION_VIEW are supported.
+// the returned tables' fields. Only NAME_ONLY view (default),
+// REPLICATION_VIEW and ENCRYPTION_VIEW are supported.
 //
 // Possible values:
 //   "VIEW_UNSPECIFIED" - Uses the default view for each method as
@@ -9545,7 +9545,7 @@ func (c *ProjectsInstancesTablesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "The view to be applied to the returned tables' fields. Only NAME_ONLY view (default) and REPLICATION_VIEW are supported.",
+	//       "description": "The view to be applied to the returned tables' fields. Only NAME_ONLY view (default), REPLICATION_VIEW and ENCRYPTION_VIEW are supported.",
 	//       "enum": [
 	//         "VIEW_UNSPECIFIED",
 	//         "NAME_ONLY",

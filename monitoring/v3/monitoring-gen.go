@@ -1312,8 +1312,8 @@ func (s *Condition) MarshalJSON() ([]byte, error) {
 // response (and the first 1 MB of a TCP check's response) are examined
 // for purposes of content matching.
 type ContentMatcher struct {
-	// Content: String or regex content to match. Maximum 1024 bytes. An
-	// empty content string indicates no content matching is to be
+	// Content: String, regex or JSON content to match. Maximum 1024 bytes.
+	// An empty content string indicates no content matching is to be
 	// performed.
 	Content string `json:"content,omitempty"`
 
@@ -1331,7 +1331,7 @@ type ContentMatcher struct {
 	//   "NOT_CONTAINS_STRING" - Selects negation of substring matching. The
 	// match succeeds if the output does NOT contain the content string.
 	//   "MATCHES_REGEX" - Selects regular-expression matching. The match
-	// succeeds of the output matches the regular expression specified in
+	// succeeds if the output matches the regular expression specified in
 	// the content string. Regex matching is only supported for HTTP/HTTPS
 	// checks.
 	//   "NOT_MATCHES_REGEX" - Selects negation of regular-expression
@@ -3671,8 +3671,7 @@ type MetricThreshold struct {
 	//
 	// Possible values:
 	//   "EVALUATION_MISSING_DATA_UNSPECIFIED" - An unspecified evaluation
-	// missing data option, if used, it will default to
-	// EVALUATION_MISSING_DATA_ACTIVE.
+	// missing data option. Equivalent to EVALUATION_MISSING_DATA_NO_OP.
 	//   "EVALUATION_MISSING_DATA_INACTIVE" - If there is no data to
 	// evaluate the condition, then evaluate the condition as false.
 	//   "EVALUATION_MISSING_DATA_ACTIVE" - If there is no data to evaluate
@@ -3960,8 +3959,7 @@ type MonitoringQueryLanguageCondition struct {
 	//
 	// Possible values:
 	//   "EVALUATION_MISSING_DATA_UNSPECIFIED" - An unspecified evaluation
-	// missing data option, if used, it will default to
-	// EVALUATION_MISSING_DATA_ACTIVE.
+	// missing data option. Equivalent to EVALUATION_MISSING_DATA_NO_OP.
 	//   "EVALUATION_MISSING_DATA_INACTIVE" - If there is no data to
 	// evaluate the condition, then evaluate the condition as false.
 	//   "EVALUATION_MISSING_DATA_ACTIVE" - If there is no data to evaluate

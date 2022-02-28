@@ -2330,7 +2330,8 @@ type RunQueryRequest struct {
 	// StructuredQuery: A structured query.
 	StructuredQuery *StructuredQuery `json:"structuredQuery,omitempty"`
 
-	// Transaction: Reads documents in a transaction.
+	// Transaction: Run the query within an already active transaction. The
+	// value here is the opaque transaction ID to execute the query in.
 	Transaction string `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
@@ -2359,7 +2360,7 @@ func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 
 // RunQueryResponse: The response for Firestore.RunQuery.
 type RunQueryResponse struct {
-	// Document: A query result. Not set when reporting partial progress.
+	// Document: A query result, not set when reporting partial progress.
 	Document *Document `json:"document,omitempty"`
 
 	// ReadTime: The time at which the document was read. This may be

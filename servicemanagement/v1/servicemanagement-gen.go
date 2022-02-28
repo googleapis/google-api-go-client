@@ -1559,10 +1559,6 @@ func (s *DocumentationRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EnableServiceResponse: Operation payload for EnableService method.
-type EnableServiceResponse struct {
-}
-
 // Endpoint: `Endpoint` describes a network address of a service that
 // serves a set of APIs. It is commonly known as a service endpoint. A
 // service may expose any number of service endpoints, and all service
@@ -3908,8 +3904,7 @@ type Rollout struct {
 	// CreateTime: Creation time of the rollout. Readonly.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// CreatedBy: This field is deprecated and will be deleted. Please
-	// remove usage of this field.
+	// CreatedBy: The user who created the Rollout. Readonly.
 	CreatedBy string `json:"createdBy,omitempty"`
 
 	// DeleteServiceStrategy: The strategy associated with a rollout to

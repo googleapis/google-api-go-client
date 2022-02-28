@@ -2676,8 +2676,7 @@ func (s *IntegerMean) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Job: Defines a job to be run by the Cloud Dataflow service. nextID:
-// 26
+// Job: Defines a job to be run by the Cloud Dataflow service.
 type Job struct {
 	// ClientRequestId: The client's unique identifier of the job, re-used
 	// across retried attempts. If this field is set, the service will

@@ -153,7 +153,6 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Instances = NewProjectsLocationsInstancesService(s)
 	rs.Networks = NewProjectsLocationsNetworksService(s)
-	rs.NfsShares = NewProjectsLocationsNfsSharesService(s)
 	rs.ProvisioningConfigs = NewProjectsLocationsProvisioningConfigsService(s)
 	rs.ProvisioningQuotas = NewProjectsLocationsProvisioningQuotasService(s)
 	rs.SnapshotSchedulePolicies = NewProjectsLocationsSnapshotSchedulePoliciesService(s)
@@ -167,8 +166,6 @@ type ProjectsLocationsService struct {
 	Instances *ProjectsLocationsInstancesService
 
 	Networks *ProjectsLocationsNetworksService
-
-	NfsShares *ProjectsLocationsNfsSharesService
 
 	ProvisioningConfigs *ProjectsLocationsProvisioningConfigsService
 
@@ -194,15 +191,6 @@ func NewProjectsLocationsNetworksService(s *Service) *ProjectsLocationsNetworksS
 }
 
 type ProjectsLocationsNetworksService struct {
-	s *Service
-}
-
-func NewProjectsLocationsNfsSharesService(s *Service) *ProjectsLocationsNfsSharesService {
-	rs := &ProjectsLocationsNfsSharesService{s: s}
-	return rs
-}
-
-type ProjectsLocationsNfsSharesService struct {
 	s *Service
 }
 
@@ -264,61 +252,6 @@ func NewProjectsLocationsVolumesSnapshotsService(s *Service) *ProjectsLocationsV
 
 type ProjectsLocationsVolumesSnapshotsService struct {
 	s *Service
-}
-
-// AllowedClient: Represents an 'access point' for the share.
-type AllowedClient struct {
-	// AllowDev: Allow dev flag. Which controls whether to allow creation of
-	// devices.
-	AllowDev bool `json:"allowDev,omitempty"`
-
-	// AllowSuid: Allow the setuid flag.
-	AllowSuid bool `json:"allowSuid,omitempty"`
-
-	// AllowedClientsCidr: The subnet of IP addresses permitted to access
-	// the share.
-	AllowedClientsCidr string `json:"allowedClientsCidr,omitempty"`
-
-	// MountPermissions: Mount permissions.
-	//
-	// Possible values:
-	//   "MOUNT_PERMISSIONS_UNSPECIFIED" - Permissions were not specified.
-	//   "READ" - NFS share can be mount with read-only permissions.
-	//   "READ_WRITE" - NFS share can be mount with read-write permissions.
-	MountPermissions string `json:"mountPermissions,omitempty"`
-
-	// Network: The network the access point sits on.
-	Network string `json:"network,omitempty"`
-
-	// NoRootSquash: Disable root squashing, which is a feature of NFS. Root
-	// squash is a special mapping of the remote superuser (root) identity
-	// when using identity authentication.
-	NoRootSquash bool `json:"noRootSquash,omitempty"`
-
-	// ShareIp: The IP address of the share on this network.
-	ShareIp string `json:"shareIp,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AllowDev") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowDev") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AllowedClient) MarshalJSON() ([]byte, error) {
-	type NoMethod AllowedClient
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -714,45 +647,6 @@ type ListNetworksResponse struct {
 
 func (s *ListNetworksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNetworksResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ListNfsSharesResponse: Response message containing the list of NFS
-// shares.
-type ListNfsSharesResponse struct {
-	// NextPageToken: A token identifying a page of results from the server.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// NfsShares: The list of NFS shares.
-	NfsShares []*NfsShare `json:"nfsShares,omitempty"`
-
-	// Unreachable: Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListNfsSharesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListNfsSharesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1196,6 +1090,10 @@ type NetworkConfig struct {
 	// Cidr: CIDR range of the network.
 	Cidr string `json:"cidr,omitempty"`
 
+	// GcpService: The GCP service of the network. Available gcp_service are
+	// in https://cloud.google.com/bare-metal/docs/bms-planning.
+	GcpService string `json:"gcpService,omitempty"`
+
 	// Id: A transient unique identifier to identify a volume within an
 	// ProvisioningConfig request.
 	Id string `json:"id,omitempty"`
@@ -1337,59 +1235,6 @@ type NfsExport struct {
 
 func (s *NfsExport) MarshalJSON() ([]byte, error) {
 	type NoMethod NfsExport
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// NfsShare: An NFS share.
-type NfsShare struct {
-	// AllowedClients: List of allowed access points.
-	AllowedClients []*AllowedClient `json:"allowedClients,omitempty"`
-
-	// Labels: Labels as key value pairs.
-	Labels map[string]string `json:"labels,omitempty"`
-
-	// Name: Output only. The name of the NFS share.
-	Name string `json:"name,omitempty"`
-
-	// NfsShareId: Output only. An identifier for the NFS share, generated
-	// by the backend.
-	NfsShareId string `json:"nfsShareId,omitempty"`
-
-	// State: The state of the NFS share.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - The share is in an unknown state.
-	//   "PROVISIONED" - The share has been provisioned.
-	State string `json:"state,omitempty"`
-
-	// Volume: The volume containing the share.
-	Volume string `json:"volume,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AllowedClients") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowedClients") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *NfsShare) MarshalJSON() ([]byte, error) {
-	type NoMethod NfsShare
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1644,6 +1489,13 @@ type SnapshotReservationDetail struct {
 	// ReservedSpaceGib: The space on this storage volume reserved for
 	// snapshots, shown in GiB.
 	ReservedSpaceGib int64 `json:"reservedSpaceGib,omitempty,string"`
+
+	// ReservedSpacePercent: Percent of the total Volume size reserved for
+	// snapshot copies. Enabling snapshots requires reserving 20% or more of
+	// the storage volume space for snapshots. Maximum reserved space for
+	// snapshots is 40%. Setting this field will effectively set
+	// snapshot_enabled to true.
+	ReservedSpacePercent int64 `json:"reservedSpacePercent,omitempty"`
 
 	// ReservedSpaceRemainingGib: The amount, in GiB, of available space in
 	// this storage volume's reserved snapshot space.
@@ -1967,6 +1819,9 @@ type Volume struct {
 	//   "NEWEST_FIRST" - Delete the newest snapshots first.
 	SnapshotAutoDeleteBehavior string `json:"snapshotAutoDeleteBehavior,omitempty"`
 
+	// SnapshotEnabled: Whether snapshots are enabled.
+	SnapshotEnabled bool `json:"snapshotEnabled,omitempty"`
+
 	// SnapshotReservationDetail: Details about snapshot space reservation
 	// and usage on the storage volume.
 	SnapshotReservationDetail *SnapshotReservationDetail `json:"snapshotReservationDetail,omitempty"`
@@ -2023,6 +1878,11 @@ func (s *Volume) MarshalJSON() ([]byte, error) {
 
 // VolumeConfig: Configuration parameters for a new volume.
 type VolumeConfig struct {
+	// GcpService: The GCP service of the storage volume. Available
+	// gcp_service are in
+	// https://cloud.google.com/bare-metal/docs/bms-planning.
+	GcpService string `json:"gcpService,omitempty"`
+
 	// Id: A transient unique identifier to identify a volume within an
 	// ProvisioningConfig request.
 	Id string `json:"id,omitempty"`
@@ -2067,7 +1927,7 @@ type VolumeConfig struct {
 	// additional information for the BMS Ops team (b/194021617).
 	UserNote string `json:"userNote,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Id") to
+	// ForceSendFields is a list of field names (e.g. "GcpService") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2075,8 +1935,8 @@ type VolumeConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "GcpService") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -3941,511 +3801,6 @@ func (c *ProjectsLocationsNetworksPatchCall) Do(opts ...googleapi.CallOption) (*
 
 }
 
-// method id "baremetalsolution.projects.locations.nfsShares.get":
-
-type ProjectsLocationsNfsSharesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Get details of a single NFS share.
-//
-// - name: Name of the resource.
-func (r *ProjectsLocationsNfsSharesService) Get(name string) *ProjectsLocationsNfsSharesGetCall {
-	c := &ProjectsLocationsNfsSharesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsNfsSharesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNfsSharesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsNfsSharesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNfsSharesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsNfsSharesGetCall) Context(ctx context.Context) *ProjectsLocationsNfsSharesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsNfsSharesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsNfsSharesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "baremetalsolution.projects.locations.nfsShares.get" call.
-// Exactly one of *NfsShare or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *NfsShare.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsNfsSharesGetCall) Do(opts ...googleapi.CallOption) (*NfsShare, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &NfsShare{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Get details of a single NFS share.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/nfsShares/{nfsSharesId}",
-	//   "httpMethod": "GET",
-	//   "id": "baremetalsolution.projects.locations.nfsShares.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/nfsShares/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "NfsShare"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "baremetalsolution.projects.locations.nfsShares.list":
-
-type ProjectsLocationsNfsSharesListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: List NFS shares.
-//
-// - parent: Parent value for ListNfsSharesRequest.
-func (r *ProjectsLocationsNfsSharesService) List(parent string) *ProjectsLocationsNfsSharesListCall {
-	c := &ProjectsLocationsNfsSharesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Filter sets the optional parameter "filter": List filter.
-func (c *ProjectsLocationsNfsSharesListCall) Filter(filter string) *ProjectsLocationsNfsSharesListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The server might return fewer items than requested. If unspecified,
-// server will pick an appropriate default.
-func (c *ProjectsLocationsNfsSharesListCall) PageSize(pageSize int64) *ProjectsLocationsNfsSharesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results from the server.
-func (c *ProjectsLocationsNfsSharesListCall) PageToken(pageToken string) *ProjectsLocationsNfsSharesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsNfsSharesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNfsSharesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsNfsSharesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNfsSharesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsNfsSharesListCall) Context(ctx context.Context) *ProjectsLocationsNfsSharesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsNfsSharesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsNfsSharesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/nfsShares")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "baremetalsolution.projects.locations.nfsShares.list" call.
-// Exactly one of *ListNfsSharesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListNfsSharesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsNfsSharesListCall) Do(opts ...googleapi.CallOption) (*ListNfsSharesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListNfsSharesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "List NFS shares.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/nfsShares",
-	//   "httpMethod": "GET",
-	//   "id": "baremetalsolution.projects.locations.nfsShares.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "List filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Requested page size. The server might return fewer items than requested. If unspecified, server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results from the server.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent value for ListNfsSharesRequest.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/nfsShares",
-	//   "response": {
-	//     "$ref": "ListNfsSharesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsNfsSharesListCall) Pages(ctx context.Context, f func(*ListNfsSharesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "baremetalsolution.projects.locations.nfsShares.patch":
-
-type ProjectsLocationsNfsSharesPatchCall struct {
-	s          *Service
-	name       string
-	nfsshare   *NfsShare
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Patch: Update details of a single NFS share.
-//
-// - name: Output only. The name of the NFS share.
-func (r *ProjectsLocationsNfsSharesService) Patch(name string, nfsshare *NfsShare) *ProjectsLocationsNfsSharesPatchCall {
-	c := &ProjectsLocationsNfsSharesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.nfsshare = nfsshare
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update. The only currently supported fields are: `labels`
-func (c *ProjectsLocationsNfsSharesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsNfsSharesPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsNfsSharesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsNfsSharesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsNfsSharesPatchCall) Context(ctx context.Context) *ProjectsLocationsNfsSharesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsNfsSharesPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsNfsSharesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.nfsshare)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "baremetalsolution.projects.locations.nfsShares.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsNfsSharesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Update details of a single NFS share.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/nfsShares/{nfsSharesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "baremetalsolution.projects.locations.nfsShares.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. The name of the NFS share.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/nfsShares/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to update. The only currently supported fields are: `labels`",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "NfsShare"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "baremetalsolution.projects.locations.provisioningConfigs.submit":
 
 type ProjectsLocationsProvisioningConfigsSubmitCall struct {
@@ -5956,7 +5311,8 @@ func (r *ProjectsLocationsVolumesService) Patch(name string, volume *Volume) *Pr
 // UpdateMask sets the optional parameter "updateMask": The list of
 // fields to update. The only currently supported fields are:
 // `snapshot_auto_delete_behavior` `snapshot_schedule_policy_name`
-// 'labels' 'requested_size_gib'
+// 'labels' 'requested_size_gib' 'snapshot_enabled'
+// 'snapshot_reservation_detail.reserved_space_percent'
 func (c *ProjectsLocationsVolumesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsVolumesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6069,7 +5425,7 @@ func (c *ProjectsLocationsVolumesPatchCall) Do(opts ...googleapi.CallOption) (*O
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The list of fields to update. The only currently supported fields are: `snapshot_auto_delete_behavior` `snapshot_schedule_policy_name` 'labels' 'requested_size_gib'",
+	//       "description": "The list of fields to update. The only currently supported fields are: `snapshot_auto_delete_behavior` `snapshot_schedule_policy_name` 'labels' 'requested_size_gib' 'snapshot_enabled' 'snapshot_reservation_detail.reserved_space_percent'",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

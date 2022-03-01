@@ -1319,6 +1319,12 @@ type Metadata struct {
 	// Location's properties are in the edit pending state.
 	HasPendingEdits bool `json:"hasPendingEdits,omitempty"`
 
+	// HasVoiceOfMerchant: Output only. Indicates if the listing has Voice
+	// of Merchant. If this boolean is false, you should call the
+	// locations.getVoiceOfMerchantState API to get details as to why they
+	// do not have Voice of Merchant.
+	HasVoiceOfMerchant bool `json:"hasVoiceOfMerchant,omitempty"`
+
 	// MapsUri: Output only. A link to the location on Maps.
 	MapsUri string `json:"mapsUri,omitempty"`
 

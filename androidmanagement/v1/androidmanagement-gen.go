@@ -4231,7 +4231,11 @@ type SetupAction struct {
 	// Description: Description of this action.
 	Description *UserFacingMessage `json:"description,omitempty"`
 
-	// LaunchApp: An action to launch an app.
+	// LaunchApp: An action to launch an app. The app will be launched with
+	// an intent containing an extra with key
+	// com.google.android.apps.work.clouddpc.EXTRA_LAUNCHED_AS_SETUP_ACTION
+	// set to the boolean value true to indicate that this is a setup action
+	// flow.
 	LaunchApp *LaunchAppAction `json:"launchApp,omitempty"`
 
 	// Title: Title of this action.

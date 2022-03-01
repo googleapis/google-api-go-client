@@ -1143,6 +1143,12 @@ type AccountItemUpdates struct {
 	// inherited value of the parent account. Read-only.
 	EffectiveAllowAvailabilityUpdates bool `json:"effectiveAllowAvailabilityUpdates,omitempty"`
 
+	// EffectiveAllowConditionUpdates: Output only. The effective value of
+	// allow_condition_updates. If account_item_updates_settings is present,
+	// then this value is the same. Otherwise, it represents the inherited
+	// value of the parent account. Read-only.
+	EffectiveAllowConditionUpdates bool `json:"effectiveAllowConditionUpdates,omitempty"`
+
 	// EffectiveAllowPriceUpdates: Output only. The effective value of
 	// allow_price_updates. If account_item_updates_settings is present,
 	// then this value is the same. Otherwise, it represents the inherited
@@ -1190,6 +1196,11 @@ type AccountItemUpdatesSettings struct {
 	// overwritten if Google finds an in-stock annotation on the offer’s
 	// page.
 	AllowAvailabilityUpdates bool `json:"allowAvailabilityUpdates,omitempty"`
+
+	// AllowConditionUpdates: If condition updates are enabled, Google
+	// always updates item condition with the condition detected from the
+	// details of your product.
+	AllowConditionUpdates bool `json:"allowConditionUpdates,omitempty"`
 
 	// AllowPriceUpdates: If price updates are enabled, Google always
 	// updates the active price with the crawled information.

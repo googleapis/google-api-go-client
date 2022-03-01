@@ -1525,6 +1525,7 @@ type CdnSettings struct {
 	//   "dash"
 	//   "webrtc"
 	//   "hls"
+	//   "srt"
 	IngestionType string `json:"ingestionType,omitempty"`
 
 	// Resolution: The resolution of the inbound video data.
@@ -4513,8 +4514,8 @@ func (s *ImageSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// IngestionInfo: Describes information necessary for ingesting an RTMP
-// or an HTTP stream.
+// IngestionInfo: Describes information necessary for ingesting an RTMP,
+// HTTP, or SRT stream.
 type IngestionInfo struct {
 	// BackupIngestionAddress: The backup ingestion URL that you should use
 	// to stream video to YouTube. You have the option of simultaneously
@@ -4540,8 +4541,7 @@ type IngestionInfo struct {
 	// non-RTMP streams.
 	RtmpsIngestionAddress string `json:"rtmpsIngestionAddress,omitempty"`
 
-	// StreamName: The HTTP or RTMP stream name that YouTube assigns to the
-	// video stream.
+	// StreamName: The stream name that YouTube assigns to the video stream.
 	StreamName string `json:"streamName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

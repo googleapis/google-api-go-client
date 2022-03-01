@@ -354,6 +354,11 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BootImage: Definition of the boot image used by the Runtime. Used to
+// facilitate runtime upgradeability.
+type BootImage struct {
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
@@ -632,6 +637,10 @@ type Event struct {
 	// indicates that instance / runtime underlying compute is operational.
 	//   "HEALTH" - The instance / runtime health is available. This event
 	// indicates that instance / runtime health information.
+	//   "MAINTENANCE" - The instance / runtime is available. This event
+	// allows instance / runtime to send Host maintenance information to
+	// Control Plane.
+	// https://cloud.google.com/compute/docs/gpus/gpu-host-maintenance
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
@@ -1038,6 +1047,11 @@ type Instance struct {
 	//   "PD_SSD" - SSD persistent disk type.
 	//   "PD_BALANCED" - Balanced persistent disk type.
 	BootDiskType string `json:"bootDiskType,omitempty"`
+
+	// CanIpForward: Optional. Flag to enable ip forwarding or not, default
+	// false/off.
+	// https://cloud.google.com/vpc/docs/using-routes#canipforward
+	CanIpForward bool `json:"canIpForward,omitempty"`
 
 	// ContainerImage: Use a container image to start the notebook instance.
 	ContainerImage *ContainerImage `json:"containerImage,omitempty"`
@@ -3417,6 +3431,10 @@ type VirtualMachineConfig struct {
 	// AcceleratorConfig: Optional. The Compute Engine accelerator
 	// configuration for this runtime.
 	AcceleratorConfig *RuntimeAcceleratorConfig `json:"acceleratorConfig,omitempty"`
+
+	// BootImage: Optional. Boot image metadata used for runtime
+	// upgradeability.
+	BootImage *BootImage `json:"bootImage,omitempty"`
 
 	// ContainerImages: Optional. Use a list of container images to use as
 	// Kernels in the notebook instance.

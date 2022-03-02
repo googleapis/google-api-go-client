@@ -1714,12 +1714,12 @@ type BatchGetValuesByDataFilterRequest struct {
 	// (left of the decimal) counts the days since December 30th 1899. The
 	// fractional portion (right of the decimal) counts the time as a
 	// fraction of the day. For example, January 1st 1900 at noon would be
-	// 2.5, 2 because it's 2 days after December 30st 1899, and .5 because
+	// 2.5, 2 because it's 2 days after December 30th 1899, and .5 because
 	// noon is half a day. February 1st 1900 at 3pm would be 33.625. This
 	// correctly treats the year 1900 as not a leap year.
 	//   "FORMATTED_STRING" - Instructs date, time, datetime, and duration
-	// fields to be output as strings in their given number format (which is
-	// dependent on the spreadsheet locale).
+	// fields to be output as strings in their given number format (which
+	// depends on the spreadsheet locale).
 	DateTimeRenderOption string `json:"dateTimeRenderOption,omitempty"`
 
 	// MajorDimension: The major dimension that results should use. For
@@ -1967,12 +1967,12 @@ type BatchUpdateValuesByDataFilterRequest struct {
 	// (left of the decimal) counts the days since December 30th 1899. The
 	// fractional portion (right of the decimal) counts the time as a
 	// fraction of the day. For example, January 1st 1900 at noon would be
-	// 2.5, 2 because it's 2 days after December 30st 1899, and .5 because
+	// 2.5, 2 because it's 2 days after December 30th 1899, and .5 because
 	// noon is half a day. February 1st 1900 at 3pm would be 33.625. This
 	// correctly treats the year 1900 as not a leap year.
 	//   "FORMATTED_STRING" - Instructs date, time, datetime, and duration
-	// fields to be output as strings in their given number format (which is
-	// dependent on the spreadsheet locale).
+	// fields to be output as strings in their given number format (which
+	// depends on the spreadsheet locale).
 	ResponseDateTimeRenderOption string `json:"responseDateTimeRenderOption,omitempty"`
 
 	// ResponseValueRenderOption: Determines how values in the response
@@ -2106,12 +2106,12 @@ type BatchUpdateValuesRequest struct {
 	// (left of the decimal) counts the days since December 30th 1899. The
 	// fractional portion (right of the decimal) counts the time as a
 	// fraction of the day. For example, January 1st 1900 at noon would be
-	// 2.5, 2 because it's 2 days after December 30st 1899, and .5 because
+	// 2.5, 2 because it's 2 days after December 30th 1899, and .5 because
 	// noon is half a day. February 1st 1900 at 3pm would be 33.625. This
 	// correctly treats the year 1900 as not a leap year.
 	//   "FORMATTED_STRING" - Instructs date, time, datetime, and duration
-	// fields to be output as strings in their given number format (which is
-	// dependent on the spreadsheet locale).
+	// fields to be output as strings in their given number format (which
+	// depends on the spreadsheet locale).
 	ResponseDateTimeRenderOption string `json:"responseDateTimeRenderOption,omitempty"`
 
 	// ResponseValueRenderOption: Determines how values in the response
@@ -12732,12 +12732,12 @@ func (c *SpreadsheetsValuesAppendCall) InsertDataOption(insertDataOption string)
 // (left of the decimal) counts the days since December 30th 1899. The
 // fractional portion (right of the decimal) counts the time as a
 // fraction of the day. For example, January 1st 1900 at noon would be
-// 2.5, 2 because it's 2 days after December 30st 1899, and .5 because
+// 2.5, 2 because it's 2 days after December 30th 1899, and .5 because
 // noon is half a day. February 1st 1900 at 3pm would be 33.625. This
 // correctly treats the year 1900 as not a leap year.
 //   "FORMATTED_STRING" - Instructs date, time, datetime, and duration
-// fields to be output as strings in their given number format (which is
-// dependent on the spreadsheet locale).
+// fields to be output as strings in their given number format (which
+// depends on the spreadsheet locale).
 func (c *SpreadsheetsValuesAppendCall) ResponseDateTimeRenderOption(responseDateTimeRenderOption string) *SpreadsheetsValuesAppendCall {
 	c.urlParams_.Set("responseDateTimeRenderOption", responseDateTimeRenderOption)
 	return c
@@ -12913,8 +12913,8 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 	//         "FORMATTED_STRING"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Instructs date, time, datetime, and duration fields to be output as doubles in \"serial number\" format, as popularized by Lotus 1-2-3. The whole number portion of the value (left of the decimal) counts the days since December 30th 1899. The fractional portion (right of the decimal) counts the time as a fraction of the day. For example, January 1st 1900 at noon would be 2.5, 2 because it's 2 days after December 30st 1899, and .5 because noon is half a day. February 1st 1900 at 3pm would be 33.625. This correctly treats the year 1900 as not a leap year.",
-	//         "Instructs date, time, datetime, and duration fields to be output as strings in their given number format (which is dependent on the spreadsheet locale)."
+	//         "Instructs date, time, datetime, and duration fields to be output as doubles in \"serial number\" format, as popularized by Lotus 1-2-3. The whole number portion of the value (left of the decimal) counts the days since December 30th 1899. The fractional portion (right of the decimal) counts the time as a fraction of the day. For example, January 1st 1900 at noon would be 2.5, 2 because it's 2 days after December 30th 1899, and .5 because noon is half a day. February 1st 1900 at 3pm would be 33.625. This correctly treats the year 1900 as not a leap year.",
+	//         "Instructs date, time, datetime, and duration fields to be output as strings in their given number format (which depends on the spreadsheet locale)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -13299,12 +13299,12 @@ func (r *SpreadsheetsValuesService) BatchGet(spreadsheetId string) *Spreadsheets
 // (left of the decimal) counts the days since December 30th 1899. The
 // fractional portion (right of the decimal) counts the time as a
 // fraction of the day. For example, January 1st 1900 at noon would be
-// 2.5, 2 because it's 2 days after December 30st 1899, and .5 because
+// 2.5, 2 because it's 2 days after December 30th 1899, and .5 because
 // noon is half a day. February 1st 1900 at 3pm would be 33.625. This
 // correctly treats the year 1900 as not a leap year.
 //   "FORMATTED_STRING" - Instructs date, time, datetime, and duration
-// fields to be output as strings in their given number format (which is
-// dependent on the spreadsheet locale).
+// fields to be output as strings in their given number format (which
+// depends on the spreadsheet locale).
 func (c *SpreadsheetsValuesBatchGetCall) DateTimeRenderOption(dateTimeRenderOption string) *SpreadsheetsValuesBatchGetCall {
 	c.urlParams_.Set("dateTimeRenderOption", dateTimeRenderOption)
 	return c
@@ -13468,8 +13468,8 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//         "FORMATTED_STRING"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Instructs date, time, datetime, and duration fields to be output as doubles in \"serial number\" format, as popularized by Lotus 1-2-3. The whole number portion of the value (left of the decimal) counts the days since December 30th 1899. The fractional portion (right of the decimal) counts the time as a fraction of the day. For example, January 1st 1900 at noon would be 2.5, 2 because it's 2 days after December 30st 1899, and .5 because noon is half a day. February 1st 1900 at 3pm would be 33.625. This correctly treats the year 1900 as not a leap year.",
-	//         "Instructs date, time, datetime, and duration fields to be output as strings in their given number format (which is dependent on the spreadsheet locale)."
+	//         "Instructs date, time, datetime, and duration fields to be output as doubles in \"serial number\" format, as popularized by Lotus 1-2-3. The whole number portion of the value (left of the decimal) counts the days since December 30th 1899. The fractional portion (right of the decimal) counts the time as a fraction of the day. For example, January 1st 1900 at noon would be 2.5, 2 because it's 2 days after December 30th 1899, and .5 because noon is half a day. February 1st 1900 at 3pm would be 33.625. This correctly treats the year 1900 as not a leap year.",
+	//         "Instructs date, time, datetime, and duration fields to be output as strings in their given number format (which depends on the spreadsheet locale)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -14164,12 +14164,12 @@ func (r *SpreadsheetsValuesService) Get(spreadsheetId string, range_ string) *Sp
 // (left of the decimal) counts the days since December 30th 1899. The
 // fractional portion (right of the decimal) counts the time as a
 // fraction of the day. For example, January 1st 1900 at noon would be
-// 2.5, 2 because it's 2 days after December 30st 1899, and .5 because
+// 2.5, 2 because it's 2 days after December 30th 1899, and .5 because
 // noon is half a day. February 1st 1900 at 3pm would be 33.625. This
 // correctly treats the year 1900 as not a leap year.
 //   "FORMATTED_STRING" - Instructs date, time, datetime, and duration
-// fields to be output as strings in their given number format (which is
-// dependent on the spreadsheet locale).
+// fields to be output as strings in their given number format (which
+// depends on the spreadsheet locale).
 func (c *SpreadsheetsValuesGetCall) DateTimeRenderOption(dateTimeRenderOption string) *SpreadsheetsValuesGetCall {
 	c.urlParams_.Set("dateTimeRenderOption", dateTimeRenderOption)
 	return c
@@ -14328,8 +14328,8 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//         "FORMATTED_STRING"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Instructs date, time, datetime, and duration fields to be output as doubles in \"serial number\" format, as popularized by Lotus 1-2-3. The whole number portion of the value (left of the decimal) counts the days since December 30th 1899. The fractional portion (right of the decimal) counts the time as a fraction of the day. For example, January 1st 1900 at noon would be 2.5, 2 because it's 2 days after December 30st 1899, and .5 because noon is half a day. February 1st 1900 at 3pm would be 33.625. This correctly treats the year 1900 as not a leap year.",
-	//         "Instructs date, time, datetime, and duration fields to be output as strings in their given number format (which is dependent on the spreadsheet locale)."
+	//         "Instructs date, time, datetime, and duration fields to be output as doubles in \"serial number\" format, as popularized by Lotus 1-2-3. The whole number portion of the value (left of the decimal) counts the days since December 30th 1899. The fractional portion (right of the decimal) counts the time as a fraction of the day. For example, January 1st 1900 at noon would be 2.5, 2 because it's 2 days after December 30th 1899, and .5 because noon is half a day. February 1st 1900 at 3pm would be 33.625. This correctly treats the year 1900 as not a leap year.",
+	//         "Instructs date, time, datetime, and duration fields to be output as strings in their given number format (which depends on the spreadsheet locale)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -14442,12 +14442,12 @@ func (c *SpreadsheetsValuesUpdateCall) IncludeValuesInResponse(includeValuesInRe
 // (left of the decimal) counts the days since December 30th 1899. The
 // fractional portion (right of the decimal) counts the time as a
 // fraction of the day. For example, January 1st 1900 at noon would be
-// 2.5, 2 because it's 2 days after December 30st 1899, and .5 because
+// 2.5, 2 because it's 2 days after December 30th 1899, and .5 because
 // noon is half a day. February 1st 1900 at 3pm would be 33.625. This
 // correctly treats the year 1900 as not a leap year.
 //   "FORMATTED_STRING" - Instructs date, time, datetime, and duration
-// fields to be output as strings in their given number format (which is
-// dependent on the spreadsheet locale).
+// fields to be output as strings in their given number format (which
+// depends on the spreadsheet locale).
 func (c *SpreadsheetsValuesUpdateCall) ResponseDateTimeRenderOption(responseDateTimeRenderOption string) *SpreadsheetsValuesUpdateCall {
 	c.urlParams_.Set("responseDateTimeRenderOption", responseDateTimeRenderOption)
 	return c
@@ -14610,8 +14610,8 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 	//         "FORMATTED_STRING"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Instructs date, time, datetime, and duration fields to be output as doubles in \"serial number\" format, as popularized by Lotus 1-2-3. The whole number portion of the value (left of the decimal) counts the days since December 30th 1899. The fractional portion (right of the decimal) counts the time as a fraction of the day. For example, January 1st 1900 at noon would be 2.5, 2 because it's 2 days after December 30st 1899, and .5 because noon is half a day. February 1st 1900 at 3pm would be 33.625. This correctly treats the year 1900 as not a leap year.",
-	//         "Instructs date, time, datetime, and duration fields to be output as strings in their given number format (which is dependent on the spreadsheet locale)."
+	//         "Instructs date, time, datetime, and duration fields to be output as doubles in \"serial number\" format, as popularized by Lotus 1-2-3. The whole number portion of the value (left of the decimal) counts the days since December 30th 1899. The fractional portion (right of the decimal) counts the time as a fraction of the day. For example, January 1st 1900 at noon would be 2.5, 2 because it's 2 days after December 30th 1899, and .5 because noon is half a day. February 1st 1900 at 3pm would be 33.625. This correctly treats the year 1900 as not a leap year.",
+	//         "Instructs date, time, datetime, and duration fields to be output as strings in their given number format (which depends on the spreadsheet locale)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

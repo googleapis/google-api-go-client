@@ -8305,7 +8305,8 @@ type GoogleCloudDocumentaiV1beta3Processor struct {
 	// successful.
 	State string `json:"state,omitempty"`
 
-	// Type: The processor type, e.g., INVOICE_PARSING, W2_PARSING, etc.
+	// Type: The processor type, e.g., OCR_PROCESSOR, INVOICE_PROCESSOR,
+	// etc. To get a list of processors types, see FetchProcessorTypes.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

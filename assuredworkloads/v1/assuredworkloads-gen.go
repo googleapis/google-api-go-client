@@ -340,8 +340,10 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	KajEnrollmentState string `json:"kajEnrollmentState,omitempty"`
 
 	// KmsSettings: Input only. Settings used to create a CMEK crypto key.
-	// When set a project with a KMS CMEK key is provisioned. This field is
-	// mandatory for a subset of Compliance Regimes.
+	// When set, a project with a KMS CMEK key is provisioned. This field is
+	// deprecated as of Feb 28, 2022. In order to create a Keyring, callers
+	// should specify, ENCRYPTION_KEYS_PROJECT or KEYRING in
+	// ResourceSettings.resource_type field.
 	KmsSettings *GoogleCloudAssuredworkloadsV1WorkloadKMSSettings `json:"kmsSettings,omitempty"`
 
 	// Labels: Optional. Labels applied to the workload.
@@ -496,7 +498,8 @@ type GoogleCloudAssuredworkloadsV1WorkloadResourceSettings struct {
 
 	// ResourceId: Resource identifier. For a project this represents
 	// project_id. If the project is already taken, the workload creation
-	// will fail.
+	// will fail. For KeyRing, this represents the keyring_id. For a folder,
+	// don't set this value as folder_id is assigned by Google.
 	ResourceId string `json:"resourceId,omitempty"`
 
 	// ResourceType: Indicates the type of resource. This field should be
@@ -660,8 +663,8 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// `billingAccounts/012345-567890-ABCDEF`.
 	BillingAccount string `json:"billingAccount,omitempty"`
 
-	// CjisSettings: Required. Input only. Immutable. Settings specific to
-	// resources needed for CJIS.
+	// CjisSettings: Input only. Immutable. Settings specific to resources
+	// needed for CJIS.
 	CjisSettings *GoogleCloudAssuredworkloadsV1beta1WorkloadCJISSettings `json:"cjisSettings,omitempty"`
 
 	// ComplianceRegime: Required. Immutable. Compliance Regime associated
@@ -704,16 +707,16 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// operations.
 	Etag string `json:"etag,omitempty"`
 
-	// FedrampHighSettings: Required. Input only. Immutable. Settings
-	// specific to resources needed for FedRAMP High.
+	// FedrampHighSettings: Input only. Immutable. Settings specific to
+	// resources needed for FedRAMP High.
 	FedrampHighSettings *GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampHighSettings `json:"fedrampHighSettings,omitempty"`
 
-	// FedrampModerateSettings: Required. Input only. Immutable. Settings
-	// specific to resources needed for FedRAMP Moderate.
+	// FedrampModerateSettings: Input only. Immutable. Settings specific to
+	// resources needed for FedRAMP Moderate.
 	FedrampModerateSettings *GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampModerateSettings `json:"fedrampModerateSettings,omitempty"`
 
-	// Il4Settings: Required. Input only. Immutable. Settings specific to
-	// resources needed for IL4.
+	// Il4Settings: Input only. Immutable. Settings specific to resources
+	// needed for IL4.
 	Il4Settings *GoogleCloudAssuredworkloadsV1beta1WorkloadIL4Settings `json:"il4Settings,omitempty"`
 
 	// KajEnrollmentState: Output only. Represents the KAJ enrollment state
@@ -728,8 +731,10 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	KajEnrollmentState string `json:"kajEnrollmentState,omitempty"`
 
 	// KmsSettings: Input only. Settings used to create a CMEK crypto key.
-	// When set a project with a KMS CMEK key is provisioned. This field is
-	// mandatory for a subset of Compliance Regimes.
+	// When set, a project with a KMS CMEK key is provisioned. This field is
+	// deprecated as of Feb 28, 2022. In order to create a Keyring, callers
+	// should specify, ENCRYPTION_KEYS_PROJECT or KEYRING in
+	// ResourceSettings.resource_type field.
 	KmsSettings *GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings `json:"kmsSettings,omitempty"`
 
 	// Labels: Optional. Labels applied to the workload.
@@ -792,8 +797,8 @@ func (s *GoogleCloudAssuredworkloadsV1beta1Workload) MarshalJSON() ([]byte, erro
 // GoogleCloudAssuredworkloadsV1beta1WorkloadCJISSettings: Settings
 // specific to resources needed for CJIS.
 type GoogleCloudAssuredworkloadsV1beta1WorkloadCJISSettings struct {
-	// KmsSettings: Required. Input only. Immutable. Settings used to create
-	// a CMEK crypto key.
+	// KmsSettings: Input only. Immutable. Settings used to create a CMEK
+	// crypto key.
 	KmsSettings *GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings `json:"kmsSettings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsSettings") to
@@ -822,8 +827,8 @@ func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadCJISSettings) MarshalJSON() (
 // GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampHighSettings:
 // Settings specific to resources needed for FedRAMP High.
 type GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampHighSettings struct {
-	// KmsSettings: Required. Input only. Immutable. Settings used to create
-	// a CMEK crypto key.
+	// KmsSettings: Input only. Immutable. Settings used to create a CMEK
+	// crypto key.
 	KmsSettings *GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings `json:"kmsSettings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsSettings") to
@@ -852,8 +857,8 @@ func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampHighSettings) MarshalJ
 // GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampModerateSettings:
 // Settings specific to resources needed for FedRAMP Moderate.
 type GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampModerateSettings struct {
-	// KmsSettings: Required. Input only. Immutable. Settings used to create
-	// a CMEK crypto key.
+	// KmsSettings: Input only. Immutable. Settings used to create a CMEK
+	// crypto key.
 	KmsSettings *GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings `json:"kmsSettings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsSettings") to
@@ -882,8 +887,8 @@ func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampModerateSettings) Mars
 // GoogleCloudAssuredworkloadsV1beta1WorkloadIL4Settings: Settings
 // specific to resources needed for IL4.
 type GoogleCloudAssuredworkloadsV1beta1WorkloadIL4Settings struct {
-	// KmsSettings: Required. Input only. Immutable. Settings used to create
-	// a CMEK crypto key.
+	// KmsSettings: Input only. Immutable. Settings used to create a CMEK
+	// crypto key.
 	KmsSettings *GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings `json:"kmsSettings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsSettings") to
@@ -999,7 +1004,8 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings struct {
 
 	// ResourceId: Resource identifier. For a project this represents
 	// project_id. If the project is already taken, the workload creation
-	// will fail.
+	// will fail. For KeyRing, this represents the keyring_id. For a folder,
+	// don't set this value as folder_id is assigned by Google.
 	ResourceId string `json:"resourceId,omitempty"`
 
 	// ResourceType: Indicates the type of resource. This field should be
@@ -1230,8 +1236,10 @@ type GoogleCloudAssuredworkloadsVersioningV1mainWorkload struct {
 	KajEnrollmentState string `json:"kajEnrollmentState,omitempty"`
 
 	// KmsSettings: Input only. Settings used to create a CMEK crypto key.
-	// When set a project with a KMS CMEK key is provisioned. This field is
-	// mandatory for a subset of Compliance Regimes.
+	// When set, a project with a KMS CMEK key is provisioned. This field is
+	// deprecated as of Feb 28, 2022. In order to create a Keyring, callers
+	// should specify, ENCRYPTION_KEYS_PROJECT or KEYRING in
+	// ResourceSettings.resource_type field.
 	KmsSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings `json:"kmsSettings,omitempty"`
 
 	// Labels: Optional. Labels applied to the workload.
@@ -1294,8 +1302,8 @@ func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkload) MarshalJSON() ([]b
 // GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings:
 // Settings specific to resources needed for CJIS.
 type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings struct {
-	// KmsSettings: Required. Input only. Immutable. Settings used to create
-	// a CMEK crypto key.
+	// KmsSettings: Input only. Immutable. Settings used to create a CMEK
+	// crypto key.
 	KmsSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings `json:"kmsSettings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsSettings") to
@@ -1324,8 +1332,8 @@ func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings) Marsha
 // GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampHighSettings
 // : Settings specific to resources needed for FedRAMP High.
 type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampHighSettings struct {
-	// KmsSettings: Required. Input only. Immutable. Settings used to create
-	// a CMEK crypto key.
+	// KmsSettings: Input only. Immutable. Settings used to create a CMEK
+	// crypto key.
 	KmsSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings `json:"kmsSettings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsSettings") to
@@ -1354,8 +1362,8 @@ func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampHighSettings)
 // GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampModerateSett
 // ings: Settings specific to resources needed for FedRAMP Moderate.
 type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampModerateSettings struct {
-	// KmsSettings: Required. Input only. Immutable. Settings used to create
-	// a CMEK crypto key.
+	// KmsSettings: Input only. Immutable. Settings used to create a CMEK
+	// crypto key.
 	KmsSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings `json:"kmsSettings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsSettings") to
@@ -1384,8 +1392,8 @@ func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampModerateSetti
 // GoogleCloudAssuredworkloadsVersioningV1mainWorkloadIL4Settings:
 // Settings specific to resources needed for IL4.
 type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadIL4Settings struct {
-	// KmsSettings: Required. Input only. Immutable. Settings used to create
-	// a CMEK crypto key.
+	// KmsSettings: Input only. Immutable. Settings used to create a CMEK
+	// crypto key.
 	KmsSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings `json:"kmsSettings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsSettings") to
@@ -1501,7 +1509,8 @@ type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceSettings struct 
 
 	// ResourceId: Resource identifier. For a project this represents
 	// project_id. If the project is already taken, the workload creation
-	// will fail.
+	// will fail. For KeyRing, this represents the keyring_id. For a folder,
+	// don't set this value as folder_id is assigned by Google.
 	ResourceId string `json:"resourceId,omitempty"`
 
 	// ResourceType: Indicates the type of resource. This field should be

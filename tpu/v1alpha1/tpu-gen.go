@@ -739,33 +739,29 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OperationMetadata: Represents the metadata of the long-running
-// operation.
+// OperationMetadata: Metadata describing an Operation
 type OperationMetadata struct {
-	// ApiVersion: Output only. API version used to start the operation.
+	// ApiVersion: API version.
 	ApiVersion string `json:"apiVersion,omitempty"`
 
-	// CancelRequested: Output only. Identifies whether the user has
-	// requested cancellation of the operation. Operations that have been
-	// cancelled successfully have Operation.error value with a
-	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	// CancelRequested: Specifies if cancellation was requested for the
+	// operation.
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 
-	// CreateTime: Output only. The time the operation was created.
+	// CreateTime: The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// EndTime: Output only. The time the operation finished running.
+	// EndTime: The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StatusDetail: Output only. Human-readable status of the operation, if
-	// any.
+	// StatusDetail: Human-readable status of the operation, if any.
 	StatusDetail string `json:"statusDetail,omitempty"`
 
-	// Target: Output only. Server-defined resource path for the target of
-	// the operation.
+	// Target: Target of the operation - for example
+	// projects/project-1/connectivityTests/test-1
 	Target string `json:"target,omitempty"`
 
-	// Verb: Output only. Name of the verb executed by the operation.
+	// Verb: Name of the verb executed by the operation.
 	Verb string `json:"verb,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to

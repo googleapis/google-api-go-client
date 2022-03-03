@@ -1059,8 +1059,8 @@ type OperationMetadata struct {
 	//   "DELETE" - A resource deletion operation.
 	//   "UPDATE" - A resource update operation.
 	//   "CHECK" - A resource check operation.
-	//   "STORE_STATE" - Stores the state of the resource operation.
-	//   "LOAD_STATE" - Loads the state of the resource operation.
+	//   "SAVE_SNAPSHOT" - Saves snapshot of the resource operation.
+	//   "LOAD_SNAPSHOT" - Loads snapshot of the resource operation.
 	OperationType string `json:"operationType,omitempty"`
 
 	// Resource: Output only. The resource being operated on, as a relative

@@ -844,7 +844,8 @@ func (s *DeployedFleetDetails) MarshalJSON() ([]byte, error) {
 }
 
 // DeployedFleetStatus: DeployedFleetStatus has details about the Agones
-// fleets such as how many are running, how many allocated, and so on.
+// fleets, such as how many are running, how many are allocated, and so
+// on.
 type DeployedFleetStatus struct {
 	// AllocatedReplicas: The number of GameServer replicas in the ALLOCATED
 	// state in this fleet.
@@ -1003,8 +1004,8 @@ func (s *FetchDeploymentStateResponse) MarshalJSON() ([]byte, error) {
 
 // FleetConfig: Fleet configs for Agones.
 type FleetConfig struct {
-	// FleetSpec: Agones fleet spec. Example spec:
-	// `https://agones.dev/site/docs/reference/fleet/`.
+	// FleetSpec: Agones fleet spec (see example spec
+	// (https://agones.dev/site/docs/reference/fleet/)).
 	FleetSpec string `json:"fleetSpec,omitempty"`
 
 	// Name: The name of the FleetConfig.
@@ -1035,9 +1036,9 @@ func (s *FleetConfig) MarshalJSON() ([]byte, error) {
 
 // GameServerCluster: A game server cluster resource.
 type GameServerCluster struct {
-	// ClusterState: Output only. The state of the Kubernetes cluster, this
-	// will be available if 'view' is set to `FULL` in the relevant
-	// List/Get/Preview request.
+	// ClusterState: Output only. The state of the Kubernetes cluster in
+	// preview. This will be available if view is set to FULL in the
+	// relevant list/get/preview request.
 	ClusterState *KubernetesClusterState `json:"clusterState,omitempty"`
 
 	// ConnectionInfo: The game server cluster connection information. This
@@ -1050,7 +1051,8 @@ type GameServerCluster struct {
 	// Description: Human readable description of the cluster.
 	Description string `json:"description,omitempty"`
 
-	// Etag: ETag of the resource.
+	// Etag: Used to perform consistent read-modify-write updates. If not
+	// set, a blind "overwrite" update happens.
 	Etag string `json:"etag,omitempty"`
 
 	// Labels: The labels associated with this game server cluster. Each
@@ -1059,10 +1061,10 @@ type GameServerCluster struct {
 
 	// Name: Required. The resource name of the game server cluster, in the
 	// following form:
-	// `projects/{project}/locations/{location}/realms/{realm}/gameServerClus
-	// ters/{cluster}`. For example,
-	// `projects/my-project/locations/{location}/realms/zanzibar/gameServerCl
-	// usters/my-onprem-cluster`.
+	// `projects/{project}/locations/{locationId}/realms/{realmId}/gameServer
+	// Clusters/{gameServerClusterId}`. For example,
+	// `projects/my-project/locations/global/realms/zanzibar/gameServerCluste
+	// rs/my-gke-cluster`.
 	Name string `json:"name,omitempty"`
 
 	// UpdateTime: Output only. The last-modified time.
@@ -1149,8 +1151,8 @@ type GameServerConfig struct {
 
 	// Name: The resource name of the game server config, in the following
 	// form:
-	// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-	// ment}/configs/{config}`. For example,
+	// `projects/{project}/locations/{locationId}/gameServerDeployments/{depl
+	// oymentId}/configs/{configId}`. For example,
 	// `projects/my-project/locations/global/gameServerDeployments/my-game/co
 	// nfigs/my-config`.
 	Name string `json:"name,omitempty"`
@@ -1225,10 +1227,11 @@ type GameServerDeployment struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Human readable description of the game server
-	// delpoyment.
+	// deployment.
 	Description string `json:"description,omitempty"`
 
-	// Etag: ETag of the resource.
+	// Etag: Used to perform consistent read-modify-write updates. If not
+	// set, a blind "overwrite" update happens.
 	Etag string `json:"etag,omitempty"`
 
 	// Labels: The labels associated with this game server deployment. Each
@@ -1237,8 +1240,8 @@ type GameServerDeployment struct {
 
 	// Name: The resource name of the game server deployment, in the
 	// following form:
-	// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-	// ment}`. For example,
+	// `projects/{project}/locations/{locationId}/gameServerDeployments/{depl
+	// oymentId}`. For example,
 	// `projects/my-project/locations/global/gameServerDeployments/my-deploym
 	// ent`.
 	Name string `json:"name,omitempty"`
@@ -1295,8 +1298,8 @@ type GameServerDeploymentRollout struct {
 
 	// Name: The resource name of the game server deployment rollout, in the
 	// following form:
-	// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-	// ment}/rollout`. For example,
+	// `projects/{project}/locations/{locationId}/gameServerDeployments/{depl
+	// oymentId}/rollout`. For example,
 	// `projects/my-project/locations/global/gameServerDeployments/my-deploym
 	// ent/rollout`.
 	Name string `json:"name,omitempty"`
@@ -1335,8 +1338,8 @@ func (s *GameServerDeploymentRollout) MarshalJSON() ([]byte, error) {
 type GkeClusterReference struct {
 	// Cluster: The full or partial name of a GKE cluster, using one of the
 	// following forms: *
-	// `projects/{project}/locations/{location}/clusters/{cluster}` *
-	// `locations/{location}/clusters/{cluster}` * `{cluster}` If project
+	// `projects/{project}/locations/{locationId}/clusters/{cluster}` *
+	// `locations/{locationId}/clusters/{cluster}` * `{cluster}` If project
 	// and location are not specified, the project and location of the
 	// GameServerCluster resource are used to generate the full name of the
 	// GKE cluster.
@@ -1379,10 +1382,11 @@ type KubernetesClusterState struct {
 	// of Agones/Kubernetes.
 	//
 	// Possible values:
-	//   "INSTALLATION_STATE_UNSPECIFIED" - The default value. This value is
-	// used if the state is omitted.
-	//   "AGONES_KUBERNETES_VERSION_SUPPORTED" - The combination of Agones
-	// and Kubernetes versions is supported by Google Cloud Game Servers.
+	//   "INSTALLATION_STATE_UNSPECIFIED" - The default installation state.
+	// This value is used if the state is omitted.
+	//   "AGONES_KUBERNETES_VERSION_SUPPORTED" - Both the Agones and
+	// Kubernetes versions are supported by Google Cloud Game Servers and
+	// Agones and Kubernetes versions are compatible.
 	//   "AGONES_VERSION_UNSUPPORTED" - The installed version of Agones is
 	// not supported by Google Cloud Game Servers.
 	//   "AGONES_KUBERNETES_VERSION_UNSUPPORTED" - The installed version of
@@ -1396,8 +1400,8 @@ type KubernetesClusterState struct {
 	// Kubernetes cluster is not recognized because the API server didn't
 	// return parsable version info on path/version.
 	//   "VERSION_VERIFICATION_FAILED" - Failed to read or verify the
-	// version of Agones or Kubernetes. See version_installed_error_message
-	// for details.
+	// version of Agones or Kubernetes. See
+	// `version_installed_error_message` for details.
 	//   "AGONES_NOT_INSTALLED" - Agones is not installed.
 	InstallationState string `json:"installationState,omitempty"`
 
@@ -1407,8 +1411,8 @@ type KubernetesClusterState struct {
 	KubernetesVersionInstalled string `json:"kubernetesVersionInstalled,omitempty"`
 
 	// Provider: Output only. The cloud provider type reported by the first
-	// node's providerID in the list of nodes on the Kubernetes endpoint. On
-	// Kubernetes platforms that support zero-node clusters (like
+	// node's `providerID` in the list of nodes on the Kubernetes endpoint.
+	// On Kubernetes platforms that support zero-node clusters (like
 	// GKE-on-GCP), the provider type will be empty.
 	Provider string `json:"provider,omitempty"`
 
@@ -2080,8 +2084,8 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // GameServerClustersService.PreviewCreateGameServerCluster.
 type PreviewCreateGameServerClusterResponse struct {
 	// ClusterState: Output only. The state of the Kubernetes cluster in
-	// preview, this will be available if 'view' is set to `FULL` in the
-	// relevant List/Get/Preview request.
+	// preview. This will be available if view is set to FULL in the
+	// relevant list/get/preview request.
 	ClusterState *KubernetesClusterState `json:"clusterState,omitempty"`
 
 	// Etag: The ETag of the game server cluster.
@@ -2273,7 +2277,8 @@ type Realm struct {
 	// Description: Human readable description of the realm.
 	Description string `json:"description,omitempty"`
 
-	// Etag: ETag of the resource.
+	// Etag: Used to perform consistent read-modify-write updates. If not
+	// set, a blind "overwrite" update happens.
 	Etag string `json:"etag,omitempty"`
 
 	// Labels: The labels associated with this realm. Each label is a
@@ -2281,13 +2286,13 @@ type Realm struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The resource name of the realm, in the following form:
-	// `projects/{project}/locations/{location}/realms/{realm}`. For
-	// example, `projects/my-project/locations/{location}/realms/my-realm`.
+	// `projects/{project}/locations/{locationId}/realms/{realmId}`. For
+	// example, `projects/my-project/locations/global/realms/my-realm`.
 	Name string `json:"name,omitempty"`
 
 	// TimeZone: Required. Time zone where all policies targeting this realm
 	// are evaluated. The value of this field must be from the IANA time
-	// zone database: https://www.iana.org/time-zones.
+	// zone database (https://www.iana.org/time-zones).
 	TimeZone string `json:"timeZone,omitempty"`
 
 	// UpdateTime: Output only. The last-modified time.
@@ -2414,14 +2419,15 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 
 // ScalingConfig: Autoscaling config for an Agones fleet.
 type ScalingConfig struct {
-	// FleetAutoscalerSpec: Required. Agones fleet autoscaler spec. Example
-	// spec: https://agones.dev/site/docs/reference/fleetautoscaler/
+	// FleetAutoscalerSpec: Required. Agones fleet autoscaler spec (see
+	// example spec
+	// (https://agones.dev/site/docs/reference/fleetautoscaler/)).
 	FleetAutoscalerSpec string `json:"fleetAutoscalerSpec,omitempty"`
 
-	// Name: Required. The name of the Scaling Config
+	// Name: Required. The name of the scaling config.
 	Name string `json:"name,omitempty"`
 
-	// Schedules: The schedules to which this Scaling Config applies.
+	// Schedules: The schedules to which this scaling config applies.
 	Schedules []*Schedule `json:"schedules,omitempty"`
 
 	// Selectors: Labels used to identify the game server clusters to which
@@ -2456,9 +2462,9 @@ func (s *ScalingConfig) MarshalJSON() ([]byte, error) {
 
 // Schedule: The schedule of a recurring or one time event. The event's
 // time span is specified by start_time and end_time. If the scheduled
-// event's timespan is larger than the cron_spec + cron_job_duration,
-// the event will be recurring. If only cron_spec + cron_job_duration
-// are specified, the event is effective starting at the local time
+// event's timespan is larger than cron_spec added with
+// cron_job_duration, the event is recurring. If only cron_spec and
+// cron_job_duration are specified, the event starts at the local time
 // specified by cron_spec, and is recurring. ``` start_time|-------[cron
 // job]-------[cron job]-------[cron job]---|end_time cron job: cron
 // spec start time + duration ```
@@ -2468,7 +2474,7 @@ type Schedule struct {
 	CronJobDuration string `json:"cronJobDuration,omitempty"`
 
 	// CronSpec: The cron definition of the scheduled event. See
-	// https://en.wikipedia.org/wiki/Cron. Cron spec specifies the local
+	// https://en.wikipedia.org/wiki/Cron. The cron spec specifies the local
 	// time as defined by the realm.
 	CronSpec string `json:"cronSpec,omitempty"`
 
@@ -2543,11 +2549,11 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // sources.
 type SpecSource struct {
 	// GameServerConfigName: The game server config resource. Uses the form:
-	// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-	// ment_id}/configs/{config_id}`.
+	// `projects/{project}/locations/{locationId}/gameServerDeployments/{depl
+	// oymentId}/configs/{configId}`.
 	GameServerConfigName string `json:"gameServerConfigName,omitempty"`
 
-	// Name: The name of the Agones leet config or Agones scaling config
+	// Name: The name of the Agones fleet config or Agones scaling config
 	// used to derive the Agones fleet or Agones autoscaler spec.
 	Name string `json:"name,omitempty"`
 
@@ -2627,14 +2633,14 @@ type TargetDetails struct {
 	FleetDetails []*TargetFleetDetails `json:"fleetDetails,omitempty"`
 
 	// GameServerClusterName: The game server cluster name. Uses the form:
-	// `projects/{project}/locations/{location}/realms/{realm}/gameServerClus
-	// ters/{cluster}`.
+	// `projects/{project}/locations/{locationId}/realms/{realmId}/gameServer
+	// Clusters/{gameServerClusterId}`.
 	GameServerClusterName string `json:"gameServerClusterName,omitempty"`
 
 	// GameServerDeploymentName: The game server deployment name. Uses the
 	// form:
-	// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-	// ment_id}`.
+	// `projects/{project}/locations/{locationId}/gameServerDeployments/{depl
+	// oymentId}`.
 	GameServerDeploymentName string `json:"gameServerDeploymentName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FleetDetails") to
@@ -3232,7 +3238,7 @@ type ProjectsLocationsGameServerDeploymentsCreateCall struct {
 // location.
 //
 // - parent: The parent resource name, in the following form:
-//   `projects/{project}/locations/{location}`.
+//   `projects/{project}/locations/{locationId}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) Create(parent string, gameserverdeployment *GameServerDeployment) *ProjectsLocationsGameServerDeploymentsCreateCall {
 	c := &ProjectsLocationsGameServerDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3241,7 +3247,7 @@ func (r *ProjectsLocationsGameServerDeploymentsService) Create(parent string, ga
 }
 
 // DeploymentId sets the optional parameter "deploymentId": Required.
-// The ID of the game server delpoyment resource to be created.
+// The ID of the game server deployment resource to create.
 func (c *ProjectsLocationsGameServerDeploymentsCreateCall) DeploymentId(deploymentId string) *ProjectsLocationsGameServerDeploymentsCreateCall {
 	c.urlParams_.Set("deploymentId", deploymentId)
 	return c
@@ -3347,12 +3353,12 @@ func (c *ProjectsLocationsGameServerDeploymentsCreateCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "deploymentId": {
-	//       "description": "Required. The ID of the game server delpoyment resource to be created.",
+	//       "description": "Required. The ID of the game server deployment resource to create.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{locationId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3385,10 +3391,10 @@ type ProjectsLocationsGameServerDeploymentsDeleteCall struct {
 
 // Delete: Deletes a single game server deployment.
 //
-// - name: The name of the game server delpoyment to delete, in the
+// - name: The name of the game server deployment to delete, in the
 //   following form:
-//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
-//   oyment}`.
+//   `projects/{project}/locations/{locationId}/gameServerDeployments/{de
+//   ploymentId}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) Delete(name string) *ProjectsLocationsGameServerDeploymentsDeleteCall {
 	c := &ProjectsLocationsGameServerDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3490,7 +3496,7 @@ func (c *ProjectsLocationsGameServerDeploymentsDeleteCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server delpoyment to delete, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
+	//       "description": "Required. The name of the game server deployment to delete, in the following form: `projects/{project}/locations/{locationId}/gameServerDeployments/{deploymentId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -3524,10 +3530,10 @@ type ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall struct {
 // Agones autoscalers, including fleets running an older version of the
 // game server deployment.
 //
-// - name: The name of the game server delpoyment, in the following
+// - name: The name of the game server deployment, in the following
 //   form:
-//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
-//   oyment}`.
+//   `projects/{project}/locations/{locationId}/gameServerDeployments/{de
+//   ploymentId}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) FetchDeploymentState(name string, fetchdeploymentstaterequest *FetchDeploymentStateRequest) *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall {
 	c := &ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3635,7 +3641,7 @@ func (c *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server delpoyment, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
+	//       "description": "Required. The name of the game server deployment, in the following form: `projects/{project}/locations/{locationId}/gameServerDeployments/{deploymentId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -3669,10 +3675,10 @@ type ProjectsLocationsGameServerDeploymentsGetCall struct {
 
 // Get: Gets details of a single game server deployment.
 //
-// - name: The name of the game server delpoyment to retrieve, in the
+// - name: The name of the game server deployment to retrieve, in the
 //   following form:
-//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
-//   oyment}`.
+//   `projects/{project}/locations/{locationId}/gameServerDeployments/{de
+//   ploymentId}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) Get(name string) *ProjectsLocationsGameServerDeploymentsGetCall {
 	c := &ProjectsLocationsGameServerDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3787,7 +3793,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server delpoyment to retrieve, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
+	//       "description": "Required. The name of the game server deployment to retrieve, in the following form: `projects/{project}/locations/{locationId}/gameServerDeployments/{deploymentId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -3990,12 +3996,12 @@ type ProjectsLocationsGameServerDeploymentsGetRolloutCall struct {
 	header_      http.Header
 }
 
-// GetRollout: Gets details a single game server deployment rollout.
+// GetRollout: Gets details of a single game server deployment rollout.
 //
-// - name: The name of the game server delpoyment to retrieve, in the
-//   following form:
-//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
-//   oyment}/rollout`.
+// - name: The name of the game server deployment rollout to retrieve,
+//   in the following form:
+//   `projects/{project}/locations/{locationId}/gameServerDeployments/{de
+//   ploymentId}/rollout`.
 func (r *ProjectsLocationsGameServerDeploymentsService) GetRollout(name string) *ProjectsLocationsGameServerDeploymentsGetRolloutCall {
 	c := &ProjectsLocationsGameServerDeploymentsGetRolloutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4101,7 +4107,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets details a single game server deployment rollout.",
+	//   "description": "Gets details of a single game server deployment rollout.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}/rollout",
 	//   "httpMethod": "GET",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.getRollout",
@@ -4110,7 +4116,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server delpoyment to retrieve, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`.",
+	//       "description": "Required. The name of the game server deployment rollout to retrieve, in the following form: `projects/{project}/locations/{locationId}/gameServerDeployments/{deploymentId}/rollout`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -4142,7 +4148,7 @@ type ProjectsLocationsGameServerDeploymentsListCall struct {
 // List: Lists game server deployments in a given project and location.
 //
 // - parent: The parent resource name, in the following form:
-//   `projects/{project}/locations/{location}`.
+//   `projects/{project}/locations/{locationId}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) List(parent string) *ProjectsLocationsGameServerDeploymentsListCall {
 	c := &ProjectsLocationsGameServerDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4150,32 +4156,32 @@ func (r *ProjectsLocationsGameServerDeploymentsService) List(parent string) *Pro
 }
 
 // Filter sets the optional parameter "filter": The filter to apply to
-// list results.
+// list results (see Filtering (https://google.aip.dev/160)).
 func (c *ProjectsLocationsGameServerDeploymentsListCall) Filter(filter string) *ProjectsLocationsGameServerDeploymentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Specifies the ordering
-// of results following syntax at
-// https://cloud.google.com/apis/design/design_patterns#sorting_order.
+// of results following Cloud API syntax
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order).
 func (c *ProjectsLocationsGameServerDeploymentsListCall) OrderBy(orderBy string) *ProjectsLocationsGameServerDeploymentsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return. If unspecified, the server will pick an
-// appropriate default. The server may return fewer items than
-// requested. A caller should only rely on response's next_page_token to
-// determine if there are more GameServerDeployments left to be queried.
+// of items to return. If unspecified, the server picks an appropriate
+// default. The server may return fewer items than requested. A caller
+// should only rely on the response's next_page_token to determine if
+// there are more GameServerDeployments left to be queried.
 func (c *ProjectsLocationsGameServerDeploymentsListCall) PageSize(pageSize int64) *ProjectsLocationsGameServerDeploymentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
+// next_page_token value returned from a previous list request, if any.
 func (c *ProjectsLocationsGameServerDeploymentsListCall) PageToken(pageToken string) *ProjectsLocationsGameServerDeploymentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4290,28 +4296,28 @@ func (c *ProjectsLocationsGameServerDeploymentsListCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter to apply to list results.",
+	//       "description": "Optional. The filter to apply to list results (see [Filtering](https://google.aip.dev/160)).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Specifies the ordering of results following syntax at https://cloud.google.com/apis/design/design_patterns#sorting_order.",
+	//       "description": "Optional. Specifies the ordering of results following [Cloud API syntax](https://cloud.google.com/apis/design/design_patterns#sorting_order).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of items to return. If unspecified, the server will pick an appropriate default. The server may return fewer items than requested. A caller should only rely on response's next_page_token to determine if there are more GameServerDeployments left to be queried.",
+	//       "description": "Optional. The maximum number of items to return. If unspecified, the server picks an appropriate default. The server may return fewer items than requested. A caller should only rely on the response's next_page_token to determine if there are more GameServerDeployments left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. The next_page_token value returned from a previous List request, if any.",
+	//       "description": "Optional. The next_page_token value returned from a previous list request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{locationId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -4365,8 +4371,8 @@ type ProjectsLocationsGameServerDeploymentsPatchCall struct {
 //
 // - name: The resource name of the game server deployment, in the
 //   following form:
-//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
-//   oyment}`. For example,
+//   `projects/{project}/locations/{locationId}/gameServerDeployments/{de
+//   ploymentId}`. For example,
 //   `projects/my-project/locations/global/gameServerDeployments/my-deplo
 //   yment`.
 func (r *ProjectsLocationsGameServerDeploymentsService) Patch(name string, gameserverdeployment *GameServerDeployment) *ProjectsLocationsGameServerDeploymentsPatchCall {
@@ -4376,10 +4382,11 @@ func (r *ProjectsLocationsGameServerDeploymentsService) Patch(name string, games
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Mask
-// of fields to update. At least one path must be supplied in this
-// field. For the `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask to apply to the resource. At least one path must be
+// supplied in this field. For more information, see the `FieldMask`
+// definition
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).
 func (c *ProjectsLocationsGameServerDeploymentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGameServerDeploymentsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4485,14 +4492,14 @@ func (c *ProjectsLocationsGameServerDeploymentsPatchCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the game server deployment, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}`. For example, `projects/my-project/locations/global/gameServerDeployments/my-deployment`.",
+	//       "description": "The resource name of the game server deployment, in the following form: `projects/{project}/locations/{locationId}/gameServerDeployments/{deploymentId}`. For example, `projects/my-project/locations/global/gameServerDeployments/my-deployment`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Mask of fields to update. At least one path must be supplied in this field. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. The update mask to apply to the resource. At least one path must be supplied in this field. For more information, see the [`FieldMask` definition](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4528,8 +4535,8 @@ type ProjectsLocationsGameServerDeploymentsPreviewRolloutCall struct {
 //
 // - name: The resource name of the game server deployment rollout, in
 //   the following form:
-//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
-//   oyment}/rollout`. For example,
+//   `projects/{project}/locations/{locationId}/gameServerDeployments/{de
+//   ploymentId}/rollout`. For example,
 //   `projects/my-project/locations/global/gameServerDeployments/my-deplo
 //   yment/rollout`.
 func (r *ProjectsLocationsGameServerDeploymentsService) PreviewRollout(name string, gameserverdeploymentrollout *GameServerDeploymentRollout) *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall {
@@ -4547,10 +4554,10 @@ func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) PreviewTime(p
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Mask of fields
-// to update. At least one path must be supplied in this field. For the
-// `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// UpdateMask sets the optional parameter "updateMask": The update mask
+// to apply to the resource. At least one path must be supplied in this
+// field. For more information, see the `FieldMask` definition
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).
 func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) UpdateMask(updateMask string) *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4658,7 +4665,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the game server deployment rollout, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`. For example, `projects/my-project/locations/global/gameServerDeployments/my-deployment/rollout`.",
+	//       "description": "The resource name of the game server deployment rollout, in the following form: `projects/{project}/locations/{locationId}/gameServerDeployments/{deploymentId}/rollout`. For example, `projects/my-project/locations/global/gameServerDeployments/my-deployment/rollout`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -4671,7 +4678,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Optional. Mask of fields to update. At least one path must be supplied in this field. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Optional. The update mask to apply to the resource. At least one path must be supplied in this field. For more information, see the [`FieldMask` definition](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4999,16 +5006,15 @@ type ProjectsLocationsGameServerDeploymentsUpdateRolloutCall struct {
 
 // UpdateRollout: Patches a single game server deployment rollout. The
 // method will not return an error if the update does not affect any
-// existing realms. For example - if the default_game_server_config is
-// changed but all existing realms use the override, that is valid.
-// Similarly, if a non existing realm is explicitly called out in
-// game_server_config_overrides field, that will also not result in an
-// error.
+// existing realms. For example, the following cases will not return an
+// error: * The default_game_server_config is changed but all existing
+// realms use the override. * A non-existing realm is explicitly called
+// out in the game_server_config_overrides field.
 //
 // - name: The resource name of the game server deployment rollout, in
 //   the following form:
-//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
-//   oyment}/rollout`. For example,
+//   `projects/{project}/locations/{locationId}/gameServerDeployments/{de
+//   ploymentId}/rollout`. For example,
 //   `projects/my-project/locations/global/gameServerDeployments/my-deplo
 //   yment/rollout`.
 func (r *ProjectsLocationsGameServerDeploymentsService) UpdateRollout(name string, gameserverdeploymentrollout *GameServerDeploymentRollout) *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall {
@@ -5018,10 +5024,11 @@ func (r *ProjectsLocationsGameServerDeploymentsService) UpdateRollout(name strin
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Mask
-// of fields to update. At least one path must be supplied in this
-// field. For the `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask to apply to the resource. At least one path must be
+// supplied in this field. For more information, see the `FieldMask`
+// definition
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).
 func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) UpdateMask(updateMask string) *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5118,7 +5125,7 @@ func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Patches a single game server deployment rollout. The method will not return an error if the update does not affect any existing realms. For example - if the default_game_server_config is changed but all existing realms use the override, that is valid. Similarly, if a non existing realm is explicitly called out in game_server_config_overrides field, that will also not result in an error.",
+	//   "description": "Patches a single game server deployment rollout. The method will not return an error if the update does not affect any existing realms. For example, the following cases will not return an error: * The default_game_server_config is changed but all existing realms use the override. * A non-existing realm is explicitly called out in the game_server_config_overrides field.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}/rollout",
 	//   "httpMethod": "PATCH",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.updateRollout",
@@ -5127,14 +5134,14 @@ func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the game server deployment rollout, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`. For example, `projects/my-project/locations/global/gameServerDeployments/my-deployment/rollout`.",
+	//       "description": "The resource name of the game server deployment rollout, in the following form: `projects/{project}/locations/{locationId}/gameServerDeployments/{deploymentId}/rollout`. For example, `projects/my-project/locations/global/gameServerDeployments/my-deployment/rollout`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Mask of fields to update. At least one path must be supplied in this field. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. The update mask to apply to the resource. At least one path must be supplied in this field. For more information, see the [`FieldMask` definition](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5171,8 +5178,8 @@ type ProjectsLocationsGameServerDeploymentsConfigsCreateCall struct {
 // deployment rollout resource.
 //
 // - parent: The parent resource name, in the following form:
-//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
-//   oyment}/`.
+//   `projects/{project}/locations/{locationId}/gameServerDeployments/{de
+//   ploymentId}/`.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Create(parent string, gameserverconfig *GameServerConfig) *ProjectsLocationsGameServerDeploymentsConfigsCreateCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5181,7 +5188,7 @@ func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Create(parent str
 }
 
 // ConfigId sets the optional parameter "configId": Required. The ID of
-// the game server config resource to be created.
+// the game server config resource to create.
 func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) ConfigId(configId string) *ProjectsLocationsGameServerDeploymentsConfigsCreateCall {
 	c.urlParams_.Set("configId", configId)
 	return c
@@ -5287,12 +5294,12 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "configId": {
-	//       "description": "Required. The ID of the game server config resource to be created.",
+	//       "description": "Required. The ID of the game server config resource to create.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{locationId}/gameServerDeployments/{deploymentId}/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -5323,14 +5330,14 @@ type ProjectsLocationsGameServerDeploymentsConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single game server config. The deletion will fail
-// if the game server config is referenced in a game server deployment
+// Delete: Deletes a single game server config. The deletion fails if
+// the game server config is referenced in a game server deployment
 // rollout.
 //
 // - name: The name of the game server config to delete, in the
 //   following form:
-//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
-//   oyment}/configs/{config}`.
+//   `projects/{project}/locations/{locationId}/gameServerDeployments/{de
+//   ploymentId}/configs/{configId}`.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Delete(name string) *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5423,7 +5430,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a single game server config. The deletion will fail if the game server config is referenced in a game server deployment rollout.",
+	//   "description": "Deletes a single game server config. The deletion fails if the game server config is referenced in a game server deployment rollout.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}/configs/{configsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.configs.delete",
@@ -5432,7 +5439,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server config to delete, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.",
+	//       "description": "Required. The name of the game server config to delete, in the following form: `projects/{project}/locations/{locationId}/gameServerDeployments/{deploymentId}/configs/{configId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+/configs/[^/]+$",
 	//       "required": true,
@@ -5465,8 +5472,8 @@ type ProjectsLocationsGameServerDeploymentsConfigsGetCall struct {
 //
 // - name: The name of the game server config to retrieve, in the
 //   following form:
-//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
-//   oyment}/configs/{config}`.
+//   `projects/{project}/locations/{locationId}/gameServerDeployments/{de
+//   ploymentId}/configs/{configId}`.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Get(name string) *ProjectsLocationsGameServerDeploymentsConfigsGetCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5581,7 +5588,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsGetCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server config to retrieve, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.",
+	//       "description": "Required. The name of the game server config to retrieve, in the following form: `projects/{project}/locations/{locationId}/gameServerDeployments/{deploymentId}/configs/{configId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+/configs/[^/]+$",
 	//       "required": true,
@@ -5614,8 +5621,8 @@ type ProjectsLocationsGameServerDeploymentsConfigsListCall struct {
 // game server deployment.
 //
 // - parent: The parent resource name, in the following form:
-//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
-//   oyment}/configs/*`.
+//   `projects/{project}/locations/{locationId}/gameServerDeployments/{de
+//   ploymentId}/configs/*`.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) List(parent string) *ProjectsLocationsGameServerDeploymentsConfigsListCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5623,23 +5630,23 @@ func (r *ProjectsLocationsGameServerDeploymentsConfigsService) List(parent strin
 }
 
 // Filter sets the optional parameter "filter": The filter to apply to
-// list results.
+// list results (see Filtering (https://google.aip.dev/160)).
 func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) Filter(filter string) *ProjectsLocationsGameServerDeploymentsConfigsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Specifies the ordering
-// of results following syntax at
-// https://cloud.google.com/apis/design/design_patterns#sorting_order.
+// of results following Cloud API syntax
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order).
 func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) OrderBy(orderBy string) *ProjectsLocationsGameServerDeploymentsConfigsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return. If unspecified, server will pick an appropriate
-// default. Server may return fewer items than requested. A caller
+// of items to return. If unspecified, the server picks an appropriate
+// default. The server may return fewer items than requested. A caller
 // should only rely on response's next_page_token to determine if there
 // are more GameServerConfigs left to be queried.
 func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsGameServerDeploymentsConfigsListCall {
@@ -5762,17 +5769,17 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter to apply to list results.",
+	//       "description": "Optional. The filter to apply to list results (see [Filtering](https://google.aip.dev/160)).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Specifies the ordering of results following syntax at https://cloud.google.com/apis/design/design_patterns#sorting_order.",
+	//       "description": "Optional. Specifies the ordering of results following [Cloud API syntax](https://cloud.google.com/apis/design/design_patterns#sorting_order).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of items to return. If unspecified, server will pick an appropriate default. Server may return fewer items than requested. A caller should only rely on response's next_page_token to determine if there are more GameServerConfigs left to be queried.",
+	//       "description": "Optional. The maximum number of items to return. If unspecified, the server picks an appropriate default. The server may return fewer items than requested. A caller should only rely on response's next_page_token to determine if there are more GameServerConfigs left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5783,7 +5790,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) Do(opts ...googl
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/*`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{locationId}/gameServerDeployments/{deploymentId}/configs/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -6483,7 +6490,7 @@ type ProjectsLocationsRealmsCreateCall struct {
 // Create: Creates a new realm in a given project and location.
 //
 // - parent: The parent resource name, in the following form:
-//   `projects/{project}/locations/{location}`.
+//   `projects/{project}/locations/{locationId}`.
 func (r *ProjectsLocationsRealmsService) Create(parent string, realm *Realm) *ProjectsLocationsRealmsCreateCall {
 	c := &ProjectsLocationsRealmsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6492,7 +6499,7 @@ func (r *ProjectsLocationsRealmsService) Create(parent string, realm *Realm) *Pr
 }
 
 // RealmId sets the optional parameter "realmId": Required. The ID of
-// the realm resource to be created.
+// the realm resource to create.
 func (c *ProjectsLocationsRealmsCreateCall) RealmId(realmId string) *ProjectsLocationsRealmsCreateCall {
 	c.urlParams_.Set("realmId", realmId)
 	return c
@@ -6598,14 +6605,14 @@ func (c *ProjectsLocationsRealmsCreateCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{locationId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "realmId": {
-	//       "description": "Required. The ID of the realm resource to be created.",
+	//       "description": "Required. The ID of the realm resource to create.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6637,7 +6644,7 @@ type ProjectsLocationsRealmsDeleteCall struct {
 // Delete: Deletes a single realm.
 //
 // - name: The name of the realm to delete, in the following form:
-//   `projects/{project}/locations/{location}/realms/{realm}`.
+//   `projects/{project}/locations/{locationId}/realms/{realmId}`.
 func (r *ProjectsLocationsRealmsService) Delete(name string) *ProjectsLocationsRealmsDeleteCall {
 	c := &ProjectsLocationsRealmsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6739,7 +6746,7 @@ func (c *ProjectsLocationsRealmsDeleteCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the realm to delete, in the following form: `projects/{project}/locations/{location}/realms/{realm}`.",
+	//       "description": "Required. The name of the realm to delete, in the following form: `projects/{project}/locations/{locationId}/realms/{realmId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -6771,7 +6778,7 @@ type ProjectsLocationsRealmsGetCall struct {
 // Get: Gets details of a single realm.
 //
 // - name: The name of the realm to retrieve, in the following form:
-//   `projects/{project}/locations/{location}/realms/{realm}`.
+//   `projects/{project}/locations/{locationId}/realms/{realmId}`.
 func (r *ProjectsLocationsRealmsService) Get(name string) *ProjectsLocationsRealmsGetCall {
 	c := &ProjectsLocationsRealmsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6886,7 +6893,7 @@ func (c *ProjectsLocationsRealmsGetCall) Do(opts ...googleapi.CallOption) (*Real
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the realm to retrieve, in the following form: `projects/{project}/locations/{location}/realms/{realm}`.",
+	//       "description": "Required. The name of the realm to retrieve, in the following form: `projects/{project}/locations/{locationId}/realms/{realmId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -6918,7 +6925,7 @@ type ProjectsLocationsRealmsListCall struct {
 // List: Lists realms in a given project and location.
 //
 // - parent: The parent resource name, in the following form:
-//   `projects/{project}/locations/{location}`.
+//   `projects/{project}/locations/{locationId}`.
 func (r *ProjectsLocationsRealmsService) List(parent string) *ProjectsLocationsRealmsListCall {
 	c := &ProjectsLocationsRealmsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6926,32 +6933,32 @@ func (r *ProjectsLocationsRealmsService) List(parent string) *ProjectsLocationsR
 }
 
 // Filter sets the optional parameter "filter": The filter to apply to
-// list results.
+// list results (see Filtering (https://google.aip.dev/160)).
 func (c *ProjectsLocationsRealmsListCall) Filter(filter string) *ProjectsLocationsRealmsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Specifies the ordering
-// of results following syntax at
-// https://cloud.google.com/apis/design/design_patterns#sorting_order.
+// of results following Cloud API syntax
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order).
 func (c *ProjectsLocationsRealmsListCall) OrderBy(orderBy string) *ProjectsLocationsRealmsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return. If unspecified, server will pick an appropriate
-// default. Server may return fewer items than requested. A caller
-// should only rely on response's next_page_token to determine if there
-// are more realms left to be queried.
+// of items to return. If unspecified, the server picks an appropriate
+// default. The server may return fewer items than requested. A caller
+// should only rely on the response's next_page_token to determine if
+// there are more realms left to be queried.
 func (c *ProjectsLocationsRealmsListCall) PageSize(pageSize int64) *ProjectsLocationsRealmsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
+// next_page_token value returned from a previous list request, if any.
 func (c *ProjectsLocationsRealmsListCall) PageToken(pageToken string) *ProjectsLocationsRealmsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7065,28 +7072,28 @@ func (c *ProjectsLocationsRealmsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter to apply to list results.",
+	//       "description": "Optional. The filter to apply to list results (see [Filtering](https://google.aip.dev/160)).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Specifies the ordering of results following syntax at https://cloud.google.com/apis/design/design_patterns#sorting_order.",
+	//       "description": "Optional. Specifies the ordering of results following [Cloud API syntax](https://cloud.google.com/apis/design/design_patterns#sorting_order).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of items to return. If unspecified, server will pick an appropriate default. Server may return fewer items than requested. A caller should only rely on response's next_page_token to determine if there are more realms left to be queried.",
+	//       "description": "Optional. The maximum number of items to return. If unspecified, the server picks an appropriate default. The server may return fewer items than requested. A caller should only rely on the response's next_page_token to determine if there are more realms left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. The next_page_token value returned from a previous List request, if any.",
+	//       "description": "Optional. The next_page_token value returned from a previous list request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{locationId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -7139,9 +7146,8 @@ type ProjectsLocationsRealmsPatchCall struct {
 // Patch: Patches a single realm.
 //
 // - name: The resource name of the realm, in the following form:
-//   `projects/{project}/locations/{location}/realms/{realm}`. For
-//   example,
-//   `projects/my-project/locations/{location}/realms/my-realm`.
+//   `projects/{project}/locations/{locationId}/realms/{realmId}`. For
+//   example, `projects/my-project/locations/global/realms/my-realm`.
 func (r *ProjectsLocationsRealmsService) Patch(name string, realm *Realm) *ProjectsLocationsRealmsPatchCall {
 	c := &ProjectsLocationsRealmsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7150,9 +7156,9 @@ func (r *ProjectsLocationsRealmsService) Patch(name string, realm *Realm) *Proje
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// update mask applies to the resource. For the `FieldMask` definition,
-// see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// update mask to apply to the resource. For more information, see the
+// `FieldMask` definition
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).
 func (c *ProjectsLocationsRealmsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRealmsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7258,14 +7264,14 @@ func (c *ProjectsLocationsRealmsPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the realm, in the following form: `projects/{project}/locations/{location}/realms/{realm}`. For example, `projects/my-project/locations/{location}/realms/my-realm`.",
+	//       "description": "The resource name of the realm, in the following form: `projects/{project}/locations/{locationId}/realms/{realmId}`. For example, `projects/my-project/locations/global/realms/my-realm`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. The update mask to apply to the resource. For more information, see the [`FieldMask` definition](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7299,9 +7305,8 @@ type ProjectsLocationsRealmsPreviewUpdateCall struct {
 // PreviewUpdate: Previews patches to a single realm.
 //
 // - name: The resource name of the realm, in the following form:
-//   `projects/{project}/locations/{location}/realms/{realm}`. For
-//   example,
-//   `projects/my-project/locations/{location}/realms/my-realm`.
+//   `projects/{project}/locations/{locationId}/realms/{realmId}`. For
+//   example, `projects/my-project/locations/global/realms/my-realm`.
 func (r *ProjectsLocationsRealmsService) PreviewUpdate(name string, realm *Realm) *ProjectsLocationsRealmsPreviewUpdateCall {
 	c := &ProjectsLocationsRealmsPreviewUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7317,9 +7322,9 @@ func (c *ProjectsLocationsRealmsPreviewUpdateCall) PreviewTime(previewTime strin
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// update mask applies to the resource. For the `FieldMask` definition,
-// see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// update mask to apply to the resource. For more information, see the
+// `FieldMask` definition
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).
 func (c *ProjectsLocationsRealmsPreviewUpdateCall) UpdateMask(updateMask string) *ProjectsLocationsRealmsPreviewUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7425,7 +7430,7 @@ func (c *ProjectsLocationsRealmsPreviewUpdateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the realm, in the following form: `projects/{project}/locations/{location}/realms/{realm}`. For example, `projects/my-project/locations/{location}/realms/my-realm`.",
+	//       "description": "The resource name of the realm, in the following form: `projects/{project}/locations/{locationId}/realms/{realmId}`. For example, `projects/my-project/locations/global/realms/my-realm`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -7438,7 +7443,7 @@ func (c *ProjectsLocationsRealmsPreviewUpdateCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. The update mask to apply to the resource. For more information, see the [`FieldMask` definition](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7473,7 +7478,7 @@ type ProjectsLocationsRealmsGameServerClustersCreateCall struct {
 // location.
 //
 // - parent: The parent resource name, in the following form:
-//   `projects/{project}/locations/{location}/realms/{realm-id}`.
+//   `projects/{project}/locations/{locationId}/realms/{realmId}`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) Create(parent string, gameservercluster *GameServerCluster) *ProjectsLocationsRealmsGameServerClustersCreateCall {
 	c := &ProjectsLocationsRealmsGameServerClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7483,7 +7488,7 @@ func (r *ProjectsLocationsRealmsGameServerClustersService) Create(parent string,
 
 // GameServerClusterId sets the optional parameter
 // "gameServerClusterId": Required. The ID of the game server cluster
-// resource to be created.
+// resource to create.
 func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) GameServerClusterId(gameServerClusterId string) *ProjectsLocationsRealmsGameServerClustersCreateCall {
 	c.urlParams_.Set("gameServerClusterId", gameServerClusterId)
 	return c
@@ -7589,12 +7594,12 @@ func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "gameServerClusterId": {
-	//       "description": "Required. The ID of the game server cluster resource to be created.",
+	//       "description": "Required. The ID of the game server cluster resource to create.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}/realms/{realm-id}`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{locationId}/realms/{realmId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -7629,8 +7634,8 @@ type ProjectsLocationsRealmsGameServerClustersDeleteCall struct {
 //
 // - name: The name of the game server cluster to delete, in the
 //   following form:
-//   `projects/{project}/locations/{location}/gameServerClusters/{cluster
-//   }`.
+//   `projects/{project}/locations/{locationId}/gameServerClusters/{gameS
+//   erverClusterId}`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) Delete(name string) *ProjectsLocationsRealmsGameServerClustersDeleteCall {
 	c := &ProjectsLocationsRealmsGameServerClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7732,7 +7737,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersDeleteCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server cluster to delete, in the following form: `projects/{project}/locations/{location}/gameServerClusters/{cluster}`.",
+	//       "description": "Required. The name of the game server cluster to delete, in the following form: `projects/{project}/locations/{locationId}/gameServerClusters/{gameServerClusterId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
@@ -7765,8 +7770,8 @@ type ProjectsLocationsRealmsGameServerClustersGetCall struct {
 //
 // - name: The name of the game server cluster to retrieve, in the
 //   following form:
-//   `projects/{project}/locations/{location}/realms/{realm-id}/gameServe
-//   rClusters/{cluster}`.
+//   `projects/{project}/locations/{locationId}/realms/{realmId}/gameServ
+//   erClusters/{gameServerClusterId}`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) Get(name string) *ProjectsLocationsRealmsGameServerClustersGetCall {
 	c := &ProjectsLocationsRealmsGameServerClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7778,17 +7783,18 @@ func (r *ProjectsLocationsRealmsGameServerClustersService) Get(name string) *Pro
 // `cluster_state` field is also returned in the GameServerCluster
 // object, which includes the state of the referenced Kubernetes cluster
 // such as versions and provider info. The default/unset value is
-// GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED, same as BASIC, which does not
-// return the `cluster_state` field.
+// `GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED`, the same as `BASIC`, which
+// does not return the `cluster_state` field.
 //
 // Possible values:
-//   "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED" - The default / unset value.
-// The API will default to the BASIC view.
-//   "BASIC" - Include basic information of a GameServerCluster resource
-// and omit `cluster_state`. This is the default value (for
-// ListGameServerClusters, GetGameServerCluster and
+//   "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED" - If the value is not set,
+// Google Cloud Game Servers defaults to the `BASIC` view.
+//   "BASIC" - Includes basic information of a GameServerCluster
+// resource and omits `cluster_state`. This is the default value (for
+// methods ListGameServerClusters, GetGameServerCluster, and
 // PreviewCreateGameServerCluster).
-//   "FULL" - Include everything.
+//   "FULL" - Include basic information of a GameServerCluster resource
+// as well as `cluster_state`.
 func (c *ProjectsLocationsRealmsGameServerClustersGetCall) View(view string) *ProjectsLocationsRealmsGameServerClustersGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7902,23 +7908,23 @@ func (c *ProjectsLocationsRealmsGameServerClustersGetCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server cluster to retrieve, in the following form: `projects/{project}/locations/{location}/realms/{realm-id}/gameServerClusters/{cluster}`.",
+	//       "description": "Required. The name of the game server cluster to retrieve, in the following form: `projects/{project}/locations/{locationId}/realms/{realmId}/gameServerClusters/{gameServerClusterId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Optional. View for the returned GameServerCluster objects. When `FULL` is specified, the `cluster_state` field is also returned in the GameServerCluster object, which includes the state of the referenced Kubernetes cluster such as versions and provider info. The default/unset value is GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED, same as BASIC, which does not return the `cluster_state` field.",
+	//       "description": "Optional. View for the returned GameServerCluster objects. When `FULL` is specified, the `cluster_state` field is also returned in the GameServerCluster object, which includes the state of the referenced Kubernetes cluster such as versions and provider info. The default/unset value is `GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED`, the same as `BASIC`, which does not return the `cluster_state` field.",
 	//       "enum": [
 	//         "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED",
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "The default / unset value. The API will default to the BASIC view.",
-	//         "Include basic information of a GameServerCluster resource and omit `cluster_state`. This is the default value (for ListGameServerClusters, GetGameServerCluster and PreviewCreateGameServerCluster).",
-	//         "Include everything."
+	//         "If the value is not set, Google Cloud Game Servers defaults to the `BASIC` view.",
+	//         "Includes basic information of a GameServerCluster resource and omits `cluster_state`. This is the default value (for methods ListGameServerClusters, GetGameServerCluster, and PreviewCreateGameServerCluster).",
+	//         "Include basic information of a GameServerCluster resource as well as `cluster_state`."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7949,7 +7955,7 @@ type ProjectsLocationsRealmsGameServerClustersListCall struct {
 // List: Lists game server clusters in a given project and location.
 //
 // - parent: The parent resource name, in the following form:
-//   "projects/{project}/locations/{location}/realms/{realm}".
+//   `projects/{project}/locations/{locationId}/realms/{realmId}`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) List(parent string) *ProjectsLocationsRealmsGameServerClustersListCall {
 	c := &ProjectsLocationsRealmsGameServerClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7957,32 +7963,32 @@ func (r *ProjectsLocationsRealmsGameServerClustersService) List(parent string) *
 }
 
 // Filter sets the optional parameter "filter": The filter to apply to
-// list results.
+// list results (see Filtering (https://google.aip.dev/160)).
 func (c *ProjectsLocationsRealmsGameServerClustersListCall) Filter(filter string) *ProjectsLocationsRealmsGameServerClustersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Specifies the ordering
-// of results following syntax at
-// https://cloud.google.com/apis/design/design_patterns#sorting_order.
+// of results following Cloud API syntax
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order).
 func (c *ProjectsLocationsRealmsGameServerClustersListCall) OrderBy(orderBy string) *ProjectsLocationsRealmsGameServerClustersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return. If unspecified, the server will pick an
-// appropriate default. The server may return fewer items than
-// requested. A caller should only rely on response's next_page_token to
-// determine if there are more GameServerClusters left to be queried.
+// of items to return. If unspecified, the server picks an appropriate
+// default. The server may return fewer items than requested. A caller
+// should only rely on response's next_page_token to determine if there
+// are more GameServerClusters left to be queried.
 func (c *ProjectsLocationsRealmsGameServerClustersListCall) PageSize(pageSize int64) *ProjectsLocationsRealmsGameServerClustersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
+// next_page_token value returned from a previous list request, if any.
 func (c *ProjectsLocationsRealmsGameServerClustersListCall) PageToken(pageToken string) *ProjectsLocationsRealmsGameServerClustersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7993,17 +7999,18 @@ func (c *ProjectsLocationsRealmsGameServerClustersListCall) PageToken(pageToken 
 // `cluster_state` field is also returned in the GameServerCluster
 // object, which includes the state of the referenced Kubernetes cluster
 // such as versions and provider info. The default/unset value is
-// GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED, same as BASIC, which does not
-// return the `cluster_state` field.
+// `GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED`, the same as `BASIC`, which
+// does not return the `cluster_state` field.
 //
 // Possible values:
-//   "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED" - The default / unset value.
-// The API will default to the BASIC view.
-//   "BASIC" - Include basic information of a GameServerCluster resource
-// and omit `cluster_state`. This is the default value (for
-// ListGameServerClusters, GetGameServerCluster and
+//   "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED" - If the value is not set,
+// Google Cloud Game Servers defaults to the `BASIC` view.
+//   "BASIC" - Includes basic information of a GameServerCluster
+// resource and omits `cluster_state`. This is the default value (for
+// methods ListGameServerClusters, GetGameServerCluster, and
 // PreviewCreateGameServerCluster).
-//   "FULL" - Include everything.
+//   "FULL" - Include basic information of a GameServerCluster resource
+// as well as `cluster_state`.
 func (c *ProjectsLocationsRealmsGameServerClustersListCall) View(view string) *ProjectsLocationsRealmsGameServerClustersListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -8117,44 +8124,44 @@ func (c *ProjectsLocationsRealmsGameServerClustersListCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter to apply to list results.",
+	//       "description": "Optional. The filter to apply to list results (see [Filtering](https://google.aip.dev/160)).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Specifies the ordering of results following syntax at https://cloud.google.com/apis/design/design_patterns#sorting_order.",
+	//       "description": "Optional. Specifies the ordering of results following [Cloud API syntax](https://cloud.google.com/apis/design/design_patterns#sorting_order).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of items to return. If unspecified, the server will pick an appropriate default. The server may return fewer items than requested. A caller should only rely on response's next_page_token to determine if there are more GameServerClusters left to be queried.",
+	//       "description": "Optional. The maximum number of items to return. If unspecified, the server picks an appropriate default. The server may return fewer items than requested. A caller should only rely on response's next_page_token to determine if there are more GameServerClusters left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. The next_page_token value returned from a previous List request, if any.",
+	//       "description": "Optional. The next_page_token value returned from a previous list request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, in the following form: \"projects/{project}/locations/{location}/realms/{realm}\".",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{locationId}/realms/{realmId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Optional. View for the returned GameServerCluster objects. When `FULL` is specified, the `cluster_state` field is also returned in the GameServerCluster object, which includes the state of the referenced Kubernetes cluster such as versions and provider info. The default/unset value is GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED, same as BASIC, which does not return the `cluster_state` field.",
+	//       "description": "Optional. View for the returned GameServerCluster objects. When `FULL` is specified, the `cluster_state` field is also returned in the GameServerCluster object, which includes the state of the referenced Kubernetes cluster such as versions and provider info. The default/unset value is `GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED`, the same as `BASIC`, which does not return the `cluster_state` field.",
 	//       "enum": [
 	//         "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED",
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "The default / unset value. The API will default to the BASIC view.",
-	//         "Include basic information of a GameServerCluster resource and omit `cluster_state`. This is the default value (for ListGameServerClusters, GetGameServerCluster and PreviewCreateGameServerCluster).",
-	//         "Include everything."
+	//         "If the value is not set, Google Cloud Game Servers defaults to the `BASIC` view.",
+	//         "Includes basic information of a GameServerCluster resource and omits `cluster_state`. This is the default value (for methods ListGameServerClusters, GetGameServerCluster, and PreviewCreateGameServerCluster).",
+	//         "Include basic information of a GameServerCluster resource as well as `cluster_state`."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -8207,10 +8214,10 @@ type ProjectsLocationsRealmsGameServerClustersPatchCall struct {
 //
 // - name: The resource name of the game server cluster, in the
 //   following form:
-//   `projects/{project}/locations/{location}/realms/{realm}/gameServerCl
-//   usters/{cluster}`. For example,
-//   `projects/my-project/locations/{location}/realms/zanzibar/gameServer
-//   Clusters/my-onprem-cluster`.
+//   `projects/{project}/locations/{locationId}/realms/{realmId}/gameServ
+//   erClusters/{gameServerClusterId}`. For example,
+//   `projects/my-project/locations/global/realms/zanzibar/gameServerClus
+//   ters/my-gke-cluster`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) Patch(name string, gameservercluster *GameServerCluster) *ProjectsLocationsRealmsGameServerClustersPatchCall {
 	c := &ProjectsLocationsRealmsGameServerClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8218,10 +8225,11 @@ func (r *ProjectsLocationsRealmsGameServerClustersService) Patch(name string, ga
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Mask
-// of fields to update. At least one path must be supplied in this
-// field. For the `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask to apply to the resource. At least one path must be
+// supplied in this field. For more information, see the `FieldMask`
+// definition
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).
 func (c *ProjectsLocationsRealmsGameServerClustersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRealmsGameServerClustersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8327,14 +8335,14 @@ func (c *ProjectsLocationsRealmsGameServerClustersPatchCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the game server cluster, in the following form: `projects/{project}/locations/{location}/realms/{realm}/gameServerClusters/{cluster}`. For example, `projects/my-project/locations/{location}/realms/zanzibar/gameServerClusters/my-onprem-cluster`.",
+	//       "description": "Required. The resource name of the game server cluster, in the following form: `projects/{project}/locations/{locationId}/realms/{realmId}/gameServerClusters/{gameServerClusterId}`. For example, `projects/my-project/locations/global/realms/zanzibar/gameServerClusters/my-gke-cluster`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Mask of fields to update. At least one path must be supplied in this field. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. The update mask to apply to the resource. At least one path must be supplied in this field. For more information, see the [`FieldMask` definition](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -8369,7 +8377,7 @@ type ProjectsLocationsRealmsGameServerClustersPreviewCreateCall struct {
 // given project and location.
 //
 // - parent: The parent resource name, in the following form:
-//   `projects/{project}/locations/{location}/realms/{realm}`.
+//   `projects/{project}/locations/{locationId}/realms/{realmId}`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) PreviewCreate(parent string, gameservercluster *GameServerCluster) *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall {
 	c := &ProjectsLocationsRealmsGameServerClustersPreviewCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8379,7 +8387,7 @@ func (r *ProjectsLocationsRealmsGameServerClustersService) PreviewCreate(parent 
 
 // GameServerClusterId sets the optional parameter
 // "gameServerClusterId": Required. The ID of the game server cluster
-// resource to be created.
+// resource to create.
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) GameServerClusterId(gameServerClusterId string) *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall {
 	c.urlParams_.Set("gameServerClusterId", gameServerClusterId)
 	return c
@@ -8392,17 +8400,18 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) PreviewTime
 	return c
 }
 
-// View sets the optional parameter "view": This field is deprecated,
-// preview will always return KubernetesClusterState.
+// View sets the optional parameter "view": This field is deprecated.
+// Preview will always return KubernetesClusterState.
 //
 // Possible values:
-//   "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED" - The default / unset value.
-// The API will default to the BASIC view.
-//   "BASIC" - Include basic information of a GameServerCluster resource
-// and omit `cluster_state`. This is the default value (for
-// ListGameServerClusters, GetGameServerCluster and
+//   "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED" - If the value is not set,
+// Google Cloud Game Servers defaults to the `BASIC` view.
+//   "BASIC" - Includes basic information of a GameServerCluster
+// resource and omits `cluster_state`. This is the default value (for
+// methods ListGameServerClusters, GetGameServerCluster, and
 // PreviewCreateGameServerCluster).
-//   "FULL" - Include everything.
+//   "FULL" - Include basic information of a GameServerCluster resource
+// as well as `cluster_state`.
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) View(view string) *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -8509,12 +8518,12 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "gameServerClusterId": {
-	//       "description": "Required. The ID of the game server cluster resource to be created.",
+	//       "description": "Required. The ID of the game server cluster resource to create.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}/realms/{realm}`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{locationId}/realms/{realmId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -8527,16 +8536,16 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) Do(opts ...
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Optional. This field is deprecated, preview will always return KubernetesClusterState.",
+	//       "description": "Optional. This field is deprecated. Preview will always return KubernetesClusterState.",
 	//       "enum": [
 	//         "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED",
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "The default / unset value. The API will default to the BASIC view.",
-	//         "Include basic information of a GameServerCluster resource and omit `cluster_state`. This is the default value (for ListGameServerClusters, GetGameServerCluster and PreviewCreateGameServerCluster).",
-	//         "Include everything."
+	//         "If the value is not set, Google Cloud Game Servers defaults to the `BASIC` view.",
+	//         "Includes basic information of a GameServerCluster resource and omits `cluster_state`. This is the default value (for methods ListGameServerClusters, GetGameServerCluster, and PreviewCreateGameServerCluster).",
+	//         "Include basic information of a GameServerCluster resource as well as `cluster_state`."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -8570,8 +8579,8 @@ type ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall struct {
 //
 // - name: The name of the game server cluster to delete, in the
 //   following form:
-//   `projects/{project}/locations/{location}/gameServerClusters/{cluster
-//   }`.
+//   `projects/{project}/locations/{locationId}/gameServerClusters/{gameS
+//   erverClusterId}`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) PreviewDelete(name string) *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall {
 	c := &ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8681,7 +8690,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server cluster to delete, in the following form: `projects/{project}/locations/{location}/gameServerClusters/{cluster}`.",
+	//       "description": "Required. The name of the game server cluster to delete, in the following form: `projects/{project}/locations/{locationId}/gameServerClusters/{gameServerClusterId}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
@@ -8720,10 +8729,10 @@ type ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall struct {
 //
 // - name: The resource name of the game server cluster, in the
 //   following form:
-//   `projects/{project}/locations/{location}/realms/{realm}/gameServerCl
-//   usters/{cluster}`. For example,
-//   `projects/my-project/locations/{location}/realms/zanzibar/gameServer
-//   Clusters/my-onprem-cluster`.
+//   `projects/{project}/locations/{locationId}/realms/{realmId}/gameServ
+//   erClusters/{gameServerClusterId}`. For example,
+//   `projects/my-project/locations/global/realms/zanzibar/gameServerClus
+//   ters/my-gke-cluster`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) PreviewUpdate(name string, gameservercluster *GameServerCluster) *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall {
 	c := &ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8740,8 +8749,8 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) PreviewTime
 
 // UpdateMask sets the optional parameter "updateMask": Required. Mask
 // of fields to update. At least one path must be supplied in this
-// field. For the `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// field. For more information, see the `FieldMask` definition
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) UpdateMask(updateMask string) *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8848,7 +8857,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the game server cluster, in the following form: `projects/{project}/locations/{location}/realms/{realm}/gameServerClusters/{cluster}`. For example, `projects/my-project/locations/{location}/realms/zanzibar/gameServerClusters/my-onprem-cluster`.",
+	//       "description": "Required. The resource name of the game server cluster, in the following form: `projects/{project}/locations/{locationId}/realms/{realmId}/gameServerClusters/{gameServerClusterId}`. For example, `projects/my-project/locations/global/realms/zanzibar/gameServerClusters/my-gke-cluster`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
@@ -8861,7 +8870,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) Do(opts ...
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Mask of fields to update. At least one path must be supplied in this field. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. Mask of fields to update. At least one path must be supplied in this field. For more information, see the [`FieldMask` definition](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

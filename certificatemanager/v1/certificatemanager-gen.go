@@ -424,10 +424,10 @@ type CertificateMapEntry struct {
 	// certificate map entry.
 	Description string `json:"description,omitempty"`
 
-	// Hostname: A Hostname (FQDN, e.g. example.com) or a wildcard hostname
-	// expression (*.example.com) for a set of hostnames with common suffix.
-	// Used as Server Name Indication (SNI) for selecting a proper
-	// certificate.
+	// Hostname: A Hostname (FQDN, e.g. `example.com`) or a wildcard
+	// hostname expression (`*.example.com`) for a set of hostnames with
+	// common suffix. Used as Server Name Indication (SNI) for selecting a
+	// proper certificate.
 	Hostname string `json:"hostname,omitempty"`
 
 	// Labels: Set of labels associated with a Certificate Map Entry.
@@ -504,8 +504,8 @@ type DnsAuthorization struct {
 
 	// Domain: Required. Immutable. A domain which is being authorized. A
 	// DnsAuthorization resource covers a single domain and its wildcard,
-	// e.g. authorization for "example.com" can be used to issue
-	// certificates for "example.com" and "*.example.com".
+	// e.g. authorization for `example.com` can be used to issue
+	// certificates for `example.com` and `*.example.com`.
 	Domain string `json:"domain,omitempty"`
 
 	// Labels: Set of labels associated with a DnsAuthorization.
@@ -555,7 +555,7 @@ type DnsResourceRecord struct {
 	Data string `json:"data,omitempty"`
 
 	// Name: Output only. Fully qualified name of the DNS Resource Record.
-	// e.g. "_acme-challenge.example.com."
+	// e.g. `_acme-challenge.example.com`
 	Name string `json:"name,omitempty"`
 
 	// Type: Output only. Type of the DNS Resource Record. Currently always

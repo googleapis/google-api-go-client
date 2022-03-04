@@ -714,7 +714,11 @@ type BigQueryDestination struct {
 	// Dataset: Required. The BigQuery dataset in format
 	// "projects/projectId/datasets/datasetId", to which the snapshot result
 	// should be exported. If this dataset does not exist, the export call
-	// returns an INVALID_ARGUMENT error.
+	// returns an INVALID_ARGUMENT error. Setting the `contentType` for
+	// `exportAssets` determines the schema
+	// (/asset-inventory/docs/exporting-to-bigquery#bigquery-schema) of the
+	// BigQuery table. Setting `separateTablesPerAssetType` to `TRUE` also
+	// influences the schema.
 	Dataset string `json:"dataset,omitempty"`
 
 	// Force: If the destination table already exists and this flag is

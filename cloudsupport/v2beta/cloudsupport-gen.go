@@ -226,13 +226,6 @@ type Actor struct {
 	// actor.
 	GoogleSupport bool `json:"googleSupport,omitempty"`
 
-	// PrincipalId: Output only. An ID representing the user that was
-	// authenticated when the corresponding action was taken. This will be
-	// an email address, if one is available, or some other unique ID. See
-	// https://cloud.google.com/docs/authentication for more information on
-	// types of authentication.
-	PrincipalId string `json:"principalId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -941,21 +934,10 @@ func (s *EscalateCaseRequest) MarshalJSON() ([]byte, error) {
 
 // Escalation: An escalation of a support case.
 type Escalation struct {
-	// Actor: Output only. The user or Google Support agent initiated this
-	// escalation.
-	Actor *Actor `json:"actor,omitempty"`
-
-	// CreateTime: Output only. The time when this escalation event was
-	// created.
-	CreateTime string `json:"createTime,omitempty"`
-
 	// Justification: Required. A free text description to accompany the
 	// `reason` field above. Provides additional context on why the case is
 	// being escalated.
 	Justification string `json:"justification,omitempty"`
-
-	// Name: Output only. The resource name for the escalation event.
-	Name string `json:"name,omitempty"`
 
 	// Reason: Required. The reason why the Case is being escalated.
 	//
@@ -969,7 +951,7 @@ type Escalation struct {
 	// impact.
 	Reason string `json:"reason,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Actor") to
+	// ForceSendFields is a list of field names (e.g. "Justification") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -977,10 +959,10 @@ type Escalation struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Actor") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Justification") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

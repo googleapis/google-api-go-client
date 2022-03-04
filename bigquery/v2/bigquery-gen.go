@@ -2250,7 +2250,7 @@ type DatasetAccessEntry struct {
 	//   "TARGET_TYPE_UNSPECIFIED" - Do not use. You must set a target type
 	// explicitly.
 	//   "VIEWS" - This entry applies to views in the dataset.
-	TargetTypes []string `json:"target_types,omitempty"`
+	TargetTypes []string `json:"targetTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dataset") to
 	// unconditionally include in API requests. By default, fields with
@@ -3749,6 +3749,12 @@ type JobConfigurationLoad struct {
 
 	// ParquetOptions: [Optional] Options to configure parquet support.
 	ParquetOptions *ParquetOptions `json:"parquetOptions,omitempty"`
+
+	// PreserveAsciiControlCharacters: [Optional] Preserves the embedded
+	// ASCII control characters (the first 32 characters in the ASCII-table,
+	// from '\x00' to '\x1F') when loading from CSV. Only applicable to CSV,
+	// ignored for other formats.
+	PreserveAsciiControlCharacters bool `json:"preserveAsciiControlCharacters,omitempty"`
 
 	// ProjectionFields: If sourceFormat is set to "DATASTORE_BACKUP",
 	// indicates which entity properties to load into BigQuery from a Cloud

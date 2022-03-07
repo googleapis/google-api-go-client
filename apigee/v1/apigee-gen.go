@@ -3985,18 +3985,19 @@ func (s *GoogleCloudApigeeV1DimensionMetric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1EndpointAttachment: Apigee Endpoint Attachment.
+// GoogleCloudApigeeV1EndpointAttachment: Apigee endpoint attachment.
+// For more information, see Southbound networking patterns.
 type GoogleCloudApigeeV1EndpointAttachment struct {
-	// Host: Output only. Host that can be used in either HTTP Target
-	// Endpoint directly, or as the host in Target Server.
+	// Host: Output only. Host that can be used in either the HTTP target
+	// endpoint directly or as the host in target server.
 	Host string `json:"host,omitempty"`
 
 	// Location: Required. Location of the endpoint attachment.
 	Location string `json:"location,omitempty"`
 
-	// Name: Name of the Endpoint Attachment in the following format:
-	// `organizations/{organization}/endpointAttachments/{endpoint_attachment
-	// }`.
+	// Name: Name of the endpoint attachment. Use the following structure in
+	// your request:
+	// `organizations/{org}/endpointAttachments/{endpoint_attachment}`
 	Name string `json:"name,omitempty"`
 
 	// ServiceAttachment: Format: projects/*/regions/*/serviceAttachments/*
@@ -5751,12 +5752,12 @@ func (s *GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse) MarshalJSON() ([
 // GoogleCloudApigeeV1ListEndpointAttachmentsResponse: Response for
 // ListEndpointAttachments method.
 type GoogleCloudApigeeV1ListEndpointAttachmentsResponse struct {
-	// EndpointAttachments: Endpoint Attachments in the specified
+	// EndpointAttachments: Endpoint attachments in the specified
 	// organization.
 	EndpointAttachments []*GoogleCloudApigeeV1EndpointAttachment `json:"endpointAttachments,omitempty"`
 
-	// NextPageToken: Page token that you can include in a
-	// ListEndpointAttachments request to retrieve the next page. If
+	// NextPageToken: Page token that you can include in an
+	// `ListEndpointAttachments` request to retrieve the next page. If
 	// omitted, no subsequent pages exist.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -24307,11 +24308,10 @@ type OrganizationsEndpointAttachmentsCreateCall struct {
 	header_                               http.Header
 }
 
-// Create: Creates an EndpointAttachment. **Note:** Not supported for
+// Create: Creates an endpoint attachment. **Note:** Not supported for
 // Apigee hybrid.
 //
-// - parent: The Organization this EndpointAttachment will be created
-//   in.
+// - parent: Organization the endpoint attachment will be created in.
 func (r *OrganizationsEndpointAttachmentsService) Create(parent string, googlecloudapigeev1endpointattachment *GoogleCloudApigeeV1EndpointAttachment) *OrganizationsEndpointAttachmentsCreateCall {
 	c := &OrganizationsEndpointAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24320,9 +24320,9 @@ func (r *OrganizationsEndpointAttachmentsService) Create(parent string, googlecl
 }
 
 // EndpointAttachmentId sets the optional parameter
-// "endpointAttachmentId": The ID to use for the endpoint attachment. ID
-// must be a 1-20 characters string with lowercase letters and numbers
-// and must start with a letter.
+// "endpointAttachmentId": ID to use for the endpoint attachment. The ID
+// can contain lowercase letters and numbers, must start with a letter,
+// and must be 1-20 characters in length.
 func (c *OrganizationsEndpointAttachmentsCreateCall) EndpointAttachmentId(endpointAttachmentId string) *OrganizationsEndpointAttachmentsCreateCall {
 	c.urlParams_.Set("endpointAttachmentId", endpointAttachmentId)
 	return c
@@ -24419,7 +24419,7 @@ func (c *OrganizationsEndpointAttachmentsCreateCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an EndpointAttachment. **Note:** Not supported for Apigee hybrid.",
+	//   "description": "Creates an endpoint attachment. **Note:** Not supported for Apigee hybrid.",
 	//   "flatPath": "v1/organizations/{organizationsId}/endpointAttachments",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.endpointAttachments.create",
@@ -24428,12 +24428,12 @@ func (c *OrganizationsEndpointAttachmentsCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "endpointAttachmentId": {
-	//       "description": "The ID to use for the endpoint attachment. ID must be a 1-20 characters string with lowercase letters and numbers and must start with a letter.",
+	//       "description": "ID to use for the endpoint attachment. The ID can contain lowercase letters and numbers, must start with a letter, and must be 1-20 characters in length.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The Organization this EndpointAttachment will be created in.",
+	//       "description": "Required. Organization the endpoint attachment will be created in.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -24466,9 +24466,9 @@ type OrganizationsEndpointAttachmentsDeleteCall struct {
 
 // Delete: Deletes an endpoint attachment.
 //
-// - name: Name of the Endpoint Attachment in the following format:
-//   `organizations/{organization}/endpointAttachments/{endpoint_attachme
-//   nt}`.
+// - name: Name of the endpoint attachment. Use the following structure
+//   in your request:
+//   `organizations/{org}/endpointAttachments/{endpoint_attachment}`.
 func (r *OrganizationsEndpointAttachmentsService) Delete(name string) *OrganizationsEndpointAttachmentsDeleteCall {
 	c := &OrganizationsEndpointAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24570,7 +24570,7 @@ func (c *OrganizationsEndpointAttachmentsDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Endpoint Attachment in the following format: `organizations/{organization}/endpointAttachments/{endpoint_attachment}`.",
+	//       "description": "Required. Name of the endpoint attachment. Use the following structure in your request: `organizations/{org}/endpointAttachments/{endpoint_attachment}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/endpointAttachments/[^/]+$",
 	//       "required": true,
@@ -24599,11 +24599,11 @@ type OrganizationsEndpointAttachmentsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified EndpointAttachment.
+// Get: Gets the endpoint attachment.
 //
-// - name: Name of the Endpoint Attachment in the following format:
-//   `organizations/{organization}/endpointAttachments/{endpoint_attachme
-//   nt}`.
+// - name: Name of the endpoint attachment. Use the following structure
+//   in your request:
+//   `organizations/{org}/endpointAttachments/{endpoint_attachment}`.
 func (r *OrganizationsEndpointAttachmentsService) Get(name string) *OrganizationsEndpointAttachmentsGetCall {
 	c := &OrganizationsEndpointAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24710,7 +24710,7 @@ func (c *OrganizationsEndpointAttachmentsGetCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the specified EndpointAttachment.",
+	//   "description": "Gets the endpoint attachment.",
 	//   "flatPath": "v1/organizations/{organizationsId}/endpointAttachments/{endpointAttachmentsId}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.endpointAttachments.get",
@@ -24719,7 +24719,7 @@ func (c *OrganizationsEndpointAttachmentsGetCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Endpoint Attachment in the following format: `organizations/{organization}/endpointAttachments/{endpoint_attachment}`.",
+	//       "description": "Required. Name of the endpoint attachment. Use the following structure in your request: `organizations/{org}/endpointAttachments/{endpoint_attachment}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/endpointAttachments/[^/]+$",
 	//       "required": true,
@@ -24748,10 +24748,11 @@ type OrganizationsEndpointAttachmentsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the EndpointAttachments in the specified Organization.
+// List: Lists the endpoint attachments in an organization.
 //
-// - parent: Name of the Organization for which to list Endpoint
-//   Attachments in the format: `organizations/{organization}`.
+// - parent: Name of the organization for which to list endpoint
+//   attachments. Use the following structure in your request:
+//   `organizations/{org}`.
 func (r *OrganizationsEndpointAttachmentsService) List(parent string) *OrganizationsEndpointAttachmentsListCall {
 	c := &OrganizationsEndpointAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24759,7 +24760,7 @@ func (r *OrganizationsEndpointAttachmentsService) List(parent string) *Organizat
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// Endpoint Attachments to return. If unspecified, at most 25
+// endpoint attachments to return. If unspecified, at most 25
 // attachments will be returned.
 func (c *OrganizationsEndpointAttachmentsListCall) PageSize(pageSize int64) *OrganizationsEndpointAttachmentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -24767,7 +24768,7 @@ func (c *OrganizationsEndpointAttachmentsListCall) PageSize(pageSize int64) *Org
 }
 
 // PageToken sets the optional parameter "pageToken": Page token,
-// returned from a previous ListEndpointAttachments call, that you can
+// returned from a previous `ListEndpointAttachments` call, that you can
 // use to retrieve the next page.
 func (c *OrganizationsEndpointAttachmentsListCall) PageToken(pageToken string) *OrganizationsEndpointAttachmentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -24875,7 +24876,7 @@ func (c *OrganizationsEndpointAttachmentsListCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the EndpointAttachments in the specified Organization.",
+	//   "description": "Lists the endpoint attachments in an organization.",
 	//   "flatPath": "v1/organizations/{organizationsId}/endpointAttachments",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.endpointAttachments.list",
@@ -24884,18 +24885,18 @@ func (c *OrganizationsEndpointAttachmentsListCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. Maximum number of Endpoint Attachments to return. If unspecified, at most 25 attachments will be returned.",
+	//       "description": "Optional. Maximum number of endpoint attachments to return. If unspecified, at most 25 attachments will be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Page token, returned from a previous ListEndpointAttachments call, that you can use to retrieve the next page.",
+	//       "description": "Optional. Page token, returned from a previous `ListEndpointAttachments` call, that you can use to retrieve the next page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the Organization for which to list Endpoint Attachments in the format: `organizations/{organization}`.",
+	//       "description": "Required. Name of the organization for which to list endpoint attachments. Use the following structure in your request: `organizations/{org}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,

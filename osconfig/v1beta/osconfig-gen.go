@@ -652,13 +652,16 @@ type ExecStepConfig struct {
 	// (https://en.wikipedia.org/wiki/Shebang_\(Unix\)).
 	//
 	// Possible values:
-	//   "INTERPRETER_UNSPECIFIED" - Invalid for a Windows ExecStepConfig.
-	// For a Linux ExecStepConfig, the interpreter will be parsed from the
-	// shebang line of the script if unspecified.
-	//   "SHELL" - Indicates that the script is run with `/bin/sh` on Linux
+	//   "INTERPRETER_UNSPECIFIED" - If the interpreter is not specified,
+	// the value defaults to `NONE`.
+	//   "NONE" - Indicates that the file is run as follows on each
+	// operating system: + For Linux VMs, the file is ran as an executable
+	// and the interpreter might be parsed from the [shebang
+	// line](https://wikipedia.org/wiki/Shebang_(Unix)) of the file. + For
+	// Windows VM, this value is not supported.
+	//   "SHELL" - Indicates that the file is run with `/bin/sh` on Linux
 	// and `cmd` on Windows.
-	//   "POWERSHELL" - Indicates that the file is run with PowerShell flags
-	// `-NonInteractive`, `-NoProfile`, and `-ExecutionPolicy Bypass`.
+	//   "POWERSHELL" - Indicates that the file is run with PowerShell.
 	Interpreter string `json:"interpreter,omitempty"`
 
 	// LocalPath: An absolute path to the executable on the VM.

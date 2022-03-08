@@ -468,6 +468,7 @@ type CloudSqlSettings struct {
 	//   "MYSQL_8_0" - MySQL 8.0.
 	//   "POSTGRES_12" - PostgreSQL 12.
 	//   "POSTGRES_13" - PostgreSQL 13.
+	//   "POSTGRES_14" - PostgreSQL 14.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
 	// IpConfig: The settings for IP Management. This allows to enable or
@@ -662,6 +663,65 @@ type DatabaseType struct {
 
 func (s *DatabaseType) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DumpFlag: Dump flag definition.
+type DumpFlag struct {
+	// Name: The name of the flag
+	Name string `json:"name,omitempty"`
+
+	// Value: The value of the flag.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DumpFlag) MarshalJSON() ([]byte, error) {
+	type NoMethod DumpFlag
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DumpFlags: Dump flags definition.
+type DumpFlags struct {
+	// DumpFlags: The flags for the initial dump.
+	DumpFlags []*DumpFlag `json:"dumpFlags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DumpFlags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DumpFlags") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DumpFlags) MarshalJSON() ([]byte, error) {
+	type NoMethod DumpFlags
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1054,8 +1114,13 @@ type MigrationJob struct {
 	// DisplayName: The migration job display name.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// DumpFlags: The initial dump flags. This field and the "dump_path"
+	// field are mutually exclusive.
+	DumpFlags *DumpFlags `json:"dumpFlags,omitempty"`
+
 	// DumpPath: The path to the dump file in Google Cloud Storage, in the
-	// format: (gs://[BUCKET_NAME]/[OBJECT_NAME]).
+	// format: (gs://[BUCKET_NAME]/[OBJECT_NAME]). This field and the
+	// "dump_flags" field are mutually exclusive.
 	DumpPath string `json:"dumpPath,omitempty"`
 
 	// Duration: Output only. The duration of the migration job (in

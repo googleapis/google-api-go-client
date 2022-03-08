@@ -1548,9 +1548,9 @@ type GoogleCloudSecuritycenterV1ExternalSystem struct {
 	ExternalUid string `json:"externalUid,omitempty"`
 
 	// Name: External System Name e.g. jira, demisto, etc. e.g.:
-	// organizations/1234/sources/5678/findings/123456/externalSystems/jira
-	// folders/1234/sources/5678/findings/123456/externalSystems/jira
-	// projects/1234/sources/5678/findings/123456/externalSystems/jira
+	// `organizations/1234/sources/5678/findings/123456/externalSystems/jira`
+	//  `folders/1234/sources/5678/findings/123456/externalSystems/jira`
+	// `projects/1234/sources/5678/findings/123456/externalSystems/jira`
 	Name string `json:"name,omitempty"`
 
 	// Status: Most recent status of the corresponding finding's
@@ -3016,9 +3016,9 @@ type MitreAttack struct {
 	// represented by this finding, if any. primary_techniques is a repeated
 	// field because there are multiple levels of MITRE ATT&CK techniques.
 	// If the technique most closely represented by this finding is a
-	// sub-technique (e.g. SCANNING_IP_BLOCKS), both the sub-technique and
-	// its parent technique(s) will be listed (e.g. SCANNING_IP_BLOCKS,
-	// ACTIVE_SCANNING).
+	// sub-technique (e.g. `SCANNING_IP_BLOCKS`), both the sub-technique and
+	// its parent technique(s) will be listed (e.g. `SCANNING_IP_BLOCKS`,
+	// `ACTIVE_SCANNING`).
 	//
 	// Possible values:
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
@@ -7711,9 +7711,9 @@ type FoldersSourcesFindingsExternalSystemsPatchCall struct {
 // Patch: Updates external system. This is for a given finding.
 //
 // - name: External System Name e.g. jira, demisto, etc. e.g.:
-//   organizations/1234/sources/5678/findings/123456/externalSystems/jira
-//    folders/1234/sources/5678/findings/123456/externalSystems/jira
-//   projects/1234/sources/5678/findings/123456/externalSystems/jira.
+//   `organizations/1234/sources/5678/findings/123456/externalSystems/jir
+//   a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
+//   `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
 func (r *FoldersSourcesFindingsExternalSystemsService) Patch(name string, googlecloudsecuritycenterv1externalsystem *GoogleCloudSecuritycenterV1ExternalSystem) *FoldersSourcesFindingsExternalSystemsPatchCall {
 	c := &FoldersSourcesFindingsExternalSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7831,7 +7831,7 @@ func (c *FoldersSourcesFindingsExternalSystemsPatchCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "External System Name e.g. jira, demisto, etc. e.g.: organizations/1234/sources/5678/findings/123456/externalSystems/jira folders/1234/sources/5678/findings/123456/externalSystems/jira projects/1234/sources/5678/findings/123456/externalSystems/jira",
+	//       "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
 	//       "required": true,
@@ -14568,9 +14568,9 @@ type OrganizationsSourcesFindingsExternalSystemsPatchCall struct {
 // Patch: Updates external system. This is for a given finding.
 //
 // - name: External System Name e.g. jira, demisto, etc. e.g.:
-//   organizations/1234/sources/5678/findings/123456/externalSystems/jira
-//    folders/1234/sources/5678/findings/123456/externalSystems/jira
-//   projects/1234/sources/5678/findings/123456/externalSystems/jira.
+//   `organizations/1234/sources/5678/findings/123456/externalSystems/jir
+//   a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
+//   `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
 func (r *OrganizationsSourcesFindingsExternalSystemsService) Patch(name string, googlecloudsecuritycenterv1externalsystem *GoogleCloudSecuritycenterV1ExternalSystem) *OrganizationsSourcesFindingsExternalSystemsPatchCall {
 	c := &OrganizationsSourcesFindingsExternalSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14688,7 +14688,7 @@ func (c *OrganizationsSourcesFindingsExternalSystemsPatchCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "External System Name e.g. jira, demisto, etc. e.g.: organizations/1234/sources/5678/findings/123456/externalSystems/jira folders/1234/sources/5678/findings/123456/externalSystems/jira projects/1234/sources/5678/findings/123456/externalSystems/jira",
+	//       "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
 	//       "required": true,
@@ -18503,9 +18503,9 @@ type ProjectsSourcesFindingsExternalSystemsPatchCall struct {
 // Patch: Updates external system. This is for a given finding.
 //
 // - name: External System Name e.g. jira, demisto, etc. e.g.:
-//   organizations/1234/sources/5678/findings/123456/externalSystems/jira
-//    folders/1234/sources/5678/findings/123456/externalSystems/jira
-//   projects/1234/sources/5678/findings/123456/externalSystems/jira.
+//   `organizations/1234/sources/5678/findings/123456/externalSystems/jir
+//   a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
+//   `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
 func (r *ProjectsSourcesFindingsExternalSystemsService) Patch(name string, googlecloudsecuritycenterv1externalsystem *GoogleCloudSecuritycenterV1ExternalSystem) *ProjectsSourcesFindingsExternalSystemsPatchCall {
 	c := &ProjectsSourcesFindingsExternalSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18623,7 +18623,7 @@ func (c *ProjectsSourcesFindingsExternalSystemsPatchCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "External System Name e.g. jira, demisto, etc. e.g.: organizations/1234/sources/5678/findings/123456/externalSystems/jira folders/1234/sources/5678/findings/123456/externalSystems/jira projects/1234/sources/5678/findings/123456/externalSystems/jira",
+	//       "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
 	//       "required": true,

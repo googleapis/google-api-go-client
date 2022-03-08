@@ -508,11 +508,12 @@ type CancelPatchJobRequest struct {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -611,13 +612,16 @@ type ExecStepConfig struct {
 	// (https://en.wikipedia.org/wiki/Shebang_\(Unix\)).
 	//
 	// Possible values:
-	//   "INTERPRETER_UNSPECIFIED" - Invalid for a Windows ExecStepConfig.
-	// For a Linux ExecStepConfig, the interpreter will be parsed from the
-	// shebang line of the script if unspecified.
-	//   "SHELL" - Indicates that the script is run with `/bin/sh` on Linux
+	//   "INTERPRETER_UNSPECIFIED" - If the interpreter is not specified,
+	// the value defaults to `NONE`.
+	//   "NONE" - Indicates that the file is run as follows on each
+	// operating system: + For Linux VMs, the file is ran as an executable
+	// and the interpreter might be parsed from the [shebang
+	// line](https://wikipedia.org/wiki/Shebang_(Unix)) of the file. + For
+	// Windows VM, this value is not supported.
+	//   "SHELL" - Indicates that the file is run with `/bin/sh` on Linux
 	// and `cmd` on Windows.
-	//   "POWERSHELL" - Indicates that the file is run with PowerShell flags
-	// `-NonInteractive`, `-NoProfile`, and `-ExecutionPolicy Bypass`.
+	//   "POWERSHELL" - Indicates that the file is run with PowerShell.
 	Interpreter string `json:"interpreter,omitempty"`
 
 	// LocalPath: An absolute path to the executable on the VM.

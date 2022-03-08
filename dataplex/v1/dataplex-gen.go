@@ -1511,11 +1511,12 @@ type GoogleCloudDataplexV1Entity struct {
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Optional. Display name must be shorter than or equal to
-	// 63 characters.
+	// 256 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Etag: Optional. The etag for this entity. Required for update and
-	// delete requests. Must match the server's etag.
+	// Etag: Optional. The etag associated with the entity, which can be
+	// retrieved with a GetEntity request. Required for update and delete
+	// requests.
 	Etag string `json:"etag,omitempty"`
 
 	// Format: Required. Identifies the storage format of the entity data.
@@ -1526,7 +1527,7 @@ type GoogleCloudDataplexV1Entity struct {
 	// used as the published table name. Specifying a new ID in an update
 	// entity request will override the existing value. The ID must contain
 	// only letters (a-z, A-Z), numbers (0-9), and underscores. Must begin
-	// with a letter.
+	// with a letter and consist of 256 or fewer characters.
 	Id string `json:"id,omitempty"`
 
 	// Name: Output only. The resource name of the entity, of the form:
@@ -2731,14 +2732,11 @@ type GoogleCloudDataplexV1Partition struct {
 	// projects//datasets//tables/
 	Location string `json:"location,omitempty"`
 
-	// Name: Output only. The values must be HTML URL encoded two times
-	// before constructing the path. For example, if you have a value of
-	// "US:CA", encoded it two times and you get "US%253ACA". Then if you
-	// have the 2nd value is "CA#Sunnyvale", encoded two times and you get
-	// "CA%2523Sunnyvale". The partition values path is
-	// "US%253ACA/CA%2523Sunnyvale". The final URL will be
-	// "https://.../partitions/US%253ACA/CA%2523Sunnyvale". The name field
-	// in the responses will always have the encoded format.
+	// Name: Output only. Partition values used in the HTTP URL must be
+	// double encoded. For example, url_encode(url_encode(value)) can be
+	// used to encode "US:CA/CA#Sunnyvale so that the request URL ends with
+	// "/partitions/US%253ACA/CA%2523Sunnyvale". The name field in the
+	// response retains the encoded format.
 	Name string `json:"name,omitempty"`
 
 	// Values: Required. Immutable. The set of values representing the
@@ -2777,7 +2775,7 @@ func (s *GoogleCloudDataplexV1Partition) MarshalJSON() ([]byte, error) {
 // structure and layout of the data.
 type GoogleCloudDataplexV1Schema struct {
 	// Fields: Optional. The sequence of fields describing data in table
-	// entities.
+	// entities. Note: BigQuery SchemaFields are immutable.
 	Fields []*GoogleCloudDataplexV1SchemaSchemaField `json:"fields,omitempty"`
 
 	// PartitionFields: Optional. The sequence of fields describing the
@@ -2795,24 +2793,16 @@ type GoogleCloudDataplexV1Schema struct {
 	// gs://bucket/path/to/table/dt=2019-10-31/lang=en/late.
 	PartitionStyle string `json:"partitionStyle,omitempty"`
 
-	// UserManaged: Required. Whether the schema is user-managed or managed
-	// by the service. - Set user_manage to false if you would like Dataplex
-	// to help you manage the schema. You will get the full service provided
-	// by Dataplex discovery, including new data discovery, schema inference
-	// and schema evolution. You can still provide input the schema of the
-	// entities, for example renaming a schema field, changing CSV or Json
-	// options if you think the discovered values are not as accurate.
-	// Dataplex will consider your input as the initial schema (as if they
-	// were produced by the previous discovery run), and will evolve schema
-	// or flag actions based on that. - Set user_manage to true if you would
-	// like to fully manage the entity schema by yourself. This is useful
-	// when you would like to manually specify the schema for a table. In
-	// this case, the schema defined by the user is guaranteed to be kept
-	// unchanged and would not be overwritten. But this also means Dataplex
-	// will not provide schema evolution management for you. Dataplex will
-	// still be able to manage partition registration (i.e., keeping the
-	// list of partitions up to date) when Dataplex discovery is turned on
-	// and user_managed is set to true.
+	// UserManaged: Required. Set to true if user-managed or false if
+	// managed by Dataplex. The default is false (managed by Dataplex). Set
+	// to falseto enable Dataplex discovery to update the schema. including
+	// new data discovery, schema inference, and schema evolution. Users
+	// retain the ability to input and edit the schema. Dataplex treats
+	// schema input by the user as though produced by a previous Dataplex
+	// discovery operation, and it will evolve the schema and take action
+	// based on that treatment. Set to true to fully manage the entity
+	// schema. This setting guarantees that Dataplex will not change schema
+	// fields.
 	UserManaged bool `json:"userManaged,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
@@ -2841,11 +2831,12 @@ func (s *GoogleCloudDataplexV1Schema) MarshalJSON() ([]byte, error) {
 // GoogleCloudDataplexV1SchemaPartitionField: Represents a key field
 // within the entity's partition structure. You could have up to 20
 // partition fields, but only the first 10 partitions have the filtering
-// ability due to performance consideration.
+// ability due to performance consideration. Note: Partition fields are
+// immutable.
 type GoogleCloudDataplexV1SchemaPartitionField struct {
-	// Name: Required. Partition name is editable if only the partition
-	// style is not HIVE compatible. The maximum length allowed is 767
-	// characters.
+	// Name: Required. Partition field name must consist of letters,
+	// numbers, and underscores only, with a maximum of length of 256
+	// characters, and must begin with a letter or underscore..
 	Name string `json:"name,omitempty"`
 
 	// Type: Required. Immutable. The type of field.
@@ -2914,9 +2905,9 @@ type GoogleCloudDataplexV1SchemaSchemaField struct {
 	// list of values.
 	Mode string `json:"mode,omitempty"`
 
-	// Name: Required. The name of the field. The maximum length is 767
-	// characters. The name must begins with a letter and not contains : and
-	// ..
+	// Name: Required. The name of the field. Must contain only letters,
+	// numbers and underscores, with a maximum length of 767 characters, and
+	// must begin with a letter or underscore.
 	Name string `json:"name,omitempty"`
 
 	// Type: Required. The type of field.
@@ -3149,11 +3140,10 @@ type GoogleCloudDataplexV1StorageFormat struct {
 	Json *GoogleCloudDataplexV1StorageFormatJsonOptions `json:"json,omitempty"`
 
 	// MimeType: Required. The mime type descriptor for the data. Must match
-	// the pattern {type}/{subtype}. Supported values: -
-	// application/x-parquet - application/x-avro - application/x-orc -
-	// application/x-tfrecord - application/json - application/{subtypes} -
-	// text/csv - text/ - image/{image subtype} - video/{video subtype} -
-	// audio/{audio subtype}
+	// the pattern {type}/{subtype}. Supported values: application/x-parquet
+	// application/x-avro application/x-orc application/x-tfrecord
+	// application/json application/{subtypes} text/csv text/ image/{image
+	// subtype} video/{video subtype} audio/{audio subtype}
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CompressionFormat")
@@ -3197,7 +3187,8 @@ type GoogleCloudDataplexV1StorageFormatCsvOptions struct {
 	HeaderRows int64 `json:"headerRows,omitempty"`
 
 	// Quote: Optional. The character used to quote column values. Accepts
-	// '"' and '''. Defaults to '"' if unspecified.
+	// '"' (double quotation mark) or ''' (single quotation mark). Defaults
+	// to '"' (double quotation mark) if unspecified.
 	Quote string `json:"quote,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Delimiter") to
@@ -14337,7 +14328,8 @@ func (r *ProjectsLocationsLakesZonesEntitiesService) Delete(name string) *Projec
 }
 
 // Etag sets the optional parameter "etag": Required. The etag
-// associated with the partition if it was previously retrieved.
+// associated with the entity, which can be retrieved with a GetEntity
+// request.
 func (c *ProjectsLocationsLakesZonesEntitiesDeleteCall) Etag(etag string) *ProjectsLocationsLakesZonesEntitiesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -14438,7 +14430,7 @@ func (c *ProjectsLocationsLakesZonesEntitiesDeleteCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "Required. The etag associated with the partition if it was previously retrieved.",
+	//       "description": "Required. The etag associated with the entity, which can be retrieved with a GetEntity request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14666,8 +14658,8 @@ func (r *ProjectsLocationsLakesZonesEntitiesService) List(parent string) *Projec
 // parameters can be added to the URL to limit the entities returned by
 // the API: Entity ID: ?filter="id=entityID" Asset ID:
 // ?filter="asset=assetID" Data path ?filter="data_path=gs://my-bucket"
-// Is HIVE compatible: ?filter=”hive_compatible=true” Is BigQuery
-// compatible: ?filter=”bigquery_compatible=true”
+// Is HIVE compatible: ?filter="hive_compatible=true" Is BigQuery
+// compatible: ?filter="bigquery_compatible=true"
 func (c *ProjectsLocationsLakesZonesEntitiesListCall) Filter(filter string) *ProjectsLocationsLakesZonesEntitiesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -14695,8 +14687,8 @@ func (c *ProjectsLocationsLakesZonesEntitiesListCall) PageToken(pageToken string
 // view to make a partial list request.
 //
 // Possible values:
-//   "ENTITY_VIEW_UNSPECIFIED" - The default unset value. The API will
-// default to the FULL view.
+//   "ENTITY_VIEW_UNSPECIFIED" - The default unset value. Return both
+// table and fileset entities if unspecified.
 //   "TABLES" - Only list table entities.
 //   "FILESETS" - Only list fileset entities.
 func (c *ProjectsLocationsLakesZonesEntitiesListCall) View(view string) *ProjectsLocationsLakesZonesEntitiesListCall {
@@ -14814,7 +14806,7 @@ func (c *ProjectsLocationsLakesZonesEntitiesListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The following filter parameters can be added to the URL to limit the entities returned by the API: Entity ID: ?filter=\"id=entityID\" Asset ID: ?filter=\"asset=assetID\" Data path ?filter=\"data_path=gs://my-bucket\" Is HIVE compatible: ?filter=”hive_compatible=true” Is BigQuery compatible: ?filter=”bigquery_compatible=true”",
+	//       "description": "Optional. The following filter parameters can be added to the URL to limit the entities returned by the API: Entity ID: ?filter=\"id=entityID\" Asset ID: ?filter=\"asset=assetID\" Data path ?filter=\"data_path=gs://my-bucket\" Is HIVE compatible: ?filter=\"hive_compatible=true\" Is BigQuery compatible: ?filter=\"bigquery_compatible=true\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14844,7 +14836,7 @@ func (c *ProjectsLocationsLakesZonesEntitiesListCall) Do(opts ...googleapi.CallO
 	//         "FILESETS"
 	//       ],
 	//       "enumDescriptions": [
-	//         "The default unset value. The API will default to the FULL view.",
+	//         "The default unset value. Return both table and fileset entities if unspecified.",
 	//         "Only list table entities.",
 	//         "Only list fileset entities."
 	//       ],
@@ -15223,7 +15215,7 @@ func (r *ProjectsLocationsLakesZonesEntitiesPartitionsService) Delete(name strin
 }
 
 // Etag sets the optional parameter "etag": The etag associated with the
-// partition if it was previously retrieved.
+// partition.
 func (c *ProjectsLocationsLakesZonesEntitiesPartitionsDeleteCall) Etag(etag string) *ProjectsLocationsLakesZonesEntitiesPartitionsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -15324,7 +15316,7 @@ func (c *ProjectsLocationsLakesZonesEntitiesPartitionsDeleteCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "Optional. The etag associated with the partition if it was previously retrieved.",
+	//       "description": "Optional. The etag associated with the partition.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15521,16 +15513,16 @@ func (r *ProjectsLocationsLakesZonesEntitiesPartitionsService) List(parent strin
 }
 
 // Filter sets the optional parameter "filter": Filter the partitions
-// returned to the caller using a key vslue pair expression. The filter
-// expression supports: logical operators: AND, OR comparison operators:
+// returned to the caller using a key value pair expression. Supported
+// operators and syntax: logic operators: AND, OR comparison operators:
 // <, >, >=, <= ,=, != LIKE operators: The right hand of a LIKE operator
-// supports “.” and “*” for wildcard searches, for example
-// "value1 LIKE ".*oo.*" parenthetical grouping: ( )Sample filter
-// expression: `?filter="key1 < value1 OR key2 > value2"Notes: Keys to
-// the left of operators are case insensitive. Partition results are
-// sorted first by creation time, then by lexicographic order. Up to 20
-// key value filter pairs are allowed, but due to performance
-// considerations, only the first 10 will be used as a filter.
+// supports "." and "*" for wildcard searches, for example "value1 LIKE
+// ".*oo.*" parenthetical grouping: ( )Sample filter expression:
+// `?filter="key1 < value1 OR key2 > value2"Notes: Keys to the left of
+// operators are case insensitive. Partition results are sorted first by
+// creation time, then by lexicographic order. Up to 20 key value filter
+// pairs are allowed, but due to performance considerations, only the
+// first 10 will be used as a filter.
 func (c *ProjectsLocationsLakesZonesEntitiesPartitionsListCall) Filter(filter string) *ProjectsLocationsLakesZonesEntitiesPartitionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -15666,7 +15658,7 @@ func (c *ProjectsLocationsLakesZonesEntitiesPartitionsListCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter the partitions returned to the caller using a key vslue pair expression. The filter expression supports: logical operators: AND, OR comparison operators: \u003c, \u003e, \u003e=, \u003c= ,=, != LIKE operators: The right hand of a LIKE operator supports “.” and “*” for wildcard searches, for example \"value1 LIKE \".*oo.*\" parenthetical grouping: ( )Sample filter expression: `?filter=\"key1 \u003c value1 OR key2 \u003e value2\"Notes: Keys to the left of operators are case insensitive. Partition results are sorted first by creation time, then by lexicographic order. Up to 20 key value filter pairs are allowed, but due to performance considerations, only the first 10 will be used as a filter.",
+	//       "description": "Optional. Filter the partitions returned to the caller using a key value pair expression. Supported operators and syntax: logic operators: AND, OR comparison operators: \u003c, \u003e, \u003e=, \u003c= ,=, != LIKE operators: The right hand of a LIKE operator supports \".\" and \"*\" for wildcard searches, for example \"value1 LIKE \".*oo.*\" parenthetical grouping: ( )Sample filter expression: `?filter=\"key1 \u003c value1 OR key2 \u003e value2\"Notes: Keys to the left of operators are case insensitive. Partition results are sorted first by creation time, then by lexicographic order. Up to 20 key value filter pairs are allowed, but due to performance considerations, only the first 10 will be used as a filter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

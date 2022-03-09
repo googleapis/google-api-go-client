@@ -802,7 +802,7 @@
       "name": "chat",
       "version": "v1",
       "title": "Google Chat API",
-      "description": "Enables bots to fetch information and perform actions in Google Chat. Authentication using a service account is a prerequisite for using the Google Chat REST API.",
+      "description": "Enables apps to fetch information and perform actions in Google Chat. Authentication using a service account is a prerequisite for using the Google Chat REST API.",
       "discoveryRestUrl": "https://chat.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

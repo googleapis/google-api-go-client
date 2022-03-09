@@ -579,6 +579,8 @@ type AppId struct {
 	//   "CONTACTS_APP"
 	//   "ACTIVITY_FEED_APP"
 	//   "DRIVE_APP"
+	//   "ASSISTIVE_SUGGESTION_APP" - TODO (b/220205747): replace the above
+	// FILE_SUGGESTION_APP in the future.
 	GsuiteAppType string `json:"gsuiteAppType,omitempty"`
 
 	// Id: Numeric identifier of the App. Set to Project number for 1/3P
@@ -1840,6 +1842,65 @@ func (s *DriveTimeSpanRestrict) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveTimeSpanRestrict
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DynamiteSpacesScoringInfo: This is the proto for holding space level
+// scoring information. This data is used for logging in query-api
+// server and for testing purposes.
+type DynamiteSpacesScoringInfo struct {
+	FinalScore float64 `json:"finalScore,omitempty"`
+
+	FreshnessScore float64 `json:"freshnessScore,omitempty"`
+
+	MessageScore float64 `json:"messageScore,omitempty"`
+
+	SpaceAgeInDays float64 `json:"spaceAgeInDays,omitempty"`
+
+	TopicalityScore float64 `json:"topicalityScore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FinalScore") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FinalScore") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DynamiteSpacesScoringInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamiteSpacesScoringInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *DynamiteSpacesScoringInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod DynamiteSpacesScoringInfo
+	var s1 struct {
+		FinalScore      gensupport.JSONFloat64 `json:"finalScore"`
+		FreshnessScore  gensupport.JSONFloat64 `json:"freshnessScore"`
+		MessageScore    gensupport.JSONFloat64 `json:"messageScore"`
+		SpaceAgeInDays  gensupport.JSONFloat64 `json:"spaceAgeInDays"`
+		TopicalityScore gensupport.JSONFloat64 `json:"topicalityScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FinalScore = float64(s1.FinalScore)
+	s.FreshnessScore = float64(s1.FreshnessScore)
+	s.MessageScore = float64(s1.MessageScore)
+	s.SpaceAgeInDays = float64(s1.SpaceAgeInDays)
+	s.TopicalityScore = float64(s1.TopicalityScore)
+	return nil
 }
 
 // EmailAddress: A person's email address.
@@ -6611,6 +6672,10 @@ type SpaceInfo struct {
 	Description string `json:"description,omitempty"`
 
 	GroupId *GroupId `json:"groupId,omitempty"`
+
+	// IsExternal: Whether this is an external space outside of user's
+	// organization
+	IsExternal bool `json:"isExternal,omitempty"`
 
 	Name string `json:"name,omitempty"`
 

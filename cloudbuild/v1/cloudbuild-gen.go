@@ -5780,7 +5780,7 @@ func (c *ProjectsBuildsListCall) PageToken(pageToken string) *ProjectsBuildsList
 
 // Parent sets the optional parameter "parent": The parent of the
 // collection of `Builds`. Format:
-// `projects/{project}/locations/location`
+// `projects/{project}/locations/{location}`
 func (c *ProjectsBuildsListCall) Parent(parent string) *ProjectsBuildsListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -5910,7 +5910,7 @@ func (c *ProjectsBuildsListCall) Do(opts ...googleapi.CallOption) (*ListBuildsRe
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent of the collection of `Builds`. Format: `projects/{project}/locations/location`",
+	//       "description": "The parent of the collection of `Builds`. Format: `projects/{project}/locations/{location}`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9011,7 +9011,7 @@ type ProjectsLocationsBuildsListCall struct {
 // unsuccessfully.
 //
 // - parent: The parent of the collection of `Builds`. Format:
-//   `projects/{project}/locations/location`.
+//   `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsBuildsService) List(parent string) *ProjectsLocationsBuildsListCall {
 	c := &ProjectsLocationsBuildsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9174,7 +9174,7 @@ func (c *ProjectsLocationsBuildsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent of the collection of `Builds`. Format: `projects/{project}/locations/location`",
+	//       "description": "The parent of the collection of `Builds`. Format: `projects/{project}/locations/{location}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

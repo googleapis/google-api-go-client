@@ -3330,8 +3330,8 @@ type Space struct {
 	// humans, this field might be empty.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Resource name of the space, in the form "spaces/*". Example:
-	// spaces/AAAAAAAAAAAA
+	// Name: Optional. Resource name of the space, in the form "spaces/*".
+	// Example: spaces/AAAAAAAAAAAA
 	Name string `json:"name,omitempty"`
 
 	// SingleUserBotDm: Output only. Whether the space is a DM between a bot
@@ -6491,7 +6491,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*At
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the attachment, in the form \"spaces/*/messages/*/attachments/*\".",
+	//       "description": "Required. Resource name of the attachment, in the form \"spaces/*/messages/*/attachments/*\".",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+/attachments/[^/]+$",
 	//       "required": true,

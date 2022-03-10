@@ -886,7 +886,7 @@ type CommonEventObject struct {
 	//   "SHEETS" - The add-on launches from Google Sheets.
 	//   "SLIDES" - The add-on launches from Google Slides.
 	//   "DRAWINGS" - The add-on launches from Google Drawings.
-	//   "CHAT" - A Google Chat app. Not used for Google Workspace add-ons.
+	//   "CHAT" - A Google Chat app. Not used for Google Workspace Add-ons.
 	HostApp string `json:"hostApp,omitempty"`
 
 	// InvokedFunction: Name of the invoked function associated with the
@@ -913,7 +913,7 @@ type CommonEventObject struct {
 	// (UTC).
 	TimeZone *TimeZone `json:"timeZone,omitempty"`
 
-	// UserLocale: The full locale.displayName in the format of [ISO 639
+	// UserLocale: The full `locale.displayName` in the format of [ISO 639
 	// language code]-[ISO 3166 country/region code] such as "en-US". Not
 	// supported by Chat apps.
 	UserLocale string `json:"userLocale,omitempty"`
@@ -1497,15 +1497,15 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // For example, the following JSON creates a card that has a header with
 // the name, position, icons, and link for a contact, followed by a
 // section with contact information like email and phone number. ``` {
-// "header": { "title": "Heba Salam", "subtitle": "Software Engineer",
+// "header": { "title": "Sasha", "subtitle": "Software Engineer",
 // "imageStyle": "ImageStyle.AVATAR", "imageUrl":
-// "https://example.com/heba_salam.png", "imageAltText": "Avatar for
-// Heba Salam" }, "sections" : [ { "header": "Contact Info", "widgets":
-// [ { "decorated_text": { "icon": { "knownIcon": "EMAIL" }, "content":
-// "heba.salam@example.com" } }, { "decoratedText": { "icon": {
-// "knownIcon": "PERSON" }, "content": "Online" } }, { "decoratedText":
-// { "icon": { "knownIcon": "PHONE" }, "content": "+1 (555) 555-1234" }
-// }, { "buttons": [ { "textButton": { "text": "Share", }, "onClick": {
+// "https://example.com/sasha.png", "imageAltText": "Avatar for Sasha"
+// }, "sections" : [ { "header": "Contact Info", "widgets": [ {
+// "decorated_text": { "icon": { "knownIcon": "EMAIL" }, "content":
+// "sasha@example.com" } }, { "decoratedText": { "icon": { "knownIcon":
+// "PERSON" }, "content": "Online" } }, { "decoratedText": { "icon": {
+// "knownIcon": "PHONE" }, "content": "+1 (555) 555-1234" } }, {
+// "buttons": [ { "textButton": { "text": "Share", }, "onClick": {
 // "openLink": { "url": "https://example.com/share" } } }, {
 // "textButton": { "text": "Edit", }, "onClick": { "action": {
 // "function": "goToView", "parameters": [ { "key": "viewType", "value":
@@ -2538,9 +2538,9 @@ type GoogleAppsCardV1Widget struct {
 	// DecoratedText: Displays a decorated text item in this widget. For
 	// example, the following JSON creates a decorated text widget showing
 	// email address: ``` "decoratedText": { "icon": { "knownIcon": "EMAIL"
-	// }, "topLabel": "Email Address", "content": "heba.salam@example.com",
+	// }, "topLabel": "Email Address", "content": "sasha@example.com",
 	// "bottomLabel": "This is a new Email address!", "switchWidget": {
-	// "name": "has_send_welcome_email_to_heba_salam", "selected": false,
+	// "name": "has_send_welcome_email_to_sasha", "selected": false,
 	// "controlType": "ControlType.CHECKBOX" } } ```
 	DecoratedText *GoogleAppsCardV1DecoratedText `json:"decoratedText,omitempty"`
 
@@ -2569,8 +2569,8 @@ type GoogleAppsCardV1Widget struct {
 
 	// Image: Displays an image in this widget. For example, the following
 	// JSON creates an image with alternative text: ``` "image": {
-	// "imageUrl": "https://example.com/heba_salam.png" "altText": "Avatar
-	// for Heba Salam" } ```
+	// "imageUrl": "https://example.com/sasha.png" "altText": "Avatar for
+	// Sasha" } ```
 	Image *GoogleAppsCardV1Image `json:"image,omitempty"`
 
 	// SelectionInput: Displays a switch control in this widget. For
@@ -3016,7 +3016,9 @@ type Membership struct {
 
 	// Member: A user in Google Chat. Represents a person
 	// (https://developers.google.com/people/api/rest/v1/people) in the
-	// People API. Format: `users/{person}`
+	// People API or a user
+	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
+	// in the Admin SDK Directory API. Format: `users/{user}`
 	Member *User `json:"member,omitempty"`
 
 	Name string `json:"name,omitempty"`
@@ -3328,8 +3330,8 @@ type Space struct {
 	// humans, this field might be empty.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Resource name of the space, in the form "spaces/*". Example:
-	// spaces/AAAAAAAAAAAA
+	// Name: Optional. Resource name of the space, in the form "spaces/*".
+	// Example: spaces/AAAAAAAAAAAA
 	Name string `json:"name,omitempty"`
 
 	// SingleUserBotDm: Output only. Whether the space is a DM between a bot
@@ -3617,10 +3619,11 @@ type User struct {
 	// not visible.
 	IsAnonymous bool `json:"isAnonymous,omitempty"`
 
-	// Name: Resource name for a Google Chat user. Formatted as
-	// `users/{user}`. Represents a person
+	// Name: Resource name for a Google Chat user. Represents a person
 	// (https://developers.google.com/people/api/rest/v1/people#Person) in
-	// the People API.
+	// the People API or a user
+	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
+	// in the Admin SDK Directory API. Formatted as: `users/{user}`
 	Name string `json:"name,omitempty"`
 
 	// Type: User type.
@@ -3753,9 +3756,8 @@ func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall 
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *DmsMessagesCall) RequestId(requestId string) *DmsMessagesCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -3882,7 +3884,7 @@ func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3927,9 +3929,8 @@ func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall 
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *DmsWebhooksCall) RequestId(requestId string) *DmsWebhooksCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -4056,7 +4057,7 @@ func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4101,9 +4102,8 @@ func (r *DmsConversationsService) Messages(parent string, message *Message) *Dms
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *DmsConversationsMessagesCall) RequestId(requestId string) *DmsConversationsMessagesCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -4230,7 +4230,7 @@ func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Messag
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4437,9 +4437,8 @@ func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesC
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *RoomsMessagesCall) RequestId(requestId string) *RoomsMessagesCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -4566,7 +4565,7 @@ func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4611,9 +4610,8 @@ func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksC
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *RoomsWebhooksCall) RequestId(requestId string) *RoomsWebhooksCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -4740,7 +4738,7 @@ func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4785,9 +4783,8 @@ func (r *RoomsConversationsService) Messages(parent string, message *Message) *R
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *RoomsConversationsMessagesCall) RequestId(requestId string) *RoomsConversationsMessagesCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -4914,7 +4911,7 @@ func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Mess
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5277,9 +5274,8 @@ func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhook
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *SpacesWebhooksCall) RequestId(requestId string) *SpacesWebhooksCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -5406,7 +5402,7 @@ func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) 
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5786,9 +5782,8 @@ func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesM
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -5915,7 +5910,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6496,7 +6491,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*At
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the attachment, in the form \"spaces/*/messages/*/attachments/*\".",
+	//       "description": "Required. Resource name of the attachment, in the form \"spaces/*/messages/*/attachments/*\".",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+/attachments/[^/]+$",
 	//       "required": true,

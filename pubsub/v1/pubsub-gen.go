@@ -882,9 +882,9 @@ type OidcToken struct {
 
 	// ServiceAccountEmail: Service account email
 	// (https://cloud.google.com/iam/docs/service-accounts) to be used for
-	// generating the OIDC token. The caller (for CreateSubscription,
-	// UpdateSubscription, and ModifyPushConfig RPCs) must have the
-	// iam.serviceAccounts.actAs permission for the service account.
+	// generating the OIDC token. See Setting up push authentication
+	// (/pubsub/docs/push#setting_up_for_push_authentication) for more
+	// details.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audience") to
@@ -1367,6 +1367,13 @@ type Schema struct {
 	// Name: Required. Name of the schema. Format is
 	// `projects/{project}/schemas/{schema}`.
 	Name string `json:"name,omitempty"`
+
+	// RevisionCreateTime: Output only. The timestamp that the revision was
+	// created.
+	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
+
+	// RevisionId: Output only. Immutable. The revision ID of the schema.
+	RevisionId string `json:"revisionId,omitempty"`
 
 	// Type: The type of the schema definition.
 	//

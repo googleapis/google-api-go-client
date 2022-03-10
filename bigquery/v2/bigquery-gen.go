@@ -1641,6 +1641,39 @@ func (s *CategoryCount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type CloneDefinition struct {
+	// BaseTableReference: [Required] Reference describing the ID of the
+	// table that was cloned.
+	BaseTableReference *TableReference `json:"baseTableReference,omitempty"`
+
+	// CloneTime: [Required] The time at which the base table was cloned.
+	// This value is reported in the JSON response using RFC3339 format.
+	CloneTime string `json:"cloneTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseTableReference")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseTableReference") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloneDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod CloneDefinition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Cluster: Message containing the information about one cluster.
 type Cluster struct {
 	// CentroidId: Centroid id.
@@ -1974,6 +2007,9 @@ type DataSplitResult struct {
 	// EvaluationTable: Table reference of the evaluation data after split.
 	EvaluationTable *TableReference `json:"evaluationTable,omitempty"`
 
+	// TestTable: Table reference of the test data after split.
+	TestTable *TableReference `json:"testTable,omitempty"`
+
 	// TrainingTable: Table reference of the training data after split.
 	TrainingTable *TableReference `json:"trainingTable,omitempty"`
 
@@ -2250,7 +2286,7 @@ type DatasetAccessEntry struct {
 	//   "TARGET_TYPE_UNSPECIFIED" - Do not use. You must set a target type
 	// explicitly.
 	//   "VIEWS" - This entry applies to views in the dataset.
-	TargetTypes []string `json:"target_types,omitempty"`
+	TargetTypes []string `json:"targetTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dataset") to
 	// unconditionally include in API requests. By default, fields with
@@ -2446,6 +2482,52 @@ func (s *DestinationTableProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DimensionalityReductionMetrics: Model evaluation metrics for
+// dimensionality reduction models.
+type DimensionalityReductionMetrics struct {
+	// TotalExplainedVarianceRatio: Total percentage of variance explained
+	// by the selected principal components.
+	TotalExplainedVarianceRatio float64 `json:"totalExplainedVarianceRatio,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TotalExplainedVarianceRatio") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "TotalExplainedVarianceRatio") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DimensionalityReductionMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod DimensionalityReductionMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *DimensionalityReductionMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod DimensionalityReductionMetrics
+	var s1 struct {
+		TotalExplainedVarianceRatio gensupport.JSONFloat64 `json:"totalExplainedVarianceRatio"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TotalExplainedVarianceRatio = float64(s1.TotalExplainedVarianceRatio)
+	return nil
+}
+
 type DmlStatistics struct {
 	// DeletedRowCount: Number of deleted Rows. populated by DML DELETE,
 	// MERGE and TRUNCATE statements.
@@ -2481,6 +2563,112 @@ func (s *DmlStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod DmlStatistics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DoubleCandidates: Discrete candidates of a double hyperparameter.
+type DoubleCandidates struct {
+	// Candidates: Candidates for the double parameter in increasing order.
+	Candidates []float64 `json:"candidates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Candidates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Candidates") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DoubleCandidates) MarshalJSON() ([]byte, error) {
+	type NoMethod DoubleCandidates
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DoubleHparamSearchSpace: Search space for a double hyperparameter.
+type DoubleHparamSearchSpace struct {
+	// Candidates: Candidates of the double hyperparameter.
+	Candidates *DoubleCandidates `json:"candidates,omitempty"`
+
+	// Range: Range of the double hyperparameter.
+	Range *DoubleRange `json:"range,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Candidates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Candidates") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DoubleHparamSearchSpace) MarshalJSON() ([]byte, error) {
+	type NoMethod DoubleHparamSearchSpace
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DoubleRange: Range of a double hyperparameter.
+type DoubleRange struct {
+	// Max: Max value of the double parameter.
+	Max float64 `json:"max,omitempty"`
+
+	// Min: Min value of the double parameter.
+	Min float64 `json:"min,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Max") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Max") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DoubleRange) MarshalJSON() ([]byte, error) {
+	type NoMethod DoubleRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *DoubleRange) UnmarshalJSON(data []byte) error {
+	type NoMethod DoubleRange
+	var s1 struct {
+		Max gensupport.JSONFloat64 `json:"max"`
+		Min gensupport.JSONFloat64 `json:"min"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Max = float64(s1.Max)
+	s.Min = float64(s1.Min)
+	return nil
 }
 
 type EncryptionConfiguration struct {
@@ -2597,6 +2785,10 @@ type EvaluationMetrics struct {
 
 	// ClusteringMetrics: Populated for clustering models.
 	ClusteringMetrics *ClusteringMetrics `json:"clusteringMetrics,omitempty"`
+
+	// DimensionalityReductionMetrics: Evaluation metrics when the model is
+	// a dimensionality reduction model, which currently includes PCA.
+	DimensionalityReductionMetrics *DimensionalityReductionMetrics `json:"dimensionalityReductionMetrics,omitempty"`
 
 	// MultiClassClassificationMetrics: Populated for multi-class
 	// classification/classifier models.
@@ -2821,6 +3013,53 @@ func (s *ExplainQueryStep) MarshalJSON() ([]byte, error) {
 	type NoMethod ExplainQueryStep
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Explanation: Explanation for a single feature.
+type Explanation struct {
+	// Attribution: Attribution of feature.
+	Attribution float64 `json:"attribution,omitempty"`
+
+	// FeatureName: Full name of the feature. For non-numerical features,
+	// will be formatted like .. Overall size of feature name will always be
+	// truncated to first 120 characters.
+	FeatureName string `json:"featureName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attribution") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attribution") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Explanation) MarshalJSON() ([]byte, error) {
+	type NoMethod Explanation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Explanation) UnmarshalJSON(data []byte) error {
+	type NoMethod Explanation
+	var s1 struct {
+		Attribution gensupport.JSONFloat64 `json:"attribution"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Attribution = float64(s1.Attribution)
+	return nil
 }
 
 // Expr: Represents a textual expression in the Common Expression
@@ -3250,6 +3489,41 @@ func (s *GetServiceAccountResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GlobalExplanation: Global explanations containing the top most
+// important features after training.
+type GlobalExplanation struct {
+	// ClassLabel: Class label for this set of global explanations. Will be
+	// empty/null for binary logistic and linear regression models. Sorted
+	// alphabetically in descending order.
+	ClassLabel string `json:"classLabel,omitempty"`
+
+	// Explanations: A list of the top global explanations. Sorted by
+	// absolute value of attribution in descending order.
+	Explanations []*Explanation `json:"explanations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClassLabel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClassLabel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GlobalExplanation) MarshalJSON() ([]byte, error) {
+	type NoMethod GlobalExplanation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleSheetsOptions struct {
 	// Range: [Optional] Range of a sheet to query from. Only used when
 	// non-empty. Typical format:
@@ -3346,6 +3620,335 @@ type HivePartitioningOptions struct {
 
 func (s *HivePartitioningOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod HivePartitioningOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HparamSearchSpaces: Hyperparameter search spaces. These should be a
+// subset of training_options.
+type HparamSearchSpaces struct {
+	// ActivationFn: Activation functions of neural network models.
+	ActivationFn *StringHparamSearchSpace `json:"activationFn,omitempty"`
+
+	// BatchSize: Mini batch sample size.
+	BatchSize *IntHparamSearchSpace `json:"batchSize,omitempty"`
+
+	// BoosterType: Booster type for boosted tree models.
+	BoosterType *StringHparamSearchSpace `json:"boosterType,omitempty"`
+
+	// ColsampleBylevel: Subsample ratio of columns for each level for
+	// boosted tree models.
+	ColsampleBylevel *DoubleHparamSearchSpace `json:"colsampleBylevel,omitempty"`
+
+	// ColsampleBynode: Subsample ratio of columns for each node(split) for
+	// boosted tree models.
+	ColsampleBynode *DoubleHparamSearchSpace `json:"colsampleBynode,omitempty"`
+
+	// ColsampleBytree: Subsample ratio of columns when constructing each
+	// tree for boosted tree models.
+	ColsampleBytree *DoubleHparamSearchSpace `json:"colsampleBytree,omitempty"`
+
+	// DartNormalizeType: Dart normalization type for boosted tree models.
+	DartNormalizeType *StringHparamSearchSpace `json:"dartNormalizeType,omitempty"`
+
+	// Dropout: Dropout probability for dnn model training and boosted tree
+	// models using dart booster.
+	Dropout *DoubleHparamSearchSpace `json:"dropout,omitempty"`
+
+	// HiddenUnits: Hidden units for neural network models.
+	HiddenUnits *IntArrayHparamSearchSpace `json:"hiddenUnits,omitempty"`
+
+	// L1Reg: L1 regularization coefficient.
+	L1Reg *DoubleHparamSearchSpace `json:"l1Reg,omitempty"`
+
+	// L2Reg: L2 regularization coefficient.
+	L2Reg *DoubleHparamSearchSpace `json:"l2Reg,omitempty"`
+
+	// LearnRate: Learning rate of training jobs.
+	LearnRate *DoubleHparamSearchSpace `json:"learnRate,omitempty"`
+
+	// MaxTreeDepth: Maximum depth of a tree for boosted tree models.
+	MaxTreeDepth *IntHparamSearchSpace `json:"maxTreeDepth,omitempty"`
+
+	// MinSplitLoss: Minimum split loss for boosted tree models.
+	MinSplitLoss *DoubleHparamSearchSpace `json:"minSplitLoss,omitempty"`
+
+	// MinTreeChildWeight: Minimum sum of instance weight needed in a child
+	// for boosted tree models.
+	MinTreeChildWeight *IntHparamSearchSpace `json:"minTreeChildWeight,omitempty"`
+
+	// NumClusters: Number of clusters for k-means.
+	NumClusters *IntHparamSearchSpace `json:"numClusters,omitempty"`
+
+	// NumFactors: Number of latent factors to train on.
+	NumFactors *IntHparamSearchSpace `json:"numFactors,omitempty"`
+
+	// NumParallelTree: Number of parallel trees for boosted tree models.
+	NumParallelTree *IntHparamSearchSpace `json:"numParallelTree,omitempty"`
+
+	// Optimizer: Optimizer of TF models.
+	Optimizer *StringHparamSearchSpace `json:"optimizer,omitempty"`
+
+	// Subsample: Subsample the training data to grow tree to prevent
+	// overfitting for boosted tree models.
+	Subsample *DoubleHparamSearchSpace `json:"subsample,omitempty"`
+
+	// TreeMethod: Tree construction algorithm for boosted tree models.
+	TreeMethod *StringHparamSearchSpace `json:"treeMethod,omitempty"`
+
+	// WalsAlpha: Hyperparameter for matrix factoration when implicit
+	// feedback type is specified.
+	WalsAlpha *DoubleHparamSearchSpace `json:"walsAlpha,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActivationFn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActivationFn") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HparamSearchSpaces) MarshalJSON() ([]byte, error) {
+	type NoMethod HparamSearchSpaces
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HparamTuningTrial: Training info of a trial in hyperparameter tuning.
+type HparamTuningTrial struct {
+	// EndTimeMs: Ending time of the trial.
+	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
+
+	// ErrorMessage: Error message for FAILED and INFEASIBLE trial.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// EvalLoss: Loss computed on the eval data at the end of trial.
+	EvalLoss float64 `json:"evalLoss,omitempty"`
+
+	// EvaluationMetrics: Evaluation metrics of this trial calculated on the
+	// test data. Empty in Job API.
+	EvaluationMetrics *EvaluationMetrics `json:"evaluationMetrics,omitempty"`
+
+	// HparamTuningEvaluationMetrics: Hyperparameter tuning evaluation
+	// metrics of this trial calculated on the eval data. Unlike
+	// evaluation_metrics, only the fields corresponding to the
+	// hparam_tuning_objectives are set.
+	HparamTuningEvaluationMetrics *EvaluationMetrics `json:"hparamTuningEvaluationMetrics,omitempty"`
+
+	// Hparams: The hyperprameters selected for this trial.
+	Hparams *TrainingOptions `json:"hparams,omitempty"`
+
+	// StartTimeMs: Starting time of the trial.
+	StartTimeMs int64 `json:"startTimeMs,omitempty,string"`
+
+	// Status: The status of the trial.
+	//
+	// Possible values:
+	//   "TRIAL_STATUS_UNSPECIFIED"
+	//   "NOT_STARTED" - Scheduled but not started.
+	//   "RUNNING" - Running state.
+	//   "SUCCEEDED" - The trial succeeded.
+	//   "FAILED" - The trial failed.
+	//   "INFEASIBLE" - The trial is infeasible due to the invalid params.
+	//   "STOPPED_EARLY" - Trial stopped early because it's not promising.
+	Status string `json:"status,omitempty"`
+
+	// TrainingLoss: Loss computed on the training data at the end of trial.
+	TrainingLoss float64 `json:"trainingLoss,omitempty"`
+
+	// TrialId: 1-based index of the trial.
+	TrialId int64 `json:"trialId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTimeMs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTimeMs") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HparamTuningTrial) MarshalJSON() ([]byte, error) {
+	type NoMethod HparamTuningTrial
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *HparamTuningTrial) UnmarshalJSON(data []byte) error {
+	type NoMethod HparamTuningTrial
+	var s1 struct {
+		EvalLoss     gensupport.JSONFloat64 `json:"evalLoss"`
+		TrainingLoss gensupport.JSONFloat64 `json:"trainingLoss"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.EvalLoss = float64(s1.EvalLoss)
+	s.TrainingLoss = float64(s1.TrainingLoss)
+	return nil
+}
+
+// IntArray: An array of int.
+type IntArray struct {
+	// Elements: Elements in the int array.
+	Elements googleapi.Int64s `json:"elements,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Elements") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Elements") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntArray) MarshalJSON() ([]byte, error) {
+	type NoMethod IntArray
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IntArrayHparamSearchSpace: Search space for int array.
+type IntArrayHparamSearchSpace struct {
+	// Candidates: Candidates for the int array parameter.
+	Candidates []*IntArray `json:"candidates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Candidates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Candidates") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntArrayHparamSearchSpace) MarshalJSON() ([]byte, error) {
+	type NoMethod IntArrayHparamSearchSpace
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IntCandidates: Discrete candidates of an int hyperparameter.
+type IntCandidates struct {
+	// Candidates: Candidates for the int parameter in increasing order.
+	Candidates googleapi.Int64s `json:"candidates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Candidates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Candidates") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntCandidates) MarshalJSON() ([]byte, error) {
+	type NoMethod IntCandidates
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IntHparamSearchSpace: Search space for an int hyperparameter.
+type IntHparamSearchSpace struct {
+	// Candidates: Candidates of the int hyperparameter.
+	Candidates *IntCandidates `json:"candidates,omitempty"`
+
+	// Range: Range of the int hyperparameter.
+	Range *IntRange `json:"range,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Candidates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Candidates") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntHparamSearchSpace) MarshalJSON() ([]byte, error) {
+	type NoMethod IntHparamSearchSpace
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IntRange: Range of an int hyperparameter.
+type IntRange struct {
+	// Max: Max value of the int parameter.
+	Max int64 `json:"max,omitempty,string"`
+
+	// Min: Min value of the int parameter.
+	Min int64 `json:"min,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Max") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Max") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntRange) MarshalJSON() ([]byte, error) {
+	type NoMethod IntRange
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3749,6 +4352,12 @@ type JobConfigurationLoad struct {
 
 	// ParquetOptions: [Optional] Options to configure parquet support.
 	ParquetOptions *ParquetOptions `json:"parquetOptions,omitempty"`
+
+	// PreserveAsciiControlCharacters: [Optional] Preserves the embedded
+	// ASCII control characters (the first 32 characters in the ASCII-table,
+	// from '\x00' to '\x1F') when loading from CSV. Only applicable to CSV,
+	// ignored for other formats.
+	PreserveAsciiControlCharacters bool `json:"preserveAsciiControlCharacters,omitempty"`
 
 	// ProjectionFields: If sourceFormat is set to "DATASTORE_BACKUP",
 	// indicates which entity properties to load into BigQuery from a Cloud
@@ -4940,6 +5549,13 @@ type Model struct {
 	// millisecs since the epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
+	// DefaultTrialId: Output only. The default trial_id to use in TVFs when
+	// the trial_id is not passed in. For single-objective hyperparameter
+	// tuning, this is the best trial id. For multi-objective hyperparameter
+	// tuning, this is the smallest trial id among all Pareto optimal
+	// trials.
+	DefaultTrialId int64 `json:"defaultTrialId,omitempty,string"`
+
 	// Description: Optional. A user-friendly description of this model.
 	Description string `json:"description,omitempty"`
 
@@ -4966,6 +5582,14 @@ type Model struct {
 
 	// FriendlyName: Optional. A descriptive name for this model.
 	FriendlyName string `json:"friendlyName,omitempty"`
+
+	// HparamSearchSpaces: Output only. All hyperparameter search spaces in
+	// this model.
+	HparamSearchSpaces *HparamSearchSpaces `json:"hparamSearchSpaces,omitempty"`
+
+	// HparamTrials: Output only. Trials of a hyperparameter tuning model
+	// sorted by trial_id.
+	HparamTrials []*HparamTuningTrial `json:"hparamTrials,omitempty"`
 
 	// LabelColumns: Output only. Label columns that were used to train this
 	// model. The output of the model will have a "predicted_" prefix to
@@ -5008,8 +5632,16 @@ type Model struct {
 	//   "ARIMA" - ARIMA model.
 	//   "AUTOML_REGRESSOR" - AutoML Tables regression model.
 	//   "AUTOML_CLASSIFIER" - AutoML Tables classification model.
+	//   "PCA" - Prinpical Component Analysis model.
+	//   "AUTOENCODER" - Autoencoder model.
 	//   "ARIMA_PLUS" - New name for the ARIMA model.
 	ModelType string `json:"modelType,omitempty"`
+
+	// OptimalTrialIds: Output only. For single-objective hyperparameter
+	// tuning, it only contains the best trial. For multi-objective
+	// hyperparameter tuning, it contains all Pareto optimal trials sorted
+	// by trial_id.
+	OptimalTrialIds googleapi.Int64s `json:"optimalTrialIds,omitempty"`
 
 	// TrainingRuns: Output only. Information for all training runs in
 	// increasing order of start_time.
@@ -5322,6 +5954,69 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrincipalComponentInfo: Principal component infos, used only for
+// eigen decomposition based models, e.g., PCA. Ordered by
+// explained_variance in the descending order.
+type PrincipalComponentInfo struct {
+	// CumulativeExplainedVarianceRatio: The explained_variance is
+	// pre-ordered in the descending order to compute the cumulative
+	// explained variance ratio.
+	CumulativeExplainedVarianceRatio float64 `json:"cumulativeExplainedVarianceRatio,omitempty"`
+
+	// ExplainedVariance: Explained variance by this principal component,
+	// which is simply the eigenvalue.
+	ExplainedVariance float64 `json:"explainedVariance,omitempty"`
+
+	// ExplainedVarianceRatio: Explained_variance over the total explained
+	// variance.
+	ExplainedVarianceRatio float64 `json:"explainedVarianceRatio,omitempty"`
+
+	// PrincipalComponentId: Id of the principal component.
+	PrincipalComponentId int64 `json:"principalComponentId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CumulativeExplainedVarianceRatio") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CumulativeExplainedVarianceRatio") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrincipalComponentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PrincipalComponentInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *PrincipalComponentInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod PrincipalComponentInfo
+	var s1 struct {
+		CumulativeExplainedVarianceRatio gensupport.JSONFloat64 `json:"cumulativeExplainedVarianceRatio"`
+		ExplainedVariance                gensupport.JSONFloat64 `json:"explainedVariance"`
+		ExplainedVarianceRatio           gensupport.JSONFloat64 `json:"explainedVarianceRatio"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CumulativeExplainedVarianceRatio = float64(s1.CumulativeExplainedVarianceRatio)
+	s.ExplainedVariance = float64(s1.ExplainedVariance)
+	s.ExplainedVarianceRatio = float64(s1.ExplainedVarianceRatio)
+	return nil
 }
 
 type ProjectList struct {
@@ -6731,7 +7426,39 @@ func (s *Streamingbuffer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StringHparamSearchSpace: Search space for string and enum.
+type StringHparamSearchSpace struct {
+	// Candidates: Canididates for the string or enum parameter in lower
+	// case.
+	Candidates []string `json:"candidates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Candidates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Candidates") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StringHparamSearchSpace) MarshalJSON() ([]byte, error) {
+	type NoMethod StringHparamSearchSpace
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Table struct {
+	// CloneDefinition: [Output-only] Clone definition.
+	CloneDefinition *CloneDefinition `json:"cloneDefinition,omitempty"`
+
 	// Clustering: [Beta] Clustering specification for the table. Must be
 	// specified with partitioning, data in the table will be first
 	// partitioned and subsequently clustered.
@@ -6872,7 +7599,7 @@ type Table struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Clustering") to
+	// ForceSendFields is a list of field names (e.g. "CloneDefinition") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6880,12 +7607,13 @@ type Table struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Clustering") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CloneDefinition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -7630,6 +8358,10 @@ type TrainingOptions struct {
 	//   "DART" - Dart booster.
 	BoosterType string `json:"boosterType,omitempty"`
 
+	// CalculatePValues: Whether or not p-value test should be computed for
+	// this model. Only available for linear and logistic regression models.
+	CalculatePValues bool `json:"calculatePValues,omitempty"`
+
 	// CleanSpikesAndDips: If true, clean spikes and dips in the input time
 	// series.
 	CleanSpikesAndDips bool `json:"cleanSpikesAndDips,omitempty"`
@@ -7719,6 +8451,10 @@ type TrainingOptions struct {
 	// significantly any more (compared to min_relative_progress). Used only
 	// for iterative training algorithms.
 	EarlyStop bool `json:"earlyStop,omitempty"`
+
+	// EnableGlobalExplain: If true, enable global explanation during
+	// training.
+	EnableGlobalExplain bool `json:"enableGlobalExplain,omitempty"`
 
 	// FeedbackType: Feedback type that specifies which algorithm to run for
 	// matrix factorization.
@@ -7812,6 +8548,49 @@ type TrainingOptions struct {
 	// Horizon: The number of periods ahead that need to be forecasted.
 	Horizon int64 `json:"horizon,omitempty,string"`
 
+	// HparamTuningObjectives: The target evaluation metrics to optimize the
+	// hyperparameters for.
+	//
+	// Possible values:
+	//   "HPARAM_TUNING_OBJECTIVE_UNSPECIFIED" - Unspecified evaluation
+	// metric.
+	//   "MEAN_ABSOLUTE_ERROR" - Mean absolute error. mean_absolute_error =
+	// AVG(ABS(label - predicted))
+	//   "MEAN_SQUARED_ERROR" - Mean squared error. mean_squared_error =
+	// AVG(POW(label - predicted, 2))
+	//   "MEAN_SQUARED_LOG_ERROR" - Mean squared log error.
+	// mean_squared_log_error = AVG(POW(LN(1 + label) - LN(1 + predicted),
+	// 2))
+	//   "MEDIAN_ABSOLUTE_ERROR" - Mean absolute error.
+	// median_absolute_error = APPROX_QUANTILES(absolute_error,
+	// 2)[OFFSET(1)]
+	//   "R_SQUARED" - R^2 score. This corresponds to r2_score in
+	// ML.EVALUATE. r_squared = 1 -
+	// SUM(squared_error)/(COUNT(label)*VAR_POP(label))
+	//   "EXPLAINED_VARIANCE" - Explained variance. explained_variance = 1 -
+	// VAR_POP(label_error)/VAR_POP(label)
+	//   "PRECISION" - Precision is the fraction of actual positive
+	// predictions that had positive actual labels. For multiclass this is a
+	// macro-averaged metric treating each class as a binary classifier.
+	//   "RECALL" - Recall is the fraction of actual positive labels that
+	// were given a positive prediction. For multiclass this is a
+	// macro-averaged metric.
+	//   "ACCURACY" - Accuracy is the fraction of predictions given the
+	// correct label. For multiclass this is a globally micro-averaged
+	// metric.
+	//   "F1_SCORE" - The F1 score is an average of recall and precision.
+	// For multiclass this is a macro-averaged metric.
+	//   "LOG_LOSS" - Logorithmic Loss. For multiclass this is a
+	// macro-averaged metric.
+	//   "ROC_AUC" - Area Under an ROC Curve. For multiclass this is a
+	// macro-averaged metric.
+	//   "DAVIES_BOULDIN_INDEX" - Davies-Bouldin Index.
+	//   "MEAN_AVERAGE_PRECISION" - Mean Average Precision.
+	//   "NORMALIZED_DISCOUNTED_CUMULATIVE_GAIN" - Normalized Discounted
+	// Cumulative Gain.
+	//   "AVERAGE_RANK" - Average Rank.
+	HparamTuningObjectives []string `json:"hparamTuningObjectives,omitempty"`
+
 	// IncludeDrift: Include drift when fitting an ARIMA model.
 	IncludeDrift bool `json:"includeDrift,omitempty"`
 
@@ -7821,6 +8600,10 @@ type TrainingOptions struct {
 
 	// InputLabelColumns: Name of input label columns in training data.
 	InputLabelColumns []string `json:"inputLabelColumns,omitempty"`
+
+	// IntegratedGradientsNumSteps: Number of integral steps for the
+	// integrated gradients explain method.
+	IntegratedGradientsNumSteps int64 `json:"integratedGradientsNumSteps,omitempty,string"`
 
 	// ItemColumn: Item column specified for matrix factorization models.
 	ItemColumn string `json:"itemColumn,omitempty"`
@@ -7879,6 +8662,9 @@ type TrainingOptions struct {
 	// only for iterative training algorithms.
 	MaxIterations int64 `json:"maxIterations,omitempty,string"`
 
+	// MaxParallelTrials: Maximum number of trials to run in parallel.
+	MaxParallelTrials int64 `json:"maxParallelTrials,omitempty,string"`
+
 	// MaxTreeDepth: Maximum depth of a tree for boosted tree models.
 	MaxTreeDepth int64 `json:"maxTreeDepth,omitempty,string"`
 
@@ -7913,6 +8699,9 @@ type TrainingOptions struct {
 	// iteration for boosted tree models.
 	NumParallelTree int64 `json:"numParallelTree,omitempty,string"`
 
+	// NumTrials: Number of trials to run this hyperparameter tuning job.
+	NumTrials int64 `json:"numTrials,omitempty,string"`
+
 	// OptimizationStrategy: Optimization strategy for training linear
 	// regression models.
 	//
@@ -7929,6 +8718,10 @@ type TrainingOptions struct {
 	// (default), the output feature name is A_b. When true, the output
 	// feature name is A.b.
 	PreserveInputStructs bool `json:"preserveInputStructs,omitempty"`
+
+	// SampledShapleyNumPaths: Number of paths for the sampled shapley
+	// explain method.
+	SampledShapleyNumPaths int64 `json:"sampledShapleyNumPaths,omitempty,string"`
 
 	// Subsample: Subsample fraction of the training data to grow tree to
 	// prevent overfitting for boosted tree models.
@@ -8036,6 +8829,11 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 // TrainingRun: Information about a single training query run for the
 // model.
 type TrainingRun struct {
+	// ClassLevelGlobalExplanations: Global explanation contains the
+	// explanation of top features on the class level. Applies to
+	// classification models only.
+	ClassLevelGlobalExplanations []*GlobalExplanation `json:"classLevelGlobalExplanations,omitempty"`
+
 	// DataSplitResult: Data split result of the training run. Only set when
 	// the input data is actually split.
 	DataSplitResult *DataSplitResult `json:"dataSplitResult,omitempty"`
@@ -8043,6 +8841,11 @@ type TrainingRun struct {
 	// EvaluationMetrics: The evaluation metrics over training/eval data
 	// that were computed at the end of training.
 	EvaluationMetrics *EvaluationMetrics `json:"evaluationMetrics,omitempty"`
+
+	// ModelLevelGlobalExplanation: Global explanation contains the
+	// explanation of top features on the model level. Applies to both
+	// regression and classification models.
+	ModelLevelGlobalExplanation *GlobalExplanation `json:"modelLevelGlobalExplanation,omitempty"`
 
 	// Results: Output of each iteration run, results.size() <=
 	// max_iterations.
@@ -8055,21 +8858,22 @@ type TrainingRun struct {
 	// includes user specified and default options that were used.
 	TrainingOptions *TrainingOptions `json:"trainingOptions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DataSplitResult") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ClassLevelGlobalExplanations") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DataSplitResult") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "ClassLevelGlobalExplanations") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

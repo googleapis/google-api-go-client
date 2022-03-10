@@ -84,8 +84,16 @@ const mtlsBasePath = "https://cloudidentity.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Private Service:
+	// https://www.googleapis.com/auth/cloud-identity.devices
+	CloudIdentityDevicesScope = "https://www.googleapis.com/auth/cloud-identity.devices"
+
 	// See your device details
 	CloudIdentityDevicesLookupScope = "https://www.googleapis.com/auth/cloud-identity.devices.lookup"
+
+	// Private Service:
+	// https://www.googleapis.com/auth/cloud-identity.devices.readonly
+	CloudIdentityDevicesReadonlyScope = "https://www.googleapis.com/auth/cloud-identity.devices.readonly"
 
 	// See, change, create, and delete any of the Cloud Identity Groups that
 	// you can access, including the members of each group
@@ -103,7 +111,9 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/cloud-identity.devices",
 		"https://www.googleapis.com/auth/cloud-identity.devices.lookup",
+		"https://www.googleapis.com/auth/cloud-identity.devices.readonly",
 		"https://www.googleapis.com/auth/cloud-identity.groups",
 		"https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 		"https://www.googleapis.com/auth/cloud-platform",
@@ -2773,7 +2783,10 @@ func (c *DevicesCancelWipeCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices"
+	//   ]
 	// }
 
 }
@@ -2915,7 +2928,10 @@ func (c *DevicesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices"
+	//   ]
 	// }
 
 }
@@ -3063,7 +3079,10 @@ func (c *DevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices"
+	//   ]
 	// }
 
 }
@@ -3227,7 +3246,11 @@ func (c *DevicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAppsCloudident
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleAppsCloudidentityDevicesV1Device"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices",
+	//     "https://www.googleapis.com/auth/cloud-identity.devices.readonly"
+	//   ]
 	// }
 
 }
@@ -3466,7 +3489,11 @@ func (c *DevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsCloudiden
 	//   "path": "v1/devices",
 	//   "response": {
 	//     "$ref": "GoogleAppsCloudidentityDevicesV1ListDevicesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices",
+	//     "https://www.googleapis.com/auth/cloud-identity.devices.readonly"
+	//   ]
 	// }
 
 }
@@ -3630,7 +3657,10 @@ func (c *DevicesWipeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices"
+	//   ]
 	// }
 
 }
@@ -3773,7 +3803,10 @@ func (c *DevicesDeviceUsersApproveCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices"
+	//   ]
 	// }
 
 }
@@ -3916,7 +3949,10 @@ func (c *DevicesDeviceUsersBlockCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices"
+	//   ]
 	// }
 
 }
@@ -4061,7 +4097,10 @@ func (c *DevicesDeviceUsersCancelWipeCall) Do(opts ...googleapi.CallOption) (*Op
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices"
+	//   ]
 	// }
 
 }
@@ -4211,7 +4250,10 @@ func (c *DevicesDeviceUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Operat
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices"
+	//   ]
 	// }
 
 }
@@ -4376,7 +4418,11 @@ func (c *DevicesDeviceUsersGetCall) Do(opts ...googleapi.CallOption) (*GoogleApp
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleAppsCloudidentityDevicesV1DeviceUser"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices",
+	//     "https://www.googleapis.com/auth/cloud-identity.devices.readonly"
+	//   ]
 	// }
 
 }
@@ -4597,7 +4643,11 @@ func (c *DevicesDeviceUsersListCall) Do(opts ...googleapi.CallOption) (*GoogleAp
 	//   "path": "v1/{+parent}/deviceUsers",
 	//   "response": {
 	//     "$ref": "GoogleAppsCloudidentityDevicesV1ListDeviceUsersResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices",
+	//     "https://www.googleapis.com/auth/cloud-identity.devices.readonly"
+	//   ]
 	// }
 
 }
@@ -5023,7 +5073,10 @@ func (c *DevicesDeviceUsersWipeCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices"
+	//   ]
 	// }
 
 }
@@ -5199,7 +5252,11 @@ func (c *DevicesDeviceUsersClientStatesGetCall) Do(opts ...googleapi.CallOption)
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleAppsCloudidentityDevicesV1ClientState"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices",
+	//     "https://www.googleapis.com/auth/cloud-identity.devices.readonly"
+	//   ]
 	// }
 
 }
@@ -5403,7 +5460,11 @@ func (c *DevicesDeviceUsersClientStatesListCall) Do(opts ...googleapi.CallOption
 	//   "path": "v1/{+parent}/clientStates",
 	//   "response": {
 	//     "$ref": "GoogleAppsCloudidentityDevicesV1ListClientStatesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices",
+	//     "https://www.googleapis.com/auth/cloud-identity.devices.readonly"
+	//   ]
 	// }
 
 }
@@ -5612,7 +5673,10 @@ func (c *DevicesDeviceUsersClientStatesPatchCall) Do(opts ...googleapi.CallOptio
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices"
+	//   ]
 	// }
 
 }

@@ -435,14 +435,126 @@ func (s *AppTrackInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AppVersion: This represents a single version of the app.
+type AppVersion struct {
+	// Production: True if this version is a production track.
+	Production bool `json:"production,omitempty"`
+
+	// TrackIds: Track ids that the app version is published in. This
+	// doesn't include the production track (see production instead).
+	TrackIds []string `json:"trackIds,omitempty"`
+
+	// VersionCode: Unique increasing identifier for the app version.
+	VersionCode int64 `json:"versionCode,omitempty"`
+
+	// VersionString: The string used in the Play store by the app developer
+	// to identify the version. The string is not necessarily unique or
+	// localized (for example, the string could be "1.4").
+	VersionString string `json:"versionString,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Production") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Production") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod AppVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Application: Information about an app.
 type Application struct {
+	// AppPricing: Whether this app is free, free with in-app purchases, or
+	// paid. If the pricing is unspecified, this means the app is not
+	// generally available anymore (even though it might still be available
+	// to people who own it).
+	//
+	// Possible values:
+	//   "APP_PRICING_UNSPECIFIED" - Unknown pricing, used to denote an
+	// approved app that is not generally available.
+	//   "FREE" - The app is free.
+	//   "FREE_WITH_IN_APP_PURCHASE" - The app is free, but offers in-app
+	// purchases.
+	//   "PAID" - The app is paid.
+	AppPricing string `json:"appPricing,omitempty"`
+
 	// AppTracks: Application tracks visible to the enterprise.
 	AppTracks []*AppTrackInfo `json:"appTracks,omitempty"`
+
+	// AppVersions: Versions currently available for this app.
+	AppVersions []*AppVersion `json:"appVersions,omitempty"`
+
+	// Author: The name of the author of the apps (for example, the app
+	// developer).
+	Author string `json:"author,omitempty"`
+
+	// AvailableCountries: The countries which this app is available in as
+	// per ISO 3166-1 alpha-2.
+	AvailableCountries []string `json:"availableCountries,omitempty"`
+
+	// Category: The app category (e.g. RACING, SOCIAL, etc.)
+	Category string `json:"category,omitempty"`
+
+	// ContentRating: The content rating for this app.
+	//
+	// Possible values:
+	//   "CONTENT_RATING_UNSPECIFIED" - Unspecified.
+	//   "THREE_YEARS" - Content suitable for ages 3 and above only.
+	//   "SEVEN_YEARS" - Content suitable for ages 7 and above only.
+	//   "TWELVE_YEARS" - Content suitable for ages 12 and above only.
+	//   "SIXTEEN_YEARS" - Content suitable for ages 16 and above only.
+	//   "EIGHTEEN_YEARS" - Content suitable for ages 18 and above only.
+	ContentRating string `json:"contentRating,omitempty"`
+
+	// Description: The localized promotional description, if available.
+	Description string `json:"description,omitempty"`
+
+	// DistributionChannel: How and to whom the package is made available.
+	//
+	// Possible values:
+	//   "DISTRIBUTION_CHANNEL_UNSPECIFIED" - Unspecified.
+	//   "PUBLIC_GOOGLE_HOSTED" - Package is available through the Play
+	// store and not restricted to a specific enterprise.
+	//   "PRIVATE_GOOGLE_HOSTED" - Package is a private app (restricted to
+	// an enterprise) but hosted by Google.
+	//   "PRIVATE_SELF_HOSTED" - Private app (restricted to an enterprise)
+	// and is privately hosted.
+	DistributionChannel string `json:"distributionChannel,omitempty"`
+
+	// Features: Noteworthy features (if any) of this app.
+	//
+	// Possible values:
+	//   "APP_FEATURE_UNSPECIFIED" - Unspecified.
+	//   "VPN_APP" - The app is a VPN.
+	Features []string `json:"features,omitempty"`
+
+	// FullDescription: Full app description, if available.
+	FullDescription string `json:"fullDescription,omitempty"`
+
+	// IconUrl: A link to an image that can be used as an icon for the app.
+	// This image is suitable for use at up to 512px x 512px
+	IconUrl string `json:"iconUrl,omitempty"`
 
 	// ManagedProperties: The set of managed properties available to be
 	// pre-configured for the app.
 	ManagedProperties []*ManagedProperty `json:"managedProperties,omitempty"`
+
+	// MinAndroidSdkVersion: The minimum Android SDK necessary to run the
+	// app.
+	MinAndroidSdkVersion int64 `json:"minAndroidSdkVersion,omitempty"`
 
 	// Name: The name of the app in the form
 	// enterprises/{enterprise}/applications/{package_name}.
@@ -451,14 +563,33 @@ type Application struct {
 	// Permissions: The permissions required by the app.
 	Permissions []*ApplicationPermission `json:"permissions,omitempty"`
 
+	// PlayStoreUrl: A link to the (consumer) Google Play details page for
+	// the app.
+	PlayStoreUrl string `json:"playStoreUrl,omitempty"`
+
+	// RecentChanges: A localised description of the recent changes made to
+	// the app.
+	RecentChanges string `json:"recentChanges,omitempty"`
+
+	// ScreenshotUrls: A list of screenshot links representing the app.
+	ScreenshotUrls []string `json:"screenshotUrls,omitempty"`
+
+	// SmallIconUrl: A link to a smaller image that can be used as an icon
+	// for the app. This image is suitable for use at up to 128px x 128px.
+	SmallIconUrl string `json:"smallIconUrl,omitempty"`
+
 	// Title: The title of the app. Localized.
 	Title string `json:"title,omitempty"`
+
+	// UpdateTime: Output only. The approximate time (within 7 days) the app
+	// was last published.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AppTracks") to
+	// ForceSendFields is a list of field names (e.g. "AppPricing") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -466,7 +597,7 @@ type Application struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AppTracks") to include in
+	// NullFields is a list of field names (e.g. "AppPricing") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3218,6 +3349,24 @@ type PasswordRequirements struct {
 	//   "REQUIRE_EVERY_DAY" - The timeout period is set to 24 hours.
 	RequirePasswordUnlock string `json:"requirePasswordUnlock,omitempty"`
 
+	// UnifiedLockSettings: Controls whether a unified lock is allowed for
+	// the device and the work profile, on devices running Android 9 and
+	// above with a work profile. This has no effect on other devices. This
+	// can be set only if password_scope is set to SCOPE_PROFILE, the policy
+	// will be rejected otherwise. If user has not set a separate work lock
+	// and this field is set to REQUIRE_SEPARATE_WORK_LOCK, a
+	// NonComplianceDetail is reported with nonComplianceReason set to
+	// USER_ACTION.
+	//
+	// Possible values:
+	//   "UNIFIED_LOCK_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
+	// ALLOW_UNIFIED_WORK_AND_PERSONAL_LOCK.
+	//   "ALLOW_UNIFIED_WORK_AND_PERSONAL_LOCK" - A common lock for the
+	// device and the work profile is allowed.
+	//   "REQUIRE_SEPARATE_WORK_LOCK" - A separate lock for the work profile
+	// is required.
+	UnifiedLockSettings string `json:"unifiedLockSettings,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "MaximumFailedPasswordsForWipe") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -3530,31 +3679,33 @@ type Policy struct {
 	//   "CAMERA_ACCESS_UNSPECIFIED" - If camera_disabled is true, this is
 	// equivalent to CAMERA_ACCESS_DISABLED. Otherwise, this is equivalent
 	// to CAMERA_ACCESS_USER_CHOICE.
-	//   "CAMERA_ACCESS_USER_CHOICE" - The field
-	// camera_disabled(google.android.devicemanagement.v1.Policy.camera_disab
-	// led] is ignored. This is the default device behaviour: all cameras on
-	// the device are available. On Android 12 and above, the user can use
-	// the camera access toggle.
-	//   "CAMERA_ACCESS_DISABLED" - The field
-	// camera_disabled(google.android.devicemanagement.v1.Policy.camera_disab
-	// led] is ignored. All cameras on the device are disabled (for fully
-	// managed devices, this applies device-wide and for work profiles this
-	// applies only to the work profile).There are no explicit restrictions
-	// placed on the camera access toggle on Android 12 and above: on fully
-	// managed devices, the camera access toggle has no effect as all
-	// cameras are disabled. On devices with a work profile, this toggle has
-	// no effect on apps in the work profile, but it affects apps outside
-	// the work profile.
-	//   "CAMERA_ACCESS_ENFORCED" - The field
-	// camera_disabled(google.android.devicemanagement.v1.Policy.camera_disab
-	// led] is ignored. All cameras on the device are available. On fully
-	// managed devices running Android 12 and above, the user is unable to
-	// use the camera access toggle. On devices which are not fully managed
-	// or which run Android 11 or below, this is equivalent to
-	// CAMERA_ACCESS_USER_CHOICE.
+	//   "CAMERA_ACCESS_USER_CHOICE" - The field camera_disabled is ignored.
+	// This is the default device behaviour: all cameras on the device are
+	// available. On Android 12 and above, the user can use the camera
+	// access toggle.
+	//   "CAMERA_ACCESS_DISABLED" - The field camera_disabled is ignored.
+	// All cameras on the device are disabled (for fully managed devices,
+	// this applies device-wide and for work profiles this applies only to
+	// the work profile).There are no explicit restrictions placed on the
+	// camera access toggle on Android 12 and above: on fully managed
+	// devices, the camera access toggle has no effect as all cameras are
+	// disabled. On devices with a work profile, this toggle has no effect
+	// on apps in the work profile, but it affects apps outside the work
+	// profile.
+	//   "CAMERA_ACCESS_ENFORCED" - The field camera_disabled is ignored.
+	// All cameras on the device are available. On fully managed devices
+	// running Android 12 and above, the user is unable to use the camera
+	// access toggle. On devices which are not fully managed or which run
+	// Android 11 or below, this is equivalent to CAMERA_ACCESS_USER_CHOICE.
 	CameraAccess string `json:"cameraAccess,omitempty"`
 
-	// CameraDisabled: Whether all cameras on the device are disabled.
+	// CameraDisabled: If camera_access is set to any value other than
+	// CAMERA_ACCESS_UNSPECIFIED, this has no effect. Otherwise this field
+	// controls whether cameras are disabled: If true, all cameras are
+	// disabled, otherwise they are available. For fully managed devices
+	// this field applies for all apps on the device. For work profiles,
+	// this field applies only to apps in the work profile, and the camera
+	// access of apps outside the work profile is unaffected.
 	CameraDisabled bool `json:"cameraDisabled,omitempty"`
 
 	// CellBroadcastsConfigDisabled: Whether configuring cell broadcast is
@@ -3721,22 +3872,18 @@ type Policy struct {
 	// true, this is equivalent to MICROPHONE_ACCESS_DISABLED. Otherwise,
 	// this is equivalent to MICROPHONE_ACCESS_USER_CHOICE.
 	//   "MICROPHONE_ACCESS_USER_CHOICE" - The field
-	// unmute_microphone_disabled(google.android.devicemanagement.v1.Policy.u
-	// nmute_microphone_disabled] is ignored. This is the default device
+	// unmute_microphone_disabled is ignored. This is the default device
 	// behaviour: the microphone on the device is available. On Android 12
 	// and above, the user can use the microphone access toggle.
-	//   "MICROPHONE_ACCESS_DISABLED" - The field
-	// unmute_microphone_disabled(google.android.devicemanagement.v1.Policy.u
-	// nmute_microphone_disabled] is ignored. The microphone on the device
-	// is disabled (for fully managed devices, this applies device-wide).The
-	// microphone access toggle has no effect as the microphone is disabled.
-	//   "MICROPHONE_ACCESS_ENFORCED" - The field
-	// unmute_microphone_disabled(google.android.devicemanagement.v1.Policy.u
-	// nmute_microphone_disabled] is ignored. The microphone on the device
-	// is available. On devices running Android 12 and above, the user is
-	// unable to use the microphone access toggle. On devices which run
-	// Android 11 or below, this is equivalent to
-	// MICROPHONE_ACCESS_USER_CHOICE.
+	//   "MICROPHONE_ACCESS_DISABLED" - The field unmute_microphone_disabled
+	// is ignored. The microphone on the device is disabled (for fully
+	// managed devices, this applies device-wide).The microphone access
+	// toggle has no effect as the microphone is disabled.
+	//   "MICROPHONE_ACCESS_ENFORCED" - The field unmute_microphone_disabled
+	// is ignored. The microphone on the device is available. On devices
+	// running Android 12 and above, the user is unable to use the
+	// microphone access toggle. On devices which run Android 11 or below,
+	// this is equivalent to MICROPHONE_ACCESS_USER_CHOICE.
 	MicrophoneAccess string `json:"microphoneAccess,omitempty"`
 
 	// MinimumApiLevel: The minimum allowed Android API level.
@@ -3795,9 +3942,10 @@ type Policy struct {
 
 	// PasswordRequirements: Password requirements. The field
 	// password_requirements.require_password_unlock must not be set.
-	// DEPRECATED - Use password_policies.Note:Complexity-based values of
+	// DEPRECATED - Use passwordPolicies.Note:Complexity-based values of
 	// PasswordQuality, that is, COMPLEXITY_LOW, COMPLEXITY_MEDIUM, and
-	// COMPLEXITY_HIGH, cannot be used here.
+	// COMPLEXITY_HIGH, cannot be used here. unified_lock_settings cannot be
+	// used here
 	PasswordRequirements *PasswordRequirements `json:"passwordRequirements,omitempty"`
 
 	// PermissionGrants: Explicit permission or group grants or denials for
@@ -3889,7 +4037,8 @@ type Policy struct {
 	// SetWallpaperDisabled: Whether changing the wallpaper is disabled.
 	SetWallpaperDisabled bool `json:"setWallpaperDisabled,omitempty"`
 
-	// SetupActions: Actions to take during the setup process.
+	// SetupActions: Action to take during the setup process. At most one
+	// action may be specified.
 	SetupActions []*SetupAction `json:"setupActions,omitempty"`
 
 	// ShareLocationDisabled: Whether location sharing is disabled.
@@ -3944,8 +4093,11 @@ type Policy struct {
 	// disabled.
 	UninstallAppsDisabled bool `json:"uninstallAppsDisabled,omitempty"`
 
-	// UnmuteMicrophoneDisabled: Whether the microphone is muted and
-	// adjusting microphone volume is disabled.
+	// UnmuteMicrophoneDisabled: If microphone_access is set to any value
+	// other than MICROPHONE_ACCESS_UNSPECIFIED, this has no effect.
+	// Otherwise this field controls whether microphones are disabled: If
+	// true, all microphones are disabled, otherwise they are available.
+	// This is available only on fully managed devices.
 	UnmuteMicrophoneDisabled bool `json:"unmuteMicrophoneDisabled,omitempty"`
 
 	// UsbFileTransferDisabled: Whether transferring files over USB is
@@ -4231,7 +4383,11 @@ type SetupAction struct {
 	// Description: Description of this action.
 	Description *UserFacingMessage `json:"description,omitempty"`
 
-	// LaunchApp: An action to launch an app.
+	// LaunchApp: An action to launch an app. The app will be launched with
+	// an intent containing an extra with key
+	// com.google.android.apps.work.clouddpc.EXTRA_LAUNCHED_AS_SETUP_ACTION
+	// set to the boolean value true to indicate that this is a setup action
+	// flow.
 	LaunchApp *LaunchAppAction `json:"launchApp,omitempty"`
 
 	// Title: Title of this action.

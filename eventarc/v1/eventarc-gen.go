@@ -4477,6 +4477,16 @@ func (r *ProjectsLocationsTriggersService) List(parent string) *ProjectsLocation
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filter field. Used to
+// filter the Triggers to be listed. Possible filters are described in
+// https://google.aip.dev/160. For example, using
+// "?filter=destination:gke" would list only Triggers with a gke
+// destination.
+func (c *ProjectsLocationsTriggersListCall) Filter(filter string) *ProjectsLocationsTriggersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // OrderBy sets the optional parameter "orderBy": The sorting order of
 // the resources returned. Value should be a comma-separated list of
 // fields. The default sorting order is ascending. To specify descending
@@ -4611,6 +4621,11 @@ func (c *ProjectsLocationsTriggersListCall) Do(opts ...googleapi.CallOption) (*L
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filter field. Used to filter the Triggers to be listed. Possible filters are described in https://google.aip.dev/160. For example, using \"?filter=destination:gke\" would list only Triggers with a gke destination.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "orderBy": {
 	//       "description": "The sorting order of the resources returned. Value should be a comma-separated list of fields. The default sorting order is ascending. To specify descending order for a field, append a `desc` suffix; for example: `name desc, trigger_id`.",
 	//       "location": "query",

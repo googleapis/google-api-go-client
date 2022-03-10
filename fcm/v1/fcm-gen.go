@@ -301,6 +301,10 @@ type AndroidNotification struct {
 	// See String Resources (https://goo.gl/NdFZGI) for more information.
 	BodyLocKey string `json:"bodyLocKey,omitempty"`
 
+	// BypassProxyNotification: If set, display notifications delivered to
+	// the device will be handled by the app instead of the proxy.
+	BypassProxyNotification bool `json:"bypassProxyNotification,omitempty"`
+
 	// ChannelId: The notification's channel id
 	// (https://developer.android.com/guide/topics/ui/notifiers/notifications#ManageChannels)
 	// (new in Android O). The app must create a channel with this channel

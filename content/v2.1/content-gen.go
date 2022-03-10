@@ -1143,6 +1143,12 @@ type AccountItemUpdates struct {
 	// inherited value of the parent account. Read-only.
 	EffectiveAllowAvailabilityUpdates bool `json:"effectiveAllowAvailabilityUpdates,omitempty"`
 
+	// EffectiveAllowConditionUpdates: Output only. The effective value of
+	// allow_condition_updates. If account_item_updates_settings is present,
+	// then this value is the same. Otherwise, it represents the inherited
+	// value of the parent account. Read-only.
+	EffectiveAllowConditionUpdates bool `json:"effectiveAllowConditionUpdates,omitempty"`
+
 	// EffectiveAllowPriceUpdates: Output only. The effective value of
 	// allow_price_updates. If account_item_updates_settings is present,
 	// then this value is the same. Otherwise, it represents the inherited
@@ -1190,6 +1196,11 @@ type AccountItemUpdatesSettings struct {
 	// overwritten if Google finds an in-stock annotation on the offer’s
 	// page.
 	AllowAvailabilityUpdates bool `json:"allowAvailabilityUpdates,omitempty"`
+
+	// AllowConditionUpdates: If condition updates are enabled, Google
+	// always updates item condition with the condition detected from the
+	// details of your product.
+	AllowConditionUpdates bool `json:"allowConditionUpdates,omitempty"`
 
 	// AllowPriceUpdates: If price updates are enabled, Google always
 	// updates the active price with the crawled information.
@@ -4168,11 +4179,12 @@ func (s *DatafeedstatusesListResponse) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -4463,24 +4475,28 @@ func (s *Errors) MarshalJSON() ([]byte, error) {
 // FreeListingsProgramStatus: Response message for
 // GetFreeListingsProgramStatus.
 type FreeListingsProgramStatus struct {
+	// GlobalState: State of the program, It is set to enabled if there are
+	// offers for at least one region.
+	//
+	// Possible values:
+	//   "PROGRAM_STATE_UNSPECIFIED" - State is not known.
+	//   "NOT_ENABLED" - Program is not enabled for any country.
+	//   "NO_OFFERS_UPLOADED" - Offers are not uploaded targeting even a
+	// single country for this program.
+	//   "ENABLED" - Program is enabled and offers are uploaded for at least
+	// one country.
+	GlobalState string `json:"globalState,omitempty"`
+
 	// RegionStatuses: Status of the program in each region. Regions with
 	// the same status and review eligibility are grouped together in
 	// `regionCodes`.
 	RegionStatuses []*FreeListingsProgramStatusRegionStatus `json:"regionStatuses,omitempty"`
 
-	// State: If program is successfully onboarded for at least one region.
-	//
-	// Possible values:
-	//   "PROGRAM_STATE_UNSPECIFIED" - State is not known.
-	//   "ENABLED" - Program is enabled for at least one country.
-	//   "NOT_ENABLED" - Program is not enabled for any country.
-	State string `json:"state,omitempty"`
-
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "RegionStatuses") to
+	// ForceSendFields is a list of field names (e.g. "GlobalState") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4488,13 +4504,12 @@ type FreeListingsProgramStatus struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RegionStatuses") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GlobalState") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4509,7 +4524,7 @@ type FreeListingsProgramStatusRegionStatus struct {
 	// DisapprovalDate: Date by which `eligibility_status` will go from
 	// `WARNING` to `DISAPPROVED`. It will be present when
 	// `eligibility_status` is `WARNING`. Date will be provided in ISO 8601
-	// format i.e. YYYY-MM-DD
+	// format: YYYY-MM-DD
 	DisapprovalDate string `json:"disapprovalDate,omitempty"`
 
 	// EligibilityStatus: Eligibility status of the standard free listing
@@ -4526,34 +4541,16 @@ type FreeListingsProgramStatusRegionStatus struct {
 	// ence/rest/v2.1/accountstatuses) API.
 	//   "WARNING" - If account has issues but offers are servable. Some of
 	// the issue can make account DISAPPROVED after a certain deadline.
-	//   "UNDER_REVIEW" - Account is under review.
+	//   "UNDER_REVIEW" - Account is under review. Deprecated: This state is
+	// not created.
 	//   "PENDING_REVIEW" - Account is waiting for review to start.
-	//   "ONBOARDING" - Program is currently onboarding.
+	//   "ONBOARDING" - Program is currently onboarding. Upload valid offers
+	// to complete onboarding.
 	EligibilityStatus string `json:"eligibilityStatus,omitempty"`
 
-	// EnhancedEligibilityStatus: Eligibility status of the enhanced free
-	// listing program.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - State is not known.
-	//   "APPROVED" - If the account has no issues and review is completed
-	// successfully.
-	//   "DISAPPROVED" - There are one or more issues that needs to be
-	// resolved for account to be active for the program. Detailed list of
-	// account issues are available in
-	// [accountstatuses](https://developers.google.com/shopping-content/refer
-	// ence/rest/v2.1/accountstatuses) API.
-	//   "WARNING" - If account has issues but offers are servable. Some of
-	// the issue can make account DISAPPROVED after a certain deadline.
-	//   "UNDER_REVIEW" - Account is under review.
-	//   "PENDING_REVIEW" - Account is waiting for review to start.
-	//   "ONBOARDING" - Program is currently onboarding.
-	EnhancedEligibilityStatus string `json:"enhancedEligibilityStatus,omitempty"`
-
-	// IneligibilityReason: Reason if a program in a given country is not
-	// eligible for review. Populated only if `review_eligibility_status` is
-	// `INELIGIBLE`.
-	IneligibilityReason string `json:"ineligibilityReason,omitempty"`
+	// OnboardingIssues: These issues must be fixed to become eligible for
+	// the review.
+	OnboardingIssues []string `json:"onboardingIssues,omitempty"`
 
 	// RegionCodes: The two-letter ISO 3166-1 alpha-2
 	// (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) codes for all the
@@ -4565,12 +4562,38 @@ type FreeListingsProgramStatusRegionStatus struct {
 	// `DISAPPROVED`.
 	//
 	// Possible values:
-	//   "REVIEW_ELIGIBILITY_UNSPECIFIED" - Review eligibility state is
-	// unknown.
-	//   "ELIGIBLE" - Account for a region code is eligible for review.
-	//   "INELIGIBLE" - Account for a region code is not eligible for
-	// review.
+	//   "REVIEW_ELIGIBILITY_UNSPECIFIED" - Review eligibility reason state
+	// is unknown.
+	//   "ELIGIBLE" - Account is eligible for review for a specified region
+	// code.
+	//   "INELIGIBLE" - Account is not eligible for review for a specified
+	// region code.
 	ReviewEligibilityStatus string `json:"reviewEligibilityStatus,omitempty"`
+
+	// ReviewIneligibilityReason: Review ineligibility reason if account is
+	// not eligible for review.
+	//
+	// Possible values:
+	//   "REVIEW_INELIGIBILITY_REASON_UNSPECIFIED" - Requesting a review
+	// from Google is not possible.
+	//   "ONBOARDING_ISSUES" - All onboarding issues needs to be fixed.
+	//   "NOT_ENOUGH_OFFERS" - Not enough offers uploaded for this country.
+	//   "IN_COOLDOWN_PERIOD" - Cooldown period applies. Wait until cooldown
+	// period ends.
+	//   "ALREADY_UNDER_REVIEW" - Account is already under review.
+	//   "NO_REVIEW_REQUIRED" - No issues available to review.
+	ReviewIneligibilityReason string `json:"reviewIneligibilityReason,omitempty"`
+
+	// ReviewIneligibilityReasonDescription: Reason if a program in a given
+	// country is not eligible for review. Populated only if
+	// `review_eligibility_status` is `INELIGIBLE`.
+	ReviewIneligibilityReasonDescription string `json:"reviewIneligibilityReasonDescription,omitempty"`
+
+	// ReviewIneligibilityReasonDetails: This contains additional
+	// information specific to review ineligibility reasons. If review is
+	// ineligible because of `IN_COOLDOWN_PERIOD`, it will contain timestamp
+	// for cooldown period.
+	ReviewIneligibilityReasonDetails *FreeListingsProgramStatusReviewIneligibilityReasonDetails `json:"reviewIneligibilityReasonDetails,omitempty"`
 
 	// ReviewIssues: These issues will be evaluated in review process. Fix
 	// all the issues before requesting the review.
@@ -4596,6 +4619,36 @@ type FreeListingsProgramStatusRegionStatus struct {
 
 func (s *FreeListingsProgramStatusRegionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod FreeListingsProgramStatusRegionStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FreeListingsProgramStatusReviewIneligibilityReasonDetails: Additional
+// details for review ineligibility reasons.
+type FreeListingsProgramStatusReviewIneligibilityReasonDetails struct {
+	// CooldownTime: This timestamp represents end of cooldown period for
+	// review ineligbility reason `IN_COOLDOWN_PERIOD`.
+	CooldownTime string `json:"cooldownTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CooldownTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CooldownTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FreeListingsProgramStatusReviewIneligibilityReasonDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod FreeListingsProgramStatusReviewIneligibilityReasonDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13167,7 +13220,7 @@ func (s *ProductstatusesListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Promotion:  The Promotions feature is currently in alpha and is not
-// yet publicly available via Content API for Shopping. This
+// yet publicly available in Content API for Shopping. This
 // documentation is provided for reference only may be subject to
 // change. Represents a promotion. See the following articles for more
 // details. * Promotions feed specification
@@ -13312,15 +13365,16 @@ type Promotion struct {
 	PromotionDestinationIds []string `json:"promotionDestinationIds,omitempty"`
 
 	// PromotionDisplayDates: String representation of the promotion display
-	// dates.
+	// dates (deprecated: Use promotion_display_time_period instead).
 	PromotionDisplayDates string `json:"promotionDisplayDates,omitempty"`
 
 	// PromotionDisplayTimePeriod: TimePeriod representation of the
 	// promotion display dates.
 	PromotionDisplayTimePeriod *TimePeriod `json:"promotionDisplayTimePeriod,omitempty"`
 
-	// PromotionEffectiveDates: Required. String representation of the
-	// promotion effective dates.
+	// PromotionEffectiveDates: String representation of the promotion
+	// effective dates (deprecated: Use promotion_effective_time_period
+	// instead).
 	PromotionEffectiveDates string `json:"promotionEffectiveDates,omitempty"`
 
 	// PromotionEffectiveTimePeriod: Required. TimePeriod representation of
@@ -16852,24 +16906,28 @@ func (s *ShippingsettingsListResponse) MarshalJSON() ([]byte, error) {
 // ShoppingAdsProgramStatus: Response message for
 // GetShoppingAdsProgramStatus.
 type ShoppingAdsProgramStatus struct {
+	// GlobalState: State of the program, It is set to enabled if there are
+	// offers for at least one region.
+	//
+	// Possible values:
+	//   "PROGRAM_STATE_UNSPECIFIED" - State is not known.
+	//   "NOT_ENABLED" - Program is not enabled for any country.
+	//   "NO_OFFERS_UPLOADED" - Offers are not uploaded targeting even a
+	// single country for this program.
+	//   "ENABLED" - Program is enabled and offers are uploaded for at least
+	// one country.
+	GlobalState string `json:"globalState,omitempty"`
+
 	// RegionStatuses: Status of the program in each region. Regions with
 	// the same status and review eligibility are grouped together in
 	// `regionCodes`.
 	RegionStatuses []*ShoppingAdsProgramStatusRegionStatus `json:"regionStatuses,omitempty"`
 
-	// State: If program is successfully onboarded for at least one region.
-	//
-	// Possible values:
-	//   "PROGRAM_STATE_UNSPECIFIED" - State is not known.
-	//   "ENABLED" - Program is enabled for at least one country.
-	//   "NOT_ENABLED" - Program is not enabled for any country.
-	State string `json:"state,omitempty"`
-
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "RegionStatuses") to
+	// ForceSendFields is a list of field names (e.g. "GlobalState") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -16877,13 +16935,12 @@ type ShoppingAdsProgramStatus struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RegionStatuses") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GlobalState") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -16898,7 +16955,7 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 	// DisapprovalDate: Date by which `eligibility_status` will go from
 	// `WARNING` to `DISAPPROVED`. It will be present when
 	// `eligibility_status` is `WARNING`. Date will be provided in ISO 8601
-	// (https://en.wikipedia.org/wiki/ISO_8601) format i.e. YYYY-MM-DD
+	// (https://en.wikipedia.org/wiki/ISO_8601) format: YYYY-MM-DD
 	DisapprovalDate string `json:"disapprovalDate,omitempty"`
 
 	// EligibilityStatus: Eligibility status of the Shopping Ads program.
@@ -16914,15 +16971,16 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 	// ence/rest/v2.1/accountstatuses) API.
 	//   "WARNING" - If account has issues but offers are servable. Some of
 	// the issue can make account DISAPPROVED after a certain deadline.
-	//   "UNDER_REVIEW" - Account is under review.
+	//   "UNDER_REVIEW" - Account is under review. Deprecated: This state is
+	// not created.
 	//   "PENDING_REVIEW" - Account is waiting for review to start.
-	//   "ONBOARDING" - Program is currently onboarding.
+	//   "ONBOARDING" - Program is currently onboarding. Upload valid offers
+	// to complete onboarding.
 	EligibilityStatus string `json:"eligibilityStatus,omitempty"`
 
-	// IneligibilityReason: Reason if a program in a given country is not
-	// eligible for review. Populated only if `review_eligibility_status` is
-	// `INELIGIBLE`.
-	IneligibilityReason string `json:"ineligibilityReason,omitempty"`
+	// OnboardingIssues: These issues must be fixed to become eligible for
+	// the review.
+	OnboardingIssues []string `json:"onboardingIssues,omitempty"`
 
 	// RegionCodes: The two-letter ISO 3166-1 alpha-2
 	// (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) codes for all the
@@ -16934,12 +16992,38 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 	// `DISAPPROVED`.
 	//
 	// Possible values:
-	//   "REVIEW_ELIGIBILITY_UNSPECIFIED" - Review eligibility state is
-	// unknown.
-	//   "ELIGIBLE" - Account for a region code is eligible for review.
-	//   "INELIGIBLE" - Account for a region code is not eligible for
-	// review.
+	//   "REVIEW_ELIGIBILITY_UNSPECIFIED" - Review eligibility reason state
+	// is unknown.
+	//   "ELIGIBLE" - Account is eligible for review for a specified region
+	// code.
+	//   "INELIGIBLE" - Account is not eligible for review for a specified
+	// region code.
 	ReviewEligibilityStatus string `json:"reviewEligibilityStatus,omitempty"`
+
+	// ReviewIneligibilityReason: Review ineligibility reason if account is
+	// not eligible for review.
+	//
+	// Possible values:
+	//   "REVIEW_INELIGIBILITY_REASON_UNSPECIFIED" - Requesting a review
+	// from Google is not possible.
+	//   "ONBOARDING_ISSUES" - All onboarding issues needs to be fixed.
+	//   "NOT_ENOUGH_OFFERS" - Not enough offers uploaded for this country.
+	//   "IN_COOLDOWN_PERIOD" - Cooldown period applies. Wait until cooldown
+	// period ends.
+	//   "ALREADY_UNDER_REVIEW" - Account is already under review.
+	//   "NO_REVIEW_REQUIRED" - No issues available to review.
+	ReviewIneligibilityReason string `json:"reviewIneligibilityReason,omitempty"`
+
+	// ReviewIneligibilityReasonDescription: Reason if a program in a given
+	// country is not eligible for review. Populated only if
+	// `review_eligibility_status` is `INELIGIBLE`.
+	ReviewIneligibilityReasonDescription string `json:"reviewIneligibilityReasonDescription,omitempty"`
+
+	// ReviewIneligibilityReasonDetails: This contains additional
+	// information specific to review ineligibility reasons. If review is
+	// ineligible because of `IN_COOLDOWN_PERIOD`, it will contain timestamp
+	// for cooldown period.
+	ReviewIneligibilityReasonDetails *ShoppingAdsProgramStatusReviewIneligibilityReasonDetails `json:"reviewIneligibilityReasonDetails,omitempty"`
 
 	// ReviewIssues: These issues will be evaluated in review process. Fix
 	// all the issues before requesting the review.
@@ -16965,6 +17049,36 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 
 func (s *ShoppingAdsProgramStatusRegionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ShoppingAdsProgramStatusRegionStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ShoppingAdsProgramStatusReviewIneligibilityReasonDetails: Additional
+// details for review ineligibility reasons.
+type ShoppingAdsProgramStatusReviewIneligibilityReasonDetails struct {
+	// CooldownTime: This timestamp represents end of cooldown period for
+	// review ineligbility reason `IN_COOLDOWN_PERIOD`.
+	CooldownTime string `json:"cooldownTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CooldownTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CooldownTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ShoppingAdsProgramStatusReviewIneligibilityReasonDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ShoppingAdsProgramStatusReviewIneligibilityReasonDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

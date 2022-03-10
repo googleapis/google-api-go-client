@@ -2197,6 +2197,17 @@ func (s *FileHashes) MarshalJSON() ([]byte, error) {
 // GitFileSource: GitFileSource describes a file within a (possibly
 // remote) code repository.
 type GitFileSource struct {
+	// BitbucketServerConfig: The full resource name of the bitbucket server
+	// config. Format:
+	// `projects/{project}/locations/{location}/bitbucketServerConfigs/{id}`.
+	BitbucketServerConfig string `json:"bitbucketServerConfig,omitempty"`
+
+	// GithubEnterpriseConfig: The full resource name of the github
+	// enterprise config. Format:
+	// `projects/{project}/locations/{location}/githubEnterpriseConfigs/{id}`
+	// . `projects/{project}/githubEnterpriseConfigs/{id}`.
+	GithubEnterpriseConfig string `json:"githubEnterpriseConfig,omitempty"`
+
 	// Path: The path of the file, with the repo root as the root of the
 	// path.
 	Path string `json:"path,omitempty"`
@@ -2209,6 +2220,7 @@ type GitFileSource struct {
 	// Repositories-hosted repo.
 	//   "GITHUB" - A GitHub-hosted repo not necessarily on "github.com"
 	// (i.e. GitHub Enterprise).
+	//   "BITBUCKET_SERVER" - A Bitbucket Server-hosted repo.
 	RepoType string `json:"repoType,omitempty"`
 
 	// Revision: The branch, tag, arbitrary ref, or SHA version of the repo
@@ -2224,20 +2236,22 @@ type GitFileSource struct {
 	// from which to read the specified path.
 	Uri string `json:"uri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Path") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "BitbucketServerConfig") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Path") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BitbucketServerConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2435,6 +2449,17 @@ func (s *GitHubEventsConfig) MarshalJSON() ([]byte, error) {
 // GitRepoSource: GitRepoSource describes a repo and ref of a code
 // repository.
 type GitRepoSource struct {
+	// BitbucketServerConfig: The full resource name of the bitbucket server
+	// config. Format:
+	// `projects/{project}/locations/{location}/bitbucketServerConfigs/{id}`.
+	BitbucketServerConfig string `json:"bitbucketServerConfig,omitempty"`
+
+	// GithubEnterpriseConfig: The full resource name of the github
+	// enterprise config. Format:
+	// `projects/{project}/locations/{location}/githubEnterpriseConfigs/{id}`
+	// . `projects/{project}/githubEnterpriseConfigs/{id}`.
+	GithubEnterpriseConfig string `json:"githubEnterpriseConfig,omitempty"`
+
 	// Ref: The branch or tag to use. Must start with "refs/" (required).
 	Ref string `json:"ref,omitempty"`
 
@@ -2446,25 +2471,28 @@ type GitRepoSource struct {
 	// Repositories-hosted repo.
 	//   "GITHUB" - A GitHub-hosted repo not necessarily on "github.com"
 	// (i.e. GitHub Enterprise).
+	//   "BITBUCKET_SERVER" - A Bitbucket Server-hosted repo.
 	RepoType string `json:"repoType,omitempty"`
 
 	// Uri: The URI of the repo (required).
 	Uri string `json:"uri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Ref") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "BitbucketServerConfig") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Ref") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BitbucketServerConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3743,6 +3771,58 @@ type RunBuildTriggerRequest struct {
 
 func (s *RunBuildTriggerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunBuildTriggerRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RunWorkflowCustomOperationMetadata: Represents the custom metadata of
+// the RunWorkflow long-running operation.
+type RunWorkflowCustomOperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// PipelineRunId: Output only. ID of the pipeline run created by
+	// RunWorkflow.
+	PipelineRunId string `json:"pipelineRunId,omitempty"`
+
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have
+	// successfully been cancelled have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+
+	// Target: Output only. Server-defined resource path for the target of
+	// the operation.
+	Target string `json:"target,omitempty"`
+
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RunWorkflowCustomOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod RunWorkflowCustomOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5700,7 +5780,7 @@ func (c *ProjectsBuildsListCall) PageToken(pageToken string) *ProjectsBuildsList
 
 // Parent sets the optional parameter "parent": The parent of the
 // collection of `Builds`. Format:
-// `projects/{project}/locations/location`
+// `projects/{project}/locations/{location}`
 func (c *ProjectsBuildsListCall) Parent(parent string) *ProjectsBuildsListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -5830,7 +5910,7 @@ func (c *ProjectsBuildsListCall) Do(opts ...googleapi.CallOption) (*ListBuildsRe
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent of the collection of `Builds`. Format: `projects/{project}/locations/location`",
+	//       "description": "The parent of the collection of `Builds`. Format: `projects/{project}/locations/{location}`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8931,7 +9011,7 @@ type ProjectsLocationsBuildsListCall struct {
 // unsuccessfully.
 //
 // - parent: The parent of the collection of `Builds`. Format:
-//   `projects/{project}/locations/location`.
+//   `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsBuildsService) List(parent string) *ProjectsLocationsBuildsListCall {
 	c := &ProjectsLocationsBuildsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9094,7 +9174,7 @@ func (c *ProjectsLocationsBuildsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent of the collection of `Builds`. Format: `projects/{project}/locations/location`",
+	//       "description": "The parent of the collection of `Builds`. Format: `projects/{project}/locations/{location}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

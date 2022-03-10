@@ -1392,8 +1392,12 @@ type GoogleCloudRetailV2alphaCatalogAttribute struct {
 	// in Product.attributes. Otherwise, this field is `False`.
 	// CatalogAttribute can be pre-loaded by using AddCatalogAttribute,
 	// ImportCatalogAttributes, or UpdateAttributesConfig APIs. This field
-	// is `False` for pre-loaded CatalogAttributes. After catalog changes,
-	// it takes about 10 minutes for this field to update.
+	// is `False` for pre-loaded CatalogAttributes. Only CatalogAttributes
+	// that are not in use by products can be deleted. CatalogAttributes
+	// that are in use by products cannot be deleted; however, their
+	// configuration properties will reset to default values upon removal
+	// request. After catalog changes, it takes about 10 minutes for this
+	// field to update.
 	InUse bool `json:"inUse,omitempty"`
 
 	// IndexableOption: When AttributesConfig.attribute_config_level is
@@ -1841,7 +1845,8 @@ type GoogleCloudRetailV2alphaControl struct {
 	// SolutionTypes: Required. Immutable. The solution types that the
 	// serving config is used for. Currently we support setting only one
 	// type of solution at creation time. Only `SOLUTION_TYPE_SEARCH` value
-	// is supported at the moment.
+	// is supported at the moment. If no solution type is provided at
+	// creation time, will default to SOLUTION_TYPE_SEARCH.
 	//
 	// Possible values:
 	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
@@ -6815,11 +6820,12 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // a birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type GoogleTypeDate struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -6907,11 +6913,14 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType strin
 	return c
 }
 
-// LanguageCodes sets the optional parameter "languageCodes": The list
-// of languages of the query. This is the BCP-47 language code, such as
-// "en-US" or "sr-Latn". For more information, see Tags for Identifying
-// Languages (https://tools.ietf.org/html/bcp47). The maximum number of
-// allowed characters is 255. Only "en-US" is currently supported.
+// LanguageCodes sets the optional parameter "languageCodes": The
+// language filters applied to the output suggestions. If set, it should
+// contain the language of the query. If not set, suggestions are
+// returned without considering language restrictions. This is the
+// BCP-47 language code, such as "en-US" or "sr-Latn". For more
+// information, see Tags for Identifying Languages
+// (https://tools.ietf.org/html/bcp47). The maximum number of language
+// codes is 3.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) LanguageCodes(languageCodes ...string) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.SetMulti("languageCodes", append([]string{}, languageCodes...))
 	return c
@@ -7074,7 +7083,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "languageCodes": {
-	//       "description": "The list of languages of the query. This is the BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see [Tags for Identifying Languages](https://tools.ietf.org/html/bcp47). The maximum number of allowed characters is 255. Only \"en-US\" is currently supported.",
+	//       "description": "The language filters applied to the output suggestions. If set, it should contain the language of the query. If not set, suggestions are returned without considering language restrictions. This is the BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see [Tags for Identifying Languages](https://tools.ietf.org/html/bcp47). The maximum number of language codes is 3.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

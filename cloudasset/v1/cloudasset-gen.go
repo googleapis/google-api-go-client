@@ -714,7 +714,11 @@ type BigQueryDestination struct {
 	// Dataset: Required. The BigQuery dataset in format
 	// "projects/projectId/datasets/datasetId", to which the snapshot result
 	// should be exported. If this dataset does not exist, the export call
-	// returns an INVALID_ARGUMENT error.
+	// returns an INVALID_ARGUMENT error. Setting the `contentType` for
+	// `exportAssets` determines the schema
+	// (/asset-inventory/docs/exporting-to-bigquery#bigquery-schema) of the
+	// BigQuery table. Setting `separateTablesPerAssetType` to `TRUE` also
+	// influences the schema.
 	Dataset string `json:"dataset,omitempty"`
 
 	// Force: If the destination table already exists and this flag is
@@ -976,11 +980,12 @@ func (s *CreateFeedRequest) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the

@@ -4466,7 +4466,8 @@ type ProjectsLocationsRepositoriesFilesListCall struct {
 
 // List: Lists files.
 //
-// - parent: The name of the parent resource whose files will be listed.
+// - parent: The name of the repository whose files will be listed. For
+//   example: "projects/p1/locations/us-central1/repositories/repo1.
 func (r *ProjectsLocationsRepositoriesFilesService) List(parent string) *ProjectsLocationsRepositoriesFilesListCall {
 	c := &ProjectsLocationsRepositoriesFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4625,7 +4626,7 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the parent resource whose files will be listed.",
+	//       "description": "The name of the repository whose files will be listed. For example: \"projects/p1/locations/us-central1/repositories/repo1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,

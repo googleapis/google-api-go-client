@@ -2068,6 +2068,16 @@ type ExportMessagesResponse struct {
 
 // ExportResourcesRequest: Request to export resources.
 type ExportResourcesRequest struct {
+	// Since: If provided, only resources updated after this time are
+	// exported. The time uses the format YYYY-MM-DDThh:mm:ss.sss+zz:zz. For
+	// example, `2015-02-07T13:28:17.239+02:00` or `2017-01-01T00:00:00Z`.
+	// The time must be specified to the second and include a time zone.
+	Since string `json:"_since,omitempty"`
+
+	// Type: String of comma-delimited FHIR resource types. If provided,
+	// only resources of the specified resource type(s) are exported.
+	Type string `json:"_type,omitempty"`
+
 	// BigqueryDestination: The BigQuery output destination. The Cloud
 	// Healthcare Service Agent requires two IAM roles on the BigQuery
 	// location: `roles/bigquery.dataEditor` and `roles/bigquery.jobUser`.
@@ -2084,21 +2094,20 @@ type ExportResourcesRequest struct {
 	// resource.
 	GcsDestination *GoogleCloudHealthcareV1FhirGcsDestination `json:"gcsDestination,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BigqueryDestination")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Since") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BigqueryDestination") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Since") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

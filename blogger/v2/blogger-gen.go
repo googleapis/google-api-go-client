@@ -778,6 +778,7 @@ type Page struct {
 	// Possible values:
 	//   "LIVE"
 	//   "DRAFT"
+	//   "SOFT_TRASHED"
 	Status string `json:"status,omitempty"`
 
 	// Title: The title of this entity. This is the name displayed in the
@@ -1006,6 +1007,7 @@ type Post struct {
 	//   "LIVE"
 	//   "DRAFT"
 	//   "SCHEDULED"
+	//   "SOFT_TRASHED"
 	Status string `json:"status,omitempty"`
 
 	// Title: The title of the Post.

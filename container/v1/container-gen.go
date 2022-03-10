@@ -553,13 +553,17 @@ type AutoprovisioningNodePoolDefaults struct {
 	// node-pools.
 	Management *NodeManagement `json:"management,omitempty"`
 
-	// MinCpuPlatform: Minimum CPU platform to be used for NAP created node
-	// pools. The instance may be scheduled on the specified or newer CPU
-	// platform. Applicable values are the friendly names of CPU platforms,
-	// such as minCpuPlatform: Intel Haswell or minCpuPlatform: Intel Sandy
-	// Bridge. For more information, read how to specify min CPU platform
+	// MinCpuPlatform: Deprecated. Minimum CPU platform to be used for NAP
+	// created node pools. The instance may be scheduled on the specified or
+	// newer CPU platform. Applicable values are the friendly names of CPU
+	// platforms, such as minCpuPlatform: Intel Haswell or minCpuPlatform:
+	// Intel Sandy Bridge. For more information, read how to specify min CPU
+	// platform
 	// (https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform)
-	// To unset the min cpu platform field pass "automatic" as field value.
+	// This field is deprecated, min_cpu_platform should be specified using
+	// cloud.google.com/requested-min-cpu-platform label selector on the
+	// pod. To unset the min cpu platform field pass "automatic" as field
+	// value.
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// OauthScopes: Scopes that are used by NAP when creating node pools.
@@ -1038,6 +1042,11 @@ type Cluster struct {
 	// is in route-based network mode.
 	NodeIpv4CidrSize int64 `json:"nodeIpv4CidrSize,omitempty"`
 
+	// NodePoolAutoConfig: Node pool configs that apply to all
+	// auto-provisioned node pools in autopilot clusters and node
+	// auto-provisioning enabled clusters.
+	NodePoolAutoConfig *NodePoolAutoConfig `json:"nodePoolAutoConfig,omitempty"`
+
 	// NodePoolDefaults: Default NodePool settings for the entire cluster.
 	// These settings are overridden if specified on the specific NodePool
 	// object.
@@ -1326,6 +1335,11 @@ type ClusterUpdate struct {
 	// be used for GKE 1.14+ or `monitoring.googleapis.com` for earlier
 	// versions.
 	DesiredMonitoringService string `json:"desiredMonitoringService,omitempty"`
+
+	// DesiredNodePoolAutoConfigNetworkTags: The desired network tags that
+	// apply to all auto-provisioned node pools in autopilot clusters and
+	// node auto-provisioning enabled clusters.
+	DesiredNodePoolAutoConfigNetworkTags *NetworkTags `json:"desiredNodePoolAutoConfigNetworkTags,omitempty"`
 
 	// DesiredNodePoolAutoscaling: Autoscaler configuration for the node
 	// pool specified in desired_node_pool_id. If there is only one pool in
@@ -3293,6 +3307,35 @@ func (s *NetworkPolicyConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NetworkTags: Collection of Compute Engine network tags that can be
+// applied to a node's underlying VM instance.
+type NetworkTags struct {
+	// Tags: List of network tags.
+	Tags []string `json:"tags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tags") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NetworkTags) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkTags
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NodeConfig: Parameters that describe the nodes in a cluster.
 type NodeConfig struct {
 	// Accelerators: A list of hardware accelerators to be attached to each
@@ -3761,6 +3804,39 @@ type NodePool struct {
 
 func (s *NodePool) MarshalJSON() ([]byte, error) {
 	type NoMethod NodePool
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NodePoolAutoConfig: Node pool configs that apply to all
+// auto-provisioned node pools in autopilot clusters and node
+// auto-provisioning enabled clusters.
+type NodePoolAutoConfig struct {
+	// NetworkTags: The list of instance tags applied to all nodes. Tags are
+	// used to identify valid sources or targets for network firewalls and
+	// are specified by the client during cluster creation. Each tag within
+	// the list must comply with RFC1035.
+	NetworkTags *NetworkTags `json:"networkTags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NetworkTags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NetworkTags") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodePoolAutoConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod NodePoolAutoConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

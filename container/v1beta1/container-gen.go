@@ -565,13 +565,17 @@ type AutoprovisioningNodePoolDefaults struct {
 	// Management: NodeManagement configuration for this NodePool.
 	Management *NodeManagement `json:"management,omitempty"`
 
-	// MinCpuPlatform: Minimum CPU platform to be used by this instance. The
-	// instance may be scheduled on the specified or newer CPU platform.
-	// Applicable values are the friendly names of CPU platforms, such as
-	// `minCpuPlatform: "Intel Haswell" or `minCpuPlatform: "Intel Sandy
-	// Bridge". For more information, read how to specify min CPU platform
+	// MinCpuPlatform: Deprecated. Minimum CPU platform to be used for NAP
+	// created node pools. The instance may be scheduled on the specified or
+	// newer CPU platform. Applicable values are the friendly names of CPU
+	// platforms, such as minCpuPlatform: Intel Haswell or minCpuPlatform:
+	// Intel Sandy Bridge. For more information, read how to specify min CPU
+	// platform
 	// (https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform)
-	// To unset the min cpu platform field pass "automatic" as field value.
+	// This field is deprecated, min_cpu_platform should be specified using
+	// cloud.google.com/requested-min-cpu-platform label selector on the
+	// pod. To unset the min cpu platform field pass "automatic" as field
+	// value.
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// OauthScopes: The set of Google API scopes to be made available on all
@@ -1109,6 +1113,11 @@ type Cluster struct {
 	// is in route-based network mode.
 	NodeIpv4CidrSize int64 `json:"nodeIpv4CidrSize,omitempty"`
 
+	// NodePoolAutoConfig: Node pool configs that apply to all
+	// auto-provisioned node pools in autopilot clusters and node
+	// auto-provisioning enabled clusters.
+	NodePoolAutoConfig *NodePoolAutoConfig `json:"nodePoolAutoConfig,omitempty"`
+
 	// NodePoolDefaults: Default NodePool settings for the entire cluster.
 	// These settings are overridden if specified on the specific NodePool
 	// object.
@@ -1204,6 +1213,10 @@ type Cluster struct {
 	// VerticalPodAutoscaling: Cluster-level Vertical Pod Autoscaling
 	// configuration.
 	VerticalPodAutoscaling *VerticalPodAutoscaling `json:"verticalPodAutoscaling,omitempty"`
+
+	// WorkloadAltsConfig: Configuration for direct-path (via ALTS) with
+	// workload identity.
+	WorkloadAltsConfig *WorkloadALTSConfig `json:"workloadAltsConfig,omitempty"`
 
 	// WorkloadCertificates: Configuration for issuance of mTLS keys and
 	// certificates to Kubernetes pods.
@@ -1458,6 +1471,11 @@ type ClusterUpdate struct {
 	// versions.
 	DesiredMonitoringService string `json:"desiredMonitoringService,omitempty"`
 
+	// DesiredNodePoolAutoConfigNetworkTags: The desired network tags that
+	// apply to all auto-provisioned node pools in autopilot clusters and
+	// node auto-provisioning enabled clusters.
+	DesiredNodePoolAutoConfigNetworkTags *NetworkTags `json:"desiredNodePoolAutoConfigNetworkTags,omitempty"`
+
 	// DesiredNodePoolAutoscaling: Autoscaler configuration for the node
 	// pool specified in desired_node_pool_id. If there is only one pool in
 	// the cluster and desired_node_pool_id is not provided then the change
@@ -1526,6 +1544,10 @@ type ClusterUpdate struct {
 	// DesiredVerticalPodAutoscaling: Cluster-level Vertical Pod Autoscaling
 	// configuration.
 	DesiredVerticalPodAutoscaling *VerticalPodAutoscaling `json:"desiredVerticalPodAutoscaling,omitempty"`
+
+	// DesiredWorkloadAltsConfig: Configuration for direct-path (via ALTS)
+	// with workload identity.
+	DesiredWorkloadAltsConfig *WorkloadALTSConfig `json:"desiredWorkloadAltsConfig,omitempty"`
 
 	// DesiredWorkloadCertificates: Configuration for issuance of mTLS keys
 	// and certificates to Kubernetes pods.
@@ -1921,11 +1943,11 @@ func (s *DatabaseEncryption) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values * A month and day, with a
+// zero year (e.g., an anniversary) * A year on its own, with a zero
+// month and a zero day * A year and month, with a zero day (e.g., a
+// credit card expiration date) Related types: * google.type.TimeOfDay *
+// google.type.DateTime * google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -4284,6 +4306,39 @@ type NodePool struct {
 
 func (s *NodePool) MarshalJSON() ([]byte, error) {
 	type NoMethod NodePool
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NodePoolAutoConfig: node pool configs that apply to all
+// auto-provisioned node pools in autopilot clusters and node
+// auto-provisioning enabled clusters
+type NodePoolAutoConfig struct {
+	// NetworkTags: The list of instance tags applied to all nodes. Tags are
+	// used to identify valid sources or targets for network firewalls and
+	// are specified by the client during cluster creation. Each tag within
+	// the list must comply with RFC1035.
+	NetworkTags *NetworkTags `json:"networkTags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NetworkTags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NetworkTags") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodePoolAutoConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod NodePoolAutoConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6933,6 +6988,37 @@ type WindowsVersions struct {
 
 func (s *WindowsVersions) MarshalJSON() ([]byte, error) {
 	type NoMethod WindowsVersions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadALTSConfig: Configuration for direct-path (via ALTS) with
+// workload identity.
+type WorkloadALTSConfig struct {
+	// EnableAlts: enable_alts controls whether the alts handshaker should
+	// be enabled or not for direct-path. Requires Workload Identity
+	// (workload_pool must be non-empty).
+	EnableAlts bool `json:"enableAlts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnableAlts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnableAlts") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkloadALTSConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadALTSConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

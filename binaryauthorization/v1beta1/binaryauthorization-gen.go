@@ -341,6 +341,10 @@ type Attestor struct {
 	// updated. The field may be displayed in chooser dialogs.
 	Description string `json:"description,omitempty"`
 
+	// Etag: Optional. Used to prevent updating the attestor when another
+	// request has updated it since it was retrieved.
+	Etag string `json:"etag,omitempty"`
+
 	// Name: Required. The resource name, in the format:
 	// `projects/*/attestors/*`. This field may not be updated.
 	Name string `json:"name,omitempty"`
@@ -773,11 +777,19 @@ type PkixPublicKey struct {
 	//   "SIGNATURE_ALGORITHM_UNSPECIFIED" - Not specified.
 	//   "RSA_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
 	// digest.
+	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
+	// digest.
 	//   "RSA_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
+	// digest.
+	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
 	// digest.
 	//   "RSA_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256
 	// digest.
+	//   "RSA_SIGN_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256
+	// digest.
 	//   "RSA_PSS_4096_SHA512" - RSASSA-PSS 4096 bit key with a SHA512
+	// digest.
+	//   "RSA_SIGN_PSS_4096_SHA512" - RSASSA-PSS 4096 bit key with a SHA512
 	// digest.
 	//   "RSA_SIGN_PKCS1_2048_SHA256" - RSASSA-PKCS1-v1_5 with a 2048 bit
 	// key and a SHA256 digest.
@@ -847,6 +859,10 @@ type Policy struct {
 
 	// Description: Optional. A descriptive comment.
 	Description string `json:"description,omitempty"`
+
+	// Etag: Optional. Used to prevent updating the policy when another
+	// request has updated it since it was retrieved.
+	Etag string `json:"etag,omitempty"`
 
 	// GlobalPolicyEvaluationMode: Optional. Controls the evaluation of a
 	// Google-maintained global admission policy for common system-level

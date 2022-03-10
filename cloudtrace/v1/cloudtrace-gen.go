@@ -685,7 +685,7 @@ type ProjectsTracesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns of a list of traces that match the specified filter
+// List: Returns a list of traces that match the specified filter
 // conditions.
 //
 // - projectId: ID of the Cloud project where the trace data is stored.
@@ -884,7 +884,7 @@ func (c *ProjectsTracesListCall) Do(opts ...googleapi.CallOption) (*ListTracesRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns of a list of traces that match the specified filter conditions.",
+	//   "description": "Returns a list of traces that match the specified filter conditions.",
 	//   "flatPath": "v1/projects/{projectId}/traces",
 	//   "httpMethod": "GET",
 	//   "id": "cloudtrace.projects.traces.list",

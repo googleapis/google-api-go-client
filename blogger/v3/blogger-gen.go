@@ -826,6 +826,7 @@ type Page struct {
 	// Possible values:
 	//   "LIVE"
 	//   "DRAFT"
+	//   "SOFT_TRASHED"
 	Status string `json:"status,omitempty"`
 
 	// Title: The title of this entity. This is the name displayed in the
@@ -1126,6 +1127,7 @@ type Post struct {
 	//   "LIVE"
 	//   "DRAFT"
 	//   "SCHEDULED"
+	//   "SOFT_TRASHED"
 	Status string `json:"status,omitempty"`
 
 	// Title: The title of the Post.
@@ -4364,6 +4366,7 @@ func (c *PagesListCall) PageToken(pageToken string) *PagesListCall {
 // Possible values:
 //   "LIVE"
 //   "DRAFT"
+//   "SOFT_TRASHED"
 func (c *PagesListCall) Status(status ...string) *PagesListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
@@ -4509,9 +4512,11 @@ func (c *PagesListCall) Do(opts ...googleapi.CallOption) (*PageList, error) {
 	//     "status": {
 	//       "enum": [
 	//         "LIVE",
-	//         "DRAFT"
+	//         "DRAFT",
+	//         "SOFT_TRASHED"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         ""
 	//       ],
@@ -5441,6 +5446,7 @@ func (c *PostUserInfosListCall) StartDate(startDate string) *PostUserInfosListCa
 //   "LIVE"
 //   "DRAFT"
 //   "SCHEDULED"
+//   "SOFT_TRASHED"
 func (c *PostUserInfosListCall) Status(status ...string) *PostUserInfosListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
@@ -5617,9 +5623,11 @@ func (c *PostUserInfosListCall) Do(opts ...googleapi.CallOption) (*PostUserInfos
 	//       "enum": [
 	//         "LIVE",
 	//         "DRAFT",
-	//         "SCHEDULED"
+	//         "SCHEDULED",
+	//         "SOFT_TRASHED"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         ""
@@ -6452,6 +6460,7 @@ func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 //   "LIVE"
 //   "DRAFT"
 //   "SCHEDULED"
+//   "SOFT_TRASHED"
 func (c *PostsListCall) Status(status ...string) *PostsListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
@@ -6630,9 +6639,11 @@ func (c *PostsListCall) Do(opts ...googleapi.CallOption) (*PostList, error) {
 	//       "enum": [
 	//         "LIVE",
 	//         "DRAFT",
-	//         "SCHEDULED"
+	//         "SCHEDULED",
+	//         "SOFT_TRASHED"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         ""

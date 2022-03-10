@@ -265,6 +265,44 @@ func (s *AbortInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AppEngineVersionInfo: For display only. Metadata associated with an
+// App Engine version.
+type AppEngineVersionInfo struct {
+	// DisplayName: Name of an App Engine version.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Environment: App Engine execution environment for a version.
+	Environment string `json:"environment,omitempty"`
+
+	// Runtime: Runtime of the App Engine version.
+	Runtime string `json:"runtime,omitempty"`
+
+	// Uri: URI of an App Engine version.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppEngineVersionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AppEngineVersionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -468,6 +506,45 @@ func (s *CloudFunctionEndpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CloudFunctionInfo: For display only. Metadata associated with a Cloud
+// function.
+type CloudFunctionInfo struct {
+	// DisplayName: Name of a Cloud function.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Location: Location in which the Cloud function is deployed.
+	Location string `json:"location,omitempty"`
+
+	// Uri: URI of a Cloud function.
+	Uri string `json:"uri,omitempty"`
+
+	// VersionId: Latest successfully deployed version id of the Cloud
+	// function.
+	VersionId int64 `json:"versionId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudFunctionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudFunctionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CloudSQLInstanceInfo: For display only. Metadata associated with a
 // Cloud SQL instance.
 type CloudSQLInstanceInfo struct {
@@ -631,6 +708,16 @@ type DeliverInfo struct {
 	//   "GOOGLE_API" - Target is a Google API.
 	//   "GKE_MASTER" - Target is a Google Kubernetes Engine cluster master.
 	//   "CLOUD_SQL_INSTANCE" - Target is a Cloud SQL instance.
+	//   "PSC_PUBLISHED_SERVICE" - Target is a published service using
+	// [Private Service
+	// Connect](https://cloud.google.com/vpc/docs/configure-private-service-c
+	// onnect-services).
+	//   "PSC_GOOGLE_API" - Target is all Google APIs using [Private Service
+	// Connect](https://cloud.google.com/vpc/docs/configure-private-service-c
+	// onnect-apis).
+	//   "PSC_VPC_SC" - Target is VPC-SC using [Private Service
+	// Connect](https://cloud.google.com/vpc/docs/configure-private-service-c
+	// onnect-apis).
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
@@ -724,6 +811,17 @@ type DropInfo struct {
 	// Managed Services Network.
 	//   "CLOUD_SQL_INSTANCE_NO_IP_ADDRESS" - Packet was dropped because the
 	// Cloud SQL instance has neither a private nor a public IP address.
+	//   "CLOUD_FUNCTION_NOT_ACTIVE" - Packet could be dropped because the
+	// Cloud function is not in an active status.
+	//   "VPC_CONNECTOR_NOT_SET" - Packet could be dropped because no VPC
+	// connector is set.
+	//   "VPC_CONNECTOR_NOT_RUNNING" - Packet could be dropped because the
+	// VPC connector is not in a running state.
+	//   "FORWARDING_RULE_REGION_MISMATCH" - Packet could be dropped because
+	// it was sent from a different region to a regional forwarding without
+	// global access.
+	//   "PSC_CONNECTION_NOT_ACCEPTED" - Privte Service Connect (PSC)
+	// connection is not in accepted state.
 	Cause string `json:"cause,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the drop.
@@ -2121,8 +2219,15 @@ type Step struct {
 	// Abort: Display information of the final state "abort" and reason.
 	Abort *AbortInfo `json:"abort,omitempty"`
 
+	// AppEngineVersionInfo: Display information of an App Engine service
+	// version.
+	AppEngineVersionInfo *AppEngineVersionInfo `json:"appEngineVersionInfo,omitempty"`
+
 	// CausesDrop: This is a step that leads to the final state Drop.
 	CausesDrop bool `json:"causesDrop,omitempty"`
+
+	// CloudFunction: Display information of a Cloud function.
+	CloudFunction *CloudFunctionInfo `json:"cloudFunction,omitempty"`
 
 	// CloudSqlInstance: Display information of a Cloud SQL instance.
 	CloudSqlInstance *CloudSQLInstanceInfo `json:"cloudSqlInstance,omitempty"`
@@ -2192,6 +2297,12 @@ type Step struct {
 	//   "START_FROM_CLOUD_SQL_INSTANCE" - Initial state: packet originating
 	// from a Cloud SQL instance. A CloudSQLInstanceInfo is populated with
 	// starting instance information.
+	//   "START_FROM_CLOUD_FUNCTION" - Initial state: packet originating
+	// from a Cloud function. A CloudFunctionInfo is populated with starting
+	// function information.
+	//   "START_FROM_APP_ENGINE_VERSION" - Initial state: packet originating
+	// from an App Engine service version. An AppEngineVersionInfo is
+	// populated with starting version information.
 	//   "APPLY_INGRESS_FIREWALL_RULE" - Config checking state: verify
 	// ingress firewall rule.
 	//   "APPLY_EGRESS_FIREWALL_RULE" - Config checking state: verify egress
@@ -2211,6 +2322,8 @@ type Step struct {
 	// gateway.
 	//   "ARRIVE_AT_VPN_TUNNEL" - Forwarding state: arriving at a Cloud VPN
 	// tunnel.
+	//   "ARRIVE_AT_VPC_CONNECTOR" - Forwarding state: arriving at a VPC
+	// connector.
 	//   "NAT" - Transition state: packet header translated.
 	//   "PROXY_CONNECTION" - Transition state: original connection is
 	// terminated and a new proxied connection is initiated.
@@ -2223,6 +2336,9 @@ type Step struct {
 	// result does not have permission to see the configuration in this
 	// step.
 	State string `json:"state,omitempty"`
+
+	// VpcConnector: Display information of a VPC connector.
+	VpcConnector *VpcConnectorInfo `json:"vpcConnector,omitempty"`
 
 	// VpnGateway: Display information of a Compute Engine VPN gateway.
 	VpnGateway *VpnGatewayInfo `json:"vpnGateway,omitempty"`
@@ -2359,6 +2475,41 @@ type Trace struct {
 
 func (s *Trace) MarshalJSON() ([]byte, error) {
 	type NoMethod Trace
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VpcConnectorInfo: For display only. Metadata associated with a VPC
+// connector.
+type VpcConnectorInfo struct {
+	// DisplayName: Name of a VPC connector.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Location: Location in which the VPC connector is deployed.
+	Location string `json:"location,omitempty"`
+
+	// Uri: URI of a VPC connector.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VpcConnectorInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod VpcConnectorInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

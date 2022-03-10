@@ -7626,7 +7626,8 @@ func (r *TagBindingsService) List() *TagBindingsListCall {
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of TagBindings to return in the response. The server allows a maximum
 // of 300 TagBindings to return. If unspecified, the server will use 100
-// as the default.
+// as the default. Currently this api returns unpaginated response and
+// `page_size` is ignored.
 func (c *TagBindingsListCall) PageSize(pageSize int64) *TagBindingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7634,7 +7635,8 @@ func (c *TagBindingsListCall) PageSize(pageSize int64) *TagBindingsListCall {
 
 // PageToken sets the optional parameter "pageToken": A pagination token
 // returned from a previous call to `ListTagBindings` that indicates
-// where this listing should continue from.
+// where this listing should continue from. Currently this api returns
+// unpaginated response and `page_token` is ignored.
 func (c *TagBindingsListCall) PageToken(pageToken string) *TagBindingsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7752,13 +7754,13 @@ func (c *TagBindingsListCall) Do(opts ...googleapi.CallOption) (*ListTagBindings
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of TagBindings to return in the response. The server allows a maximum of 300 TagBindings to return. If unspecified, the server will use 100 as the default.",
+	//       "description": "Optional. The maximum number of TagBindings to return in the response. The server allows a maximum of 300 TagBindings to return. If unspecified, the server will use 100 as the default. Currently this api returns unpaginated response and `page_size` is ignored.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A pagination token returned from a previous call to `ListTagBindings` that indicates where this listing should continue from.",
+	//       "description": "Optional. A pagination token returned from a previous call to `ListTagBindings` that indicates where this listing should continue from. Currently this api returns unpaginated response and `page_token` is ignored.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

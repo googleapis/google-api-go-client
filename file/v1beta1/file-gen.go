@@ -977,7 +977,7 @@ type Instance struct {
 	// state, if available.
 	StatusMessage string `json:"statusMessage,omitempty"`
 
-	// SuspensionReasons: Output only. field indicates all the reasons the
+	// SuspensionReasons: Output only. Field indicates all the reasons the
 	// instance is in "SUSPENDED" state.
 	//
 	// Possible values:

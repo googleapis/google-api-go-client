@@ -1709,6 +1709,10 @@ type DeidentifyConfig struct {
 	// found in the source_dataset.
 	Image *ImageConfig `json:"image,omitempty"`
 
+	// OperationMetadata: Details about the work the de-identify operation
+	// performed.
+	OperationMetadata *DeidentifyOperationMetadata `json:"operationMetadata,omitempty"`
+
 	// Text: Configures de-identification of text wherever it is found in
 	// the source_dataset.
 	Text *TextConfig `json:"text,omitempty"`
@@ -1855,6 +1859,35 @@ type DeidentifyFhirStoreRequest struct {
 
 func (s *DeidentifyFhirStoreRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeidentifyFhirStoreRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeidentifyOperationMetadata: Details about the work the de-identify
+// operation performed.
+type DeidentifyOperationMetadata struct {
+	// FhirOutput: Details about the FHIR store to write the output to.
+	FhirOutput *FhirOutput `json:"fhirOutput,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FhirOutput") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FhirOutput") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeidentifyOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod DeidentifyOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2775,6 +2808,43 @@ type FhirFilter struct {
 
 func (s *FhirFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod FhirFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FhirOutput: Details about the FHIR store to write the output to.
+type FhirOutput struct {
+	// FhirStore: Name of the output FHIR store, which must already exist.
+	// You must grant the healthcare.fhirResources.update permission on the
+	// destination store to your project's **Cloud Healthcare Service
+	// Agent** service account
+	// (https://cloud.google.com/healthcare/docs/how-tos/permissions-healthcare-api-gcp-products#the_cloud_healthcare_service_agent).
+	// The destination store must set `enable_update_create` to true. The
+	// destination store must use FHIR version R4. Writing these resources
+	// will consume FHIR operations quota from the project containing the
+	// source data. De-identify operation metadata is only generated for
+	// DICOM de-identification operations.
+	FhirStore string `json:"fhirStore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FhirStore") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FhirStore") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FhirOutput) MarshalJSON() ([]byte, error) {
+	type NoMethod FhirOutput
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5474,6 +5544,12 @@ type ParserConfig struct {
 	// are off-by-one with respect to the HL7 standard.
 	//   "V2" - The `parsed_data` includes every given non-empty message
 	// field.
+	//   "V3" - This version is the same as V2, with the following change.
+	// The `parsed_data` contains unescaped escaped field separators,
+	// component separators, sub-component separators, repetition
+	// separators, escape characters, and truncation characters. If `schema`
+	// is specified, the schematized parser uses improved parsing heuristics
+	// compared to previous versions.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowNullHeader") to

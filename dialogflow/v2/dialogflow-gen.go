@@ -151,6 +151,8 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Agent = NewProjectsAgentService(s)
 	rs.AnswerRecords = NewProjectsAnswerRecordsService(s)
+	rs.ConversationDatasets = NewProjectsConversationDatasetsService(s)
+	rs.ConversationModels = NewProjectsConversationModelsService(s)
 	rs.ConversationProfiles = NewProjectsConversationProfilesService(s)
 	rs.Conversations = NewProjectsConversationsService(s)
 	rs.KnowledgeBases = NewProjectsKnowledgeBasesService(s)
@@ -165,6 +167,10 @@ type ProjectsService struct {
 	Agent *ProjectsAgentService
 
 	AnswerRecords *ProjectsAnswerRecordsService
+
+	ConversationDatasets *ProjectsConversationDatasetsService
+
+	ConversationModels *ProjectsConversationModelsService
 
 	ConversationProfiles *ProjectsConversationProfilesService
 
@@ -375,6 +381,36 @@ type ProjectsAnswerRecordsService struct {
 	s *Service
 }
 
+func NewProjectsConversationDatasetsService(s *Service) *ProjectsConversationDatasetsService {
+	rs := &ProjectsConversationDatasetsService{s: s}
+	return rs
+}
+
+type ProjectsConversationDatasetsService struct {
+	s *Service
+}
+
+func NewProjectsConversationModelsService(s *Service) *ProjectsConversationModelsService {
+	rs := &ProjectsConversationModelsService{s: s}
+	rs.Evaluations = NewProjectsConversationModelsEvaluationsService(s)
+	return rs
+}
+
+type ProjectsConversationModelsService struct {
+	s *Service
+
+	Evaluations *ProjectsConversationModelsEvaluationsService
+}
+
+func NewProjectsConversationModelsEvaluationsService(s *Service) *ProjectsConversationModelsEvaluationsService {
+	rs := &ProjectsConversationModelsEvaluationsService{s: s}
+	return rs
+}
+
+type ProjectsConversationModelsEvaluationsService struct {
+	s *Service
+}
+
 func NewProjectsConversationProfilesService(s *Service) *ProjectsConversationProfilesService {
 	rs := &ProjectsConversationProfilesService{s: s}
 	return rs
@@ -454,6 +490,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Agent = NewProjectsLocationsAgentService(s)
 	rs.AnswerRecords = NewProjectsLocationsAnswerRecordsService(s)
+	rs.ConversationDatasets = NewProjectsLocationsConversationDatasetsService(s)
+	rs.ConversationModels = NewProjectsLocationsConversationModelsService(s)
 	rs.ConversationProfiles = NewProjectsLocationsConversationProfilesService(s)
 	rs.Conversations = NewProjectsLocationsConversationsService(s)
 	rs.KnowledgeBases = NewProjectsLocationsKnowledgeBasesService(s)
@@ -467,6 +505,10 @@ type ProjectsLocationsService struct {
 	Agent *ProjectsLocationsAgentService
 
 	AnswerRecords *ProjectsLocationsAnswerRecordsService
+
+	ConversationDatasets *ProjectsLocationsConversationDatasetsService
+
+	ConversationModels *ProjectsLocationsConversationModelsService
 
 	ConversationProfiles *ProjectsLocationsConversationProfilesService
 
@@ -648,6 +690,36 @@ func NewProjectsLocationsAnswerRecordsService(s *Service) *ProjectsLocationsAnsw
 }
 
 type ProjectsLocationsAnswerRecordsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsConversationDatasetsService(s *Service) *ProjectsLocationsConversationDatasetsService {
+	rs := &ProjectsLocationsConversationDatasetsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsConversationDatasetsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsConversationModelsService(s *Service) *ProjectsLocationsConversationModelsService {
+	rs := &ProjectsLocationsConversationModelsService{s: s}
+	rs.Evaluations = NewProjectsLocationsConversationModelsEvaluationsService(s)
+	return rs
+}
+
+type ProjectsLocationsConversationModelsService struct {
+	s *Service
+
+	Evaluations *ProjectsLocationsConversationModelsEvaluationsService
+}
+
+func NewProjectsLocationsConversationModelsEvaluationsService(s *Service) *ProjectsLocationsConversationModelsEvaluationsService {
+	rs := &ProjectsLocationsConversationModelsEvaluationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsConversationModelsEvaluationsService struct {
 	s *Service
 }
 
@@ -7744,6 +7816,43 @@ func (s *GoogleCloudDialogflowV2ArticleAnswer) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+// GoogleCloudDialogflowV2ArticleSuggestionModelMetadata: Metadata for
+// article suggestion models.
+type GoogleCloudDialogflowV2ArticleSuggestionModelMetadata struct {
+	// TrainingModelType: Optional. Type of the article suggestion model. If
+	// not provided, model_type is used.
+	//
+	// Possible values:
+	//   "MODEL_TYPE_UNSPECIFIED" - ModelType unspecified.
+	//   "SMART_REPLY_DUAL_ENCODER_MODEL" - ModelType smart reply dual
+	// encoder model.
+	//   "SMART_REPLY_BERT_MODEL" - ModelType smart reply bert model.
+	TrainingModelType string `json:"trainingModelType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TrainingModelType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TrainingModelType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ArticleSuggestionModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ArticleSuggestionModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2AssistQueryParameters: Represents the
 // parameters of human assist query.
 type GoogleCloudDialogflowV2AssistQueryParameters struct {
@@ -8201,6 +8310,113 @@ func (s *GoogleCloudDialogflowV2BatchUpdateIntentsResponse) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata:
+// Metadata for a ConversationProfile.ClearSuggestionFeatureConfig
+// operation.
+type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata struct {
+	// ConversationProfile: The resource name of the conversation profile.
+	// Format: `projects//locations//conversationProfiles/`
+	ConversationProfile string `json:"conversationProfile,omitempty"`
+
+	// CreateTime: Timestamp whe the request was created. The time is
+	// measured on server side.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ParticipantRole: Required. The participant role to remove the
+	// suggestion feature config. Only HUMAN_AGENT or END_USER can be used.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Participant role not set.
+	//   "HUMAN_AGENT" - Participant is a human agent.
+	//   "AUTOMATED_AGENT" - Participant is an automated agent, such as a
+	// Dialogflow agent.
+	//   "END_USER" - Participant is an end user that has called or chatted
+	// with Dialogflow services.
+	ParticipantRole string `json:"participantRole,omitempty"`
+
+	// SuggestionFeatureType: Required. The type of the suggestion feature
+	// to remove.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
+	//   "FAQ" - Run FAQ model.
+	//   "SMART_REPLY" - Run smart reply model.
+	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationProfile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest: The
+// request message for ConversationProfiles.ClearFeature.
+type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest struct {
+	// ParticipantRole: Required. The participant role to remove the
+	// suggestion feature config. Only HUMAN_AGENT or END_USER can be used.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Participant role not set.
+	//   "HUMAN_AGENT" - Participant is a human agent.
+	//   "AUTOMATED_AGENT" - Participant is an automated agent, such as a
+	// Dialogflow agent.
+	//   "END_USER" - Participant is an end user that has called or chatted
+	// with Dialogflow services.
+	ParticipantRole string `json:"participantRole,omitempty"`
+
+	// SuggestionFeatureType: Required. The type of the suggestion feature
+	// to remove.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
+	//   "FAQ" - Run FAQ model.
+	//   "SMART_REPLY" - Run smart reply model.
+	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ParticipantRole") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ParticipantRole") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2CompleteConversationRequest: The request
 // message for Conversations.CompleteConversation.
 type GoogleCloudDialogflowV2CompleteConversationRequest struct {
@@ -8360,6 +8576,67 @@ func (s *GoogleCloudDialogflowV2Conversation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2ConversationDataset: Represents a conversation
+// dataset that a user imports raw data into. The data inside
+// ConversationDataset can not be changed after ImportConversationData
+// finishes (and calling ImportConversationData on a dataset that
+// already has data is not allowed).
+type GoogleCloudDialogflowV2ConversationDataset struct {
+	// ConversationCount: Output only. The number of conversations this
+	// conversation dataset contains.
+	ConversationCount int64 `json:"conversationCount,omitempty,string"`
+
+	// ConversationInfo: Output only. Metadata set during conversation data
+	// import.
+	ConversationInfo *GoogleCloudDialogflowV2ConversationInfo `json:"conversationInfo,omitempty"`
+
+	// CreateTime: Output only. Creation time of this dataset.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. The description of the dataset. Maximum of
+	// 10000 bytes.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Required. The display name of the dataset. Maximum of 64
+	// bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// InputConfig: Output only. Input configurations set during
+	// conversation data import.
+	InputConfig *GoogleCloudDialogflowV2InputConfig `json:"inputConfig,omitempty"`
+
+	// Name: Output only. ConversationDataset resource name. Format:
+	// `projects//locations//conversationDatasets/`
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ConversationDataset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ConversationDataset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2ConversationEvent: Represents a notification
 // sent to Pub/Sub subscribers for conversation lifecycle events.
 type GoogleCloudDialogflowV2ConversationEvent struct {
@@ -8416,6 +8693,164 @@ type GoogleCloudDialogflowV2ConversationEvent struct {
 
 func (s *GoogleCloudDialogflowV2ConversationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ConversationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ConversationInfo: Represents metadata of a
+// conversation.
+type GoogleCloudDialogflowV2ConversationInfo struct {
+	// LanguageCode: Optional. The language code of the conversation data
+	// within this dataset. See
+	// https://cloud.google.com/apis/design/standard_fields for more
+	// information. Supports all UTF-8 languages.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ConversationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ConversationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ConversationModel: Represents a conversation
+// model.
+type GoogleCloudDialogflowV2ConversationModel struct {
+	// ArticleSuggestionModelMetadata: Metadata for article suggestion
+	// models.
+	ArticleSuggestionModelMetadata *GoogleCloudDialogflowV2ArticleSuggestionModelMetadata `json:"articleSuggestionModelMetadata,omitempty"`
+
+	// CreateTime: Output only. Creation time of this model.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Datasets: Required. Datasets used to create model.
+	Datasets []*GoogleCloudDialogflowV2InputDataset `json:"datasets,omitempty"`
+
+	// DisplayName: Required. The display name of the model. At most 64
+	// bytes long.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LanguageCode: Language code for the conversation model. If not
+	// specified, the language is en-US. Language at ConversationModel
+	// should be set for all non en-us languages. This should be a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. Example:
+	// "en-US".
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Name: ConversationModel resource name. Format:
+	// `projects//conversationModels/`
+	Name string `json:"name,omitempty"`
+
+	// SmartReplyModelMetadata: Metadata for smart reply models.
+	SmartReplyModelMetadata *GoogleCloudDialogflowV2SmartReplyModelMetadata `json:"smartReplyModelMetadata,omitempty"`
+
+	// State: Output only. State of the model. A model can only serve
+	// prediction requests after it gets deployed.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Should not be used, an un-set enum has this
+	// value by default.
+	//   "CREATING" - Model being created.
+	//   "UNDEPLOYED" - Model is not deployed but ready to deploy.
+	//   "DEPLOYING" - Model is deploying.
+	//   "DEPLOYED" - Model is deployed and ready to use.
+	//   "UNDEPLOYING" - Model is undeploying.
+	//   "DELETING" - Model is deleting.
+	//   "FAILED" - Model is in error state. Not ready to deploy and use.
+	//   "PENDING" - Model is being created but the training has not
+	// started, The model may remain in this state until there is enough
+	// capacity to start training.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ArticleSuggestionModelMetadata") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ArticleSuggestionModelMetadata") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ConversationModel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ConversationModel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ConversationModelEvaluation: Represents
+// evaluation result of a conversation model.
+type GoogleCloudDialogflowV2ConversationModelEvaluation struct {
+	// CreateTime: Output only. Creation time of this model.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: Optional. The display name of the model evaluation. At
+	// most 64 bytes long.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EvaluationConfig: Optional. The configuration of the evaluation task.
+	EvaluationConfig *GoogleCloudDialogflowV2EvaluationConfig `json:"evaluationConfig,omitempty"`
+
+	// Name: The resource name of the evaluation. Format:
+	// `projects//conversationModels//evaluations/`
+	Name string `json:"name,omitempty"`
+
+	// SmartReplyMetrics: Output only. Only available when model is for
+	// smart reply.
+	SmartReplyMetrics *GoogleCloudDialogflowV2SmartReplyMetrics `json:"smartReplyMetrics,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ConversationModelEvaluation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ConversationModelEvaluation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8539,6 +8974,225 @@ func (s *GoogleCloudDialogflowV2ConversationProfile) MarshalJSON() ([]byte, erro
 	type NoMethod GoogleCloudDialogflowV2ConversationProfile
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata:
+// Metadata for ConversationDatasets.
+type GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata struct {
+}
+
+// GoogleCloudDialogflowV2CreateConversationModelEvaluationOperationMetad
+// ata: Metadata for a
+// ConversationModels.CreateConversationModelEvaluation operation.
+type GoogleCloudDialogflowV2CreateConversationModelEvaluationOperationMetadata struct {
+	// ConversationModel: The resource name of the conversation model.
+	// Format: `projects//locations//conversationModels/`
+	ConversationModel string `json:"conversationModel,omitempty"`
+
+	// ConversationModelEvaluation: The resource name of the conversation
+	// model. Format:
+	// `projects//locations//conversationModels//evaluations/`
+	ConversationModelEvaluation string `json:"conversationModelEvaluation,omitempty"`
+
+	// CreateTime: Timestamp when the request to create conversation model
+	// was submitted. The time is measured on server side.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// State: State of CreateConversationModel operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Operation status not specified.
+	//   "INITIALIZING" - The operation is being prepared.
+	//   "RUNNING" - The operation is running.
+	//   "CANCELLED" - The operation is cancelled.
+	//   "SUCCEEDED" - The operation has succeeded.
+	//   "FAILED" - The operation has failed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationModel")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationModel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2CreateConversationModelEvaluationOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2CreateConversationModelEvaluationOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2CreateConversationModelEvaluationRequest: The
+// request message for
+// ConversationModels.CreateConversationModelEvaluation
+type GoogleCloudDialogflowV2CreateConversationModelEvaluationRequest struct {
+	// ConversationModelEvaluation: Required. The conversation model
+	// evaluation to be created.
+	ConversationModelEvaluation *GoogleCloudDialogflowV2ConversationModelEvaluation `json:"conversationModelEvaluation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConversationModelEvaluation") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ConversationModelEvaluation") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2CreateConversationModelEvaluationRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2CreateConversationModelEvaluationRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2CreateConversationModelOperationMetadata:
+// Metadata for a ConversationModels.CreateConversationModel operation.
+type GoogleCloudDialogflowV2CreateConversationModelOperationMetadata struct {
+	// ConversationModel: The resource name of the conversation model.
+	// Format: `projects//conversationModels/`
+	ConversationModel string `json:"conversationModel,omitempty"`
+
+	// CreateTime: Timestamp when the request to create conversation model
+	// is submitted. The time is measured on server side.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// State: State of CreateConversationModel operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Invalid.
+	//   "PENDING" - Request is submitted, but training has not started yet.
+	// The model may remain in this state until there is enough capacity to
+	// start training.
+	//   "SUCCEEDED" - The training has succeeded.
+	//   "FAILED" - The training has succeeded.
+	//   "CANCELLED" - The training has been cancelled.
+	//   "CANCELLING" - The training is in cancelling state.
+	//   "TRAINING" - Custom model is training.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationModel")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationModel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2CreateConversationModelOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2CreateConversationModelOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2DeleteConversationDatasetOperationMetadata:
+// Metadata for ConversationDatasets.
+type GoogleCloudDialogflowV2DeleteConversationDatasetOperationMetadata struct {
+}
+
+// GoogleCloudDialogflowV2DeleteConversationModelOperationMetadata:
+// Metadata for a ConversationModels.DeleteConversationModel operation.
+type GoogleCloudDialogflowV2DeleteConversationModelOperationMetadata struct {
+	// ConversationModel: The resource name of the conversation model.
+	// Format: `projects//conversationModels/`
+	ConversationModel string `json:"conversationModel,omitempty"`
+
+	// CreateTime: Timestamp when delete conversation model request was
+	// created. The time is measured on server side.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationModel")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationModel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2DeleteConversationModelOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2DeleteConversationModelOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2DeployConversationModelOperationMetadata:
+// Metadata for a ConversationModels.DeployConversationModel operation.
+type GoogleCloudDialogflowV2DeployConversationModelOperationMetadata struct {
+	// ConversationModel: The resource name of the conversation model.
+	// Format: `projects//conversationModels/`
+	ConversationModel string `json:"conversationModel,omitempty"`
+
+	// CreateTime: Timestamp when request to deploy conversation model was
+	// submitted. The time is measured on server side.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationModel")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationModel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2DeployConversationModelOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2DeployConversationModelOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2DeployConversationModelRequest: The request
+// message for ConversationModels.DeployConversationModel
+type GoogleCloudDialogflowV2DeployConversationModelRequest struct {
 }
 
 // GoogleCloudDialogflowV2DetectIntentRequest: The request to detect
@@ -8699,6 +9353,8 @@ type GoogleCloudDialogflowV2Document struct {
 	//   "ARTICLE_SUGGESTION" - The entire document content as a whole can
 	// be used for query results. Only for Contact Center Solutions on
 	// Dialogflow.
+	//   "AGENT_FACING_SMART_REPLY" - The document contains agent-facing
+	// Smart Reply entries.
 	KnowledgeTypes []string `json:"knowledgeTypes,omitempty"`
 
 	// LatestReloadStatus: Output only. The time and status of the latest
@@ -8724,6 +9380,17 @@ type GoogleCloudDialogflowV2Document struct {
 	// RawContent: The raw content of the document. This field is only
 	// permitted for EXTRACTIVE_QA and FAQ knowledge types.
 	RawContent string `json:"rawContent,omitempty"`
+
+	// State: Output only. The current state of the document.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The document state is unspecified.
+	//   "CREATING" - The document creation is in progress.
+	//   "ACTIVE" - The document is active and ready to use.
+	//   "UPDATING" - The document updation is in progress.
+	//   "RELOADING" - The document is reloading.
+	//   "DELETING" - The document deletion is in progress.
+	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -9124,6 +9791,117 @@ func (s *GoogleCloudDialogflowV2EnvironmentHistoryEntry) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2EvaluationConfig: The configuration for model
+// evaluation.
+type GoogleCloudDialogflowV2EvaluationConfig struct {
+	// Datasets: Required. Datasets used for evaluation.
+	Datasets []*GoogleCloudDialogflowV2InputDataset `json:"datasets,omitempty"`
+
+	// SmartComposeConfig: Configuration for smart compose model evalution.
+	SmartComposeConfig *GoogleCloudDialogflowV2EvaluationConfigSmartComposeConfig `json:"smartComposeConfig,omitempty"`
+
+	// SmartReplyConfig: Configuration for smart reply model evalution.
+	SmartReplyConfig *GoogleCloudDialogflowV2EvaluationConfigSmartReplyConfig `json:"smartReplyConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Datasets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Datasets") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2EvaluationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2EvaluationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2EvaluationConfigSmartComposeConfig: Smart
+// compose specific configuration for evaluation job.
+type GoogleCloudDialogflowV2EvaluationConfigSmartComposeConfig struct {
+	// AllowlistDocument: The allowlist document resource name. Format:
+	// `projects//knowledgeBases//documents/`. Only used for smart compose
+	// model.
+	AllowlistDocument string `json:"allowlistDocument,omitempty"`
+
+	// MaxResultCount: Required. The model to be evaluated can return
+	// multiple results with confidence score on each query. These results
+	// will be sorted by the descending order of the scores and we only keep
+	// the first max_result_count results as the final results to evaluate.
+	MaxResultCount int64 `json:"maxResultCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowlistDocument")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowlistDocument") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2EvaluationConfigSmartComposeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2EvaluationConfigSmartComposeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2EvaluationConfigSmartReplyConfig: Smart reply
+// specific configuration for evaluation job.
+type GoogleCloudDialogflowV2EvaluationConfigSmartReplyConfig struct {
+	// AllowlistDocument: The allowlist document resource name. Format:
+	// `projects//knowledgeBases//documents/`. Only used for smart reply
+	// model.
+	AllowlistDocument string `json:"allowlistDocument,omitempty"`
+
+	// MaxResultCount: Required. The model to be evaluated can return
+	// multiple results with confidence score on each query. These results
+	// will be sorted by the descending order of the scores and we only keep
+	// the first max_result_count results as the final results to evaluate.
+	MaxResultCount int64 `json:"maxResultCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowlistDocument")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowlistDocument") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2EvaluationConfigSmartReplyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2EvaluationConfigSmartReplyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2EventInput: Events allow for matching intents
 // by event name instead of the natural language input. For instance,
 // input `` can trigger a personalized welcome response. The parameter
@@ -9275,6 +10053,37 @@ type GoogleCloudDialogflowV2ExportDocumentRequest struct {
 
 func (s *GoogleCloudDialogflowV2ExportDocumentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ExportDocumentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ExportOperationMetadata: Metadata related to
+// the Export Data Operations (e.g. ExportDocument).
+type GoogleCloudDialogflowV2ExportOperationMetadata struct {
+	// ExportedGcsDestination: Cloud Storage file path of the exported data.
+	ExportedGcsDestination *GoogleCloudDialogflowV2GcsDestination `json:"exportedGcsDestination,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ExportedGcsDestination") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExportedGcsDestination")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ExportOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ExportOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10227,6 +11036,111 @@ func (s *GoogleCloudDialogflowV2ImportAgentRequest) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2ImportConversationDataOperationMetadata:
+// Metadata for a ConversationDatasets.ImportConversationData operation.
+type GoogleCloudDialogflowV2ImportConversationDataOperationMetadata struct {
+	// ConversationDataset: The resource name of the imported conversation
+	// dataset. Format: `projects//locations//conversationDatasets/`
+	ConversationDataset string `json:"conversationDataset,omitempty"`
+
+	// CreateTime: Timestamp when import conversation data request was
+	// created. The time is measured on server side.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// PartialFailures: Partial failures are failures that don't fail the
+	// whole long running operation, e.g. single files that couldn't be
+	// read.
+	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationDataset")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationDataset") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ImportConversationDataOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ImportConversationDataOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ImportConversationDataOperationResponse:
+// Response used for ConversationDatasets.ImportConversationData long
+// running operation.
+type GoogleCloudDialogflowV2ImportConversationDataOperationResponse struct {
+	// ConversationDataset: The resource name of the imported conversation
+	// dataset. Format: `projects//locations//conversationDatasets/`
+	ConversationDataset string `json:"conversationDataset,omitempty"`
+
+	// ImportCount: Number of conversations imported successfully.
+	ImportCount int64 `json:"importCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationDataset")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationDataset") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ImportConversationDataOperationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ImportConversationDataOperationResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ImportConversationDataRequest: The request
+// message for ConversationDatasets.ImportConversationData.
+type GoogleCloudDialogflowV2ImportConversationDataRequest struct {
+	// InputConfig: Required. Configuration describing where to import data
+	// from.
+	InputConfig *GoogleCloudDialogflowV2InputConfig `json:"inputConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InputConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InputConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ImportConversationDataRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ImportConversationDataRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2ImportDocumentTemplate: The template used for
 // importing documents.
 type GoogleCloudDialogflowV2ImportDocumentTemplate struct {
@@ -10245,6 +11159,8 @@ type GoogleCloudDialogflowV2ImportDocumentTemplate struct {
 	//   "ARTICLE_SUGGESTION" - The entire document content as a whole can
 	// be used for query results. Only for Contact Center Solutions on
 	// Dialogflow.
+	//   "AGENT_FACING_SMART_REPLY" - The document contains agent-facing
+	// Smart Reply entries.
 	KnowledgeTypes []string `json:"knowledgeTypes,omitempty"`
 
 	// Metadata: Metadata for the document. The metadata supports arbitrary
@@ -10501,6 +11417,67 @@ type GoogleCloudDialogflowV2InputAudioConfig struct {
 
 func (s *GoogleCloudDialogflowV2InputAudioConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2InputAudioConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2InputConfig: Represents the configuration of
+// importing a set of conversation files in Google Cloud Storage.
+type GoogleCloudDialogflowV2InputConfig struct {
+	// GcsSource: The Cloud Storage URI has the form gs:////agent*.json.
+	// Wildcards are allowed and will be expanded into all matched JSON
+	// files, which will be read as one conversation per file.
+	GcsSource *GoogleCloudDialogflowV2GcsSources `json:"gcsSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsSource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2InputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2InputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2InputDataset: InputDataset used to create
+// model or do evaluation. NextID:5
+type GoogleCloudDialogflowV2InputDataset struct {
+	// Dataset: Required. ConversationDataset resource name. Format:
+	// `projects//locations//conversationDatasets/`
+	Dataset string `json:"dataset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dataset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dataset") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2InputDataset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2InputDataset
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12010,6 +12987,10 @@ func (s *GoogleCloudDialogflowV2KnowledgeBase) MarshalJSON() ([]byte, error) {
 // GoogleCloudDialogflowV2KnowledgeOperationMetadata: Metadata in
 // google::longrunning::Operation for Knowledge operations.
 type GoogleCloudDialogflowV2KnowledgeOperationMetadata struct {
+	// ExportOperationMetadata: Metadata for the Export Data Operation such
+	// as the destination of export.
+	ExportOperationMetadata *GoogleCloudDialogflowV2ExportOperationMetadata `json:"exportOperationMetadata,omitempty"`
+
 	// KnowledgeBase: The name of the knowledge base interacted with during
 	// the operation.
 	KnowledgeBase string `json:"knowledgeBase,omitempty"`
@@ -12023,20 +13004,22 @@ type GoogleCloudDialogflowV2KnowledgeOperationMetadata struct {
 	//   "DONE" - The operation is done, either cancelled or completed.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "KnowledgeBase") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ExportOperationMetadata") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "KnowledgeBase") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExportOperationMetadata")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -12119,6 +13102,123 @@ type GoogleCloudDialogflowV2ListContextsResponse struct {
 
 func (s *GoogleCloudDialogflowV2ListContextsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ListContextsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ListConversationDatasetsResponse: The response
+// message for ConversationDatasets.ListConversationDatasets.
+type GoogleCloudDialogflowV2ListConversationDatasetsResponse struct {
+	// ConversationDatasets: The list of datasets to return.
+	ConversationDatasets []*GoogleCloudDialogflowV2ConversationDataset `json:"conversationDatasets,omitempty"`
+
+	// NextPageToken: The token to use to retrieve the next page of results,
+	// or empty if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConversationDatasets") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationDatasets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ListConversationDatasetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ListConversationDatasetsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse: The
+// response message for
+// ConversationModels.ListConversationModelEvaluations
+type GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse struct {
+	// ConversationModelEvaluations: The list of evaluations to return.
+	ConversationModelEvaluations []*GoogleCloudDialogflowV2ConversationModelEvaluation `json:"conversationModelEvaluations,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConversationModelEvaluations") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ConversationModelEvaluations") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2ListConversationModelsResponse: The response
+// message for ConversationModels.ListConversationModels
+type GoogleCloudDialogflowV2ListConversationModelsResponse struct {
+	// ConversationModels: The list of models to return.
+	ConversationModels []*GoogleCloudDialogflowV2ConversationModel `json:"conversationModels,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationModels")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationModels") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2ListConversationModelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ListConversationModelsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12693,11 +13793,13 @@ type GoogleCloudDialogflowV2NotificationConfig struct {
 	MessageFormat string `json:"messageFormat,omitempty"`
 
 	// Topic: Name of the Pub/Sub topic to publish conversation events like
-	// CONVERSATION_STARTED as serialized ConversationEvent protos.
-	// Notification works for phone calls, if this topic either is in the
-	// same project as the conversation or you grant
+	// CONVERSATION_STARTED as serialized ConversationEvent protos. For
+	// telephony integration to receive notification, make sure either this
+	// topic is in the same project as the conversation or you grant
 	// `service-@gcp-sa-dialogflow.iam.gserviceaccount.com` the `Dialogflow
-	// Service Agent` role in the topic project. Format:
+	// Service Agent` role in the topic project. For chat integration to
+	// receive notification, make sure API caller has been granted the
+	// `Dialogflow Service Agent` role for the topic. Format:
 	// `projects//locations//topics/`.
 	Topic string `json:"topic,omitempty"`
 
@@ -13484,6 +14586,107 @@ func (s *GoogleCloudDialogflowV2SessionEntityType) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata:
+// Metadata for a ConversationProfile.SetSuggestionFeatureConfig
+// operation.
+type GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata struct {
+	// ConversationProfile: The resource name of the conversation profile.
+	// Format: `projects//locations//conversationProfiles/`
+	ConversationProfile string `json:"conversationProfile,omitempty"`
+
+	// CreateTime: Timestamp whe the request was created. The time is
+	// measured on server side.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ParticipantRole: Required. The participant role to add or update the
+	// suggestion feature config. Only HUMAN_AGENT or END_USER can be used.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Participant role not set.
+	//   "HUMAN_AGENT" - Participant is a human agent.
+	//   "AUTOMATED_AGENT" - Participant is an automated agent, such as a
+	// Dialogflow agent.
+	//   "END_USER" - Participant is an end user that has called or chatted
+	// with Dialogflow services.
+	ParticipantRole string `json:"participantRole,omitempty"`
+
+	// SuggestionFeatureType: Required. The type of the suggestion feature
+	// to add or update.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
+	//   "FAQ" - Run FAQ model.
+	//   "SMART_REPLY" - Run smart reply model.
+	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationProfile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest: The request
+// message for ConversationProfiles.SetSuggestionFeature.
+type GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest struct {
+	// ParticipantRole: Required. The participant role to add or update the
+	// suggestion feature config. Only HUMAN_AGENT or END_USER can be used.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Participant role not set.
+	//   "HUMAN_AGENT" - Participant is a human agent.
+	//   "AUTOMATED_AGENT" - Participant is an automated agent, such as a
+	// Dialogflow agent.
+	//   "END_USER" - Participant is an end user that has called or chatted
+	// with Dialogflow services.
+	ParticipantRole string `json:"participantRole,omitempty"`
+
+	// SuggestionFeatureConfig: Required. The suggestion feature config to
+	// add or update.
+	SuggestionFeatureConfig *GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionFeatureConfig `json:"suggestionFeatureConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ParticipantRole") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ParticipantRole") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2SmartReplyAnswer: Represents a smart reply
 // answer.
 type GoogleCloudDialogflowV2SmartReplyAnswer struct {
@@ -13534,6 +14737,148 @@ func (s *GoogleCloudDialogflowV2SmartReplyAnswer) UnmarshalJSON(data []byte) err
 	}
 	s.Confidence = float64(s1.Confidence)
 	return nil
+}
+
+// GoogleCloudDialogflowV2SmartReplyMetrics: The evaluation metrics for
+// smart reply model.
+type GoogleCloudDialogflowV2SmartReplyMetrics struct {
+	// AllowlistCoverage: Percentage of target participant messages in the
+	// evaluation dataset for which similar messages have appeared at least
+	// once in the allowlist. Should be [0, 1].
+	AllowlistCoverage float64 `json:"allowlistCoverage,omitempty"`
+
+	// ConversationCount: Total number of conversations used to generate
+	// this metric.
+	ConversationCount int64 `json:"conversationCount,omitempty,string"`
+
+	// TopNMetrics: Metrics of top n smart replies, sorted by TopNMetric.n.
+	TopNMetrics []*GoogleCloudDialogflowV2SmartReplyMetricsTopNMetrics `json:"topNMetrics,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowlistCoverage")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowlistCoverage") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2SmartReplyMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SmartReplyMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2SmartReplyMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2SmartReplyMetrics
+	var s1 struct {
+		AllowlistCoverage gensupport.JSONFloat64 `json:"allowlistCoverage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AllowlistCoverage = float64(s1.AllowlistCoverage)
+	return nil
+}
+
+// GoogleCloudDialogflowV2SmartReplyMetricsTopNMetrics: Evaluation
+// metrics when retrieving `n` smart replies with the model.
+type GoogleCloudDialogflowV2SmartReplyMetricsTopNMetrics struct {
+	// N: Number of retrieved smart replies. For example, when `n` is 3,
+	// this evaluation contains metrics for when Dialogflow retrieves 3
+	// smart replies with the model.
+	N int64 `json:"n,omitempty"`
+
+	// Recall: Defined as `number of queries whose top n smart replies have
+	// at least one similar (token match similarity above the defined
+	// threshold) reply as the real reply` divided by `number of queries
+	// with at least one smart reply`. Value ranges from 0.0 to 1.0
+	// inclusive.
+	Recall float64 `json:"recall,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "N") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "N") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2SmartReplyMetricsTopNMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SmartReplyMetricsTopNMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2SmartReplyMetricsTopNMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2SmartReplyMetricsTopNMetrics
+	var s1 struct {
+		Recall gensupport.JSONFloat64 `json:"recall"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Recall = float64(s1.Recall)
+	return nil
+}
+
+// GoogleCloudDialogflowV2SmartReplyModelMetadata: Metadata for smart
+// reply models.
+type GoogleCloudDialogflowV2SmartReplyModelMetadata struct {
+	// TrainingModelType: Optional. Type of the smart reply model. If not
+	// provided, model_type is used.
+	//
+	// Possible values:
+	//   "MODEL_TYPE_UNSPECIFIED" - ModelType unspecified.
+	//   "SMART_REPLY_DUAL_ENCODER_MODEL" - ModelType smart reply dual
+	// encoder model.
+	//   "SMART_REPLY_BERT_MODEL" - ModelType smart reply bert model.
+	TrainingModelType string `json:"trainingModelType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TrainingModelType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TrainingModelType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2SmartReplyModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SmartReplyModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2SpeechContext: Hints for the speech recognizer
@@ -14177,6 +15522,47 @@ func (s *GoogleCloudDialogflowV2TextToSpeechSettings) MarshalJSON() ([]byte, err
 type GoogleCloudDialogflowV2TrainAgentRequest struct {
 }
 
+// GoogleCloudDialogflowV2UndeployConversationModelOperationMetadata:
+// Metadata for a ConversationModels.UndeployConversationModel
+// operation.
+type GoogleCloudDialogflowV2UndeployConversationModelOperationMetadata struct {
+	// ConversationModel: The resource name of the conversation model.
+	// Format: `projects//conversationModels/`
+	ConversationModel string `json:"conversationModel,omitempty"`
+
+	// CreateTime: Timestamp when the request to undeploy conversation model
+	// was submitted. The time is measured on server side.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationModel")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationModel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2UndeployConversationModelOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2UndeployConversationModelOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2UndeployConversationModelRequest: The request
+// message for ConversationModels.UndeployConversationModel
+type GoogleCloudDialogflowV2UndeployConversationModelRequest struct {
+}
+
 // GoogleCloudDialogflowV2ValidationError: Represents a single
 // validation error.
 type GoogleCloudDialogflowV2ValidationError struct {
@@ -14654,6 +16040,64 @@ func (s *GoogleCloudDialogflowV2beta1BatchUpdateIntentsResponse) MarshalJSON() (
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetad
+// ata: Metadata for a ConversationProfile.ClearSuggestionFeatureConfig
+// operation.
+type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata struct {
+	// ConversationProfile: The resource name of the conversation profile.
+	// Format: `projects//locations//conversationProfiles/`
+	ConversationProfile string `json:"conversationProfile,omitempty"`
+
+	// CreateTime: Timestamp whe the request was created. The time is
+	// measured on server side.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ParticipantRole: Required. The participant role to remove the
+	// suggestion feature config. Only HUMAN_AGENT or END_USER can be used.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Participant role not set.
+	//   "HUMAN_AGENT" - Participant is a human agent.
+	//   "AUTOMATED_AGENT" - Participant is an automated agent, such as a
+	// Dialogflow agent.
+	//   "END_USER" - Participant is an end user that has called or chatted
+	// with Dialogflow services.
+	ParticipantRole string `json:"participantRole,omitempty"`
+
+	// SuggestionFeatureType: Required. The type of the suggestion feature
+	// to remove.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
+	//   "FAQ" - Run FAQ model.
+	//   "SMART_REPLY" - Run smart reply model.
+	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationProfile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1Context: Dialogflow contexts are similar
 // to natural language context. If a person says to you "they are
 // orange", you need context in order to understand what "they" is
@@ -14987,6 +16431,37 @@ func (s *GoogleCloudDialogflowV2beta1ExportAgentResponse) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1ExportOperationMetadata: Metadata related
+// to the Export Data Operations (e.g. ExportDocument).
+type GoogleCloudDialogflowV2beta1ExportOperationMetadata struct {
+	// ExportedGcsDestination: Cloud Storage file path of the exported data.
+	ExportedGcsDestination *GoogleCloudDialogflowV2beta1GcsDestination `json:"exportedGcsDestination,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ExportedGcsDestination") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExportedGcsDestination")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1ExportOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ExportOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1FaqAnswer: Represents answer from
 // "frequently asked questions".
 type GoogleCloudDialogflowV2beta1FaqAnswer struct {
@@ -15049,6 +16524,38 @@ func (s *GoogleCloudDialogflowV2beta1FaqAnswer) UnmarshalJSON(data []byte) error
 	}
 	s.Confidence = float64(s1.Confidence)
 	return nil
+}
+
+// GoogleCloudDialogflowV2beta1GcsDestination: Google Cloud Storage
+// location for the output.
+type GoogleCloudDialogflowV2beta1GcsDestination struct {
+	// Uri: Required. The Google Cloud Storage URIs for the output. A URI is
+	// of the form: gs://bucket/object-prefix-or-name Whether a prefix or
+	// name is used depends on the use case. The requesting user must have
+	// "write-permission" to the bucket.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1GcsDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1GcsDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent: Output only.
@@ -17200,6 +18707,10 @@ func (s *GoogleCloudDialogflowV2beta1KnowledgeAnswersAnswer) UnmarshalJSON(data 
 // GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata: Metadata in
 // google::longrunning::Operation for Knowledge operations.
 type GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata struct {
+	// ExportOperationMetadata: Metadata for the Export Data Operation such
+	// as the destination of export.
+	ExportOperationMetadata *GoogleCloudDialogflowV2beta1ExportOperationMetadata `json:"exportOperationMetadata,omitempty"`
+
 	// KnowledgeBase: The name of the knowledge base interacted with during
 	// the operation.
 	KnowledgeBase string `json:"knowledgeBase,omitempty"`
@@ -17213,20 +18724,22 @@ type GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata struct {
 	//   "DONE" - The operation is done, either cancelled or completed.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "KnowledgeBase") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ExportOperationMetadata") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "KnowledgeBase") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExportOperationMetadata")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -17685,6 +19198,64 @@ type GoogleCloudDialogflowV2beta1SessionEntityType struct {
 
 func (s *GoogleCloudDialogflowV2beta1SessionEntityType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SessionEntityType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadat
+// a: Metadata for a ConversationProfile.SetSuggestionFeatureConfig
+// operation.
+type GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata struct {
+	// ConversationProfile: The resource name of the conversation profile.
+	// Format: `projects//locations//conversationProfiles/`
+	ConversationProfile string `json:"conversationProfile,omitempty"`
+
+	// CreateTime: Timestamp whe the request was created. The time is
+	// measured on server side.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ParticipantRole: Required. The participant role to add or update the
+	// suggestion feature config. Only HUMAN_AGENT or END_USER can be used.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Participant role not set.
+	//   "HUMAN_AGENT" - Participant is a human agent.
+	//   "AUTOMATED_AGENT" - Participant is an automated agent, such as a
+	// Dialogflow agent.
+	//   "END_USER" - Participant is an end user that has called or chatted
+	// with Dialogflow services.
+	ParticipantRole string `json:"participantRole,omitempty"`
+
+	// SuggestionFeatureType: Required. The type of the suggestion feature
+	// to add or update.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
+	//   "FAQ" - Run FAQ model.
+	//   "SMART_REPLY" - Run smart reply model.
+	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationProfile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -31261,6 +32832,1943 @@ func (c *ProjectsAnswerRecordsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 
 }
 
+// method id "dialogflow.projects.conversationDatasets.get":
+
+type ProjectsConversationDatasetsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the specified conversation dataset.
+//
+// - name: The conversation dataset to retrieve. Format:
+//   `projects//locations//conversationDatasets/`.
+func (r *ProjectsConversationDatasetsService) Get(name string) *ProjectsConversationDatasetsGetCall {
+	c := &ProjectsConversationDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationDatasetsGetCall) Fields(s ...googleapi.Field) *ProjectsConversationDatasetsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsConversationDatasetsGetCall) IfNoneMatch(entityTag string) *ProjectsConversationDatasetsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationDatasetsGetCall) Context(ctx context.Context) *ProjectsConversationDatasetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationDatasetsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationDatasets.get" call.
+// Exactly one of *GoogleCloudDialogflowV2ConversationDataset or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2ConversationDataset.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsConversationDatasetsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2ConversationDataset, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2ConversationDataset{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the specified conversation dataset.",
+	//   "flatPath": "v2/projects/{projectsId}/conversationDatasets/{conversationDatasetsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.conversationDatasets.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation dataset to retrieve. Format: `projects//locations//conversationDatasets/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/conversationDatasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2ConversationDataset"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.conversationDatasets.importConversationData":
+
+type ProjectsConversationDatasetsImportConversationDataCall struct {
+	s                                                    *Service
+	name                                                 string
+	googleclouddialogflowv2importconversationdatarequest *GoogleCloudDialogflowV2ImportConversationDataRequest
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// ImportConversationData: Import data into the specified conversation
+// dataset. Note that it is not allowed to import data to a conversation
+// dataset that already has data in it. This method is a long-running
+// operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: ImportConversationDataOperationMetadata -
+// `response`: ImportConversationDataOperationResponse
+//
+// - name: Dataset resource name. Format:
+//   `projects//locations//conversationDatasets/`.
+func (r *ProjectsConversationDatasetsService) ImportConversationData(name string, googleclouddialogflowv2importconversationdatarequest *GoogleCloudDialogflowV2ImportConversationDataRequest) *ProjectsConversationDatasetsImportConversationDataCall {
+	c := &ProjectsConversationDatasetsImportConversationDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddialogflowv2importconversationdatarequest = googleclouddialogflowv2importconversationdatarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationDatasetsImportConversationDataCall) Fields(s ...googleapi.Field) *ProjectsConversationDatasetsImportConversationDataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationDatasetsImportConversationDataCall) Context(ctx context.Context) *ProjectsConversationDatasetsImportConversationDataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationDatasetsImportConversationDataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationDatasetsImportConversationDataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2importconversationdatarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:importConversationData")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationDatasets.importConversationData" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsConversationDatasetsImportConversationDataCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Import data into the specified conversation dataset. Note that it is not allowed to import data to a conversation dataset that already has data in it. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: ImportConversationDataOperationMetadata - `response`: ImportConversationDataOperationResponse",
+	//   "flatPath": "v2/projects/{projectsId}/conversationDatasets/{conversationDatasetsId}:importConversationData",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.conversationDatasets.importConversationData",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Dataset resource name. Format: `projects//locations//conversationDatasets/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/conversationDatasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:importConversationData",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2ImportConversationDataRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.conversationDatasets.list":
+
+type ProjectsConversationDatasetsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the list of all conversation datasets in the specified
+// project and location.
+//
+// - parent: The project and location name to list all conversation
+//   datasets for. Format: `projects//locations/`.
+func (r *ProjectsConversationDatasetsService) List(parent string) *ProjectsConversationDatasetsListCall {
+	c := &ProjectsConversationDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// conversation datasets to return in a single page. By default 100 and
+// at most 1000.
+func (c *ProjectsConversationDatasetsListCall) PageSize(pageSize int64) *ProjectsConversationDatasetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request.
+func (c *ProjectsConversationDatasetsListCall) PageToken(pageToken string) *ProjectsConversationDatasetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationDatasetsListCall) Fields(s ...googleapi.Field) *ProjectsConversationDatasetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsConversationDatasetsListCall) IfNoneMatch(entityTag string) *ProjectsConversationDatasetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationDatasetsListCall) Context(ctx context.Context) *ProjectsConversationDatasetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationDatasetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationDatasetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/conversationDatasets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationDatasets.list" call.
+// Exactly one of
+// *GoogleCloudDialogflowV2ListConversationDatasetsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2ListConversationDatasetsResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsConversationDatasetsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2ListConversationDatasetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2ListConversationDatasetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the list of all conversation datasets in the specified project and location.",
+	//   "flatPath": "v2/projects/{projectsId}/conversationDatasets",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.conversationDatasets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of conversation datasets to return in a single page. By default 100 and at most 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The project and location name to list all conversation datasets for. Format: `projects//locations/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/conversationDatasets",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2ListConversationDatasetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsConversationDatasetsListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowV2ListConversationDatasetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dialogflow.projects.conversationModels.create":
+
+type ProjectsConversationModelsCreateCall struct {
+	s                                        *Service
+	parent                                   string
+	googleclouddialogflowv2conversationmodel *GoogleCloudDialogflowV2ConversationModel
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Create: Creates a model. This method is a long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: CreateConversationModelOperationMetadata -
+// `response`: ConversationModel
+//
+// - parent: The project to create conversation model for. Format:
+//   `projects/`.
+func (r *ProjectsConversationModelsService) Create(parent string, googleclouddialogflowv2conversationmodel *GoogleCloudDialogflowV2ConversationModel) *ProjectsConversationModelsCreateCall {
+	c := &ProjectsConversationModelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowv2conversationmodel = googleclouddialogflowv2conversationmodel
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationModelsCreateCall) Fields(s ...googleapi.Field) *ProjectsConversationModelsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationModelsCreateCall) Context(ctx context.Context) *ProjectsConversationModelsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationModelsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationModelsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2conversationmodel)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/conversationModels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationModels.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsConversationModelsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a model. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: CreateConversationModelOperationMetadata - `response`: ConversationModel",
+	//   "flatPath": "v2/projects/{projectsId}/conversationModels",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.conversationModels.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The project to create conversation model for. Format: `projects/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/conversationModels",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2ConversationModel"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.conversationModels.delete":
+
+type ProjectsConversationModelsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a model. This method is a long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: DeleteConversationModelOperationMetadata -
+// `response`: An Empty message
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
+//
+// - name: The conversation model to delete. Format:
+//   `projects//conversationModels/`.
+func (r *ProjectsConversationModelsService) Delete(name string) *ProjectsConversationModelsDeleteCall {
+	c := &ProjectsConversationModelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationModelsDeleteCall) Fields(s ...googleapi.Field) *ProjectsConversationModelsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationModelsDeleteCall) Context(ctx context.Context) *ProjectsConversationModelsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationModelsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationModels.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsConversationModelsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a model. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: DeleteConversationModelOperationMetadata - `response`: An [Empty message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)",
+	//   "flatPath": "v2/projects/{projectsId}/conversationModels/{conversationModelsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dialogflow.projects.conversationModels.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation model to delete. Format: `projects//conversationModels/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/conversationModels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.conversationModels.deploy":
+
+type ProjectsConversationModelsDeployCall struct {
+	s                                                     *Service
+	name                                                  string
+	googleclouddialogflowv2deployconversationmodelrequest *GoogleCloudDialogflowV2DeployConversationModelRequest
+	urlParams_                                            gensupport.URLParams
+	ctx_                                                  context.Context
+	header_                                               http.Header
+}
+
+// Deploy: Deploys a model. If a model is already deployed, deploying it
+// has no effect. A model can only serve prediction requests after it
+// gets deployed. For article suggestion, custom model will not be used
+// unless it is deployed. This method is a long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: DeployConversationModelOperationMetadata -
+// `response`: An Empty message
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
+//
+// - name: The conversation model to deploy. Format:
+//   `projects//conversationModels/`.
+func (r *ProjectsConversationModelsService) Deploy(name string, googleclouddialogflowv2deployconversationmodelrequest *GoogleCloudDialogflowV2DeployConversationModelRequest) *ProjectsConversationModelsDeployCall {
+	c := &ProjectsConversationModelsDeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddialogflowv2deployconversationmodelrequest = googleclouddialogflowv2deployconversationmodelrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationModelsDeployCall) Fields(s ...googleapi.Field) *ProjectsConversationModelsDeployCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationModelsDeployCall) Context(ctx context.Context) *ProjectsConversationModelsDeployCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationModelsDeployCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationModelsDeployCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2deployconversationmodelrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:deploy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationModels.deploy" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsConversationModelsDeployCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deploys a model. If a model is already deployed, deploying it has no effect. A model can only serve prediction requests after it gets deployed. For article suggestion, custom model will not be used unless it is deployed. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: DeployConversationModelOperationMetadata - `response`: An [Empty message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)",
+	//   "flatPath": "v2/projects/{projectsId}/conversationModels/{conversationModelsId}:deploy",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.conversationModels.deploy",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation model to deploy. Format: `projects//conversationModels/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/conversationModels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:deploy",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2DeployConversationModelRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.conversationModels.get":
+
+type ProjectsConversationModelsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets conversation model.
+//
+// - name: The conversation model to retrieve. Format:
+//   `projects//conversationModels/`.
+func (r *ProjectsConversationModelsService) Get(name string) *ProjectsConversationModelsGetCall {
+	c := &ProjectsConversationModelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationModelsGetCall) Fields(s ...googleapi.Field) *ProjectsConversationModelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsConversationModelsGetCall) IfNoneMatch(entityTag string) *ProjectsConversationModelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationModelsGetCall) Context(ctx context.Context) *ProjectsConversationModelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationModelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationModelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationModels.get" call.
+// Exactly one of *GoogleCloudDialogflowV2ConversationModel or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2ConversationModel.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsConversationModelsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2ConversationModel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2ConversationModel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets conversation model.",
+	//   "flatPath": "v2/projects/{projectsId}/conversationModels/{conversationModelsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.conversationModels.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation model to retrieve. Format: `projects//conversationModels/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/conversationModels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2ConversationModel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.conversationModels.list":
+
+type ProjectsConversationModelsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists conversation models.
+//
+// - parent: The project to list all conversation models for. Format:
+//   `projects/`.
+func (r *ProjectsConversationModelsService) List(parent string) *ProjectsConversationModelsListCall {
+	c := &ProjectsConversationModelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// conversation models to return in a single page. By default 100 and at
+// most 1000.
+func (c *ProjectsConversationModelsListCall) PageSize(pageSize int64) *ProjectsConversationModelsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request.
+func (c *ProjectsConversationModelsListCall) PageToken(pageToken string) *ProjectsConversationModelsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationModelsListCall) Fields(s ...googleapi.Field) *ProjectsConversationModelsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsConversationModelsListCall) IfNoneMatch(entityTag string) *ProjectsConversationModelsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationModelsListCall) Context(ctx context.Context) *ProjectsConversationModelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationModelsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationModelsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/conversationModels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationModels.list" call.
+// Exactly one of *GoogleCloudDialogflowV2ListConversationModelsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudDialogflowV2ListConversationModelsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsConversationModelsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2ListConversationModelsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2ListConversationModelsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists conversation models.",
+	//   "flatPath": "v2/projects/{projectsId}/conversationModels",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.conversationModels.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of conversation models to return in a single page. By default 100 and at most 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The project to list all conversation models for. Format: `projects/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/conversationModels",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2ListConversationModelsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsConversationModelsListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowV2ListConversationModelsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dialogflow.projects.conversationModels.undeploy":
+
+type ProjectsConversationModelsUndeployCall struct {
+	s                                                       *Service
+	name                                                    string
+	googleclouddialogflowv2undeployconversationmodelrequest *GoogleCloudDialogflowV2UndeployConversationModelRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// Undeploy: Undeploys a model. If the model is not deployed this method
+// has no effect. If the model is currently being used: - For article
+// suggestion, article suggestion will fallback to the default model if
+// model is undeployed. This method is a long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: UndeployConversationModelOperationMetadata -
+// `response`: An Empty message
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
+//
+// - name: The conversation model to undeploy. Format:
+//   `projects//conversationModels/`.
+func (r *ProjectsConversationModelsService) Undeploy(name string, googleclouddialogflowv2undeployconversationmodelrequest *GoogleCloudDialogflowV2UndeployConversationModelRequest) *ProjectsConversationModelsUndeployCall {
+	c := &ProjectsConversationModelsUndeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddialogflowv2undeployconversationmodelrequest = googleclouddialogflowv2undeployconversationmodelrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationModelsUndeployCall) Fields(s ...googleapi.Field) *ProjectsConversationModelsUndeployCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationModelsUndeployCall) Context(ctx context.Context) *ProjectsConversationModelsUndeployCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationModelsUndeployCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationModelsUndeployCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2undeployconversationmodelrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:undeploy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationModels.undeploy" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsConversationModelsUndeployCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Undeploys a model. If the model is not deployed this method has no effect. If the model is currently being used: - For article suggestion, article suggestion will fallback to the default model if model is undeployed. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: UndeployConversationModelOperationMetadata - `response`: An [Empty message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)",
+	//   "flatPath": "v2/projects/{projectsId}/conversationModels/{conversationModelsId}:undeploy",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.conversationModels.undeploy",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation model to undeploy. Format: `projects//conversationModels/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/conversationModels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:undeploy",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2UndeployConversationModelRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.conversationModels.evaluations.get":
+
+type ProjectsConversationModelsEvaluationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an evaluation of conversation model.
+//
+// - name: The conversation model evaluation resource name. Format:
+//   `projects//conversationModels//evaluations/`.
+func (r *ProjectsConversationModelsEvaluationsService) Get(name string) *ProjectsConversationModelsEvaluationsGetCall {
+	c := &ProjectsConversationModelsEvaluationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationModelsEvaluationsGetCall) Fields(s ...googleapi.Field) *ProjectsConversationModelsEvaluationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsConversationModelsEvaluationsGetCall) IfNoneMatch(entityTag string) *ProjectsConversationModelsEvaluationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationModelsEvaluationsGetCall) Context(ctx context.Context) *ProjectsConversationModelsEvaluationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationModelsEvaluationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationModelsEvaluationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationModels.evaluations.get" call.
+// Exactly one of *GoogleCloudDialogflowV2ConversationModelEvaluation or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2ConversationModelEvaluation.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsConversationModelsEvaluationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2ConversationModelEvaluation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2ConversationModelEvaluation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an evaluation of conversation model.",
+	//   "flatPath": "v2/projects/{projectsId}/conversationModels/{conversationModelsId}/evaluations/{evaluationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.conversationModels.evaluations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation model evaluation resource name. Format: `projects//conversationModels//evaluations/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/conversationModels/[^/]+/evaluations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2ConversationModelEvaluation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.conversationModels.evaluations.list":
+
+type ProjectsConversationModelsEvaluationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists evaluations of a conversation model.
+//
+// - parent: The conversation model resource name. Format:
+//   `projects//conversationModels/`.
+func (r *ProjectsConversationModelsEvaluationsService) List(parent string) *ProjectsConversationModelsEvaluationsListCall {
+	c := &ProjectsConversationModelsEvaluationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// evaluations to return in a single page. By default 100 and at most
+// 1000.
+func (c *ProjectsConversationModelsEvaluationsListCall) PageSize(pageSize int64) *ProjectsConversationModelsEvaluationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request.
+func (c *ProjectsConversationModelsEvaluationsListCall) PageToken(pageToken string) *ProjectsConversationModelsEvaluationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationModelsEvaluationsListCall) Fields(s ...googleapi.Field) *ProjectsConversationModelsEvaluationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsConversationModelsEvaluationsListCall) IfNoneMatch(entityTag string) *ProjectsConversationModelsEvaluationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationModelsEvaluationsListCall) Context(ctx context.Context) *ProjectsConversationModelsEvaluationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationModelsEvaluationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationModelsEvaluationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/evaluations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationModels.evaluations.list" call.
+// Exactly one of
+// *GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse.Serve
+// rResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsConversationModelsEvaluationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists evaluations of a conversation model.",
+	//   "flatPath": "v2/projects/{projectsId}/conversationModels/{conversationModelsId}/evaluations",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.conversationModels.evaluations.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of evaluations to return in a single page. By default 100 and at most 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The conversation model resource name. Format: `projects//conversationModels/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/conversationModels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/evaluations",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsConversationModelsEvaluationsListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dialogflow.projects.conversationProfiles.clearSuggestionFeatureConfig":
+
+type ProjectsConversationProfilesClearSuggestionFeatureConfigCall struct {
+	s                                                          *Service
+	conversationProfile                                        string
+	googleclouddialogflowv2clearsuggestionfeatureconfigrequest *GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest
+	urlParams_                                                 gensupport.URLParams
+	ctx_                                                       context.Context
+	header_                                                    http.Header
+}
+
+// ClearSuggestionFeatureConfig: Clears a suggestion feature from a
+// conversation profile for the given participant role. This method is a
+// long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: ClearSuggestionFeatureConfigOperationMetadata -
+// `response`: ConversationProfile
+//
+// - conversationProfile: The Conversation Profile to add or update the
+//   suggestion feature config. Format:
+//   `projects//locations//conversationProfiles/`.
+func (r *ProjectsConversationProfilesService) ClearSuggestionFeatureConfig(conversationProfile string, googleclouddialogflowv2clearsuggestionfeatureconfigrequest *GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest) *ProjectsConversationProfilesClearSuggestionFeatureConfigCall {
+	c := &ProjectsConversationProfilesClearSuggestionFeatureConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.conversationProfile = conversationProfile
+	c.googleclouddialogflowv2clearsuggestionfeatureconfigrequest = googleclouddialogflowv2clearsuggestionfeatureconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationProfilesClearSuggestionFeatureConfigCall) Fields(s ...googleapi.Field) *ProjectsConversationProfilesClearSuggestionFeatureConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationProfilesClearSuggestionFeatureConfigCall) Context(ctx context.Context) *ProjectsConversationProfilesClearSuggestionFeatureConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationProfilesClearSuggestionFeatureConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationProfilesClearSuggestionFeatureConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2clearsuggestionfeatureconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+conversationProfile}:clearSuggestionFeatureConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"conversationProfile": c.conversationProfile,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationProfiles.clearSuggestionFeatureConfig" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsConversationProfilesClearSuggestionFeatureConfigCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Clears a suggestion feature from a conversation profile for the given participant role. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: ClearSuggestionFeatureConfigOperationMetadata - `response`: ConversationProfile",
+	//   "flatPath": "v2/projects/{projectsId}/conversationProfiles/{conversationProfilesId}:clearSuggestionFeatureConfig",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.conversationProfiles.clearSuggestionFeatureConfig",
+	//   "parameterOrder": [
+	//     "conversationProfile"
+	//   ],
+	//   "parameters": {
+	//     "conversationProfile": {
+	//       "description": "Required. The Conversation Profile to add or update the suggestion feature config. Format: `projects//locations//conversationProfiles/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/conversationProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+conversationProfile}:clearSuggestionFeatureConfig",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
 // method id "dialogflow.projects.conversationProfiles.create":
 
 type ProjectsConversationProfilesCreateCall struct {
@@ -32045,6 +35553,163 @@ func (c *ProjectsConversationProfilesPatchCall) Do(opts ...googleapi.CallOption)
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDialogflowV2ConversationProfile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.conversationProfiles.setSuggestionFeatureConfig":
+
+type ProjectsConversationProfilesSetSuggestionFeatureConfigCall struct {
+	s                                                        *Service
+	conversationProfile                                      string
+	googleclouddialogflowv2setsuggestionfeatureconfigrequest *GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// SetSuggestionFeatureConfig: Adds or updates a suggestion feature in a
+// conversation profile. If the conversation profile contains the type
+// of suggestion feature for the participant role, it will update it.
+// Otherwise it will insert the suggestion feature. This method is a
+// long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: SetSuggestionFeatureConfigOperationMetadata -
+// `response`: ConversationProfile If a long running operation to add or
+// update suggestion feature config for the same conversation profile,
+// participant role and suggestion feature type exists, please cancel
+// the existing long running operation before sending such request,
+// otherwise the request will be rejected.
+//
+// - conversationProfile: The Conversation Profile to add or update the
+//   suggestion feature config. Format:
+//   `projects//locations//conversationProfiles/`.
+func (r *ProjectsConversationProfilesService) SetSuggestionFeatureConfig(conversationProfile string, googleclouddialogflowv2setsuggestionfeatureconfigrequest *GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest) *ProjectsConversationProfilesSetSuggestionFeatureConfigCall {
+	c := &ProjectsConversationProfilesSetSuggestionFeatureConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.conversationProfile = conversationProfile
+	c.googleclouddialogflowv2setsuggestionfeatureconfigrequest = googleclouddialogflowv2setsuggestionfeatureconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationProfilesSetSuggestionFeatureConfigCall) Fields(s ...googleapi.Field) *ProjectsConversationProfilesSetSuggestionFeatureConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationProfilesSetSuggestionFeatureConfigCall) Context(ctx context.Context) *ProjectsConversationProfilesSetSuggestionFeatureConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationProfilesSetSuggestionFeatureConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationProfilesSetSuggestionFeatureConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2setsuggestionfeatureconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+conversationProfile}:setSuggestionFeatureConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"conversationProfile": c.conversationProfile,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversationProfiles.setSuggestionFeatureConfig" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsConversationProfilesSetSuggestionFeatureConfigCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds or updates a suggestion feature in a conversation profile. If the conversation profile contains the type of suggestion feature for the participant role, it will update it. Otherwise it will insert the suggestion feature. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: SetSuggestionFeatureConfigOperationMetadata - `response`: ConversationProfile If a long running operation to add or update suggestion feature config for the same conversation profile, participant role and suggestion feature type exists, please cancel the existing long running operation before sending such request, otherwise the request will be rejected.",
+	//   "flatPath": "v2/projects/{projectsId}/conversationProfiles/{conversationProfilesId}:setSuggestionFeatureConfig",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.conversationProfiles.setSuggestionFeatureConfig",
+	//   "parameterOrder": [
+	//     "conversationProfile"
+	//   ],
+	//   "parameters": {
+	//     "conversationProfile": {
+	//       "description": "Required. The Conversation Profile to add or update the suggestion feature config. Format: `projects//locations//conversationProfiles/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/conversationProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+conversationProfile}:setSuggestionFeatureConfig",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -47551,6 +51216,2376 @@ func (c *ProjectsLocationsAnswerRecordsPatchCall) Do(opts ...googleapi.CallOptio
 
 }
 
+// method id "dialogflow.projects.locations.conversationDatasets.create":
+
+type ProjectsLocationsConversationDatasetsCreateCall struct {
+	s                                          *Service
+	parent                                     string
+	googleclouddialogflowv2conversationdataset *GoogleCloudDialogflowV2ConversationDataset
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// Create: Creates a new conversation dataset. This method is a
+// long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: CreateConversationDatasetOperationMetadata -
+// `response`: ConversationDataset
+//
+// - parent: The project to create conversation dataset for. Format:
+//   `projects//locations/`.
+func (r *ProjectsLocationsConversationDatasetsService) Create(parent string, googleclouddialogflowv2conversationdataset *GoogleCloudDialogflowV2ConversationDataset) *ProjectsLocationsConversationDatasetsCreateCall {
+	c := &ProjectsLocationsConversationDatasetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowv2conversationdataset = googleclouddialogflowv2conversationdataset
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationDatasetsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationDatasetsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationDatasetsCreateCall) Context(ctx context.Context) *ProjectsLocationsConversationDatasetsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationDatasetsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2conversationdataset)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/conversationDatasets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationDatasets.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationDatasetsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new conversation dataset. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: CreateConversationDatasetOperationMetadata - `response`: ConversationDataset",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationDatasets",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.conversationDatasets.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project to create conversation dataset for. Format: `projects//locations/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/conversationDatasets",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2ConversationDataset"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversationDatasets.delete":
+
+type ProjectsLocationsConversationDatasetsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified conversation dataset. This method is a
+// long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: DeleteConversationDatasetOperationMetadata -
+// `response`: An Empty message
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
+//
+// - name: The conversation dataset to delete. Format:
+//   `projects//locations//conversationDatasets/`.
+func (r *ProjectsLocationsConversationDatasetsService) Delete(name string) *ProjectsLocationsConversationDatasetsDeleteCall {
+	c := &ProjectsLocationsConversationDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationDatasetsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationDatasetsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationDatasetsDeleteCall) Context(ctx context.Context) *ProjectsLocationsConversationDatasetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationDatasetsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationDatasets.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified conversation dataset. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: DeleteConversationDatasetOperationMetadata - `response`: An [Empty message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationDatasets/{conversationDatasetsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dialogflow.projects.locations.conversationDatasets.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation dataset to delete. Format: `projects//locations//conversationDatasets/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversationDatasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversationDatasets.get":
+
+type ProjectsLocationsConversationDatasetsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the specified conversation dataset.
+//
+// - name: The conversation dataset to retrieve. Format:
+//   `projects//locations//conversationDatasets/`.
+func (r *ProjectsLocationsConversationDatasetsService) Get(name string) *ProjectsLocationsConversationDatasetsGetCall {
+	c := &ProjectsLocationsConversationDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationDatasetsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationDatasetsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConversationDatasetsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsConversationDatasetsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationDatasetsGetCall) Context(ctx context.Context) *ProjectsLocationsConversationDatasetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationDatasetsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationDatasets.get" call.
+// Exactly one of *GoogleCloudDialogflowV2ConversationDataset or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2ConversationDataset.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConversationDatasetsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2ConversationDataset, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2ConversationDataset{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the specified conversation dataset.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationDatasets/{conversationDatasetsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.conversationDatasets.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation dataset to retrieve. Format: `projects//locations//conversationDatasets/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversationDatasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2ConversationDataset"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversationDatasets.importConversationData":
+
+type ProjectsLocationsConversationDatasetsImportConversationDataCall struct {
+	s                                                    *Service
+	name                                                 string
+	googleclouddialogflowv2importconversationdatarequest *GoogleCloudDialogflowV2ImportConversationDataRequest
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// ImportConversationData: Import data into the specified conversation
+// dataset. Note that it is not allowed to import data to a conversation
+// dataset that already has data in it. This method is a long-running
+// operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: ImportConversationDataOperationMetadata -
+// `response`: ImportConversationDataOperationResponse
+//
+// - name: Dataset resource name. Format:
+//   `projects//locations//conversationDatasets/`.
+func (r *ProjectsLocationsConversationDatasetsService) ImportConversationData(name string, googleclouddialogflowv2importconversationdatarequest *GoogleCloudDialogflowV2ImportConversationDataRequest) *ProjectsLocationsConversationDatasetsImportConversationDataCall {
+	c := &ProjectsLocationsConversationDatasetsImportConversationDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddialogflowv2importconversationdatarequest = googleclouddialogflowv2importconversationdatarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationDatasetsImportConversationDataCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationDatasetsImportConversationDataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationDatasetsImportConversationDataCall) Context(ctx context.Context) *ProjectsLocationsConversationDatasetsImportConversationDataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationDatasetsImportConversationDataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationDatasetsImportConversationDataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2importconversationdatarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:importConversationData")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationDatasets.importConversationData" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationDatasetsImportConversationDataCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Import data into the specified conversation dataset. Note that it is not allowed to import data to a conversation dataset that already has data in it. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: ImportConversationDataOperationMetadata - `response`: ImportConversationDataOperationResponse",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationDatasets/{conversationDatasetsId}:importConversationData",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.conversationDatasets.importConversationData",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Dataset resource name. Format: `projects//locations//conversationDatasets/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversationDatasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:importConversationData",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2ImportConversationDataRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversationDatasets.list":
+
+type ProjectsLocationsConversationDatasetsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the list of all conversation datasets in the specified
+// project and location.
+//
+// - parent: The project and location name to list all conversation
+//   datasets for. Format: `projects//locations/`.
+func (r *ProjectsLocationsConversationDatasetsService) List(parent string) *ProjectsLocationsConversationDatasetsListCall {
+	c := &ProjectsLocationsConversationDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// conversation datasets to return in a single page. By default 100 and
+// at most 1000.
+func (c *ProjectsLocationsConversationDatasetsListCall) PageSize(pageSize int64) *ProjectsLocationsConversationDatasetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request.
+func (c *ProjectsLocationsConversationDatasetsListCall) PageToken(pageToken string) *ProjectsLocationsConversationDatasetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationDatasetsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationDatasetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConversationDatasetsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConversationDatasetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationDatasetsListCall) Context(ctx context.Context) *ProjectsLocationsConversationDatasetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationDatasetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationDatasetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/conversationDatasets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationDatasets.list" call.
+// Exactly one of
+// *GoogleCloudDialogflowV2ListConversationDatasetsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2ListConversationDatasetsResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConversationDatasetsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2ListConversationDatasetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2ListConversationDatasetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the list of all conversation datasets in the specified project and location.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationDatasets",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.conversationDatasets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of conversation datasets to return in a single page. By default 100 and at most 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The project and location name to list all conversation datasets for. Format: `projects//locations/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/conversationDatasets",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2ListConversationDatasetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConversationDatasetsListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowV2ListConversationDatasetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dialogflow.projects.locations.conversationModels.create":
+
+type ProjectsLocationsConversationModelsCreateCall struct {
+	s                                        *Service
+	parent                                   string
+	googleclouddialogflowv2conversationmodel *GoogleCloudDialogflowV2ConversationModel
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Create: Creates a model. This method is a long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: CreateConversationModelOperationMetadata -
+// `response`: ConversationModel
+//
+// - parent: The project to create conversation model for. Format:
+//   `projects/`.
+func (r *ProjectsLocationsConversationModelsService) Create(parent string, googleclouddialogflowv2conversationmodel *GoogleCloudDialogflowV2ConversationModel) *ProjectsLocationsConversationModelsCreateCall {
+	c := &ProjectsLocationsConversationModelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowv2conversationmodel = googleclouddialogflowv2conversationmodel
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationModelsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationModelsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationModelsCreateCall) Context(ctx context.Context) *ProjectsLocationsConversationModelsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationModelsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationModelsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2conversationmodel)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/conversationModels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationModels.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationModelsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a model. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: CreateConversationModelOperationMetadata - `response`: ConversationModel",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationModels",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.conversationModels.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The project to create conversation model for. Format: `projects/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/conversationModels",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2ConversationModel"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversationModels.delete":
+
+type ProjectsLocationsConversationModelsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a model. This method is a long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: DeleteConversationModelOperationMetadata -
+// `response`: An Empty message
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
+//
+// - name: The conversation model to delete. Format:
+//   `projects//conversationModels/`.
+func (r *ProjectsLocationsConversationModelsService) Delete(name string) *ProjectsLocationsConversationModelsDeleteCall {
+	c := &ProjectsLocationsConversationModelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationModelsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationModelsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationModelsDeleteCall) Context(ctx context.Context) *ProjectsLocationsConversationModelsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationModelsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationModels.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationModelsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a model. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: DeleteConversationModelOperationMetadata - `response`: An [Empty message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationModels/{conversationModelsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dialogflow.projects.locations.conversationModels.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation model to delete. Format: `projects//conversationModels/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversationModels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversationModels.deploy":
+
+type ProjectsLocationsConversationModelsDeployCall struct {
+	s                                                     *Service
+	name                                                  string
+	googleclouddialogflowv2deployconversationmodelrequest *GoogleCloudDialogflowV2DeployConversationModelRequest
+	urlParams_                                            gensupport.URLParams
+	ctx_                                                  context.Context
+	header_                                               http.Header
+}
+
+// Deploy: Deploys a model. If a model is already deployed, deploying it
+// has no effect. A model can only serve prediction requests after it
+// gets deployed. For article suggestion, custom model will not be used
+// unless it is deployed. This method is a long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: DeployConversationModelOperationMetadata -
+// `response`: An Empty message
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
+//
+// - name: The conversation model to deploy. Format:
+//   `projects//conversationModels/`.
+func (r *ProjectsLocationsConversationModelsService) Deploy(name string, googleclouddialogflowv2deployconversationmodelrequest *GoogleCloudDialogflowV2DeployConversationModelRequest) *ProjectsLocationsConversationModelsDeployCall {
+	c := &ProjectsLocationsConversationModelsDeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddialogflowv2deployconversationmodelrequest = googleclouddialogflowv2deployconversationmodelrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationModelsDeployCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationModelsDeployCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationModelsDeployCall) Context(ctx context.Context) *ProjectsLocationsConversationModelsDeployCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationModelsDeployCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationModelsDeployCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2deployconversationmodelrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:deploy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationModels.deploy" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationModelsDeployCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deploys a model. If a model is already deployed, deploying it has no effect. A model can only serve prediction requests after it gets deployed. For article suggestion, custom model will not be used unless it is deployed. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: DeployConversationModelOperationMetadata - `response`: An [Empty message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationModels/{conversationModelsId}:deploy",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.conversationModels.deploy",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation model to deploy. Format: `projects//conversationModels/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversationModels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:deploy",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2DeployConversationModelRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversationModels.get":
+
+type ProjectsLocationsConversationModelsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets conversation model.
+//
+// - name: The conversation model to retrieve. Format:
+//   `projects//conversationModels/`.
+func (r *ProjectsLocationsConversationModelsService) Get(name string) *ProjectsLocationsConversationModelsGetCall {
+	c := &ProjectsLocationsConversationModelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationModelsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationModelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConversationModelsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsConversationModelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationModelsGetCall) Context(ctx context.Context) *ProjectsLocationsConversationModelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationModelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationModelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationModels.get" call.
+// Exactly one of *GoogleCloudDialogflowV2ConversationModel or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2ConversationModel.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConversationModelsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2ConversationModel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2ConversationModel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets conversation model.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationModels/{conversationModelsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.conversationModels.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation model to retrieve. Format: `projects//conversationModels/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversationModels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2ConversationModel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversationModels.list":
+
+type ProjectsLocationsConversationModelsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists conversation models.
+//
+// - parent: The project to list all conversation models for. Format:
+//   `projects/`.
+func (r *ProjectsLocationsConversationModelsService) List(parent string) *ProjectsLocationsConversationModelsListCall {
+	c := &ProjectsLocationsConversationModelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// conversation models to return in a single page. By default 100 and at
+// most 1000.
+func (c *ProjectsLocationsConversationModelsListCall) PageSize(pageSize int64) *ProjectsLocationsConversationModelsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request.
+func (c *ProjectsLocationsConversationModelsListCall) PageToken(pageToken string) *ProjectsLocationsConversationModelsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationModelsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationModelsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConversationModelsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConversationModelsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationModelsListCall) Context(ctx context.Context) *ProjectsLocationsConversationModelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationModelsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationModelsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/conversationModels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationModels.list" call.
+// Exactly one of *GoogleCloudDialogflowV2ListConversationModelsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudDialogflowV2ListConversationModelsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConversationModelsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2ListConversationModelsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2ListConversationModelsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists conversation models.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationModels",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.conversationModels.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of conversation models to return in a single page. By default 100 and at most 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The project to list all conversation models for. Format: `projects/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/conversationModels",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2ListConversationModelsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConversationModelsListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowV2ListConversationModelsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dialogflow.projects.locations.conversationModels.undeploy":
+
+type ProjectsLocationsConversationModelsUndeployCall struct {
+	s                                                       *Service
+	name                                                    string
+	googleclouddialogflowv2undeployconversationmodelrequest *GoogleCloudDialogflowV2UndeployConversationModelRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// Undeploy: Undeploys a model. If the model is not deployed this method
+// has no effect. If the model is currently being used: - For article
+// suggestion, article suggestion will fallback to the default model if
+// model is undeployed. This method is a long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: UndeployConversationModelOperationMetadata -
+// `response`: An Empty message
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
+//
+// - name: The conversation model to undeploy. Format:
+//   `projects//conversationModels/`.
+func (r *ProjectsLocationsConversationModelsService) Undeploy(name string, googleclouddialogflowv2undeployconversationmodelrequest *GoogleCloudDialogflowV2UndeployConversationModelRequest) *ProjectsLocationsConversationModelsUndeployCall {
+	c := &ProjectsLocationsConversationModelsUndeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddialogflowv2undeployconversationmodelrequest = googleclouddialogflowv2undeployconversationmodelrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationModelsUndeployCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationModelsUndeployCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationModelsUndeployCall) Context(ctx context.Context) *ProjectsLocationsConversationModelsUndeployCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationModelsUndeployCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationModelsUndeployCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2undeployconversationmodelrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:undeploy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationModels.undeploy" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationModelsUndeployCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Undeploys a model. If the model is not deployed this method has no effect. If the model is currently being used: - For article suggestion, article suggestion will fallback to the default model if model is undeployed. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: UndeployConversationModelOperationMetadata - `response`: An [Empty message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationModels/{conversationModelsId}:undeploy",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.conversationModels.undeploy",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation model to undeploy. Format: `projects//conversationModels/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversationModels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:undeploy",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2UndeployConversationModelRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversationModels.evaluations.create":
+
+type ProjectsLocationsConversationModelsEvaluationsCreateCall struct {
+	s                                                               *Service
+	parent                                                          string
+	googleclouddialogflowv2createconversationmodelevaluationrequest *GoogleCloudDialogflowV2CreateConversationModelEvaluationRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// Create: Creates evaluation of a conversation model.
+//
+// - parent: The conversation model resource name. Format:
+//   `projects//locations//conversationModels/`.
+func (r *ProjectsLocationsConversationModelsEvaluationsService) Create(parent string, googleclouddialogflowv2createconversationmodelevaluationrequest *GoogleCloudDialogflowV2CreateConversationModelEvaluationRequest) *ProjectsLocationsConversationModelsEvaluationsCreateCall {
+	c := &ProjectsLocationsConversationModelsEvaluationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowv2createconversationmodelevaluationrequest = googleclouddialogflowv2createconversationmodelevaluationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationModelsEvaluationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationModelsEvaluationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationModelsEvaluationsCreateCall) Context(ctx context.Context) *ProjectsLocationsConversationModelsEvaluationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationModelsEvaluationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationModelsEvaluationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2createconversationmodelevaluationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/evaluations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationModels.evaluations.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationModelsEvaluationsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates evaluation of a conversation model.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationModels/{conversationModelsId}/evaluations",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.conversationModels.evaluations.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The conversation model resource name. Format: `projects//locations//conversationModels/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversationModels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/evaluations",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2CreateConversationModelEvaluationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversationModels.evaluations.get":
+
+type ProjectsLocationsConversationModelsEvaluationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an evaluation of conversation model.
+//
+// - name: The conversation model evaluation resource name. Format:
+//   `projects//conversationModels//evaluations/`.
+func (r *ProjectsLocationsConversationModelsEvaluationsService) Get(name string) *ProjectsLocationsConversationModelsEvaluationsGetCall {
+	c := &ProjectsLocationsConversationModelsEvaluationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationModelsEvaluationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationModelsEvaluationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConversationModelsEvaluationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsConversationModelsEvaluationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationModelsEvaluationsGetCall) Context(ctx context.Context) *ProjectsLocationsConversationModelsEvaluationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationModelsEvaluationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationModelsEvaluationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationModels.evaluations.get" call.
+// Exactly one of *GoogleCloudDialogflowV2ConversationModelEvaluation or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2ConversationModelEvaluation.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConversationModelsEvaluationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2ConversationModelEvaluation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2ConversationModelEvaluation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an evaluation of conversation model.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationModels/{conversationModelsId}/evaluations/{evaluationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.conversationModels.evaluations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The conversation model evaluation resource name. Format: `projects//conversationModels//evaluations/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversationModels/[^/]+/evaluations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2ConversationModelEvaluation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversationModels.evaluations.list":
+
+type ProjectsLocationsConversationModelsEvaluationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists evaluations of a conversation model.
+//
+// - parent: The conversation model resource name. Format:
+//   `projects//conversationModels/`.
+func (r *ProjectsLocationsConversationModelsEvaluationsService) List(parent string) *ProjectsLocationsConversationModelsEvaluationsListCall {
+	c := &ProjectsLocationsConversationModelsEvaluationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// evaluations to return in a single page. By default 100 and at most
+// 1000.
+func (c *ProjectsLocationsConversationModelsEvaluationsListCall) PageSize(pageSize int64) *ProjectsLocationsConversationModelsEvaluationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request.
+func (c *ProjectsLocationsConversationModelsEvaluationsListCall) PageToken(pageToken string) *ProjectsLocationsConversationModelsEvaluationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationModelsEvaluationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationModelsEvaluationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConversationModelsEvaluationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConversationModelsEvaluationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationModelsEvaluationsListCall) Context(ctx context.Context) *ProjectsLocationsConversationModelsEvaluationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationModelsEvaluationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationModelsEvaluationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/evaluations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationModels.evaluations.list" call.
+// Exactly one of
+// *GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse.Serve
+// rResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConversationModelsEvaluationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists evaluations of a conversation model.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationModels/{conversationModelsId}/evaluations",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.conversationModels.evaluations.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of evaluations to return in a single page. By default 100 and at most 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The conversation model resource name. Format: `projects//conversationModels/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversationModels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/evaluations",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConversationModelsEvaluationsListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dialogflow.projects.locations.conversationProfiles.clearSuggestionFeatureConfig":
+
+type ProjectsLocationsConversationProfilesClearSuggestionFeatureConfigCall struct {
+	s                                                          *Service
+	conversationProfile                                        string
+	googleclouddialogflowv2clearsuggestionfeatureconfigrequest *GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest
+	urlParams_                                                 gensupport.URLParams
+	ctx_                                                       context.Context
+	header_                                                    http.Header
+}
+
+// ClearSuggestionFeatureConfig: Clears a suggestion feature from a
+// conversation profile for the given participant role. This method is a
+// long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: ClearSuggestionFeatureConfigOperationMetadata -
+// `response`: ConversationProfile
+//
+// - conversationProfile: The Conversation Profile to add or update the
+//   suggestion feature config. Format:
+//   `projects//locations//conversationProfiles/`.
+func (r *ProjectsLocationsConversationProfilesService) ClearSuggestionFeatureConfig(conversationProfile string, googleclouddialogflowv2clearsuggestionfeatureconfigrequest *GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest) *ProjectsLocationsConversationProfilesClearSuggestionFeatureConfigCall {
+	c := &ProjectsLocationsConversationProfilesClearSuggestionFeatureConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.conversationProfile = conversationProfile
+	c.googleclouddialogflowv2clearsuggestionfeatureconfigrequest = googleclouddialogflowv2clearsuggestionfeatureconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationProfilesClearSuggestionFeatureConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationProfilesClearSuggestionFeatureConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationProfilesClearSuggestionFeatureConfigCall) Context(ctx context.Context) *ProjectsLocationsConversationProfilesClearSuggestionFeatureConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationProfilesClearSuggestionFeatureConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationProfilesClearSuggestionFeatureConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2clearsuggestionfeatureconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+conversationProfile}:clearSuggestionFeatureConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"conversationProfile": c.conversationProfile,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationProfiles.clearSuggestionFeatureConfig" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationProfilesClearSuggestionFeatureConfigCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Clears a suggestion feature from a conversation profile for the given participant role. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: ClearSuggestionFeatureConfigOperationMetadata - `response`: ConversationProfile",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationProfiles/{conversationProfilesId}:clearSuggestionFeatureConfig",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.conversationProfiles.clearSuggestionFeatureConfig",
+	//   "parameterOrder": [
+	//     "conversationProfile"
+	//   ],
+	//   "parameters": {
+	//     "conversationProfile": {
+	//       "description": "Required. The Conversation Profile to add or update the suggestion feature config. Format: `projects//locations//conversationProfiles/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversationProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+conversationProfile}:clearSuggestionFeatureConfig",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
 // method id "dialogflow.projects.locations.conversationProfiles.create":
 
 type ProjectsLocationsConversationProfilesCreateCall struct {
@@ -48335,6 +54370,163 @@ func (c *ProjectsLocationsConversationProfilesPatchCall) Do(opts ...googleapi.Ca
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDialogflowV2ConversationProfile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversationProfiles.setSuggestionFeatureConfig":
+
+type ProjectsLocationsConversationProfilesSetSuggestionFeatureConfigCall struct {
+	s                                                        *Service
+	conversationProfile                                      string
+	googleclouddialogflowv2setsuggestionfeatureconfigrequest *GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// SetSuggestionFeatureConfig: Adds or updates a suggestion feature in a
+// conversation profile. If the conversation profile contains the type
+// of suggestion feature for the participant role, it will update it.
+// Otherwise it will insert the suggestion feature. This method is a
+// long-running operation
+// (https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: SetSuggestionFeatureConfigOperationMetadata -
+// `response`: ConversationProfile If a long running operation to add or
+// update suggestion feature config for the same conversation profile,
+// participant role and suggestion feature type exists, please cancel
+// the existing long running operation before sending such request,
+// otherwise the request will be rejected.
+//
+// - conversationProfile: The Conversation Profile to add or update the
+//   suggestion feature config. Format:
+//   `projects//locations//conversationProfiles/`.
+func (r *ProjectsLocationsConversationProfilesService) SetSuggestionFeatureConfig(conversationProfile string, googleclouddialogflowv2setsuggestionfeatureconfigrequest *GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest) *ProjectsLocationsConversationProfilesSetSuggestionFeatureConfigCall {
+	c := &ProjectsLocationsConversationProfilesSetSuggestionFeatureConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.conversationProfile = conversationProfile
+	c.googleclouddialogflowv2setsuggestionfeatureconfigrequest = googleclouddialogflowv2setsuggestionfeatureconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationProfilesSetSuggestionFeatureConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationProfilesSetSuggestionFeatureConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationProfilesSetSuggestionFeatureConfigCall) Context(ctx context.Context) *ProjectsLocationsConversationProfilesSetSuggestionFeatureConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationProfilesSetSuggestionFeatureConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationProfilesSetSuggestionFeatureConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2setsuggestionfeatureconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+conversationProfile}:setSuggestionFeatureConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"conversationProfile": c.conversationProfile,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversationProfiles.setSuggestionFeatureConfig" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationProfilesSetSuggestionFeatureConfigCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds or updates a suggestion feature in a conversation profile. If the conversation profile contains the type of suggestion feature for the participant role, it will update it. Otherwise it will insert the suggestion feature. This method is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The returned `Operation` type has the following method-specific fields: - `metadata`: SetSuggestionFeatureConfigOperationMetadata - `response`: ConversationProfile If a long running operation to add or update suggestion feature config for the same conversation profile, participant role and suggestion feature type exists, please cancel the existing long running operation before sending such request, otherwise the request will be rejected.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversationProfiles/{conversationProfilesId}:setSuggestionFeatureConfig",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.conversationProfiles.setSuggestionFeatureConfig",
+	//   "parameterOrder": [
+	//     "conversationProfile"
+	//   ],
+	//   "parameters": {
+	//     "conversationProfile": {
+	//       "description": "Required. The Conversation Profile to add or update the suggestion feature config. Format: `projects//locations//conversationProfiles/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversationProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+conversationProfile}:setSuggestionFeatureConfig",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

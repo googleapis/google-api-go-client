@@ -528,6 +528,9 @@ type Cve struct {
 	// https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-34527
 	References []*Reference `json:"references,omitempty"`
 
+	// UpstreamFixAvailable: Whether upstream fix is available for the CVE.
+	UpstreamFixAvailable bool `json:"upstreamFixAvailable,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Cvssv3") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1126,6 +1129,87 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV1BigQueryExport: Configures how to deliver
+// Findings to BigQuery Instance.
+type GoogleCloudSecuritycenterV1BigQueryExport struct {
+	// CreateTime: Output only. The time at which the big query export was
+	// created. This field is set by the server and will be ignored if
+	// provided on export on creation.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Dataset: The dataset to write findings' updates to. Its format is
+	// "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery
+	// Dataset unique ID must contain only letters (a-z, A-Z), numbers
+	// (0-9), or underscores (_).
+	Dataset string `json:"dataset,omitempty"`
+
+	// Description: The description of the export (max of 1024 characters).
+	Description string `json:"description,omitempty"`
+
+	// Filter: Expression that defines the filter to apply across
+	// create/update events of findings. The expression is a list of zero or
+	// more restrictions combined via logical operators `AND` and `OR`.
+	// Parentheses are supported, and `OR` has higher precedence than `AND`.
+	// Restrictions have the form ` ` and may have a `-` character in front
+	// of them to indicate negation. The fields map to those defined in the
+	// corresponding resource. The supported operators are: * `=` for all
+	// value types. * `>`, `<`, `>=`, `<=` for integer values. * `:`,
+	// meaning substring matching, for strings. The supported value types
+	// are: * string literals in quotes. * integer literals without quotes.
+	// * boolean literals `true` and `false` without quotes. Please see the
+	// proto documentation in the finding
+	// (https://source.corp.google.com/piper///depot/google3/google/cloud/securitycenter/v1/finding.proto)
+	// and in the ListFindingsRequest for valid filter syntax.
+	// (https://source.corp.google.com/piper///depot/google3/google/cloud/securitycenter/v1/securitycenter_service.proto).
+	Filter string `json:"filter,omitempty"`
+
+	// MostRecentEditor: Output only. Email address of the user who last
+	// edited the big query export. This field is set by the server and will
+	// be ignored if provided on export creation or update.
+	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
+
+	// Name: The relative resource name of this export. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name.
+	// Example format:
+	// "organizations/{organization_id}/bigQueryExports/{export_id}" Example
+	// format: "folders/{folder_id}/bigQueryExports/{export_id}" Example
+	// format: "projects/{project_id}/bigQueryExports/{export_id}" This
+	// field is provided in responses, and is ignored when provided in
+	// create requests.
+	Name string `json:"name,omitempty"`
+
+	// Principal: Output only. The service account that needs permission to
+	// create table, upload data to the big query dataset.
+	Principal string `json:"principal,omitempty"`
+
+	// UpdateTime: Output only. The most recent time at which the big export
+	// was updated. This field is set by the server and will be ignored if
+	// provided on export creation or update.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1BigQueryExport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1BigQueryExport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV1BulkMuteFindingsResponse: The response to
 // a BulkMute request. Contains the LRO information.
 type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
@@ -1147,9 +1231,9 @@ type GoogleCloudSecuritycenterV1ExternalSystem struct {
 	ExternalUid string `json:"externalUid,omitempty"`
 
 	// Name: External System Name e.g. jira, demisto, etc. e.g.:
-	// organizations/1234/sources/5678/findings/123456/externalSystems/jira
-	// folders/1234/sources/5678/findings/123456/externalSystems/jira
-	// projects/1234/sources/5678/findings/123456/externalSystems/jira
+	// `organizations/1234/sources/5678/findings/123456/externalSystems/jira`
+	//  `folders/1234/sources/5678/findings/123456/externalSystems/jira`
+	// `projects/1234/sources/5678/findings/123456/externalSystems/jira`
 	Name string `json:"name,omitempty"`
 
 	// Status: Most recent status of the corresponding finding's
@@ -1310,8 +1394,7 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	// to.
 	Project string `json:"project,omitempty"`
 
-	// ProjectDisplayName: The human readable name of project that the
-	// resource belongs to.
+	// ProjectDisplayName: The project id that the resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
 	// Type: The full resource type of the resource.
@@ -1782,8 +1865,7 @@ type GoogleCloudSecuritycenterV1p1beta1Resource struct {
 	// to.
 	Project string `json:"project,omitempty"`
 
-	// ProjectDisplayName: The human readable name of project that the
-	// resource belongs to.
+	// ProjectDisplayName: The project id that the resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Folders") to
@@ -2460,6 +2542,7 @@ type MitreAttack struct {
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
@@ -2487,9 +2570,9 @@ type MitreAttack struct {
 	// represented by this finding, if any. primary_techniques is a repeated
 	// field because there are multiple levels of MITRE ATT&CK techniques.
 	// If the technique most closely represented by this finding is a
-	// sub-technique (e.g. SCANNING_IP_BLOCKS), both the sub-technique and
-	// its parent technique(s) will be listed (e.g. SCANNING_IP_BLOCKS,
-	// ACTIVE_SCANNING).
+	// sub-technique (e.g. `SCANNING_IP_BLOCKS`), both the sub-technique and
+	// its parent technique(s) will be listed (e.g. `SCANNING_IP_BLOCKS`,
+	// `ACTIVE_SCANNING`).
 	//
 	// Possible values:
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
@@ -2520,6 +2603,7 @@ type MitreAttack struct {
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 
 	// Version: The MITRE ATT&CK version referenced by the above fields.

@@ -467,6 +467,14 @@ func (s *AnalyticsProperty) MarshalJSON() ([]byte, error) {
 
 // AndroidApp: Details of a Firebase App for Android.
 type AndroidApp struct {
+	// ApiKeyId: The key_id of the GCP ApiKey associated with this App. If
+	// set must have no restrictions, or only have restrictions that are
+	// valid for the associated Firebase App. Cannot be set in create
+	// requests, instead an existing valid API Key will be chosen, or if no
+	// valid API Keys exist, one will be provisioned for you. Cannot be set
+	// to an empty value in update requests.
+	ApiKeyId string `json:"apiKeyId,omitempty"`
+
 	// AppId: Immutable. The globally unique, Firebase-assigned identifier
 	// for the `AndroidApp`. This identifier should be treated as an opaque
 	// token, as the data format is not specified.
@@ -500,7 +508,7 @@ type AndroidApp struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AppId") to
+	// ForceSendFields is a list of field names (e.g. "ApiKeyId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -508,8 +516,8 @@ type AndroidApp struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AppId") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "ApiKeyId") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -805,6 +813,14 @@ func (s *FirebaseProject) MarshalJSON() ([]byte, error) {
 
 // IosApp: Details of a Firebase App for iOS.
 type IosApp struct {
+	// ApiKeyId: The key_id of the GCP ApiKey associated with this App. If
+	// set must have no restrictions, or only have restrictions that are
+	// valid for the associated Firebase App. Cannot be set in create
+	// requests, instead an existing valid API Key will be chosen, or if no
+	// valid API Keys exist, one will be provisioned for you. Cannot be set
+	// to an empty value in update requests.
+	ApiKeyId string `json:"apiKeyId,omitempty"`
+
 	// AppId: Immutable. The globally unique, Firebase-assigned identifier
 	// for the `IosApp`. This identifier should be treated as an opaque
 	// token, as the data format is not specified.
@@ -846,7 +862,7 @@ type IosApp struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AppId") to
+	// ForceSendFields is a list of field names (e.g. "ApiKeyId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -854,8 +870,8 @@ type IosApp struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AppId") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "ApiKeyId") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1622,6 +1638,14 @@ func (s *StreamMapping) MarshalJSON() ([]byte, error) {
 
 // WebApp: Details of a Firebase App for the web.
 type WebApp struct {
+	// ApiKeyId: The key_id of the GCP ApiKey associated with this App. If
+	// set must have no restrictions, or only have restrictions that are
+	// valid for the associated Firebase App. Cannot be set in create
+	// requests, instead an existing valid API Key will be chosen, or if no
+	// valid API Keys exist, one will be provisioned for you. Cannot be set
+	// to an empty value in update requests.
+	ApiKeyId string `json:"apiKeyId,omitempty"`
+
 	// AppId: Immutable. The globally unique, Firebase-assigned identifier
 	// for the `WebApp`. This identifier should be treated as an opaque
 	// token, as the data format is not specified.
@@ -1661,7 +1685,7 @@ type WebApp struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AppId") to
+	// ForceSendFields is a list of field names (e.g. "ApiKeyId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1669,8 +1693,8 @@ type WebApp struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AppId") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "ApiKeyId") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

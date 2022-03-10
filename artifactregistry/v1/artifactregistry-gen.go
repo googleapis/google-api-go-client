@@ -127,7 +127,6 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.Operations = NewOperationsService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -137,8 +136,6 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
-	Operations *OperationsService
-
 	Projects *ProjectsService
 }
 
@@ -147,15 +144,6 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
-}
-
-func NewOperationsService(s *Service) *OperationsService {
-	rs := &OperationsService{s: s}
-	return rs
-}
-
-type OperationsService struct {
-	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -172,6 +160,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Repositories = NewProjectsLocationsRepositoriesService(s)
 	return rs
 }
@@ -179,7 +168,18 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	Operations *ProjectsLocationsOperationsService
+
 	Repositories *ProjectsLocationsRepositoriesService
+}
+
+func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
+	rs := &ProjectsLocationsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsOperationsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsRepositoriesService(s *Service) *ProjectsLocationsRepositoriesService {
@@ -187,8 +187,6 @@ func NewProjectsLocationsRepositoriesService(s *Service) *ProjectsLocationsRepos
 	rs.AptArtifacts = NewProjectsLocationsRepositoriesAptArtifactsService(s)
 	rs.DockerImages = NewProjectsLocationsRepositoriesDockerImagesService(s)
 	rs.Files = NewProjectsLocationsRepositoriesFilesService(s)
-	rs.GooGetArtifacts = NewProjectsLocationsRepositoriesGooGetArtifactsService(s)
-	rs.GoogetArtifacts = NewProjectsLocationsRepositoriesGoogetArtifactsService(s)
 	rs.Packages = NewProjectsLocationsRepositoriesPackagesService(s)
 	rs.YumArtifacts = NewProjectsLocationsRepositoriesYumArtifactsService(s)
 	return rs
@@ -202,10 +200,6 @@ type ProjectsLocationsRepositoriesService struct {
 	DockerImages *ProjectsLocationsRepositoriesDockerImagesService
 
 	Files *ProjectsLocationsRepositoriesFilesService
-
-	GooGetArtifacts *ProjectsLocationsRepositoriesGooGetArtifactsService
-
-	GoogetArtifacts *ProjectsLocationsRepositoriesGoogetArtifactsService
 
 	Packages *ProjectsLocationsRepositoriesPackagesService
 
@@ -236,24 +230,6 @@ func NewProjectsLocationsRepositoriesFilesService(s *Service) *ProjectsLocations
 }
 
 type ProjectsLocationsRepositoriesFilesService struct {
-	s *Service
-}
-
-func NewProjectsLocationsRepositoriesGooGetArtifactsService(s *Service) *ProjectsLocationsRepositoriesGooGetArtifactsService {
-	rs := &ProjectsLocationsRepositoriesGooGetArtifactsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsRepositoriesGooGetArtifactsService struct {
-	s *Service
-}
-
-func NewProjectsLocationsRepositoriesGoogetArtifactsService(s *Service) *ProjectsLocationsRepositoriesGoogetArtifactsService {
-	rs := &ProjectsLocationsRepositoriesGoogetArtifactsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsRepositoriesGoogetArtifactsService struct {
 	s *Service
 }
 
@@ -659,69 +635,6 @@ type ImportAptArtifactsRequest struct {
 
 func (s *ImportAptArtifactsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAptArtifactsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ImportGooGetArtifactsGcsSource: Google Cloud Storage location where
-// the artifacts currently reside.
-type ImportGooGetArtifactsGcsSource struct {
-	// Uris: Cloud Storage paths URI (e.g., gs://my_bucket/my_object).
-	Uris []string `json:"uris,omitempty"`
-
-	// UseWildcards: Supports URI wildcards for matching multiple objects
-	// from a single URI.
-	UseWildcards bool `json:"useWildcards,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Uris") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Uris") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImportGooGetArtifactsGcsSource) MarshalJSON() ([]byte, error) {
-	type NoMethod ImportGooGetArtifactsGcsSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ImportGooGetArtifactsRequest: The request to import new googet
-// artifacts.
-type ImportGooGetArtifactsRequest struct {
-	// GcsSource: Google Cloud Storage location where input content is
-	// located.
-	GcsSource *ImportGooGetArtifactsGcsSource `json:"gcsSource,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GcsSource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsSource") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImportGooGetArtifactsRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod ImportGooGetArtifactsRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1604,43 +1517,6 @@ func (s *UploadAptArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 type UploadAptArtifactRequest struct {
 }
 
-// UploadGooGetArtifactMediaResponse: The response to upload an
-// artifact.
-type UploadGooGetArtifactMediaResponse struct {
-	// Operation: Operation to be returned to the user.
-	Operation *Operation `json:"operation,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Operation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Operation") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadGooGetArtifactMediaResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadGooGetArtifactMediaResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadGooGetArtifactRequest: The request to upload an artifact.
-type UploadGooGetArtifactRequest struct {
-}
-
 // UploadYumArtifactMediaResponse: The response to upload an artifact.
 type UploadYumArtifactMediaResponse struct {
 	// Operation: Operation to be returned to the user.
@@ -1732,155 +1608,6 @@ func (s *Version) MarshalJSON() ([]byte, error) {
 	type NoMethod Version
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// method id "artifactregistry.operations.get":
-
-type OperationsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
-//
-// - name: The name of the operation resource.
-func (r *OperationsService) Get(name string) *OperationsGetCall {
-	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OperationsGetCall) IfNoneMatch(entityTag string) *OperationsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OperationsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "artifactregistry.operations.get" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "artifactregistry.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
 
 // method id "artifactregistry.projects.getProjectSettings":
@@ -2182,6 +1909,155 @@ func (c *ProjectsUpdateProjectSettingsCall) Do(opts ...googleapi.CallOption) (*P
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "artifactregistry.projects.locations.operations.get":
+
+type ProjectsLocationsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
+	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "artifactregistry.projects.locations.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -4314,7 +4190,8 @@ type ProjectsLocationsRepositoriesFilesListCall struct {
 
 // List: Lists files.
 //
-// - parent: The name of the parent resource whose files will be listed.
+// - parent: The name of the repository whose files will be listed. For
+//   example: "projects/p1/locations/us-central1/repositories/repo1.
 func (r *ProjectsLocationsRepositoriesFilesService) List(parent string) *ProjectsLocationsRepositoriesFilesListCall {
 	c := &ProjectsLocationsRepositoriesFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4332,6 +4209,13 @@ func (r *ProjectsLocationsRepositoriesFilesService) List(parent string) *Project
 // `pkg1`.
 func (c *ProjectsLocationsRepositoriesFilesListCall) Filter(filter string) *ProjectsLocationsRepositoriesFilesListCall {
 	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The field to order the
+// results by.
+func (c *ProjectsLocationsRepositoriesFilesListCall) OrderBy(orderBy string) *ProjectsLocationsRepositoriesFilesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
@@ -4461,6 +4345,11 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Do(opts ...googleapi.CallOp
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "orderBy": {
+	//       "description": "The field to order the results by.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of files to return.",
 	//       "format": "int32",
@@ -4473,7 +4362,7 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the parent resource whose files will be listed.",
+	//       "description": "The name of the repository whose files will be listed. For example: \"projects/p1/locations/us-central1/repositories/repo1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -4511,379 +4400,6 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Pages(ctx context.Context, 
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "artifactregistry.projects.locations.repositories.gooGetArtifacts.import":
-
-type ProjectsLocationsRepositoriesGooGetArtifactsImportCall struct {
-	s                            *Service
-	parent                       string
-	importgoogetartifactsrequest *ImportGooGetArtifactsRequest
-	urlParams_                   gensupport.URLParams
-	ctx_                         context.Context
-	header_                      http.Header
-}
-
-// Import: Imports GooGet artifacts. The returned Operation will
-// complete once the resources are imported. Package, Version, and File
-// resources are created based on the imported artifacts. Imported
-// artifacts that conflict with existing resources are ignored.
-//
-// - parent: The name of the parent resource where the artifacts will be
-//   imported.
-func (r *ProjectsLocationsRepositoriesGooGetArtifactsService) Import(parent string, importgoogetartifactsrequest *ImportGooGetArtifactsRequest) *ProjectsLocationsRepositoriesGooGetArtifactsImportCall {
-	c := &ProjectsLocationsRepositoriesGooGetArtifactsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.importgoogetartifactsrequest = importgoogetartifactsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsRepositoriesGooGetArtifactsImportCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesGooGetArtifactsImportCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsRepositoriesGooGetArtifactsImportCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesGooGetArtifactsImportCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsRepositoriesGooGetArtifactsImportCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsRepositoriesGooGetArtifactsImportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importgoogetartifactsrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/gooGetArtifacts:import")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "artifactregistry.projects.locations.repositories.gooGetArtifacts.import" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesGooGetArtifactsImportCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Imports GooGet artifacts. The returned Operation will complete once the resources are imported. Package, Version, and File resources are created based on the imported artifacts. Imported artifacts that conflict with existing resources are ignored.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/gooGetArtifacts:import",
-	//   "httpMethod": "POST",
-	//   "id": "artifactregistry.projects.locations.repositories.gooGetArtifacts.import",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "The name of the parent resource where the artifacts will be imported.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/gooGetArtifacts:import",
-	//   "request": {
-	//     "$ref": "ImportGooGetArtifactsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "artifactregistry.projects.locations.repositories.googetArtifacts.upload":
-
-type ProjectsLocationsRepositoriesGoogetArtifactsUploadCall struct {
-	s                           *Service
-	parent                      string
-	uploadgoogetartifactrequest *UploadGooGetArtifactRequest
-	urlParams_                  gensupport.URLParams
-	mediaInfo_                  *gensupport.MediaInfo
-	ctx_                        context.Context
-	header_                     http.Header
-}
-
-// Upload: Directly uploads a GooGet artifact. The returned Operation
-// will complete once the resources are uploaded. Package, Version, and
-// File resources are created based on the imported artifact. Imported
-// artifacts that conflict with existing resources are ignored.
-//
-// - parent: The name of the parent resource where the artifacts will be
-//   uploaded.
-func (r *ProjectsLocationsRepositoriesGoogetArtifactsService) Upload(parent string, uploadgoogetartifactrequest *UploadGooGetArtifactRequest) *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall {
-	c := &ProjectsLocationsRepositoriesGoogetArtifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.uploadgoogetartifactrequest = uploadgoogetartifactrequest
-	return c
-}
-
-// Media specifies the media to upload in one or more chunks. The chunk
-// size may be controlled by supplying a MediaOption generated by
-// googleapi.ChunkSize. The chunk size defaults to
-// googleapi.DefaultUploadChunkSize.The Content-Type header used in the
-// upload request will be determined by sniffing the contents of r,
-// unless a MediaOption generated by googleapi.ContentType is
-// supplied.
-// At most one of Media and ResumableMedia may be set.
-func (c *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall {
-	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
-	return c
-}
-
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx.
-//
-// Deprecated: use Media instead.
-//
-// At most one of Media and ResumableMedia may be set. mediaType
-// identifies the MIME media type of the upload, such as "image/png". If
-// mediaType is "", it will be auto-detected. The provided ctx will
-// supersede any context previously provided to the Context method.
-func (c *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall {
-	c.ctx_ = ctx
-	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
-func (c *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall {
-	c.mediaInfo_.SetProgressUpdater(pu)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-// This context will supersede any context previously provided to the
-// ResumableMedia method.
-func (c *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uploadgoogetartifactrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/googetArtifacts:create")
-	if c.mediaInfo_ != nil {
-		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/v1/{+parent}/googetArtifacts:create")
-		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
-	}
-	if body == nil {
-		body = new(bytes.Buffer)
-		reqHeaders.Set("Content-Type", "application/json")
-	}
-	body, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
-	defer cleanup()
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	req.GetBody = getBody
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "artifactregistry.projects.locations.repositories.googetArtifacts.upload" call.
-// Exactly one of *UploadGooGetArtifactMediaResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *UploadGooGetArtifactMediaResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsRepositoriesGoogetArtifactsUploadCall) Do(opts ...googleapi.CallOption) (*UploadGooGetArtifactMediaResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
-	if rx != nil {
-		rx.Client = c.s.client
-		rx.UserAgent = c.s.userAgent()
-		ctx := c.ctx_
-		if ctx == nil {
-			ctx = context.TODO()
-		}
-		res, err = rx.Upload(ctx)
-		if err != nil {
-			return nil, err
-		}
-		defer res.Body.Close()
-		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
-		}
-	}
-	ret := &UploadGooGetArtifactMediaResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Directly uploads a GooGet artifact. The returned Operation will complete once the resources are uploaded. Package, Version, and File resources are created based on the imported artifact. Imported artifacts that conflict with existing resources are ignored.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/googetArtifacts:create",
-	//   "httpMethod": "POST",
-	//   "id": "artifactregistry.projects.locations.repositories.googetArtifacts.upload",
-	//   "mediaUpload": {
-	//     "accept": [
-	//       "*/*"
-	//     ],
-	//     "protocols": {
-	//       "simple": {
-	//         "multipart": true,
-	//         "path": "/upload/v1/{+parent}/googetArtifacts:create"
-	//       }
-	//     }
-	//   },
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "The name of the parent resource where the artifacts will be uploaded.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/googetArtifacts:create",
-	//   "request": {
-	//     "$ref": "UploadGooGetArtifactRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "UploadGooGetArtifactMediaResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ],
-	//   "supportsMediaUpload": true
-	// }
-
 }
 
 // method id "artifactregistry.projects.locations.repositories.packages.delete":

@@ -1995,12 +1995,17 @@ type JobQuery struct {
 	// company filters are allowed.
 	Companies []string `json:"companies,omitempty"`
 
-	// CompanyDisplayNames: This filter specifies the exact company
-	// Company.display_name of the jobs to search against. If a value isn't
-	// specified, jobs within the search results are associated with any
-	// company. If multiple values are specified, jobs within the search
-	// results may be associated with any of the specified companies. At
-	// most 20 company display name filters are allowed.
+	// CompanyDisplayNames: This filter specifies the company
+	// Company.display_name of the jobs to search against. The company name
+	// must match the value exactly. Alternatively, if the value being
+	// searched for is wrapped in SUBSTRING_MATCH([value]), the company name
+	// must contain a case insensitive substring match of the value. Using
+	// this function may increase latency. Sample Value:
+	// SUBSTRING_MATCH(google) If a value isn't specified, jobs within the
+	// search results are associated with any company. If multiple values
+	// are specified, jobs within the search results may be associated with
+	// any of the specified companies. At most 20 company display name
+	// filters are allowed.
 	CompanyDisplayNames []string `json:"companyDisplayNames,omitempty"`
 
 	// CompensationFilter: This search filter is applied only to
@@ -2948,8 +2953,8 @@ type PostalAddress struct {
 
 	// RegionCode: Required. CLDR region code of the country/region of the
 	// address. This is never inferred and it is up to the user to ensure
-	// the value is correct. See http://cldr.unicode.org/ and
-	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// the value is correct. See https://cldr.unicode.org/ and
+	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
 	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 
@@ -3208,18 +3213,19 @@ type SearchJobsRequest struct {
 	// calls are: * `count(string_histogram_facet)`: Count the number of
 	// matching entities, for each distinct attribute value. *
 	// `count(numeric_histogram_facet, list of buckets)`: Count the number
-	// of matching entities within each bucket. Data types: * Histogram
-	// facet: facet names with format `a-zA-Z+`. * String: string like "any
-	// string with backslash escape for quote(\")." * Number: whole number
-	// and floating point number like 10, -1 and -0.01. * List: list of
-	// elements with comma(,) separator surrounded by square brackets, for
-	// example, [1, 2, 3] and ["one", "two", "three"]. Built-in constants: *
-	// MIN (minimum number similar to java Double.MIN_VALUE) * MAX (maximum
-	// number similar to java Double.MAX_VALUE) Built-in functions: *
-	// bucket(start, end[, label]): bucket built-in function creates a
-	// bucket with range of start, end). Note that the end is exclusive, for
-	// example, bucket(1, MAX, "positive number") or bucket(1, 10). Job
-	// histogram facets: * company_display_name: histogram by
+	// of matching entities within each bucket. A maximum of 200 histogram
+	// buckets are supported. Data types: * Histogram facet: facet names
+	// with format `a-zA-Z+`. * String: string like "any string with
+	// backslash escape for quote(\")." * Number: whole number and floating
+	// point number like 10, -1 and -0.01. * List: list of elements with
+	// comma(,) separator surrounded by square brackets, for example, [1, 2,
+	// 3] and ["one", "two", "three"]. Built-in constants: * MIN (minimum
+	// number similar to java Double.MIN_VALUE) * MAX (maximum number
+	// similar to java Double.MAX_VALUE) Built-in functions: * bucket(start,
+	// end[, label]): bucket built-in function creates a bucket with range
+	// of start, end). Note that the end is exclusive, for example,
+	// bucket(1, MAX, "positive number") or bucket(1, 10). Job histogram
+	// facets: * company_display_name: histogram by
 	// [Job.company_display_name. * employment_type: histogram by
 	// Job.employment_types, for example, "FULL_TIME", "PART_TIME". *
 	// company_size: histogram by CompanySize, for example, "SMALL",

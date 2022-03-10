@@ -423,7 +423,7 @@ func (s *CallFunctionResponse) MarshalJSON() ([]byte, error) {
 
 // CloudFunction: Describes a Cloud Function that contains user
 // computation executed in response to an event. It encapsulate function
-// and triggers configurations. Next tag: 36
+// and triggers configurations.
 type CloudFunction struct {
 	// AvailableMemoryMb: The amount of memory in MB available for a
 	// function. Defaults to 256MB.
@@ -1707,9 +1707,7 @@ type Retry struct {
 
 // SecretEnvVar: Configuration for a secret environment variable. It has
 // the information necessary to fetch the secret value from secret
-// manager and expose it as an environment variable. Secret value is not
-// a part of the configuration. Secret values are only fetched when a
-// new clone starts.
+// manager and expose it as an environment variable.
 type SecretEnvVar struct {
 	// Key: Name of the environment variable.
 	Key string `json:"key,omitempty"`
@@ -1727,7 +1725,7 @@ type SecretEnvVar struct {
 	// Version: Version of the secret (version number or the string
 	// 'latest'). It is recommended to use a numeric version for secret
 	// environment variables as any updates to the secret value is not
-	// reflected until new clones start.
+	// reflected until new instances start.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to

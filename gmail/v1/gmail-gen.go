@@ -1690,10 +1690,12 @@ func (s *MessagePartHeader) MarshalJSON() ([]byte, error) {
 }
 
 type ModifyMessageRequest struct {
-	// AddLabelIds: A list of IDs of labels to add to this message.
+	// AddLabelIds: A list of IDs of labels to add to this message. You can
+	// add up to 100 labels with each update.
 	AddLabelIds []string `json:"addLabelIds,omitempty"`
 
-	// RemoveLabelIds: A list IDs of labels to remove from this message.
+	// RemoveLabelIds: A list IDs of labels to remove from this message. You
+	// can remove up to 100 labels with each update.
 	RemoveLabelIds []string `json:"removeLabelIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AddLabelIds") to
@@ -1720,10 +1722,12 @@ func (s *ModifyMessageRequest) MarshalJSON() ([]byte, error) {
 }
 
 type ModifyThreadRequest struct {
-	// AddLabelIds: A list of IDs of labels to add to this thread.
+	// AddLabelIds: A list of IDs of labels to add to this thread. You can
+	// add up to 100 labels with each update.
 	AddLabelIds []string `json:"addLabelIds,omitempty"`
 
 	// RemoveLabelIds: A list of IDs of labels to remove from this thread.
+	// You can remove up to 100 labels with each update.
 	RemoveLabelIds []string `json:"removeLabelIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AddLabelIds") to
@@ -12301,8 +12305,9 @@ type UsersThreadsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Immediately and permanently deletes the specified thread.
-// This operation cannot be undone. Prefer `threads.trash` instead.
+// Delete: Immediately and permanently deletes the specified thread. Any
+// messages that belong to the thread are also deleted. This operation
+// cannot be undone. Prefer `threads.trash` instead.
 //
 // - id: ID of the Thread to delete.
 // - userId: The user's email address. The special value `me` can be
@@ -12376,7 +12381,7 @@ func (c *UsersThreadsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Immediately and permanently deletes the specified thread. This operation cannot be undone. Prefer `threads.trash` instead.",
+	//   "description": "Immediately and permanently deletes the specified thread. Any messages that belong to the thread are also deleted. This operation cannot be undone. Prefer `threads.trash` instead.",
 	//   "flatPath": "gmail/v1/users/{userId}/threads/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "gmail.users.threads.delete",
@@ -13023,7 +13028,8 @@ type UsersThreadsTrashCall struct {
 	header_    http.Header
 }
 
-// Trash: Moves the specified thread to the trash.
+// Trash: Moves the specified thread to the trash. Any messages that
+// belong to the thread are also moved to the trash.
 //
 // - id: The ID of the thread to Trash.
 // - userId: The user's email address. The special value `me` can be
@@ -13122,7 +13128,7 @@ func (c *UsersThreadsTrashCall) Do(opts ...googleapi.CallOption) (*Thread, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Moves the specified thread to the trash.",
+	//   "description": "Moves the specified thread to the trash. Any messages that belong to the thread are also moved to the trash.",
 	//   "flatPath": "gmail/v1/users/{userId}/threads/{id}/trash",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.threads.trash",
@@ -13168,7 +13174,8 @@ type UsersThreadsUntrashCall struct {
 	header_    http.Header
 }
 
-// Untrash: Removes the specified thread from the trash.
+// Untrash: Removes the specified thread from the trash. Any messages
+// that belong to the thread are also removed from the trash.
 //
 // - id: The ID of the thread to remove from Trash.
 // - userId: The user's email address. The special value `me` can be
@@ -13267,7 +13274,7 @@ func (c *UsersThreadsUntrashCall) Do(opts ...googleapi.CallOption) (*Thread, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes the specified thread from the trash.",
+	//   "description": "Removes the specified thread from the trash. Any messages that belong to the thread are also removed from the trash.",
 	//   "flatPath": "gmail/v1/users/{userId}/threads/{id}/untrash",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.threads.untrash",

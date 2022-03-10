@@ -2819,13 +2819,13 @@ func (s *GoogleCloudChannelV1StartPaidServiceRequest) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudChannelV1SubscriberEvent: Represents information which
-// resellers will get as part of notification from Cloud Pub/Sub.
+// resellers will get as part of notification from Pub/Sub.
 type GoogleCloudChannelV1SubscriberEvent struct {
-	// CustomerEvent: Customer event send as part of Pub/Sub event to
+	// CustomerEvent: Customer event sent as part of Pub/Sub event to
 	// partners.
 	CustomerEvent *GoogleCloudChannelV1CustomerEvent `json:"customerEvent,omitempty"`
 
-	// EntitlementEvent: Entitlement event send as part of Pub/Sub event to
+	// EntitlementEvent: Entitlement event sent as part of Pub/Sub event to
 	// partners.
 	EntitlementEvent *GoogleCloudChannelV1EntitlementEvent `json:"entitlementEvent,omitempty"`
 
@@ -3845,13 +3845,13 @@ func (s *GoogleCloudChannelV1alpha1RenewalSettings) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudChannelV1alpha1SubscriberEvent: Represents information
-// which resellers will get as part of notification from Cloud Pub/Sub.
+// which resellers will get as part of notification from Pub/Sub.
 type GoogleCloudChannelV1alpha1SubscriberEvent struct {
-	// CustomerEvent: Customer event send as part of Pub/Sub event to
+	// CustomerEvent: Customer event sent as part of Pub/Sub event to
 	// partners.
 	CustomerEvent *GoogleCloudChannelV1alpha1CustomerEvent `json:"customerEvent,omitempty"`
 
-	// EntitlementEvent: Entitlement event send as part of Pub/Sub event to
+	// EntitlementEvent: Entitlement event sent as part of Pub/Sub event to
 	// partners.
 	EntitlementEvent *GoogleCloudChannelV1alpha1EntitlementEvent `json:"entitlementEvent,omitempty"`
 
@@ -4274,8 +4274,8 @@ type GoogleTypePostalAddress struct {
 
 	// RegionCode: Required. CLDR region code of the country/region of the
 	// address. This is never inferred and it is up to the user to ensure
-	// the value is correct. See http://cldr.unicode.org/ and
-	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// the value is correct. See https://cldr.unicode.org/ and
+	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
 	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 
@@ -6701,6 +6701,15 @@ func (r *AccountsChannelPartnerLinksCustomersService) List(parent string) *Accou
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filters applied to the
+// [CloudChannelService.ListCustomers] results. See
+// https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers
+// for more information.
+func (c *AccountsChannelPartnerLinksCustomersListCall) Filter(filter string) *AccountsChannelPartnerLinksCustomersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of customers to return. The service may return fewer than this value.
 // If unspecified, returns at most 10 customers. The maximum value is
@@ -6828,6 +6837,11 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) Do(opts ...googleapi.Call
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filters applied to the [CloudChannelService.ListCustomers] results. See https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers for more information.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
 	//       "format": "int32",
@@ -7657,6 +7671,15 @@ func (r *AccountsCustomersService) List(parent string) *AccountsCustomersListCal
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filters applied to the
+// [CloudChannelService.ListCustomers] results. See
+// https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers
+// for more information.
+func (c *AccountsCustomersListCall) Filter(filter string) *AccountsCustomersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of customers to return. The service may return fewer than this value.
 // If unspecified, returns at most 10 customers. The maximum value is
@@ -7784,6 +7807,11 @@ func (c *AccountsCustomersListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filters applied to the [CloudChannelService.ListCustomers] results. See https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers for more information.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
 	//       "format": "int32",

@@ -1172,12 +1172,12 @@ func (s *AdvertiserTargetingConfig) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_AGE_RANGE`.
 type AgeRangeAssignedTargetingOptionDetails struct {
-	// AgeRange: Output only. The age range of an audience. We only support
-	// targeting a continuous age range of an audience. Thus, the age range
-	// represented in this field can be 1) targeted solely, or, 2) part of a
-	// larger continuous age range. The reach of a continuous age range
-	// targeting can be expanded by also targeting an audience of an unknown
-	// age.
+	// AgeRange: The age range of an audience. We only support targeting a
+	// continuous age range of an audience. Thus, the age range represented
+	// in this field can be 1) targeted solely, or, 2) part of a larger
+	// continuous age range. The reach of a continuous age range targeting
+	// can be expanded by also targeting an audience of an unknown age.
+	// Output only in v1. Required in v2.
 	//
 	// Possible values:
 	//   "AGE_RANGE_UNSPECIFIED" - Default value when age range is not
@@ -2174,7 +2174,8 @@ func (s *AudienceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, err
 // is not supported. Remove all audio content type targeting options to
 // achieve this effect.
 type AudioContentTypeAssignedTargetingOptionDetails struct {
-	// AudioContentType: Output only. The audio content type.
+	// AudioContentType: The audio content type. Output only in v1. Required
+	// in v2.
 	//
 	// Possible values:
 	//   "AUDIO_CONTENT_TYPE_UNSPECIFIED" - Audio content type is not
@@ -4400,8 +4401,8 @@ type ContentInstreamPositionAssignedTargetingOptionDetails struct {
 	// audio content.
 	AdType string `json:"adType,omitempty"`
 
-	// ContentInstreamPosition: Output only. The content instream position
-	// for video or audio ads.
+	// ContentInstreamPosition: The content instream position for video or
+	// audio ads. Output only in v1. Required in v2.
 	//
 	// Possible values:
 	//   "CONTENT_INSTREAM_POSITION_UNSPECIFIED" - Content instream position
@@ -4514,8 +4515,8 @@ type ContentOutstreamPositionAssignedTargetingOptionDetails struct {
 	// audio content.
 	AdType string `json:"adType,omitempty"`
 
-	// ContentOutstreamPosition: Output only. The content outstream
-	// position.
+	// ContentOutstreamPosition: The content outstream position. Output only
+	// in v1. Required in v2.
 	//
 	// Possible values:
 	//   "CONTENT_OUTSTREAM_POSITION_UNSPECIFIED" - Content outstream
@@ -5408,7 +5409,8 @@ func (s *Creative) MarshalJSON() ([]byte, error) {
 // source.
 type CreativeConfig struct {
 	// CreativeType: The type of creative that can be assigned to the
-	// inventory source.
+	// inventory source. Only the following types are supported: *
+	// `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_VIDEO`
 	//
 	// Possible values:
 	//   "CREATIVE_TYPE_UNSPECIFIED" - Type value is not specified or is
@@ -5807,11 +5809,12 @@ func (s *CustomListTargetingSetting) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -6155,7 +6158,8 @@ func (s *DeviceMakeModelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_DEVICE_TYPE`.
 type DeviceTypeAssignedTargetingOptionDetails struct {
-	// DeviceType: Output only. The display name of the device type.
+	// DeviceType: The display name of the device type. Output only in v1.
+	// Required in v2.
 	//
 	// Possible values:
 	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
@@ -6843,7 +6847,8 @@ type Empty struct {
 // of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_ENVIRONMENT`.
 type EnvironmentAssignedTargetingOptionDetails struct {
-	// Environment: Output only. The serving environment.
+	// Environment: The serving environment. Output only in v1. Required in
+	// v2.
 	//
 	// Possible values:
 	//   "ENVIRONMENT_UNSPECIFIED" - Default value when environment is not
@@ -7758,9 +7763,9 @@ func (s *FloodlightGroup) MarshalJSON() ([]byte, error) {
 // FrequencyCap: Settings that control the number of times a user may be
 // shown with the same ad during a given time period.
 type FrequencyCap struct {
-	// MaxImpressions: The maximum number of times a user may be shown with
-	// the same ad during this period. Must be greater than 0. Required when
-	// unlimited is `false`.
+	// MaxImpressions: The maximum number of times a user may be shown the
+	// same ad during this period. Must be greater than 0. Required when
+	// unlimited is `false` and max_views is not set.
 	MaxImpressions int64 `json:"maxImpressions,omitempty"`
 
 	// TimeUnit: The time unit in which the frequency cap will be applied.
@@ -7826,7 +7831,8 @@ func (s *FrequencyCap) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARTGETING_TYPE_GENDER`.
 type GenderAssignedTargetingOptionDetails struct {
-	// Gender: Output only. The gender of the audience.
+	// Gender: The gender of the audience. Output only in v1. Required in
+	// v2.
 	//
 	// Possible values:
 	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified
@@ -9675,8 +9681,9 @@ type LineItem struct {
 	// Flight: Required. The start and end time of the line item's flight.
 	Flight *LineItemFlight `json:"flight,omitempty"`
 
-	// FrequencyCap: Required. The frequency capping setting of the line
-	// item.
+	// FrequencyCap: Required. The impression frequency cap settings of the
+	// line item. The max_impressions field in this settings object must be
+	// used if assigning a limited cap.
 	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
 
 	// InsertionOrderId: Required. Immutable. The unique ID of the insertion
@@ -11358,6 +11365,10 @@ type MaximizeSpendBidStrategy struct {
 	// impressions.
 	PerformanceGoalType string `json:"performanceGoalType,omitempty"`
 
+	// RaiseBidForDeals: Controls whether the strategy takes deal floor
+	// prices into account.
+	RaiseBidForDeals bool `json:"raiseBidForDeals,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "CustomBiddingAlgorithmId") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -11541,7 +11552,8 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // Explicitly targeting all options is not supported. Remove all native
 // content position targeting options to achieve this effect.
 type NativeContentPositionAssignedTargetingOptionDetails struct {
-	// ContentPosition: Output only. The content position.
+	// ContentPosition: The content position. Output only in v1. Required in
+	// v2.
 	//
 	// Possible values:
 	//   "NATIVE_CONTENT_POSITION_UNSPECIFIED" - Native content position is
@@ -11839,7 +11851,8 @@ func (s *ObaIcon) MarshalJSON() ([]byte, error) {
 // details field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_OMID`.
 type OmidAssignedTargetingOptionDetails struct {
-	// Omid: Output only. The type of Open Measurement enabled inventory.
+	// Omid: The type of Open Measurement enabled inventory. Output only in
+	// v1. Required in v2.
 	//
 	// Possible values:
 	//   "OMID_UNSPECIFIED" - Default value when omid targeting is not
@@ -13837,8 +13850,8 @@ type SensitiveCategoryAssignedTargetingOptionDetails struct {
 	// be EXCLUDED.
 	ExcludedTargetingOptionId string `json:"excludedTargetingOptionId,omitempty"`
 
-	// SensitiveCategory: Output only. An enum for the DV360 Sensitive
-	// category content classifier.
+	// SensitiveCategory: An enum for the DV360 Sensitive category content
+	// classifier. Output only in v1. Required in v2.
 	//
 	// Possible values:
 	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - This enum is only a placeholder
@@ -14976,7 +14989,8 @@ type VideoPlayerSizeAssignedTargetingOptionDetails struct {
 	// targeting_type is `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
-	// VideoPlayerSize: Output only. The video player size.
+	// VideoPlayerSize: The video player size. Output only in v1. Required
+	// in v2.
 	//
 	// Possible values:
 	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not
@@ -15076,7 +15090,8 @@ type ViewabilityAssignedTargetingOptionDetails struct {
 	// for targeting the `VIEWABILITY_10_PERCENT_OR_MORE` option).
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
-	// Viewability: Output only. The predicted viewability percentage.
+	// Viewability: The predicted viewability percentage. Output only in v1.
+	// Required in v2.
 	//
 	// Possible values:
 	//   "VIEWABILITY_UNSPECIFIED" - Default value when viewability is not
@@ -34236,7 +34251,9 @@ func (c *FirstAndThirdPartyAudiencesPatchCall) AdvertiserId(advertiserId int64) 
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// mask to control which fields to update.
+// mask to control which fields to update. Updates are only supported
+// for the following fields: * `displayName` * `description` *
+// `membershipDurationDays`
 func (c *FirstAndThirdPartyAudiencesPatchCall) UpdateMask(updateMask string) *FirstAndThirdPartyAudiencesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -34356,7 +34373,7 @@ func (c *FirstAndThirdPartyAudiencesPatchCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The mask to control which fields to update.",
+	//       "description": "Required. The mask to control which fields to update. Updates are only supported for the following fields: * `displayName` * `description` * `membershipDurationDays`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

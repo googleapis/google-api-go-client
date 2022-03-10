@@ -745,11 +745,12 @@ type ClearLocationAssociationRequest struct {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -1184,15 +1185,17 @@ type Location struct {
 	// can use to get in touch with the business.
 	PhoneNumbers *PhoneNumbers `json:"phoneNumbers,omitempty"`
 
-	// Profile: Required. Describes your business in your own voice and
+	// Profile: Optional. Describes your business in your own voice and
 	// shares with users the unique story of your business and offerings.
+	// This field is required for all categories except lodging categories
+	// (e.g. hotels, motels, inns).
 	Profile *Profile `json:"profile,omitempty"`
 
 	// RegularHours: Optional. Operating hours for the business.
 	RegularHours *BusinessHours `json:"regularHours,omitempty"`
 
-	// RelationshipData: Output only. All locations and chain related to
-	// this one.
+	// RelationshipData: Optional. All locations and chain related to this
+	// one.
 	RelationshipData *RelationshipData `json:"relationshipData,omitempty"`
 
 	// ServiceArea: Optional. Service area businesses provide their service
@@ -1316,6 +1319,12 @@ type Metadata struct {
 	// HasPendingEdits: Output only. Indicates whether any of this
 	// Location's properties are in the edit pending state.
 	HasPendingEdits bool `json:"hasPendingEdits,omitempty"`
+
+	// HasVoiceOfMerchant: Output only. Indicates if the listing has Voice
+	// of Merchant. If this boolean is false, you should call the
+	// locations.getVoiceOfMerchantState API to get details as to why they
+	// do not have Voice of Merchant.
+	HasVoiceOfMerchant bool `json:"hasVoiceOfMerchant,omitempty"`
 
 	// MapsUri: Output only. A link to the location on Maps.
 	MapsUri string `json:"mapsUri,omitempty"`
@@ -1695,8 +1704,8 @@ type PostalAddress struct {
 
 	// RegionCode: Required. CLDR region code of the country/region of the
 	// address. This is never inferred and it is up to the user to ensure
-	// the value is correct. See http://cldr.unicode.org/ and
-	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// the value is correct. See https://cldr.unicode.org/ and
+	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
 	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 

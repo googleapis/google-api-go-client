@@ -2676,8 +2676,7 @@ func (s *IntegerMean) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Job: Defines a job to be run by the Cloud Dataflow service. nextID:
-// 26
+// Job: Defines a job to be run by the Cloud Dataflow service.
 type Job struct {
 	// ClientRequestId: The client's unique identifier of the job, re-used
 	// across retried attempts. If this field is set, the service will
@@ -3762,6 +3761,10 @@ func (s *MapTask) MarshalJSON() ([]byte, error) {
 type MemInfo struct {
 	// CurrentLimitBytes: Instantenous memory limit in bytes.
 	CurrentLimitBytes uint64 `json:"currentLimitBytes,omitempty,string"`
+
+	// CurrentOoms: Number of Out of Memory (OOM) events recorded since the
+	// previous measurement.
+	CurrentOoms int64 `json:"currentOoms,omitempty,string"`
 
 	// CurrentRssBytes: Instantenous memory (RSS) size in bytes.
 	CurrentRssBytes uint64 `json:"currentRssBytes,omitempty,string"`
@@ -5078,6 +5081,11 @@ func (s *SDKInfo) MarshalJSON() ([]byte, error) {
 // SdkHarnessContainerImage: Defines a SDK harness container for
 // executing Dataflow pipelines.
 type SdkHarnessContainerImage struct {
+	// Capabilities: The set of capabilities enumerated in the above
+	// Environment proto. See also
+	// https://github.com/apache/beam/blob/master/model/pipeline/src/main/proto/beam_runner_api.proto
+	Capabilities []string `json:"capabilities,omitempty"`
+
 	// ContainerImage: A docker container image that resides in Google
 	// Container Registry.
 	ContainerImage string `json:"containerImage,omitempty"`
@@ -5093,7 +5101,7 @@ type SdkHarnessContainerImage struct {
 	// service may choose to override this property if needed.
 	UseSingleCorePerContainer bool `json:"useSingleCorePerContainer,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ContainerImage") to
+	// ForceSendFields is a list of field names (e.g. "Capabilities") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5101,13 +5109,12 @@ type SdkHarnessContainerImage struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ContainerImage") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Capabilities") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5164,6 +5171,7 @@ func (s *SdkVersion) MarshalJSON() ([]byte, error) {
 }
 
 // SendDebugCaptureRequest: Request to send encoded debug information.
+// Next ID: 8
 type SendDebugCaptureRequest struct {
 	// ComponentId: The internal component id for which debug information is
 	// sent.
@@ -5171,6 +5179,18 @@ type SendDebugCaptureRequest struct {
 
 	// Data: The encoded debug information.
 	Data string `json:"data,omitempty"`
+
+	// DataFormat: Format for the data field above (id=5).
+	//
+	// Possible values:
+	//   "DATA_FORMAT_UNSPECIFIED" - Format unspecified, parsing is
+	// determined based upon page type and legacy encoding.
+	// (go/protodosdonts#do-include-an-unspecified-value-in-an-enum)
+	//   "RAW" - Raw HTML string.
+	//   "JSON" - JSON-encoded string.
+	//   "ZLIB" - Websafe encoded zlib-compressed string.
+	//   "BROTLI" - Websafe encoded brotli-compressed string.
+	DataFormat string `json:"dataFormat,omitempty"`
 
 	// Location: The [regional endpoint]
 	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)

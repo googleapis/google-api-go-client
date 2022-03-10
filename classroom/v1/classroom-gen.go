@@ -1249,11 +1249,12 @@ func (s *CourseWorkMaterial) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -3244,14 +3245,16 @@ type CoursesCreateCall struct {
 }
 
 // Create: Creates a course. The user specified in `ownerId` is the
-// owner of the created course and added as a teacher. This method
-// returns the following error codes: * `PERMISSION_DENIED` if the
-// requesting user is not permitted to create courses or for access
-// errors. * `NOT_FOUND` if the primary teacher is not a valid user. *
-// `FAILED_PRECONDITION` if the course owner's account is disabled or
-// for the following request errors: * UserGroupsMembershipLimitReached
-// * `ALREADY_EXISTS` if an alias was specified in the `id` and already
-// exists.
+// owner of the created course and added as a teacher. A non-admin
+// requesting user can only create a course with themselves as the
+// owner. Domain admins can create courses owned by any user within
+// their domain. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting user is not permitted to create
+// courses or for access errors. * `NOT_FOUND` if the primary teacher is
+// not a valid user. * `FAILED_PRECONDITION` if the course owner's
+// account is disabled or for the following request errors: *
+// UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if an alias was
+// specified in the `id` and already exists.
 func (r *CoursesService) Create(course *Course) *CoursesCreateCall {
 	c := &CoursesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.course = course
@@ -3346,7 +3349,7 @@ func (c *CoursesCreateCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a course. The user specified in `ownerId` is the owner of the created course and added as a teacher. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create courses or for access errors. * `NOT_FOUND` if the primary teacher is not a valid user. * `FAILED_PRECONDITION` if the course owner's account is disabled or for the following request errors: * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if an alias was specified in the `id` and already exists.",
+	//   "description": "Creates a course. The user specified in `ownerId` is the owner of the created course and added as a teacher. A non-admin requesting user can only create a course with themselves as the owner. Domain admins can create courses owned by any user within their domain. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create courses or for access errors. * `NOT_FOUND` if the primary teacher is not a valid user. * `FAILED_PRECONDITION` if the course owner's account is disabled or for the following request errors: * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if an alias was specified in the `id` and already exists.",
 	//   "flatPath": "v1/courses",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.create",
@@ -9885,15 +9888,20 @@ type CoursesTeachersCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a teacher of a course. This method returns the
-// following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to create teachers in this course or for access
-// errors. * `NOT_FOUND` if the requested course ID does not exist. *
-// `FAILED_PRECONDITION` if the requested user's account is disabled,
-// for the following request errors: * CourseMemberLimitReached *
-// CourseNotModifiable * CourseTeacherLimitReached *
-// UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is
-// already a teacher or student in the course.
+// Create: Creates a teacher of a course. Domain administrators are
+// permitted to directly add
+// (https://developers.google.com/classroom/guides/manage-users) users
+// within their domain as teachers to courses within their domain.
+// Non-admin users should send an Invitation instead. This method
+// returns the following error codes: * `PERMISSION_DENIED` if the
+// requesting user is not permitted to create teachers in this course or
+// for access errors. * `NOT_FOUND` if the requested course ID does not
+// exist. * `FAILED_PRECONDITION` if the requested user's account is
+// disabled, for the following request errors: *
+// CourseMemberLimitReached * CourseNotModifiable *
+// CourseTeacherLimitReached * UserGroupsMembershipLimitReached *
+// `ALREADY_EXISTS` if the user is already a teacher or student in the
+// course.
 //
 // - courseId: Identifier of the course. This identifier can be either
 //   the Classroom-assigned identifier or an alias.
@@ -9995,7 +10003,7 @@ func (c *CoursesTeachersCreateCall) Do(opts ...googleapi.CallOption) (*Teacher, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create teachers in this course or for access errors. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is already a teacher or student in the course.",
+	//   "description": "Creates a teacher of a course. Domain administrators are permitted to [directly add](https://developers.google.com/classroom/guides/manage-users) users within their domain as teachers to courses within their domain. Non-admin users should send an Invitation instead. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create teachers in this course or for access errors. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is already a teacher or student in the course.",
 	//   "flatPath": "v1/courses/{courseId}/teachers",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.teachers.create",

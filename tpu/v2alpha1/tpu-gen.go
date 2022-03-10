@@ -1043,33 +1043,29 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OperationMetadata: Represents the metadata of the long-running
-// operation.
+// OperationMetadata: Metadata describing an Operation
 type OperationMetadata struct {
-	// ApiVersion: Output only. API version used to start the operation.
+	// ApiVersion: API version.
 	ApiVersion string `json:"apiVersion,omitempty"`
 
-	// CancelRequested: Output only. Identifies whether the user has
-	// requested cancellation of the operation. Operations that have been
-	// cancelled successfully have Operation.error value with a
-	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	// CancelRequested: Specifies if cancellation was requested for the
+	// operation.
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 
-	// CreateTime: Output only. The time the operation was created.
+	// CreateTime: The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// EndTime: Output only. The time the operation finished running.
+	// EndTime: The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StatusDetail: Output only. Human-readable status of the operation, if
-	// any.
+	// StatusDetail: Human-readable status of the operation, if any.
 	StatusDetail string `json:"statusDetail,omitempty"`
 
-	// Target: Output only. Server-defined resource path for the target of
-	// the operation.
+	// Target: Target of the operation - for example
+	// projects/project-1/connectivityTests/test-1
 	Target string `json:"target,omitempty"`
 
-	// Verb: Output only. Name of the verb executed by the operation.
+	// Verb: Name of the verb executed by the operation.
 	Verb string `json:"verb,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
@@ -2210,6 +2206,13 @@ func (c *ProjectsLocationsNodesCreateCall) NodeId(nodeId string) *ProjectsLocati
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": Idempotent request
+// UUID.
+func (c *ProjectsLocationsNodesCreateCall) RequestId(requestId string) *ProjectsLocationsNodesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2320,6 +2323,11 @@ func (c *ProjectsLocationsNodesCreateCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Idempotent request UUID.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v2alpha1/{+parent}/nodes",
@@ -2352,6 +2360,13 @@ type ProjectsLocationsNodesDeleteCall struct {
 func (r *ProjectsLocationsNodesService) Delete(name string) *ProjectsLocationsNodesDeleteCall {
 	c := &ProjectsLocationsNodesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Idempotent request
+// UUID.
+func (c *ProjectsLocationsNodesDeleteCall) RequestId(requestId string) *ProjectsLocationsNodesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -2454,6 +2469,11 @@ func (c *ProjectsLocationsNodesDeleteCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/nodes/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Idempotent request UUID.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

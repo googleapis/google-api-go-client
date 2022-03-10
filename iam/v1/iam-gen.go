@@ -177,6 +177,7 @@ func NewLocationsWorkforcePoolsService(s *Service) *LocationsWorkforcePoolsServi
 	rs := &LocationsWorkforcePoolsService{s: s}
 	rs.Operations = NewLocationsWorkforcePoolsOperationsService(s)
 	rs.Providers = NewLocationsWorkforcePoolsProvidersService(s)
+	rs.Subjects = NewLocationsWorkforcePoolsSubjectsService(s)
 	return rs
 }
 
@@ -186,6 +187,8 @@ type LocationsWorkforcePoolsService struct {
 	Operations *LocationsWorkforcePoolsOperationsService
 
 	Providers *LocationsWorkforcePoolsProvidersService
+
+	Subjects *LocationsWorkforcePoolsSubjectsService
 }
 
 func NewLocationsWorkforcePoolsOperationsService(s *Service) *LocationsWorkforcePoolsOperationsService {
@@ -215,6 +218,27 @@ func NewLocationsWorkforcePoolsProvidersOperationsService(s *Service) *Locations
 }
 
 type LocationsWorkforcePoolsProvidersOperationsService struct {
+	s *Service
+}
+
+func NewLocationsWorkforcePoolsSubjectsService(s *Service) *LocationsWorkforcePoolsSubjectsService {
+	rs := &LocationsWorkforcePoolsSubjectsService{s: s}
+	rs.Operations = NewLocationsWorkforcePoolsSubjectsOperationsService(s)
+	return rs
+}
+
+type LocationsWorkforcePoolsSubjectsService struct {
+	s *Service
+
+	Operations *LocationsWorkforcePoolsSubjectsOperationsService
+}
+
+func NewLocationsWorkforcePoolsSubjectsOperationsService(s *Service) *LocationsWorkforcePoolsSubjectsOperationsService {
+	rs := &LocationsWorkforcePoolsSubjectsOperationsService{s: s}
+	return rs
+}
+
+type LocationsWorkforcePoolsSubjectsOperationsService struct {
 	s *Service
 }
 
@@ -304,6 +328,7 @@ type ProjectsLocationsWorkloadIdentityPoolsOperationsService struct {
 
 func NewProjectsLocationsWorkloadIdentityPoolsProvidersService(s *Service) *ProjectsLocationsWorkloadIdentityPoolsProvidersService {
 	rs := &ProjectsLocationsWorkloadIdentityPoolsProvidersService{s: s}
+	rs.Keys = NewProjectsLocationsWorkloadIdentityPoolsProvidersKeysService(s)
 	rs.Operations = NewProjectsLocationsWorkloadIdentityPoolsProvidersOperationsService(s)
 	return rs
 }
@@ -311,7 +336,30 @@ func NewProjectsLocationsWorkloadIdentityPoolsProvidersService(s *Service) *Proj
 type ProjectsLocationsWorkloadIdentityPoolsProvidersService struct {
 	s *Service
 
+	Keys *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysService
+
 	Operations *ProjectsLocationsWorkloadIdentityPoolsProvidersOperationsService
+}
+
+func NewProjectsLocationsWorkloadIdentityPoolsProvidersKeysService(s *Service) *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysService {
+	rs := &ProjectsLocationsWorkloadIdentityPoolsProvidersKeysService{s: s}
+	rs.Operations = NewProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsService(s)
+	return rs
+}
+
+type ProjectsLocationsWorkloadIdentityPoolsProvidersKeysService struct {
+	s *Service
+
+	Operations *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsService
+}
+
+func NewProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsService(s *Service) *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsService {
+	rs := &ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsWorkloadIdentityPoolsProvidersOperationsService(s *Service) *ProjectsLocationsWorkloadIdentityPoolsProvidersOperationsService {
@@ -2612,18 +2660,17 @@ type WorkloadIdentityPoolProvider struct {
 	// the Google Cloud IAM attribute to map to. The following keys are
 	// supported: * `google.subject`: The principal IAM is authenticating.
 	// You can reference this value in IAM bindings. This is also the
-	// subject that appears in Cloud Logging logs. Cannot exceed 127
-	// characters. * `google.groups`: Groups the external identity belongs
-	// to. You can grant groups access to resources using an IAM
-	// `principalSet` binding; access applies to all members of the group.
-	// You can also provide custom attributes by specifying
-	// `attribute.{custom_attribute}`, where `{custom_attribute}` is the
-	// name of the custom attribute to be mapped. You can define a maximum
-	// of 50 custom attributes. The maximum length of a mapped attribute key
-	// is 100 characters, and the key may only contain the characters
-	// [a-z0-9_]. You can reference these attributes in IAM policies to
-	// define fine-grained access for a workload to Google Cloud resources.
-	// For example: * `google.subject`:
+	// subject that appears in Cloud Logging logs. Cannot exceed 127 bytes.
+	// * `google.groups`: Groups the external identity belongs to. You can
+	// grant groups access to resources using an IAM `principalSet` binding;
+	// access applies to all members of the group. You can also provide
+	// custom attributes by specifying `attribute.{custom_attribute}`, where
+	// `{custom_attribute}` is the name of the custom attribute to be
+	// mapped. You can define a maximum of 50 custom attributes. The maximum
+	// length of a mapped attribute key is 100 characters, and the key may
+	// only contain the characters [a-z0-9_]. You can reference these
+	// attributes in IAM policies to define fine-grained access for a
+	// workload to Google Cloud resources. For example: * `google.subject`:
 	// `principal://iam.googleapis.com/projects/{project}/locations/{location
 	// }/workloadIdentityPools/{pool}/subject/{value}` * `google.groups`:
 	// `principalSet://iam.googleapis.com/projects/{project}/locations/{locat
@@ -3254,6 +3301,154 @@ func (c *LocationsWorkforcePoolsProvidersOperationsGetCall) Do(opts ...googleapi
 	//       "description": "The name of the operation resource.",
 	//       "location": "path",
 	//       "pattern": "^locations/[^/]+/workforcePools/[^/]+/providers/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "iam.locations.workforcePools.subjects.operations.get":
+
+type LocationsWorkforcePoolsSubjectsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *LocationsWorkforcePoolsSubjectsOperationsService) Get(name string) *LocationsWorkforcePoolsSubjectsOperationsGetCall {
+	c := &LocationsWorkforcePoolsSubjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsWorkforcePoolsSubjectsOperationsGetCall) Fields(s ...googleapi.Field) *LocationsWorkforcePoolsSubjectsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LocationsWorkforcePoolsSubjectsOperationsGetCall) IfNoneMatch(entityTag string) *LocationsWorkforcePoolsSubjectsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsWorkforcePoolsSubjectsOperationsGetCall) Context(ctx context.Context) *LocationsWorkforcePoolsSubjectsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsWorkforcePoolsSubjectsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsWorkforcePoolsSubjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iam.locations.workforcePools.subjects.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LocationsWorkforcePoolsSubjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1/locations/{locationsId}/workforcePools/{workforcePoolsId}/subjects/{subjectsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "iam.locations.workforcePools.subjects.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^locations/[^/]+/workforcePools/[^/]+/subjects/[^/]+/operations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -6570,6 +6765,154 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersUndeleteCall) Do(opts ..
 	//   "request": {
 	//     "$ref": "UndeleteWorkloadIdentityPoolProviderRequest"
 	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "iam.projects.locations.workloadIdentityPools.providers.keys.operations.get":
+
+type ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsService) Get(name string) *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsGetCall {
+	c := &ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iam.projects.locations.workloadIdentityPools.providers.keys.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersKeysOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workloadIdentityPools/{workloadIdentityPoolsId}/providers/{providersId}/keys/{keysId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "iam.projects.locations.workloadIdentityPools.providers.keys.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/workloadIdentityPools/[^/]+/providers/[^/]+/keys/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },

@@ -259,10 +259,44 @@ func (s *CompleteVerificationResponse) MarshalJSON() ([]byte, error) {
 
 // ComplyWithGuidelines: Indicates that the location fails to comply
 // with our guidelines
-// (https://support.google.com/business/answer/3038177). To fix this
-// issue, consult the Help Center Article
-// (https://support.google.com/business/answer/4569145).
+// (https://support.google.com/business/answer/3038177).
 type ComplyWithGuidelines struct {
+	// RecommendationReason: The reason why the location is being
+	// recommended to comply with guidelines.
+	//
+	// Possible values:
+	//   "RECOMMENDATION_REASON_UNSPECIFIED" - Not specified.
+	//   "BUSINESS_LOCATION_SUSPENDED" - The business location is suspended.
+	// To fix this issue, consult the [Help Center
+	// article](https://support.google.com/business/answer/4569145).
+	//   "BUSINESS_LOCATION_DISABLED" - The business location is disabled.
+	// To fix this issue, consult the [Help Center
+	// article](https://support.google.com/business/answer/9334246).
+	RecommendationReason string `json:"recommendationReason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RecommendationReason") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RecommendationReason") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComplyWithGuidelines) MarshalJSON() ([]byte, error) {
+	type NoMethod ComplyWithGuidelines
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // EmailVerificationData: Display data for verifications through email.
@@ -612,8 +646,8 @@ type PostalAddress struct {
 
 	// RegionCode: Required. CLDR region code of the country/region of the
 	// address. This is never inferred and it is up to the user to ensure
-	// the value is correct. See http://cldr.unicode.org/ and
-	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// the value is correct. See https://cldr.unicode.org/ and
+	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
 	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 

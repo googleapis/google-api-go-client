@@ -1873,11 +1873,12 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // a birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type GoogleTypeDate struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -3360,7 +3361,7 @@ func (c *CustomersTelemetryDevicesListCall) Filter(filter string) *CustomersTele
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// results to return. Maximum and default are 100.
+// results to return. Default value is 100. Maximum value is 200.
 func (c *CustomersTelemetryDevicesListCall) PageSize(pageSize int64) *CustomersTelemetryDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3495,7 +3496,7 @@ func (c *CustomersTelemetryDevicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Maximum number of results to return. Maximum and default are 100.",
+	//       "description": "Maximum number of results to return. Default value is 100. Maximum value is 200.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

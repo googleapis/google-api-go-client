@@ -1424,7 +1424,7 @@
       }
     }
   },
-  "revision": "20211231",
+  "revision": "20220301",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {
@@ -1705,7 +1705,7 @@
           "type": "string"
         },
         "serviceAccountEmail": {
-          "description": "[Service account email](https://cloud.google.com/iam/docs/service-accounts) to be used for generating the OIDC token. The caller (for CreateSubscription, UpdateSubscription, and ModifyPushConfig RPCs) must have the iam.serviceAccounts.actAs permission for the service account.",
+          "description": "[Service account email](https://cloud.google.com/iam/docs/service-accounts) to be used for generating the OIDC token. See [Setting up push authentication](/pubsub/docs/push#setting_up_for_push_authentication) for more details.",
           "type": "string"
         }
       },
@@ -1896,6 +1896,17 @@
           "description": "Required. Name of the schema. Format is `projects/{project}/schemas/{schema}`.",
           "type": "string"
         },
+        "revisionCreateTime": {
+          "description": "Output only. The timestamp that the revision was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "revisionId": {
+          "description": "Output only. Immutable. The revision ID of the schema.",
+          "readOnly": true,
+          "type": "string"
+        },
         "type": {
           "description": "The type of the schema definition.",
           "enum": [
@@ -2013,6 +2024,10 @@
         },
         "detached": {
           "description": "Indicates whether the subscription is detached from its topic. Detached subscriptions don't receive messages from their topic and don't retain any backlog. `Pull` and `StreamingPull` requests will return FAILED_PRECONDITION. If the subscription is a push subscription, pushes to the endpoint will not be made.",
+          "type": "boolean"
+        },
+        "enableExactlyOnceDelivery": {
+          "description": "If true, Pub/Sub provides the following guarantees for the delivery of a message with a given value of `message_id` on this subscription: * The message sent to a subscriber is guaranteed not to be resent before the message's acknowledgement deadline expires. * An acknowledged message will not be resent to a subscriber. Note that subscribers may still receive multiple copies of a message when `enable_exactly_once_delivery` is true if the message was published multiple times by a publisher client. These copies are considered distinct by Pub/Sub and have distinct `message_id` values.",
           "type": "boolean"
         },
         "enableMessageOrdering": {

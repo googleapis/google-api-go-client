@@ -225,7 +225,9 @@ type Assignment struct {
 
 	// Name: Output only. Name of the resource. E.g.:
 	// `projects/myproject/locations/US/reservations/team1-prod/assignments/1
-	// 23`.
+	// 23`. For the assignment id, it must only contain lower case
+	// alphanumeric characters or dashes and the max length is 64
+	// characters.
 	Name string `json:"name,omitempty"`
 
 	// State: Output only. State of the assignment.
@@ -324,8 +326,18 @@ type CapacityCommitment struct {
 	// reason of failure.
 	FailureStatus *Status `json:"failureStatus,omitempty"`
 
+	// MultiRegionAuxiliary: Applicable only for commitments located within
+	// one of the BigQuery multi-regions (US or EU). If set to true, this
+	// commitment is placed in the organization's secondary region which is
+	// designated for disaster recovery purposes. If false, this commitment
+	// is placed in the organization's default region.
+	MultiRegionAuxiliary bool `json:"multiRegionAuxiliary,omitempty"`
+
 	// Name: Output only. The resource name of the capacity commitment,
-	// e.g., `projects/myproject/locations/US/capacityCommitments/123`
+	// e.g., `projects/myproject/locations/US/capacityCommitments/123` For
+	// the commitment id, it must only contain lower case alphanumeric
+	// characters or dashes.It must start with a letter and must not end
+	// with a dash. Its maximum length is 64 characters.
 	Name string `json:"name,omitempty"`
 
 	// Plan: Capacity commitment commitment plan.
@@ -617,6 +629,13 @@ func (s *MoveAssignmentRequest) MarshalJSON() ([]byte, error) {
 // Reservation: A reservation is a mechanism used to guarantee slots to
 // users.
 type Reservation struct {
+	// Concurrency: Maximum number of queries that are allowed to run
+	// concurrently in this reservation. This is a soft limit due to
+	// asynchronous nature of the system and various optimizations for small
+	// queries. Default value is 0 which means that concurrency will be
+	// automatically set based on the reservation size.
+	Concurrency int64 `json:"concurrency,omitempty,string"`
+
 	// CreationTime: Output only. Creation time of the reservation.
 	CreationTime string `json:"creationTime,omitempty"`
 
@@ -627,8 +646,18 @@ type Reservation struct {
 	// slot_capacity field at most.
 	IgnoreIdleSlots bool `json:"ignoreIdleSlots,omitempty"`
 
+	// MultiRegionAuxiliary: Applicable only for reservations located within
+	// one of the BigQuery multi-regions (US or EU). If set to true, this
+	// reservation is placed in the organization's secondary region which is
+	// designated for disaster recovery purposes. If false, this reservation
+	// is placed in the organization's default region.
+	MultiRegionAuxiliary bool `json:"multiRegionAuxiliary,omitempty"`
+
 	// Name: The resource name of the reservation, e.g.,
-	// `projects/*/locations/*/reservations/team1-prod`.
+	// `projects/*/locations/*/reservations/team1-prod`. For the reservation
+	// id, it must only contain lower case alphanumeric characters or
+	// dashes.It must start with a letter and must not end with a dash. Its
+	// maximum length is 64 characters.
 	Name string `json:"name,omitempty"`
 
 	// SlotCapacity: Minimum slots available to this reservation. A slot is
@@ -651,7 +680,7 @@ type Reservation struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// ForceSendFields is a list of field names (e.g. "Concurrency") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -659,7 +688,7 @@ type Reservation struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreationTime") to include
+	// NullFields is a list of field names (e.g. "Concurrency") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -1378,8 +1407,9 @@ func (r *ProjectsLocationsCapacityCommitmentsService) Create(parent string, capa
 // "capacityCommitmentId": The optional capacity commitment ID. Capacity
 // commitment name will be generated automatically if this field is
 // empty. This field must only contain lower case alphanumeric
-// characters or dash. Max length is 64 characters. NOTE: this ID won't
-// be kept if the capacity commitment is split or merged.
+// characters or dashes. The first and last character cannot be a dash.
+// Max length is 64 characters. NOTE: this ID won't be kept if the
+// capacity commitment is split or merged.
 func (c *ProjectsLocationsCapacityCommitmentsCreateCall) CapacityCommitmentId(capacityCommitmentId string) *ProjectsLocationsCapacityCommitmentsCreateCall {
 	c.urlParams_.Set("capacityCommitmentId", capacityCommitmentId)
 	return c
@@ -1493,7 +1523,7 @@ func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "capacityCommitmentId": {
-	//       "description": "The optional capacity commitment ID. Capacity commitment name will be generated automatically if this field is empty. This field must only contain lower case alphanumeric characters or dash. Max length is 64 characters. NOTE: this ID won't be kept if the capacity commitment is split or merged.",
+	//       "description": "The optional capacity commitment ID. Capacity commitment name will be generated automatically if this field is empty. This field must only contain lower case alphanumeric characters or dashes. The first and last character cannot be a dash. Max length is 64 characters. NOTE: this ID won't be kept if the capacity commitment is split or merged.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2183,7 +2213,10 @@ type ProjectsLocationsCapacityCommitmentsPatchCall struct {
 // `google.rpc.Code.FAILED_PRECONDITION`.
 //
 // - name: Output only. The resource name of the capacity commitment,
-//   e.g., `projects/myproject/locations/US/capacityCommitments/123`.
+//   e.g., `projects/myproject/locations/US/capacityCommitments/123` For
+//   the commitment id, it must only contain lower case alphanumeric
+//   characters or dashes.It must start with a letter and must not end
+//   with a dash. Its maximum length is 64 characters.
 func (r *ProjectsLocationsCapacityCommitmentsService) Patch(name string, capacitycommitment *CapacityCommitment) *ProjectsLocationsCapacityCommitmentsPatchCall {
 	c := &ProjectsLocationsCapacityCommitmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2298,7 +2331,7 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The resource name of the capacity commitment, e.g., `projects/myproject/locations/US/capacityCommitments/123`",
+	//       "description": "Output only. The resource name of the capacity commitment, e.g., `projects/myproject/locations/US/capacityCommitments/123` For the commitment id, it must only contain lower case alphanumeric characters or dashes.It must start with a letter and must not end with a dash. Its maximum length is 64 characters.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/capacityCommitments/[^/]+$",
 	//       "required": true,
@@ -2497,8 +2530,9 @@ func (r *ProjectsLocationsReservationsService) Create(parent string, reservation
 }
 
 // ReservationId sets the optional parameter "reservationId": The
-// reservation ID. This field must only contain lower case alphanumeric
-// characters or dash. Max length is 64 characters.
+// reservation ID. It must only contain lower case alphanumeric
+// characters or dashes.It must start with a letter and must not end
+// with a dash. Its maximum length is 64 characters.
 func (c *ProjectsLocationsReservationsCreateCall) ReservationId(reservationId string) *ProjectsLocationsReservationsCreateCall {
 	c.urlParams_.Set("reservationId", reservationId)
 	return c
@@ -2611,7 +2645,7 @@ func (c *ProjectsLocationsReservationsCreateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "reservationId": {
-	//       "description": "The reservation ID. This field must only contain lower case alphanumeric characters or dash. Max length is 64 characters.",
+	//       "description": "The reservation ID. It must only contain lower case alphanumeric characters or dashes.It must start with a letter and must not end with a dash. Its maximum length is 64 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3139,7 +3173,10 @@ type ProjectsLocationsReservationsPatchCall struct {
 // Patch: Updates an existing reservation resource.
 //
 // - name: The resource name of the reservation, e.g.,
-//   `projects/*/locations/*/reservations/team1-prod`.
+//   `projects/*/locations/*/reservations/team1-prod`. For the
+//   reservation id, it must only contain lower case alphanumeric
+//   characters or dashes.It must start with a letter and must not end
+//   with a dash. Its maximum length is 64 characters.
 func (r *ProjectsLocationsReservationsService) Patch(name string, reservation *Reservation) *ProjectsLocationsReservationsPatchCall {
 	c := &ProjectsLocationsReservationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3254,7 +3291,7 @@ func (c *ProjectsLocationsReservationsPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the reservation, e.g., `projects/*/locations/*/reservations/team1-prod`.",
+	//       "description": "The resource name of the reservation, e.g., `projects/*/locations/*/reservations/team1-prod`. For the reservation id, it must only contain lower case alphanumeric characters or dashes.It must start with a letter and must not end with a dash. Its maximum length is 64 characters.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+$",
 	//       "required": true,
@@ -3330,7 +3367,7 @@ func (r *ProjectsLocationsReservationsAssignmentsService) Create(parent string, 
 // AssignmentId sets the optional parameter "assignmentId": The optional
 // assignment ID. Assignment name will be generated automatically if
 // this field is empty. This field must only contain lower case
-// alphanumeric characters or dash. Max length is 64 characters.
+// alphanumeric characters or dashes. Max length is 64 characters.
 func (c *ProjectsLocationsReservationsAssignmentsCreateCall) AssignmentId(assignmentId string) *ProjectsLocationsReservationsAssignmentsCreateCall {
 	c.urlParams_.Set("assignmentId", assignmentId)
 	return c
@@ -3436,7 +3473,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "assignmentId": {
-	//       "description": "The optional assignment ID. Assignment name will be generated automatically if this field is empty. This field must only contain lower case alphanumeric characters or dash. Max length is 64 characters.",
+	//       "description": "The optional assignment ID. Assignment name will be generated automatically if this field is empty. This field must only contain lower case alphanumeric characters or dashes. Max length is 64 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3975,7 +4012,9 @@ type ProjectsLocationsReservationsAssignmentsPatchCall struct {
 //
 // - name: Output only. Name of the resource. E.g.:
 //   `projects/myproject/locations/US/reservations/team1-prod/assignments
-//   /123`.
+//   /123`. For the assignment id, it must only contain lower case
+//   alphanumeric characters or dashes and the max length is 64
+//   characters.
 func (r *ProjectsLocationsReservationsAssignmentsService) Patch(name string, assignment *Assignment) *ProjectsLocationsReservationsAssignmentsPatchCall {
 	c := &ProjectsLocationsReservationsAssignmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4090,7 +4129,7 @@ func (c *ProjectsLocationsReservationsAssignmentsPatchCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Name of the resource. E.g.: `projects/myproject/locations/US/reservations/team1-prod/assignments/123`.",
+	//       "description": "Output only. Name of the resource. E.g.: `projects/myproject/locations/US/reservations/team1-prod/assignments/123`. For the assignment id, it must only contain lower case alphanumeric characters or dashes and the max length is 64 characters.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+/assignments/[^/]+$",
 	//       "required": true,

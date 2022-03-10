@@ -1059,9 +1059,10 @@ type GoogleCloudRetailV2CustomAttribute struct {
 	Searchable bool `json:"searchable,omitempty"`
 
 	// Text: The textual values of this custom attribute. For example,
-	// `["yellow", "green"]` when the key is "color". Exactly one of text or
-	// numbers should be set. Otherwise, an INVALID_ARGUMENT error is
-	// returned.
+	// `["yellow", "green"]` when the key is "color". Empty string is not
+	// allowed. Otherwise, an INVALID_ARGUMENT error is returned. Exactly
+	// one of text or numbers should be set. Otherwise, an INVALID_ARGUMENT
+	// error is returned.
 	Text []string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Indexable") to
@@ -1335,10 +1336,10 @@ func (s *GoogleCloudRetailV2ImportCompletionDataResponse) MarshalJSON() ([]byte,
 // GoogleCloudRetailV2ImportErrorsConfig: Configuration of destination
 // for Import related errors.
 type GoogleCloudRetailV2ImportErrorsConfig struct {
-	// GcsPrefix: Google Cloud Storage path for import errors. This must be
-	// an empty, existing Cloud Storage bucket. Import errors will be
-	// written to a file in this bucket, one per line, as a JSON-encoded
-	// `google.rpc.Status` message.
+	// GcsPrefix: Google Cloud Storage prefix for import errors. This must
+	// be an empty, existing Cloud Storage directory. Import errors will be
+	// written to sharded files in this directory, one per line, as a
+	// JSON-encoded `google.rpc.Status` message.
 	GcsPrefix string `json:"gcsPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsPrefix") to
@@ -2063,9 +2064,9 @@ type GoogleCloudRetailV2Product struct {
 	// characters. * For indexable attribute, the key must match the
 	// pattern: `a-zA-Z0-9*`. For example, `key0LikeThis` or
 	// `KEY_1_LIKE_THIS`. * For text attributes, at most 400 values are
-	// allowed. Empty values are not allowed. Each value must be a UTF-8
-	// encoded string with a length limit of 256 characters. * For number
-	// attributes, at most 400 values are allowed.
+	// allowed. Empty values are not allowed. Each value must be a non-empty
+	// UTF-8 encoded string with a length limit of 256 characters. * For
+	// number attributes, at most 400 values are allowed.
 	Attributes map[string]GoogleCloudRetailV2CustomAttribute `json:"attributes,omitempty"`
 
 	// Audience: The target group associated with a given audience (e.g.
@@ -3771,8 +3772,14 @@ func (s *GoogleCloudRetailV2SearchResponseSearchResult) MarshalJSON() ([]byte, e
 type GoogleCloudRetailV2SetDefaultBranchRequest struct {
 	// BranchId: The final component of the resource name of a branch. This
 	// field must be one of "0", "1" or "2". Otherwise, an INVALID_ARGUMENT
-	// error is returned.
+	// error is returned. If there are no sufficient active products in the
+	// targeted branch and force is not set, a FAILED_PRECONDITION error is
+	// returned.
 	BranchId string `json:"branchId,omitempty"`
+
+	// Force: If set to true, it permits switching to a branch with
+	// branch_id even if it has no sufficient active products.
+	Force bool `json:"force,omitempty"`
 
 	// Note: Some note on this request, this can be retrieved by
 	// CatalogService.GetDefaultBranch before next valid default branch set
@@ -3833,12 +3840,22 @@ type GoogleCloudRetailV2SetInventoryRequest struct {
 	// to update has existing inventory information, the provided inventory
 	// information will be merged while respecting the last update time for
 	// each inventory field, using the provided or default value for
-	// SetInventoryRequest.set_time. The last update time is recorded for
-	// the following inventory fields: * Product.price_info *
-	// Product.availability * Product.available_quantity *
-	// Product.fulfillment_info If a full overwrite of inventory information
-	// while ignoring timestamps is needed, UpdateProduct should be invoked
-	// instead.
+	// SetInventoryRequest.set_time. The caller can replace place IDs for a
+	// subset of fulfillment types in the following ways: * Adds
+	// "fulfillment_info" in SetInventoryRequest.set_mask * Specifies only
+	// the desired fulfillment types and corresponding place IDs to update
+	// in SetInventoryRequest.inventory.fulfillment_info The caller can
+	// clear all place IDs from a subset of fulfillment types in the
+	// following ways: * Adds "fulfillment_info" in
+	// SetInventoryRequest.set_mask * Specifies only the desired fulfillment
+	// types to clear in SetInventoryRequest.inventory.fulfillment_info *
+	// Checks that only the desired fulfillment info types have empty
+	// SetInventoryRequest.inventory.fulfillment_info.place_ids The last
+	// update time is recorded for the following inventory fields: *
+	// Product.price_info * Product.availability *
+	// Product.available_quantity * Product.fulfillment_info If a full
+	// overwrite of inventory information while ignoring timestamps is
+	// needed, UpdateProduct should be invoked instead.
 	Inventory *GoogleCloudRetailV2Product `json:"inventory,omitempty"`
 
 	// SetMask: Indicates which inventory fields in the provided Product to
@@ -4440,10 +4457,10 @@ func (s *GoogleCloudRetailV2alphaImportCompletionDataResponse) MarshalJSON() ([]
 // GoogleCloudRetailV2alphaImportErrorsConfig: Configuration of
 // destination for Import related errors.
 type GoogleCloudRetailV2alphaImportErrorsConfig struct {
-	// GcsPrefix: Google Cloud Storage path for import errors. This must be
-	// an empty, existing Cloud Storage bucket. Import errors will be
-	// written to a file in this bucket, one per line, as a JSON-encoded
-	// `google.rpc.Status` message.
+	// GcsPrefix: Google Cloud Storage prefix for import errors. This must
+	// be an empty, existing Cloud Storage directory. Import errors will be
+	// written to sharded files in this directory, one per line, as a
+	// JSON-encoded `google.rpc.Status` message.
 	GcsPrefix string `json:"gcsPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsPrefix") to
@@ -4938,10 +4955,10 @@ func (s *GoogleCloudRetailV2betaImportCompletionDataResponse) MarshalJSON() ([]b
 // GoogleCloudRetailV2betaImportErrorsConfig: Configuration of
 // destination for Import related errors.
 type GoogleCloudRetailV2betaImportErrorsConfig struct {
-	// GcsPrefix: Google Cloud Storage path for import errors. This must be
-	// an empty, existing Cloud Storage bucket. Import errors will be
-	// written to a file in this bucket, one per line, as a JSON-encoded
-	// `google.rpc.Status` message.
+	// GcsPrefix: Google Cloud Storage prefix for import errors. This must
+	// be an empty, existing Cloud Storage directory. Import errors will be
+	// written to sharded files in this directory, one per line, as a
+	// JSON-encoded `google.rpc.Status` message.
 	GcsPrefix string `json:"gcsPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsPrefix") to
@@ -5393,11 +5410,12 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // a birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type GoogleTypeDate struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -5485,11 +5503,14 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType strin
 	return c
 }
 
-// LanguageCodes sets the optional parameter "languageCodes": The list
-// of languages of the query. This is the BCP-47 language code, such as
-// "en-US" or "sr-Latn". For more information, see Tags for Identifying
-// Languages (https://tools.ietf.org/html/bcp47). The maximum number of
-// allowed characters is 255. Only "en-US" is currently supported.
+// LanguageCodes sets the optional parameter "languageCodes": The
+// language filters applied to the output suggestions. If set, it should
+// contain the language of the query. If not set, suggestions are
+// returned without considering language restrictions. This is the
+// BCP-47 language code, such as "en-US" or "sr-Latn". For more
+// information, see Tags for Identifying Languages
+// (https://tools.ietf.org/html/bcp47). The maximum number of language
+// codes is 3.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) LanguageCodes(languageCodes ...string) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.SetMulti("languageCodes", append([]string{}, languageCodes...))
 	return c
@@ -5652,7 +5673,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "languageCodes": {
-	//       "description": "The list of languages of the query. This is the BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see [Tags for Identifying Languages](https://tools.ietf.org/html/bcp47). The maximum number of allowed characters is 255. Only \"en-US\" is currently supported.",
+	//       "description": "The language filters applied to the output suggestions. If set, it should contain the language of the query. If not set, suggestions are returned without considering language restrictions. This is the BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see [Tags for Identifying Languages](https://tools.ietf.org/html/bcp47). The maximum number of language codes is 3.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -7862,8 +7883,8 @@ type ProjectsLocationsCatalogsBranchesProductsSetInventoryCall struct {
 // the time of the CreateProduct or UpdateProduct request. If no
 // inventory fields are set in CreateProductRequest.product, then any
 // pre-existing inventory information for this product will be used. If
-// no inventory fields are set in UpdateProductRequest.set_mask, then
-// any existing inventory information will be preserved. Pre-existing
+// no inventory fields are set in SetInventoryRequest.set_mask, then any
+// existing inventory information will be preserved. Pre-existing
 // inventory information can only be updated with SetInventory,
 // AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is
 // only available for users who have Retail Search enabled. Please
@@ -7971,7 +7992,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in UpdateProductRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:setInventory",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.setInventory",

@@ -211,7 +211,7 @@ func (s *Annotation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AttributeValue: The allowed types for [VALUE] in a `[KEY]:[VALUE]`
+// AttributeValue: The allowed types for `[VALUE]` in a `[KEY]:[VALUE]`
 // attribute.
 type AttributeValue struct {
 	// BoolValue: A Boolean value represented by `true` or `false`.
@@ -246,14 +246,14 @@ func (s *AttributeValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Attributes: A set of attributes, each in the format `[KEY]:[VALUE]`.
+// Attributes: A set of attributes as key-value pairs.
 type Attributes struct {
-	// AttributeMap: The set of attributes. Each attribute's key can be up
-	// to 128 bytes long. The value can be a string up to 256 bytes, a
-	// signed 64-bit integer, or the Boolean values `true` and `false`. For
-	// example: "/instance_id": { "string_value": { "value": "my-instance" }
-	// } "/http/request_bytes": { "int_value": 300 } "abc.com/myattribute":
-	// { "bool_value": false }
+	// AttributeMap: A set of attributes. Each attribute's key can be up to
+	// 128 bytes long. The value can be a string up to 256 bytes, a signed
+	// 64-bit integer, or the boolean values `true` or `false`. For example:
+	// "/instance_id": { "string_value": { "value": "my-instance" } }
+	// "/http/request_bytes": { "int_value": 300 } "abc.com/myattribute": {
+	// "bool_value": false }
 	AttributeMap map[string]AttributeValue `json:"attributeMap,omitempty"`
 
 	// DroppedAttributesCount: The number of attributes that were discarded.
@@ -289,7 +289,7 @@ func (s *Attributes) MarshalJSON() ([]byte, error) {
 // method.
 type BatchWriteSpansRequest struct {
 	// Spans: Required. A list of new spans. The span names must not match
-	// existing spans, or the results are undefined.
+	// existing spans, otherwise the results are undefined.
 	Spans []*Span `json:"spans,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Spans") to
@@ -333,14 +333,14 @@ type Empty struct {
 // requests from different traces or when the handler receives a request
 // from a different project.
 type Link struct {
-	// Attributes: A set of attributes on the link. You have have up to 32
-	// attributes per link.
+	// Attributes: A set of attributes on the link. Up to 32 attributes can
+	// be specified per link.
 	Attributes *Attributes `json:"attributes,omitempty"`
 
-	// SpanId: The [SPAN_ID] for a span within a trace.
+	// SpanId: The `[SPAN_ID]` for a span within a trace.
 	SpanId string `json:"spanId,omitempty"`
 
-	// TraceId: The [TRACE_ID] for a trace within a project.
+	// TraceId: The `[TRACE_ID]` for a trace within a project.
 	TraceId string `json:"traceId,omitempty"`
 
 	// Type: The relationship of the current span relative to the linked
@@ -415,12 +415,12 @@ func (s *Links) MarshalJSON() ([]byte, error) {
 // Spans.
 type MessageEvent struct {
 	// CompressedSizeBytes: The number of compressed bytes sent or received.
-	// If missing assumed to be the same size as uncompressed.
+	// If missing, the compressed size is assumed to be the same size as the
+	// uncompressed size.
 	CompressedSizeBytes int64 `json:"compressedSizeBytes,omitempty,string"`
 
 	// Id: An identifier for the MessageEvent's message that can be used to
-	// match SENT and RECEIVED MessageEvents. It is recommended to be unique
-	// within a Span.
+	// match `SENT` and `RECEIVED` MessageEvents.
 	Id int64 `json:"id,omitempty,string"`
 
 	// Type: Type of MessageEvent. Indicates whether the message was sent or
@@ -497,7 +497,7 @@ func (s *Module) MarshalJSON() ([]byte, error) {
 // be nested to form a trace tree. Often, a trace contains a root span
 // that describes the end-to-end latency, and one or more subspans for
 // its sub-operations. A trace can also contain multiple root spans, or
-// none at all. Spans do not need to be contiguous—there may be gaps
+// none at all. Spans do not need to be contiguous—there might be gaps
 // or overlaps between spans in a trace.
 type Span struct {
 	// Attributes: A set of attributes on the span. You can have up to 32
@@ -510,12 +510,12 @@ type Span struct {
 	ChildSpanCount int64 `json:"childSpanCount,omitempty"`
 
 	// DisplayName: Required. A description of the span's operation (up to
-	// 128 bytes). Trace displays the description in the Google Cloud
-	// Platform Console. For example, the display name can be a qualified
-	// method name or a file name and a line number where the operation is
-	// called. A best practice is to use the same display name within an
-	// application and at the same call point. This makes it easier to
-	// correlate spans in different traces.
+	// 128 bytes). Cloud Trace displays the description in the Cloud
+	// Console. For example, the display name can be a qualified method name
+	// or a file name and a line number where the operation is called. A
+	// best practice is to use the same display name within an application
+	// and at the same call point. This makes it easier to correlate spans
+	// in different traces.
 	DisplayName *TruncatableString `json:"displayName,omitempty"`
 
 	// EndTime: Required. The end time of the span. On the client side, this
@@ -529,15 +529,16 @@ type Span struct {
 	Links *Links `json:"links,omitempty"`
 
 	// Name: Required. The resource name of the span in the following
-	// format: projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a
-	// unique identifier for a trace within a project; it is a 32-character
-	// hexadecimal encoding of a 16-byte array. [SPAN_ID] is a unique
-	// identifier for a span within a trace; it is a 16-character
-	// hexadecimal encoding of an 8-byte array. It should not be zero.
+	// format: * `projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]`
+	// `[TRACE_ID]` is a unique identifier for a trace within a project; it
+	// is a 32-character hexadecimal encoding of a 16-byte array. It should
+	// not be zero. `[SPAN_ID]` is a unique identifier for a span within a
+	// trace; it is a 16-character hexadecimal encoding of an 8-byte array.
+	// It should not be zero. .
 	Name string `json:"name,omitempty"`
 
-	// ParentSpanId: The [SPAN_ID] of this span's parent span. If this is a
-	// root span, then this field must be empty.
+	// ParentSpanId: The `[SPAN_ID]` of this span's parent span. If this is
+	// a root span, then this field must be empty.
 	ParentSpanId string `json:"parentSpanId,omitempty"`
 
 	// SameProcessAsParentSpan: Optional. Set this parameter to indicate
@@ -546,7 +547,8 @@ type Span struct {
 	// information.
 	SameProcessAsParentSpan bool `json:"sameProcessAsParentSpan,omitempty"`
 
-	// SpanId: Required. The [SPAN_ID] portion of the span's resource name.
+	// SpanId: Required. The `[SPAN_ID]` portion of the span's resource
+	// name.
 	SpanId string `json:"spanId,omitempty"`
 
 	// SpanKind: Optional. Distinguishes between spans generated in a
@@ -913,8 +915,8 @@ type ProjectsTracesBatchWriteCall struct {
 	header_                http.Header
 }
 
-// BatchWrite: Sends new spans to new or existing traces. You cannot
-// update existing spans.
+// BatchWrite: Batch writes new spans to new or existing traces. You
+// cannot update existing spans.
 //
 // - name: The name of the project where the spans belong. The format is
 //   `projects/[PROJECT_ID]`.
@@ -1016,7 +1018,7 @@ func (c *ProjectsTracesBatchWriteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends new spans to new or existing traces. You cannot update existing spans.",
+	//   "description": "Batch writes new spans to new or existing traces. You cannot update existing spans.",
 	//   "flatPath": "v2/projects/{projectsId}/traces:batchWrite",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtrace.projects.traces.batchWrite",
@@ -1060,12 +1062,13 @@ type ProjectsTracesSpansCreateSpanCall struct {
 
 // CreateSpan: Creates a new span.
 //
-// - name: The resource name of the span in the following format:
-//   projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique
-//   identifier for a trace within a project; it is a 32-character
-//   hexadecimal encoding of a 16-byte array. [SPAN_ID] is a unique
-//   identifier for a span within a trace; it is a 16-character
-//   hexadecimal encoding of an 8-byte array. It should not be zero.
+// - name: The resource name of the span in the following format: *
+//   `projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]`
+//   `[TRACE_ID]` is a unique identifier for a trace within a project;
+//   it is a 32-character hexadecimal encoding of a 16-byte array. It
+//   should not be zero. `[SPAN_ID]` is a unique identifier for a span
+//   within a trace; it is a 16-character hexadecimal encoding of an
+//   8-byte array. It should not be zero. .
 func (r *ProjectsTracesSpansService) CreateSpan(nameid string, span *Span) *ProjectsTracesSpansCreateSpanCall {
 	c := &ProjectsTracesSpansCreateSpanCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -1173,7 +1176,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Do(opts ...googleapi.CallOption) (*S
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the span in the following format: projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique identifier for a trace within a project; it is a 32-character hexadecimal encoding of a 16-byte array. [SPAN_ID] is a unique identifier for a span within a trace; it is a 16-character hexadecimal encoding of an 8-byte array. It should not be zero.",
+	//       "description": "Required. The resource name of the span in the following format: * `projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]` `[TRACE_ID]` is a unique identifier for a trace within a project; it is a 32-character hexadecimal encoding of a 16-byte array. It should not be zero. `[SPAN_ID]` is a unique identifier for a span within a trace; it is a 16-character hexadecimal encoding of an 8-byte array. It should not be zero. .",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/traces/[^/]+/spans/[^/]+$",
 	//       "required": true,

@@ -119,6 +119,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Assets = NewAssetsService(s)
+	s.EffectiveIamPolicies = NewEffectiveIamPoliciesService(s)
 	s.Feeds = NewFeedsService(s)
 	s.Operations = NewOperationsService(s)
 	s.SavedQueries = NewSavedQueriesService(s)
@@ -132,6 +133,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Assets *AssetsService
+
+	EffectiveIamPolicies *EffectiveIamPoliciesService
 
 	Feeds *FeedsService
 
@@ -155,6 +158,15 @@ func NewAssetsService(s *Service) *AssetsService {
 }
 
 type AssetsService struct {
+	s *Service
+}
+
+func NewEffectiveIamPoliciesService(s *Service) *EffectiveIamPoliciesService {
+	rs := &EffectiveIamPoliciesService{s: s}
+	return rs
+}
+
+type EffectiveIamPoliciesService struct {
 	s *Service
 }
 
@@ -660,12 +672,53 @@ func (s *BatchGetAssetsHistoryResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchGetEffectiveIamPoliciesResponse: A response message for
+// AssetService.BatchGetEffectiveIamPolicies.
+type BatchGetEffectiveIamPoliciesResponse struct {
+	// PolicyResults: The effective policies for a batch of resources. Note
+	// that the results order is the same as the order of
+	// BatchGetEffectiveIamPoliciesRequest.names. When a resource does not
+	// have any effective IAM policies, its corresponding policy_result will
+	// contain empty EffectiveIamPolicy.policies.
+	PolicyResults []*EffectiveIamPolicy `json:"policyResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "PolicyResults") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PolicyResults") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchGetEffectiveIamPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchGetEffectiveIamPoliciesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BigQueryDestination: A BigQuery destination for exporting assets to.
 type BigQueryDestination struct {
 	// Dataset: Required. The BigQuery dataset in format
 	// "projects/projectId/datasets/datasetId", to which the snapshot result
 	// should be exported. If this dataset does not exist, the export call
-	// returns an INVALID_ARGUMENT error.
+	// returns an INVALID_ARGUMENT error. Setting the `contentType` for
+	// `exportAssets` determines the schema
+	// (/asset-inventory/docs/exporting-to-bigquery#bigquery-schema) of the
+	// BigQuery table. Setting `separateTablesPerAssetType` to `TRUE` also
+	// influences the schema.
 	Dataset string `json:"dataset,omitempty"`
 
 	// Force: If the destination table already exists and this flag is
@@ -927,11 +980,12 @@ func (s *CreateFeedRequest) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -965,6 +1019,51 @@ type Date struct {
 
 func (s *Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EffectiveIamPolicy: The effective IAM policies on one resource.
+type EffectiveIamPolicy struct {
+	// FullResourceName: The [full_resource_name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// for which the policies are computed. This is one of the
+	// BatchGetEffectiveIamPoliciesRequest.names the caller provides in the
+	// request.
+	FullResourceName string `json:"fullResourceName,omitempty"`
+
+	// Policies: The effective policies for the full_resource_name. These
+	// policies include the policy set on the full_resource_name and those
+	// set on its parents and ancestors up to the
+	// BatchGetEffectiveIamPoliciesRequest.scope. Note that these policies
+	// are not filtered according to the resource type of the
+	// full_resource_name. These policies are hierarchically ordered by
+	// PolicyInfo.attached_resource starting from full_resource_name itself
+	// to its parents and ancestors, such that policies[i]'s
+	// PolicyInfo.attached_resource is the child of policies[i+1]'s
+	// PolicyInfo.attached_resource, if policies[i+1] exists.
+	Policies []*PolicyInfo `json:"policies,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FullResourceName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EffectiveIamPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod EffectiveIamPolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4365,6 +4464,40 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PolicyInfo: The IAM policy and its attached resource.
+type PolicyInfo struct {
+	// AttachedResource: The full resource name the policy is directly
+	// attached to.
+	AttachedResource string `json:"attachedResource,omitempty"`
+
+	// Policy: The IAM policy that's directly attached to the
+	// attached_resource.
+	Policy *Policy `json:"policy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttachedResource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttachedResource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PubsubDestination: A Pub/Sub destination.
 type PubsubDestination struct {
 	// Topic: The name of the Pub/Sub topic to publish to. Example:
@@ -5911,6 +6044,179 @@ func (c *AssetsListCall) Pages(ctx context.Context, f func(*ListAssetsResponse) 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "cloudasset.effectiveIamPolicies.batchGet":
+
+type EffectiveIamPoliciesBatchGetCall struct {
+	s            *Service
+	scope        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BatchGet: Gets effective IAM policies for a batch of resources.
+//
+// - scope: Only IAM policies on or below the scope will be returned.
+//   This can only be an organization number (such as
+//   "organizations/123"), a folder number (such as "folders/123"), a
+//   project ID (such as "projects/my-project-id"), or a project number
+//   (such as "projects/12345"). To know how to get organization id,
+//   visit here
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+//   To know how to get folder or project id, visit here
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
+func (r *EffectiveIamPoliciesService) BatchGet(scope string) *EffectiveIamPoliciesBatchGetCall {
+	c := &EffectiveIamPoliciesBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.scope = scope
+	return c
+}
+
+// Names sets the optional parameter "names": Required. The names refer
+// to the [full_resource_names]
+// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+// of searchable asset types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+// A maximum of 20 resources' effective policies can be retrieved in a
+// batch.
+func (c *EffectiveIamPoliciesBatchGetCall) Names(names ...string) *EffectiveIamPoliciesBatchGetCall {
+	c.urlParams_.SetMulti("names", append([]string{}, names...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EffectiveIamPoliciesBatchGetCall) Fields(s ...googleapi.Field) *EffectiveIamPoliciesBatchGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *EffectiveIamPoliciesBatchGetCall) IfNoneMatch(entityTag string) *EffectiveIamPoliciesBatchGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EffectiveIamPoliciesBatchGetCall) Context(ctx context.Context) *EffectiveIamPoliciesBatchGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EffectiveIamPoliciesBatchGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EffectiveIamPoliciesBatchGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+scope}/effectiveIamPolicies:batchGet")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"scope": c.scope,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.effectiveIamPolicies.batchGet" call.
+// Exactly one of *BatchGetEffectiveIamPoliciesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BatchGetEffectiveIamPoliciesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *EffectiveIamPoliciesBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetEffectiveIamPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchGetEffectiveIamPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets effective IAM policies for a batch of resources.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/effectiveIamPolicies:batchGet",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.effectiveIamPolicies.batchGet",
+	//   "parameterOrder": [
+	//     "scope"
+	//   ],
+	//   "parameters": {
+	//     "names": {
+	//       "description": "Required. The names refer to the [full_resource_names] (https://cloud.google.com/asset-inventory/docs/resource-name-format) of [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types). A maximum of 20 resources' effective policies can be retrieved in a batch.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "scope": {
+	//       "description": "Required. Only IAM policies on or below the scope will be returned. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+scope}/effectiveIamPolicies:batchGet",
+	//   "response": {
+	//     "$ref": "BatchGetEffectiveIamPoliciesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "cloudasset.feeds.create":

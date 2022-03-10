@@ -882,9 +882,9 @@ type OidcToken struct {
 
 	// ServiceAccountEmail: Service account email
 	// (https://cloud.google.com/iam/docs/service-accounts) to be used for
-	// generating the OIDC token. The caller (for CreateSubscription,
-	// UpdateSubscription, and ModifyPushConfig RPCs) must have the
-	// iam.serviceAccounts.actAs permission for the service account.
+	// generating the OIDC token. See Setting up push authentication
+	// (/pubsub/docs/push#setting_up_for_push_authentication) for more
+	// details.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audience") to
@@ -1368,6 +1368,13 @@ type Schema struct {
 	// `projects/{project}/schemas/{schema}`.
 	Name string `json:"name,omitempty"`
 
+	// RevisionCreateTime: Output only. The timestamp that the revision was
+	// created.
+	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
+
+	// RevisionId: Output only. Immutable. The revision ID of the schema.
+	RevisionId string `json:"revisionId,omitempty"`
+
 	// Type: The type of the schema definition.
 	//
 	// Possible values:
@@ -1617,6 +1624,18 @@ type Subscription struct {
 	// will return FAILED_PRECONDITION. If the subscription is a push
 	// subscription, pushes to the endpoint will not be made.
 	Detached bool `json:"detached,omitempty"`
+
+	// EnableExactlyOnceDelivery: If true, Pub/Sub provides the following
+	// guarantees for the delivery of a message with a given value of
+	// `message_id` on this subscription: * The message sent to a subscriber
+	// is guaranteed not to be resent before the message's acknowledgement
+	// deadline expires. * An acknowledged message will not be resent to a
+	// subscriber. Note that subscribers may still receive multiple copies
+	// of a message when `enable_exactly_once_delivery` is true if the
+	// message was published multiple times by a publisher client. These
+	// copies are considered distinct by Pub/Sub and have distinct
+	// `message_id` values.
+	EnableExactlyOnceDelivery bool `json:"enableExactlyOnceDelivery,omitempty"`
 
 	// EnableMessageOrdering: If true, messages published with the same
 	// `ordering_key` in `PubsubMessage` will be delivered to the

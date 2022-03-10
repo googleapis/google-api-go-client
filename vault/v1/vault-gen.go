@@ -1747,6 +1747,9 @@ type MailExportOptions struct {
 	// to **true**.
 	ShowConfidentialModeContent bool `json:"showConfidentialModeContent,omitempty"`
 
+	// UseNewExport: To use the new export system, set to **true**.
+	UseNewExport bool `json:"useNewExport,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

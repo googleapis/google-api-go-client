@@ -8019,7 +8019,9 @@ type FilesWatchCall struct {
 	header_    http.Header
 }
 
-// Watch: Subscribes to changes to a file
+// Watch: Subscribes to changes to a file. While you can establish a
+// channel forchanges to a file on a shared drive, a change to a shared
+// drive file won't create a notification.
 //
 // - fileId: The ID of the file.
 func (r *FilesService) Watch(fileId string, channel *Channel) *FilesWatchCall {
@@ -8169,7 +8171,7 @@ func (c *FilesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Subscribes to changes to a file",
+	//   "description": "Subscribes to changes to a file. While you can establish a channel forchanges to a file on a shared drive, a change to a shared drive file won't create a notification.",
 	//   "httpMethod": "POST",
 	//   "id": "drive.files.watch",
 	//   "parameterOrder": [

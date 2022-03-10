@@ -900,6 +900,12 @@ type GoogleCloudDatacatalogV1DataSource struct {
 	//   "BIGQUERY" - BigQuery service.
 	Service string `json:"service,omitempty"`
 
+	// SourceEntry: Output only. Data Catalog entry name, if applicable.
+	SourceEntry string `json:"sourceEntry,omitempty"`
+
+	// StorageProperties: Detailed properties of the underlying storage.
+	StorageProperties *GoogleCloudDatacatalogV1StorageProperties `json:"storageProperties,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Resource") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -958,6 +964,10 @@ func (s *GoogleCloudDatacatalogV1DataSourceConnectionSpec) MarshalJSON() ([]byte
 // GoogleCloudDatacatalogV1DatabaseTableSpec: Specification that applies
 // to a table resource. Valid only for entries with the `TABLE` type.
 type GoogleCloudDatacatalogV1DatabaseTableSpec struct {
+	// DataplexTable: Fields specific to a Dataplex table and present only
+	// in the Dataplex table entries.
+	DataplexTable *GoogleCloudDatacatalogV1DataplexTableSpec `json:"dataplexTable,omitempty"`
+
 	// Type: Type of this table.
 	//
 	// Possible values:
@@ -966,7 +976,7 @@ type GoogleCloudDatacatalogV1DatabaseTableSpec struct {
 	//   "EXTERNAL" - External table.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Type") to
+	// ForceSendFields is a list of field names (e.g. "DataplexTable") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -974,7 +984,131 @@ type GoogleCloudDatacatalogV1DatabaseTableSpec struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Type") to include in API
+	// NullFields is a list of field names (e.g. "DataplexTable") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1DatabaseTableSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1DatabaseTableSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1DataplexExternalTable: External table
+// registered by Dataplex. Dataplex publishes data discovered from an
+// asset into multiple other systems (BigQuery, DPMS) in form of tables.
+// We call them "external tables". External tables are also synced into
+// the Data Catalog. This message contains pointers to those external
+// tables (fully qualified name, resource name et cetera) within the
+// Data Catalog.
+type GoogleCloudDatacatalogV1DataplexExternalTable struct {
+	// DataCatalogEntry: Name of the Data Catalog entry representing the
+	// external table.
+	DataCatalogEntry string `json:"dataCatalogEntry,omitempty"`
+
+	// FullyQualifiedName: Fully qualified name (FQN) of the external table.
+	FullyQualifiedName string `json:"fullyQualifiedName,omitempty"`
+
+	// GoogleCloudResource: Google Cloud resource name of the external
+	// table.
+	GoogleCloudResource string `json:"googleCloudResource,omitempty"`
+
+	// System: Service in which the external table is registered.
+	//
+	// Possible values:
+	//   "INTEGRATED_SYSTEM_UNSPECIFIED" - Default unknown system.
+	//   "BIGQUERY" - BigQuery.
+	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
+	//   "DATAPROC_METASTORE" - Dataproc Metastore.
+	//   "DATAPLEX" - Dataplex.
+	System string `json:"system,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataCatalogEntry") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataCatalogEntry") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1DataplexExternalTable) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1DataplexExternalTable
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1DataplexFilesetSpec: Entry specyfication for
+// a Dataplex fileset.
+type GoogleCloudDatacatalogV1DataplexFilesetSpec struct {
+	// DataplexSpec: Common Dataplex fields.
+	DataplexSpec *GoogleCloudDatacatalogV1DataplexSpec `json:"dataplexSpec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataplexSpec") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataplexSpec") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1DataplexFilesetSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1DataplexFilesetSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1DataplexSpec: Common Dataplex fields.
+type GoogleCloudDatacatalogV1DataplexSpec struct {
+	// Asset: Fully qualified resource name of an asset in Dataplex, to
+	// which the underlying data source (Cloud Storage bucket or BigQuery
+	// dataset) of the entity is attached.
+	Asset string `json:"asset,omitempty"`
+
+	// CompressionFormat: Compression format of the data, e.g., zip, gzip
+	// etc.
+	CompressionFormat string `json:"compressionFormat,omitempty"`
+
+	// DataFormat: Format of the data.
+	DataFormat *GoogleCloudDatacatalogV1PhysicalSchema `json:"dataFormat,omitempty"`
+
+	// ProjectId: Project ID of the underlying Cloud Storage or BigQuery
+	// data. Note that this may not be the same project as the
+	// correspondingly Dataplex lake / zone / asset.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Asset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Asset") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -983,8 +1117,46 @@ type GoogleCloudDatacatalogV1DatabaseTableSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogV1DatabaseTableSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDatacatalogV1DatabaseTableSpec
+func (s *GoogleCloudDatacatalogV1DataplexSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1DataplexSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1DataplexTableSpec: Entry specification for a
+// Dataplex table.
+type GoogleCloudDatacatalogV1DataplexTableSpec struct {
+	// DataplexSpec: Common Dataplex fields.
+	DataplexSpec *GoogleCloudDatacatalogV1DataplexSpec `json:"dataplexSpec,omitempty"`
+
+	// ExternalTables: List of external tables registered by Dataplex in
+	// other systems based on the same underlying data. External tables
+	// allow to query this data in those systems.
+	ExternalTables []*GoogleCloudDatacatalogV1DataplexExternalTable `json:"externalTables,omitempty"`
+
+	// UserManaged: Indicates if the table schema is managed by the user or
+	// not.
+	UserManaged bool `json:"userManaged,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataplexSpec") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataplexSpec") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1DataplexTableSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1DataplexTableSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1037,6 +1209,10 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// when encoded in UTF-8. Default value is an empty string.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// FilesetSpec: Specification that applies to a fileset resource. Valid
+	// only for entries with the `FILESET` type.
+	FilesetSpec *GoogleCloudDatacatalogV1FilesetSpec `json:"filesetSpec,omitempty"`
+
 	// FullyQualifiedName: Fully qualified name (FQN) of the resource. Set
 	// automatically for entries representing resources from synced systems.
 	// Settable only during creation and read-only afterwards. Can be used
@@ -1063,6 +1239,7 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "BIGQUERY" - BigQuery.
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
+	//   "DATAPLEX" - Dataplex.
 	IntegratedSystem string `json:"integratedSystem,omitempty"`
 
 	// Labels: Cloud labels attached to the entry. In Data Catalog, you can
@@ -1131,6 +1308,8 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "DATA_SOURCE_CONNECTION" - Output only. Connection to a data
 	// source. For example, a BigQuery connection.
 	//   "ROUTINE" - Output only. Routine, for example, a BigQuery routine.
+	//   "LAKE" - A Dataplex lake.
+	//   "ZONE" - A Dataplex zone.
 	//   "SERVICE" - A service, for example, a Dataproc Metastore service.
 	Type string `json:"type,omitempty"`
 
@@ -1405,6 +1584,37 @@ type GoogleCloudDatacatalogV1FieldTypeEnumTypeEnumValue struct {
 
 func (s *GoogleCloudDatacatalogV1FieldTypeEnumTypeEnumValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1FieldTypeEnumTypeEnumValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1FilesetSpec: Specification that applies to a
+// fileset. Valid only for entries with the 'FILESET' type.
+type GoogleCloudDatacatalogV1FilesetSpec struct {
+	// DataplexFileset: Fields specific to a Dataplex fileset and present
+	// only in the Dataplex fileset entries.
+	DataplexFileset *GoogleCloudDatacatalogV1DataplexFilesetSpec `json:"dataplexFileset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataplexFileset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataplexFileset") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1FilesetSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1FilesetSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1864,6 +2074,153 @@ type GoogleCloudDatacatalogV1PersonalDetails struct {
 
 func (s *GoogleCloudDatacatalogV1PersonalDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1PersonalDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1PhysicalSchema: Native schema used by a
+// resource represented as an entry. Used by query engines for
+// deserializing and parsing source data.
+type GoogleCloudDatacatalogV1PhysicalSchema struct {
+	// Avro: Schema in Avro JSON format.
+	Avro *GoogleCloudDatacatalogV1PhysicalSchemaAvroSchema `json:"avro,omitempty"`
+
+	// Csv: Marks a CSV-encoded data source.
+	Csv *GoogleCloudDatacatalogV1PhysicalSchemaCsvSchema `json:"csv,omitempty"`
+
+	// Orc: Marks an ORC-encoded data source.
+	Orc *GoogleCloudDatacatalogV1PhysicalSchemaOrcSchema `json:"orc,omitempty"`
+
+	// Parquet: Marks a Parquet-encoded data source.
+	Parquet *GoogleCloudDatacatalogV1PhysicalSchemaParquetSchema `json:"parquet,omitempty"`
+
+	// Protobuf: Schema in protocol buffer format.
+	Protobuf *GoogleCloudDatacatalogV1PhysicalSchemaProtobufSchema `json:"protobuf,omitempty"`
+
+	// Thrift: Schema in Thrift format.
+	Thrift *GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema `json:"thrift,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Avro") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Avro") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1PhysicalSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1PhysicalSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1PhysicalSchemaAvroSchema: Schema in Avro JSON
+// format.
+type GoogleCloudDatacatalogV1PhysicalSchemaAvroSchema struct {
+	// Text: JSON source of the Avro schema.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1PhysicalSchemaAvroSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1PhysicalSchemaAvroSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1PhysicalSchemaCsvSchema: Marks a CSV-encoded
+// data source.
+type GoogleCloudDatacatalogV1PhysicalSchemaCsvSchema struct {
+}
+
+// GoogleCloudDatacatalogV1PhysicalSchemaOrcSchema: Marks an ORC-encoded
+// data source.
+type GoogleCloudDatacatalogV1PhysicalSchemaOrcSchema struct {
+}
+
+// GoogleCloudDatacatalogV1PhysicalSchemaParquetSchema: Marks a
+// Parquet-encoded data source.
+type GoogleCloudDatacatalogV1PhysicalSchemaParquetSchema struct {
+}
+
+// GoogleCloudDatacatalogV1PhysicalSchemaProtobufSchema: Schema in
+// protocol buffer format.
+type GoogleCloudDatacatalogV1PhysicalSchemaProtobufSchema struct {
+	// Text: Protocol buffer source of the schema.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1PhysicalSchemaProtobufSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1PhysicalSchemaProtobufSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema: Schema in Thrift
+// format.
+type GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema struct {
+	// Text: Thrift IDL source of the schema.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2347,6 +2704,7 @@ type GoogleCloudDatacatalogV1SearchCatalogResult struct {
 	//   "BIGQUERY" - BigQuery.
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
+	//   "DATAPLEX" - Dataplex.
 	IntegratedSystem string `json:"integratedSystem,omitempty"`
 
 	// LinkedResource: The full name of the Google Cloud resource the entry
@@ -2515,6 +2873,51 @@ type GoogleCloudDatacatalogV1StarEntryResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleCloudDatacatalogV1StorageProperties: Details the properties of
+// the underlying storage.
+type GoogleCloudDatacatalogV1StorageProperties struct {
+	// FilePattern: Patterns to identify a set of files for this fileset.
+	// Examples of a valid `file_pattern`: * `gs://bucket_name/dir/*`:
+	// matches all files in the `bucket_name/dir` directory *
+	// `gs://bucket_name/dir/**`: matches all files in the `bucket_name/dir`
+	// and all subdirectories recursively * `gs://bucket_name/file*`:
+	// matches files prefixed by `file` in `bucket_name` *
+	// `gs://bucket_name/??.txt`: matches files with two characters followed
+	// by `.txt` in `bucket_name` * `gs://bucket_name/[aeiou].txt`: matches
+	// files that contain a single vowel character followed by `.txt` in
+	// `bucket_name` * `gs://bucket_name/[a-m].txt`: matches files that
+	// contain `a`, `b`, ... or `m` followed by `.txt` in `bucket_name` *
+	// `gs://bucket_name/a/*/b`: matches all files in `bucket_name` that
+	// match the `a/*/b` pattern, such as `a/c/b`, `a/d/b` *
+	// `gs://another_bucket/a.txt`: matches `gs://another_bucket/a.txt`
+	FilePattern []string `json:"filePattern,omitempty"`
+
+	// FileType: File type in MIME format, for example, `text/plain`.
+	FileType string `json:"fileType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilePattern") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilePattern") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1StorageProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1StorageProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1SystemTimestamps: Timestamps associated with
@@ -2779,8 +3182,8 @@ type GoogleCloudDatacatalogV1TagTemplate struct {
 	// IsPubliclyReadable: Indicates whether tags created with this template
 	// are public. Public tags do not require tag template access to appear
 	// in ListTags API response. Additionally, you can search for a public
-	// tag by value with a simple search query instead of using a ``tag:``
-	// predicate.
+	// tag by value with a simple search query in addition to using a
+	// ``tag:`` predicate.
 	IsPubliclyReadable bool `json:"isPubliclyReadable,omitempty"`
 
 	// Name: The resource name of the tag template in URL format. Note: The

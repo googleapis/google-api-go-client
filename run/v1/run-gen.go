@@ -1529,6 +1529,10 @@ func (s *ExecutionSpec) MarshalJSON() ([]byte, error) {
 // ExecutionStatus: ExecutionStatus represents the current state of a
 // Execution.
 type ExecutionStatus struct {
+	// CancelledCount: Optional. The number of tasks which reached phase
+	// Cancelled. +optional
+	CancelledCount int64 `json:"cancelledCount,omitempty"`
+
 	// CompletionTime: Optional. Represents time when the execution was
 	// completed. It is not guaranteed to be set in happens-before order
 	// across separate operations. It is represented in RFC3339 form and is
@@ -1553,6 +1557,10 @@ type ExecutionStatus struct {
 	// was last processed by the controller.
 	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
 
+	// RetriedCount: Optional. The number of tasks which have retried at
+	// least once. +optional
+	RetriedCount int64 `json:"retriedCount,omitempty"`
+
 	// RunningCount: Optional. The number of actively running tasks.
 	// +optional
 	RunningCount int64 `json:"runningCount,omitempty"`
@@ -1567,7 +1575,7 @@ type ExecutionStatus struct {
 	// Succeeded. +optional
 	SucceededCount int64 `json:"succeededCount,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CompletionTime") to
+	// ForceSendFields is a list of field names (e.g. "CancelledCount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1575,7 +1583,7 @@ type ExecutionStatus struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CompletionTime") to
+	// NullFields is a list of field names (e.g. "CancelledCount") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2960,12 +2968,13 @@ type Probe struct {
 	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
 
 	// PeriodSeconds: (Optional) How often (in seconds) to perform the
-	// probe. Default to 10 seconds. Minimum value is 1.
+	// probe. Default to 10 seconds. Minimum value is 1. Maximum value is
+	// 3600. Must be greater or equal than timeout_seconds.
 	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
 
 	// SuccessThreshold: (Optional) Minimum consecutive successes for the
 	// probe to be considered successful after having failed. Defaults to 1.
-	// Must be 1 for liveness. Minimum value is 1.
+	// Must be 1 for liveness and startup Probes.
 	SuccessThreshold int64 `json:"successThreshold,omitempty"`
 
 	// TcpSocket: (Optional) TCPSocket specifies an action involving a TCP
@@ -2974,7 +2983,8 @@ type Probe struct {
 	TcpSocket *TCPSocketAction `json:"tcpSocket,omitempty"`
 
 	// TimeoutSeconds: (Optional) Number of seconds after which the probe
-	// times out. Defaults to 1 second. Minimum value is 1. More info:
+	// times out. Defaults to 1 second. Minimum value is 1. Maximum value is
+	// 3600. Must be smaller than period_seconds. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
 

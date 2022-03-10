@@ -6682,7 +6682,7 @@ func (c *ProjectsSearchCall) PageToken(pageToken string) *ProjectsSearchCall {
 // Query sets the optional parameter "query": A query string for
 // searching for projects that the caller has
 // `resourcemanager.projects.get` permission to. If multiple fields are
-// included in the query, the it will return results that match any of
+// included in the query, then it will return results that match any of
 // the fields. Some eligible fields are: ``` | Field | Description |
 // |-------------------------|-------------------------------------------
 // ---| | displayName, name | Filters by displayName. | | parent |
@@ -6823,7 +6823,7 @@ func (c *ProjectsSearchCall) Do(opts ...googleapi.CallOption) (*SearchProjectsRe
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. A query string for searching for projects that the caller has `resourcemanager.projects.get` permission to. If multiple fields are included in the query, the it will return results that match any of the fields. Some eligible fields are: ``` | Field | Description | |-------------------------|----------------------------------------------| | displayName, name | Filters by displayName. | | parent | Project's parent (for example: folders/123, organizations/*). Prefer parent field over parent.type and parent.id.| | parent.type | Parent's type: `folder` or `organization`. | | parent.id | Parent's id number (for example: 123) | | id, projectId | Filters by projectId. | | state, lifecycleState | Filters by state. | | labels | Filters by label name or value. | | labels.\\ (where *key* is the name of a label) | Filters by label name.| ``` Search expressions are case insensitive. Some examples queries: ``` | Query | Description | |------------------|-----------------------------------------------------| | name:how* | The project's name starts with \"how\". | | name:Howl | The project's name is `Howl` or `howl`. | | name:HOWL | Equivalent to above. | | NAME:howl | Equivalent to above. | | labels.color:* | The project has the label `color`. | | labels.color:red | The project's label `color` has the value `red`. | | labels.color:red labels.size:big | The project's label `color` has the value `red` and its label `size` has the value `big`.| ``` If no query is specified, the call will return projects for which the user has the `resourcemanager.projects.get` permission.",
+	//       "description": "Optional. A query string for searching for projects that the caller has `resourcemanager.projects.get` permission to. If multiple fields are included in the query, then it will return results that match any of the fields. Some eligible fields are: ``` | Field | Description | |-------------------------|----------------------------------------------| | displayName, name | Filters by displayName. | | parent | Project's parent (for example: folders/123, organizations/*). Prefer parent field over parent.type and parent.id.| | parent.type | Parent's type: `folder` or `organization`. | | parent.id | Parent's id number (for example: 123) | | id, projectId | Filters by projectId. | | state, lifecycleState | Filters by state. | | labels | Filters by label name or value. | | labels.\\ (where *key* is the name of a label) | Filters by label name.| ``` Search expressions are case insensitive. Some examples queries: ``` | Query | Description | |------------------|-----------------------------------------------------| | name:how* | The project's name starts with \"how\". | | name:Howl | The project's name is `Howl` or `howl`. | | name:HOWL | Equivalent to above. | | NAME:howl | Equivalent to above. | | labels.color:* | The project has the label `color`. | | labels.color:red | The project's label `color` has the value `red`. | | labels.color:red labels.size:big | The project's label `color` has the value `red` and its label `size` has the value `big`.| ``` If no query is specified, the call will return projects for which the user has the `resourcemanager.projects.get` permission.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7626,7 +7626,8 @@ func (r *TagBindingsService) List() *TagBindingsListCall {
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of TagBindings to return in the response. The server allows a maximum
 // of 300 TagBindings to return. If unspecified, the server will use 100
-// as the default.
+// as the default. Currently this api returns unpaginated response and
+// `page_size` is ignored.
 func (c *TagBindingsListCall) PageSize(pageSize int64) *TagBindingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7634,7 +7635,8 @@ func (c *TagBindingsListCall) PageSize(pageSize int64) *TagBindingsListCall {
 
 // PageToken sets the optional parameter "pageToken": A pagination token
 // returned from a previous call to `ListTagBindings` that indicates
-// where this listing should continue from.
+// where this listing should continue from. Currently this api returns
+// unpaginated response and `page_token` is ignored.
 func (c *TagBindingsListCall) PageToken(pageToken string) *TagBindingsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7752,13 +7754,13 @@ func (c *TagBindingsListCall) Do(opts ...googleapi.CallOption) (*ListTagBindings
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of TagBindings to return in the response. The server allows a maximum of 300 TagBindings to return. If unspecified, the server will use 100 as the default.",
+	//       "description": "Optional. The maximum number of TagBindings to return in the response. The server allows a maximum of 300 TagBindings to return. If unspecified, the server will use 100 as the default. Currently this api returns unpaginated response and `page_size` is ignored.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A pagination token returned from a previous call to `ListTagBindings` that indicates where this listing should continue from.",
+	//       "description": "Optional. A pagination token returned from a previous call to `ListTagBindings` that indicates where this listing should continue from. Currently this api returns unpaginated response and `page_token` is ignored.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

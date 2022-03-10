@@ -460,11 +460,12 @@ type CancelOperationRequest struct {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -1065,6 +1066,20 @@ type MetadataOptions struct {
 	//   "TEMPORARY_HOLD_PRESERVE" - Preserve the object's original
 	// temporary hold status.
 	TemporaryHold string `json:"temporaryHold,omitempty"`
+
+	// TimeCreated: Specifies how each object's `timeCreated` metadata is
+	// preserved for transfers between Google Cloud Storage buckets. If
+	// unspecified, the default behavior is the same as TIME_CREATED_SKIP.
+	//
+	// Possible values:
+	//   "TIME_CREATED_UNSPECIFIED" - TimeCreated behavior is unspecified.
+	//   "TIME_CREATED_SKIP" - Do not preserve the `timeCreated` metadata
+	// from the source object.
+	//   "TIME_CREATED_PRESERVE_AS_CUSTOM_TIME" - Preserves the source
+	// object's `timeCreated` metadata in the `customTime` field in the
+	// destination object. Note that any value stored in the source object's
+	// `customTime` field will not be propagated to the destination object.
+	TimeCreated string `json:"timeCreated,omitempty"`
 
 	// Uid: Specifies how each file's POSIX user ID (UID) attribute should
 	// be handled by the transfer. By default, UID is not preserved.
@@ -4110,7 +4125,8 @@ type TransferOperationsListCall struct {
 //   optional. The valid values for `transferStatuses` are
 //   case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and
 //   ABORTED.
-// - name: Not used.
+// - name: The name of the type being listed; must be
+//   `transferOperations`.
 func (r *TransferOperationsService) List(name string, filter string) *TransferOperationsListCall {
 	c := &TransferOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4247,7 +4263,7 @@ func (c *TransferOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOper
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Not used.",
+	//       "description": "Required. The name of the type being listed; must be `transferOperations`.",
 	//       "location": "path",
 	//       "pattern": "^transferOperations$",
 	//       "required": true,

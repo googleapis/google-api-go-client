@@ -194,9 +194,9 @@ type ProjectsLocationsServicesRevisionsService struct {
 	s *Service
 }
 
-// GoogleCloudRunOpV2BinaryAuthorization: Settings for Binary
+// GoogleCloudRunV2BinaryAuthorization: Settings for Binary
 // Authorization feature.
-type GoogleCloudRunOpV2BinaryAuthorization struct {
+type GoogleCloudRunV2BinaryAuthorization struct {
 	// BreakglassJustification: If present, indicates to use Breakglass
 	// using this justification. If use_default is False, then it must be
 	// empty. For more information on breakglass, see
@@ -227,15 +227,15 @@ type GoogleCloudRunOpV2BinaryAuthorization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2BinaryAuthorization) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2BinaryAuthorization
+func (s *GoogleCloudRunV2BinaryAuthorization) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2BinaryAuthorization
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2CloudSqlInstance: Represents a specific Cloud SQL
+// GoogleCloudRunV2CloudSqlInstance: Represents a specific Cloud SQL
 // instance.
-type GoogleCloudRunOpV2CloudSqlInstance struct {
+type GoogleCloudRunV2CloudSqlInstance struct {
 	// Connections: The Cloud SQL instance connection names, as can be found
 	// in https://console.cloud.google.com/sql/instances. Visit
 	// https://cloud.google.com/sql/docs/mysql/connect-run for more
@@ -260,15 +260,14 @@ type GoogleCloudRunOpV2CloudSqlInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2CloudSqlInstance) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2CloudSqlInstance
+func (s *GoogleCloudRunV2CloudSqlInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2CloudSqlInstance
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2Condition: Defines a status condition for a
-// resource.
-type GoogleCloudRunOpV2Condition struct {
+// GoogleCloudRunV2Condition: Defines a status condition for a resource.
+type GoogleCloudRunV2Condition struct {
 	// DomainMappingReason: A reason for the domain mapping condition.
 	//
 	// Possible values:
@@ -424,17 +423,17 @@ type GoogleCloudRunOpV2Condition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2Condition) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2Condition
+func (s *GoogleCloudRunV2Condition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2Condition
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2Container: A single application container. This
+// GoogleCloudRunV2Container: A single application container. This
 // specifies both the container to run, the command to run in the
 // container and the arguments to supply to it. Note that additional
 // arguments may be supplied by the system to the container at runtime.
-type GoogleCloudRunOpV2Container struct {
+type GoogleCloudRunV2Container struct {
 	// Args: Arguments to the entrypoint. The docker image's CMD is used if
 	// this is not provided. Variable references $(VAR_NAME) are expanded
 	// using the container's environment. If a variable cannot be resolved,
@@ -457,7 +456,7 @@ type GoogleCloudRunOpV2Container struct {
 	Command []string `json:"command,omitempty"`
 
 	// Env: List of environment variables to set in the container.
-	Env []*GoogleCloudRunOpV2EnvVar `json:"env,omitempty"`
+	Env []*GoogleCloudRunV2EnvVar `json:"env,omitempty"`
 
 	// Image: Required. URL of the Container image in Google Container
 	// Registry or Docker More info:
@@ -472,15 +471,15 @@ type GoogleCloudRunOpV2Container struct {
 	// interfaces (0.0.0.0) within the container to be accessible. If
 	// omitted, a port number will be chosen and passed to the container
 	// through the PORT environment variable for the container to listen on.
-	Ports []*GoogleCloudRunOpV2ContainerPort `json:"ports,omitempty"`
+	Ports []*GoogleCloudRunV2ContainerPort `json:"ports,omitempty"`
 
 	// Resources: Compute Resource requirements by this container. More
 	// info:
 	// https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
-	Resources *GoogleCloudRunOpV2ResourceRequirements `json:"resources,omitempty"`
+	Resources *GoogleCloudRunV2ResourceRequirements `json:"resources,omitempty"`
 
 	// VolumeMounts: Volume to mount into the container's filesystem.
-	VolumeMounts []*GoogleCloudRunOpV2VolumeMount `json:"volumeMounts,omitempty"`
+	VolumeMounts []*GoogleCloudRunV2VolumeMount `json:"volumeMounts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
 	// unconditionally include in API requests. By default, fields with
@@ -499,15 +498,15 @@ type GoogleCloudRunOpV2Container struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2Container) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2Container
+func (s *GoogleCloudRunV2Container) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2Container
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2ContainerPort: ContainerPort represents a network
+// GoogleCloudRunV2ContainerPort: ContainerPort represents a network
 // port in a single container.
-type GoogleCloudRunOpV2ContainerPort struct {
+type GoogleCloudRunV2ContainerPort struct {
 	// ContainerPort: Port number the container listens on. This must be a
 	// valid TCP port number, 0 < container_port < 65536.
 	ContainerPort int64 `json:"containerPort,omitempty"`
@@ -533,15 +532,15 @@ type GoogleCloudRunOpV2ContainerPort struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2ContainerPort) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2ContainerPort
+func (s *GoogleCloudRunV2ContainerPort) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ContainerPort
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2EnvVar: EnvVar represents an environment variable
+// GoogleCloudRunV2EnvVar: EnvVar represents an environment variable
 // present in a Container.
-type GoogleCloudRunOpV2EnvVar struct {
+type GoogleCloudRunV2EnvVar struct {
 	// Name: Required. Name of the environment variable. Must be a
 	// C_IDENTIFIER, and mnay not exceed 32768 characters.
 	Name string `json:"name,omitempty"`
@@ -556,7 +555,7 @@ type GoogleCloudRunOpV2EnvVar struct {
 	Value string `json:"value,omitempty"`
 
 	// ValueSource: Source for the environment variable's value.
-	ValueSource *GoogleCloudRunOpV2EnvVarSource `json:"valueSource,omitempty"`
+	ValueSource *GoogleCloudRunV2EnvVarSource `json:"valueSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -575,18 +574,18 @@ type GoogleCloudRunOpV2EnvVar struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2EnvVar) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2EnvVar
+func (s *GoogleCloudRunV2EnvVar) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2EnvVar
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2EnvVarSource: EnvVarSource represents a source for
+// GoogleCloudRunV2EnvVarSource: EnvVarSource represents a source for
 // the value of an EnvVar.
-type GoogleCloudRunOpV2EnvVarSource struct {
+type GoogleCloudRunV2EnvVarSource struct {
 	// SecretKeyRef: Selects a secret and a specific version from Cloud
 	// Secret Manager.
-	SecretKeyRef *GoogleCloudRunOpV2SecretKeySelector `json:"secretKeyRef,omitempty"`
+	SecretKeyRef *GoogleCloudRunV2SecretKeySelector `json:"secretKeyRef,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SecretKeyRef") to
 	// unconditionally include in API requests. By default, fields with
@@ -605,21 +604,21 @@ type GoogleCloudRunOpV2EnvVarSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2EnvVarSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2EnvVarSource
+func (s *GoogleCloudRunV2EnvVarSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2EnvVarSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2ListRevisionsResponse: Response message containing
-// a list of Revisions.
-type GoogleCloudRunOpV2ListRevisionsResponse struct {
+// GoogleCloudRunV2ListRevisionsResponse: Response message containing a
+// list of Revisions.
+type GoogleCloudRunV2ListRevisionsResponse struct {
 	// NextPageToken: A token indicating there are more items than
 	// page_size. Use it in the next ListRevisions request to continue.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Revisions: The resulting list of Revisions.
-	Revisions []*GoogleCloudRunOpV2Revision `json:"revisions,omitempty"`
+	Revisions []*GoogleCloudRunV2Revision `json:"revisions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -642,21 +641,21 @@ type GoogleCloudRunOpV2ListRevisionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2ListRevisionsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2ListRevisionsResponse
+func (s *GoogleCloudRunV2ListRevisionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ListRevisionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2ListServicesResponse: Response message containing a
+// GoogleCloudRunV2ListServicesResponse: Response message containing a
 // list of Services.
-type GoogleCloudRunOpV2ListServicesResponse struct {
+type GoogleCloudRunV2ListServicesResponse struct {
 	// NextPageToken: A token indicating there are more items than
 	// page_size. Use it in the next ListServices request to continue.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Services: The resulting list of Services.
-	Services []*GoogleCloudRunOpV2Service `json:"services,omitempty"`
+	Services []*GoogleCloudRunV2Service `json:"services,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -679,15 +678,15 @@ type GoogleCloudRunOpV2ListServicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2ListServicesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2ListServicesResponse
+func (s *GoogleCloudRunV2ListServicesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ListServicesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2ResourceRequirements: ResourceRequirements
-// describes the compute resource requirements.
-type GoogleCloudRunOpV2ResourceRequirements struct {
+// GoogleCloudRunV2ResourceRequirements: ResourceRequirements describes
+// the compute resource requirements.
+type GoogleCloudRunV2ResourceRequirements struct {
 	// CpuIdle: Determines whether CPU should be throttled or not outside of
 	// requests.
 	CpuIdle bool `json:"cpuIdle,omitempty"`
@@ -716,23 +715,23 @@ type GoogleCloudRunOpV2ResourceRequirements struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2ResourceRequirements) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2ResourceRequirements
+func (s *GoogleCloudRunV2ResourceRequirements) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ResourceRequirements
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2Revision: A Revision is an immutable snapshot of
-// code and configuration. A Revision references a container image.
-// Revisions are only created by updates to its parent Service.
-type GoogleCloudRunOpV2Revision struct {
+// GoogleCloudRunV2Revision: A Revision is an immutable snapshot of code
+// and configuration. A Revision references a container image. Revisions
+// are only created by updates to its parent Service.
+type GoogleCloudRunV2Revision struct {
 	// Annotations: KRM-style annotations for the resource.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// Conditions: Output only. The Condition of this Revision, containing
 	// its readiness status, and detailed error information in case it did
 	// not reach a serving state.
-	Conditions []*GoogleCloudRunOpV2Condition `json:"conditions,omitempty"`
+	Conditions []*GoogleCloudRunV2Condition `json:"conditions,omitempty"`
 
 	// Confidential: Indicates whether Confidential Cloud Run is enabled in
 	// this Revision.
@@ -744,7 +743,7 @@ type GoogleCloudRunOpV2Revision struct {
 
 	// Containers: Holds the single container that defines the unit of
 	// execution for this Revision.
-	Containers []*GoogleCloudRunOpV2Container `json:"containers,omitempty"`
+	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
 
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -853,7 +852,7 @@ type GoogleCloudRunOpV2Revision struct {
 	Reconciling bool `json:"reconciling,omitempty"`
 
 	// Scaling: Scaling settings for this revision.
-	Scaling *GoogleCloudRunOpV2RevisionScaling `json:"scaling,omitempty"`
+	Scaling *GoogleCloudRunV2RevisionScaling `json:"scaling,omitempty"`
 
 	// Service: Output only. The name of the parent service.
 	Service string `json:"service,omitempty"`
@@ -876,12 +875,12 @@ type GoogleCloudRunOpV2Revision struct {
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// Volumes: A list of Volumes to make available to containers.
-	Volumes []*GoogleCloudRunOpV2Volume `json:"volumes,omitempty"`
+	Volumes []*GoogleCloudRunV2Volume `json:"volumes,omitempty"`
 
 	// VpcAccess: VPC Access configuration for this Revision. For more
 	// information, visit
 	// https://cloud.google.com/run/docs/configuring/connecting-vpc.
-	VpcAccess *GoogleCloudRunOpV2VpcAccess `json:"vpcAccess,omitempty"`
+	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -904,15 +903,15 @@ type GoogleCloudRunOpV2Revision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2Revision) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2Revision
+func (s *GoogleCloudRunV2Revision) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2Revision
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2RevisionScaling: Settings for revision-level
-// scaling settings.
-type GoogleCloudRunOpV2RevisionScaling struct {
+// GoogleCloudRunV2RevisionScaling: Settings for revision-level scaling
+// settings.
+type GoogleCloudRunV2RevisionScaling struct {
 	// MaxInstanceCount: Maximum number of serving instances that this
 	// resource should have.
 	MaxInstanceCount int64 `json:"maxInstanceCount,omitempty"`
@@ -939,15 +938,15 @@ type GoogleCloudRunOpV2RevisionScaling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2RevisionScaling) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2RevisionScaling
+func (s *GoogleCloudRunV2RevisionScaling) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2RevisionScaling
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2RevisionTemplate: RevisionTemplate describes the
-// data a revision should have when created from a template.
-type GoogleCloudRunOpV2RevisionTemplate struct {
+// GoogleCloudRunV2RevisionTemplate: RevisionTemplate describes the data
+// a revision should have when created from a template.
+type GoogleCloudRunV2RevisionTemplate struct {
 	// Annotations: KRM-style annotations for the resource.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
@@ -961,7 +960,7 @@ type GoogleCloudRunOpV2RevisionTemplate struct {
 
 	// Containers: Holds the single container that defines the unit of
 	// execution for this Revision.
-	Containers []*GoogleCloudRunOpV2Container `json:"containers,omitempty"`
+	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
 
 	// EncryptionKey: A reference to a customer managed encryption key
 	// (CMEK) to use to encrypt this container image. For more information,
@@ -985,7 +984,7 @@ type GoogleCloudRunOpV2RevisionTemplate struct {
 	Revision string `json:"revision,omitempty"`
 
 	// Scaling: Scaling settings for this Revision.
-	Scaling *GoogleCloudRunOpV2RevisionScaling `json:"scaling,omitempty"`
+	Scaling *GoogleCloudRunV2RevisionScaling `json:"scaling,omitempty"`
 
 	// ServiceAccount: Email address of the IAM service account associated
 	// with the revision of the service. The service account represents the
@@ -998,12 +997,12 @@ type GoogleCloudRunOpV2RevisionTemplate struct {
 	Timeout string `json:"timeout,omitempty"`
 
 	// Volumes: A list of Volumes to make available to containers.
-	Volumes []*GoogleCloudRunOpV2Volume `json:"volumes,omitempty"`
+	Volumes []*GoogleCloudRunV2Volume `json:"volumes,omitempty"`
 
 	// VpcAccess: VPC Access configuration to use for this Revision. For
 	// more information, visit
 	// https://cloud.google.com/run/docs/configuring/connecting-vpc.
-	VpcAccess *GoogleCloudRunOpV2VpcAccess `json:"vpcAccess,omitempty"`
+	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
@@ -1022,15 +1021,15 @@ type GoogleCloudRunOpV2RevisionTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2RevisionTemplate) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2RevisionTemplate
+func (s *GoogleCloudRunV2RevisionTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2RevisionTemplate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2SecretKeySelector: SecretEnvVarSource represents a
+// GoogleCloudRunV2SecretKeySelector: SecretEnvVarSource represents a
 // source for the value of an EnvVar.
-type GoogleCloudRunOpV2SecretKeySelector struct {
+type GoogleCloudRunV2SecretKeySelector struct {
 	// Secret: Required. The name of the secret in Cloud Secret Manager.
 	// Format: {secret_name} if the secret is in the same project.
 	// projects/{project}/secrets/{secret_name} if the secret is in a
@@ -1058,16 +1057,16 @@ type GoogleCloudRunOpV2SecretKeySelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2SecretKeySelector) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2SecretKeySelector
+func (s *GoogleCloudRunV2SecretKeySelector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2SecretKeySelector
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2SecretVolumeSource: The secret's value will be
+// GoogleCloudRunV2SecretVolumeSource: The secret's value will be
 // presented as the content of a file whose name is defined in the item
 // path. If no items are defined, the name of the file is the secret.
-type GoogleCloudRunOpV2SecretVolumeSource struct {
+type GoogleCloudRunV2SecretVolumeSource struct {
 	// DefaultMode: Integer representation of mode bits to use on created
 	// files by default. Must be a value between 0000 and 0777 (octal),
 	// defaulting to 0644. Directories within the path are not affected by
@@ -1089,7 +1088,7 @@ type GoogleCloudRunOpV2SecretVolumeSource struct {
 	// will be used as the version to fetch from Cloud Secret Manager and
 	// the path will be the name of the file exposed in the volume. When
 	// items are defined, they must specify a path and a version.
-	Items []*GoogleCloudRunOpV2VersionToPath `json:"items,omitempty"`
+	Items []*GoogleCloudRunV2VersionToPath `json:"items,omitempty"`
 
 	// Secret: Required. The name of the secret in Cloud Secret Manager.
 	// Format: {secret} if the secret is in the same project.
@@ -1114,19 +1113,19 @@ type GoogleCloudRunOpV2SecretVolumeSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2SecretVolumeSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2SecretVolumeSource
+func (s *GoogleCloudRunV2SecretVolumeSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2SecretVolumeSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2Service: Service acts as a top-level container that
+// GoogleCloudRunV2Service: Service acts as a top-level container that
 // manages a set of configurations and revision templates which
 // implement a network service. Service exists to provide a singular
 // abstraction which can be access controlled, reasoned about, and which
 // encapsulates software lifecycle decisions such as rollout policy and
 // team resource ownership.
-type GoogleCloudRunOpV2Service struct {
+type GoogleCloudRunV2Service struct {
 	// Annotations: Unstructured key value map that may be set by external
 	// tools to store and arbitrary metadata. They are not queryable and
 	// should be preserved when modifying objects. Cloud Run will populate
@@ -1137,7 +1136,7 @@ type GoogleCloudRunOpV2Service struct {
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// BinaryAuthorization: Settings for the Binary Authorization feature.
-	BinaryAuthorization *GoogleCloudRunOpV2BinaryAuthorization `json:"binaryAuthorization,omitempty"`
+	BinaryAuthorization *GoogleCloudRunV2BinaryAuthorization `json:"binaryAuthorization,omitempty"`
 
 	// Client: Arbitrary identifier for the API client.
 	Client string `json:"client,omitempty"`
@@ -1150,7 +1149,7 @@ type GoogleCloudRunOpV2Service struct {
 	// case the Service does not reach its Serving state. See comments in
 	// `reconciling` for additional information on reconciliation process in
 	// Cloud Run.
-	Conditions []*GoogleCloudRunOpV2Condition `json:"conditions,omitempty"`
+	Conditions []*GoogleCloudRunV2Condition `json:"conditions,omitempty"`
 
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1161,7 +1160,8 @@ type GoogleCloudRunOpV2Service struct {
 	// DeleteTime: Output only. The deletion time.
 	DeleteTime string `json:"deleteTime,omitempty"`
 
-	// Description: User-provided description of the Service.
+	// Description: User-provided description of the Service. This field
+	// currently has a 512-character limit.
 	Description string `json:"description,omitempty"`
 
 	// Etag: Output only. A system-generated fingerprint for this version of
@@ -1289,23 +1289,23 @@ type GoogleCloudRunOpV2Service struct {
 
 	// Template: Required. The template used to create revisions for this
 	// Service.
-	Template *GoogleCloudRunOpV2RevisionTemplate `json:"template,omitempty"`
+	Template *GoogleCloudRunV2RevisionTemplate `json:"template,omitempty"`
 
 	// TerminalCondition: Output only. The Condition of this Service,
 	// containing its readiness status, and detailed error information in
 	// case it did not reach a serving state. See comments in `reconciling`
 	// for additional information on reconciliation process in Cloud Run.
-	TerminalCondition *GoogleCloudRunOpV2Condition `json:"terminalCondition,omitempty"`
+	TerminalCondition *GoogleCloudRunV2Condition `json:"terminalCondition,omitempty"`
 
 	// Traffic: Specifies how to distribute traffic over a collection of
 	// Revisions belonging to the Service. If traffic is empty or not
 	// provided, defaults to 100% traffic to the latest `Ready` Revision.
-	Traffic []*GoogleCloudRunOpV2TrafficTarget `json:"traffic,omitempty"`
+	Traffic []*GoogleCloudRunV2TrafficTarget `json:"traffic,omitempty"`
 
 	// TrafficStatuses: Output only. Detailed status information for
 	// corresponding traffic targets. See comments in `reconciling` for
 	// additional information on reconciliation process in Cloud Run.
-	TrafficStatuses []*GoogleCloudRunOpV2TrafficTargetStatus `json:"trafficStatuses,omitempty"`
+	TrafficStatuses []*GoogleCloudRunV2TrafficTargetStatus `json:"trafficStatuses,omitempty"`
 
 	// Uid: Output only. Server assigned unique identifier for the trigger.
 	// The value is a UUID4 string and guaranteed to remain unchanged until
@@ -1340,16 +1340,16 @@ type GoogleCloudRunOpV2Service struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2Service) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2Service
+func (s *GoogleCloudRunV2Service) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2Service
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2TrafficTarget: Holds a single traffic routing entry
+// GoogleCloudRunV2TrafficTarget: Holds a single traffic routing entry
 // for the Service. Allocations can be done to a specific Revision name,
 // or pointing to the latest Ready Revision.
-type GoogleCloudRunOpV2TrafficTarget struct {
+type GoogleCloudRunV2TrafficTarget struct {
 	// Percent: Specifies percent of the traffic to this Revision. This
 	// defaults to zero if unspecified.
 	Percent int64 `json:"percent,omitempty"`
@@ -1390,15 +1390,15 @@ type GoogleCloudRunOpV2TrafficTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2TrafficTarget) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2TrafficTarget
+func (s *GoogleCloudRunV2TrafficTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2TrafficTarget
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2TrafficTargetStatus: Represents the observed state
-// of a single `TrafficTarget` entry.
-type GoogleCloudRunOpV2TrafficTargetStatus struct {
+// GoogleCloudRunV2TrafficTargetStatus: Represents the observed state of
+// a single `TrafficTarget` entry.
+type GoogleCloudRunV2TrafficTargetStatus struct {
 	// Percent: Specifies percent of the traffic to this Revision.
 	Percent int64 `json:"percent,omitempty"`
 
@@ -1440,16 +1440,16 @@ type GoogleCloudRunOpV2TrafficTargetStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2TrafficTargetStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2TrafficTargetStatus
+func (s *GoogleCloudRunV2TrafficTargetStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2TrafficTargetStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2VersionToPath: VersionToPath maps a specific
-// version of a secret to a relative file to mount to, relative to
-// VolumeMount's mount_path.
-type GoogleCloudRunOpV2VersionToPath struct {
+// GoogleCloudRunV2VersionToPath: VersionToPath maps a specific version
+// of a secret to a relative file to mount to, relative to VolumeMount's
+// mount_path.
+type GoogleCloudRunV2VersionToPath struct {
 	// Mode: Integer octal mode bits to use on this file, must be a value
 	// between 01 and 0777 (octal). If 0 or not set, the Volume's default
 	// mode will be used. Notes * Internally, a umask of 0222 will be
@@ -1487,27 +1487,27 @@ type GoogleCloudRunOpV2VersionToPath struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2VersionToPath) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2VersionToPath
+func (s *GoogleCloudRunV2VersionToPath) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2VersionToPath
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2Volume: Volume represents a named volume in a
+// GoogleCloudRunV2Volume: Volume represents a named volume in a
 // container.
-type GoogleCloudRunOpV2Volume struct {
+type GoogleCloudRunV2Volume struct {
 	// CloudSqlInstance: For Cloud SQL volumes, contains the specific
 	// instances that should be mounted. Visit
 	// https://cloud.google.com/sql/docs/mysql/connect-run for more
 	// information on how to connect Cloud SQL and Cloud Run.
-	CloudSqlInstance *GoogleCloudRunOpV2CloudSqlInstance `json:"cloudSqlInstance,omitempty"`
+	CloudSqlInstance *GoogleCloudRunV2CloudSqlInstance `json:"cloudSqlInstance,omitempty"`
 
 	// Name: Required. Volume's name.
 	Name string `json:"name,omitempty"`
 
 	// Secret: Secret represents a secret that should populate this volume.
 	// More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
-	Secret *GoogleCloudRunOpV2SecretVolumeSource `json:"secret,omitempty"`
+	Secret *GoogleCloudRunV2SecretVolumeSource `json:"secret,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CloudSqlInstance") to
 	// unconditionally include in API requests. By default, fields with
@@ -1527,15 +1527,15 @@ type GoogleCloudRunOpV2Volume struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2Volume) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2Volume
+func (s *GoogleCloudRunV2Volume) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2Volume
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2VolumeMount: VolumeMount describes a mounting of a
+// GoogleCloudRunV2VolumeMount: VolumeMount describes a mounting of a
 // Volume within a container.
-type GoogleCloudRunOpV2VolumeMount struct {
+type GoogleCloudRunV2VolumeMount struct {
 	// MountPath: Required. Path within the container at which the volume
 	// should be mounted. Must not contain ':'. For Cloud SQL volumes, it
 	// can be left empty, or must otherwise be `/cloudsql`. All instances
@@ -1564,19 +1564,19 @@ type GoogleCloudRunOpV2VolumeMount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2VolumeMount) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2VolumeMount
+func (s *GoogleCloudRunV2VolumeMount) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2VolumeMount
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunOpV2VpcAccess: VPC Access settings. For more
-// information on creating a VPC Connector, visit
+// GoogleCloudRunV2VpcAccess: VPC Access settings. For more information
+// on creating a VPC Connector, visit
 // https://cloud.google.com/vpc/docs/configure-serverless-vpc-access For
 // information on how to configure Cloud Run with an existing VPC
 // Connector, visit
 // https://cloud.google.com/run/docs/configuring/connecting-vpc
-type GoogleCloudRunOpV2VpcAccess struct {
+type GoogleCloudRunV2VpcAccess struct {
 	// Connector: VPC Access connector name. Format:
 	// projects/{project}/locations/{location}/connectors/{connector}
 	Connector string `json:"connector,omitempty"`
@@ -1608,8 +1608,8 @@ type GoogleCloudRunOpV2VpcAccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRunOpV2VpcAccess) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunOpV2VpcAccess
+func (s *GoogleCloudRunV2VpcAccess) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2VpcAccess
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2720,22 +2720,22 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 // method id "run.projects.locations.services.create":
 
 type ProjectsLocationsServicesCreateCall struct {
-	s                         *Service
-	parent                    string
-	googlecloudrunopv2service *GoogleCloudRunOpV2Service
-	urlParams_                gensupport.URLParams
-	ctx_                      context.Context
-	header_                   http.Header
+	s                       *Service
+	parent                  string
+	googlecloudrunv2service *GoogleCloudRunV2Service
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
 }
 
 // Create: Creates a new Service in a given project and location.
 //
 // - parent: The location and project in which this service should be
 //   created. Format: projects/{projectnumber}/locations/{location}.
-func (r *ProjectsLocationsServicesService) Create(parent string, googlecloudrunopv2service *GoogleCloudRunOpV2Service) *ProjectsLocationsServicesCreateCall {
+func (r *ProjectsLocationsServicesService) Create(parent string, googlecloudrunv2service *GoogleCloudRunV2Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudrunopv2service = googlecloudrunopv2service
+	c.googlecloudrunv2service = googlecloudrunv2service
 	return c
 }
 
@@ -2788,7 +2788,7 @@ func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Respo
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrunopv2service)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrunv2service)
 	if err != nil {
 		return nil, err
 	}
@@ -2874,7 +2874,7 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//   },
 	//   "path": "v2/{+parent}/services",
 	//   "request": {
-	//     "$ref": "GoogleCloudRunOpV2Service"
+	//     "$ref": "GoogleCloudRunV2Service"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
@@ -3129,13 +3129,13 @@ func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "run.projects.locations.services.get" call.
-// Exactly one of *GoogleCloudRunOpV2Service or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudRunOpV2Service.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
+// Exactly one of *GoogleCloudRunV2Service or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRunV2Service.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunOpV2Service, error) {
+func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2Service, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3154,7 +3154,7 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Go
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudRunOpV2Service{
+	ret := &GoogleCloudRunV2Service{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3184,7 +3184,7 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Go
 	//   },
 	//   "path": "v2/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudRunOpV2Service"
+	//     "$ref": "GoogleCloudRunV2Service"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -3380,8 +3380,9 @@ type ProjectsLocationsServicesListCall struct {
 
 // List: List Services.
 //
-// - parent: The location and project to list resources on. Format:
-//   projects/{projectnumber}/locations/{location}.
+// - parent: The location and project to list resources on. Location
+//   must be a valid GCP region, and may not be the "-" wildcard.
+//   Format: projects/{projectnumber}/locations/{location}.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3472,14 +3473,14 @@ func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "run.projects.locations.services.list" call.
-// Exactly one of *GoogleCloudRunOpV2ListServicesResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudRunOpV2ListServicesResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunOpV2ListServicesResponse, error) {
+// Exactly one of *GoogleCloudRunV2ListServicesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudRunV2ListServicesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2ListServicesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3498,7 +3499,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*G
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudRunOpV2ListServicesResponse{
+	ret := &GoogleCloudRunV2ListServicesResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3530,7 +3531,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The location and project to list resources on. Format: projects/{projectnumber}/locations/{location}",
+	//       "description": "Required. The location and project to list resources on. Location must be a valid GCP region, and may not be the \"-\" wildcard. Format: projects/{projectnumber}/locations/{location}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3544,7 +3545,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//   },
 	//   "path": "v2/{+parent}/services",
 	//   "response": {
-	//     "$ref": "GoogleCloudRunOpV2ListServicesResponse"
+	//     "$ref": "GoogleCloudRunV2ListServicesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -3556,7 +3557,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*G
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsServicesListCall) Pages(ctx context.Context, f func(*GoogleCloudRunOpV2ListServicesResponse) error) error {
+func (c *ProjectsLocationsServicesListCall) Pages(ctx context.Context, f func(*GoogleCloudRunV2ListServicesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -3577,12 +3578,12 @@ func (c *ProjectsLocationsServicesListCall) Pages(ctx context.Context, f func(*G
 // method id "run.projects.locations.services.patch":
 
 type ProjectsLocationsServicesPatchCall struct {
-	s                         *Service
-	name                      string
-	googlecloudrunopv2service *GoogleCloudRunOpV2Service
-	urlParams_                gensupport.URLParams
-	ctx_                      context.Context
-	header_                   http.Header
+	s                       *Service
+	name                    string
+	googlecloudrunv2service *GoogleCloudRunV2Service
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
 }
 
 // Patch: Updates a Service.
@@ -3592,10 +3593,10 @@ type ProjectsLocationsServicesPatchCall struct {
 //   from CreateServiceRequest.parent and
 //   CreateServiceRequest.service_id. Format:
 //   projects/{project}/locations/{location}/services/{service_id}.
-func (r *ProjectsLocationsServicesService) Patch(name string, googlecloudrunopv2service *GoogleCloudRunOpV2Service) *ProjectsLocationsServicesPatchCall {
+func (r *ProjectsLocationsServicesService) Patch(name string, googlecloudrunv2service *GoogleCloudRunV2Service) *ProjectsLocationsServicesPatchCall {
 	c := &ProjectsLocationsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.googlecloudrunopv2service = googlecloudrunopv2service
+	c.googlecloudrunv2service = googlecloudrunv2service
 	return c
 }
 
@@ -3656,7 +3657,7 @@ func (c *ProjectsLocationsServicesPatchCall) doRequest(alt string) (*http.Respon
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrunopv2service)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrunv2service)
 	if err != nil {
 		return nil, err
 	}
@@ -3748,7 +3749,7 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "path": "v2/{+name}",
 	//   "request": {
-	//     "$ref": "GoogleCloudRunOpV2Service"
+	//     "$ref": "GoogleCloudRunV2Service"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
@@ -4296,13 +4297,13 @@ func (c *ProjectsLocationsServicesRevisionsGetCall) doRequest(alt string) (*http
 }
 
 // Do executes the "run.projects.locations.services.revisions.get" call.
-// Exactly one of *GoogleCloudRunOpV2Revision or error will be non-nil.
+// Exactly one of *GoogleCloudRunV2Revision or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudRunOpV2Revision.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
+// *GoogleCloudRunV2Revision.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsServicesRevisionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunOpV2Revision, error) {
+func (c *ProjectsLocationsServicesRevisionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2Revision, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4321,7 +4322,7 @@ func (c *ProjectsLocationsServicesRevisionsGetCall) Do(opts ...googleapi.CallOpt
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudRunOpV2Revision{
+	ret := &GoogleCloudRunV2Revision{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -4351,7 +4352,7 @@ func (c *ProjectsLocationsServicesRevisionsGetCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "path": "v2/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudRunOpV2Revision"
+	//     "$ref": "GoogleCloudRunV2Revision"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -4467,14 +4468,14 @@ func (c *ProjectsLocationsServicesRevisionsListCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "run.projects.locations.services.revisions.list" call.
-// Exactly one of *GoogleCloudRunOpV2ListRevisionsResponse or error will
+// Exactly one of *GoogleCloudRunV2ListRevisionsResponse or error will
 // be non-nil. Any non-2xx status code is an error. Response headers are
 // in either
-// *GoogleCloudRunOpV2ListRevisionsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
+// *GoogleCloudRunV2ListRevisionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsServicesRevisionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunOpV2ListRevisionsResponse, error) {
+func (c *ProjectsLocationsServicesRevisionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2ListRevisionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4493,7 +4494,7 @@ func (c *ProjectsLocationsServicesRevisionsListCall) Do(opts ...googleapi.CallOp
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudRunOpV2ListRevisionsResponse{
+	ret := &GoogleCloudRunV2ListRevisionsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -4539,7 +4540,7 @@ func (c *ProjectsLocationsServicesRevisionsListCall) Do(opts ...googleapi.CallOp
 	//   },
 	//   "path": "v2/{+parent}/revisions",
 	//   "response": {
-	//     "$ref": "GoogleCloudRunOpV2ListRevisionsResponse"
+	//     "$ref": "GoogleCloudRunV2ListRevisionsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -4551,7 +4552,7 @@ func (c *ProjectsLocationsServicesRevisionsListCall) Do(opts ...googleapi.CallOp
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsServicesRevisionsListCall) Pages(ctx context.Context, f func(*GoogleCloudRunOpV2ListRevisionsResponse) error) error {
+func (c *ProjectsLocationsServicesRevisionsListCall) Pages(ctx context.Context, f func(*GoogleCloudRunV2ListRevisionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

@@ -1,5 +1,35 @@
 # Changes
 
+## [0.71.0](https://github.com/googleapis/google-api-go-client/compare/v0.70.0...v0.71.0) (2022-03-08)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1469](https://github.com/googleapis/google-api-go-client/issues/1469) [#1467](https://github.com/googleapis/google-api-go-client/issues/1467) [#1466](https://github.com/googleapis/google-api-go-client/issues/1466) [#1465](https://github.com/googleapis/google-api-go-client/issues/1465) [#1464](https://github.com/googleapis/google-api-go-client/issues/1464) [#1463](https://github.com/googleapis/google-api-go-client/issues/1463) [#1457](https://github.com/googleapis/google-api-go-client/issues/1457) [#1455](https://github.com/googleapis/google-api-go-client/issues/1455) [#1453](https://github.com/googleapis/google-api-go-client/issues/1453)
+* **internal/gensupport:** add net.ErrClosed to default retry ([#1462](https://github.com/googleapis/google-api-go-client/issues/1462)) ([33ba990](https://github.com/googleapis/google-api-go-client/commit/33ba990caa9a19720ff862d91b1226781aee94cd))
+
+## [0.70.0](https://github.com/googleapis/google-api-go-client/compare/v0.69.0...v0.70.0) (2022-02-22)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1450](https://github.com/googleapis/google-api-go-client/issues/1450) [#1449](https://github.com/googleapis/google-api-go-client/issues/1449) [#1448](https://github.com/googleapis/google-api-go-client/issues/1448) [#1444](https://github.com/googleapis/google-api-go-client/issues/1444)
+* **transport:** add an env variable to disable DirectPath ([#1447](https://github.com/googleapis/google-api-go-client/issues/1447)) ([7bce545](https://github.com/googleapis/google-api-go-client/commit/7bce545d91c0e7d4c51962634dd40de39605f369))
+
+## [0.69.0](https://github.com/googleapis/google-api-go-client/compare/v0.68.0...v0.69.0) (2022-02-15)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1443](https://github.com/googleapis/google-api-go-client/issues/1443) [#1439](https://github.com/googleapis/google-api-go-client/issues/1439) [#1438](https://github.com/googleapis/google-api-go-client/issues/1438) [#1437](https://github.com/googleapis/google-api-go-client/issues/1437)
+* bump grpc and x/net ([#1428](https://github.com/googleapis/google-api-go-client/issues/1428)) ([331bc9e](https://github.com/googleapis/google-api-go-client/commit/331bc9ececf37af4a07db7a6e00e67800b66a88a))
+
+
+### Bug Fixes
+
+* **gensupport:** cover ChunkRetryDeadline edge case ([#1430](https://github.com/googleapis/google-api-go-client/issues/1430)) ([ef89845](https://github.com/googleapis/google-api-go-client/commit/ef898456d14592574235bb839514bd549e1007ba))
+* **internal/kokoro:** path to module root to run discogen ([#1433](https://github.com/googleapis/google-api-go-client/issues/1433)) ([4499c41](https://github.com/googleapis/google-api-go-client/commit/4499c413cda13a7a638b34205941cdf367c3ae1a))
+
 ## [0.68.0](https://github.com/googleapis/google-api-go-client/compare/v0.67.0...v0.68.0) (2022-02-08)
 
 

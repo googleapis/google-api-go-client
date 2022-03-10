@@ -867,6 +867,10 @@ type SasPortalDeviceMetadata struct {
 	// coordinated with the National Quiet Zone office.
 	NrqzValidated bool `json:"nrqzValidated,omitempty"`
 
+	// NrqzValidation: Output only. National Radio Quiet Zone validation
+	// info.
+	NrqzValidation *SasPortalNrqzValidation `json:"nrqzValidation,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AntennaModel") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1494,6 +1498,61 @@ func (s *SasPortalNode) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalNode
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SasPortalNrqzValidation: Information about National Radio Quiet Zone
+// validation. The presence of the field indicates the device has been
+// validated.
+type SasPortalNrqzValidation struct {
+	// CaseId: Validation case id.
+	CaseId string `json:"caseId,omitempty"`
+
+	// CpiId: CPI who signed the validation.
+	CpiId string `json:"cpiId,omitempty"`
+
+	// Latitude: Device latitude associated with the validation.
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Longitude: Device longitude associated with the validation.
+	Longitude float64 `json:"longitude,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaseId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaseId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SasPortalNrqzValidation) MarshalJSON() ([]byte, error) {
+	type NoMethod SasPortalNrqzValidation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SasPortalNrqzValidation) UnmarshalJSON(data []byte) error {
+	type NoMethod SasPortalNrqzValidation
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
 }
 
 // SasPortalOperation: This resource represents a long-running operation

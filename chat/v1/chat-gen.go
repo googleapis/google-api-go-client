@@ -268,8 +268,9 @@ func (s *ActionParameter) MarshalJSON() ([]byte, error) {
 // ActionResponse: Parameters that a bot can use to configure how it's
 // response is posted.
 type ActionResponse struct {
-	// DialogAction: This response is for Dialog related events and must be
-	// accompanied by ResponseType.Dialog
+	// DialogAction: A response to an event related to a dialog
+	// (https://developers.google.com/chat/how-tos/bot-dialogs). Must be
+	// accompanied by `ResponseType.Dialog`.
 	DialogAction *DialogAction `json:"dialogAction,omitempty"`
 
 	// Type: The type of bot response.
@@ -285,6 +286,8 @@ type ActionResponse struct {
 	// HUMAN. Text will be ignored.
 	//   "REQUEST_CONFIG" - Privately ask the user for additional auth or
 	// config.
+	//   "DIALOG" - Presents a
+	// [dialog](https://developers.google.com/chat/how-tos/bot-dialogs).
 	Type string `json:"type,omitempty"`
 
 	// Url: URL for users to auth or config. (Only for REQUEST_CONFIG
@@ -314,10 +317,7 @@ func (s *ActionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ActionStatus: ActionStatus represents status of a request from the
-// bot developer's side. In specific, for each request a bot gets, the
-// bot developer will set both fields below in relation to what the
-// response status and message related to status should be.
+// ActionStatus: Represents the status of a request.
 type ActionStatus struct {
 	// StatusCode: The status code.
 	//
@@ -411,11 +411,9 @@ type ActionStatus struct {
 	// 500 Internal Server Error
 	StatusCode string `json:"statusCode,omitempty"`
 
-	// UserFacingMessage: This message will be the corresponding string to
-	// the above status_code. If unset, an appropriate generic message based
-	// on the status_code will be shown to the user. If this field is set
-	// then the message will be surfaced to the user for both successes and
-	// errors.
+	// UserFacingMessage: The message to send users about the status of
+	// their request. If unset, a generic message based on the `status_code`
+	// is sent.
 	UserFacingMessage string `json:"userFacingMessage,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "StatusCode") to
@@ -858,39 +856,51 @@ func (s *Color) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// CommonEventObject: Next available ID = 8
+// CommonEventObject: Represents information about the user's client,
+// such as locale, host app, and platform. For Chat apps,
+// `CommonEventObject` includes data submitted by users interacting with
+// cards, like data entered in dialogs
+// (https://developers.google.com/chat/how-tos/bot-dialogs).
 type CommonEventObject struct {
-	// FormInputs: The keys are the string IDs associated with the widget
-	// and the values are inputs with a widget in the card.
+	// FormInputs: A map containing the current values of the widgets in a
+	// card. The map keys are the string IDs assigned to each widget, and
+	// the values represent inputs to the widget. Depending on the input
+	// data type, a different object represents each input: For single-value
+	// widgets, `StringInput`. For multi-value widgets, an array of
+	// `StringInput` objects. For a date-time picker, a `DateTimeInput`. For
+	// a date-only picker, a `DateInput`. For a time-only picker, a
+	// `TimeInput`. Corresponds with the data entered by a user on a card in
+	// a dialog (https://developers.google.com/chat/how-tos/bot-dialogs).
 	FormInputs map[string]Inputs `json:"formInputs,omitempty"`
 
 	// HostApp: The hostApp enum which indicates the app the add-on is
-	// invoked from
+	// invoked from. Always `CHAT` for Chat apps.
 	//
 	// Possible values:
-	//   "UNSPECIFIED_HOST_APP"
-	//   "GMAIL"
-	//   "CALENDAR"
-	//   "DRIVE"
-	//   "DEMO"
-	//   "DOCS"
-	//   "SHEETS"
-	//   "SLIDES"
-	//   "DRAWINGS"
-	//   "CHAT"
-	//   "ALL_HOST_APPS" - This is only used for aggregating logs on the
-	// server. Clients should never send these values directly.
+	//   "UNSPECIFIED_HOST_APP" - Google can't identify a host app.
+	//   "GMAIL" - The add-on launches from Gmail.
+	//   "CALENDAR" - The add-on launches from Google Calendar.
+	//   "DRIVE" - The add-on launches from Google Drive.
+	//   "DEMO" - Not used.
+	//   "DOCS" - The add-on launches from Google Docs.
+	//   "SHEETS" - The add-on launches from Google Sheets.
+	//   "SLIDES" - The add-on launches from Google Slides.
+	//   "DRAWINGS" - The add-on launches from Google Drawings.
+	//   "CHAT" - A Google Chat app. Not used for Google Workspace Add-ons.
 	HostApp string `json:"hostApp,omitempty"`
 
 	// InvokedFunction: Name of the invoked function associated with the
-	// widget. This field is currently only set for chat.
+	// widget. Only set for Chat apps.
 	InvokedFunction string `json:"invokedFunction,omitempty"`
 
-	// Parameters: Any additional parameters.
+	// Parameters: Custom parameters
+	// (/chat/api/reference/rest/v1/cards#ActionParameter) passed to the
+	// invoked function. Both keys and values must be strings.
 	Parameters map[string]string `json:"parameters,omitempty"`
 
 	// Platform: The platform enum which indicates the platform where the
-	// add-on is running.
+	// event originates (`WEB`, `IOS`, or `ANDROID`). Not supported by Chat
+	// apps.
 	//
 	// Possible values:
 	//   "UNKNOWN_PLATFORM"
@@ -899,10 +909,13 @@ type CommonEventObject struct {
 	//   "ANDROID"
 	Platform string `json:"platform,omitempty"`
 
+	// TimeZone: The timezone ID and offset from Coordinated Universal Time
+	// (UTC).
 	TimeZone *TimeZone `json:"timeZone,omitempty"`
 
-	// UserLocale: The full locale.displayName in the format of [ISO 639
-	// language code]-[ISO 3166 country/region code] such as "en-US"
+	// UserLocale: The full `locale.displayName` in the format of [ISO 639
+	// language code]-[ISO 3166 country/region code] such as "en-US". Not
+	// supported by Chat apps.
 	UserLocale string `json:"userLocale,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FormInputs") to
@@ -928,8 +941,9 @@ func (s *CommonEventObject) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DateInput: Input Parameter for Date Picker widget.
+// DateInput: Date input values. Not supported by Chat apps.
 type DateInput struct {
+	// MsSinceEpoch: Time since epoch time, in milliseconds.
 	MsSinceEpoch int64 `json:"msSinceEpoch,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "MsSinceEpoch") to
@@ -955,12 +969,16 @@ func (s *DateInput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DateTimeInput: Input Parameter for Date and Time Picker widget.
+// DateTimeInput: Date and time input values. Not supported by Chat
+// apps.
 type DateTimeInput struct {
+	// HasDate: Whether the `datetime` input includes a calendar date.
 	HasDate bool `json:"hasDate,omitempty"`
 
+	// HasTime: Whether the `datetime` input includes a timestamp.
 	HasTime bool `json:"hasTime,omitempty"`
 
+	// MsSinceEpoch: Time since epoch time, in milliseconds.
 	MsSinceEpoch int64 `json:"msSinceEpoch,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "HasDate") to
@@ -994,8 +1012,11 @@ type DeprecatedEvent struct {
 	// information.
 	Action *FormAction `json:"action,omitempty"`
 
-	// Common: This will include form information for dialogs such as form
-	// inputs, action parameters.
+	// Common: Represents information about the user's client, such as
+	// locale, host app, and platform. For Chat apps, `CommonEventObject`
+	// includes information submitted by users interacting with dialogs
+	// (https://developers.google.com/chat/how-tos/bot-dialogs), like data
+	// entered on a card.
 	Common *CommonEventObject `json:"common,omitempty"`
 
 	// ConfigCompleteRedirectUrl: The URL the bot should redirect the user
@@ -1004,23 +1025,27 @@ type DeprecatedEvent struct {
 	// guide (/chat/how-tos/auth-3p) for more information.
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 
-	// DialogEventType: The type of dialog event we have received.
+	// DialogEventType: The type of dialog
+	// (https://developers.google.com/chat/how-tos/bot-dialogs) event
+	// received.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - This could be used when the corresponding
 	// event is not dialog related. For example an @mention.
-	//   "REQUEST_DIALOG" - For any user action that would result in a
-	// dialog opening.
-	//   "SUBMIT_DIALOG" - For card click events from any dialog.
-	//   "CANCEL_DIALOG" - For native cancellation button.
+	//   "REQUEST_DIALOG" - Any user action that opens a
+	// [dialog](https://developers.google.com/chat/how-tos/bot-dialogs).
+	//   "SUBMIT_DIALOG" - A card click event from a
+	// [dialog](https://developers.google.com/chat/how-tos/bot-dialogs).
+	//   "CANCEL_DIALOG" - The
+	// [dialog](https://developers.google.com/chat/how-tos/bot-dialogs) was
+	// cancelled.
 	DialogEventType string `json:"dialogEventType,omitempty"`
 
 	// EventTime: The timestamp indicating when the event occurred.
 	EventTime string `json:"eventTime,omitempty"`
 
-	// IsDialogEvent: Whether or not this event is related to dialogs
-	// request, submit or cancel. This will be set to true when we want a
-	// request/submit/cancel event.
+	// IsDialogEvent: True when the event is related to dialogs
+	// (https://developers.google.com/chat/how-tos/bot-dialogs).
 	IsDialogEvent bool `json:"isDialogEvent,omitempty"`
 
 	// Message: The message that triggered the event, if applicable.
@@ -1079,14 +1104,9 @@ func (s *DeprecatedEvent) MarshalJSON() ([]byte, error) {
 
 // Dialog: Wrapper around the card body of the dialog.
 type Dialog struct {
-	// Body: Body of the dialog, which will be rendered in a modal. NOTE:
-	// The following fields within the objects are not supported:
-	// google.apps.card.v1.Widget.date_time_picker
-	// google.apps.card.v1.DecoratedText.SwitchControl.on_change_action
-	// google.apps.card.v1.TextInput.on_change_action
-	// google.apps.card.v1.SelectionInput.on_change_action
-	// google.apps.card.v1.DateTimePicker.on_change_action Setting the
-	// fields above will have no effect on the dialog.
+	// Body: Body of the dialog, which is rendered in a modal. Google Chat
+	// apps do not support the following card entities: `DateTimePicker`,
+	// `OnChangeAction`.
 	Body *GoogleAppsCardV1Card `json:"body,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Body") to
@@ -1112,15 +1132,19 @@ func (s *Dialog) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DialogAction: Contains dialog if present as well as the ActionStatus
-// for the request sent from user.
+// DialogAction: Contains a dialog
+// (https://developers.google.com/chat/how-tos/bot-dialogs) and request
+// status code.
 type DialogAction struct {
-	// ActionStatus: Status for either invoke dialog or submit dialog
-	// requests. This will be used to display a status and message to user
-	// if needed. For example in case of an error or success.
+	// ActionStatus: Status for a request to either invoke or submit a
+	// dialog (https://developers.google.com/chat/how-tos/bot-dialogs).
+	// Displays a status and message to users, if necessary. For example, in
+	// case of an error or success.
 	ActionStatus *ActionStatus `json:"actionStatus,omitempty"`
 
-	// Dialog: Dialog for the request.
+	// Dialog: Dialog
+	// (https://developers.google.com/chat/how-tos/bot-dialogs) for the
+	// request.
 	Dialog *Dialog `json:"dialog,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionStatus") to
@@ -1270,6 +1294,9 @@ type GoogleAppsCardV1Action struct {
 	// is clicked/activated.
 	Function string `json:"function,omitempty"`
 
+	// LoadIndicator: Specifies the loading indicator that the action
+	// displays while making the call to the action.
+	//
 	// Possible values:
 	//   "SPINNER" - Displays a spinner to indicate that content is loading.
 	//   "NONE" - Nothing is displayed.
@@ -1401,7 +1428,7 @@ type GoogleAppsCardV1Button struct {
 	// Color: If set, the button is filled with a solid background.
 	Color *Color `json:"color,omitempty"`
 
-	// Disabled: If true, the button is displayed in a disabled state and
+	// Disabled: If `true`, the button is displayed in a disabled state and
 	// doesn't respond to user actions.
 	Disabled bool `json:"disabled,omitempty"`
 
@@ -1439,6 +1466,7 @@ func (s *GoogleAppsCardV1Button) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1ButtonList: A list of buttons layed out horizontally.
 type GoogleAppsCardV1ButtonList struct {
+	// Buttons: An array of buttons.
 	Buttons []*GoogleAppsCardV1Button `json:"buttons,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Buttons") to
@@ -1469,15 +1497,15 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // For example, the following JSON creates a card that has a header with
 // the name, position, icons, and link for a contact, followed by a
 // section with contact information like email and phone number. ``` {
-// "header": { "title": "Heba Salam", "subtitle": "Software Engineer",
+// "header": { "title": "Sasha", "subtitle": "Software Engineer",
 // "imageStyle": "ImageStyle.AVATAR", "imageUrl":
-// "https://example.com/heba_salam.png", "imageAltText": "Avatar for
-// Heba Salam" }, "sections" : [ { "header": "Contact Info", "widgets":
-// [ { "decorated_text": { "icon": { "knownIcon": "EMAIL" }, "content":
-// "heba.salam@example.com" } }, { "decoratedText": { "icon": {
-// "knownIcon": "PERSON" }, "content": "Online" } }, { "decoratedText":
-// { "icon": { "knownIcon": "PHONE" }, "content": "+1 (555) 555-1234" }
-// }, { "buttons": [ { "textButton": { "text": "Share", }, "onClick": {
+// "https://example.com/sasha.png", "imageAltText": "Avatar for Sasha"
+// }, "sections" : [ { "header": "Contact Info", "widgets": [ {
+// "decorated_text": { "icon": { "knownIcon": "EMAIL" }, "content":
+// "sasha@example.com" } }, { "decoratedText": { "icon": { "knownIcon":
+// "PERSON" }, "content": "Online" } }, { "decoratedText": { "icon": {
+// "knownIcon": "PHONE" }, "content": "+1 (555) 555-1234" } }, {
+// "buttons": [ { "textButton": { "text": "Share", }, "onClick": {
 // "openLink": { "url": "https://example.com/share" } } }, {
 // "textButton": { "text": "Edit", }, "onClick": { "action": {
 // "function": "goToView", "parameters": [ { "key": "viewType", "value":
@@ -1487,20 +1515,20 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // "openLink": { "url": "https://example.com/feedback" } } } ], "name":
 // "contact-card-K3wB6arF2H9L" } ```
 type GoogleAppsCardV1Card struct {
-	// CardActions: The actions of this card. They are added to a card's
+	// CardActions: The card's actions. Actions are added to the card's
 	// generated toolbar menu. For example, the following JSON constructs a
 	// card action menu with Settings and Send Feedback options: ```
-	// "card_actions": [ { "actionLabel": "Setting", "onClick": { "action":
+	// "card_actions": [ { "actionLabel": "Settings", "onClick": { "action":
 	// { "functionName": "goToView", "parameters": [ { "key": "viewType",
 	// "value": "SETTING" } ], "loadIndicator": "LoadIndicator.SPINNER" } }
 	// }, { "actionLabel": "Send Feedback", "onClick": { "openLink": {
 	// "url": "https://example.com/feedback" } } } ] ```
 	CardActions []*GoogleAppsCardV1CardAction `json:"cardActions,omitempty"`
 
-	// DisplayStyle: The display style for peekCardHeader.
+	// DisplayStyle: The display style for `peekCardHeader`.
 	//
 	// Possible values:
-	//   "DISPLAY_STYLE_UNSPECIFIED"
+	//   "DISPLAY_STYLE_UNSPECIFIED" - Default value. Do not use.
 	//   "PEEK" - The header of the card appears at the bottom of the
 	// sidebar, partially covering the current top card of the stack.
 	// Clicking the header pops the card into the card stack. If the card
@@ -1516,8 +1544,7 @@ type GoogleAppsCardV1Card struct {
 	// an image.
 	Header *GoogleAppsCardV1CardHeader `json:"header,omitempty"`
 
-	// Name: Name of the card, which is used as a identifier for the card in
-	// card navigation.
+	// Name: Name of the card. Used as a card identifier in card navigation.
 	Name string `json:"name,omitempty"`
 
 	// PeekCardHeader: When displaying contextual content, the peek card
@@ -1559,7 +1586,7 @@ type GoogleAppsCardV1CardAction struct {
 	// ActionLabel: The label that displays as the action menu item.
 	ActionLabel string `json:"actionLabel,omitempty"`
 
-	// OnClick: The onclick action for this action item.
+	// OnClick: The `onClick` action for this action item.
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionLabel") to
@@ -1620,6 +1647,7 @@ func (s *GoogleAppsCardV1CardFixedFooter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1CardHeader: Represents a card header.
 type GoogleAppsCardV1CardHeader struct {
 	// ImageAltText: The alternative text of this image which is used for
 	// accessibility.
@@ -1638,10 +1666,9 @@ type GoogleAppsCardV1CardHeader struct {
 	// Subtitle: The subtitle of the card header.
 	Subtitle string `json:"subtitle,omitempty"`
 
-	// Title: The title of the card header. The title must be specified. The
-	// header has a fixed height: if both a title and subtitle are
-	// specified, each takes up one line. If only the title is specified, it
-	// takes up both lines.
+	// Title: Required. The title of the card header. The header has a fixed
+	// height: if both a title and subtitle are specified, each takes up one
+	// line. If only the title is specified, it takes up both lines.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageAltText") to
@@ -1668,12 +1695,12 @@ func (s *GoogleAppsCardV1CardHeader) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1DateTimePicker: The widget that lets users to specify
-// a date and time.
+// a date and time. Not supported by Google Chat apps.
 type GoogleAppsCardV1DateTimePicker struct {
 	// Label: The label for the field that displays to the user.
 	Label string `json:"label,omitempty"`
 
-	// Name: The name of the text input that's used in formInput, and
+	// Name: The name of the text input that's used in `formInput`, and
 	// uniquely identifies this input.
 	Name string `json:"name,omitempty"`
 
@@ -1914,7 +1941,7 @@ type GoogleAppsCardV1Icon struct {
 	ImageType string `json:"imageType,omitempty"`
 
 	// KnownIcon: The icon specified by the string name of a list of known
-	// icons
+	// icons.
 	KnownIcon string `json:"knownIcon,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltText") to
@@ -1941,7 +1968,7 @@ func (s *GoogleAppsCardV1Icon) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Image: An image that is specified by a URL and can
-// have an onClick action.
+// have an `onClick` action.
 type GoogleAppsCardV1Image struct {
 	// AltText: The alternative text of this image, used for accessibility.
 	AltText string `json:"altText,omitempty"`
@@ -1949,6 +1976,7 @@ type GoogleAppsCardV1Image struct {
 	// ImageUrl: An image URL.
 	ImageUrl string `json:"imageUrl,omitempty"`
 
+	// OnClick: The action triggered by an `onClick` event.
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltText") to
@@ -1974,6 +2002,7 @@ func (s *GoogleAppsCardV1Image) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1ImageComponent: Represents an image.
 type GoogleAppsCardV1ImageComponent struct {
 	// AltText: The accessibility label for the image.
 	AltText string `json:"altText,omitempty"`
@@ -2066,8 +2095,10 @@ func (s *GoogleAppsCardV1ImageCropStyle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleAppsCardV1OnClick: Represents the response to an `onClick`
+// event.
 type GoogleAppsCardV1OnClick struct {
-	// Action: If specified, an action is triggered by this onClick.
+	// Action: If specified, an action is triggered by this `onClick`.
 	Action *GoogleAppsCardV1Action `json:"action,omitempty"`
 
 	// Card: A new card is pushed to the card stack after clicking if
@@ -2075,13 +2106,13 @@ type GoogleAppsCardV1OnClick struct {
 	Card *GoogleAppsCardV1Card `json:"card,omitempty"`
 
 	// OpenDynamicLinkAction: An add-on triggers this action when the action
-	// needs to open a link. This differs from the open_link above in that
+	// needs to open a link. This differs from the `open_link` above in that
 	// this needs to talk to server to get the link. Thus some preparation
 	// work is required for web client to do before the open link action
 	// response comes back.
 	OpenDynamicLinkAction *GoogleAppsCardV1Action `json:"openDynamicLinkAction,omitempty"`
 
-	// OpenLink: If specified, this onClick triggers an open link action.
+	// OpenLink: If specified, this `onClick` triggers an open link action.
 	OpenLink *GoogleAppsCardV1OpenLink `json:"openLink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -2107,17 +2138,24 @@ func (s *GoogleAppsCardV1OnClick) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1OpenLink: Represents an `onClick` event that opens a
+// hyperlink.
 type GoogleAppsCardV1OpenLink struct {
+	// OnClose: Whether the client forgets about a link after opening it, or
+	// observes it until the window closes. Not supported by Chat apps.
+	//
 	// Possible values:
 	//   "NOTHING" - Doesn’t reload the card after the child window
-	// closes. Reloads the card after the child window closes. If used in
-	// conjunction with
+	// closes.
+	//   "RELOAD" - Reloads the card after the child window closes. If used
+	// in conjunction with
 	// [OpenAs.OVERLAY](/workspace/add-ons/reference/rpc/google.apps.card.v1#
 	// openas), the child window acts as a modal dialog and the main card is
 	// blocked until the child window closes.
-	//   "RELOAD"
 	OnClose string `json:"onClose,omitempty"`
 
+	// OpenAs: How to open a link. Not supported by Chat apps.
+	//
 	// Possible values:
 	//   "FULL_SIZE" - The link opens as a full size window (if that's the
 	// frame used by the client.
@@ -2164,10 +2202,10 @@ type GoogleAppsCardV1Section struct {
 
 	// UncollapsibleWidgetsCount: The number of uncollapsible widgets. For
 	// example, when a section contains five widgets and the
-	// `numUncollapsibleWidget` is set to `2`, the first two widgets are
+	// `uncollapsibleWidgetsCount` is set to `2`, the first two widgets are
 	// always shown and the last three are collapsed as default. The
-	// `numUncollapsibleWidget` is taken into account only when collapsible
-	// is set to `true`.
+	// `uncollapsibleWidgetsCount` is taken into account only when
+	// `collapsible` is `true`.
 	UncollapsibleWidgetsCount int64 `json:"uncollapsibleWidgetsCount,omitempty"`
 
 	// Widgets: A section must contain at least 1 widget.
@@ -2196,15 +2234,16 @@ func (s *GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1SelectionInput: A widget that creates a UI item (for
-// example, a drop-down list) with options for users to select.
+// GoogleAppsCardV1SelectionInput: A widget that creates a UI item with
+// options for users to select. For example, a dropdown menu.
 type GoogleAppsCardV1SelectionInput struct {
+	// Items: An array of the selected items.
 	Items []*GoogleAppsCardV1SelectionItem `json:"items,omitempty"`
 
 	// Label: The label displayed ahead of the switch control.
 	Label string `json:"label,omitempty"`
 
-	// Name: The name of the text input which is used in formInput.
+	// Name: The name of the text input which is used in `formInput`.
 	Name string `json:"name,omitempty"`
 
 	// OnChangeAction: If specified, the form is submitted when the
@@ -2212,11 +2251,13 @@ type GoogleAppsCardV1SelectionInput struct {
 	// button.
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
 
+	// Type: The type of the selection.
+	//
 	// Possible values:
-	//   "CHECK_BOX" - The selection type is a checkbox.
-	//   "RADIO_BUTTON" - The selection type is a radio button.
-	//   "SWITCH" - The selection type is a switch.
-	//   "DROPDOWN" - The selection type is a dropdown.
+	//   "CHECK_BOX" - A checkbox.
+	//   "RADIO_BUTTON" - A radio button.
+	//   "SWITCH" - A switch.
+	//   "DROPDOWN" - A dropdown menu.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
@@ -2242,8 +2283,8 @@ func (s *GoogleAppsCardV1SelectionInput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1SelectionItem: The item in the switch control. A
-// radio button, at most one of the items is selected.
+// GoogleAppsCardV1SelectionItem: A selectable item in the switch
+// control.
 type GoogleAppsCardV1SelectionItem struct {
 	// Selected: If more than one item is selected for `RADIO_BUTTON` and
 	// `DROPDOWN`, the first selected item is treated as selected and the
@@ -2280,9 +2321,9 @@ func (s *GoogleAppsCardV1SelectionItem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1SuggestionItem: A suggestion item. Only supports text
-// for now.
+// GoogleAppsCardV1SuggestionItem: A suggestion item.
 type GoogleAppsCardV1SuggestionItem struct {
+	// Text: The suggested autocomplete result.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Text") to
@@ -2311,8 +2352,7 @@ func (s *GoogleAppsCardV1SuggestionItem) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1Suggestions: A container wrapping elements necessary
 // for showing suggestion items used in text input autocomplete.
 type GoogleAppsCardV1Suggestions struct {
-	// Items: A list of suggestions items which will be used in are used in
-	// autocomplete.
+	// Items: A list of suggestions used for autocomplete recommendations.
 	Items []*GoogleAppsCardV1SuggestionItem `json:"items,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
@@ -2338,16 +2378,18 @@ func (s *GoogleAppsCardV1Suggestions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1SwitchControl: Either a toggle-style switch or a
+// checkbox.
 type GoogleAppsCardV1SwitchControl struct {
 	// ControlType: The control type, either switch or checkbox.
 	//
 	// Possible values:
-	//   "SWITCH"
+	//   "SWITCH" - A toggle-style switch.
 	//   "CHECKBOX" - Deprecated in favor of `CHECK_BOX`.
-	//   "CHECK_BOX"
+	//   "CHECK_BOX" - A checkbox.
 	ControlType string `json:"controlType,omitempty"`
 
-	// Name: The name of the switch widget that's used in formInput.
+	// Name: The name of the switch widget that's used in `formInput`.
 	Name string `json:"name,omitempty"`
 
 	// OnChangeAction: The action when the switch state is changed.
@@ -2402,7 +2444,7 @@ type GoogleAppsCardV1TextInput struct {
 	// Label: At least one of label and hintText must be specified.
 	Label string `json:"label,omitempty"`
 
-	// Name: The name of the text input which is used in formInput.
+	// Name: The name of the text input which is used in `formInput`.
 	Name string `json:"name,omitempty"`
 
 	// OnChangeAction: The onChange action, for example, invoke a function.
@@ -2496,9 +2538,9 @@ type GoogleAppsCardV1Widget struct {
 	// DecoratedText: Displays a decorated text item in this widget. For
 	// example, the following JSON creates a decorated text widget showing
 	// email address: ``` "decoratedText": { "icon": { "knownIcon": "EMAIL"
-	// }, "topLabel": "Email Address", "content": "heba.salam@example.com",
+	// }, "topLabel": "Email Address", "content": "sasha@example.com",
 	// "bottomLabel": "This is a new Email address!", "switchWidget": {
-	// "name": "has_send_welcome_email_to_heba_salam", "selected": false,
+	// "name": "has_send_welcome_email_to_sasha", "selected": false,
 	// "controlType": "ControlType.CHECKBOX" } } ```
 	DecoratedText *GoogleAppsCardV1DecoratedText `json:"decoratedText,omitempty"`
 
@@ -2527,8 +2569,8 @@ type GoogleAppsCardV1Widget struct {
 
 	// Image: Displays an image in this widget. For example, the following
 	// JSON creates an image with alternative text: ``` "image": {
-	// "imageUrl": "https://example.com/heba_salam.png" "altText": "Avatar
-	// for Heba Salam" } ```
+	// "imageUrl": "https://example.com/sasha.png" "altText": "Avatar for
+	// Sasha" } ```
 	Image *GoogleAppsCardV1Image `json:"image,omitempty"`
 
 	// SelectionInput: Displays a switch control in this widget. For
@@ -2705,14 +2747,22 @@ func (s *ImageButton) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Inputs: The inputs with widgets.
+// Inputs: Types of data inputs for widgets. Users enter data with these
+// inputs.
 type Inputs struct {
+	// DateInput: Date input values. Not supported by Chat apps.
 	DateInput *DateInput `json:"dateInput,omitempty"`
 
+	// DateTimeInput: Date and time input values. Not supported by Chat
+	// apps.
 	DateTimeInput *DateTimeInput `json:"dateTimeInput,omitempty"`
 
+	// StringInputs: Input parameter for regular widgets. For single-valued
+	// widgets, it is a single value list. For multi-valued widgets, such as
+	// checkbox, all the values are presented.
 	StringInputs *StringInputs `json:"stringInputs,omitempty"`
 
+	// TimeInput: Time input values. Not supported by Chat apps.
 	TimeInput *TimeInput `json:"timeInput,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DateInput") to
@@ -2966,7 +3016,9 @@ type Membership struct {
 
 	// Member: A user in Google Chat. Represents a person
 	// (https://developers.google.com/people/api/rest/v1/people) in the
-	// People API. Format: `users/{person}`
+	// People API or a user
+	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
+	// in the Admin SDK Directory API. Format: `users/{user}`
 	Member *User `json:"member,omitempty"`
 
 	Name string `json:"name,omitempty"`
@@ -3196,7 +3248,9 @@ func (s *Section) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SlashCommand: A Slash Command in Chat.
+// SlashCommand: A slash command
+// (https://developers.google.com/chat/how-tos/slash-commands) in Google
+// Chat.
 type SlashCommand struct {
 	// CommandId: The id of the slash command invoked.
 	CommandId int64 `json:"commandId,omitempty,string"`
@@ -3276,8 +3330,8 @@ type Space struct {
 	// humans, this field might be empty.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Resource name of the space, in the form "spaces/*". Example:
-	// spaces/AAAAAAAAAAAA
+	// Name: Optional. Resource name of the space, in the form "spaces/*".
+	// Example: spaces/AAAAAAAAAAAA
 	Name string `json:"name,omitempty"`
 
 	// SingleUserBotDm: Output only. Whether the space is a DM between a bot
@@ -3371,9 +3425,10 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // StringInputs: Input parameter for regular widgets. For single-valued
-// widgets, it will be a single value list; for multi-valued widgets,
-// such as checkbox, all the values are presented.
+// widgets, it is a single value list. For multi-valued widgets, such as
+// checkbox, all the values are presented.
 type StringInputs struct {
+	// Value: An array of strings entered by the user.
 	Value []string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Value") to
@@ -3486,10 +3541,13 @@ func (s *Thread) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimeInput: Input Parameter for Time Picker widget.
+// TimeInput: Time input values. Not supported by Chat apps.
 type TimeInput struct {
+	// Hours: The hour on a 24-hour clock.
 	Hours int64 `json:"hours,omitempty"`
 
+	// Minutes: The number of minutes past the hour. Valid values are 0 to
+	// 59.
 	Minutes int64 `json:"minutes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Hours") to
@@ -3515,12 +3573,15 @@ func (s *TimeInput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimeZone: The timezone id and offset. The id is the tz database time
-// zones such as "America/Toronto". The user timezone offset, in
-// milliseconds, from Coordinated Universal Time (UTC).
+// TimeZone: The timezone ID and offset from Coordinated Universal Time
+// (UTC). Not supported by Chat apps.
 type TimeZone struct {
+	// Id: The IANA TZ (https://www.iana.org/time-zones) time zone database
+	// code, such as "America/Toronto".
 	Id string `json:"id,omitempty"`
 
+	// Offset: The user timezone offset, in milliseconds, from Coordinated
+	// Universal Time (UTC).
 	Offset int64 `json:"offset,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -3558,10 +3619,11 @@ type User struct {
 	// not visible.
 	IsAnonymous bool `json:"isAnonymous,omitempty"`
 
-	// Name: Resource name for a Google Chat user. Formatted as
-	// `users/AAAAAAAAAAA`. Represents a person
+	// Name: Resource name for a Google Chat user. Represents a person
 	// (https://developers.google.com/people/api/rest/v1/people#Person) in
-	// the People API.
+	// the People API or a user
+	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
+	// in the Admin SDK Directory API. Formatted as: `users/{user}`
 	Name string `json:"name,omitempty"`
 
 	// Type: User type.
@@ -3694,9 +3756,8 @@ func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall 
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *DmsMessagesCall) RequestId(requestId string) *DmsMessagesCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -3823,7 +3884,7 @@ func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3868,9 +3929,8 @@ func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall 
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *DmsWebhooksCall) RequestId(requestId string) *DmsWebhooksCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -3997,7 +4057,7 @@ func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4042,9 +4102,8 @@ func (r *DmsConversationsService) Messages(parent string, message *Message) *Dms
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *DmsConversationsMessagesCall) RequestId(requestId string) *DmsConversationsMessagesCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -4171,7 +4230,7 @@ func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Messag
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4378,9 +4437,8 @@ func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesC
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *RoomsMessagesCall) RequestId(requestId string) *RoomsMessagesCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -4507,7 +4565,7 @@ func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4552,9 +4610,8 @@ func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksC
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *RoomsWebhooksCall) RequestId(requestId string) *RoomsWebhooksCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -4681,7 +4738,7 @@ func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4726,9 +4783,8 @@ func (r *RoomsConversationsService) Messages(parent string, message *Message) *R
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *RoomsConversationsMessagesCall) RequestId(requestId string) *RoomsConversationsMessagesCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -4855,7 +4911,7 @@ func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Mess
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5218,9 +5274,8 @@ func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhook
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *SpacesWebhooksCall) RequestId(requestId string) *SpacesWebhooksCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -5347,7 +5402,7 @@ func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) 
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5727,9 +5782,8 @@ func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesM
 }
 
 // RequestId sets the optional parameter "requestId": A unique request
-// ID for this message. If a message has already been created in the
-// space with this request ID, the subsequent request will return the
-// existing message and no new message will be created.
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
 func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -5856,7 +5910,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6437,7 +6491,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*At
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the attachment, in the form \"spaces/*/messages/*/attachments/*\".",
+	//       "description": "Required. Resource name of the attachment, in the form \"spaces/*/messages/*/attachments/*\".",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+/attachments/[^/]+$",
 	//       "required": true,

@@ -538,7 +538,7 @@ type AlertMetadata struct {
 	// Etag: Optional. `etag` is used for optimistic concurrency control as
 	// a way to help prevent simultaneous updates of an alert metadata from
 	// overwriting each other. It is strongly suggested that systems make
-	// use of the `etag` in the read-modify-write cycle to perform metatdata
+	// use of the `etag` in the read-modify-write cycle to perform metadata
 	// updates in order to avoid race conditions: An `etag` is returned in
 	// the response which contains alert metadata, and systems are expected
 	// to put that etag in the request to update alert metadata to ensure
@@ -1286,6 +1286,9 @@ type GoogleOperations struct {
 	// Description: A detailed, freeform incident description.
 	Description string `json:"description,omitempty"`
 
+	// Domain: Customer domain for email template personalization.
+	Domain string `json:"domain,omitempty"`
+
 	// Header: A header to display above the incident message. Typically
 	// used to attach a localized notice on the timeline for followup comms
 	// translations.
@@ -1506,6 +1509,39 @@ type MaliciousEntity struct {
 
 func (s *MaliciousEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod MaliciousEntity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MandatoryServiceAnnouncement: Alert Created by the MSA team for
+// communications necessary for continued use of Google Workspace
+// Products.
+type MandatoryServiceAnnouncement struct {
+	// Description: Detailed, freeform text describing the announcement
+	Description string `json:"description,omitempty"`
+
+	// Title: One line summary of the announcement
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MandatoryServiceAnnouncement) MarshalJSON() ([]byte, error) {
+	type NoMethod MandatoryServiceAnnouncement
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

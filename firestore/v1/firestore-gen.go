@@ -1236,6 +1236,19 @@ func (s *Filter) MarshalJSON() ([]byte, error) {
 // only one database is allowed per cloud project; this database must
 // have a `database_id` of '(default)'.
 type GoogleFirestoreAdminV1Database struct {
+	// AppEngineIntegrationMode: The App Engine integration mode to use for
+	// this database.
+	//
+	// Possible values:
+	//   "APP_ENGINE_INTEGRATION_MODE_UNSPECIFIED" - Not used.
+	//   "ENABLED" - If an App Engine application exists in the same region
+	// as this database, App Engine configuration will impact this database.
+	// This includes disabling of the application & database, as well as
+	// disabling writes to the database.
+	//   "DISABLED" - Appengine has no affect on the ability of this
+	// database to serve requests.
+	AppEngineIntegrationMode string `json:"appEngineIntegrationMode,omitempty"`
+
 	// ConcurrencyMode: The concurrency control mode to use for this
 	// database.
 	//
@@ -1256,6 +1269,14 @@ type GoogleFirestoreAdminV1Database struct {
 	// other fields, and may be sent on update and delete requests to ensure
 	// the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
+
+	// KeyPrefix: Output only. The key_prefix for this database. This
+	// key_prefix is used, in combination with the project id ("~") to
+	// construct the application id that is returned from the Cloud
+	// Datastore APIs in Google App Engine first generation runtimes. This
+	// value may be empty in which case the appid to use for URL-encoded
+	// keys is the project_id (eg: foo instead of v~foo).
+	KeyPrefix string `json:"keyPrefix,omitempty"`
 
 	// LocationId: The location of the database. Available databases are
 	// listed at https://cloud.google.com/firestore/docs/locations.
@@ -1280,18 +1301,19 @@ type GoogleFirestoreAdminV1Database struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ConcurrencyMode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AppEngineIntegrationMode") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConcurrencyMode") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "AppEngineIntegrationMode")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -2940,6 +2962,10 @@ func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 type RunQueryResponse struct {
 	// Document: A query result, not set when reporting partial progress.
 	Document *Document `json:"document,omitempty"`
+
+	// Done: If present, Firestore has completely finished the request and
+	// no more documents will be returned.
+	Done bool `json:"done,omitempty"`
 
 	// ReadTime: The time at which the document was read. This may be
 	// monotonically increasing; in this case, the previous documents in the
@@ -7076,6 +7102,286 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Pages(ctx context.Cont
 			return nil
 		}
 		c.listcollectionidsrequest.PageToken = x.NextPageToken
+	}
+}
+
+// method id "firestore.projects.databases.documents.listDocuments":
+
+type ProjectsDatabasesDocumentsListDocumentsCall struct {
+	s            *Service
+	parent       string
+	collectionId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListDocuments: Lists documents.
+//
+// - collectionId: The collection ID, relative to `parent`, to list. For
+//   example: `chatrooms` or `messages`.
+// - parent: The parent resource name. In the format:
+//   `projects/{project_id}/databases/{database_id}/documents` or
+//   `projects/{project_id}/databases/{database_id}/documents/{document_p
+//   ath}`. For example:
+//   `projects/my-project/databases/my-database/documents` or
+//   `projects/my-project/databases/my-database/documents/chatrooms/my-ch
+//   atroom`.
+func (r *ProjectsDatabasesDocumentsService) ListDocuments(parent string, collectionId string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c := &ProjectsDatabasesDocumentsListDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.collectionId = collectionId
+	return c
+}
+
+// MaskFieldPaths sets the optional parameter "mask.fieldPaths": The
+// list of field paths in the mask. See Document.fields for a field path
+// syntax reference.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) MaskFieldPaths(maskFieldPaths ...string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.SetMulti("mask.fieldPaths", append([]string{}, maskFieldPaths...))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The order to sort
+// results by. For example: `priority desc, name`.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) OrderBy(orderBy string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of documents to return.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) PageSize(pageSize int64) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// `next_page_token` value returned from a previous List request, if
+// any.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) PageToken(pageToken string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadTime sets the optional parameter "readTime": Reads documents as
+// they were at the given time. This may not be older than 270 seconds.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("readTime", readTime)
+	return c
+}
+
+// ShowMissing sets the optional parameter "showMissing": If the list
+// should show missing documents. A missing document is a document that
+// does not exist but has sub-documents. These documents will be
+// returned with a key but will not have fields, Document.create_time,
+// or Document.update_time set. Requests with `show_missing` may not
+// specify `where` or `order_by`.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) ShowMissing(showMissing bool) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("showMissing", fmt.Sprint(showMissing))
+	return c
+}
+
+// Transaction sets the optional parameter "transaction": Reads
+// documents in a transaction.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Transaction(transaction string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("transaction", transaction)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Fields(s ...googleapi.Field) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) IfNoneMatch(entityTag string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Context(ctx context.Context) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/{collectionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":       c.parent,
+		"collectionId": c.collectionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.documents.listDocuments" call.
+// Exactly one of *ListDocumentsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListDocumentsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Do(opts ...googleapi.CallOption) (*ListDocumentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListDocumentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists documents.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents/{collectionId}",
+	//   "httpMethod": "GET",
+	//   "id": "firestore.projects.databases.documents.listDocuments",
+	//   "parameterOrder": [
+	//     "parent",
+	//     "collectionId"
+	//   ],
+	//   "parameters": {
+	//     "collectionId": {
+	//       "description": "Required. The collection ID, relative to `parent`, to list. For example: `chatrooms` or `messages`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "mask.fieldPaths": {
+	//       "description": "The list of field paths in the mask. See Document.fields for a field path syntax reference.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "The order to sort results by. For example: `priority desc, name`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of documents to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The `next_page_token` value returned from a previous List request, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource name. In the format: `projects/{project_id}/databases/{database_id}/documents` or `projects/{project_id}/databases/{database_id}/documents/{document_path}`. For example: `projects/my-project/databases/my-database/documents` or `projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readTime": {
+	//       "description": "Reads documents as they were at the given time. This may not be older than 270 seconds.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showMissing": {
+	//       "description": "If the list should show missing documents. A missing document is a document that does not exist but has sub-documents. These documents will be returned with a key but will not have fields, Document.create_time, or Document.update_time set. Requests with `show_missing` may not specify `where` or `order_by`.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "transaction": {
+	//       "description": "Reads documents in a transaction.",
+	//       "format": "byte",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/{collectionId}",
+	//   "response": {
+	//     "$ref": "ListDocumentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Pages(ctx context.Context, f func(*ListDocumentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
 	}
 }
 

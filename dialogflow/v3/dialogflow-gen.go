@@ -2315,7 +2315,11 @@ type GoogleCloudDialogflowCxV3ExportAgentRequest struct {
 	// AgentUri: Optional. The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to export the agent to.
 	// The format of this URI must be `gs:///`. If left unspecified, the
-	// serialized agent is returned inline.
+	// serialized agent is returned inline. Dialogflow performs a write
+	// operation for the Cloud Storage object on the caller's behalf, so
+	// your request authentication must have write permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	AgentUri string `json:"agentUri,omitempty"`
 
 	// Environment: Optional. Environment name. If not set, draft
@@ -2385,7 +2389,11 @@ type GoogleCloudDialogflowCxV3ExportFlowRequest struct {
 	// FlowUri: Optional. The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to export the flow to.
 	// The format of this URI must be `gs:///`. If left unspecified, the
-	// serialized flow is returned inline.
+	// serialized flow is returned inline. Dialogflow performs a write
+	// operation for the Cloud Storage object on the caller's behalf, so
+	// your request authentication must have write permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	FlowUri string `json:"flowUri,omitempty"`
 
 	// IncludeReferencedFlows: Optional. Whether to export flows referenced
@@ -2476,7 +2484,11 @@ type GoogleCloudDialogflowCxV3ExportTestCasesRequest struct {
 	// GcsUri: The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to export the test cases
 	// to. The format of this URI must be `gs:///`. If unspecified, the
-	// serialized test cases is returned inline.
+	// serialized test cases is returned inline. Dialogflow performs a write
+	// operation for the Cloud Storage object on the caller's behalf, so
+	// your request authentication must have write permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	GcsUri string `json:"gcsUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataFormat") to
@@ -3201,7 +3213,11 @@ type GoogleCloudDialogflowCxV3ImportFlowRequest struct {
 
 	// FlowUri: The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to import flow from. The
-	// format of this URI must be `gs:///`.
+	// format of this URI must be `gs:///`. Dialogflow performs a read
+	// operation for the Cloud Storage object on the caller's behalf, so
+	// your request authentication must have read permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	FlowUri string `json:"flowUri,omitempty"`
 
 	// ImportOption: Flow import mode. If not specified, `KEEP` is assumed.
@@ -3306,7 +3322,11 @@ type GoogleCloudDialogflowCxV3ImportTestCasesRequest struct {
 
 	// GcsUri: The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to import test cases
-	// from. The format of this URI must be `gs:///`.
+	// from. The format of this URI must be `gs:///`. Dialogflow performs a
+	// read operation for the Cloud Storage object on the caller's behalf,
+	// so your request authentication must have read permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	GcsUri string `json:"gcsUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -5794,7 +5814,11 @@ type GoogleCloudDialogflowCxV3RestoreAgentRequest struct {
 
 	// AgentUri: The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to restore agent from.
-	// The format of this URI must be `gs:///`.
+	// The format of this URI must be `gs:///`. Dialogflow performs a read
+	// operation for the Cloud Storage object on the caller's behalf, so
+	// your request authentication must have read permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	AgentUri string `json:"agentUri,omitempty"`
 
 	// RestoreOption: Agent restore mode. If not specified, `KEEP` is
@@ -6662,9 +6686,20 @@ func (s *GoogleCloudDialogflowCxV3TestCaseResult) MarshalJSON() ([]byte, error) 
 // GoogleCloudDialogflowCxV3TestConfig: Represents configurations for a
 // test case.
 type GoogleCloudDialogflowCxV3TestConfig struct {
-	// Flow: Flow name. If not set, default start flow is assumed. Format:
-	// `projects//locations//agents//flows/`.
+	// Flow: Flow name to start the test case with. Format:
+	// `projects//locations//agents//flows/`. Only one of `flow` and `page`
+	// should be set to indicate the starting point of the test case. If
+	// both are set, `page` takes precedence over `flow`. If neither is set,
+	// the test case will start with start page on the default start flow.
 	Flow string `json:"flow,omitempty"`
+
+	// Page: The page to start the test case with. Format:
+	// `projects//locations//agents//flows//pages/`. Only one of `flow` and
+	// `page` should be set to indicate the starting point of the test case.
+	// If both are set, `page` takes precedence over `flow`. If neither is
+	// set, the test case will start with start page on the default start
+	// flow.
+	Page string `json:"page,omitempty"`
 
 	// TrackingParameters: Session parameters to be compared when
 	// calculating differences.
@@ -10684,9 +10719,20 @@ func (s *GoogleCloudDialogflowCxV3beta1TestCaseResult) MarshalJSON() ([]byte, er
 // GoogleCloudDialogflowCxV3beta1TestConfig: Represents configurations
 // for a test case.
 type GoogleCloudDialogflowCxV3beta1TestConfig struct {
-	// Flow: Flow name. If not set, default start flow is assumed. Format:
-	// `projects//locations//agents//flows/`.
+	// Flow: Flow name to start the test case with. Format:
+	// `projects//locations//agents//flows/`. Only one of `flow` and `page`
+	// should be set to indicate the starting point of the test case. If
+	// both are set, `page` takes precedence over `flow`. If neither is set,
+	// the test case will start with start page on the default start flow.
 	Flow string `json:"flow,omitempty"`
+
+	// Page: The page to start the test case with. Format:
+	// `projects//locations//agents//flows//pages/`. Only one of `flow` and
+	// `page` should be set to indicate the starting point of the test case.
+	// If both are set, `page` takes precedence over `flow`. If neither is
+	// set, the test case will start with start page on the default start
+	// flow.
+	Page string `json:"page,omitempty"`
 
 	// TrackingParameters: Session parameters to be compared when
 	// calculating differences.
@@ -12029,7 +12075,9 @@ type GoogleCloudDialogflowV2EventInput struct {
 	// Support (https://cloud.google.com/dialogflow/docs/reference/language)
 	// for a list of the currently supported language codes. Note that
 	// queries in the same session do not necessarily need to specify the
-	// same language.
+	// same language. This field is ignored when used in the context of a
+	// WebhookResponse.followup_event_input field, because the language was
+	// already defined in the originating detect intent request.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Name: Required. The unique identifier of the event.
@@ -15093,6 +15141,8 @@ type GoogleCloudDialogflowV2beta1ConversationEvent struct {
 	//   "CONVERSATION_FINISHED" - An existing conversation has closed. This
 	// is fired when a telephone call is terminated, or a conversation is
 	// closed via the API.
+	//   "HUMAN_INTERVENTION_NEEDED" - An existing conversation has received
+	// notification from Dialogflow that human intervention is required.
 	//   "NEW_MESSAGE" - An existing conversation has received a new
 	// message, either from API or telephony. It is configured in
 	// ConversationProfile.new_message_event_notification_config
@@ -15254,7 +15304,9 @@ type GoogleCloudDialogflowV2beta1EventInput struct {
 	// Support (https://cloud.google.com/dialogflow/docs/reference/language)
 	// for a list of the currently supported language codes. Note that
 	// queries in the same session do not necessarily need to specify the
-	// same language.
+	// same language. This field is ignored when used in the context of a
+	// WebhookResponse.followup_event_input field, because the language was
+	// already defined in the originating detect intent request.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Name: Required. The unique identifier of the event.

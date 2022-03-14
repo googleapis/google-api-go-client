@@ -131,7 +131,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://mail.google.com/",
 		"https://www.googleapis.com/auth/gmail.addons.current.action.compose",
 		"https://www.googleapis.com/auth/gmail.addons.current.message.action",

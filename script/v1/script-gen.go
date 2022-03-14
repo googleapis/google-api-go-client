@@ -142,7 +142,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://mail.google.com/",
 		"https://www.google.com/calendar/feeds",
 		"https://www.google.com/m8/feeds",

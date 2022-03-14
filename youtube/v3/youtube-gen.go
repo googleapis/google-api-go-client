@@ -111,7 +111,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/youtube",
 		"https://www.googleapis.com/auth/youtube.channel-memberships.creator",
 		"https://www.googleapis.com/auth/youtube.force-ssl",

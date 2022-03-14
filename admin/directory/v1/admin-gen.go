@@ -176,7 +176,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/admin.chrome.printers",
 		"https://www.googleapis.com/auth/admin.chrome.printers.readonly",
 		"https://www.googleapis.com/auth/admin.directory.customer",

@@ -752,7 +752,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("// NewService creates a new %s.", service)
 	pn("func NewService(ctx context.Context, opts ...option.ClientOption) (*%s, error) {", service)
 	if len(a.doc.Auth.OAuth2Scopes) != 0 {
-		pn("scopesOption := option.WithScopes(")
+		pn("scopesOption := internaloption.WithDefaultScopes(")
 		for _, scope := range a.doc.Auth.OAuth2Scopes {
 			pn("%q,", scope.ID)
 		}

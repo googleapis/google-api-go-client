@@ -1,5 +1,13 @@
 # Changes
 
+## [0.73.0](https://github.com/googleapis/google-api-go-client/compare/v0.72.0...v0.73.0) (2022-03-15)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1477](https://github.com/googleapis/google-api-go-client/issues/1477)
+* **all:** prefer using WithDefaultScope option internally ([#1476](https://github.com/googleapis/google-api-go-client/issues/1476)) ([0922a63](https://github.com/googleapis/google-api-go-client/commit/0922a63f2341bb10cb3c3085233fd4b6adaeac26))
+
 ## [0.72.0](https://github.com/googleapis/google-api-go-client/compare/v0.71.0...v0.72.0) (2022-03-14)
 
 

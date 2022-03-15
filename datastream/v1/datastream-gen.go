@@ -1390,7 +1390,7 @@ func (s *MysqlSslConfig) MarshalJSON() ([]byte, error) {
 // MysqlTable: MySQL table.
 type MysqlTable struct {
 	// MysqlColumns: MySQL columns in the database. When unspecified as part
-	// of include/exclude lists, includes/excludes everything.
+	// of include/exclude objects, includes/excludes everything.
 	MysqlColumns []*MysqlColumn `json:"mysqlColumns,omitempty"`
 
 	// Table: Table name.
@@ -1759,7 +1759,7 @@ func (s *OracleSourceConfig) MarshalJSON() ([]byte, error) {
 // OracleTable: Oracle table.
 type OracleTable struct {
 	// OracleColumns: Oracle columns in the schema. When unspecified as part
-	// of inclue/exclude lists, includes/excludes everything.
+	// of include/exclude objects, includes/excludes everything.
 	OracleColumns []*OracleColumn `json:"oracleColumns,omitempty"`
 
 	// Table: Table name.
@@ -1939,10 +1939,10 @@ func (s *Route) MarshalJSON() ([]byte, error) {
 
 // SourceConfig: The configuration of the stream source.
 type SourceConfig struct {
-	// MysqlSourceConfig: MySQL data source configuration
+	// MysqlSourceConfig: MySQL data source configuration.
 	MysqlSourceConfig *MysqlSourceConfig `json:"mysqlSourceConfig,omitempty"`
 
-	// OracleSourceConfig: Oracle data source configuration
+	// OracleSourceConfig: Oracle data source configuration.
 	OracleSourceConfig *OracleSourceConfig `json:"oracleSourceConfig,omitempty"`
 
 	// SourceConnectionProfile: Required. Source connection profile

@@ -3752,6 +3752,7 @@ type ContentRating struct {
 	//   "mibacVap"
 	//   "mibacVm12"
 	//   "mibacVm14"
+	//   "mibacVm16"
 	//   "mibacVm18"
 	//   "mibacUnrated"
 	MibacRating string `json:"mibacRating,omitempty"`
@@ -5342,6 +5343,50 @@ func (s *LiveChatFanFundingEventDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type LiveChatGiftMembershipReceivedDetails struct {
+	// AssociatedMembershipGiftingMessageId: The ID of the membership
+	// gifting message that is related to this gift membership. This ID will
+	// always refer to a message whose type is 'membershipGiftingEvent'.
+	AssociatedMembershipGiftingMessageId string `json:"associatedMembershipGiftingMessageId,omitempty"`
+
+	// GifterChannelId: The ID of the user that made the membership gifting
+	// purchase. This matches the `snippet.authorChannelId` of the
+	// associated membership gifting message.
+	GifterChannelId string `json:"gifterChannelId,omitempty"`
+
+	// MemberLevelName: The name of the Level at which the viewer is a
+	// member. This matches the
+	// `snippet.membershipGiftingDetails.giftMembershipsLevelName` of the
+	// associated membership gifting message. The Level names are defined by
+	// the YouTube channel offering the Membership. In some situations this
+	// field isn't filled.
+	MemberLevelName string `json:"memberLevelName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssociatedMembershipGiftingMessageId") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AssociatedMembershipGiftingMessageId") to include in API requests
+	// with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. However, any field with an empty value
+	// appearing in NullFields will be sent to the server as null. It is an
+	// error if a field in this list has a non-empty value. This may be used
+	// to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LiveChatGiftMembershipReceivedDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod LiveChatGiftMembershipReceivedDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type LiveChatMemberMilestoneChatDetails struct {
 	// MemberLevelName: The name of the Level at which the viever is a
 	// member. The Level names are defined by the YouTube channel offering
@@ -5378,6 +5423,42 @@ type LiveChatMemberMilestoneChatDetails struct {
 
 func (s *LiveChatMemberMilestoneChatDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatMemberMilestoneChatDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LiveChatMembershipGiftingDetails struct {
+	// GiftMembershipsCount: The number of gift memberships purchased by the
+	// user.
+	GiftMembershipsCount int64 `json:"giftMembershipsCount,omitempty"`
+
+	// GiftMembershipsLevelName: The name of the level of the gift
+	// memberships purchased by the user. The Level names are defined by the
+	// YouTube channel offering the Membership. In some situations this
+	// field isn't filled.
+	GiftMembershipsLevelName string `json:"giftMembershipsLevelName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "GiftMembershipsCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GiftMembershipsCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LiveChatMembershipGiftingDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod LiveChatMembershipGiftingDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5590,14 +5671,16 @@ func (s *LiveChatMessageRetractedDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LiveChatMessageSnippet: Next ID: 31
+// LiveChatMessageSnippet: Next ID: 33
 type LiveChatMessageSnippet struct {
 	// AuthorChannelId: The ID of the user that authored this message, this
 	// field is not always filled. textMessageEvent - the user that wrote
 	// the message fanFundingEvent - the user that funded the broadcast
 	// newSponsorEvent - the user that just became a sponsor
 	// memberMilestoneChatEvent - the member that sent the message
-	// messageDeletedEvent - the moderator that took the action
+	// membershipGiftingEvent - the user that made the purchase
+	// giftMembershipReceivedEvent - the user that received the gift
+	// membership messageDeletedEvent - the moderator that took the action
 	// messageRetractedEvent - the author that retracted their message
 	// userBannedEvent - the moderator that took the action superChatEvent -
 	// the user that made the purchase superStickerEvent - the user that
@@ -5613,6 +5696,11 @@ type LiveChatMessageSnippet struct {
 	// set if the type is 'fanFundingEvent'.
 	FanFundingEventDetails *LiveChatFanFundingEventDetails `json:"fanFundingEventDetails,omitempty"`
 
+	// GiftMembershipReceivedDetails: Details about the Gift Membership
+	// Received event, this is only set if the type is
+	// 'giftMembershipReceivedEvent'.
+	GiftMembershipReceivedDetails *LiveChatGiftMembershipReceivedDetails `json:"giftMembershipReceivedDetails,omitempty"`
+
 	// HasDisplayContent: Whether the message has display content that
 	// should be displayed to users.
 	HasDisplayContent bool `json:"hasDisplayContent,omitempty"`
@@ -5622,6 +5710,10 @@ type LiveChatMessageSnippet struct {
 	// MemberMilestoneChatDetails: Details about the Member Milestone Chat
 	// event, this is only set if the type is 'memberMilestoneChatEvent'.
 	MemberMilestoneChatDetails *LiveChatMemberMilestoneChatDetails `json:"memberMilestoneChatDetails,omitempty"`
+
+	// MembershipGiftingDetails: Details about the Membership Gifting event,
+	// this is only set if the type is 'membershipGiftingEvent'.
+	MembershipGiftingDetails *LiveChatMembershipGiftingDetails `json:"membershipGiftingDetails,omitempty"`
 
 	MessageDeletedDetails *LiveChatMessageDeletedDetails `json:"messageDeletedDetails,omitempty"`
 
@@ -5661,6 +5753,8 @@ type LiveChatMessageSnippet struct {
 	//   "sponsorOnlyModeEndedEvent"
 	//   "newSponsorEvent"
 	//   "memberMilestoneChatEvent"
+	//   "membershipGiftingEvent"
+	//   "giftMembershipReceivedEvent"
 	//   "messageDeletedEvent"
 	//   "messageRetractedEvent"
 	//   "userBannedEvent"

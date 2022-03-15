@@ -2195,6 +2195,30 @@ type ResetInstanceRequest struct {
 // ResetRuntimeRequest: Request for resetting a Managed Notebook
 // Runtime.
 type ResetRuntimeRequest struct {
+	// RequestId: Idempotent request UUID.
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResetRuntimeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ResetRuntimeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // RollbackInstanceRequest: Request for rollbacking a notebook instance
@@ -2923,6 +2947,30 @@ type StartInstanceRequest struct {
 
 // StartRuntimeRequest: Request for starting a Managed Notebook Runtime.
 type StartRuntimeRequest struct {
+	// RequestId: Idempotent request UUID.
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StartRuntimeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod StartRuntimeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -2975,6 +3023,30 @@ type StopInstanceRequest struct {
 
 // StopRuntimeRequest: Request for stopping a Managed Notebook Runtime.
 type StopRuntimeRequest struct {
+	// RequestId: Idempotent request UUID.
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StopRuntimeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod StopRuntimeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SwitchRuntimeRequest: Request for switching a Managed Notebook
@@ -2985,6 +3057,9 @@ type SwitchRuntimeRequest struct {
 
 	// MachineType: machine type.
 	MachineType string `json:"machineType,omitempty"`
+
+	// RequestId: Idempotent request UUID.
+	RequestId string `json:"requestId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcceleratorConfig")
 	// to unconditionally include in API requests. By default, fields with
@@ -9340,6 +9415,13 @@ func (r *ProjectsLocationsRuntimesService) Create(parent string, runtime *Runtim
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": Idempotent request
+// UUID.
+func (c *ProjectsLocationsRuntimesCreateCall) RequestId(requestId string) *ProjectsLocationsRuntimesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // RuntimeId sets the optional parameter "runtimeId": Required.
 // User-defined unique ID of this Runtime.
 func (c *ProjectsLocationsRuntimesCreateCall) RuntimeId(runtimeId string) *ProjectsLocationsRuntimesCreateCall {
@@ -9453,6 +9535,11 @@ func (c *ProjectsLocationsRuntimesCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Idempotent request UUID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "runtimeId": {
 	//       "description": "Required. User-defined unique ID of this Runtime.",
 	//       "location": "query",
@@ -9490,6 +9577,13 @@ type ProjectsLocationsRuntimesDeleteCall struct {
 func (r *ProjectsLocationsRuntimesService) Delete(name string) *ProjectsLocationsRuntimesDeleteCall {
 	c := &ProjectsLocationsRuntimesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Idempotent request
+// UUID.
+func (c *ProjectsLocationsRuntimesDeleteCall) RequestId(requestId string) *ProjectsLocationsRuntimesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -9592,6 +9686,11 @@ func (c *ProjectsLocationsRuntimesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Idempotent request UUID.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

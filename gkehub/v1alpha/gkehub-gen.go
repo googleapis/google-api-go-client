@@ -118,6 +118,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -127,6 +128,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Organizations *OrganizationsService
+
 	Projects *ProjectsService
 }
 
@@ -135,6 +138,39 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewOrganizationsService(s *Service) *OrganizationsService {
+	rs := &OrganizationsService{s: s}
+	rs.Locations = NewOrganizationsLocationsService(s)
+	return rs
+}
+
+type OrganizationsService struct {
+	s *Service
+
+	Locations *OrganizationsLocationsService
+}
+
+func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
+	rs := &OrganizationsLocationsService{s: s}
+	rs.Fleets = NewOrganizationsLocationsFleetsService(s)
+	return rs
+}
+
+type OrganizationsLocationsService struct {
+	s *Service
+
+	Fleets *OrganizationsLocationsFleetsService
+}
+
+func NewOrganizationsLocationsFleetsService(s *Service) *OrganizationsLocationsFleetsService {
+	rs := &OrganizationsLocationsFleetsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsFleetsService struct {
+	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -206,6 +242,37 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// AnthosObservabilityFeatureSpec: **Anthos Observability**: Spec
+type AnthosObservabilityFeatureSpec struct {
+	// DefaultMembershipSpec: default membership spec for unconfigured
+	// memberships
+	DefaultMembershipSpec *AnthosObservabilityMembershipSpec `json:"defaultMembershipSpec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultMembershipSpec") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultMembershipSpec") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnthosObservabilityFeatureSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod AnthosObservabilityFeatureSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AnthosObservabilityMembershipSpec: **Anthosobservability**:
 // Per-Membership Feature spec.
 type AnthosObservabilityMembershipSpec struct {
@@ -218,6 +285,9 @@ type AnthosObservabilityMembershipSpec struct {
 	// metrics and logs from user apps See
 	// go/onyx-application-metrics-logs-user-guide
 	EnableStackdriverOnApplications bool `json:"enableStackdriverOnApplications,omitempty"`
+
+	// Version: the version of stackdriver operator used by this feature
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DoNotOptimizeMetrics") to unconditionally include in API requests.
@@ -590,6 +660,9 @@ func (s *CloudBuildMembershipSpec) MarshalJSON() ([]byte, error) {
 // CommonFeatureSpec: CommonFeatureSpec contains Hub-wide configuration
 // information
 type CommonFeatureSpec struct {
+	// Anthosobservability: Anthos Observability spec
+	Anthosobservability *AnthosObservabilityFeatureSpec `json:"anthosobservability,omitempty"`
+
 	// Appdevexperience: Appdevexperience specific spec.
 	Appdevexperience *AppDevExperienceFeatureSpec `json:"appdevexperience,omitempty"`
 
@@ -602,15 +675,15 @@ type CommonFeatureSpec struct {
 	// Workloadcertificate: Workload Certificate spec.
 	Workloadcertificate *FeatureSpec `json:"workloadcertificate,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Anthosobservability")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Appdevexperience") to
+	// NullFields is a list of field names (e.g. "Anthosobservability") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2623,6 +2696,44 @@ func (s *ListFeaturesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListFleetsResponse: Response message for the
+// `GkeHub.ListFleetsResponse` method.
+type ListFleetsResponse struct {
+	// Fleets: The list of matching fleets.
+	Fleets []*Fleet `json:"fleets,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Fleets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fleets") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListFleetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListFleetsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListLocationsResponse: The response message for
 // Locations.ListLocations.
 type ListLocationsResponse struct {
@@ -3496,125 +3607,8 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PolicyControllerMembershipSpec: **Policy Controller**: Configuration
-// for a single cluster. Intended to parallel the PolicyController CR.
-type PolicyControllerMembershipSpec struct {
-	// PolicyControllerHubConfig: Policy Controller configuration for the
-	// cluster.
-	PolicyControllerHubConfig *PolicyControllerPolicyControllerHubConfig `json:"policyControllerHubConfig,omitempty"`
-
-	// Version: Version of Policy Controller installed.
-	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "PolicyControllerHubConfig") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "PolicyControllerHubConfig") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PolicyControllerMembershipSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicyControllerMembershipSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PolicyControllerMembershipState: **Policy Controller**: State for a
-// single cluster.
-type PolicyControllerMembershipState struct {
-	// ClusterName: The user-defined name for the cluster used by
-	// ClusterSelectors to group clusters together. This should match
-	// Membership's membership_name, unless the user installed PC on the
-	// cluster manually prior to enabling the PC hub feature. Unique within
-	// a Policy Controller installation.
-	ClusterName string `json:"clusterName,omitempty"`
-
-	// MembershipSpec: Membership configuration in the cluster. This
-	// represents the actual state in the cluster, while the MembershipSpec
-	// in the FeatureSpec represents the intended state
-	MembershipSpec *PolicyControllerMembershipSpec `json:"membershipSpec,omitempty"`
-
-	// PolicyControllerHubState: Policy Controller state observed by the
-	// Policy Controller Hub
-	PolicyControllerHubState *PolicyControllerPolicyControllerHubState `json:"policyControllerHubState,omitempty"`
-
-	// State: The lifecycle state Policy Controller is in.
-	//
-	// Possible values:
-	//   "LIFECYCLE_STATE_UNSPECIFIED" - The lifecycle state is unspecified.
-	//   "NOT_INSTALLED" - The PC does not exist on the given cluster, and
-	// no k8s resources of any type that are associated with the PC should
-	// exist there. The cluster does not possess a membership with the PCH.
-	//   "INSTALLING" - The PCH possesses a Membership, however the PC is
-	// not fully installed on the cluster. In this state the hub can be
-	// expected to be taking actions to install the PC on the cluster.
-	//   "ACTIVE" - The PC is fully installed on the cluster and in an
-	// operational mode. In this state PCH will be reconciling state with
-	// the PC, and the PC will be performing it’s operational tasks per
-	// that software. Entering a READY state requires that the hub has
-	// confirmed the PC is installed and its pods are operational with the
-	// version of the PC the PCH expects.
-	//   "UPDATING" - The PC is fully installed, but in the process of
-	// changing the configuration (including changing the version of PC
-	// either up and down, or modifying the manifests of PC) of the
-	// resources running on the cluster. The PCH has a Membership, is aware
-	// of the version the cluster should be running in, but has not
-	// confirmed for itself that the PC is running with that version.
-	//   "DECOMISSIONING" - The PC may have resources on the cluster, but
-	// the PCH wishes to remove the Membership. The Membership still exists.
-	//   "CLUSTER_ERROR" - The PC is not operational, and the PCH is unable
-	// to act to make it operational. Entering a CLUSTER_ERROR state happens
-	// automatically when the PCH determines that a PC installed on the
-	// cluster is non-operative or that the cluster does not meet
-	// requirements set for the PCH to administer the cluster but has
-	// nevertheless been given an instruction to do so (such as
-	// ‘install’).
-	//   "HUB_ERROR" - In this state, the PC may still be operational, and
-	// only the PCH is unable to act. The hub should not issue instructions
-	// to change the PC state, or otherwise interfere with the on-cluster
-	// resources. Entering a HUB_ERROR state happens automatically when the
-	// PCH determines the hub is in an unhealthy state and it wishes to
-	// ‘take hands off’ to avoid corrupting the PC or other data.
-	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ClusterName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClusterName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PolicyControllerMembershipState) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicyControllerMembershipState
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PolicyControllerPolicyControllerHubConfig: Configuration for Policy
-// Controller
-type PolicyControllerPolicyControllerHubConfig struct {
+// PolicyControllerHubConfig: Configuration for Policy Controller
+type PolicyControllerHubConfig struct {
 	// AuditIntervalSeconds: Sets the interval for Policy Controller Audit
 	// Scans (in seconds). When set to 0, this disables audit functionality
 	// altogether.
@@ -3676,22 +3670,21 @@ type PolicyControllerPolicyControllerHubConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicyControllerPolicyControllerHubConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicyControllerPolicyControllerHubConfig
+func (s *PolicyControllerHubConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerHubConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PolicyControllerPolicyControllerHubState: State of the Policy
-// Controller.
-type PolicyControllerPolicyControllerHubState struct {
+// PolicyControllerHubState: State of the Policy Controller.
+type PolicyControllerHubState struct {
 	// DeploymentStates: Map from deployment name to deployment state.
 	// Example deployments are gatekeeper-controller-manager,
 	// gatekeeper-audit deployment, and gatekeeper-mutation.
 	DeploymentStates map[string]string `json:"deploymentStates,omitempty"`
 
 	// Version: The version of Gatekeeper Policy Controller deployed.
-	Version *PolicyControllerPolicyControllerHubVersion `json:"version,omitempty"`
+	Version *PolicyControllerHubVersion `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeploymentStates") to
 	// unconditionally include in API requests. By default, fields with
@@ -3711,15 +3704,15 @@ type PolicyControllerPolicyControllerHubState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicyControllerPolicyControllerHubState) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicyControllerPolicyControllerHubState
+func (s *PolicyControllerHubState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerHubState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PolicyControllerPolicyControllerHubVersion: The build version of
-// Gatekeeper that Policy Controller is using.
-type PolicyControllerPolicyControllerHubVersion struct {
+// PolicyControllerHubVersion: The build version of Gatekeeper that
+// Policy Controller is using.
+type PolicyControllerHubVersion struct {
 	// Version: The gatekeeper image tag that is composed of ACM version,
 	// git tag, build number.
 	Version string `json:"version,omitempty"`
@@ -3741,8 +3734,124 @@ type PolicyControllerPolicyControllerHubVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicyControllerPolicyControllerHubVersion) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicyControllerPolicyControllerHubVersion
+func (s *PolicyControllerHubVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerHubVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerMembershipSpec: **Policy Controller**: Configuration
+// for a single cluster. Intended to parallel the PolicyController CR.
+type PolicyControllerMembershipSpec struct {
+	// PolicyControllerHubConfig: Policy Controller configuration for the
+	// cluster.
+	PolicyControllerHubConfig *PolicyControllerHubConfig `json:"policyControllerHubConfig,omitempty"`
+
+	// Version: Version of Policy Controller installed.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PolicyControllerHubConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "PolicyControllerHubConfig") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyControllerMembershipSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerMembershipSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerMembershipState: **Policy Controller**: State for a
+// single cluster.
+type PolicyControllerMembershipState struct {
+	// ClusterName: The user-defined name for the cluster used by
+	// ClusterSelectors to group clusters together. This should match
+	// Membership's membership_name, unless the user installed PC on the
+	// cluster manually prior to enabling the PC hub feature. Unique within
+	// a Policy Controller installation.
+	ClusterName string `json:"clusterName,omitempty"`
+
+	// MembershipSpec: Membership configuration in the cluster. This
+	// represents the actual state in the cluster, while the MembershipSpec
+	// in the FeatureSpec represents the intended state
+	MembershipSpec *PolicyControllerMembershipSpec `json:"membershipSpec,omitempty"`
+
+	// PolicyControllerHubState: Policy Controller state observed by the
+	// Policy Controller Hub
+	PolicyControllerHubState *PolicyControllerHubState `json:"policyControllerHubState,omitempty"`
+
+	// State: The lifecycle state Policy Controller is in.
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - The lifecycle state is unspecified.
+	//   "NOT_INSTALLED" - The PC does not exist on the given cluster, and
+	// no k8s resources of any type that are associated with the PC should
+	// exist there. The cluster does not possess a membership with the PCH.
+	//   "INSTALLING" - The PCH possesses a Membership, however the PC is
+	// not fully installed on the cluster. In this state the hub can be
+	// expected to be taking actions to install the PC on the cluster.
+	//   "ACTIVE" - The PC is fully installed on the cluster and in an
+	// operational mode. In this state PCH will be reconciling state with
+	// the PC, and the PC will be performing it’s operational tasks per
+	// that software. Entering a READY state requires that the hub has
+	// confirmed the PC is installed and its pods are operational with the
+	// version of the PC the PCH expects.
+	//   "UPDATING" - The PC is fully installed, but in the process of
+	// changing the configuration (including changing the version of PC
+	// either up and down, or modifying the manifests of PC) of the
+	// resources running on the cluster. The PCH has a Membership, is aware
+	// of the version the cluster should be running in, but has not
+	// confirmed for itself that the PC is running with that version.
+	//   "DECOMISSIONING" - The PC may have resources on the cluster, but
+	// the PCH wishes to remove the Membership. The Membership still exists.
+	//   "CLUSTER_ERROR" - The PC is not operational, and the PCH is unable
+	// to act to make it operational. Entering a CLUSTER_ERROR state happens
+	// automatically when the PCH determines that a PC installed on the
+	// cluster is non-operative or that the cluster does not meet
+	// requirements set for the PCH to administer the cluster but has
+	// nevertheless been given an instruction to do so (such as
+	// ‘install’).
+	//   "HUB_ERROR" - In this state, the PC may still be operational, and
+	// only the PCH is unable to act. The hub should not issue instructions
+	// to change the PC state, or otherwise interfere with the on-cluster
+	// resources. Entering a HUB_ERROR state happens automatically when the
+	// PCH determines the hub is in an unhealthy state and it wishes to
+	// ‘take hands off’ to avoid corrupting the PC or other data.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyControllerMembershipState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerMembershipState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4348,6 +4457,190 @@ func (s *TypeMeta) MarshalJSON() ([]byte, error) {
 	type NoMethod TypeMeta
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "gkehub.organizations.locations.fleets.list":
+
+type OrganizationsLocationsFleetsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns all fleets within an organization or a project that the
+// caller has access to.
+//
+// - parent: The organization or project to list for Fleets under, in
+//   the format `organizations/*/locations/*` or
+//   `projects/*/locations/*`.
+func (r *OrganizationsLocationsFleetsService) List(parent string) *OrganizationsLocationsFleetsListCall {
+	c := &OrganizationsLocationsFleetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListFleets` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided
+// to `ListFleets` must match the call that provided the page token.
+func (c *OrganizationsLocationsFleetsListCall) PageToken(pageToken string) *OrganizationsLocationsFleetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsFleetsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFleetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsFleetsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsFleetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsFleetsListCall) Context(ctx context.Context) *OrganizationsLocationsFleetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsFleetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFleetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/fleets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.organizations.locations.fleets.list" call.
+// Exactly one of *ListFleetsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListFleetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsFleetsListCall) Do(opts ...googleapi.CallOption) (*ListFleetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListFleetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns all fleets within an organization or a project that the caller has access to.",
+	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/{locationsId}/fleets",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.organizations.locations.fleets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListFleets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListFleets` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The organization or project to list for Fleets under, in the format `organizations/*/locations/*` or `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/fleets",
+	//   "response": {
+	//     "$ref": "ListFleetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsFleetsListCall) Pages(ctx context.Context, f func(*ListFleetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "gkehub.projects.locations.get":
@@ -6492,6 +6785,190 @@ func (c *ProjectsLocationsFleetsGetCall) Do(opts ...googleapi.CallOption) (*Flee
 	//   ]
 	// }
 
+}
+
+// method id "gkehub.projects.locations.fleets.list":
+
+type ProjectsLocationsFleetsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns all fleets within an organization or a project that the
+// caller has access to.
+//
+// - parent: The organization or project to list for Fleets under, in
+//   the format `organizations/*/locations/*` or
+//   `projects/*/locations/*`.
+func (r *ProjectsLocationsFleetsService) List(parent string) *ProjectsLocationsFleetsListCall {
+	c := &ProjectsLocationsFleetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListFleets` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided
+// to `ListFleets` must match the call that provided the page token.
+func (c *ProjectsLocationsFleetsListCall) PageToken(pageToken string) *ProjectsLocationsFleetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFleetsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsFleetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsFleetsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsFleetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFleetsListCall) Context(ctx context.Context) *ProjectsLocationsFleetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFleetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFleetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/fleets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.fleets.list" call.
+// Exactly one of *ListFleetsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListFleetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFleetsListCall) Do(opts ...googleapi.CallOption) (*ListFleetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListFleetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns all fleets within an organization or a project that the caller has access to.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/fleets",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.fleets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListFleets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListFleets` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The organization or project to list for Fleets under, in the format `organizations/*/locations/*` or `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/fleets",
+	//   "response": {
+	//     "$ref": "ListFleetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsFleetsListCall) Pages(ctx context.Context, f func(*ListFleetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "gkehub.projects.locations.fleets.patch":

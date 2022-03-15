@@ -850,6 +850,36 @@ func (s *DropInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EdgeLocation: Representation of a network edge location as per
+// https://cloud.google.com/vpc/docs/edge-locations.
+type EdgeLocation struct {
+	// MetropolitanArea: Name of the metropolitan area.
+	MetropolitanArea string `json:"metropolitanArea,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MetropolitanArea") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MetropolitanArea") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EdgeLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod EdgeLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -1916,6 +1946,14 @@ type ProbingDetails struct {
 	//   "NO_SOURCE_LOCATION" - No valid source endpoint could be derived
 	// from the request.
 	AbortCause string `json:"abortCause,omitempty"`
+
+	// DestinationEgressLocation: The EdgeLocation from which a packet
+	// destined for/originating from the internet will egress/ingress the
+	// Google network. This will only be populated for a connectivity test
+	// which has an internet destination/source address. The absence of this
+	// field *must not* be used as an indication that the destination/source
+	// is part of the Google network.
+	DestinationEgressLocation *EdgeLocation `json:"destinationEgressLocation,omitempty"`
 
 	// EndpointInfo: The source and destination endpoints derived from the
 	// test input and used for active probing.

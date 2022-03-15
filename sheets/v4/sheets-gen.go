@@ -1591,10 +1591,11 @@ func (s *BatchClearValuesByDataFilterRequest) MarshalJSON() ([]byte, error) {
 // BatchClearValuesByDataFilterResponse: The response when clearing a
 // range of values selected with DataFilters in a spreadsheet.
 type BatchClearValuesByDataFilterResponse struct {
-	// ClearedRanges: The ranges that were cleared, in A1 notation. If the
-	// requests are for an unbounded range or a ranger larger than the
-	// bounds of the sheet, this is the actual ranges that were cleared,
-	// bounded to the sheet's limits.
+	// ClearedRanges: The ranges that were cleared, in A1 notation
+	// (/sheets/api/guides/concepts#cell). If the requests are for an
+	// unbounded range or a ranger larger than the bounds of the sheet, this
+	// is the actual ranges that were cleared, bounded to the sheet's
+	// limits.
 	ClearedRanges []string `json:"clearedRanges,omitempty"`
 
 	// SpreadsheetId: The spreadsheet the updates were applied to.
@@ -1630,7 +1631,8 @@ func (s *BatchClearValuesByDataFilterResponse) MarshalJSON() ([]byte, error) {
 // BatchClearValuesRequest: The request for clearing more than one range
 // of values in a spreadsheet.
 type BatchClearValuesRequest struct {
-	// Ranges: The ranges to clear, in A1 or R1C1 notation.
+	// Ranges: The ranges to clear, in A1 notation or R1C1 notation
+	// (/sheets/api/guides/concepts#cell).
 	Ranges []string `json:"ranges,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Ranges") to
@@ -6727,17 +6729,17 @@ func (s *GridProperties) MarshalJSON() ([]byte, error) {
 // are half open, i.e. the start index is inclusive and the end index is
 // exclusive -- [start_index, end_index). Missing indexes indicate the
 // range is unbounded on that side. For example, if "Sheet1" is sheet
-// ID 0, then: `Sheet1!A1:A1 == sheet_id: 0, start_row_index: 0,
-// end_row_index: 1, start_column_index: 0, end_column_index: 1`
-// `Sheet1!A3:B4 == sheet_id: 0, start_row_index: 2, end_row_index: 4,
-// start_column_index: 0, end_column_index: 2` `Sheet1!A:B == sheet_id:
-// 0, start_column_index: 0, end_column_index: 2` `Sheet1!A5:B ==
-// sheet_id: 0, start_row_index: 4, start_column_index: 0,
-// end_column_index: 2` `Sheet1 == sheet_id:0` The start index must
-// always be less than or equal to the end index. If the start index
-// equals the end index, then the range is empty. Empty ranges are
-// typically not meaningful and are usually rendered in the UI as
-// `#REF!`.
+// ID 123456, then: `Sheet1!A1:A1 == sheet_id: 123456, start_row_index:
+// 0, end_row_index: 1, start_column_index: 0, end_column_index: 1`
+// `Sheet1!A3:B4 == sheet_id: 123456, start_row_index: 2, end_row_index:
+// 4, start_column_index: 0, end_column_index: 2` `Sheet1!A:B ==
+// sheet_id: 123456, start_column_index: 0, end_column_index: 2`
+// `Sheet1!A5:B == sheet_id: 123456, start_row_index: 4,
+// start_column_index: 0, end_column_index: 2` `Sheet1 == sheet_id:
+// 123456` The start index must always be less than or equal to the end
+// index. If the start index equals the end index, then the range is
+// empty. Empty ranges are typically not meaningful and are usually
+// rendered in the UI as `#REF!`.
 type GridRange struct {
 	// EndColumnIndex: The end column (exclusive) of the range, or not set
 	// if unbounded.
@@ -11202,8 +11204,8 @@ type UpdateValuesByDataFilterResponse struct {
 	// the request's `includeValuesInResponse` field was `true`.
 	UpdatedData *ValueRange `json:"updatedData,omitempty"`
 
-	// UpdatedRange: The range (in A1 notation) that updates were applied
-	// to.
+	// UpdatedRange: The range (in A1 notation
+	// (/sheets/api/guides/concepts#cell)) that updates were applied to.
 	UpdatedRange string `json:"updatedRange,omitempty"`
 
 	// UpdatedRows: The number of rows where at least one cell in the row
@@ -11304,11 +11306,12 @@ type ValueRange struct {
 	//   "COLUMNS" - Operates on the columns of a sheet.
 	MajorDimension string `json:"majorDimension,omitempty"`
 
-	// Range: The range the values cover, in A1 notation. For output, this
-	// range indicates the entire requested range, even though the values
-	// will exclude trailing rows and columns. When appending values, this
-	// field represents the range to search for a table, after which values
-	// will be appended.
+	// Range: The range the values cover, in A1 notation
+	// (/sheets/api/guides/concepts#cell). For output, this range indicates
+	// the entire requested range, even though the values will exclude
+	// trailing rows and columns. When appending values, this field
+	// represents the range to search for a table, after which values will
+	// be appended.
 	Range string `json:"range,omitempty"`
 
 	// Values: The data that was read or to be written. This is an array of
@@ -12686,8 +12689,9 @@ type SpreadsheetsValuesAppendCall struct {
 // the sheet (column-wise or row-wise), it does not influence what cell
 // the data starts being written to.
 //
-// - range: The A1 notation of a range to search for a logical table of
-//   data. Values are appended after the last row of the table.
+// - range: The A1 notation (/sheets/api/guides/concepts#cell) of a
+//   range to search for a logical table of data. Values are appended
+//   after the last row of the table.
 // - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Append(spreadsheetId string, range_ string, valuerange *ValueRange) *SpreadsheetsValuesAppendCall {
 	c := &SpreadsheetsValuesAppendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12901,7 +12905,7 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 	//       "type": "string"
 	//     },
 	//     "range": {
-	//       "description": "The A1 notation of a range to search for a logical table of data. Values are appended after the last row of the table.",
+	//       "description": "The [A1 notation](/sheets/api/guides/concepts#cell) of a range to search for a logical table of data. Values are appended after the last row of the table.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12986,7 +12990,7 @@ type SpreadsheetsValuesBatchClearCall struct {
 // BatchClear: Clears one or more ranges of values from a spreadsheet.
 // The caller must specify the spreadsheet ID and one or more ranges.
 // Only values are cleared -- all other properties of the cell (such as
-// formatting, data validation, etc..) are kept.
+// formatting and data validation) are kept.
 //
 // - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) BatchClear(spreadsheetId string, batchclearvaluesrequest *BatchClearValuesRequest) *SpreadsheetsValuesBatchClearCall {
@@ -13087,7 +13091,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Do(opts ...googleapi.CallOption) (*Ba
 	}
 	return ret, nil
 	// {
-	//   "description": "Clears one or more ranges of values from a spreadsheet. The caller must specify the spreadsheet ID and one or more ranges. Only values are cleared -- all other properties of the cell (such as formatting, data validation, etc..) are kept.",
+	//   "description": "Clears one or more ranges of values from a spreadsheet. The caller must specify the spreadsheet ID and one or more ranges. Only values are cleared -- all other properties of the cell (such as formatting and data validation) are kept.",
 	//   "flatPath": "v4/spreadsheets/{spreadsheetId}/values:batchClear",
 	//   "httpMethod": "POST",
 	//   "id": "sheets.spreadsheets.values.batchClear",
@@ -13313,8 +13317,8 @@ func (c *SpreadsheetsValuesBatchGetCall) DateTimeRenderOption(dateTimeRenderOpti
 // MajorDimension sets the optional parameter "majorDimension": The
 // major dimension that results should use. For example, if the
 // spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`, then requesting
-// `range=A1:B2,majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas
-// requesting `range=A1:B2,majorDimension=COLUMNS` returns
+// `ranges=["A1:B2"],majorDimension=ROWS` returns `[[1,2],[3,4]]`,
+// whereas requesting `ranges=["A1:B2"],majorDimension=COLUMNS` returns
 // `[[1,3],[2,4]]`.
 //
 // Possible values:
@@ -13327,7 +13331,8 @@ func (c *SpreadsheetsValuesBatchGetCall) MajorDimension(majorDimension string) *
 }
 
 // Ranges sets the optional parameter "ranges": The A1 notation or R1C1
-// notation of the range to retrieve values from.
+// notation (/sheets/api/guides/concepts#cell) of the range to retrieve
+// values from.
 func (c *SpreadsheetsValuesBatchGetCall) Ranges(ranges ...string) *SpreadsheetsValuesBatchGetCall {
 	c.urlParams_.SetMulti("ranges", append([]string{}, ranges...))
 	return c
@@ -13475,7 +13480,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//       "type": "string"
 	//     },
 	//     "majorDimension": {
-	//       "description": "The major dimension that results should use. For example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`, then requesting `range=A1:B2,majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas requesting `range=A1:B2,majorDimension=COLUMNS` returns `[[1,3],[2,4]]`.",
+	//       "description": "The major dimension that results should use. For example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`, then requesting `ranges=[\"A1:B2\"],majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas requesting `ranges=[\"A1:B2\"],majorDimension=COLUMNS` returns `[[1,3],[2,4]]`.",
 	//       "enum": [
 	//         "DIMENSION_UNSPECIFIED",
 	//         "ROWS",
@@ -13490,7 +13495,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//       "type": "string"
 	//     },
 	//     "ranges": {
-	//       "description": "The A1 notation or R1C1 notation of the range to retrieve values from.",
+	//       "description": "The [A1 notation or R1C1 notation](/sheets/api/guides/concepts#cell) of the range to retrieve values from.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -13987,7 +13992,8 @@ type SpreadsheetsValuesClearCall struct {
 // properties of the cell (such as formatting, data validation, etc..)
 // are kept.
 //
-// - range: The A1 notation or R1C1 notation of the values to clear.
+// - range: The A1 notation or R1C1 notation
+//   (/sheets/api/guides/concepts#cell) of the values to clear.
 // - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Clear(spreadsheetId string, range_ string, clearvaluesrequest *ClearValuesRequest) *SpreadsheetsValuesClearCall {
 	c := &SpreadsheetsValuesClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14099,7 +14105,7 @@ func (c *SpreadsheetsValuesClearCall) Do(opts ...googleapi.CallOption) (*ClearVa
 	//   ],
 	//   "parameters": {
 	//     "range": {
-	//       "description": "The A1 notation or R1C1 notation of the values to clear.",
+	//       "description": "The [A1 notation or R1C1 notation](/sheets/api/guides/concepts#cell) of the values to clear.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14142,8 +14148,9 @@ type SpreadsheetsValuesGetCall struct {
 // Get: Returns a range of values from a spreadsheet. The caller must
 // specify the spreadsheet ID and a range.
 //
-// - range: The A1 notation or R1C1 notation of the range to retrieve
-//   values from.
+// - range: The A1 notation or R1C1 notation
+//   (/sheets/api/guides/concepts#cell) of the range to retrieve values
+//   from.
 // - spreadsheetId: The ID of the spreadsheet to retrieve data from.
 func (r *SpreadsheetsValuesService) Get(spreadsheetId string, range_ string) *SpreadsheetsValuesGetCall {
 	c := &SpreadsheetsValuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14350,7 +14357,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//       "type": "string"
 	//     },
 	//     "range": {
-	//       "description": "The A1 notation or R1C1 notation of the range to retrieve values from.",
+	//       "description": "The [A1 notation or R1C1 notation](/sheets/api/guides/concepts#cell) of the range to retrieve values from.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14407,7 +14414,8 @@ type SpreadsheetsValuesUpdateCall struct {
 // Update: Sets values in a range of a spreadsheet. The caller must
 // specify the spreadsheet ID, range, and a valueInputOption.
 //
-// - range: The A1 notation of the values to update.
+// - range: The A1 notation (/sheets/api/guides/concepts#cell) of the
+//   values to update.
 // - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Update(spreadsheetId string, range_ string, valuerange *ValueRange) *SpreadsheetsValuesUpdateCall {
 	c := &SpreadsheetsValuesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14598,7 +14606,7 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 	//       "type": "boolean"
 	//     },
 	//     "range": {
-	//       "description": "The A1 notation of the values to update.",
+	//       "description": "The [A1 notation](/sheets/api/guides/concepts#cell) of the values to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

@@ -2530,8 +2530,8 @@ type GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret struct {
 
 	// Name: Output only. Resource name of this secret. This secret may be a
 	// child of any type of stream. Format:
-	// properties/{property}/webDataStreams/{webDataStream}/measurementProtoc
-	// olSecrets/{measurementProtocolSecret}
+	// properties/{property}/dataStreams/{dataStream}/measurementProtocolSecr
+	// ets/{measurementProtocolSecret}
 	Name string `json:"name,omitempty"`
 
 	// SecretValue: Output only. The measurement protocol secret value. Pass
@@ -11247,8 +11247,8 @@ type PropertiesDataStreamsMeasurementProtocolSecretsPatchCall struct {
 //
 // - name: Output only. Resource name of this secret. This secret may be
 //   a child of any type of stream. Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets/{measurementProtocolSecret}.
+//   properties/{property}/dataStreams/{dataStream}/measurementProtocolSe
+//   crets/{measurementProtocolSecret}.
 func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Patch(name string, googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
 	c := &PropertiesDataStreamsMeasurementProtocolSecretsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11365,7 +11365,7 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of this secret. This secret may be a child of any type of stream. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
+	//       "description": "Output only. Resource name of this secret. This secret may be a child of any type of stream. Format: properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
 	//       "location": "path",
 	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
 	//       "required": true,

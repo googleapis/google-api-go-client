@@ -2634,8 +2634,22 @@ type GoogleAnalyticsAdminV1alphaProperty struct {
 
 	// Parent: Immutable. Resource name of this property's logical parent.
 	// Note: The Property-Moving UI can be used to change the parent.
-	// Format: accounts/{account} Example: "accounts/100"
+	// Format: accounts/{account}, properties/{property} Example:
+	// "accounts/100", "properties/101"
 	Parent string `json:"parent,omitempty"`
+
+	// PropertyType: Immutable. The property type for this Property
+	// resource. When creating a property, if the type is
+	// "PROPERTY_TYPE_UNSPECIFIED", then "ORDINARY_PROPERTY" will be
+	// implied. "SUBPROPERTY" and "ROLLUP_PROPERTY" types cannot yet be
+	// created via Google Analytics Admin API.
+	//
+	// Possible values:
+	//   "PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property type
+	//   "PROPERTY_TYPE_ORDINARY" - Ordinary GA4 property
+	//   "PROPERTY_TYPE_SUBPROPERTY" - GA4 subproperty
+	//   "PROPERTY_TYPE_ROLLUP" - GA4 rollup property
+	PropertyType string `json:"propertyType,omitempty"`
 
 	// ServiceLevel: Output only. The Google Analytics service level that
 	// applies to this property.
@@ -2695,9 +2709,24 @@ type GoogleAnalyticsAdminV1alphaPropertySummary struct {
 	// property summary.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// Parent: Resource name of this property's logical parent. Note: The
+	// Property-Moving UI can be used to change the parent. Format:
+	// accounts/{account}, properties/{property} Example: "accounts/100",
+	// "properties/200"
+	Parent string `json:"parent,omitempty"`
+
 	// Property: Resource name of property referred to by this property
 	// summary Format: properties/{property_id} Example: "properties/1000"
 	Property string `json:"property,omitempty"`
+
+	// PropertyType: The property's property type.
+	//
+	// Possible values:
+	//   "PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property type
+	//   "PROPERTY_TYPE_ORDINARY" - Ordinary GA4 property
+	//   "PROPERTY_TYPE_SUBPROPERTY" - GA4 subproperty
+	//   "PROPERTY_TYPE_ROLLUP" - GA4 rollup property
+	PropertyType string `json:"propertyType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with

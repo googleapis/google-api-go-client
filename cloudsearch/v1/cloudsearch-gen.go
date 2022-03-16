@@ -1848,17 +1848,29 @@ func (s *DriveTimeSpanRestrict) MarshalJSON() ([]byte, error) {
 // scoring information. This data is used for logging in query-api
 // server and for testing purposes.
 type DynamiteSpacesScoringInfo struct {
+	AffinityScore float64 `json:"affinityScore,omitempty"`
+
+	CommonContactCountAffinityScore float64 `json:"commonContactCountAffinityScore,omitempty"`
+
+	ContactsIntersectionCount float64 `json:"contactsIntersectionCount,omitempty"`
+
 	FinalScore float64 `json:"finalScore,omitempty"`
 
 	FreshnessScore float64 `json:"freshnessScore,omitempty"`
 
+	JoinedSpacesAffinityScore float64 `json:"joinedSpacesAffinityScore,omitempty"`
+
 	MessageScore float64 `json:"messageScore,omitempty"`
+
+	SmallContactListAffinityScore float64 `json:"smallContactListAffinityScore,omitempty"`
+
+	SmallUnjoinedSpacesAffinityScore float64 `json:"smallUnjoinedSpacesAffinityScore,omitempty"`
 
 	SpaceAgeInDays float64 `json:"spaceAgeInDays,omitempty"`
 
 	TopicalityScore float64 `json:"topicalityScore,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FinalScore") to
+	// ForceSendFields is a list of field names (e.g. "AffinityScore") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1866,10 +1878,10 @@ type DynamiteSpacesScoringInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FinalScore") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AffinityScore") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1884,20 +1896,32 @@ func (s *DynamiteSpacesScoringInfo) MarshalJSON() ([]byte, error) {
 func (s *DynamiteSpacesScoringInfo) UnmarshalJSON(data []byte) error {
 	type NoMethod DynamiteSpacesScoringInfo
 	var s1 struct {
-		FinalScore      gensupport.JSONFloat64 `json:"finalScore"`
-		FreshnessScore  gensupport.JSONFloat64 `json:"freshnessScore"`
-		MessageScore    gensupport.JSONFloat64 `json:"messageScore"`
-		SpaceAgeInDays  gensupport.JSONFloat64 `json:"spaceAgeInDays"`
-		TopicalityScore gensupport.JSONFloat64 `json:"topicalityScore"`
+		AffinityScore                    gensupport.JSONFloat64 `json:"affinityScore"`
+		CommonContactCountAffinityScore  gensupport.JSONFloat64 `json:"commonContactCountAffinityScore"`
+		ContactsIntersectionCount        gensupport.JSONFloat64 `json:"contactsIntersectionCount"`
+		FinalScore                       gensupport.JSONFloat64 `json:"finalScore"`
+		FreshnessScore                   gensupport.JSONFloat64 `json:"freshnessScore"`
+		JoinedSpacesAffinityScore        gensupport.JSONFloat64 `json:"joinedSpacesAffinityScore"`
+		MessageScore                     gensupport.JSONFloat64 `json:"messageScore"`
+		SmallContactListAffinityScore    gensupport.JSONFloat64 `json:"smallContactListAffinityScore"`
+		SmallUnjoinedSpacesAffinityScore gensupport.JSONFloat64 `json:"smallUnjoinedSpacesAffinityScore"`
+		SpaceAgeInDays                   gensupport.JSONFloat64 `json:"spaceAgeInDays"`
+		TopicalityScore                  gensupport.JSONFloat64 `json:"topicalityScore"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.AffinityScore = float64(s1.AffinityScore)
+	s.CommonContactCountAffinityScore = float64(s1.CommonContactCountAffinityScore)
+	s.ContactsIntersectionCount = float64(s1.ContactsIntersectionCount)
 	s.FinalScore = float64(s1.FinalScore)
 	s.FreshnessScore = float64(s1.FreshnessScore)
+	s.JoinedSpacesAffinityScore = float64(s1.JoinedSpacesAffinityScore)
 	s.MessageScore = float64(s1.MessageScore)
+	s.SmallContactListAffinityScore = float64(s1.SmallContactListAffinityScore)
+	s.SmallUnjoinedSpacesAffinityScore = float64(s1.SmallUnjoinedSpacesAffinityScore)
 	s.SpaceAgeInDays = float64(s1.SpaceAgeInDays)
 	s.TopicalityScore = float64(s1.TopicalityScore)
 	return nil
@@ -6673,8 +6697,7 @@ type SpaceInfo struct {
 
 	GroupId *GroupId `json:"groupId,omitempty"`
 
-	// IsExternal: Whether this is an external space outside of user's
-	// organization
+	// IsExternal: Whether this is a space that enables guest access
 	IsExternal bool `json:"isExternal,omitempty"`
 
 	Name string `json:"name,omitempty"`

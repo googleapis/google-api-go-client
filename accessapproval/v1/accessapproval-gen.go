@@ -393,15 +393,17 @@ type AccessReason struct {
 	// * "Case Number: #####" * "Case ID: #####" * "E-PIN Reference: #####"
 	// * "Google-#####" * "T-#####"
 	//   "GOOGLE_INITIATED_SERVICE" - The principal accessed customer data
-	// in order to diagnose or resolve a suspected issue in services or a
-	// known outage. Often this access is used to confirm that customers are
-	// not affected by a suspected service issue or to remediate a
-	// reversible system issue.
+	// in order to diagnose or resolve a suspected issue in services. Often
+	// this access is used to confirm that customers are not affected by a
+	// suspected service issue or to remediate a reversible system issue.
 	//   "GOOGLE_INITIATED_REVIEW" - Google initiated service for security,
 	// fraud, abuse, or compliance purposes.
 	//   "THIRD_PARTY_DATA_REQUEST" - The principal was compelled to access
 	// customer data in order to respond to a legal third party data request
 	// or process, including legal processes from customers themselves.
+	//   "GOOGLE_RESPONSE_TO_PRODUCTION_ALERT" - The principal accessed
+	// customer data in order to diagnose or resolve a suspected issue in
+	// services or a known outage.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to

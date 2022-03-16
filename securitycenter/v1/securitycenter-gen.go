@@ -1469,11 +1469,7 @@ type GoogleCloudSecuritycenterV1BigQueryExport struct {
 	// value types. * `>`, `<`, `>=`, `<=` for integer values. * `:`,
 	// meaning substring matching, for strings. The supported value types
 	// are: * string literals in quotes. * integer literals without quotes.
-	// * boolean literals `true` and `false` without quotes. Please see the
-	// proto documentation in the finding
-	// (https://source.corp.google.com/piper///depot/google3/google/cloud/securitycenter/v1/finding.proto)
-	// and in the ListFindingsRequest for valid filter syntax.
-	// (https://source.corp.google.com/piper///depot/google3/google/cloud/securitycenter/v1/securitycenter_service.proto).
+	// * boolean literals `true` and `false` without quotes.
 	Filter string `json:"filter,omitempty"`
 
 	// MostRecentEditor: Output only. Email address of the user who last

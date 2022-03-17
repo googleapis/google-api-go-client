@@ -1224,7 +1224,10 @@ func (s *GoogleCloudRetailV2GetDefaultBranchResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2Image: Product thumbnail/detail image.
+// GoogleCloudRetailV2Image: Product image. Recommendations AI and
+// Retail Search do not use product images to improve prediction and
+// search results. However, product images can be returned in results,
+// and are shown in prediction or search previews in the console.
 type GoogleCloudRetailV2Image struct {
 	// Height: Height of the image in number of pixels. This field must be
 	// nonnegative. Otherwise, an INVALID_ARGUMENT error is returned.
@@ -1751,9 +1754,11 @@ type GoogleCloudRetailV2PredictRequest struct {
 	// OUT_OF_STOCK. Examples: * tag=("Red" OR "Blue") tag="New-Arrival"
 	// tag=(NOT "promotional") * filterOutOfStockItems tag=(-"promotional")
 	// * filterOutOfStockItems If your filter blocks all prediction results,
-	// nothing will be returned. If you want generic (unfiltered) popular
-	// products to be returned instead, set `strictFiltering` to false in
-	// `PredictRequest.params`.
+	// the API will return generic (unfiltered) popular products. If you
+	// only want results strictly matching the filters, set
+	// `strictFiltering` to True in `PredictRequest.params` to receive empty
+	// results instead. Note that the API will never return items with
+	// storageStatus of "EXPIRED" or "DELETED" regardless of filter choices.
 	Filter string `json:"filter,omitempty"`
 
 	// Labels: The labels applied to a resource must meet the following
@@ -2197,8 +2202,8 @@ type GoogleCloudRetailV2Product struct {
 	// Schema.org property Product.sku (https://schema.org/sku).
 	Id string `json:"id,omitempty"`
 
-	// Images: Product images for the product.Highly recommended to put the
-	// main image to the first. A maximum of 300 images are allowed.
+	// Images: Product images for the product. We highly recommend putting
+	// the main image first. A maximum of 300 images are allowed.
 	// Corresponding properties: Google Merchant Center property image_link
 	// (https://support.google.com/merchants/answer/6324350). Schema.org
 	// property Product.image (https://schema.org/image).
@@ -2966,9 +2971,11 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// search products under the default branch.
 	Branch string `json:"branch,omitempty"`
 
-	// CanonicalFilter: The filter applied to every search request when
-	// quality improvement such as query expansion is needed. For example,
-	// if a query does not have enough results, an expanded query with
+	// CanonicalFilter: The default filter that is applied when a user
+	// performs a search without checking any filters on the search page.
+	// The filter applied to every search request when quality improvement
+	// such as query expansion is needed. For example, if a query does not
+	// have enough results, an expanded query with
 	// SearchRequest.canonical_filter will be returned as a supplement of
 	// the original query. This field is strongly recommended to achieve
 	// high search quality. See SearchRequest.filter for more details about
@@ -3903,16 +3910,23 @@ type GoogleCloudRetailV2SetInventoryResponse struct {
 // with customers' website.
 type GoogleCloudRetailV2UserEvent struct {
 	// Attributes: Extra user event features to include in the
-	// recommendation model. This field needs to pass all below criteria,
-	// otherwise an INVALID_ARGUMENT error is returned: * The key must be a
-	// UTF-8 encoded string with a length limit of 5,000 characters. * For
-	// text attributes, at most 400 values are allowed. Empty values are not
-	// allowed. Each value must be a UTF-8 encoded string with a length
-	// limit of 256 characters. * For number attributes, at most 400 values
-	// are allowed. For product recommendation, an example of extra user
-	// information is traffic_channel, i.e. how user arrives at the site.
-	// Users can arrive at the site by coming to the site directly, or
-	// coming through Google search, and etc.
+	// recommendation model. If you provide custom attributes for ingested
+	// user events, also include them in the user events that you associate
+	// with prediction requests. Custom attribute formatting must be
+	// consistent between imported events and events provided with
+	// prediction requests. This lets the Retail API use those custom
+	// attributes when training models and serving predictions, which helps
+	// improve recommendation quality. This field needs to pass all below
+	// criteria, otherwise an INVALID_ARGUMENT error is returned: * The key
+	// must be a UTF-8 encoded string with a length limit of 5,000
+	// characters. * For text attributes, at most 400 values are allowed.
+	// Empty values are not allowed. Each value must be a UTF-8 encoded
+	// string with a length limit of 256 characters. * For number
+	// attributes, at most 400 values are allowed. For product
+	// recommendations, an example of extra user information is
+	// traffic_channel, which is how a user arrives at the site. Users can
+	// arrive at the site by coming to the site directly, coming through
+	// Google search, or in other ways.
 	Attributes map[string]GoogleCloudRetailV2CustomAttribute `json:"attributes,omitempty"`
 
 	// AttributionToken: Highly recommended for user events that are the
@@ -4619,6 +4633,84 @@ func (s *GoogleCloudRetailV2alphaImportUserEventsResponse) MarshalJSON() ([]byte
 // progress of the Purge operation. This will be returned by the
 // google.longrunning.Operation.metadata field.
 type GoogleCloudRetailV2alphaPurgeMetadata struct {
+}
+
+// GoogleCloudRetailV2alphaPurgeProductsMetadata: Metadata related to
+// the progress of the PurgeProducts operation. This will be returned by
+// the google.longrunning.Operation.metadata field.
+type GoogleCloudRetailV2alphaPurgeProductsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FailureCount: Count of entries that encountered errors while
+	// processing.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+
+	// SuccessCount: Count of entries that were deleted successfully.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaPurgeProductsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaPurgeProductsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaPurgeProductsResponse: Response of the
+// PurgeProductsRequest. If the long running operation is successfully
+// done, then this message is returned by the
+// google.longrunning.Operations.response field.
+type GoogleCloudRetailV2alphaPurgeProductsResponse struct {
+	// PurgeCount: The total count of products purged as a result of the
+	// operation.
+	PurgeCount int64 `json:"purgeCount,omitempty,string"`
+
+	// PurgeSample: A sample of the product names that will be deleted. Only
+	// populated if `force` is set to false. A max of 100 names will be
+	// returned and the names are chosen at random.
+	PurgeSample []string `json:"purgeSample,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PurgeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PurgeCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaPurgeProductsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaPurgeProductsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaPurgeUserEventsResponse: Response of the
@@ -5534,8 +5626,8 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Query(query string) *Projec
 	return c
 }
 
-// VisitorId sets the optional parameter "visitorId": A unique
-// identifier for tracking visitors. For example, this could be
+// VisitorId sets the optional parameter "visitorId": Required field. A
+// unique identifier for tracking visitors. For example, this could be
 // implemented with an HTTP cookie, which should be able to uniquely
 // identify a visitor on a single device. This unique identifier should
 // not change if the visitor logs in or out of the website. The field
@@ -5690,7 +5782,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "visitorId": {
-	//       "description": "A unique identifier for tracking visitors. For example, this could be implemented with an HTTP cookie, which should be able to uniquely identify a visitor on a single device. This unique identifier should not change if the visitor logs in or out of the website. The field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.",
+	//       "description": "Required field. A unique identifier for tracking visitors. For example, this could be implemented with an HTTP cookie, which should be able to uniquely identify a visitor on a single device. This unique identifier should not change if the visitor logs in or out of the website. The field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -9348,14 +9440,15 @@ type ProjectsLocationsCatalogsUserEventsRejoinCall struct {
 	header_                                    http.Header
 }
 
-// Rejoin: Triggers a user event rejoin operation with latest product
+// Rejoin: Starts a user event rejoin operation with latest product
 // catalog. Events will not be annotated with detailed product
 // information if product is missing from the catalog at the time the
 // user event is ingested, and these events are stored as unjoined
-// events with a limited usage on training and serving. This API can be
-// used to trigger a 'join' operation on specified events with latest
+// events with a limited usage on training and serving. This method can
+// be used to start a join operation on specified events with latest
 // version of product catalog. It can also be used to correct events
-// joined with wrong product catalog.
+// joined with the wrong product catalog. A rejoin operation can take
+// hours or days to complete.
 //
 // - parent: The parent catalog resource name, such as
 //   `projects/1234/locations/global/catalogs/default_catalog`.
@@ -9457,7 +9550,7 @@ func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Triggers a user event rejoin operation with latest product catalog. Events will not be annotated with detailed product information if product is missing from the catalog at the time the user event is ingested, and these events are stored as unjoined events with a limited usage on training and serving. This API can be used to trigger a 'join' operation on specified events with latest version of product catalog. It can also be used to correct events joined with wrong product catalog.",
+	//   "description": "Starts a user event rejoin operation with latest product catalog. Events will not be annotated with detailed product information if product is missing from the catalog at the time the user event is ingested, and these events are stored as unjoined events with a limited usage on training and serving. This method can be used to start a join operation on specified events with latest version of product catalog. It can also be used to correct events joined with the wrong product catalog. A rejoin operation can take hours or days to complete.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/userEvents:rejoin",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.userEvents.rejoin",

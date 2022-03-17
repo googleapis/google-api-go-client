@@ -1501,7 +1501,8 @@ func (s *SasPortalNode) MarshalJSON() ([]byte, error) {
 }
 
 // SasPortalNrqzValidation: Information about National Radio Quiet Zone
-// validation.
+// validation. The presence of the field indicates the device has been
+// validated.
 type SasPortalNrqzValidation struct {
 	// CaseId: Validation case id.
 	CaseId string `json:"caseId,omitempty"`
@@ -1514,14 +1515,6 @@ type SasPortalNrqzValidation struct {
 
 	// Longitude: Device longitude associated with the validation.
 	Longitude float64 `json:"longitude,omitempty"`
-
-	// State: State of the NRQZ validation info.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "DRAFT" - Draft state.
-	//   "FINAL" - Final state.
-	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CaseId") to
 	// unconditionally include in API requests. By default, fields with

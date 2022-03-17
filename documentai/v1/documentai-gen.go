@@ -325,6 +325,16 @@ type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata struct {
 	//   "DATASET_SPLIT_UNASSIGNED" - Identifies the unassigned documents.
 	DestDatasetType string `json:"destDatasetType,omitempty"`
 
+	// DestSplitType: The destination dataset split type.
+	//
+	// Possible values:
+	//   "DATASET_SPLIT_TYPE_UNSPECIFIED" - Default value if the enum is not
+	// set. go/protodosdonts#do-include-an-unspecified-value-in-an-enum
+	//   "DATASET_SPLIT_TRAIN" - Identifies the train documents.
+	//   "DATASET_SPLIT_TEST" - Identifies the test documents.
+	//   "DATASET_SPLIT_UNASSIGNED" - Identifies the unassigned documents.
+	DestSplitType string `json:"destSplitType,omitempty"`
+
 	// IndividualBatchMoveStatuses: The list of response details of each
 	// document.
 	IndividualBatchMoveStatuses []*GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus `json:"individualBatchMoveStatuses,omitempty"`

@@ -4335,6 +4335,9 @@ type GoogleCloudApigeeV1EnvironmentGroupAttachment struct {
 	// Environment: Required. ID of the attached environment.
 	Environment string `json:"environment,omitempty"`
 
+	// EnvironmentGroupId: Output only. ID of the environment group.
+	EnvironmentGroupId string `json:"environmentGroupId,omitempty"`
+
 	// Name: ID of the environment group attachment.
 	Name string `json:"name,omitempty"`
 

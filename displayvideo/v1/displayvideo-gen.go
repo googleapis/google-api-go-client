@@ -1950,12 +1950,18 @@ type AssignedTargetingOption struct {
 	// latitude/longitude coordinates.
 	//   "TARGETING_TYPE_BUSINESS_CHAIN" - Target ads around locations of a
 	// business chain within a specific geo region.
+	//   "TARGETING_TYPE_CONTENT_DURATION" - Target ads to a specific video
+	// content duration.
+	//   "TARGETING_TYPE_CONTENT_STREAM_TYPE" - Target ads to a specific
+	// video content stream type.
 	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
 	// native content position.
 	//   "TARGETING_TYPE_OMID" - Target ads in an Open Measurement enabled
 	// inventory.
 	//   "TARGETING_TYPE_AUDIO_CONTENT_TYPE" - Target ads to a specific
 	// audio content type.
+	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
+	// genre.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ThirdPartyVerifierDetails: Third party verification details. This
@@ -4849,12 +4855,18 @@ type CreateAssignedTargetingOptionsRequest struct {
 	// latitude/longitude coordinates.
 	//   "TARGETING_TYPE_BUSINESS_CHAIN" - Target ads around locations of a
 	// business chain within a specific geo region.
+	//   "TARGETING_TYPE_CONTENT_DURATION" - Target ads to a specific video
+	// content duration.
+	//   "TARGETING_TYPE_CONTENT_STREAM_TYPE" - Target ads to a specific
+	// video content stream type.
 	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
 	// native content position.
 	//   "TARGETING_TYPE_OMID" - Target ads in an Open Measurement enabled
 	// inventory.
 	//   "TARGETING_TYPE_AUDIO_CONTENT_TYPE" - Target ads to a specific
 	// audio content type.
+	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
+	// genre.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6049,12 +6061,18 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	// latitude/longitude coordinates.
 	//   "TARGETING_TYPE_BUSINESS_CHAIN" - Target ads around locations of a
 	// business chain within a specific geo region.
+	//   "TARGETING_TYPE_CONTENT_DURATION" - Target ads to a specific video
+	// content duration.
+	//   "TARGETING_TYPE_CONTENT_STREAM_TYPE" - Target ads to a specific
+	// video content stream type.
 	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
 	// native content position.
 	//   "TARGETING_TYPE_OMID" - Target ads in an Open Measurement enabled
 	// inventory.
 	//   "TARGETING_TYPE_AUDIO_CONTENT_TYPE" - Target ads to a specific
 	// audio content type.
+	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
+	// genre.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -14397,12 +14415,18 @@ type TargetingOption struct {
 	// latitude/longitude coordinates.
 	//   "TARGETING_TYPE_BUSINESS_CHAIN" - Target ads around locations of a
 	// business chain within a specific geo region.
+	//   "TARGETING_TYPE_CONTENT_DURATION" - Target ads to a specific video
+	// content duration.
+	//   "TARGETING_TYPE_CONTENT_STREAM_TYPE" - Target ads to a specific
+	// video content stream type.
 	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
 	// native content position.
 	//   "TARGETING_TYPE_OMID" - Target ads in an Open Measurement enabled
 	// inventory.
 	//   "TARGETING_TYPE_AUDIO_CONTENT_TYPE" - Target ads to a specific
 	// audio content type.
+	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
+	// genre.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// UserRewardedContentDetails: User rewarded content details.
@@ -18134,9 +18158,12 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -18179,9 +18206,12 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -18483,9 +18513,12 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -18528,9 +18561,12 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -22483,9 +22519,12 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -22528,9 +22567,12 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -22817,9 +22859,12 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -22862,9 +22907,12 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -24966,9 +25014,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25011,9 +25062,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -25237,9 +25291,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25282,9 +25339,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -25515,9 +25575,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25560,9 +25623,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -25848,9 +25914,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25893,9 +25962,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -30283,9 +30355,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -30328,9 +30403,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -30538,9 +30616,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -30583,9 +30664,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -30805,9 +30889,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -30850,9 +30937,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -31124,9 +31214,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -31169,9 +31262,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -39983,9 +40079,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -40028,9 +40127,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -40235,9 +40337,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -40280,9 +40385,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -40499,9 +40607,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -40544,9 +40655,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -40815,9 +40929,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -40860,9 +40977,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -41399,9 +41519,12 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -41444,9 +41567,12 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -41738,9 +41864,12 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -41783,9 +41912,12 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -41991,9 +42123,12 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -42036,9 +42171,12 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",

@@ -839,6 +839,17 @@ type CmekSettings struct {
 	// for more information.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
+	// KmsKeyVersionName: The CryptoKeyVersion resource name for the
+	// configured Cloud KMS key.KMS key name format:
+	// "projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoK
+	// eys/[KEY]/cryptoKeyVersions/[VERSION]" For
+	// example:"projects/my-project/locations/us-central1/keyRings/my-ring/cr
+	// yptoKeys/my-key/cryptoKeyVersions/1"This is a read-only field used to
+	// convey the specific configured CryptoKeyVersion of kms_key that has
+	// been configured. It will be populated in cases where the CMEK
+	// settings are bound to a single key version.
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
+
 	// Name: Output only. The resource name of the CMEK settings.
 	Name string `json:"name,omitempty"`
 

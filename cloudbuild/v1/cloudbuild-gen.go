@@ -11858,8 +11858,7 @@ type ProjectsLocationsWorkerPoolsDeleteCall struct {
 // Delete: Deletes a `WorkerPool`.
 //
 // - name: The name of the `WorkerPool` to delete. Format:
-//   `projects/{project}/locations/{workerPool}/workerPools/{workerPool}`
-//   .
+//   `projects/{project}/locations/{location}/workerPools/{workerPool}`.
 func (r *ProjectsLocationsWorkerPoolsService) Delete(name string) *ProjectsLocationsWorkerPoolsDeleteCall {
 	c := &ProjectsLocationsWorkerPoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11994,7 +11993,7 @@ func (c *ProjectsLocationsWorkerPoolsDeleteCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the `WorkerPool` to delete. Format: `projects/{project}/locations/{workerPool}/workerPools/{workerPool}`.",
+	//       "description": "Required. The name of the `WorkerPool` to delete. Format: `projects/{project}/locations/{location}/workerPools/{workerPool}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workerPools/[^/]+$",
 	//       "required": true,

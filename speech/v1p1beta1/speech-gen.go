@@ -244,8 +244,9 @@ type CreateCustomClassRequest struct {
 
 	// CustomClassId: Required. The ID to use for the custom class, which
 	// will become the final component of the custom class' resource name.
-	// This value should be 4-63 characters, and valid characters are
-	// /a-z-/.
+	// This value should restrict to letters, numbers, and hyphens, with the
+	// first character a letter, the last a letter or a number, and be 4-63
+	// characters.
 	CustomClassId string `json:"customClassId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomClass") to
@@ -279,7 +280,9 @@ type CreatePhraseSetRequest struct {
 
 	// PhraseSetId: Required. The ID to use for the phrase set, which will
 	// become the final component of the phrase set's resource name. This
-	// value should be 4-63 characters, and valid characters are /a-z-/.
+	// value should restrict to letters, numbers, and hyphens, with the
+	// first character a letter, the last a letter or a number, and be 4-63
+	// characters.
 	PhraseSetId string `json:"phraseSetId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PhraseSet") to

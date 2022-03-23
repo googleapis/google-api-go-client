@@ -444,6 +444,12 @@ type Destination struct {
 	// running in the same project as the trigger.
 	Gke *GKE `json:"gke,omitempty"`
 
+	// Workflow: The resource name of the Workflow whose Executions are
+	// triggered by the events. The Workflow resource should be deployed in
+	// the same project as the trigger. Format:
+	// `projects/{project}/locations/{location}/workflows/{workflow}`
+	Workflow string `json:"workflow,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CloudFunction") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

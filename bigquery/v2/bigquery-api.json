@@ -1693,7 +1693,7 @@
       }
     }
   },
-  "revision": "20220226",
+  "revision": "20220313",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -4423,6 +4423,10 @@
           "format": "double",
           "type": "number"
         },
+        "copy": {
+          "$ref": "JobStatistics5",
+          "description": "[Output-only] Statistics for a copy job."
+        },
         "creationTime": {
           "description": "[Output-only] Creation time of this job, in milliseconds since the epoch. This field will be present on all jobs.",
           "format": "int64",
@@ -4726,6 +4730,22 @@
         },
         "inputBytes": {
           "description": "[Output-only] Number of user bytes extracted into the result. This is the byte count as computed by BigQuery for billing purposes.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JobStatistics5": {
+      "id": "JobStatistics5",
+      "properties": {
+        "copied_logical_bytes": {
+          "description": "[Output-only] Number of logical bytes copied to the destination table.",
+          "format": "int64",
+          "type": "string"
+        },
+        "copied_rows": {
+          "description": "[Output-only] Number of rows copied to the destination table.",
           "format": "int64",
           "type": "string"
         }
@@ -7198,6 +7218,14 @@
         "trainingOptions": {
           "$ref": "TrainingOptions",
           "description": "Options that were used for this training run, includes user specified and default options that were used."
+        },
+        "vertexAiModelId": {
+          "description": "The model id in Vertex AI Model Registry for this training run",
+          "type": "string"
+        },
+        "vertexAiModelVersion": {
+          "description": "The model version in Vertex AI Model Registry for this training run",
+          "type": "string"
         }
       },
       "type": "object"

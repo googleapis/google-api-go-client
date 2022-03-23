@@ -911,9 +911,9 @@ type Finding struct {
 	// finding. See: https://attack.mitre.org
 	MitreAttack *MitreAttack `json:"mitreAttack,omitempty"`
 
-	// Mute: Indicates the mute state of a finding (either unspecified,
-	// muted, unmuted or undefined). Unlike other attributes of a finding, a
-	// finding provider shouldn't set the value of mute.
+	// Mute: Indicates the mute state of a finding (either muted, unmuted or
+	// undefined). Unlike other attributes of a finding, a finding provider
+	// shouldn't set the value of mute.
 	//
 	// Possible values:
 	//   "MUTE_UNSPECIFIED" - Unspecified.
@@ -994,8 +994,8 @@ type Finding struct {
 	// to cause operational impact but may not access data or execute
 	// unauthorized code.
 	//   "LOW" - Vulnerability: A low risk vulnerability hampers a security
-	// organization’s ability to detect vulnerabilities or active threats
-	// in their deployment, or prevents the root cause investigation of
+	// organization's ability to detect vulnerabilities or active threats in
+	// their deployment, or prevents the root cause investigation of
 	// security issues. An example is monitoring and logs being disabled for
 	// resource configurations and access. Threat: Indicates a threat that
 	// has obtained minimal access to an environment but is not able to
@@ -1371,7 +1371,7 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	// to.
 	Project string `json:"project,omitempty"`
 
-	// ProjectDisplayName: The project id that the resource belongs to.
+	// ProjectDisplayName: The project ID that the resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
 	// Type: The full resource type of the resource.

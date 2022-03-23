@@ -3655,6 +3655,8 @@ type SqlExternalSyncSettingError struct {
 	// binary log format.
 	//   "BINLOG_RETENTION_SETTING" - The primary instance's binary log
 	// retention setting.
+	//   "UNSUPPORTED_STORAGE_ENGINE" - The primary instance has tables with
+	// unsupported storage engine.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
@@ -3932,6 +3934,12 @@ type SqlServerAuditConfig struct {
 
 	// Kind: This is always sql#sqlServerAuditConfig
 	Kind string `json:"kind,omitempty"`
+
+	// RetentionInterval: How long to keep generated audit files.
+	RetentionInterval string `json:"retentionInterval,omitempty"`
+
+	// UploadInterval: How often to upload generated audit files.
+	UploadInterval string `json:"uploadInterval,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Bucket") to
 	// unconditionally include in API requests. By default, fields with

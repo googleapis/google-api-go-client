@@ -178,8 +178,11 @@ type NotificationSetting struct {
 	// usages of this value to the more expanded
 	// "VOICE_OF_MERCHANT_UPDATED".
 	//   "VOICE_OF_MERCHANT_UPDATED" - Indicates whether the location has an
-	// update in voice of merchant status. Call GetVoiceOfMerchantState rpc
-	// for more details
+	// update in Voice of Merchant (VOM) status. VOM dictates whether the
+	// location is in good standing and the merchant has control over the
+	// business on Google. Any edits made to the location will propagate to
+	// Maps after passing the review phase. Call GetVoiceOfMerchantState rpc
+	// for more details.
 	NotificationTypes []string `json:"notificationTypes,omitempty"`
 
 	// PubsubTopic: Optional. The Google Pub/Sub topic that will receive

@@ -3135,6 +3135,8 @@ func (s *SystemApksListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Testers: The testers of an app. The resource for TestersService.
+// Note: while it is possible in the Play Console UI to add testers via
+// email lists, email lists are not supported by this resource.
 type Testers struct {
 	// GoogleGroups: All testing Google Groups, as email addresses.
 	GoogleGroups []string `json:"googleGroups,omitempty"`
@@ -8917,7 +8919,8 @@ type EditsTestersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets testers.
+// Get: Gets testers. Note: Testers resource does not support email
+// lists.
 //
 // - editId: Identifier of the edit.
 // - packageName: Package name of the app.
@@ -9031,7 +9034,7 @@ func (c *EditsTestersGetCall) Do(opts ...googleapi.CallOption) (*Testers, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets testers.",
+	//   "description": "Gets testers. Note: Testers resource does not support email lists.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/testers/{track}",
 	//   "httpMethod": "GET",
 	//   "id": "androidpublisher.edits.testers.get",
@@ -9084,7 +9087,8 @@ type EditsTestersPatchCall struct {
 	header_     http.Header
 }
 
-// Patch: Patches testers.
+// Patch: Patches testers. Note: Testers resource does not support email
+// lists.
 //
 // - editId: Identifier of the edit.
 // - packageName: Package name of the app.
@@ -9191,7 +9195,7 @@ func (c *EditsTestersPatchCall) Do(opts ...googleapi.CallOption) (*Testers, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Patches testers.",
+	//   "description": "Patches testers. Note: Testers resource does not support email lists.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/testers/{track}",
 	//   "httpMethod": "PATCH",
 	//   "id": "androidpublisher.edits.testers.patch",
@@ -9247,7 +9251,8 @@ type EditsTestersUpdateCall struct {
 	header_     http.Header
 }
 
-// Update: Updates testers.
+// Update: Updates testers. Note: Testers resource does not support
+// email lists.
 //
 // - editId: Identifier of the edit.
 // - packageName: Package name of the app.
@@ -9354,7 +9359,7 @@ func (c *EditsTestersUpdateCall) Do(opts ...googleapi.CallOption) (*Testers, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates testers.",
+	//   "description": "Updates testers. Note: Testers resource does not support email lists.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/testers/{track}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidpublisher.edits.testers.update",

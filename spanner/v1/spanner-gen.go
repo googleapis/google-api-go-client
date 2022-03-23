@@ -327,6 +327,13 @@ type Backup struct {
 	// resources used by the backup.
 	ExpireTime string `json:"expireTime,omitempty"`
 
+	// MaxExpireTime: Output only. The max allowed expiration time of the
+	// backup, with microseconds granularity. A backup's expiration time can
+	// be configured in multiple APIs: CreateBackup, UpdateBackup,
+	// CopyBackup. When updating or copying an existing backup, the
+	// expiration time specified must be less than `Backup.max_expire_time`.
+	MaxExpireTime string `json:"maxExpireTime,omitempty"`
+
 	// Name: Output only for the CreateBackup operation. Required for the
 	// UpdateBackup operation. A globally unique identifier for the backup
 	// which cannot be changed. Values are of the form
@@ -336,6 +343,15 @@ type Backup struct {
 	// the instance containing the backup, identified by the prefix of the
 	// backup name of the form `projects//instances/`.
 	Name string `json:"name,omitempty"`
+
+	// ReferencingBackups: Output only. The names of the destination backups
+	// being created by copying this source backup. The backup names are of
+	// the form `projects//instances//backups/`. Referencing backups may
+	// exist in different instances. The existence of any referencing backup
+	// prevents the backup from being deleted. When the copy operation is
+	// done (either successfully completed or cancelled or the destination
+	// backup is deleted), the reference to the backup is removed.
+	ReferencingBackups []string `json:"referencingBackups,omitempty"`
 
 	// ReferencingDatabases: Output only. The names of the restored
 	// databases that reference the backup. The database names are of the
@@ -830,6 +846,153 @@ func (s *ContextValue) UnmarshalJSON(data []byte) error {
 	}
 	s.Value = float64(s1.Value)
 	return nil
+}
+
+// CopyBackupEncryptionConfig: Encryption configuration for the copied
+// backup.
+type CopyBackupEncryptionConfig struct {
+	// EncryptionType: Required. The encryption type of the backup.
+	//
+	// Possible values:
+	//   "ENCRYPTION_TYPE_UNSPECIFIED" - Unspecified. Do not use.
+	//   "USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION" - This is the default
+	// option for CopyBackup when encryption_config is not specified. For
+	// example, if the source backup is using `Customer_Managed_Encryption`,
+	// the backup will be using the same Cloud KMS key as the source backup.
+	//   "GOOGLE_DEFAULT_ENCRYPTION" - Use Google default encryption.
+	//   "CUSTOMER_MANAGED_ENCRYPTION" - Use customer managed encryption. If
+	// specified, `kms_key_name` must contain a valid Cloud KMS key.
+	EncryptionType string `json:"encryptionType,omitempty"`
+
+	// KmsKeyName: Optional. The Cloud KMS key that will be used to protect
+	// the backup. This field should be set only when encryption_type is
+	// `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the form
+	// `projects//locations//keyRings//cryptoKeys/`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EncryptionType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CopyBackupEncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CopyBackupEncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CopyBackupMetadata: Metadata type for the
+// google.longrunning.Operation returned by CopyBackup.
+type CopyBackupMetadata struct {
+	// CancelTime: The time at which cancellation of CopyBackup operation
+	// was received. Operations.CancelOperation starts asynchronous
+	// cancellation on a long-running operation. The server makes a best
+	// effort to cancel the operation, but success is not guaranteed.
+	// Clients can use Operations.GetOperation or other methods to check
+	// whether the cancellation succeeded or whether the operation completed
+	// despite cancellation. On successful cancellation, the operation is
+	// not deleted; instead, it becomes an operation with an Operation.error
+	// value with a google.rpc.Status.code of 1, corresponding to
+	// `Code.CANCELLED`.
+	CancelTime string `json:"cancelTime,omitempty"`
+
+	// Name: The name of the backup being created through the copy
+	// operation. Values are of the form `projects//instances//backups/`.
+	Name string `json:"name,omitempty"`
+
+	// Progress: The progress of the CopyBackup operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// SourceBackup: The name of the source backup that is being copied.
+	// Values are of the form `projects//instances//backups/`.
+	SourceBackup string `json:"sourceBackup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CancelTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CancelTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CopyBackupMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CopyBackupMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CopyBackupRequest: The request for CopyBackup.
+type CopyBackupRequest struct {
+	// BackupId: Required. The id of the backup copy. The `backup_id`
+	// appended to `parent` forms the full backup_uri of the form
+	// `projects//instances//backups/`.
+	BackupId string `json:"backupId,omitempty"`
+
+	// EncryptionConfig: Optional. The encryption configuration used to
+	// encrypt the backup. If this field is not specified, the backup will
+	// use the same encryption configuration as the source backup by
+	// default, namely encryption_type =
+	// `USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION`.
+	EncryptionConfig *CopyBackupEncryptionConfig `json:"encryptionConfig,omitempty"`
+
+	// ExpireTime: Required. The expiration time of the backup in
+	// microsecond granularity. The expiration time must be at least 6 hours
+	// and at most 366 days from the `create_time` of the source backup.
+	// Once the `expire_time` has passed, the backup is eligible to be
+	// automatically deleted by Cloud Spanner to free the resources used by
+	// the backup.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// SourceBackup: Required. The source backup to be copied. The source
+	// backup needs to be in READY state for it to be copied. Once
+	// CopyBackup is in progress, the source backup cannot be deleted or
+	// cleaned up on expiration until CopyBackup is finished. Values are of
+	// the form: `projects//instances//backups/`.
+	SourceBackup string `json:"sourceBackup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CopyBackupRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CopyBackupRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // CreateBackupMetadata: Metadata type for the operation returned by
@@ -1865,6 +2028,9 @@ type Instance struct {
 	// and ListInstanceConfigs.
 	Config string `json:"config,omitempty"`
 
+	// CreateTime: Output only. The time at which the instance was created.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// DisplayName: Required. The descriptive name for this instance as it
 	// appears in UIs. Must be unique per project and between 4 and 30
 	// characters in length.
@@ -1927,6 +2093,10 @@ type Instance struct {
 	//   "READY" - The instance is fully created and ready to do work such
 	// as creating databases.
 	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. The time at which the instance was most
+	// recently updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -7006,7 +7176,24 @@ func (r *ProjectsInstancesBackupOperationsService) List(parent string) *Projects
 // `(error:*)` - Returns operations where: * The operation's metadata
 // type is CreateBackupMetadata. * The backup name contains the string
 // "howl". * The operation started before 2018-03-28T14:50:00Z. * The
-// operation resulted in an error.
+// operation resulted in an error. *
+// `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.
+// CopyBackupMetadata) AND` \ `(metadata.source_backup:test) AND` \
+// `(metadata.progress.start_time < \"2022-01-18T14:50:00Z\") AND` \
+// `(error:*)` - Returns operations where: * The operation's metadata
+// type is CopyBackupMetadata. * The source backup of the copied backup
+// name contains the string "test". * The operation started before
+// 2022-01-18T14:50:00Z. * The operation resulted in an error. *
+// `((metadata.@type=type.googleapis.com/google.spanner.admin.database.v1
+// .CreateBackupMetadata) AND` \ `(metadata.database:test_db)) OR` \
+// `((metadata.@type=type.googleapis.com/google.spanner.admin.database.v1
+// .CopyBackupMetadata) AND` \ `(metadata.source_backup:test_bkp)) AND`
+// \ `(error:*)` - Returns operations where: * The operation's metadata
+// matches either of criteria: * The operation's metadata type is
+// CreateBackupMetadata AND the database the backup was taken from has
+// name containing string "test_db" * The operation's metadata type is
+// CopyBackupMetadata AND the backup the backup was copied from has name
+// containing string "test_bkp" * The operation resulted in an error.
 func (c *ProjectsInstancesBackupOperationsListCall) Filter(filter string) *ProjectsInstancesBackupOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7137,7 +7324,7 @@ func (c *ProjectsInstancesBackupOperationsListCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An expression that filters the list of returned backup operations. A filter expression consists of a field name, a comparison operator, and a value for filtering. The value must be a string, a number, or a boolean. The comparison operator must be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`. Colon `:` is the contains operator. Filter rules are not case sensitive. The following fields in the operation are eligible for filtering: * `name` - The name of the long-running operation * `done` - False if the operation is in progress, else true. * `metadata.@type` - the type of metadata. For example, the type string for CreateBackupMetadata is `type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata`. * `metadata.` - any field in metadata.value. `metadata.@type` must be specified first if filtering on metadata fields. * `error` - Error associated with the long-running operation. * `response.@type` - the type of response. * `response.` - any field in response.value. You can combine multiple expressions by enclosing each expression in parentheses. By default, expressions are combined with AND logic, but you can specify AND, OR, and NOT logic explicitly. Here are a few examples: * `done:true` - The operation is complete. * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \\ `metadata.database:prod` - Returns operations where: * The operation's metadata type is CreateBackupMetadata. * The database the backup was taken from has a name containing the string \"prod\". * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \\ `(metadata.name:howl) AND` \\ `(metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\") AND` \\ `(error:*)` - Returns operations where: * The operation's metadata type is CreateBackupMetadata. * The backup name contains the string \"howl\". * The operation started before 2018-03-28T14:50:00Z. * The operation resulted in an error.",
+	//       "description": "An expression that filters the list of returned backup operations. A filter expression consists of a field name, a comparison operator, and a value for filtering. The value must be a string, a number, or a boolean. The comparison operator must be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`. Colon `:` is the contains operator. Filter rules are not case sensitive. The following fields in the operation are eligible for filtering: * `name` - The name of the long-running operation * `done` - False if the operation is in progress, else true. * `metadata.@type` - the type of metadata. For example, the type string for CreateBackupMetadata is `type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata`. * `metadata.` - any field in metadata.value. `metadata.@type` must be specified first if filtering on metadata fields. * `error` - Error associated with the long-running operation. * `response.@type` - the type of response. * `response.` - any field in response.value. You can combine multiple expressions by enclosing each expression in parentheses. By default, expressions are combined with AND logic, but you can specify AND, OR, and NOT logic explicitly. Here are a few examples: * `done:true` - The operation is complete. * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \\ `metadata.database:prod` - Returns operations where: * The operation's metadata type is CreateBackupMetadata. * The database the backup was taken from has a name containing the string \"prod\". * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \\ `(metadata.name:howl) AND` \\ `(metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\") AND` \\ `(error:*)` - Returns operations where: * The operation's metadata type is CreateBackupMetadata. * The backup name contains the string \"howl\". * The operation started before 2018-03-28T14:50:00Z. * The operation resulted in an error. * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CopyBackupMetadata) AND` \\ `(metadata.source_backup:test) AND` \\ `(metadata.progress.start_time \u003c \\\"2022-01-18T14:50:00Z\\\") AND` \\ `(error:*)` - Returns operations where: * The operation's metadata type is CopyBackupMetadata. * The source backup of the copied backup name contains the string \"test\". * The operation started before 2022-01-18T14:50:00Z. * The operation resulted in an error. * `((metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \\ `(metadata.database:test_db)) OR` \\ `((metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CopyBackupMetadata) AND` \\ `(metadata.source_backup:test_bkp)) AND` \\ `(error:*)` - Returns operations where: * The operation's metadata matches either of criteria: * The operation's metadata type is CreateBackupMetadata AND the database the backup was taken from has name containing string \"test_db\" * The operation's metadata type is CopyBackupMetadata AND the backup the backup was copied from has name containing string \"test_bkp\" * The operation resulted in an error.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7191,6 +7378,157 @@ func (c *ProjectsInstancesBackupOperationsListCall) Pages(ctx context.Context, f
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "spanner.projects.instances.backups.copy":
+
+type ProjectsInstancesBackupsCopyCall struct {
+	s                 *Service
+	parent            string
+	copybackuprequest *CopyBackupRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Copy: Starts copying a Cloud Spanner Backup. The returned backup
+// long-running operation will have a name of the format
+// `projects//instances//backups//operations/` and can be used to track
+// copying of the backup. The operation is associated with the
+// destination backup. The metadata field type is CopyBackupMetadata.
+// The response field type is Backup, if successful. Cancelling the
+// returned operation will stop the copying and delete the backup.
+// Concurrent CopyBackup requests can run on the same source backup.
+//
+// - parent: The name of the destination instance that will contain the
+//   backup copy. Values are of the form: `projects//instances/`.
+func (r *ProjectsInstancesBackupsService) Copy(parent string, copybackuprequest *CopyBackupRequest) *ProjectsInstancesBackupsCopyCall {
+	c := &ProjectsInstancesBackupsCopyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.copybackuprequest = copybackuprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesBackupsCopyCall) Fields(s ...googleapi.Field) *ProjectsInstancesBackupsCopyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesBackupsCopyCall) Context(ctx context.Context) *ProjectsInstancesBackupsCopyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesBackupsCopyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesBackupsCopyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.copybackuprequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backups:copy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.backups.copy" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesBackupsCopyCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts copying a Cloud Spanner Backup. The returned backup long-running operation will have a name of the format `projects//instances//backups//operations/` and can be used to track copying of the backup. The operation is associated with the destination backup. The metadata field type is CopyBackupMetadata. The response field type is Backup, if successful. Cancelling the returned operation will stop the copying and delete the backup. Concurrent CopyBackup requests can run on the same source backup.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups:copy",
+	//   "httpMethod": "POST",
+	//   "id": "spanner.projects.instances.backups.copy",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the destination instance that will contain the backup copy. Values are of the form: `projects//instances/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/backups:copy",
+	//   "request": {
+	//     "$ref": "CopyBackupRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
 }
 
 // method id "spanner.projects.instances.backups.create":

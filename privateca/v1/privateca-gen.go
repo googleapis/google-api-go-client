@@ -5613,8 +5613,11 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall) RequestId(req
 	return c
 }
 
-// SkipGracePeriod sets the optional parameter "skipGracePeriod": This
-// field sets the CA to have a pending delete duration of 0.
+// SkipGracePeriod sets the optional parameter "skipGracePeriod": If
+// this flag is set, the Certificate Authority will be deleted as soon
+// as possible without a 30-day grace period where undeletion would have
+// been allowed. If you proceed, there will be no way to recover this
+// CA.
 func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall) SkipGracePeriod(skipGracePeriod bool) *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall {
 	c.urlParams_.Set("skipGracePeriod", fmt.Sprint(skipGracePeriod))
 	return c
@@ -5732,7 +5735,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "skipGracePeriod": {
-	//       "description": "Optional. This field sets the CA to have a pending delete duration of 0.",
+	//       "description": "Optional. If this flag is set, the Certificate Authority will be deleted as soon as possible without a 30-day grace period where undeletion would have been allowed. If you proceed, there will be no way to recover this CA.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

@@ -831,7 +831,8 @@ type Export struct {
 	// MatterId: Output only. The matter ID.
 	MatterId string `json:"matterId,omitempty"`
 
-	// Name: The export name.
+	// Name: The export name. Don't use special characters (~!$'(),;@:/?) in
+	// the name, they can prevent you from downloading exports.
 	Name string `json:"name,omitempty"`
 
 	// Query: The query parameters used to create the export.
@@ -1019,8 +1020,10 @@ type GroupsExportOptions struct {
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - Export as MBOX.
-	//   "PST" - Export as PST.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -1052,8 +1055,10 @@ type HangoutsChatExportOptions struct {
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - Export as MBOX.
-	//   "PST" - Export as PST.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -1420,7 +1425,7 @@ type Hold struct {
 	//   "MAIL" - For search, Gmail and classic Hangouts. For holds, Gmail
 	// only.
 	//   "GROUPS" - Groups.
-	//   "HANGOUTS_CHAT" - For search, Google Chat only. For holds, Google
+	//   "HANGOUTS_CHAT" - For export, Google Chat only. For holds, Google
 	// Chat and classic Hangouts.
 	//   "VOICE" - Google Voice.
 	Corpus string `json:"corpus,omitempty"`
@@ -1739,8 +1744,10 @@ type MailExportOptions struct {
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - Export as MBOX.
-	//   "PST" - Export as PST.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ShowConfidentialModeContent: To export confidential mode content, set
@@ -2008,7 +2015,7 @@ type Query struct {
 	//   "MAIL" - For search, Gmail and classic Hangouts. For holds, Gmail
 	// only.
 	//   "GROUPS" - Groups.
-	//   "HANGOUTS_CHAT" - For search, Google Chat only. For holds, Google
+	//   "HANGOUTS_CHAT" - For export, Google Chat only. For holds, Google
 	// Chat and classic Hangouts.
 	//   "VOICE" - Google Voice.
 	Corpus string `json:"corpus,omitempty"`
@@ -2465,8 +2472,10 @@ type VoiceExportOptions struct {
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - Export as MBOX.
-	//   "PST" - Export as PST.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to

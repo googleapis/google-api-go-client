@@ -297,6 +297,11 @@ type AuditLog struct {
 	// API method, if applicable.
 	NumResponseItems int64 `json:"numResponseItems,omitempty,string"`
 
+	// PolicyViolationInfo: Indicates the policy violations for this
+	// request. If the request is denied by the policy, violation
+	// information will be logged here.
+	PolicyViolationInfo *PolicyViolationInfo `json:"policyViolationInfo,omitempty"`
+
 	// Request: The operation request. This may not include all request
 	// parameters, such as those that are too large, privacy-sensitive, or
 	// duplicated elsewhere in the log record. It should never include
@@ -605,7 +610,7 @@ type CheckResponse struct {
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// Status: Operation is allowed when this field is not set. Any non-'OK'
-	// status indicates a denial; google.rpc.Status.details () would contain
+	// status indicates a denial; google.rpc.Status.details would contain
 	// additional details about the denial.
 	Status *Status `json:"status,omitempty"`
 
@@ -669,6 +674,54 @@ func (s *FirstPartyPrincipal) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OrgPolicyViolationInfo: Represents OrgPolicy Violation information.
+type OrgPolicyViolationInfo struct {
+	// Payload: Optional. Resource payload that is currently in scope and is
+	// subjected to orgpolicy conditions. This payload may be the subset of
+	// the actual Resource that may come in the request. This payload should
+	// not contain any core content.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+
+	// ResourceTags: Optional. Tags referenced on the resource at the time
+	// of evaluation. These also include the federated tags, if they are
+	// supplied in the CheckOrgPolicy or CheckCustomConstraints Requests.
+	// Optional field as of now. These tags are the Cloud tags that are
+	// available on the resource during the policy evaluation and will be
+	// available as part of the OrgPolicy check response for logging
+	// purposes.
+	ResourceTags map[string]string `json:"resourceTags,omitempty"`
+
+	// ResourceType: Optional. Resource type that the orgpolicy is checked
+	// against. Example: compute.googleapis.com/Instance,
+	// store.googleapis.com/bucket
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ViolationInfo: Optional. Policy violations
+	ViolationInfo []*ViolationInfo `json:"violationInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Payload") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Payload") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrgPolicyViolationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod OrgPolicyViolationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Peer: This message defines attributes for a node that handles a
 // network request. The node can be either a service or an application
 // that sends, forwards, or receives the request. Service peers should
@@ -713,6 +766,38 @@ type Peer struct {
 
 func (s *Peer) MarshalJSON() ([]byte, error) {
 	type NoMethod Peer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyViolationInfo: Information related to policy violations for
+// this request.
+type PolicyViolationInfo struct {
+	// OrgPolicyViolationInfo: Indicates the orgpolicy violations for this
+	// resource.
+	OrgPolicyViolationInfo *OrgPolicyViolationInfo `json:"orgPolicyViolationInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "OrgPolicyViolationInfo") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OrgPolicyViolationInfo")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyViolationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyViolationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1566,6 +1651,53 @@ type V2LogEntrySourceLocation struct {
 
 func (s *V2LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod V2LogEntrySourceLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ViolationInfo: Provides information about the Policy violation info
+// for this request.
+type ViolationInfo struct {
+	// CheckedValue: Optional. Value that is being checked for the policy.
+	// This could be in encrypted form (if pii sensitive). This field will
+	// only be emitted in LIST_POLICY types
+	CheckedValue string `json:"checkedValue,omitempty"`
+
+	// Constraint: Optional. Constraint name
+	Constraint string `json:"constraint,omitempty"`
+
+	// ErrorMessage: Optional. Error message that policy is indicating.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// PolicyType: Optional. Indicates the type of the policy.
+	//
+	// Possible values:
+	//   "POLICY_TYPE_UNSPECIFIED" - Default value. This value should not be
+	// used.
+	//   "BOOLEAN_CONSTRAINT" - Indicates boolean policy constraint
+	//   "LIST_CONSTRAINT" - Indicates list policy constraint
+	//   "CUSTOM_CONSTRAINT" - Indicates custom policy constraint
+	PolicyType string `json:"policyType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckedValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckedValue") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ViolationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ViolationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

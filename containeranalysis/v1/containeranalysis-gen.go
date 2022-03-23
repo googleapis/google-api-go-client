@@ -1229,6 +1229,10 @@ func (s *ComplianceOccurrence) MarshalJSON() ([]byte, error) {
 // ComplianceVersion: Describes the CIS benchmark version that is
 // applicable to a given OS and os version.
 type ComplianceVersion struct {
+	// BenchmarkDocument: The name of the document that defines this
+	// benchmark, e.g. "CIS Container-Optimized OS".
+	BenchmarkDocument string `json:"benchmarkDocument,omitempty"`
+
 	// CpeUri: The CPE URI (https://cpe.mitre.org/specification/) this
 	// benchmark is applicable to.
 	CpeUri string `json:"cpeUri,omitempty"`
@@ -1237,20 +1241,21 @@ type ComplianceVersion struct {
 	// the OS-specific CIS document the benchmark is defined in.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CpeUri") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "BenchmarkDocument")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CpeUri") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BenchmarkDocument") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3082,8 +3087,7 @@ func (s *Distribution) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

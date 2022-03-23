@@ -783,6 +783,10 @@ type SasPortalDeviceGrant struct {
 	// GrantId: Grant Id.
 	GrantId string `json:"grantId,omitempty"`
 
+	// LastHeartbeatTransmitExpireTime: The transmit expiration time of the
+	// last heartbeat.
+	LastHeartbeatTransmitExpireTime string `json:"lastHeartbeatTransmitExpireTime,omitempty"`
+
 	// MaxEirp: Maximum Equivalent Isotropically Radiated Power (EIRP)
 	// permitted by the grant. The maximum EIRP is in units of dBm/MHz. The
 	// value of `maxEirp` represents the average (RMS) EIRP that would be
@@ -970,8 +974,7 @@ func (s *SasPortalDpaMoveList) MarshalJSON() ([]byte, error) {
 // defining duplicated empty messages in your APIs. A typical example is
 // to use it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type SasPortalEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1501,8 +1504,7 @@ func (s *SasPortalNode) MarshalJSON() ([]byte, error) {
 }
 
 // SasPortalNrqzValidation: Information about National Radio Quiet Zone
-// validation. The presence of the field indicates the device has been
-// validated.
+// validation.
 type SasPortalNrqzValidation struct {
 	// CaseId: Validation case id.
 	CaseId string `json:"caseId,omitempty"`
@@ -1515,6 +1517,14 @@ type SasPortalNrqzValidation struct {
 
 	// Longitude: Device longitude associated with the validation.
 	Longitude float64 `json:"longitude,omitempty"`
+
+	// State: State of the NRQZ validation info.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "DRAFT" - Draft state.
+	//   "FINAL" - Final state.
+	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CaseId") to
 	// unconditionally include in API requests. By default, fields with

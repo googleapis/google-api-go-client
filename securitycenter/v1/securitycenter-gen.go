@@ -1025,8 +1025,7 @@ func (s *Cvssv3) UnmarshalJSON(data []byte) error {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1169,9 +1168,9 @@ type Finding struct {
 	// finding. See: https://attack.mitre.org
 	MitreAttack *MitreAttack `json:"mitreAttack,omitempty"`
 
-	// Mute: Indicates the mute state of a finding (either unspecified,
-	// muted, unmuted or undefined). Unlike other attributes of a finding, a
-	// finding provider shouldn't set the value of mute.
+	// Mute: Indicates the mute state of a finding (either muted, unmuted or
+	// undefined). Unlike other attributes of a finding, a finding provider
+	// shouldn't set the value of mute.
 	//
 	// Possible values:
 	//   "MUTE_UNSPECIFIED" - Unspecified.
@@ -1252,8 +1251,8 @@ type Finding struct {
 	// to cause operational impact but may not access data or execute
 	// unauthorized code.
 	//   "LOW" - Vulnerability: A low risk vulnerability hampers a security
-	// organization’s ability to detect vulnerabilities or active threats
-	// in their deployment, or prevents the root cause investigation of
+	// organization's ability to detect vulnerabilities or active threats in
+	// their deployment, or prevents the root cause investigation of
 	// security issues. An example is monitoring and logs being disabled for
 	// resource configurations and access. Threat: Indicates a threat that
 	// has obtained minimal access to an environment but is not able to
@@ -1715,7 +1714,7 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	// to.
 	Project string `json:"project,omitempty"`
 
-	// ProjectDisplayName: The project id that the resource belongs to.
+	// ProjectDisplayName: The project ID that the resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
 	// Type: The full resource type of the resource.
@@ -3403,7 +3402,7 @@ type Resource struct {
 	// ParentName: The full resource name of resource's parent.
 	ParentName string `json:"parentName,omitempty"`
 
-	// ProjectDisplayName: The project id that the resource belongs to.
+	// ProjectDisplayName: The project ID that the resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
 	// ProjectName: The full resource name of project that the resource
@@ -4445,7 +4444,7 @@ func (r *FoldersAssetsService) UpdateSecurityMarks(name string, securitymarks *S
 // StartTime sets the optional parameter "startTime": The time at which
 // the updated SecurityMarks take effect. If not set uses current server
 // time. Updates will be applied to the SecurityMarks that are active
-// immediately preceding this time. Must be smaller or equal to the
+// immediately preceding this time. Must be earlier or equal to the
 // server time.
 func (c *FoldersAssetsUpdateSecurityMarksCall) StartTime(startTime string) *FoldersAssetsUpdateSecurityMarksCall {
 	c.urlParams_.Set("startTime", startTime)
@@ -4568,7 +4567,7 @@ func (c *FoldersAssetsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be smaller or equal to the server time.",
+	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be earlier or equal to the server time.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -7544,7 +7543,7 @@ func (r *FoldersSourcesFindingsService) UpdateSecurityMarks(name string, securit
 // StartTime sets the optional parameter "startTime": The time at which
 // the updated SecurityMarks take effect. If not set uses current server
 // time. Updates will be applied to the SecurityMarks that are active
-// immediately preceding this time. Must be smaller or equal to the
+// immediately preceding this time. Must be earlier or equal to the
 // server time.
 func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) StartTime(startTime string) *FoldersSourcesFindingsUpdateSecurityMarksCall {
 	c.urlParams_.Set("startTime", startTime)
@@ -7667,7 +7666,7 @@ func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be smaller or equal to the server time.",
+	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be earlier or equal to the server time.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -8832,7 +8831,7 @@ func (r *OrganizationsAssetsService) UpdateSecurityMarks(name string, securityma
 // StartTime sets the optional parameter "startTime": The time at which
 // the updated SecurityMarks take effect. If not set uses current server
 // time. Updates will be applied to the SecurityMarks that are active
-// immediately preceding this time. Must be smaller or equal to the
+// immediately preceding this time. Must be earlier or equal to the
 // server time.
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) StartTime(startTime string) *OrganizationsAssetsUpdateSecurityMarksCall {
 	c.urlParams_.Set("startTime", startTime)
@@ -8955,7 +8954,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be smaller or equal to the server time.",
+	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be earlier or equal to the server time.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -14401,7 +14400,7 @@ func (r *OrganizationsSourcesFindingsService) UpdateSecurityMarks(name string, s
 // StartTime sets the optional parameter "startTime": The time at which
 // the updated SecurityMarks take effect. If not set uses current server
 // time. Updates will be applied to the SecurityMarks that are active
-// immediately preceding this time. Must be smaller or equal to the
+// immediately preceding this time. Must be earlier or equal to the
 // server time.
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) StartTime(startTime string) *OrganizationsSourcesFindingsUpdateSecurityMarksCall {
 	c.urlParams_.Set("startTime", startTime)
@@ -14524,7 +14523,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Do(opts ...googlea
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be smaller or equal to the server time.",
+	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be earlier or equal to the server time.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -15237,7 +15236,7 @@ func (r *ProjectsAssetsService) UpdateSecurityMarks(name string, securitymarks *
 // StartTime sets the optional parameter "startTime": The time at which
 // the updated SecurityMarks take effect. If not set uses current server
 // time. Updates will be applied to the SecurityMarks that are active
-// immediately preceding this time. Must be smaller or equal to the
+// immediately preceding this time. Must be earlier or equal to the
 // server time.
 func (c *ProjectsAssetsUpdateSecurityMarksCall) StartTime(startTime string) *ProjectsAssetsUpdateSecurityMarksCall {
 	c.urlParams_.Set("startTime", startTime)
@@ -15360,7 +15359,7 @@ func (c *ProjectsAssetsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be smaller or equal to the server time.",
+	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be earlier or equal to the server time.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -18336,7 +18335,7 @@ func (r *ProjectsSourcesFindingsService) UpdateSecurityMarks(name string, securi
 // StartTime sets the optional parameter "startTime": The time at which
 // the updated SecurityMarks take effect. If not set uses current server
 // time. Updates will be applied to the SecurityMarks that are active
-// immediately preceding this time. Must be smaller or equal to the
+// immediately preceding this time. Must be earlier or equal to the
 // server time.
 func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) StartTime(startTime string) *ProjectsSourcesFindingsUpdateSecurityMarksCall {
 	c.urlParams_.Set("startTime", startTime)
@@ -18459,7 +18458,7 @@ func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be smaller or equal to the server time.",
+	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time. Must be earlier or equal to the server time.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"

@@ -1921,10 +1921,10 @@ func (s *GoogleCloudDocumentaiV1beta1BoundingPoly) MarshalJSON() ([]byte, error)
 }
 
 // GoogleCloudDocumentaiV1beta1Document: Document represents the
-// canonical document resource in Document Understanding AI. It is an
-// interchange format that provides insights into documents and allows
-// for collaboration between users and Document Understanding AI to
-// iterate and optimize for quality.
+// canonical document resource in Document AI. It is an interchange
+// format that provides insights into documents and allows for
+// collaboration between users and Document AI to iterate and optimize
+// for quality.
 type GoogleCloudDocumentaiV1beta1Document struct {
 	// Content: Optional. Inline document content, represented as a stream
 	// of bytes. Note: As with all `bytes` fields, protobuffers use a pure
@@ -2018,6 +2018,13 @@ type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// Amphitheatre Pkwy`. If the entity is not present in the document,
 	// this field will be empty.
 	MentionText string `json:"mentionText,omitempty"`
+
+	// NonPresent: Optional. This attribute indicates that the processing
+	// didn't actually identify this entity, but a confidence score was
+	// assigned that represent the potential that this could be a false
+	// negative. A non-present entity should have an empty mention_text and
+	// text_anchor.
+	NonPresent bool `json:"nonPresent,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
 	// extracted value could not be converted or the type (e.g. address) is
@@ -3895,10 +3902,10 @@ func (s *GoogleCloudDocumentaiV1beta2BoundingPoly) MarshalJSON() ([]byte, error)
 }
 
 // GoogleCloudDocumentaiV1beta2Document: Document represents the
-// canonical document resource in Document Understanding AI. It is an
-// interchange format that provides insights into documents and allows
-// for collaboration between users and Document Understanding AI to
-// iterate and optimize for quality.
+// canonical document resource in Document AI. It is an interchange
+// format that provides insights into documents and allows for
+// collaboration between users and Document AI to iterate and optimize
+// for quality.
 type GoogleCloudDocumentaiV1beta2Document struct {
 	// Content: Optional. Inline document content, represented as a stream
 	// of bytes. Note: As with all `bytes` fields, protobuffers use a pure
@@ -3999,6 +4006,13 @@ type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// Amphitheatre Pkwy`. If the entity is not present in the document,
 	// this field will be empty.
 	MentionText string `json:"mentionText,omitempty"`
+
+	// NonPresent: Optional. This attribute indicates that the processing
+	// didn't actually identify this entity, but a confidence score was
+	// assigned that represent the potential that this could be a false
+	// negative. A non-present entity should have an empty mention_text and
+	// text_anchor.
+	NonPresent bool `json:"nonPresent,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
 	// extracted value could not be converted or the type (e.g. address) is
@@ -6708,8 +6722,7 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
 // method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); } The JSON representation for
-// `Empty` is empty JSON object `{}`.
+// returns (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
 }
 

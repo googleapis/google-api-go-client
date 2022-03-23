@@ -2576,13 +2576,16 @@ func (s *ChannelStatus) MarshalJSON() ([]byte, error) {
 // ChannelToStoreLinkDetails: Information specific to a store on a
 // merchandising platform linked to a YouTube channel.
 type ChannelToStoreLinkDetails struct {
+	// MerchantId: Google Merchant Center id of the store.
+	MerchantId uint64 `json:"merchantId,omitempty,string"`
+
 	// StoreName: Name of the store.
 	StoreName string `json:"storeName,omitempty"`
 
 	// StoreUrl: Landing page of the store.
 	StoreUrl string `json:"storeUrl,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "StoreName") to
+	// ForceSendFields is a list of field names (e.g. "MerchantId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2590,7 +2593,7 @@ type ChannelToStoreLinkDetails struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "StoreName") to include in
+	// NullFields is a list of field names (e.g. "MerchantId") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

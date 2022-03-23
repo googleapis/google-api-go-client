@@ -783,6 +783,10 @@ type SasPortalDeviceGrant struct {
 	// GrantId: Grant Id.
 	GrantId string `json:"grantId,omitempty"`
 
+	// LastHeartbeatTransmitExpireTime: The transmit expiration time of the
+	// last heartbeat.
+	LastHeartbeatTransmitExpireTime string `json:"lastHeartbeatTransmitExpireTime,omitempty"`
+
 	// MaxEirp: Maximum Equivalent Isotropically Radiated Power (EIRP)
 	// permitted by the grant. The maximum EIRP is in units of dBm/MHz. The
 	// value of `maxEirp` represents the average (RMS) EIRP that would be
@@ -970,8 +974,7 @@ func (s *SasPortalDpaMoveList) MarshalJSON() ([]byte, error) {
 // defining duplicated empty messages in your APIs. A typical example is
 // to use it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type SasPortalEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

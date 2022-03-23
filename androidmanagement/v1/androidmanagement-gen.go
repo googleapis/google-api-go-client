@@ -702,6 +702,29 @@ type ApplicationPolicy struct {
 	// available in AppTrackInfo.
 	AccessibleTrackIds []string `json:"accessibleTrackIds,omitempty"`
 
+	// AlwaysOnVpnLockdownExemption: Specifies whether the app is allowed
+	// networking when the VPN is not connected and
+	// alwaysOnVpnPackage.lockdownEnabled is enabled. If set to
+	// VPN_LOCKDOWN_ENFORCED, the app is not allowed networking, and if set
+	// to VPN_LOCKDOWN_EXEMPTION, the app is allowed networking. Only
+	// supported on devices running Android 10 and above. If this is not
+	// supported by the device, the device will contain a
+	// NonComplianceDetail with non_compliance_reason set to API_LEVEL and a
+	// fieldPath. If this is not applicable to the app, the device will
+	// contain a NonComplianceDetail with non_compliance_reason set to
+	// UNSUPPORTED and a fieldPath. The fieldPath is set to
+	// applications[i].alwaysOnVpnLockdownExemption, where i is the index of
+	// the package in the applications policy.
+	//
+	// Possible values:
+	//   "ALWAYS_ON_VPN_LOCKDOWN_EXEMPTION_UNSPECIFIED" - Unspecified.
+	// Defaults to VPN_LOCKDOWN_ENFORCED.
+	//   "VPN_LOCKDOWN_ENFORCED" - The app respects the always-on VPN
+	// lockdown setting.
+	//   "VPN_LOCKDOWN_EXEMPTION" - The app is exempt from the always-on VPN
+	// lockdown setting.
+	AlwaysOnVpnLockdownExemption string `json:"alwaysOnVpnLockdownExemption,omitempty"`
+
 	// AutoUpdateMode: Controls the auto-update mode for the app.
 	//
 	// Possible values:
@@ -3349,24 +3372,6 @@ type PasswordRequirements struct {
 	//   "REQUIRE_EVERY_DAY" - The timeout period is set to 24 hours.
 	RequirePasswordUnlock string `json:"requirePasswordUnlock,omitempty"`
 
-	// UnifiedLockSettings: Controls whether a unified lock is allowed for
-	// the device and the work profile, on devices running Android 9 and
-	// above with a work profile. This has no effect on other devices. This
-	// can be set only if password_scope is set to SCOPE_PROFILE, the policy
-	// will be rejected otherwise. If user has not set a separate work lock
-	// and this field is set to REQUIRE_SEPARATE_WORK_LOCK, a
-	// NonComplianceDetail is reported with nonComplianceReason set to
-	// USER_ACTION.
-	//
-	// Possible values:
-	//   "UNIFIED_LOCK_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
-	// ALLOW_UNIFIED_WORK_AND_PERSONAL_LOCK.
-	//   "ALLOW_UNIFIED_WORK_AND_PERSONAL_LOCK" - A common lock for the
-	// device and the work profile is allowed.
-	//   "REQUIRE_SEPARATE_WORK_LOCK" - A separate lock for the work profile
-	// is required.
-	UnifiedLockSettings string `json:"unifiedLockSettings,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
 	// "MaximumFailedPasswordsForWipe") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -3944,8 +3949,7 @@ type Policy struct {
 	// password_requirements.require_password_unlock must not be set.
 	// DEPRECATED - Use passwordPolicies.Note:Complexity-based values of
 	// PasswordQuality, that is, COMPLEXITY_LOW, COMPLEXITY_MEDIUM, and
-	// COMPLEXITY_HIGH, cannot be used here. unified_lock_settings cannot be
-	// used here
+	// COMPLEXITY_HIGH, cannot be used here.
 	PasswordRequirements *PasswordRequirements `json:"passwordRequirements,omitempty"`
 
 	// PermissionGrants: Explicit permission or group grants or denials for

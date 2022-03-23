@@ -401,11 +401,11 @@ type AdUnit struct {
 	// ContentAdsSettings: Settings specific to content ads (AFC).
 	ContentAdsSettings *ContentAdsSettings `json:"contentAdsSettings,omitempty"`
 
-	// DisplayName: Display name of the ad unit, as provided when the ad
-	// unit was created.
+	// DisplayName: Required. Display name of the ad unit, as provided when
+	// the ad unit was created.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Resource name of the ad unit. Format:
+	// Name: Required. Resource name of the ad unit. Format:
 	// accounts/{account}/adclients/{adclient}/adunits/{adunit}
 	Name string `json:"name,omitempty"`
 
@@ -4457,7 +4457,9 @@ func (c *AccountsReportsGenerateCall) Limit(limit int64) *AccountsReportsGenerat
 // clicks on an ad. CPC is calculated by dividing the estimated revenue
 // by the number of clicks received.
 //   "ADS_PER_IMPRESSION" - Number of ad views per impression.
-//   "TOTAL_EARNINGS" - Total earnings.
+//   "TOTAL_EARNINGS" - Total earnings are the gross estimated earnings
+// from revenue shared traffic before any parent and child account
+// revenue share is applied.
 //   "WEBSEARCH_RESULT_PAGES" - Number of results pages.
 func (c *AccountsReportsGenerateCall) Metrics(metrics ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("metrics", append([]string{}, metrics...))
@@ -4864,7 +4866,7 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "Revenue per thousand individual ad impressions. This is calculated by dividing estimated revenue by the number of individual ad impressions multiplied by 1000.",
 	//         "Amount the publisher earns each time a user clicks on an ad. CPC is calculated by dividing the estimated revenue by the number of clicks received.",
 	//         "Number of ad views per impression.",
-	//         "Total earnings.",
+	//         "Total earnings are the gross estimated earnings from revenue shared traffic before any parent and child account revenue share is applied.",
 	//         "Number of results pages."
 	//       ],
 	//       "location": "query",
@@ -5209,7 +5211,9 @@ func (c *AccountsReportsGenerateCsvCall) Limit(limit int64) *AccountsReportsGene
 // clicks on an ad. CPC is calculated by dividing the estimated revenue
 // by the number of clicks received.
 //   "ADS_PER_IMPRESSION" - Number of ad views per impression.
-//   "TOTAL_EARNINGS" - Total earnings.
+//   "TOTAL_EARNINGS" - Total earnings are the gross estimated earnings
+// from revenue shared traffic before any parent and child account
+// revenue share is applied.
 //   "WEBSEARCH_RESULT_PAGES" - Number of results pages.
 func (c *AccountsReportsGenerateCsvCall) Metrics(metrics ...string) *AccountsReportsGenerateCsvCall {
 	c.urlParams_.SetMulti("metrics", append([]string{}, metrics...))
@@ -5616,7 +5620,7 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "Revenue per thousand individual ad impressions. This is calculated by dividing estimated revenue by the number of individual ad impressions multiplied by 1000.",
 	//         "Amount the publisher earns each time a user clicks on an ad. CPC is calculated by dividing the estimated revenue by the number of clicks received.",
 	//         "Number of ad views per impression.",
-	//         "Total earnings.",
+	//         "Total earnings are the gross estimated earnings from revenue shared traffic before any parent and child account revenue share is applied.",
 	//         "Number of results pages."
 	//       ],
 	//       "location": "query",

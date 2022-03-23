@@ -4861,6 +4861,9 @@ type JobStatistics struct {
 	// 1.0) for LOAD and EXTRACT jobs.
 	CompletionRatio float64 `json:"completionRatio,omitempty"`
 
+	// Copy: [Output-only] Statistics for a copy job.
+	Copy *JobStatistics5 `json:"copy,omitempty"`
+
 	// CreationTime: [Output-only] Creation time of this job, in
 	// milliseconds since the epoch. This field will be present on all jobs.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
@@ -5282,6 +5285,39 @@ type JobStatistics4 struct {
 
 func (s *JobStatistics4) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatistics4
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type JobStatistics5 struct {
+	// CopiedLogicalBytes: [Output-only] Number of logical bytes copied to
+	// the destination table.
+	CopiedLogicalBytes int64 `json:"copied_logical_bytes,omitempty,string"`
+
+	// CopiedRows: [Output-only] Number of rows copied to the destination
+	// table.
+	CopiedRows int64 `json:"copied_rows,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CopiedLogicalBytes")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CopiedLogicalBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JobStatistics5) MarshalJSON() ([]byte, error) {
+	type NoMethod JobStatistics5
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8857,6 +8893,14 @@ type TrainingRun struct {
 	// TrainingOptions: Options that were used for this training run,
 	// includes user specified and default options that were used.
 	TrainingOptions *TrainingOptions `json:"trainingOptions,omitempty"`
+
+	// VertexAiModelId: The model id in Vertex AI Model Registry for this
+	// training run
+	VertexAiModelId string `json:"vertexAiModelId,omitempty"`
+
+	// VertexAiModelVersion: The model version in Vertex AI Model Registry
+	// for this training run
+	VertexAiModelVersion string `json:"vertexAiModelVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ClassLevelGlobalExplanations") to unconditionally include in API

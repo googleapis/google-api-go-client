@@ -6096,6 +6096,16 @@ func (c *PlayersGetCall) Language(language string) *PlayersGetCall {
 	return c
 }
 
+// PlayerIdConsistencyToken sets the optional parameter
+// "playerIdConsistencyToken": Consistency token of the player id. The
+// call returns a 'not found' result when the token is present and
+// invalid. Empty value is ignored. See also
+// GlobalPlayerIdConsistencyTokenProto
+func (c *PlayersGetCall) PlayerIdConsistencyToken(playerIdConsistencyToken string) *PlayersGetCall {
+	c.urlParams_.Set("playerIdConsistencyToken", playerIdConsistencyToken)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6212,6 +6222,11 @@ func (c *PlayersGetCall) Do(opts ...googleapi.CallOption) (*Player, error) {
 	//       "description": "A player ID. A value of `me` may be used in place of the authenticated player's ID.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "playerIdConsistencyToken": {
+	//       "description": "Consistency token of the player id. The call returns a 'not found' result when the token is present and invalid. Empty value is ignored. See also GlobalPlayerIdConsistencyTokenProto",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

@@ -914,8 +914,7 @@ func (s *DocumentsTarget) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1779,6 +1778,10 @@ type ListCollectionIdsRequest struct {
 	// ListCollectionIdsResponse.
 	PageToken string `json:"pageToken,omitempty"`
 
+	// ReadTime: Reads documents as they were at the given time. This may
+	// not be older than 270 seconds.
+	ReadTime string `json:"readTime,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2052,6 +2055,10 @@ type PartitionQueryRequest struct {
 	// of parallel queries to be run, or in running a data pipeline job, one
 	// fewer than the number of workers or compute instances available.
 	PartitionCount int64 `json:"partitionCount,omitempty,string"`
+
+	// ReadTime: Reads documents as they were at the given time. This may
+	// not be older than 270 seconds.
+	ReadTime string `json:"readTime,omitempty"`
 
 	// StructuredQuery: A structured query. Query must specify collection
 	// with all descendants and be ordered by name ascending. Other filters,

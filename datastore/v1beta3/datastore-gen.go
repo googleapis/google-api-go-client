@@ -1840,8 +1840,19 @@ type PropertyFilter struct {
 	// equal to the given `value`. Requires: * That `property` comes first
 	// in `order_by`.
 	//   "EQUAL" - The given `property` is equal to the given `value`.
+	//   "IN" - The given `property` is equal to at least one value in the
+	// given array. Requires: * That `value` is a non-empty `ArrayValue`
+	// with at most 10 values. * No other `IN` or `NOT_IN` is in the same
+	// query.
+	//   "NOT_EQUAL" - The given `property` is not equal to the given
+	// `value`. Requires: * No other `NOT_EQUAL` or `NOT_IN` is in the same
+	// query. * That `property` comes first in the `order_by`.
 	//   "HAS_ANCESTOR" - Limit the result set to the given entity and its
 	// descendants. Requires: * That `value` is an entity key.
+	//   "NOT_IN" - The value of the `property` is not in the given array.
+	// Requires: * That `value` is a non-empty `ArrayValue` with at most 10
+	// values. * No other `IN`, `NOT_IN`, `NOT_EQUAL` is in the same query.
+	// * That `field` comes first in the `order_by`.
 	Op string `json:"op,omitempty"`
 
 	// Property: The property to filter by.

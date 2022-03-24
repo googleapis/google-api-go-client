@@ -449,6 +449,12 @@ type EventFilter struct {
 	// Attribute: Required. The name of a CloudEvents attribute.
 	Attribute string `json:"attribute,omitempty"`
 
+	// Operator: Optional. The operator used for matching the events with
+	// the value of the filter. If not specified, only events that have an
+	// exact key-value pair specified in the filter are matched. The only
+	// allowed value is `match-path-pattern`.
+	Operator string `json:"operator,omitempty"`
+
 	// Value: Required. The value for the attribute.
 	Value string `json:"value,omitempty"`
 
@@ -1677,6 +1683,9 @@ type ServiceConfig struct {
 	// cold start times when jump in incoming request count occurs after the
 	// idle instance would have been stopped in the default case.
 	MinInstanceCount int64 `json:"minInstanceCount,omitempty"`
+
+	// Revision: Output only. The name of service revision.
+	Revision string `json:"revision,omitempty"`
 
 	// Service: Output only. Name of the service associated with a Function.
 	// The format of this field is

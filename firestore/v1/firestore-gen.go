@@ -962,8 +962,7 @@ func (s *DocumentsTarget) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1255,14 +1254,14 @@ type GoogleFirestoreAdminV1Database struct {
 	// Possible values:
 	//   "CONCURRENCY_MODE_UNSPECIFIED" - Not used.
 	//   "OPTIMISTIC" - Use optimistic concurrency control by default. This
-	// setting is available for Cloud Firestore customers.
+	// mode is available for Cloud Firestore databases.
 	//   "PESSIMISTIC" - Use pessimistic concurrency control by default.
-	// This setting is available for Cloud Firestore customers. This is the
+	// This mode is available for Cloud Firestore databases. This is the
 	// default setting for Cloud Firestore.
 	//   "OPTIMISTIC_WITH_ENTITY_GROUPS" - Use optimistic concurrency
 	// control with entity groups by default. This is the only available
-	// setting for Cloud Datastore customers. This is the default setting
-	// for Cloud Datastore.
+	// mode for Cloud Datastore. This mode is also available for Cloud
+	// Firestore with Datastore Mode but is not recommended.
 	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
 
 	// Etag: This checksum is computed by the server based on the value of

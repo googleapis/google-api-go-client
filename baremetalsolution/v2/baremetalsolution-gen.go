@@ -325,8 +325,7 @@ func (s *AllowedClient) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1568,6 +1567,15 @@ type ProvisioningQuota struct {
 
 	// Name: Output only. The name of the provisioning quota.
 	Name string `json:"name,omitempty"`
+
+	// NetworkBandwidth: Network bandwidth, Gbps
+	NetworkBandwidth int64 `json:"networkBandwidth,omitempty,string"`
+
+	// ServerCount: Server count.
+	ServerCount int64 `json:"serverCount,omitempty,string"`
+
+	// StorageGib: Storage size (GB).
+	StorageGib int64 `json:"storageGib,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "AssetType") to
 	// unconditionally include in API requests. By default, fields with

@@ -1204,7 +1204,7 @@ type GoogleCloudChannelV1Entitlement struct {
 	// for resellers to use for their company tracking usage. If a
 	// purchaseOrderId value is given, it appears in the API responses and
 	// shows up in the invoice. The property accepts up to 80 plain text
-	// characters.
+	// characters. This is only supported for Google Workspace entitlements.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
 
 	// SuspensionReasons: Output only. Enumerable of all current suspension
@@ -3500,7 +3500,7 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 	// for resellers to use for their company tracking usage. If a
 	// purchaseOrderId value is given, it appears in the API responses and
 	// shows up in the invoice. The property accepts up to 80 plain text
-	// characters.
+	// characters. This is only supported for Google Workspace entitlements.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
 
 	// SuspensionReasons: Output only. Enumerable of all current suspension

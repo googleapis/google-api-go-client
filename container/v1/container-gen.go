@@ -3336,7 +3336,9 @@ func (s *NetworkTags) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NodeConfig: Parameters that describe the nodes in a cluster.
+// NodeConfig: Parameters that describe the nodes in a cluster. *Note:
+// *GKE Autopilot clusters do not recognize parameters in `NodeConfig`.
+// Use AutoprovisioningNodePoolDefaults instead.
 type NodeConfig struct {
 	// Accelerators: A list of hardware accelerators to be attached to each
 	// node. See https://cloud.google.com/compute/docs/gpus for more

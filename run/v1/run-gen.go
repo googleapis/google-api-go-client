@@ -1482,13 +1482,13 @@ func (s *ExecutionReference) MarshalJSON() ([]byte, error) {
 // ExecutionSpec: ExecutionSpec describes how the execution will look.
 type ExecutionSpec struct {
 	// Parallelism: Optional. Specifies the maximum desired number of tasks
-	// the execution should run at any given time. Must be <= task_count.
-	// The actual number of tasks running in steady state will be less than
-	// this number when ((.spec.task_count - .status.successful) <
-	// .spec.parallelism), i.e. when the work left to do is less than max
-	// parallelism. More info:
-	// https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
-	// +optional
+	// the execution should run at any given time. Must be <= task_count. If
+	// not specified, defaults to -1. When the job is run, this field is
+	// passed to the execution, and if -1 it will be set to the maximum
+	// possible value. The actual number of tasks running in steady state
+	// will be less than this number when there are fewer tasks waiting to
+	// be completed remaining, i.e. when the work left to do is less than
+	// max parallelism. +optional
 	Parallelism int64 `json:"parallelism,omitempty"`
 
 	// TaskCount: Optional. Specifies the desired number of tasks the

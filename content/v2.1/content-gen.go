@@ -4475,14 +4475,13 @@ func (s *Errors) MarshalJSON() ([]byte, error) {
 // FreeListingsProgramStatus: Response message for
 // GetFreeListingsProgramStatus.
 type FreeListingsProgramStatus struct {
-	// GlobalState: State of the program, It is set to enabled if there are
-	// offers for at least one region.
+	// GlobalState: State of the program. `ENABLED` if there are offers for
+	// at least one region.
 	//
 	// Possible values:
-	//   "PROGRAM_STATE_UNSPECIFIED" - State is not known.
+	//   "PROGRAM_STATE_UNSPECIFIED" - State is unknown.
 	//   "NOT_ENABLED" - Program is not enabled for any country.
-	//   "NO_OFFERS_UPLOADED" - Offers are not uploaded targeting even a
-	// single country for this program.
+	//   "NO_OFFERS_UPLOADED" - No offers have been uploaded for any region.
 	//   "ENABLED" - Program is enabled and offers are uploaded for at least
 	// one country.
 	GlobalState string `json:"globalState,omitempty"`
@@ -4521,10 +4520,10 @@ func (s *FreeListingsProgramStatus) MarshalJSON() ([]byte, error) {
 
 // FreeListingsProgramStatusRegionStatus: Status of program and region.
 type FreeListingsProgramStatusRegionStatus struct {
-	// DisapprovalDate: Date by which `eligibility_status` will go from
-	// `WARNING` to `DISAPPROVED`. It will be present when
-	// `eligibility_status` is `WARNING`. Date will be provided in ISO 8601
-	// format: YYYY-MM-DD
+	// DisapprovalDate: Date your `eligibilityStatus` will become
+	// `DISAPPROVED`. Only visible when your `eligibilityStatus` is
+	// `WARNING`. In ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601)
+	// format: `YYYY-MM-DD`.
 	DisapprovalDate string `json:"disapprovalDate,omitempty"`
 
 	// EligibilityStatus: Eligibility status of the standard free listing
@@ -4548,8 +4547,7 @@ type FreeListingsProgramStatusRegionStatus struct {
 	// to complete onboarding.
 	EligibilityStatus string `json:"eligibilityStatus,omitempty"`
 
-	// OnboardingIssues: These issues must be fixed to become eligible for
-	// the review.
+	// OnboardingIssues: Must be fixed to be eligible for review.
 	OnboardingIssues []string `json:"onboardingIssues,omitempty"`
 
 	// RegionCodes: The two-letter ISO 3166-1 alpha-2
@@ -4557,13 +4555,13 @@ type FreeListingsProgramStatusRegionStatus struct {
 	// regions with the same `eligibilityStatus` and `reviewEligibility`.
 	RegionCodes []string `json:"regionCodes,omitempty"`
 
-	// ReviewEligibilityStatus: If a program in a given country is eligible
-	// for review. It will be present only if eligibility status is
+	// ReviewEligibilityStatus: If a program is eligible for review in a
+	// specific region. Only visible if `eligibilityStatus` is
 	// `DISAPPROVED`.
 	//
 	// Possible values:
-	//   "REVIEW_ELIGIBILITY_UNSPECIFIED" - Review eligibility reason state
-	// is unknown.
+	//   "REVIEW_ELIGIBILITY_UNSPECIFIED" - Review eligibility state is
+	// unknown.
 	//   "ELIGIBLE" - Account is eligible for review for a specified region
 	// code.
 	//   "INELIGIBLE" - Account is not eligible for review for a specified
@@ -4584,19 +4582,19 @@ type FreeListingsProgramStatusRegionStatus struct {
 	//   "NO_REVIEW_REQUIRED" - No issues available to review.
 	ReviewIneligibilityReason string `json:"reviewIneligibilityReason,omitempty"`
 
-	// ReviewIneligibilityReasonDescription: Reason if a program in a given
-	// country is not eligible for review. Populated only if
-	// `review_eligibility_status` is `INELIGIBLE`.
+	// ReviewIneligibilityReasonDescription: Reason a program in a specific
+	// region isn’t eligible for review. Only visible if
+	// `reviewEligibilityStatus` is `INELIGIBLE`.
 	ReviewIneligibilityReasonDescription string `json:"reviewIneligibilityReasonDescription,omitempty"`
 
-	// ReviewIneligibilityReasonDetails: This contains additional
-	// information specific to review ineligibility reasons. If review is
-	// ineligible because of `IN_COOLDOWN_PERIOD`, it will contain timestamp
-	// for cooldown period.
+	// ReviewIneligibilityReasonDetails: Additional information for
+	// ineligibility. If `reviewIneligibilityReason` is
+	// `IN_COOLDOWN_PERIOD`, a timestamp for the end of the cooldown period
+	// is provided.
 	ReviewIneligibilityReasonDetails *FreeListingsProgramStatusReviewIneligibilityReasonDetails `json:"reviewIneligibilityReasonDetails,omitempty"`
 
-	// ReviewIssues: These issues will be evaluated in review process. Fix
-	// all the issues before requesting the review.
+	// ReviewIssues: Issues evaluated in the review process. Fix all issues
+	// before requesting a review.
 	ReviewIssues []string `json:"reviewIssues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisapprovalDate") to
@@ -11903,6 +11901,10 @@ type Product struct {
 	// too far in the future.
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
+	// ExternalSellerId: Used by a marketplace to externally identify a
+	// seller.
+	ExternalSellerId string `json:"externalSellerId,omitempty"`
+
 	// Gender: Target gender of the item.
 	Gender string `json:"gender,omitempty"`
 
@@ -13071,6 +13073,8 @@ type ProductstatusesCustomBatchRequestEntry struct {
 	// returned, otherwise only issues for the Shopping destination.
 	Destinations []string `json:"destinations,omitempty"`
 
+	// IncludeAttributes: Deprecated: Setting this field has no effect and
+	// attributes are never included.
 	IncludeAttributes bool `json:"includeAttributes,omitempty"`
 
 	// MerchantId: The ID of the managing account.
@@ -16906,14 +16910,13 @@ func (s *ShippingsettingsListResponse) MarshalJSON() ([]byte, error) {
 // ShoppingAdsProgramStatus: Response message for
 // GetShoppingAdsProgramStatus.
 type ShoppingAdsProgramStatus struct {
-	// GlobalState: State of the program, It is set to enabled if there are
-	// offers for at least one region.
+	// GlobalState: State of the program. `ENABLED` if there are offers for
+	// at least one region.
 	//
 	// Possible values:
-	//   "PROGRAM_STATE_UNSPECIFIED" - State is not known.
+	//   "PROGRAM_STATE_UNSPECIFIED" - State is unknown.
 	//   "NOT_ENABLED" - Program is not enabled for any country.
-	//   "NO_OFFERS_UPLOADED" - Offers are not uploaded targeting even a
-	// single country for this program.
+	//   "NO_OFFERS_UPLOADED" - No offers have been uploaded for any region.
 	//   "ENABLED" - Program is enabled and offers are uploaded for at least
 	// one country.
 	GlobalState string `json:"globalState,omitempty"`
@@ -16952,10 +16955,10 @@ func (s *ShoppingAdsProgramStatus) MarshalJSON() ([]byte, error) {
 
 // ShoppingAdsProgramStatusRegionStatus: Status of program and region.
 type ShoppingAdsProgramStatusRegionStatus struct {
-	// DisapprovalDate: Date by which `eligibility_status` will go from
-	// `WARNING` to `DISAPPROVED`. It will be present when
-	// `eligibility_status` is `WARNING`. Date will be provided in ISO 8601
-	// (https://en.wikipedia.org/wiki/ISO_8601) format: YYYY-MM-DD
+	// DisapprovalDate: Date your `eligibilityStatus` will become
+	// `DISAPPROVED`. Only visible when your `eligibilityStatus` is
+	// `WARNING`. In ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601)
+	// format: `YYYY-MM-DD`.
 	DisapprovalDate string `json:"disapprovalDate,omitempty"`
 
 	// EligibilityStatus: Eligibility status of the Shopping Ads program.
@@ -16978,8 +16981,7 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 	// to complete onboarding.
 	EligibilityStatus string `json:"eligibilityStatus,omitempty"`
 
-	// OnboardingIssues: These issues must be fixed to become eligible for
-	// the review.
+	// OnboardingIssues: Must be fixed to be eligible for review.
 	OnboardingIssues []string `json:"onboardingIssues,omitempty"`
 
 	// RegionCodes: The two-letter ISO 3166-1 alpha-2
@@ -16987,13 +16989,13 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 	// regions with the same `eligibilityStatus` and `reviewEligibility`.
 	RegionCodes []string `json:"regionCodes,omitempty"`
 
-	// ReviewEligibilityStatus: If a program in a given country is eligible
-	// for review. It will be present only if eligibility status is
+	// ReviewEligibilityStatus: If a program is eligible for review in a
+	// specific region. Only visible if `eligibilityStatus` is
 	// `DISAPPROVED`.
 	//
 	// Possible values:
-	//   "REVIEW_ELIGIBILITY_UNSPECIFIED" - Review eligibility reason state
-	// is unknown.
+	//   "REVIEW_ELIGIBILITY_UNSPECIFIED" - Review eligibility state is
+	// unknown.
 	//   "ELIGIBLE" - Account is eligible for review for a specified region
 	// code.
 	//   "INELIGIBLE" - Account is not eligible for review for a specified
@@ -17014,19 +17016,19 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 	//   "NO_REVIEW_REQUIRED" - No issues available to review.
 	ReviewIneligibilityReason string `json:"reviewIneligibilityReason,omitempty"`
 
-	// ReviewIneligibilityReasonDescription: Reason if a program in a given
-	// country is not eligible for review. Populated only if
-	// `review_eligibility_status` is `INELIGIBLE`.
+	// ReviewIneligibilityReasonDescription: Reason a program in a specific
+	// region isn’t eligible for review. Only visible if
+	// `reviewEligibilityStatus` is `INELIGIBLE`.
 	ReviewIneligibilityReasonDescription string `json:"reviewIneligibilityReasonDescription,omitempty"`
 
-	// ReviewIneligibilityReasonDetails: This contains additional
-	// information specific to review ineligibility reasons. If review is
-	// ineligible because of `IN_COOLDOWN_PERIOD`, it will contain timestamp
-	// for cooldown period.
+	// ReviewIneligibilityReasonDetails: Additional information for
+	// ineligibility. If `reviewIneligibilityReason` is
+	// `IN_COOLDOWN_PERIOD`, a timestamp for the end of the cooldown period
+	// is provided.
 	ReviewIneligibilityReasonDetails *ShoppingAdsProgramStatusReviewIneligibilityReasonDetails `json:"reviewIneligibilityReasonDetails,omitempty"`
 
-	// ReviewIssues: These issues will be evaluated in review process. Fix
-	// all the issues before requesting the review.
+	// ReviewIssues: Issues evaluated in the review process. Fix all issues
+	// before requesting a review.
 	ReviewIssues []string `json:"reviewIssues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisapprovalDate") to
@@ -26698,8 +26700,8 @@ type FreelistingsprogramRequestreviewCall struct {
 	header_                          http.Header
 }
 
-// Requestreview: Requests a review for Free Listings program in the
-// provided region. Important: This method is only whitelisted for
+// Requestreview: Requests a review for free listings program in a
+// specific region. Important: This method is only whitelisted for
 // selected merchants.
 //
 // - merchantId: The ID of the account.
@@ -26776,7 +26778,7 @@ func (c *FreelistingsprogramRequestreviewCall) Do(opts ...googleapi.CallOption) 
 	}
 	return nil
 	// {
-	//   "description": "Requests a review for Free Listings program in the provided region. Important: This method is only whitelisted for selected merchants.",
+	//   "description": "Requests a review for free listings program in a specific region. Important: This method is only whitelisted for selected merchants.",
 	//   "flatPath": "{merchantId}/freelistingsprogram/requestreview",
 	//   "httpMethod": "POST",
 	//   "id": "content.freelistingsprogram.requestreview",
@@ -44035,8 +44037,8 @@ type ShoppingadsprogramRequestreviewCall struct {
 	header_                         http.Header
 }
 
-// Requestreview: Requests a review for Shopping Ads program in the
-// provided country.
+// Requestreview: Requests a review for Shopping Ads program in a
+// specific region.
 //
 // - merchantId: The ID of the account.
 func (r *ShoppingadsprogramService) Requestreview(merchantId int64, requestreviewshoppingadsrequest *RequestReviewShoppingAdsRequest) *ShoppingadsprogramRequestreviewCall {
@@ -44112,7 +44114,7 @@ func (c *ShoppingadsprogramRequestreviewCall) Do(opts ...googleapi.CallOption) e
 	}
 	return nil
 	// {
-	//   "description": "Requests a review for Shopping Ads program in the provided country.",
+	//   "description": "Requests a review for Shopping Ads program in a specific region.",
 	//   "flatPath": "{merchantId}/shoppingadsprogram/requestreview",
 	//   "httpMethod": "POST",
 	//   "id": "content.shoppingadsprogram.requestreview",

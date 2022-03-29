@@ -3354,7 +3354,7 @@ func (r *CustomersTelemetryDevicesService) List(parent string) *CustomersTelemet
 
 // Filter sets the optional parameter "filter": Only include resources
 // that match the filter. Supported filter fields: - org_unit_id -
-// serial_number
+// serial_number - device_id
 func (c *CustomersTelemetryDevicesListCall) Filter(filter string) *CustomersTelemetryDevicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3491,7 +3491,7 @@ func (c *CustomersTelemetryDevicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Only include resources that match the filter. Supported filter fields: - org_unit_id - serial_number ",
+	//       "description": "Optional. Only include resources that match the filter. Supported filter fields: - org_unit_id - serial_number - device_id ",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

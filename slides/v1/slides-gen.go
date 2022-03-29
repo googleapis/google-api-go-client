@@ -3108,18 +3108,18 @@ type Page struct {
 	//   "NOTES_MASTER" - A notes master page.
 	PageType string `json:"pageType,omitempty"`
 
-	// RevisionId: The revision ID of the presentation containing this page.
-	// Can be used in update requests to assert that the presentation
-	// revision hasn't changed since the last read operation. Only populated
-	// if the user has edit access to the presentation. The format of the
-	// revision ID may change over time, so it should be treated opaquely. A
-	// returned revision ID is only guaranteed to be valid for 24 hours
-	// after it has been returned and cannot be shared across users. If the
-	// revision ID is unchanged between calls, then the presentation has not
-	// changed. Conversely, a changed ID (for the same presentation and
-	// user) usually means the presentation has been updated; however, a
-	// changed ID can also be due to internal factors such as ID format
-	// changes.
+	// RevisionId: Output only. The revision ID of the presentation. Can be
+	// used in update requests to assert the presentation revision hasn't
+	// changed since the last read operation. Only populated if the user has
+	// edit access to the presentation. The revision ID is not a sequential
+	// number but an opaque string. The format of the revision ID might
+	// change over time. A returned revision ID is only guaranteed to be
+	// valid for 24 hours after it has been returned and cannot be shared
+	// across users. If the revision ID is unchanged between calls, then the
+	// presentation has not changed. Conversely, a changed ID (for the same
+	// presentation and user) usually means the presentation has been
+	// updated. However, a changed ID can also be due to internal factors
+	// such as ID format changes.
 	RevisionId string `json:"revisionId,omitempty"`
 
 	// SlideProperties: Slide specific properties. Only set if page_type =
@@ -3603,16 +3603,17 @@ type Presentation struct {
 	// PresentationId: The ID of the presentation.
 	PresentationId string `json:"presentationId,omitempty"`
 
-	// RevisionId: The revision ID of the presentation. Can be used in
-	// update requests to assert that the presentation revision hasn't
+	// RevisionId: Output only. The revision ID of the presentation. Can be
+	// used in update requests to assert the presentation revision hasn't
 	// changed since the last read operation. Only populated if the user has
-	// edit access to the presentation. The format of the revision ID may
+	// edit access to the presentation. The revision ID is not a sequential
+	// number but a nebulous string. The format of the revision ID may
 	// change over time, so it should be treated opaquely. A returned
 	// revision ID is only guaranteed to be valid for 24 hours after it has
 	// been returned and cannot be shared across users. If the revision ID
 	// is unchanged between calls, then the presentation has not changed.
 	// Conversely, a changed ID (for the same presentation and user) usually
-	// means the presentation has been updated; however, a changed ID can
+	// means the presentation has been updated. However, a changed ID can
 	// also be due to internal factors such as ID format changes.
 	RevisionId string `json:"revisionId,omitempty"`
 
@@ -7132,10 +7133,11 @@ func (s *WordArt) MarshalJSON() ([]byte, error) {
 // WriteControl: Provides control over how write requests are executed.
 type WriteControl struct {
 	// RequiredRevisionId: The revision ID of the presentation required for
-	// the write request. If specified and the `required_revision_id`
-	// doesn't exactly match the presentation's current `revision_id`, the
-	// request will not be processed and will return a 400 bad request
-	// error.
+	// the write request. If specified and the required revision ID doesn't
+	// match the presentation's current revision ID, the request is not
+	// processed and returns a 400 bad request error. When a required
+	// revision ID is returned in a response, it indicates the revision ID
+	// of the document after the request was applied.
 	RequiredRevisionId string `json:"requiredRevisionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RequiredRevisionId")

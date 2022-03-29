@@ -2051,7 +2051,7 @@ type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta1DocumentTextAnchor `json:"textAnchor,omitempty"`
 
-	// Type: Entity type from a schema e.g. `Address`.
+	// Type: Required. Entity type from a schema e.g. `Address`.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -4039,7 +4039,7 @@ type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta2DocumentTextAnchor `json:"textAnchor,omitempty"`
 
-	// Type: Entity type from a schema e.g. `Address`.
+	// Type: Required. Entity type from a schema e.g. `Address`.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to

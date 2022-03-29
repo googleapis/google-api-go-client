@@ -1595,6 +1595,10 @@ func (s *OracleColumn) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OracleDropLargeObjects: Configuration to drop large object values.
+type OracleDropLargeObjects struct {
+}
+
 // OracleObjectIdentifier: Oracle data source object identifier.
 type OracleObjectIdentifier struct {
 	// Schema: Required. The schema name.
@@ -1734,6 +1738,9 @@ func (s *OracleSchema) MarshalJSON() ([]byte, error) {
 type OracleSourceConfig struct {
 	// Allowlist: Oracle objects to include in the stream.
 	Allowlist *OracleRdbms `json:"allowlist,omitempty"`
+
+	// DropLargeObjects: Drop large object values.
+	DropLargeObjects *OracleDropLargeObjects `json:"dropLargeObjects,omitempty"`
 
 	// Rejectlist: Oracle objects to exclude from the stream.
 	Rejectlist *OracleRdbms `json:"rejectlist,omitempty"`

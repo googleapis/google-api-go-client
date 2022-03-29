@@ -4052,6 +4052,8 @@ type DataExecutionStatus struct {
 	//   "TIMED_OUT" - The data execution timed out.
 	//   "TOO_MANY_ROWS" - The data execution returns more rows than the
 	// limit.
+	//   "TOO_MANY_COLUMNS" - The data execution returns more columns than
+	// the limit.
 	//   "TOO_MANY_CELLS" - The data execution returns more cells than the
 	// limit.
 	//   "ENGINE" - Error is received from the backend data execution engine

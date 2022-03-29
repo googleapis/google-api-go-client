@@ -1589,6 +1589,10 @@ func (s *OracleColumn) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OracleDropLargeObjects: Configuration to drop large object values.
+type OracleDropLargeObjects struct {
+}
+
 // OracleObjectIdentifier: Oracle data source object identifier.
 type OracleObjectIdentifier struct {
 	// Schema: Required. The schema name.
@@ -1726,13 +1730,16 @@ func (s *OracleSchema) MarshalJSON() ([]byte, error) {
 
 // OracleSourceConfig: Oracle data source configuration
 type OracleSourceConfig struct {
+	// DropLargeObjects: Drop large object values.
+	DropLargeObjects *OracleDropLargeObjects `json:"dropLargeObjects,omitempty"`
+
 	// ExcludeObjects: Oracle objects to exclude from the stream.
 	ExcludeObjects *OracleRdbms `json:"excludeObjects,omitempty"`
 
 	// IncludeObjects: Oracle objects to include in the stream.
 	IncludeObjects *OracleRdbms `json:"includeObjects,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// ForceSendFields is a list of field names (e.g. "DropLargeObjects") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1740,7 +1747,7 @@ type OracleSourceConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ExcludeObjects") to
+	// NullFields is a list of field names (e.g. "DropLargeObjects") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

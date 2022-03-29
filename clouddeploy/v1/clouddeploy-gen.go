@@ -3463,7 +3463,7 @@ func (r *ProjectsLocationsDeliveryPipelinesService) List(parent string) *Project
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter builds to be
+// Filter sets the optional parameter "filter": Filter pipelines to be
 // returned. See https://google.aip.dev/160 for more details.
 func (c *ProjectsLocationsDeliveryPipelinesListCall) Filter(filter string) *ProjectsLocationsDeliveryPipelinesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -3603,7 +3603,7 @@ func (c *ProjectsLocationsDeliveryPipelinesListCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter builds to be returned. See https://google.aip.dev/160 for more details.",
+	//       "description": "Filter pipelines to be returned. See https://google.aip.dev/160 for more details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4528,7 +4528,7 @@ func (r *ProjectsLocationsDeliveryPipelinesReleasesService) List(parent string) 
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter builds to be
+// Filter sets the optional parameter "filter": Filter releases to be
 // returned. See https://google.aip.dev/160 for more details.
 func (c *ProjectsLocationsDeliveryPipelinesReleasesListCall) Filter(filter string) *ProjectsLocationsDeliveryPipelinesReleasesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -4669,7 +4669,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesListCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter builds to be returned. See https://google.aip.dev/160 for more details.",
+	//       "description": "Optional. Filter releases to be returned. See https://google.aip.dev/160 for more details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5234,7 +5234,7 @@ func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) List(parent 
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter builds to be
+// Filter sets the optional parameter "filter": Filter rollouts to be
 // returned. See https://google.aip.dev/160 for more details.
 func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsListCall) Filter(filter string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -5375,7 +5375,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsListCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter builds to be returned. See https://google.aip.dev/160 for more details.",
+	//       "description": "Optional. Filter rollouts to be returned. See https://google.aip.dev/160 for more details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6812,7 +6812,7 @@ func (r *ProjectsLocationsTargetsService) List(parent string) *ProjectsLocations
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter builds to be
+// Filter sets the optional parameter "filter": Filter targets to be
 // returned. See https://google.aip.dev/160 for more details.
 func (c *ProjectsLocationsTargetsListCall) Filter(filter string) *ProjectsLocationsTargetsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -6952,7 +6952,7 @@ func (c *ProjectsLocationsTargetsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter builds to be returned. See https://google.aip.dev/160 for more details.",
+	//       "description": "Optional. Filter targets to be returned. See https://google.aip.dev/160 for more details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

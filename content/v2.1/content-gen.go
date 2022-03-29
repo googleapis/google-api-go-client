@@ -4481,7 +4481,8 @@ type FreeListingsProgramStatus struct {
 	// Possible values:
 	//   "PROGRAM_STATE_UNSPECIFIED" - State is unknown.
 	//   "NOT_ENABLED" - Program is not enabled for any country.
-	//   "NO_OFFERS_UPLOADED" - No offers have been uploaded for any region.
+	//   "NO_OFFERS_UPLOADED" - No products have been uploaded for any
+	// region. Upload products to Merchant Center.
 	//   "ENABLED" - Program is enabled and offers are uploaded for at least
 	// one country.
 	GlobalState string `json:"globalState,omitempty"`
@@ -4520,9 +4521,9 @@ func (s *FreeListingsProgramStatus) MarshalJSON() ([]byte, error) {
 
 // FreeListingsProgramStatusRegionStatus: Status of program and region.
 type FreeListingsProgramStatusRegionStatus struct {
-	// DisapprovalDate: Date your `eligibilityStatus` will become
-	// `DISAPPROVED`. Only visible when your `eligibilityStatus` is
-	// `WARNING`. In ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601)
+	// DisapprovalDate: Date by which eligibilityStatus will go from
+	// `WARNING` to `DISAPPROVED`. Only visible when your eligibilityStatus
+	// is WARNING. In ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601)
 	// format: `YYYY-MM-DD`.
 	DisapprovalDate string `json:"disapprovalDate,omitempty"`
 
@@ -4540,14 +4541,14 @@ type FreeListingsProgramStatusRegionStatus struct {
 	// ence/rest/v2.1/accountstatuses) API.
 	//   "WARNING" - If account has issues but offers are servable. Some of
 	// the issue can make account DISAPPROVED after a certain deadline.
-	//   "UNDER_REVIEW" - Account is under review. Deprecated: This state is
-	// not created.
+	//   "UNDER_REVIEW" - Account is under review.
 	//   "PENDING_REVIEW" - Account is waiting for review to start.
 	//   "ONBOARDING" - Program is currently onboarding. Upload valid offers
 	// to complete onboarding.
 	EligibilityStatus string `json:"eligibilityStatus,omitempty"`
 
-	// OnboardingIssues: Must be fixed to be eligible for review.
+	// OnboardingIssues: Issues that must be fixed to be eligible for
+	// review.
 	OnboardingIssues []string `json:"onboardingIssues,omitempty"`
 
 	// RegionCodes: The two-letter ISO 3166-1 alpha-2
@@ -4580,6 +4581,10 @@ type FreeListingsProgramStatusRegionStatus struct {
 	// period ends.
 	//   "ALREADY_UNDER_REVIEW" - Account is already under review.
 	//   "NO_REVIEW_REQUIRED" - No issues available to review.
+	//   "WILL_BE_REVIEWED_AUTOMATICALLY" - Account will be automatically
+	// reviewed at the end of the grace period.
+	//   "IS_RETIRED" - Account is retired. Should not appear in MC.
+	//   "ALREADY_REVIEWED" - Account was already reviewd.
 	ReviewIneligibilityReason string `json:"reviewIneligibilityReason,omitempty"`
 
 	// ReviewIneligibilityReasonDescription: Reason a program in a specific
@@ -11901,8 +11906,9 @@ type Product struct {
 	// too far in the future.
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
-	// ExternalSellerId: Used by a marketplace to externally identify a
-	// seller.
+	// ExternalSellerId: Required for multi-seller accounts. Use this
+	// attribute if you're a marketplace uploading products for various
+	// sellers to your multi-seller account.
 	ExternalSellerId string `json:"externalSellerId,omitempty"`
 
 	// Gender: Target gender of the item.
@@ -13241,7 +13247,7 @@ type Promotion struct {
 	BrandExclusion []string `json:"brandExclusion,omitempty"`
 
 	// ContentLanguage: Required. The content language used as part of the
-	// unique identifier.
+	// unique identifier. Currently only en value is supported.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// CouponValueType: Required. Coupon value type for the promotion.
@@ -13403,7 +13409,7 @@ type Promotion struct {
 	ShippingServiceNames []string `json:"shippingServiceNames,omitempty"`
 
 	// TargetCountry: Required. The target country used as part of the
-	// unique identifier.
+	// unique identifier. Currently only US and CA are supported.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -16916,7 +16922,8 @@ type ShoppingAdsProgramStatus struct {
 	// Possible values:
 	//   "PROGRAM_STATE_UNSPECIFIED" - State is unknown.
 	//   "NOT_ENABLED" - Program is not enabled for any country.
-	//   "NO_OFFERS_UPLOADED" - No offers have been uploaded for any region.
+	//   "NO_OFFERS_UPLOADED" - No products have been uploaded for any
+	// region. Upload products to Merchant Center.
 	//   "ENABLED" - Program is enabled and offers are uploaded for at least
 	// one country.
 	GlobalState string `json:"globalState,omitempty"`
@@ -16955,9 +16962,9 @@ func (s *ShoppingAdsProgramStatus) MarshalJSON() ([]byte, error) {
 
 // ShoppingAdsProgramStatusRegionStatus: Status of program and region.
 type ShoppingAdsProgramStatusRegionStatus struct {
-	// DisapprovalDate: Date your `eligibilityStatus` will become
-	// `DISAPPROVED`. Only visible when your `eligibilityStatus` is
-	// `WARNING`. In ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601)
+	// DisapprovalDate: Date by which eligibilityStatus will go from
+	// `WARNING` to `DISAPPROVED`. Only visible when your eligibilityStatus
+	// is WARNING. In ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601)
 	// format: `YYYY-MM-DD`.
 	DisapprovalDate string `json:"disapprovalDate,omitempty"`
 
@@ -16974,14 +16981,14 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 	// ence/rest/v2.1/accountstatuses) API.
 	//   "WARNING" - If account has issues but offers are servable. Some of
 	// the issue can make account DISAPPROVED after a certain deadline.
-	//   "UNDER_REVIEW" - Account is under review. Deprecated: This state is
-	// not created.
+	//   "UNDER_REVIEW" - Account is under review.
 	//   "PENDING_REVIEW" - Account is waiting for review to start.
 	//   "ONBOARDING" - Program is currently onboarding. Upload valid offers
 	// to complete onboarding.
 	EligibilityStatus string `json:"eligibilityStatus,omitempty"`
 
-	// OnboardingIssues: Must be fixed to be eligible for review.
+	// OnboardingIssues: Issues that must be fixed to be eligible for
+	// review.
 	OnboardingIssues []string `json:"onboardingIssues,omitempty"`
 
 	// RegionCodes: The two-letter ISO 3166-1 alpha-2
@@ -17014,6 +17021,10 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 	// period ends.
 	//   "ALREADY_UNDER_REVIEW" - Account is already under review.
 	//   "NO_REVIEW_REQUIRED" - No issues available to review.
+	//   "WILL_BE_REVIEWED_AUTOMATICALLY" - Account will be automatically
+	// reviewed at the end of the grace period.
+	//   "IS_RETIRED" - Account is retired. Should not appear in MC.
+	//   "ALREADY_REVIEWED" - Account was already reviewd.
 	ReviewIneligibilityReason string `json:"reviewIneligibilityReason,omitempty"`
 
 	// ReviewIneligibilityReasonDescription: Reason a program in a specific
@@ -26700,9 +26711,9 @@ type FreelistingsprogramRequestreviewCall struct {
 	header_                          http.Header
 }
 
-// Requestreview: Requests a review for free listings program in a
-// specific region. Important: This method is only whitelisted for
-// selected merchants.
+// Requestreview: Requests a review of free listings in a specific
+// region Important: This method is only whitelisted for selected
+// merchants.
 //
 // - merchantId: The ID of the account.
 func (r *FreelistingsprogramService) Requestreview(merchantId int64, requestreviewfreelistingsrequest *RequestReviewFreeListingsRequest) *FreelistingsprogramRequestreviewCall {
@@ -26778,7 +26789,7 @@ func (c *FreelistingsprogramRequestreviewCall) Do(opts ...googleapi.CallOption) 
 	}
 	return nil
 	// {
-	//   "description": "Requests a review for free listings program in a specific region. Important: This method is only whitelisted for selected merchants.",
+	//   "description": "Requests a review of free listings in a specific region Important: This method is only whitelisted for selected merchants.",
 	//   "flatPath": "{merchantId}/freelistingsprogram/requestreview",
 	//   "httpMethod": "POST",
 	//   "id": "content.freelistingsprogram.requestreview",
@@ -44037,8 +44048,8 @@ type ShoppingadsprogramRequestreviewCall struct {
 	header_                         http.Header
 }
 
-// Requestreview: Requests a review for Shopping Ads program in a
-// specific region.
+// Requestreview: Requests a review of Shopping ads in a specific
+// region.
 //
 // - merchantId: The ID of the account.
 func (r *ShoppingadsprogramService) Requestreview(merchantId int64, requestreviewshoppingadsrequest *RequestReviewShoppingAdsRequest) *ShoppingadsprogramRequestreviewCall {
@@ -44114,7 +44125,7 @@ func (c *ShoppingadsprogramRequestreviewCall) Do(opts ...googleapi.CallOption) e
 	}
 	return nil
 	// {
-	//   "description": "Requests a review for Shopping Ads program in a specific region.",
+	//   "description": "Requests a review of Shopping ads in a specific region.",
 	//   "flatPath": "{merchantId}/shoppingadsprogram/requestreview",
 	//   "httpMethod": "POST",
 	//   "id": "content.shoppingadsprogram.requestreview",

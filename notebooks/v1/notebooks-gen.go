@@ -518,8 +518,7 @@ func (s *Disk) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2040,6 +2039,72 @@ type Policy struct {
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RefreshRuntimeTokenInternalRequest: Request for getting a new access
+// token.
+type RefreshRuntimeTokenInternalRequest struct {
+	// VmId: Required. The VM hardware token for authenticating the VM.
+	// https://cloud.google.com/compute/docs/instances/verifying-instance-identity
+	VmId string `json:"vmId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VmId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VmId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RefreshRuntimeTokenInternalRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RefreshRuntimeTokenInternalRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RefreshRuntimeTokenInternalResponse: Response with a new access
+// token.
+type RefreshRuntimeTokenInternalResponse struct {
+	// AccessToken: The OAuth 2.0 access token.
+	AccessToken string `json:"accessToken,omitempty"`
+
+	// ExpireTime: Output only. Token expiration time.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RefreshRuntimeTokenInternalResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RefreshRuntimeTokenInternalResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10218,6 +10283,152 @@ func (c *ProjectsLocationsRuntimesListCall) Pages(ctx context.Context, f func(*L
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "notebooks.projects.locations.runtimes.refreshRuntimeTokenInternal":
+
+type ProjectsLocationsRuntimesRefreshRuntimeTokenInternalCall struct {
+	s                                  *Service
+	name                               string
+	refreshruntimetokeninternalrequest *RefreshRuntimeTokenInternalRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// RefreshRuntimeTokenInternal: Gets an access token for the consumer
+// service account that the customer attached to the runtime. Only
+// accessible from the tenant instance.
+//
+// - name: Format:
+//   `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`.
+func (r *ProjectsLocationsRuntimesService) RefreshRuntimeTokenInternal(name string, refreshruntimetokeninternalrequest *RefreshRuntimeTokenInternalRequest) *ProjectsLocationsRuntimesRefreshRuntimeTokenInternalCall {
+	c := &ProjectsLocationsRuntimesRefreshRuntimeTokenInternalCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.refreshruntimetokeninternalrequest = refreshruntimetokeninternalrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRuntimesRefreshRuntimeTokenInternalCall) Fields(s ...googleapi.Field) *ProjectsLocationsRuntimesRefreshRuntimeTokenInternalCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRuntimesRefreshRuntimeTokenInternalCall) Context(ctx context.Context) *ProjectsLocationsRuntimesRefreshRuntimeTokenInternalCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRuntimesRefreshRuntimeTokenInternalCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRuntimesRefreshRuntimeTokenInternalCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.refreshruntimetokeninternalrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:refreshRuntimeTokenInternal")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.runtimes.refreshRuntimeTokenInternal" call.
+// Exactly one of *RefreshRuntimeTokenInternalResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RefreshRuntimeTokenInternalResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRuntimesRefreshRuntimeTokenInternalCall) Do(opts ...googleapi.CallOption) (*RefreshRuntimeTokenInternalResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RefreshRuntimeTokenInternalResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an access token for the consumer service account that the customer attached to the runtime. Only accessible from the tenant instance.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}:refreshRuntimeTokenInternal",
+	//   "httpMethod": "POST",
+	//   "id": "notebooks.projects.locations.runtimes.refreshRuntimeTokenInternal",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Format: `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:refreshRuntimeTokenInternal",
+	//   "request": {
+	//     "$ref": "RefreshRuntimeTokenInternalRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RefreshRuntimeTokenInternalResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "notebooks.projects.locations.runtimes.reportEvent":

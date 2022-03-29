@@ -4003,6 +4003,17 @@ type GoogleCloudApigeeV1EndpointAttachment struct {
 	// ServiceAttachment: Format: projects/*/regions/*/serviceAttachments/*
 	ServiceAttachment string `json:"serviceAttachment,omitempty"`
 
+	// State: Output only. State of the endpoint attachment. Values other
+	// than `ACTIVE` mean the resource is not ready to use.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Resource is in an unspecified state.
+	//   "CREATING" - Resource is being created.
+	//   "ACTIVE" - Resource is provisioned and ready to use.
+	//   "DELETING" - The resource is being deleted.
+	//   "UPDATING" - The resource is being updated.
+	State string `json:"state,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -10025,8 +10036,7 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
 // method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); } The JSON representation for
-// `Empty` is empty JSON object `{}`.
+// returns (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

@@ -1710,6 +1710,15 @@ type AssignedTargetingOption struct {
 	// the targeting_type is `TARGETING_TYPE_CHANNEL`.
 	ChannelDetails *ChannelAssignedTargetingOptionDetails `json:"channelDetails,omitempty"`
 
+	// ContentDurationDetails: Content duration details. This field will be
+	// populated when the targeting_type is
+	// `TARGETING_TYPE_CONTENT_DURATION`.
+	ContentDurationDetails *ContentDurationAssignedTargetingOptionDetails `json:"contentDurationDetails,omitempty"`
+
+	// ContentGenreDetails: Content genre details. This field will be
+	// populated when the targeting_type is `TARGETING_TYPE_CONTENT_GENRE`.
+	ContentGenreDetails *ContentGenreAssignedTargetingOptionDetails `json:"contentGenreDetails,omitempty"`
+
 	// ContentInstreamPositionDetails: Content instream position details.
 	// This field will be populated when the targeting_type is
 	// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
@@ -1719,6 +1728,11 @@ type AssignedTargetingOption struct {
 	// This field will be populated when the targeting_type is
 	// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
 	ContentOutstreamPositionDetails *ContentOutstreamPositionAssignedTargetingOptionDetails `json:"contentOutstreamPositionDetails,omitempty"`
+
+	// ContentStreamTypeDetails: Content duration details. This field will
+	// be populated when the TargetingType is
+	// `TARGETING_TYPE_CONTENT_STREAM_TYPE`.
+	ContentStreamTypeDetails *ContentStreamTypeAssignedTargetingOptionDetails `json:"contentStreamTypeDetails,omitempty"`
 
 	// DayAndTimeDetails: Day and time details. This field will be populated
 	// when the targeting_type is `TARGETING_TYPE_DAY_AND_TIME`.
@@ -4384,6 +4398,170 @@ func (s *ContactInfoList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ContentDurationAssignedTargetingOptionDetails: Details for content
+// duration assigned targeting option. This will be populated in the
+// content_duration_details field when targeting_type is
+// `TARGETING_TYPE_CONTENT_DURATION`. Explicitly targeting all options
+// is not supported. Remove all content duration targeting options to
+// achieve this effect.
+type ContentDurationAssignedTargetingOptionDetails struct {
+	// ContentDuration: Output only. The content duration.
+	//
+	// Possible values:
+	//   "CONTENT_DURATION_UNSPECIFIED" - Content duration is not specified
+	// in this version. This enum is a place holder for a default value and
+	// does not represent a real content duration.
+	//   "CONTENT_DURATION_UNKNOWN" - The content duration is unknown.
+	//   "CONTENT_DURATION_0_TO_1_MIN" - Content is 0-1 minute long.
+	//   "CONTENT_DURATION_1_TO_5_MIN" - Content is 1-5 minutes long.
+	//   "CONTENT_DURATION_5_TO_15_MIN" - Content is 5-15 minutes long.
+	//   "CONTENT_DURATION_15_TO_30_MIN" - Content is 15-30 minutes long.
+	//   "CONTENT_DURATION_30_TO_60_MIN" - Content is 30-60 minutes long.
+	//   "CONTENT_DURATION_OVER_60_MIN" - Content is over 60 minutes long.
+	ContentDuration string `json:"contentDuration,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_CONTENT_DURATION`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentDuration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentDurationAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentDurationAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentDurationTargetingOptionDetails: Represents a targetable
+// content duration. This will be populated in the
+// content_duration_details field when targeting_type is
+// `TARGETING_TYPE_CONTENT_DURATION`.
+type ContentDurationTargetingOptionDetails struct {
+	// ContentDuration: Output only. The content duration.
+	//
+	// Possible values:
+	//   "CONTENT_DURATION_UNSPECIFIED" - Content duration is not specified
+	// in this version. This enum is a place holder for a default value and
+	// does not represent a real content duration.
+	//   "CONTENT_DURATION_UNKNOWN" - The content duration is unknown.
+	//   "CONTENT_DURATION_0_TO_1_MIN" - Content is 0-1 minute long.
+	//   "CONTENT_DURATION_1_TO_5_MIN" - Content is 1-5 minutes long.
+	//   "CONTENT_DURATION_5_TO_15_MIN" - Content is 5-15 minutes long.
+	//   "CONTENT_DURATION_15_TO_30_MIN" - Content is 15-30 minutes long.
+	//   "CONTENT_DURATION_30_TO_60_MIN" - Content is 30-60 minutes long.
+	//   "CONTENT_DURATION_OVER_60_MIN" - Content is over 60 minutes long.
+	ContentDuration string `json:"contentDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentDuration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentDurationTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentDurationTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentGenreAssignedTargetingOptionDetails: Details for content genre
+// assigned targeting option. This will be populated in the
+// content_genre_details field when targeting_type is
+// `TARGETING_TYPE_CONTENT_GENRE`. Explicitly targeting all options is
+// not supported. Remove all content genre targeting options to achieve
+// this effect.
+type ContentGenreAssignedTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the content genre.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_CONTENT_GENRE`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentGenreAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentGenreAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentGenreTargetingOptionDetails: Represents a targetable content
+// genre. This will be populated in the content_genre_details field when
+// targeting_type is `TARGETING_TYPE_CONTENT_GENRE`.
+type ContentGenreTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the content genre
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentGenreTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentGenreTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ContentInstreamPositionAssignedTargetingOptionDetails: Assigned
 // content instream position targeting option details. This will be
 // populated in the content_instream_position_details field when
@@ -4619,6 +4797,90 @@ type ContentOutstreamPositionTargetingOptionDetails struct {
 
 func (s *ContentOutstreamPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentOutstreamPositionTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentStreamTypeAssignedTargetingOptionDetails: Details for content
+// stream type assigned targeting option. This will be populated in the
+// content_stream_type_details field when targeting_type is
+// `TARGETING_TYPE_CONTENT_STREAM_TYPE`. Explicitly targeting all
+// options is not supported. Remove all content stream type targeting
+// options to achieve this effect.
+type ContentStreamTypeAssignedTargetingOptionDetails struct {
+	// ContentStreamType: Output only. The content stream type.
+	//
+	// Possible values:
+	//   "CONTENT_STREAM_TYPE_UNSPECIFIED" - Content stream type is not
+	// specified in this version. This enum is a place holder for a default
+	// value and does not represent a real content stream type.
+	//   "CONTENT_LIVE_STREAM" - The content is being live-streamed.
+	//   "CONTENT_ON_DEMAND" - The content is viewed on-demand.
+	ContentStreamType string `json:"contentStreamType,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_CONTENT_STREAM_TYPE`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentStreamType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentStreamType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentStreamTypeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentStreamTypeAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentStreamTypeTargetingOptionDetails: Represents a targetable
+// content stream type. This will be populated in the
+// content_stream_type_details field when targeting_type is
+// `TARGETING_TYPE_CONTENT_STREAM_TYPE`.
+type ContentStreamTypeTargetingOptionDetails struct {
+	// ContentStreamType: Output only. The content stream type.
+	//
+	// Possible values:
+	//   "CONTENT_STREAM_TYPE_UNSPECIFIED" - Content stream type is not
+	// specified in this version. This enum is a place holder for a default
+	// value and does not represent a real content stream type.
+	//   "CONTENT_LIVE_STREAM" - The content is being live-streamed.
+	//   "CONTENT_ON_DEMAND" - The content is viewed on-demand.
+	ContentStreamType string `json:"contentStreamType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentStreamType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentStreamType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentStreamTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentStreamTypeTargetingOptionDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6852,8 +7114,7 @@ func (s *EditCustomerMatchMembersResponse) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -8505,6 +8766,17 @@ type InsertionOrder struct {
 	// BidStrategy: The bidding strategy of the insertion order. By default,
 	// fixed_bid is set.
 	BidStrategy *BiddingStrategy `json:"bidStrategy,omitempty"`
+
+	// BillableOutcome: Immutable. The billable outcome of the insertion
+	// order.
+	//
+	// Possible values:
+	//   "BILLABLE_OUTCOME_UNSPECIFIED" - Unspecified billable outcome.
+	//   "BILLABLE_OUTCOME_PAY_PER_IMPRESSION" - Pay per impressions.
+	//   "BILLABLE_OUTCOME_PAY_PER_CLICK" - Pay per click.
+	//   "BILLABLE_OUTCOME_PAY_PER_VIEWABLE_IMPRESSION" - Pay per active
+	// view.
+	BillableOutcome string `json:"billableOutcome,omitempty"`
 
 	// Budget: Required. The budget allocation settings of the insertion
 	// order.
@@ -14262,11 +14534,20 @@ type TargetingOption struct {
 	// CategoryDetails: Category resource details.
 	CategoryDetails *CategoryTargetingOptionDetails `json:"categoryDetails,omitempty"`
 
+	// ContentDurationDetails: Content duration resource details.
+	ContentDurationDetails *ContentDurationTargetingOptionDetails `json:"contentDurationDetails,omitempty"`
+
+	// ContentGenreDetails: Content genre resource details.
+	ContentGenreDetails *ContentGenreTargetingOptionDetails `json:"contentGenreDetails,omitempty"`
+
 	// ContentInstreamPositionDetails: Content instream position details.
 	ContentInstreamPositionDetails *ContentInstreamPositionTargetingOptionDetails `json:"contentInstreamPositionDetails,omitempty"`
 
 	// ContentOutstreamPositionDetails: Content outstream position details.
 	ContentOutstreamPositionDetails *ContentOutstreamPositionTargetingOptionDetails `json:"contentOutstreamPositionDetails,omitempty"`
+
+	// ContentStreamTypeDetails: Content stream type resource details.
+	ContentStreamTypeDetails *ContentStreamTypeTargetingOptionDetails `json:"contentStreamTypeDetails,omitempty"`
 
 	// DeviceMakeModelDetails: Device make and model resource details.
 	DeviceMakeModelDetails *DeviceMakeModelTargetingOptionDetails `json:"deviceMakeModelDetails,omitempty"`

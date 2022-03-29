@@ -1860,13 +1860,21 @@ type DynamiteSpacesScoringInfo struct {
 
 	JoinedSpacesAffinityScore float64 `json:"joinedSpacesAffinityScore,omitempty"`
 
+	LastMessagePostedTimestampMicros int64 `json:"lastMessagePostedTimestampMicros,omitempty,string"`
+
+	MemberMetadataCount float64 `json:"memberMetadataCount,omitempty"`
+
 	MessageScore float64 `json:"messageScore,omitempty"`
+
+	NumAucContacts int64 `json:"numAucContacts,omitempty,string"`
 
 	SmallContactListAffinityScore float64 `json:"smallContactListAffinityScore,omitempty"`
 
 	SmallUnjoinedSpacesAffinityScore float64 `json:"smallUnjoinedSpacesAffinityScore,omitempty"`
 
 	SpaceAgeInDays float64 `json:"spaceAgeInDays,omitempty"`
+
+	SpaceCreationTimestampMicros int64 `json:"spaceCreationTimestampMicros,omitempty,string"`
 
 	TopicalityScore float64 `json:"topicalityScore,omitempty"`
 
@@ -1902,6 +1910,7 @@ func (s *DynamiteSpacesScoringInfo) UnmarshalJSON(data []byte) error {
 		FinalScore                       gensupport.JSONFloat64 `json:"finalScore"`
 		FreshnessScore                   gensupport.JSONFloat64 `json:"freshnessScore"`
 		JoinedSpacesAffinityScore        gensupport.JSONFloat64 `json:"joinedSpacesAffinityScore"`
+		MemberMetadataCount              gensupport.JSONFloat64 `json:"memberMetadataCount"`
 		MessageScore                     gensupport.JSONFloat64 `json:"messageScore"`
 		SmallContactListAffinityScore    gensupport.JSONFloat64 `json:"smallContactListAffinityScore"`
 		SmallUnjoinedSpacesAffinityScore gensupport.JSONFloat64 `json:"smallUnjoinedSpacesAffinityScore"`
@@ -1919,6 +1928,7 @@ func (s *DynamiteSpacesScoringInfo) UnmarshalJSON(data []byte) error {
 	s.FinalScore = float64(s1.FinalScore)
 	s.FreshnessScore = float64(s1.FreshnessScore)
 	s.JoinedSpacesAffinityScore = float64(s1.JoinedSpacesAffinityScore)
+	s.MemberMetadataCount = float64(s1.MemberMetadataCount)
 	s.MessageScore = float64(s1.MessageScore)
 	s.SmallContactListAffinityScore = float64(s1.SmallContactListAffinityScore)
 	s.SmallUnjoinedSpacesAffinityScore = float64(s1.SmallUnjoinedSpacesAffinityScore)
@@ -5580,14 +5590,11 @@ func (s *ResponseDebugInfo) MarshalJSON() ([]byte, error) {
 // RestrictItem: Information relevant only to a restrict entry. NextId:
 // 12
 type RestrictItem struct {
-	// DriveFollowUpRestrict:
-	// LINT.ThenChange(//depot/google3/java/com/google/apps/search/quality/it
-	// emsuggest/utils/SubtypeRerankingUtils.java)
 	DriveFollowUpRestrict *DriveFollowUpRestrict `json:"driveFollowUpRestrict,omitempty"`
 
 	DriveLocationRestrict *DriveLocationRestrict `json:"driveLocationRestrict,omitempty"`
 
-	// DriveMimeTypeRestrict: LINT.IfChange Drive Types.
+	// DriveMimeTypeRestrict: Drive Types.
 	DriveMimeTypeRestrict *DriveMimeTypeRestrict `json:"driveMimeTypeRestrict,omitempty"`
 
 	DriveTimeSpanRestrict *DriveTimeSpanRestrict `json:"driveTimeSpanRestrict,omitempty"`
@@ -7461,6 +7468,12 @@ func (s *UploadItemRef) MarshalJSON() ([]byte, error) {
 
 // UserId: Primary key for User resource.
 type UserId struct {
+	// ActingUserId: Optional. Opaque, server-assigned ID of the user
+	// profile associated with App/user acting on behalf of the human user.
+	// This is currently only set when a 3P application is acting on the
+	// user's behalf.
+	ActingUserId string `json:"actingUserId,omitempty"`
+
 	// Id: Opaque, server-assigned ID of the User.
 	Id string `json:"id,omitempty"`
 
@@ -7495,7 +7508,7 @@ type UserId struct {
 	//   "BOT"
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Id") to
+	// ForceSendFields is a list of field names (e.g. "ActingUserId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -7503,10 +7516,10 @@ type UserId struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ActingUserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

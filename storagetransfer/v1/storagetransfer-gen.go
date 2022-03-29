@@ -507,8 +507,7 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -974,8 +973,7 @@ func (s *LoggingConfig) MarshalJSON() ([]byte, error) {
 }
 
 // MetadataOptions: Specifies the metadata options for running a
-// transfer. These options only apply to transfers involving a POSIX
-// filesystem and are ignored for other transfers.
+// transfer.
 type MetadataOptions struct {
 	// Acl: Specifies how each object's ACLs should be preserved for
 	// transfers between Google Cloud Storage buckets. If unspecified, the
@@ -993,7 +991,9 @@ type MetadataOptions struct {
 	Acl string `json:"acl,omitempty"`
 
 	// Gid: Specifies how each file's POSIX group ID (GID) attribute should
-	// be handled by the transfer. By default, GID is not preserved.
+	// be handled by the transfer. By default, GID is not preserved. Only
+	// applicable to transfers involving POSIX file systems, and ignored for
+	// other transfers.
 	//
 	// Possible values:
 	//   "GID_UNSPECIFIED" - GID behavior is unspecified.
@@ -1017,7 +1017,9 @@ type MetadataOptions struct {
 	KmsKey string `json:"kmsKey,omitempty"`
 
 	// Mode: Specifies how each file's mode attribute should be handled by
-	// the transfer. By default, mode is not preserved.
+	// the transfer. By default, mode is not preserved. Only applicable to
+	// transfers involving POSIX file systems, and ignored for other
+	// transfers.
 	//
 	// Possible values:
 	//   "MODE_UNSPECIFIED" - Mode behavior is unspecified.
@@ -1045,7 +1047,8 @@ type MetadataOptions struct {
 	StorageClass string `json:"storageClass,omitempty"`
 
 	// Symlink: Specifies how symlinks should be handled by the transfer. By
-	// default, symlinks are not preserved.
+	// default, symlinks are not preserved. Only applicable to transfers
+	// involving POSIX file systems, and ignored for other transfers.
 	//
 	// Possible values:
 	//   "SYMLINK_UNSPECIFIED" - Symlink behavior is unspecified.
@@ -1082,7 +1085,9 @@ type MetadataOptions struct {
 	TimeCreated string `json:"timeCreated,omitempty"`
 
 	// Uid: Specifies how each file's POSIX user ID (UID) attribute should
-	// be handled by the transfer. By default, UID is not preserved.
+	// be handled by the transfer. By default, UID is not preserved. Only
+	// applicable to transfers involving POSIX file systems, and ignored for
+	// other transfers.
 	//
 	// Possible values:
 	//   "UID_UNSPECIFIED" - UID behavior is unspecified.
@@ -1920,6 +1925,18 @@ type TransferOptions struct {
 	// sink whose name matches an object in the source are overwritten with
 	// the source object.
 	OverwriteObjectsAlreadyExistingInSink bool `json:"overwriteObjectsAlreadyExistingInSink,omitempty"`
+
+	// OverwriteWhen: When to overwrite objects that already exist in the
+	// sink. If not set overwrite behavior is determined by
+	// overwrite_objects_already_existing_in_sink.
+	//
+	// Possible values:
+	//   "OVERWRITE_WHEN_UNSPECIFIED" - Indicate the option is not set.
+	//   "DIFFERENT" - Overwrite destination object with source if the two
+	// objects are different.
+	//   "NEVER" - Never overwrite destination object.
+	//   "ALWAYS" - Always overwrite destination object.
+	OverwriteWhen string `json:"overwriteWhen,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DeleteObjectsFromSourceAfterTransfer") to unconditionally include in

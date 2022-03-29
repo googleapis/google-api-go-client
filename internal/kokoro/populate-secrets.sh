@@ -14,6 +14,7 @@ function println() { printf '%s\n' "$(now) $*"; }
 # kokoro-trampoline@cloud-devrel-kokoro-resources.iam.gserviceaccount.com
 SECRET_LOCATION="${KOKORO_GFILE_DIR}/secret_manager"
 msg "Creating folder on disk for secrets: ${SECRET_LOCATION}"
+msg "Keys: ${SECRET_MANAGER_KEYS}"
 mkdir -p ${SECRET_LOCATION}
 for key in $(echo ${SECRET_MANAGER_KEYS} | sed "s/,/ /g"); do
     msg "Retrieving secret ${key}"

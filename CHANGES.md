@@ -1,5 +1,13 @@
 # Changes
 
+## [0.74.0](https://github.com/googleapis/google-api-go-client/compare/v0.73.0...v0.74.0) (2022-03-30)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1495](https://github.com/googleapis/google-api-go-client/issues/1495) [#1492](https://github.com/googleapis/google-api-go-client/issues/1492) [#1490](https://github.com/googleapis/google-api-go-client/issues/1490) [#1489](https://github.com/googleapis/google-api-go-client/issues/1489) [#1488](https://github.com/googleapis/google-api-go-client/issues/1488) [#1486](https://github.com/googleapis/google-api-go-client/issues/1486) [#1483](https://github.com/googleapis/google-api-go-client/issues/1483) [#1480](https://github.com/googleapis/google-api-go-client/issues/1480)
+* re-enable playintegrity api generation ([#1482](https://github.com/googleapis/google-api-go-client/issues/1482)) ([d1de029](https://github.com/googleapis/google-api-go-client/commit/d1de029b37b7170628ca308874aad0c5b62bb6ff)), refs [#1479](https://github.com/googleapis/google-api-go-client/issues/1479)
+
 ## [0.73.0](https://github.com/googleapis/google-api-go-client/compare/v0.72.0...v0.73.0) (2022-03-15)
 
 

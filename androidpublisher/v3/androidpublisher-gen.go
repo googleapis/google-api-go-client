@@ -4177,6 +4177,14 @@ func (r *ApplicationsDeviceTierConfigsService) Create(packageName string, device
 	return c
 }
 
+// AllowUnknownDevices sets the optional parameter
+// "allowUnknownDevices": Whether the service should accept device IDs
+// that are unknown to Play's device catalog.
+func (c *ApplicationsDeviceTierConfigsCreateCall) AllowUnknownDevices(allowUnknownDevices bool) *ApplicationsDeviceTierConfigsCreateCall {
+	c.urlParams_.Set("allowUnknownDevices", fmt.Sprint(allowUnknownDevices))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4276,6 +4284,11 @@ func (c *ApplicationsDeviceTierConfigsCreateCall) Do(opts ...googleapi.CallOptio
 	//     "packageName"
 	//   ],
 	//   "parameters": {
+	//     "allowUnknownDevices": {
+	//       "description": "Whether the service should accept device IDs that are unknown to Play's device catalog.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "packageName": {
 	//       "description": "Package name of the app.",
 	//       "location": "path",

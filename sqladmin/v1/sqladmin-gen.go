@@ -784,6 +784,10 @@ type ConnectSettings struct {
 	// minor version is 18.
 	//   "MYSQL_8_0_26" - The database major version is MySQL 8.0 and the
 	// minor version is 26.
+	//   "MYSQL_8_0_27" - The database major version is MySQL 8.0 and the
+	// minor version is 27.
+	//   "MYSQL_8_0_28" - The database major version is MySQL 8.0 and the
+	// minor version is 28.
 	//   "POSTGRES_13" - The database version is PostgreSQL 13.
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
@@ -1000,6 +1004,10 @@ type DatabaseInstance struct {
 	// minor version is 18.
 	//   "MYSQL_8_0_26" - The database major version is MySQL 8.0 and the
 	// minor version is 26.
+	//   "MYSQL_8_0_27" - The database major version is MySQL 8.0 and the
+	// minor version is 27.
+	//   "MYSQL_8_0_28" - The database major version is MySQL 8.0 and the
+	// minor version is 28.
 	//   "POSTGRES_13" - The database version is PostgreSQL 13.
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
@@ -1768,6 +1776,10 @@ type Flag struct {
 	// minor version is 18.
 	//   "MYSQL_8_0_26" - The database major version is MySQL 8.0 and the
 	// minor version is 26.
+	//   "MYSQL_8_0_27" - The database major version is MySQL 8.0 and the
+	// minor version is 27.
+	//   "MYSQL_8_0_28" - The database major version is MySQL 8.0 and the
+	// minor version is 28.
 	//   "POSTGRES_13" - The database version is PostgreSQL 13.
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
@@ -3188,6 +3200,9 @@ type PasswordValidationPolicy struct {
 	// DisallowUsernameSubstring: Disallow username as a part of the
 	// password.
 	DisallowUsernameSubstring bool `json:"disallowUsernameSubstring,omitempty"`
+
+	// EnablePasswordPolicy: Whether the password policy is enabled or not.
+	EnablePasswordPolicy bool `json:"enablePasswordPolicy,omitempty"`
 
 	// MinLength: Minimum number of characters allowed.
 	MinLength int64 `json:"minLength,omitempty"`

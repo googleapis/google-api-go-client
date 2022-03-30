@@ -2051,7 +2051,7 @@ type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta1DocumentTextAnchor `json:"textAnchor,omitempty"`
 
-	// Type: Required. Entity type from a schema e.g. `Address`.
+	// Type: Entity type from a schema e.g. `Address`.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -3975,7 +3975,7 @@ type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta2DocumentTextAnchor `json:"textAnchor,omitempty"`
 
-	// Type: Required. Entity type from a schema e.g. `Address`.
+	// Type: Entity type from a schema e.g. `Address`.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -6375,7 +6375,7 @@ type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
 	// into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta3DocumentTextAnchor `json:"textAnchor,omitempty"`
 
-	// Type: Required. Entity type from a schema e.g. `Address`.
+	// Type: Entity type from a schema e.g. `Address`.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -8492,10 +8492,6 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 
 	// DisplayName: The display name of the processor version.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// GoogleManaged: Denotes that this ProcessorVersion is managed by
-	// google.
-	GoogleManaged bool `json:"googleManaged,omitempty"`
 
 	// KmsKeyName: The KMS key name used for encryption.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`

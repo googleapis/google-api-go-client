@@ -3765,6 +3765,11 @@ type GoogleCloudDialogflowCxV3beta1Agent struct {
 	// for the agent. Please use agent.advanced_settings instead.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
 
+	// Locked: Indiciates whether the agent is locked for changes. If the
+	// agent is locked, modifications to the agent will be rejected except
+	// for RestoreAgent.
+	Locked bool `json:"locked,omitempty"`
+
 	// Name: The unique identifier of the agent. Required for the
 	// Agents.UpdateAgent method. Agents.CreateAgent populates the name
 	// automatically. Format: `projects//locations//agents/`.
@@ -5545,6 +5550,14 @@ type GoogleCloudDialogflowCxV3beta1ExportAgentRequest struct {
 	// object. For more information, see Dialogflow access control
 	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	AgentUri string `json:"agentUri,omitempty"`
+
+	// DataFormat: Optional. The data format of the exported agent. If not
+	// specified, `BLOB` is assumed.
+	//
+	// Possible values:
+	//   "DATA_FORMAT_UNSPECIFIED" - Unspecified format.
+	//   "BLOB" - Agent content will be exported as raw bytes.
+	DataFormat string `json:"dataFormat,omitempty"`
 
 	// Environment: Optional. Environment name. If not set, draft
 	// environment is assumed. Format:
@@ -17483,10 +17496,11 @@ type GoogleCloudDialogflowV2beta1IntentTrainingPhrase struct {
 	//   "EXAMPLE" - Examples do not contain @-prefixed entity type names,
 	// but example parts can be annotated with entity types.
 	//   "TEMPLATE" - Templates are not annotated with entity types, but
-	// they can contain @-prefixed entity type names as substrings. Template
-	// mode has been deprecated. Example mode is the only supported way to
-	// create new training phrases. If you have existing training phrases
-	// that you've created in template mode, those will continue to work.
+	// they can contain @-prefixed entity type names as substrings. Note:
+	// Template mode has been deprecated. Example mode is the only supported
+	// way to create new training phrases. If you have existing training
+	// phrases in template mode, they will be removed during training and it
+	// can cause a drop in agent performance.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -18990,8 +19004,7 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
 // method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); } The JSON representation for
-// `Empty` is empty JSON object `{}`.
+// returns (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

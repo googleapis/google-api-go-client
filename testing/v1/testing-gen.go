@@ -2993,7 +2993,7 @@ type TestTargetsForShard struct {
 	// run for each shard. The targets need to be specified in
 	// AndroidJUnitRunner argument format. For example, "package
 	// com.my.packages" "class com.my.package.MyClass". The number of
-	// shard_test_targets must be greater than 0.
+	// test_targets must be greater than 0.
 	TestTargets []string `json:"testTargets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestTargets") to

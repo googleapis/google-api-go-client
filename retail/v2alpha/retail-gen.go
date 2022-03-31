@@ -619,6 +619,19 @@ type GoogleCloudRetailV2AddFulfillmentPlacesMetadata struct {
 type GoogleCloudRetailV2AddFulfillmentPlacesResponse struct {
 }
 
+// GoogleCloudRetailV2AddLocalInventoriesMetadata: Metadata related to
+// the progress of the AddLocalInventories operation. Currently empty
+// because there is no meaningful metadata populated from the
+// AddLocalInventories method.
+type GoogleCloudRetailV2AddLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2AddLocalInventoriesResponse: Response of the
+// AddLocalInventories API. Currently empty because there is no
+// meaningful response populated from the AddLocalInventories method.
+type GoogleCloudRetailV2AddLocalInventoriesResponse struct {
+}
+
 // GoogleCloudRetailV2ImportCompletionDataResponse: Response of the
 // ImportCompletionDataRequest. If the long running operation is done,
 // this message is returned by the
@@ -900,6 +913,19 @@ type GoogleCloudRetailV2RemoveFulfillmentPlacesMetadata struct {
 // meaningful response populated from the RemoveFulfillmentPlaces
 // method.
 type GoogleCloudRetailV2RemoveFulfillmentPlacesResponse struct {
+}
+
+// GoogleCloudRetailV2RemoveLocalInventoriesMetadata: Metadata related
+// to the progress of the RemoveLocalInventories operation. Currently
+// empty because there is no meaningful metadata populated from the
+// RemoveLocalInventories method.
+type GoogleCloudRetailV2RemoveLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2RemoveLocalInventoriesResponse: Response of the
+// RemoveLocalInventories API. Currently empty because there is no
+// meaningful response populated from the RemoveLocalInventories method.
+type GoogleCloudRetailV2RemoveLocalInventoriesResponse struct {
 }
 
 // GoogleCloudRetailV2SetInventoryMetadata: Metadata related to the
@@ -2556,10 +2582,7 @@ type GoogleCloudRetailV2alphaImportProductsRequest struct {
 	// regions in United States)", otherwise a PERMISSION_DENIED error is
 	// thrown. Add the IAM permission "BigQuery Data Viewer" for
 	// cloud-retail-customer-data-access@system.gserviceaccount.com before
-	// using this feature otherwise an error is thrown. This feature is only
-	// available for users who have Retail Search enabled. Please submit a
-	// form [here](https://cloud.google.com/contact) to contact cloud sales
-	// if you are interested in using Retail Search.
+	// using this feature otherwise an error is thrown.
 	ReconciliationMode string `json:"reconciliationMode,omitempty"`
 
 	// RequestId: Deprecated. This field has no effect.
@@ -2934,6 +2957,18 @@ type GoogleCloudRetailV2alphaLocalInventory struct {
 	// values per product is 5MiB.
 	Attributes map[string]GoogleCloudRetailV2alphaCustomAttribute `json:"attributes,omitempty"`
 
+	// FulfillmentTypes: Input only. Supported fulfillment types. Valid
+	// fulfillment type values include commonly used types (such as pickup
+	// in store and same day delivery), and custom types. Customers have to
+	// map custom types to their display names before rendering UI.
+	// Supported values: * "pickup-in-store" * "ship-to-store" *
+	// "same-day-delivery" * "next-day-delivery" * "custom-type-1" *
+	// "custom-type-2" * "custom-type-3" * "custom-type-4" * "custom-type-5"
+	// If this field is set to an invalid value other than these, an
+	// INVALID_ARGUMENT error is returned. All the elements must be
+	// distinct. Otherwise, an INVALID_ARGUMENT error is returned.
+	FulfillmentTypes []string `json:"fulfillmentTypes,omitempty"`
+
 	// PlaceId: The place ID for the current set of inventory information.
 	PlaceId string `json:"placeId,omitempty"`
 
@@ -2989,7 +3024,8 @@ type GoogleCloudRetailV2alphaMerchantCenterLink struct {
 	// attributes. Use language tags defined by BCP 47
 	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). ISO 639-1. This
 	// specifies the language of offers in Merchant Center that will be
-	// accepted. If empty no language filtering will be performed.
+	// accepted. If empty no language filtering will be performed. Example
+	// value: `en`.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// MerchantCenterAccountId: Required. The linked Merchant center account
@@ -4957,10 +4993,11 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// filter syntax.
 	CanonicalFilter string `json:"canonicalFilter,omitempty"`
 
-	// DynamicFacetSpec: The specification for dynamically generated facets.
-	// Notice that only textual facets can be dynamically generated. This
-	// feature requires additional allowlisting. Contact Retail Search
-	// support team if you are interested in using dynamic facet feature.
+	// DynamicFacetSpec: Deprecated. Refer to
+	// https://cloud.google.com/retail/docs/configs#dynamic to enable
+	// dynamic facets. Do not set this field. The specification for
+	// dynamically generated facets. Notice that only textual facets can be
+	// dynamically generated.
 	DynamicFacetSpec *GoogleCloudRetailV2alphaSearchRequestDynamicFacetSpec `json:"dynamicFacetSpec,omitempty"`
 
 	// FacetSpecs: Facet specifications for faceted search. If empty, no
@@ -6378,14 +6415,13 @@ type GoogleCloudRetailV2alphaUserInfo struct {
 	// UserEventService.CollectUserEvent.
 	DirectUserRequest bool `json:"directUserRequest,omitempty"`
 
-	// IpAddress: The end user's IP address. Required for getting
-	// SearchResponse.sponsored_results. This field is used to extract
+	// IpAddress: The end user's IP address. This field is used to extract
 	// location information for personalization. This field must be either
 	// an IPv4 address (e.g. "104.133.9.80") or an IPv6 address (e.g.
 	// "2001:0db8:85a3:0000:0000:8a2e:0370:7334"). Otherwise, an
-	// INVALID_ARGUMENT error is returned. This should not be set when using
-	// the JavaScript tag in UserEventService.CollectUserEvent or if
-	// direct_user_request is set.
+	// INVALID_ARGUMENT error is returned. This should not be set when: *
+	// setting SearchRequest.user_info. * using the JavaScript tag in
+	// UserEventService.CollectUserEvent or if direct_user_request is set.
 	IpAddress string `json:"ipAddress,omitempty"`
 
 	// UserAgent: User agent as included in the HTTP header. Required for
@@ -6397,9 +6433,9 @@ type GoogleCloudRetailV2alphaUserInfo struct {
 	UserAgent string `json:"userAgent,omitempty"`
 
 	// UserId: Highly recommended for logged-in users. Unique identifier for
-	// logged-in user, such as a user name. The field must be a UTF-8
-	// encoded string with a length limit of 128 characters. Otherwise, an
-	// INVALID_ARGUMENT error is returned.
+	// logged-in user, such as a user name. Always use a hashed value for
+	// this ID. The field must be a UTF-8 encoded string with a length limit
+	// of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.
 	UserId string `json:"userId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DirectUserRequest")
@@ -6437,6 +6473,19 @@ type GoogleCloudRetailV2betaAddFulfillmentPlacesMetadata struct {
 // AddFulfillmentPlacesRequest. Currently empty because there is no
 // meaningful response populated from the AddFulfillmentPlaces method.
 type GoogleCloudRetailV2betaAddFulfillmentPlacesResponse struct {
+}
+
+// GoogleCloudRetailV2betaAddLocalInventoriesMetadata: Metadata related
+// to the progress of the AddLocalInventories operation. Currently empty
+// because there is no meaningful metadata populated from the
+// AddLocalInventories method.
+type GoogleCloudRetailV2betaAddLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2betaAddLocalInventoriesResponse: Response of the
+// AddLocalInventories API. Currently empty because there is no
+// meaningful response populated from the AddLocalInventories method.
+type GoogleCloudRetailV2betaAddLocalInventoriesResponse struct {
 }
 
 // GoogleCloudRetailV2betaExportErrorsConfig: Configuration of
@@ -6862,6 +6911,19 @@ type GoogleCloudRetailV2betaRemoveFulfillmentPlacesMetadata struct {
 type GoogleCloudRetailV2betaRemoveFulfillmentPlacesResponse struct {
 }
 
+// GoogleCloudRetailV2betaRemoveLocalInventoriesMetadata: Metadata
+// related to the progress of the RemoveLocalInventories operation.
+// Currently empty because there is no meaningful metadata populated
+// from the RemoveLocalInventories method.
+type GoogleCloudRetailV2betaRemoveLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2betaRemoveLocalInventoriesResponse: Response of
+// the RemoveLocalInventories API. Currently empty because there is no
+// meaningful response populated from the RemoveLocalInventories method.
+type GoogleCloudRetailV2betaRemoveLocalInventoriesResponse struct {
+}
+
 // GoogleCloudRetailV2betaSetInventoryMetadata: Metadata related to the
 // progress of the SetInventory operation. Currently empty because there
 // is no meaningful metadata populated from the SetInventory method.
@@ -7124,9 +7186,8 @@ type ProjectsLocationsCatalogsCompleteQueryCall struct {
 
 // CompleteQuery: Completes the specified prefix with keyword
 // suggestions. This feature is only available for users who have Retail
-// Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// Search enabled. Please enable Retail Search on Cloud Console before
+// using this feature.
 //
 // - catalog: Catalog for which the completion is performed. Full
 //   resource name of catalog, such as
@@ -7305,7 +7366,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}:completeQuery",
 	//   "httpMethod": "GET",
 	//   "id": "retail.projects.locations.catalogs.completeQuery",
@@ -9278,9 +9339,8 @@ type ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall struct {
 // processed downstream. As a consequence, when a response is returned,
 // the added place IDs are not immediately manifested in the Product
 // queried by GetProduct or ListProducts. This feature is only available
-// for users who have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// for users who have Retail Search enabled. Please enable Retail Search
+// on Cloud Console before using this feature.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -9385,7 +9445,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Do(o
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.addFulfillmentPlaces",
@@ -9436,9 +9496,8 @@ type ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall struct {
 // GetProduct or ListProducts. Local inventory information can only be
 // modified using this method. CreateProduct and UpdateProduct has no
 // effect on local inventories. This feature is only available for users
-// who have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact Cloud sales if you are
-// interested in using Retail Search.
+// who have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -9543,7 +9602,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates local inventory information for a Product at a list of places, while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating inventory information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. Local inventory information can only be modified using this method. CreateProduct and UpdateProduct has no effect on local inventories. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact Cloud sales if you are interested in using Retail Search.",
+	//   "description": "Updates local inventory information for a Product at a list of places, while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating inventory information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. Local inventory information can only be modified using this method. CreateProduct and UpdateProduct has no effect on local inventories. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addLocalInventories",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.addLocalInventories",
@@ -10780,9 +10839,8 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall struct
 // processed downstream. As a consequence, when a response is returned,
 // the removed place IDs are not immediately manifested in the Product
 // queried by GetProduct or ListProducts. This feature is only available
-// for users who have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// for users who have Retail Search enabled. Please enable Retail Search
+// on Cloud Console before using this feature.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -10887,7 +10945,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.removeFulfillmentPlaces",
@@ -10937,8 +10995,7 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall struct 
 // can only be removed using this method. CreateProduct and
 // UpdateProduct has no effect on local inventories. This feature is
 // only available for users who have Retail Search enabled. Please
-// submit a form here (https://cloud.google.com/contact) to contact
-// Cloud sales if you are interested in using Retail Search.
+// enable Retail Search on Cloud Console before using this feature.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -11043,7 +11100,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) Do
 	}
 	return ret, nil
 	// {
-	//   "description": "Remove local inventory information for a Product at a list of places at a removal timestamp. This process is asynchronous. If the request is valid, the removal will be enqueued and processed downstream. As a consequence, when a response is returned, removals are not immediately manifested in the Product queried by GetProduct or ListProducts. Local inventory information can only be removed using this method. CreateProduct and UpdateProduct has no effect on local inventories. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact Cloud sales if you are interested in using Retail Search.",
+	//   "description": "Remove local inventory information for a Product at a list of places at a removal timestamp. This process is asynchronous. If the request is valid, the removal will be enqueued and processed downstream. As a consequence, when a response is returned, removals are not immediately manifested in the Product queried by GetProduct or ListProducts. Local inventory information can only be removed using this method. CreateProduct and UpdateProduct has no effect on local inventories. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeLocalInventories",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.removeLocalInventories",
@@ -11103,8 +11160,7 @@ type ProjectsLocationsCatalogsBranchesProductsSetInventoryCall struct {
 // inventory information can only be updated with SetInventory,
 // AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is
 // only available for users who have Retail Search enabled. Please
-// submit a form here (https://cloud.google.com/contact) to contact
-// cloud sales if you are interested in using Retail Search.
+// enable Retail Search on Cloud Console before using this feature.
 //
 // - name: Immutable. Full resource name of the product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -11207,7 +11263,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:setInventory",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.setInventory",
@@ -11253,9 +11309,8 @@ type ProjectsLocationsCatalogsCompletionDataImportCall struct {
 // operation is successfully finished only after the imported
 // suggestions are indexed successfully and ready for serving. The
 // process takes hours. This feature is only available for users who
-// have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
 //
 // - parent: The catalog which the suggestions dataset belongs to.
 //   Format: `projects/1234/locations/global/catalogs/default_catalog`.
@@ -11357,7 +11412,7 @@ func (c *ProjectsLocationsCatalogsCompletionDataImportCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk import of processed completion dataset. Request processing is asynchronous. Partial updating is not supported. The operation is successfully finished only after the imported suggestions are indexed successfully and ready for serving. The process takes hours. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Bulk import of processed completion dataset. Request processing is asynchronous. Partial updating is not supported. The operation is successfully finished only after the imported suggestions are indexed successfully and ready for serving. The process takes hours. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/completionData:import",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.completionData.import",
@@ -12727,9 +12782,8 @@ type ProjectsLocationsCatalogsPlacementsSearchCall struct {
 }
 
 // Search: Performs a search. This feature is only available for users
-// who have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// who have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
 //
 // - placement: The resource name of the search engine placement, such
 //   as
@@ -12838,7 +12892,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/placements/{placementsId}:search",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.placements.search",
@@ -14154,9 +14208,8 @@ type ProjectsLocationsCatalogsServingConfigsSearchCall struct {
 }
 
 // Search: Performs a search. This feature is only available for users
-// who have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// who have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
 //
 // - placement: The resource name of the search engine placement, such
 //   as
@@ -14265,7 +14318,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/servingConfigs/{servingConfigsId}:search",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.servingConfigs.search",

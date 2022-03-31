@@ -619,6 +619,19 @@ type GoogleCloudRetailV2AddFulfillmentPlacesMetadata struct {
 type GoogleCloudRetailV2AddFulfillmentPlacesResponse struct {
 }
 
+// GoogleCloudRetailV2AddLocalInventoriesMetadata: Metadata related to
+// the progress of the AddLocalInventories operation. Currently empty
+// because there is no meaningful metadata populated from the
+// AddLocalInventories method.
+type GoogleCloudRetailV2AddLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2AddLocalInventoriesResponse: Response of the
+// AddLocalInventories API. Currently empty because there is no
+// meaningful response populated from the AddLocalInventories method.
+type GoogleCloudRetailV2AddLocalInventoriesResponse struct {
+}
+
 // GoogleCloudRetailV2ImportCompletionDataResponse: Response of the
 // ImportCompletionDataRequest. If the long running operation is done,
 // this message is returned by the
@@ -900,6 +913,19 @@ type GoogleCloudRetailV2RemoveFulfillmentPlacesMetadata struct {
 // meaningful response populated from the RemoveFulfillmentPlaces
 // method.
 type GoogleCloudRetailV2RemoveFulfillmentPlacesResponse struct {
+}
+
+// GoogleCloudRetailV2RemoveLocalInventoriesMetadata: Metadata related
+// to the progress of the RemoveLocalInventories operation. Currently
+// empty because there is no meaningful metadata populated from the
+// RemoveLocalInventories method.
+type GoogleCloudRetailV2RemoveLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2RemoveLocalInventoriesResponse: Response of the
+// RemoveLocalInventories API. Currently empty because there is no
+// meaningful response populated from the RemoveLocalInventories method.
+type GoogleCloudRetailV2RemoveLocalInventoriesResponse struct {
 }
 
 // GoogleCloudRetailV2SetInventoryMetadata: Metadata related to the
@@ -1668,6 +1694,72 @@ func (s *GoogleCloudRetailV2betaAddFulfillmentPlacesRequest) MarshalJSON() ([]by
 // AddFulfillmentPlacesRequest. Currently empty because there is no
 // meaningful response populated from the AddFulfillmentPlaces method.
 type GoogleCloudRetailV2betaAddFulfillmentPlacesResponse struct {
+}
+
+// GoogleCloudRetailV2betaAddLocalInventoriesMetadata: Metadata related
+// to the progress of the AddLocalInventories operation. Currently empty
+// because there is no meaningful metadata populated from the
+// AddLocalInventories method.
+type GoogleCloudRetailV2betaAddLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2betaAddLocalInventoriesRequest: Request message
+// for AddLocalInventories method.
+type GoogleCloudRetailV2betaAddLocalInventoriesRequest struct {
+	// AddMask: Indicates which inventory fields in the provided list of
+	// LocalInventory to update. The field is updated to the provided value.
+	// If a field is set while the place does not have a previous local
+	// inventory, the local inventory at that store is created. If a field
+	// is set while the value of that field is not provided, the original
+	// field value, if it exists, is deleted. If the mask is not set or set
+	// with empty paths, all inventory fields will be updated. If an
+	// unsupported or unknown field is provided, an INVALID_ARGUMENT error
+	// is returned and the entire update will be ignored.
+	AddMask string `json:"addMask,omitempty"`
+
+	// AddTime: The time when the inventory updates are issued. Used to
+	// prevent out-of-order updates on local inventory fields. If not
+	// provided, the internal system time will be used.
+	AddTime string `json:"addTime,omitempty"`
+
+	// AllowMissing: If set to true, and the Product is not found, the local
+	// inventory will still be processed and retained for at most 1 day and
+	// processed once the Product is created. If set to false, a NOT_FOUND
+	// error is returned if the Product is not found.
+	AllowMissing bool `json:"allowMissing,omitempty"`
+
+	// LocalInventories: Required. A list of inventory information at
+	// difference places. Each place is identified by its place ID. At most
+	// 3000 inventories are allowed per request.
+	LocalInventories []*GoogleCloudRetailV2betaLocalInventory `json:"localInventories,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddMask") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AddMask") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaAddLocalInventoriesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaAddLocalInventoriesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaAddLocalInventoriesResponse: Response of the
+// AddLocalInventories API. Currently empty because there is no
+// meaningful response populated from the AddLocalInventories method.
+type GoogleCloudRetailV2betaAddLocalInventoriesResponse struct {
 }
 
 // GoogleCloudRetailV2betaAttributesConfig: Catalog level attribute
@@ -3077,10 +3169,7 @@ type GoogleCloudRetailV2betaImportProductsRequest struct {
 	// regions in United States)", otherwise a PERMISSION_DENIED error is
 	// thrown. Add the IAM permission "BigQuery Data Viewer" for
 	// cloud-retail-customer-data-access@system.gserviceaccount.com before
-	// using this feature otherwise an error is thrown. This feature is only
-	// available for users who have Retail Search enabled. Please submit a
-	// form [here](https://cloud.google.com/contact) to contact cloud sales
-	// if you are interested in using Retail Search.
+	// using this feature otherwise an error is thrown.
 	ReconciliationMode string `json:"reconciliationMode,omitempty"`
 
 	// RequestId: Deprecated. This field has no effect.
@@ -3431,6 +3520,65 @@ func (s *GoogleCloudRetailV2betaListServingConfigsResponse) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaLocalInventory: The inventory information at a
+// place (e.g. a store) identified by a place ID.
+type GoogleCloudRetailV2betaLocalInventory struct {
+	// Attributes: Additional local inventory attributes, for example, store
+	// name, promotion tags, etc. This field needs to pass all below
+	// criteria, otherwise an INVALID_ARGUMENT error is returned: * At most
+	// 30 attributes are allowed. * The key must be a UTF-8 encoded string
+	// with a length limit of 32 characters. * The key must match the
+	// pattern: `a-zA-Z0-9*`. For example, key0LikeThis or KEY_1_LIKE_THIS.
+	// * The attribute values must be of the same type (text or number). *
+	// Only 1 value is allowed for each attribute. * For text values, the
+	// length limit is 256 UTF-8 characters. * The attribute does not
+	// support search. The `searchable` field should be unset or set to
+	// false. * The max summed total bytes of custom attribute keys and
+	// values per product is 5MiB.
+	Attributes map[string]GoogleCloudRetailV2betaCustomAttribute `json:"attributes,omitempty"`
+
+	// FulfillmentTypes: Input only. Supported fulfillment types. Valid
+	// fulfillment type values include commonly used types (such as pickup
+	// in store and same day delivery), and custom types. Customers have to
+	// map custom types to their display names before rendering UI.
+	// Supported values: * "pickup-in-store" * "ship-to-store" *
+	// "same-day-delivery" * "next-day-delivery" * "custom-type-1" *
+	// "custom-type-2" * "custom-type-3" * "custom-type-4" * "custom-type-5"
+	// If this field is set to an invalid value other than these, an
+	// INVALID_ARGUMENT error is returned. All the elements must be
+	// distinct. Otherwise, an INVALID_ARGUMENT error is returned.
+	FulfillmentTypes []string `json:"fulfillmentTypes,omitempty"`
+
+	// PlaceId: The place ID for the current set of inventory information.
+	PlaceId string `json:"placeId,omitempty"`
+
+	// PriceInfo: Product price and cost information. Google Merchant Center
+	// property price (https://support.google.com/merchants/answer/6324371).
+	PriceInfo *GoogleCloudRetailV2betaPriceInfo `json:"priceInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attributes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaLocalInventory) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaLocalInventory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaMerchantCenterLink: Represents a link between
 // a Merchant Center account and a branch. Once a link is established,
 // products from the linked merchant center account will be streamed to
@@ -3456,7 +3604,8 @@ type GoogleCloudRetailV2betaMerchantCenterLink struct {
 	// attributes. Use language tags defined by BCP 47
 	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). ISO 639-1. This
 	// specifies the language of offers in Merchant Center that will be
-	// accepted. If empty no language filtering will be performed.
+	// accepted. If empty no language filtering will be performed. Example
+	// value: `en`.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// MerchantCenterAccountId: Required. The linked Merchant center account
@@ -4800,6 +4949,60 @@ func (s *GoogleCloudRetailV2betaRemoveFulfillmentPlacesRequest) MarshalJSON() ([
 type GoogleCloudRetailV2betaRemoveFulfillmentPlacesResponse struct {
 }
 
+// GoogleCloudRetailV2betaRemoveLocalInventoriesMetadata: Metadata
+// related to the progress of the RemoveLocalInventories operation.
+// Currently empty because there is no meaningful metadata populated
+// from the RemoveLocalInventories method.
+type GoogleCloudRetailV2betaRemoveLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2betaRemoveLocalInventoriesRequest: Request message
+// for RemoveLocalInventories method.
+type GoogleCloudRetailV2betaRemoveLocalInventoriesRequest struct {
+	// AllowMissing: If set to true, and the Product is not found, the local
+	// inventory removal request will still be processed and retained for at
+	// most 1 day and processed once the Product is created. If set to
+	// false, a NOT_FOUND error is returned if the Product is not found.
+	AllowMissing bool `json:"allowMissing,omitempty"`
+
+	// PlaceIds: Required. A list of place IDs to have their inventory
+	// deleted. At most 3000 place IDs are allowed per request.
+	PlaceIds []string `json:"placeIds,omitempty"`
+
+	// RemoveTime: The time when the inventory deletions are issued. Used to
+	// prevent out-of-order updates and deletions on local inventory fields.
+	// If not provided, the internal system time will be used.
+	RemoveTime string `json:"removeTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowMissing") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaRemoveLocalInventoriesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaRemoveLocalInventoriesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaRemoveLocalInventoriesResponse: Response of
+// the RemoveLocalInventories API. Currently empty because there is no
+// meaningful response populated from the RemoveLocalInventories method.
+type GoogleCloudRetailV2betaRemoveLocalInventoriesResponse struct {
+}
+
 // GoogleCloudRetailV2betaReplaceCatalogAttributeRequest: Request for
 // CatalogService.ReplaceCatalogAttribute method.
 type GoogleCloudRetailV2betaReplaceCatalogAttributeRequest struct {
@@ -5241,10 +5444,11 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// filter syntax.
 	CanonicalFilter string `json:"canonicalFilter,omitempty"`
 
-	// DynamicFacetSpec: The specification for dynamically generated facets.
-	// Notice that only textual facets can be dynamically generated. This
-	// feature requires additional allowlisting. Contact Retail Search
-	// support team if you are interested in using dynamic facet feature.
+	// DynamicFacetSpec: Deprecated. Refer to
+	// https://cloud.google.com/retail/docs/configs#dynamic to enable
+	// dynamic facets. Do not set this field. The specification for
+	// dynamically generated facets. Notice that only textual facets can be
+	// dynamically generated.
 	DynamicFacetSpec *GoogleCloudRetailV2betaSearchRequestDynamicFacetSpec `json:"dynamicFacetSpec,omitempty"`
 
 	// FacetSpecs: Facet specifications for faceted search. If empty, no
@@ -6646,14 +6850,13 @@ type GoogleCloudRetailV2betaUserInfo struct {
 	// UserEventService.CollectUserEvent.
 	DirectUserRequest bool `json:"directUserRequest,omitempty"`
 
-	// IpAddress: The end user's IP address. Required for getting
-	// SearchResponse.sponsored_results. This field is used to extract
+	// IpAddress: The end user's IP address. This field is used to extract
 	// location information for personalization. This field must be either
 	// an IPv4 address (e.g. "104.133.9.80") or an IPv6 address (e.g.
 	// "2001:0db8:85a3:0000:0000:8a2e:0370:7334"). Otherwise, an
-	// INVALID_ARGUMENT error is returned. This should not be set when using
-	// the JavaScript tag in UserEventService.CollectUserEvent or if
-	// direct_user_request is set.
+	// INVALID_ARGUMENT error is returned. This should not be set when: *
+	// setting SearchRequest.user_info. * using the JavaScript tag in
+	// UserEventService.CollectUserEvent or if direct_user_request is set.
 	IpAddress string `json:"ipAddress,omitempty"`
 
 	// UserAgent: User agent as included in the HTTP header. Required for
@@ -6665,9 +6868,9 @@ type GoogleCloudRetailV2betaUserInfo struct {
 	UserAgent string `json:"userAgent,omitempty"`
 
 	// UserId: Highly recommended for logged-in users. Unique identifier for
-	// logged-in user, such as a user name. The field must be a UTF-8
-	// encoded string with a length limit of 128 characters. Otherwise, an
-	// INVALID_ARGUMENT error is returned.
+	// logged-in user, such as a user name. Always use a hashed value for
+	// this ID. The field must be a UTF-8 encoded string with a length limit
+	// of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.
 	UserId string `json:"userId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DirectUserRequest")
@@ -6908,9 +7111,8 @@ type ProjectsLocationsCatalogsCompleteQueryCall struct {
 
 // CompleteQuery: Completes the specified prefix with keyword
 // suggestions. This feature is only available for users who have Retail
-// Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// Search enabled. Please enable Retail Search on Cloud Console before
+// using this feature.
 //
 // - catalog: Catalog for which the completion is performed. Full
 //   resource name of catalog, such as
@@ -7089,7 +7291,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}:completeQuery",
 	//   "httpMethod": "GET",
 	//   "id": "retail.projects.locations.catalogs.completeQuery",
@@ -9055,9 +9257,8 @@ type ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall struct {
 // processed downstream. As a consequence, when a response is returned,
 // the added place IDs are not immediately manifested in the Product
 // queried by GetProduct or ListProducts. This feature is only available
-// for users who have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// for users who have Retail Search enabled. Please enable Retail Search
+// on Cloud Console before using this feature.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -9162,7 +9363,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Do(o
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.addFulfillmentPlaces",
@@ -9181,6 +9382,163 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Do(o
 	//   "path": "v2beta/{+product}:addFulfillmentPlaces",
 	//   "request": {
 	//     "$ref": "GoogleCloudRetailV2betaAddFulfillmentPlacesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.locations.catalogs.branches.products.addLocalInventories":
+
+type ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall struct {
+	s                                                 *Service
+	product                                           string
+	googlecloudretailv2betaaddlocalinventoriesrequest *GoogleCloudRetailV2betaAddLocalInventoriesRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// AddLocalInventories: Updates local inventory information for a
+// Product at a list of places, while respecting the last update
+// timestamps of each inventory field. This process is asynchronous and
+// does not require the Product to exist before updating inventory
+// information. If the request is valid, the update will be enqueued and
+// processed downstream. As a consequence, when a response is returned,
+// updates are not immediately manifested in the Product queried by
+// GetProduct or ListProducts. Local inventory information can only be
+// modified using this method. CreateProduct and UpdateProduct has no
+// effect on local inventories. This feature is only available for users
+// who have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
+//
+// - product: Full resource name of Product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/some_product_id`. If the caller does not have
+//   permission to access the Product, regardless of whether or not it
+//   exists, a PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsCatalogsBranchesProductsService) AddLocalInventories(product string, googlecloudretailv2betaaddlocalinventoriesrequest *GoogleCloudRetailV2betaAddLocalInventoriesRequest) *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall {
+	c := &ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.product = product
+	c.googlecloudretailv2betaaddlocalinventoriesrequest = googlecloudretailv2betaaddlocalinventoriesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) Context(ctx context.Context) *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaaddlocalinventoriesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+product}:addLocalInventories")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"product": c.product,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.branches.products.addLocalInventories" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates local inventory information for a Product at a list of places, while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating inventory information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. Local inventory information can only be modified using this method. CreateProduct and UpdateProduct has no effect on local inventories. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
+	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addLocalInventories",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.locations.catalogs.branches.products.addLocalInventories",
+	//   "parameterOrder": [
+	//     "product"
+	//   ],
+	//   "parameters": {
+	//     "product": {
+	//       "description": "Required. Full resource name of Product, such as `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`. If the caller does not have permission to access the Product, regardless of whether or not it exists, a PERMISSION_DENIED error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/branches/[^/]+/products/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta/{+product}:addLocalInventories",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2betaAddLocalInventoriesRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
@@ -10233,9 +10591,8 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall struct
 // processed downstream. As a consequence, when a response is returned,
 // the removed place IDs are not immediately manifested in the Product
 // queried by GetProduct or ListProducts. This feature is only available
-// for users who have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// for users who have Retail Search enabled. Please enable Retail Search
+// on Cloud Console before using this feature.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -10340,7 +10697,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.removeFulfillmentPlaces",
@@ -10359,6 +10716,161 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) D
 	//   "path": "v2beta/{+product}:removeFulfillmentPlaces",
 	//   "request": {
 	//     "$ref": "GoogleCloudRetailV2betaRemoveFulfillmentPlacesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.locations.catalogs.branches.products.removeLocalInventories":
+
+type ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall struct {
+	s                                                    *Service
+	product                                              string
+	googlecloudretailv2betaremovelocalinventoriesrequest *GoogleCloudRetailV2betaRemoveLocalInventoriesRequest
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// RemoveLocalInventories: Remove local inventory information for a
+// Product at a list of places at a removal timestamp. This process is
+// asynchronous. If the request is valid, the removal will be enqueued
+// and processed downstream. As a consequence, when a response is
+// returned, removals are not immediately manifested in the Product
+// queried by GetProduct or ListProducts. Local inventory information
+// can only be removed using this method. CreateProduct and
+// UpdateProduct has no effect on local inventories. This feature is
+// only available for users who have Retail Search enabled. Please
+// enable Retail Search on Cloud Console before using this feature.
+//
+// - product: Full resource name of Product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/some_product_id`. If the caller does not have
+//   permission to access the Product, regardless of whether or not it
+//   exists, a PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsCatalogsBranchesProductsService) RemoveLocalInventories(product string, googlecloudretailv2betaremovelocalinventoriesrequest *GoogleCloudRetailV2betaRemoveLocalInventoriesRequest) *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall {
+	c := &ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.product = product
+	c.googlecloudretailv2betaremovelocalinventoriesrequest = googlecloudretailv2betaremovelocalinventoriesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) Context(ctx context.Context) *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaremovelocalinventoriesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+product}:removeLocalInventories")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"product": c.product,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.branches.products.removeLocalInventories" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Remove local inventory information for a Product at a list of places at a removal timestamp. This process is asynchronous. If the request is valid, the removal will be enqueued and processed downstream. As a consequence, when a response is returned, removals are not immediately manifested in the Product queried by GetProduct or ListProducts. Local inventory information can only be removed using this method. CreateProduct and UpdateProduct has no effect on local inventories. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
+	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeLocalInventories",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.locations.catalogs.branches.products.removeLocalInventories",
+	//   "parameterOrder": [
+	//     "product"
+	//   ],
+	//   "parameters": {
+	//     "product": {
+	//       "description": "Required. Full resource name of Product, such as `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`. If the caller does not have permission to access the Product, regardless of whether or not it exists, a PERMISSION_DENIED error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/branches/[^/]+/products/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta/{+product}:removeLocalInventories",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2betaRemoveLocalInventoriesRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
@@ -10400,8 +10912,7 @@ type ProjectsLocationsCatalogsBranchesProductsSetInventoryCall struct {
 // inventory information can only be updated with SetInventory,
 // AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is
 // only available for users who have Retail Search enabled. Please
-// submit a form here (https://cloud.google.com/contact) to contact
-// cloud sales if you are interested in using Retail Search.
+// enable Retail Search on Cloud Console before using this feature.
 //
 // - name: Immutable. Full resource name of the product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -10504,7 +11015,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:setInventory",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.setInventory",
@@ -10550,9 +11061,8 @@ type ProjectsLocationsCatalogsCompletionDataImportCall struct {
 // operation is successfully finished only after the imported
 // suggestions are indexed successfully and ready for serving. The
 // process takes hours. This feature is only available for users who
-// have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
 //
 // - parent: The catalog which the suggestions dataset belongs to.
 //   Format: `projects/1234/locations/global/catalogs/default_catalog`.
@@ -10654,7 +11164,7 @@ func (c *ProjectsLocationsCatalogsCompletionDataImportCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk import of processed completion dataset. Request processing is asynchronous. Partial updating is not supported. The operation is successfully finished only after the imported suggestions are indexed successfully and ready for serving. The process takes hours. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Bulk import of processed completion dataset. Request processing is asynchronous. Partial updating is not supported. The operation is successfully finished only after the imported suggestions are indexed successfully and ready for serving. The process takes hours. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/completionData:import",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.completionData.import",
@@ -12024,9 +12534,8 @@ type ProjectsLocationsCatalogsPlacementsSearchCall struct {
 }
 
 // Search: Performs a search. This feature is only available for users
-// who have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// who have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
 //
 // - placement: The resource name of the search engine placement, such
 //   as
@@ -12135,7 +12644,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/placements/{placementsId}:search",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.placements.search",
@@ -13451,9 +13960,8 @@ type ProjectsLocationsCatalogsServingConfigsSearchCall struct {
 }
 
 // Search: Performs a search. This feature is only available for users
-// who have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// who have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
 //
 // - placement: The resource name of the search engine placement, such
 //   as
@@ -13562,7 +14070,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/servingConfigs/{servingConfigsId}:search",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.servingConfigs.search",

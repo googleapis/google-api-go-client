@@ -2127,6 +2127,10 @@ type Dataset struct {
 	// https://cloud.google.com/bigquery/docs/locations.
 	Location string `json:"location,omitempty"`
 
+	// MaxTimeTravelHours: [Optional] Number of hours for the max time
+	// travel for all tables in the dataset.
+	MaxTimeTravelHours int64 `json:"maxTimeTravelHours,omitempty,string"`
+
 	// SatisfiesPZS: [Output-only] Reserved for future use.
 	SatisfiesPZS bool `json:"satisfiesPZS,omitempty"`
 

@@ -973,6 +973,13 @@ func (c *ProjectsLocationsInstancesListCall) PageToken(pageToken string) *Projec
 	return c
 }
 
+// ShowDeleted sets the optional parameter "showDeleted": Indicate that
+// DatabaseInstances in the `DELETED` state should also be returned.
+func (c *ProjectsLocationsInstancesListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsInstancesListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1097,6 +1104,11 @@ func (c *ProjectsLocationsInstancesListCall) Do(opts ...googleapi.CallOption) (*
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Indicate that DatabaseInstances in the `DELETED` state should also be returned.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1beta/{+parent}/instances",

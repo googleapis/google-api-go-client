@@ -441,6 +441,9 @@ type CloneJob struct {
 	// API call, not when it was actually created in the target).
 	CreateTime string `json:"createTime,omitempty"`
 
+	// EndTime: Output only. The time the clone job was ended.
+	EndTime string `json:"endTime,omitempty"`
+
 	// Error: Output only. Provides details for the errors that led to the
 	// Clone Job's state.
 	Error *Status `json:"error,omitempty"`
@@ -782,6 +785,9 @@ type CutoverJob struct {
 	// API call, not when it was actually created in the target).
 	CreateTime string `json:"createTime,omitempty"`
 
+	// EndTime: Output only. The time the cutover job had finished.
+	EndTime string `json:"endTime,omitempty"`
+
 	// Error: Output only. Provides details for the errors that led to the
 	// Cutover Job's state.
 	Error *Status `json:"error,omitempty"`
@@ -953,8 +959,7 @@ func (s *DatacenterConnector) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

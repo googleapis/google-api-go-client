@@ -353,8 +353,7 @@ type QueryRequest struct {
 	// Metrics: The metrics that should be included in the response. If none
 	// are specified then any metrics found will be returned. Allowed
 	// values: ["first_contentful_paint", "first_input_delay",
-	// "largest_contentful_paint", "cumulative_layout_shift",
-	// "experimental_uncapped_cumulative_layout_shift"]
+	// "largest_contentful_paint", "cumulative_layout_shift"]
 	Metrics []string `json:"metrics,omitempty"`
 
 	// Origin: The url pattern "origin" refers to a url pattern that is the

@@ -1386,10 +1386,10 @@ type EncryptRequest struct {
 	// AdditionalAuthenticatedData: Optional. Optional data that, if
 	// specified, must also be provided during decryption through
 	// DecryptRequest.additional_authenticated_data. The maximum size
-	// depends on the key version's protection_level. For SOFTWARE keys, the
-	// AAD must be no larger than 64KiB. For HSM keys, the combined length
-	// of the plaintext and additional_authenticated_data fields must be no
-	// larger than 8KiB.
+	// depends on the key version's protection_level. For SOFTWARE,
+	// EXTERNAL, and EXTERNAL_VPC keys the AAD must be no larger than 64KiB.
+	// For HSM keys, the combined length of the plaintext and
+	// additional_authenticated_data fields must be no larger than 8KiB.
 	AdditionalAuthenticatedData string `json:"additionalAuthenticatedData,omitempty"`
 
 	// AdditionalAuthenticatedDataCrc32c: Optional. An optional CRC32C
@@ -1411,9 +1411,10 @@ type EncryptRequest struct {
 
 	// Plaintext: Required. The data to encrypt. Must be no larger than
 	// 64KiB. The maximum size depends on the key version's
-	// protection_level. For SOFTWARE keys, the plaintext must be no larger
-	// than 64KiB. For HSM keys, the combined length of the plaintext and
-	// additional_authenticated_data fields must be no larger than 8KiB.
+	// protection_level. For SOFTWARE, EXTERNAL, and EXTERNAL_VPC keys, the
+	// plaintext must be no larger than 64KiB. For HSM keys, the combined
+	// length of the plaintext and additional_authenticated_data fields must
+	// be no larger than 8KiB.
 	Plaintext string `json:"plaintext,omitempty"`
 
 	// PlaintextCrc32c: Optional. An optional CRC32C checksum of the

@@ -1868,8 +1868,7 @@ func (c *ProjectsLocationsKeysListCall) PageToken(pageToken string) *ProjectsLoc
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Indicate that
-// keys are marked as deleted within 30 days should also be returned.
-// Normally only active keys are returned.
+// keys deleted in the past 30 days should also be returned.
 func (c *ProjectsLocationsKeysListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsKeysListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
@@ -2006,7 +2005,7 @@ func (c *ProjectsLocationsKeysListCall) Do(opts ...googleapi.CallOption) (*V2Lis
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Optional. Indicate that keys are marked as deleted within 30 days should also be returned. Normally only active keys are returned.",
+	//       "description": "Optional. Indicate that keys deleted in the past 30 days should also be returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

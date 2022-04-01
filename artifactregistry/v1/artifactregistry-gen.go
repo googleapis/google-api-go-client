@@ -275,6 +275,59 @@ type ProjectsLocationsRepositoriesYumArtifactsService struct {
 	s *Service
 }
 
+// AptArtifact: A detailed representation of an Apt artifact.
+// Information in the record is derived from the archive's control file.
+// See https://www.debian.org/doc/debian-policy/ch-controlfields.html
+type AptArtifact struct {
+	// Architecture: Output only. Operating system architecture of the
+	// artifact.
+	Architecture string `json:"architecture,omitempty"`
+
+	// Component: Output only. Repository component of the artifact.
+	Component string `json:"component,omitempty"`
+
+	// ControlFile: Output only. Contents of the artifact's control metadata
+	// file.
+	ControlFile string `json:"controlFile,omitempty"`
+
+	// Name: Output only. The Artifact Registry resource name of the
+	// artifact.
+	Name string `json:"name,omitempty"`
+
+	// PackageName: Output only. The Apt package name of the artifact.
+	PackageName string `json:"packageName,omitempty"`
+
+	// PackageType: Output only. An artifact is a binary or source package.
+	//
+	// Possible values:
+	//   "PACKAGE_TYPE_UNSPECIFIED" - Package type is not specified.
+	//   "BINARY" - Binary package.
+	//   "SOURCE" - Source package.
+	PackageType string `json:"packageType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Architecture") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AptArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod AptArtifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -422,8 +475,7 @@ func (s *DockerImage) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -577,6 +629,38 @@ func (s *Hash) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportAptArtifactsErrorInfo: Error information explaining why a
+// package was not imported.
+type ImportAptArtifactsErrorInfo struct {
+	// Error: The detailed error status.
+	Error *Status `json:"error,omitempty"`
+
+	// GcsSource: Google Cloud Storage location requested.
+	GcsSource *ImportAptArtifactsGcsSource `json:"gcsSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Error") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportAptArtifactsErrorInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportAptArtifactsErrorInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ImportAptArtifactsGcsSource: Google Cloud Storage location where the
 // artifacts currently reside.
 type ImportAptArtifactsGcsSource struct {
@@ -610,6 +694,11 @@ func (s *ImportAptArtifactsGcsSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportAptArtifactsMetadata: The operation metadata for importing
+// artifacts.
+type ImportAptArtifactsMetadata struct {
+}
+
 // ImportAptArtifactsRequest: The request to import new apt artifacts.
 type ImportAptArtifactsRequest struct {
 	// GcsSource: Google Cloud Storage location where input content is
@@ -635,6 +724,70 @@ type ImportAptArtifactsRequest struct {
 
 func (s *ImportAptArtifactsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAptArtifactsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImportAptArtifactsResponse: The response message from importing APT
+// artifacts.
+type ImportAptArtifactsResponse struct {
+	// AptArtifacts: The Apt artifacts imported.
+	AptArtifacts []*AptArtifact `json:"aptArtifacts,omitempty"`
+
+	// Errors: Detailed error info for packages that were not imported.
+	Errors []*ImportAptArtifactsErrorInfo `json:"errors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AptArtifacts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AptArtifacts") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportAptArtifactsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportAptArtifactsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImportYumArtifactsErrorInfo: Error information explaining why a
+// package was not imported.
+type ImportYumArtifactsErrorInfo struct {
+	// Error: The detailed error status.
+	Error *Status `json:"error,omitempty"`
+
+	// GcsSource: Google Cloud Storage location requested.
+	GcsSource *ImportYumArtifactsGcsSource `json:"gcsSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Error") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportYumArtifactsErrorInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportYumArtifactsErrorInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -672,6 +825,11 @@ func (s *ImportYumArtifactsGcsSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportYumArtifactsMetadata: The operation metadata for importing
+// artifacts.
+type ImportYumArtifactsMetadata struct {
+}
+
 // ImportYumArtifactsRequest: The request to import new yum artifacts.
 type ImportYumArtifactsRequest struct {
 	// GcsSource: Google Cloud Storage location where input content is
@@ -697,6 +855,38 @@ type ImportYumArtifactsRequest struct {
 
 func (s *ImportYumArtifactsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportYumArtifactsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImportYumArtifactsResponse: The response message from importing YUM
+// artifacts.
+type ImportYumArtifactsResponse struct {
+	// Errors: Detailed error info for packages that were not imported.
+	Errors []*ImportYumArtifactsErrorInfo `json:"errors,omitempty"`
+
+	// YumArtifacts: The yum artifacts imported.
+	YumArtifacts []*YumArtifact `json:"yumArtifacts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportYumArtifactsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportYumArtifactsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1111,6 +1301,11 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OperationMetadata: Metadata type for longrunning-operations,
+// currently empty.
+type OperationMetadata struct {
+}
+
 // Package: Packages are named collections of versions.
 type Package struct {
 	// CreateTime: The time when the package was created.
@@ -1353,6 +1548,11 @@ type Repository struct {
 	// Name: The name of the repository, for example:
 	// "projects/p1/locations/us-central1/repositories/repo1".
 	Name string `json:"name,omitempty"`
+
+	// SizeBytes: Output only. The size, in bytes, of all artifact storage
+	// in this repository. Repositories that are generally available or in
+	// public preview use this to calculate storage costs.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 
 	// UpdateTime: The time when the repository was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1604,6 +1804,36 @@ func (s *UploadAptArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 type UploadAptArtifactRequest struct {
 }
 
+// UploadAptArtifactResponse: The response of the completed artifact
+// upload operation. This response is contained in the Operation and
+// available to users.
+type UploadAptArtifactResponse struct {
+	// AptArtifacts: The Apt artifacts updated.
+	AptArtifacts []*AptArtifact `json:"aptArtifacts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AptArtifacts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AptArtifacts") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UploadAptArtifactResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadAptArtifactResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UploadYumArtifactMediaResponse: The response to upload an artifact.
 type UploadYumArtifactMediaResponse struct {
 	// Operation: Operation to be returned to the user.
@@ -1638,6 +1868,36 @@ func (s *UploadYumArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 
 // UploadYumArtifactRequest: The request to upload an artifact.
 type UploadYumArtifactRequest struct {
+}
+
+// UploadYumArtifactResponse: The response of the completed artifact
+// upload operation. This response is contained in the Operation and
+// available to users.
+type UploadYumArtifactResponse struct {
+	// YumArtifacts: The Apt artifacts updated.
+	YumArtifacts []*YumArtifact `json:"yumArtifacts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "YumArtifacts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "YumArtifacts") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UploadYumArtifactResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadYumArtifactResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Version: The body of a version resource. A version resource
@@ -1693,6 +1953,50 @@ type Version struct {
 
 func (s *Version) MarshalJSON() ([]byte, error) {
 	type NoMethod Version
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// YumArtifact: A detailed representation of a Yum artifact.
+type YumArtifact struct {
+	// Architecture: Output only. Operating system architecture of the
+	// artifact.
+	Architecture string `json:"architecture,omitempty"`
+
+	// Name: Output only. The Artifact Registry resource name of the
+	// artifact.
+	Name string `json:"name,omitempty"`
+
+	// PackageName: Output only. The yum package name of the artifact.
+	PackageName string `json:"packageName,omitempty"`
+
+	// PackageType: Output only. An artifact is a binary or source package.
+	//
+	// Possible values:
+	//   "PACKAGE_TYPE_UNSPECIFIED" - Package type is not specified.
+	//   "BINARY" - Binary package (.rpm).
+	//   "SOURCE" - Source package (.srpm).
+	PackageType string `json:"packageType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Architecture") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *YumArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod YumArtifact
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -280,6 +280,16 @@ type Account struct {
 	// Premium: Output only. Whether this account is premium.
 	Premium bool `json:"premium,omitempty"`
 
+	// State: Output only. State of the account.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "READY" - The account is open and ready to serve ads.
+	//   "NEEDS_ATTENTION" - There are some issues with this account.
+	// Publishers should visit AdSense in order to fix the account.
+	//   "CLOSED" - The account is closed and can't serve ads.
+	State string `json:"state,omitempty"`
+
 	// TimeZone: The account time zone, as used by reporting. For more
 	// information, see changing the time zone of your reports
 	// (https://support.google.com/adsense/answer/9830725).
@@ -327,6 +337,17 @@ type AdClient struct {
 	// in the `AD_CLIENT_ID` reporting dimension. Present only if the ad
 	// client supports reporting.
 	ReportingDimensionId string `json:"reportingDimensionId,omitempty"`
+
+	// State: Output only. State of the ad client.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "READY" - The ad client is ready to show ads.
+	//   "GETTING_READY" - Running some checks on the ad client before it is
+	// ready to serve ads.
+	//   "REQUIRES_REVIEW" - The ad client hasn't been checked yet. There
+	// are tasks pending before AdSense will start the review.
+	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with

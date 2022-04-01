@@ -1317,8 +1317,7 @@ func (s *DomainMapping) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for Empty is empty
-// JSON object {}.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2489,10 +2488,11 @@ type Network struct {
 	// Engine flexible environment.
 	//
 	// Possible values:
-	//   "INSTANCE_IP_MODE_UNSPECIFIED" - Unspecified should be treated as
-	// EXTERNAL
-	//   "EXTERNAL" - VMs should be created with external and internal IPs
-	//   "INTERNAL" - VMs should be created with internal IPs only
+	//   "INSTANCE_IP_MODE_UNSPECIFIED" - Unspecified is treated as
+	// EXTERNAL.
+	//   "EXTERNAL" - Instances are created with both internal and external
+	// IP addresses.
+	//   "INTERNAL" - Instances are created with internal IP addresses only.
 	InstanceIpMode string `json:"instanceIpMode,omitempty"`
 
 	// InstanceTag: Tag to apply to the instance during creation. Only

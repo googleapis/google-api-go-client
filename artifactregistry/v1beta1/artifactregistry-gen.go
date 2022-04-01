@@ -316,8 +316,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -989,6 +988,11 @@ type Repository struct {
 	// Name: The name of the repository, for example:
 	// "projects/p1/locations/us-central1/repositories/repo1".
 	Name string `json:"name,omitempty"`
+
+	// SizeBytes: Output only. The size, in bytes, of all artifact storage
+	// in this repository. Repositories that are generally available or in
+	// public preview use this to calculate storage costs.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 
 	// UpdateTime: The time when the repository was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`

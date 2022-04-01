@@ -785,6 +785,10 @@ type Dashboard struct {
 	// the widgets are arranged vertically.
 	ColumnLayout *ColumnLayout `json:"columnLayout,omitempty"`
 
+	// DashboardFilters: Filters to reduce the amount of data charted based
+	// on the filter criteria.
+	DashboardFilters []*DashboardFilter `json:"dashboardFilters,omitempty"`
+
 	// DisplayName: Required. The mutable, human-readable name.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -838,6 +842,55 @@ type Dashboard struct {
 
 func (s *Dashboard) MarshalJSON() ([]byte, error) {
 	type NoMethod Dashboard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DashboardFilter: A filter to reduce the amount of data charted in
+// relevant widgets.
+type DashboardFilter struct {
+	// FilterType: The specified filter type
+	//
+	// Possible values:
+	//   "FILTER_TYPE_UNSPECIFIED" - Filter type is unspecified. This is not
+	// valid in a well-formed request.
+	//   "RESOURCE_LABEL" - Filter on a resource label value
+	//   "METRIC_LABEL" - Filter on a metrics label value
+	//   "USER_METADATA_LABEL" - Filter on a user metadata label value
+	//   "SYSTEM_METADATA_LABEL" - Filter on a system metadata label value
+	//   "GROUP" - Filter on a group id
+	FilterType string `json:"filterType,omitempty"`
+
+	// LabelKey: Required. The key for the label
+	LabelKey string `json:"labelKey,omitempty"`
+
+	// StringValue: A variable-length string value.
+	StringValue string `json:"stringValue,omitempty"`
+
+	// TemplateVariable: The placeholder text that can be referenced in a
+	// filter string or MQL query. If omitted, the dashboard filter will be
+	// applied to all relevant widgets in the dashboard.
+	TemplateVariable string `json:"templateVariable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilterType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilterType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DashboardFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod DashboardFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

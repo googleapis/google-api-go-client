@@ -424,6 +424,53 @@ func (s *GoogleChromeManagementV1AppDetails) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleChromeManagementV1AudioStatusReport: Audio report.
+type GoogleChromeManagementV1AudioStatusReport struct {
+	// InputDevice: Output only. Active input device's name.
+	InputDevice string `json:"inputDevice,omitempty"`
+
+	// InputGain: Output only. Active input device's gain in [0, 100].
+	InputGain int64 `json:"inputGain,omitempty"`
+
+	// InputMute: Output only. Is active input device mute or not.
+	InputMute bool `json:"inputMute,omitempty"`
+
+	// OutputDevice: Output only. Active output device's name.
+	OutputDevice string `json:"outputDevice,omitempty"`
+
+	// OutputMute: Output only. Is active output device mute or not.
+	OutputMute bool `json:"outputMute,omitempty"`
+
+	// OutputVolume: Output only. Active output device's volume in [0, 100].
+	OutputVolume int64 `json:"outputVolume,omitempty"`
+
+	// ReportTime: Output only. Timestamp of when the sample was collected
+	// on device.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InputDevice") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InputDevice") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1AudioStatusReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1AudioStatusReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1BatteryInfo: Battery info
 type GoogleChromeManagementV1BatteryInfo struct {
 	// DesignCapacity: Output only. Design capacity (mAmpere-hours).
@@ -647,8 +694,16 @@ type GoogleChromeManagementV1ChromeAppInfo struct {
 	// published state in the Chrome Web Store.
 	IsCwsHosted bool `json:"isCwsHosted,omitempty"`
 
+	// IsKioskOnly: Output only. Whether the app is only for Kiosk mode on
+	// Chrome OS devices
+	IsKioskOnly bool `json:"isKioskOnly,omitempty"`
+
 	// IsTheme: Output only. Whether the app or extension is a theme.
 	IsTheme bool `json:"isTheme,omitempty"`
+
+	// KioskEnabled: Output only. Whether this app is enabled for Kiosk mode
+	// on Chrome OS devices
+	KioskEnabled bool `json:"kioskEnabled,omitempty"`
 
 	// MinUserCount: Output only. The minimum number of users using this
 	// app.
@@ -1735,6 +1790,9 @@ func (s *GoogleChromeManagementV1StorageStatusReport) MarshalJSON() ([]byte, err
 // GoogleChromeManagementV1TelemetryDevice: Telemetry data collected
 // from a managed device.
 type GoogleChromeManagementV1TelemetryDevice struct {
+	// AudioStatusReport: Output only. Audio reports collected periodically.
+	AudioStatusReport []*GoogleChromeManagementV1AudioStatusReport `json:"audioStatusReport,omitempty"`
+
 	// BatteryInfo: Output only. Information on battery specs for the
 	// device.
 	BatteryInfo []*GoogleChromeManagementV1BatteryInfo `json:"batteryInfo,omitempty"`
@@ -1802,20 +1860,21 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	// periodically.
 	StorageStatusReport []*GoogleChromeManagementV1StorageStatusReport `json:"storageStatusReport,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BatteryInfo") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AudioStatusReport")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BatteryInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AudioStatusReport") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

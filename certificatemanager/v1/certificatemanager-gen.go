@@ -311,7 +311,9 @@ type Certificate struct {
 	PemCertificate string `json:"pemCertificate,omitempty"`
 
 	// SanDnsnames: Output only. The list of Subject Alternative Names of
-	// dnsName type defined in the certificate (see RFC 5280 4.2.1.6)
+	// dnsName type defined in the certificate (see RFC 5280 4.2.1.6).
+	// Managed certificates that haven't been provisioned yet have this
+	// field populated with a value of the managed.domains field.
 	SanDnsnames []string `json:"sanDnsnames,omitempty"`
 
 	// Scope: Immutable. The scope of the certificate.
@@ -589,8 +591,7 @@ func (s *DnsResourceRecord) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

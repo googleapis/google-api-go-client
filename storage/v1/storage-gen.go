@@ -2446,14 +2446,6 @@ func (r *BucketAccessControlsService) Delete(bucket string, entity string) *Buck
 	return c
 }
 
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketAccessControlsDeleteCall) ProvisionalUserProject(provisionalUserProject string) *BucketAccessControlsDeleteCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
-	return c
-}
-
 // UserProject sets the optional parameter "userProject": The project to
 // be billed for this request. Required for Requester Pays buckets.
 func (c *BucketAccessControlsDeleteCall) UserProject(userProject string) *BucketAccessControlsDeleteCall {
@@ -2543,11 +2535,6 @@ func (c *BucketAccessControlsDeleteCall) Do(opts ...googleapi.CallOption) error 
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -2586,14 +2573,6 @@ func (r *BucketAccessControlsService) Get(bucket string, entity string) *BucketA
 	c := &BucketAccessControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.entity = entity
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketAccessControlsGetCall) ProvisionalUserProject(provisionalUserProject string) *BucketAccessControlsGetCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -2724,11 +2703,6 @@ func (c *BucketAccessControlsGetCall) Do(opts ...googleapi.CallOption) (*BucketA
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -2765,14 +2739,6 @@ func (r *BucketAccessControlsService) Insert(bucket string, bucketaccesscontrol 
 	c := &BucketAccessControlsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.bucketaccesscontrol = bucketaccesscontrol
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketAccessControlsInsertCall) ProvisionalUserProject(provisionalUserProject string) *BucketAccessControlsInsertCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -2887,11 +2853,6 @@ func (c *BucketAccessControlsInsertCall) Do(opts ...googleapi.CallOption) (*Buck
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -2930,14 +2891,6 @@ type BucketAccessControlsListCall struct {
 func (r *BucketAccessControlsService) List(bucket string) *BucketAccessControlsListCall {
 	c := &BucketAccessControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketAccessControlsListCall) ProvisionalUserProject(provisionalUserProject string) *BucketAccessControlsListCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -3060,11 +3013,6 @@ func (c *BucketAccessControlsListCall) Do(opts ...googleapi.CallOption) (*Bucket
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -3106,14 +3054,6 @@ func (r *BucketAccessControlsService) Patch(bucket string, entity string, bucket
 	c.bucket = bucket
 	c.entity = entity
 	c.bucketaccesscontrol = bucketaccesscontrol
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketAccessControlsPatchCall) ProvisionalUserProject(provisionalUserProject string) *BucketAccessControlsPatchCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -3236,11 +3176,6 @@ func (c *BucketAccessControlsPatchCall) Do(opts ...googleapi.CallOption) (*Bucke
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -3285,14 +3220,6 @@ func (r *BucketAccessControlsService) Update(bucket string, entity string, bucke
 	c.bucket = bucket
 	c.entity = entity
 	c.bucketaccesscontrol = bucketaccesscontrol
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketAccessControlsUpdateCall) ProvisionalUserProject(provisionalUserProject string) *BucketAccessControlsUpdateCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -3415,11 +3342,6 @@ func (c *BucketAccessControlsUpdateCall) Do(opts ...googleapi.CallOption) (*Buck
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -3473,14 +3395,6 @@ func (c *BucketsDeleteCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *
 // metageneration does not match this value.
 func (c *BucketsDeleteCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *BucketsDeleteCall {
 	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketsDeleteCall) ProvisionalUserProject(provisionalUserProject string) *BucketsDeleteCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -3577,11 +3491,6 @@ func (c *BucketsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -3644,14 +3553,6 @@ func (c *BucketsGetCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64
 //   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsGetCall) Projection(projection string) *BucketsGetCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketsGetCall) ProvisionalUserProject(provisionalUserProject string) *BucketsGetCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -3799,11 +3700,6 @@ func (c *BucketsGetCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -3852,14 +3748,6 @@ func (r *BucketsService) GetIamPolicy(bucket string) *BucketsGetIamPolicyCall {
 // request fails.
 func (c *BucketsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *BucketsGetIamPolicyCall {
 	c.urlParams_.Set("optionsRequestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketsGetIamPolicyCall) ProvisionalUserProject(provisionalUserProject string) *BucketsGetIamPolicyCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -3989,11 +3877,6 @@ func (c *BucketsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	//       "minimum": "1",
 	//       "type": "integer"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -4081,14 +3964,6 @@ func (c *BucketsInsertCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAc
 //   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsInsertCall) Projection(projection string) *BucketsInsertCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketsInsertCall) ProvisionalUserProject(provisionalUserProject string) *BucketsInsertCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -4253,11 +4128,6 @@ func (c *BucketsInsertCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request.",
 	//       "location": "query",
@@ -4330,14 +4200,6 @@ func (c *BucketsListCall) Prefix(prefix string) *BucketsListCall {
 //   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsListCall) Projection(projection string) *BucketsListCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketsListCall) ProvisionalUserProject(provisionalUserProject string) *BucketsListCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -4488,11 +4350,6 @@ func (c *BucketsListCall) Do(opts ...googleapi.CallOption) (*Buckets, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request.",
 	//       "location": "query",
@@ -4554,14 +4411,6 @@ func (r *BucketsService) LockRetentionPolicy(bucket string, ifMetagenerationMatc
 	c := &BucketsLockRetentionPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketsLockRetentionPolicyCall) ProvisionalUserProject(provisionalUserProject string) *BucketsLockRetentionPolicyCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -4679,11 +4528,6 @@ func (c *BucketsLockRetentionPolicyCall) Do(opts ...googleapi.CallOption) (*Buck
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -4791,14 +4635,6 @@ func (c *BucketsPatchCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAcl
 //   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsPatchCall) Projection(projection string) *BucketsPatchCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketsPatchCall) ProvisionalUserProject(provisionalUserProject string) *BucketsPatchCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -4978,11 +4814,6 @@ func (c *BucketsPatchCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -5022,14 +4853,6 @@ func (r *BucketsService) SetIamPolicy(bucket string, policy *Policy) *BucketsSet
 	c := &BucketsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.policy = policy
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketsSetIamPolicyCall) ProvisionalUserProject(provisionalUserProject string) *BucketsSetIamPolicyCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -5144,11 +4967,6 @@ func (c *BucketsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -5190,14 +5008,6 @@ func (r *BucketsService) TestIamPermissions(bucket string, permissions []string)
 	c := &BucketsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.urlParams_.SetMulti("permissions", append([]string{}, permissions...))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketsTestIamPermissionsCall) ProvisionalUserProject(provisionalUserProject string) *BucketsTestIamPermissionsCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -5328,11 +5138,6 @@ func (c *BucketsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestI
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -5442,14 +5247,6 @@ func (c *BucketsUpdateCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAc
 //   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsUpdateCall) Projection(projection string) *BucketsUpdateCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *BucketsUpdateCall) ProvisionalUserProject(provisionalUserProject string) *BucketsUpdateCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -5629,11 +5426,6 @@ func (c *BucketsUpdateCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -5779,14 +5571,6 @@ func (r *DefaultObjectAccessControlsService) Delete(bucket string, entity string
 	return c
 }
 
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *DefaultObjectAccessControlsDeleteCall) ProvisionalUserProject(provisionalUserProject string) *DefaultObjectAccessControlsDeleteCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
-	return c
-}
-
 // UserProject sets the optional parameter "userProject": The project to
 // be billed for this request. Required for Requester Pays buckets.
 func (c *DefaultObjectAccessControlsDeleteCall) UserProject(userProject string) *DefaultObjectAccessControlsDeleteCall {
@@ -5876,11 +5660,6 @@ func (c *DefaultObjectAccessControlsDeleteCall) Do(opts ...googleapi.CallOption)
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -5919,14 +5698,6 @@ func (r *DefaultObjectAccessControlsService) Get(bucket string, entity string) *
 	c := &DefaultObjectAccessControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.entity = entity
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *DefaultObjectAccessControlsGetCall) ProvisionalUserProject(provisionalUserProject string) *DefaultObjectAccessControlsGetCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -6057,11 +5828,6 @@ func (c *DefaultObjectAccessControlsGetCall) Do(opts ...googleapi.CallOption) (*
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -6099,14 +5865,6 @@ func (r *DefaultObjectAccessControlsService) Insert(bucket string, objectaccessc
 	c := &DefaultObjectAccessControlsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.objectaccesscontrol = objectaccesscontrol
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *DefaultObjectAccessControlsInsertCall) ProvisionalUserProject(provisionalUserProject string) *DefaultObjectAccessControlsInsertCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -6221,11 +5979,6 @@ func (c *DefaultObjectAccessControlsInsertCall) Do(opts ...googleapi.CallOption)
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -6281,14 +6034,6 @@ func (c *DefaultObjectAccessControlsListCall) IfMetagenerationMatch(ifMetagenera
 // given value.
 func (c *DefaultObjectAccessControlsListCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *DefaultObjectAccessControlsListCall {
 	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *DefaultObjectAccessControlsListCall) ProvisionalUserProject(provisionalUserProject string) *DefaultObjectAccessControlsListCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -6423,11 +6168,6 @@ func (c *DefaultObjectAccessControlsListCall) Do(opts ...googleapi.CallOption) (
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -6469,14 +6209,6 @@ func (r *DefaultObjectAccessControlsService) Patch(bucket string, entity string,
 	c.bucket = bucket
 	c.entity = entity
 	c.objectaccesscontrol = objectaccesscontrol
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *DefaultObjectAccessControlsPatchCall) ProvisionalUserProject(provisionalUserProject string) *DefaultObjectAccessControlsPatchCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -6599,11 +6331,6 @@ func (c *DefaultObjectAccessControlsPatchCall) Do(opts ...googleapi.CallOption) 
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -6648,14 +6375,6 @@ func (r *DefaultObjectAccessControlsService) Update(bucket string, entity string
 	c.bucket = bucket
 	c.entity = entity
 	c.objectaccesscontrol = objectaccesscontrol
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *DefaultObjectAccessControlsUpdateCall) ProvisionalUserProject(provisionalUserProject string) *DefaultObjectAccessControlsUpdateCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -6778,11 +6497,6 @@ func (c *DefaultObjectAccessControlsUpdateCall) Do(opts ...googleapi.CallOption)
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -6823,14 +6537,6 @@ func (r *NotificationsService) Delete(bucket string, notification string) *Notif
 	c := &NotificationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.notification = notification
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *NotificationsDeleteCall) ProvisionalUserProject(provisionalUserProject string) *NotificationsDeleteCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -6923,11 +6629,6 @@ func (c *NotificationsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -6964,14 +6665,6 @@ func (r *NotificationsService) Get(bucket string, notification string) *Notifica
 	c := &NotificationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.notification = notification
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *NotificationsGetCall) ProvisionalUserProject(provisionalUserProject string) *NotificationsGetCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -7102,11 +6795,6 @@ func (c *NotificationsGetCall) Do(opts ...googleapi.CallOption) (*Notification, 
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -7146,14 +6834,6 @@ func (r *NotificationsService) Insert(bucket string, notification *Notification)
 	c := &NotificationsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.notification = notification
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *NotificationsInsertCall) ProvisionalUserProject(provisionalUserProject string) *NotificationsInsertCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -7268,11 +6948,6 @@ func (c *NotificationsInsertCall) Do(opts ...googleapi.CallOption) (*Notificatio
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -7313,14 +6988,6 @@ type NotificationsListCall struct {
 func (r *NotificationsService) List(bucket string) *NotificationsListCall {
 	c := &NotificationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *NotificationsListCall) ProvisionalUserProject(provisionalUserProject string) *NotificationsListCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -7443,11 +7110,6 @@ func (c *NotificationsListCall) Do(opts ...googleapi.CallOption) (*Notifications
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -7503,14 +7165,6 @@ func (r *ObjectAccessControlsService) Delete(bucket string, object string, entit
 // version, the default).
 func (c *ObjectAccessControlsDeleteCall) Generation(generation int64) *ObjectAccessControlsDeleteCall {
 	c.urlParams_.Set("generation", fmt.Sprint(generation))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectAccessControlsDeleteCall) ProvisionalUserProject(provisionalUserProject string) *ObjectAccessControlsDeleteCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -7617,11 +7271,6 @@ func (c *ObjectAccessControlsDeleteCall) Do(opts ...googleapi.CallOption) error 
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -7672,14 +7321,6 @@ func (r *ObjectAccessControlsService) Get(bucket string, object string, entity s
 // version, the default).
 func (c *ObjectAccessControlsGetCall) Generation(generation int64) *ObjectAccessControlsGetCall {
 	c.urlParams_.Set("generation", fmt.Sprint(generation))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectAccessControlsGetCall) ProvisionalUserProject(provisionalUserProject string) *ObjectAccessControlsGetCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -7824,11 +7465,6 @@ func (c *ObjectAccessControlsGetCall) Do(opts ...googleapi.CallOption) (*ObjectA
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -7877,14 +7513,6 @@ func (r *ObjectAccessControlsService) Insert(bucket string, object string, objec
 // version, the default).
 func (c *ObjectAccessControlsInsertCall) Generation(generation int64) *ObjectAccessControlsInsertCall {
 	c.urlParams_.Set("generation", fmt.Sprint(generation))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectAccessControlsInsertCall) ProvisionalUserProject(provisionalUserProject string) *ObjectAccessControlsInsertCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -8013,11 +7641,6 @@ func (c *ObjectAccessControlsInsertCall) Do(opts ...googleapi.CallOption) (*Obje
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -8068,14 +7691,6 @@ func (r *ObjectAccessControlsService) List(bucket string, object string) *Object
 // version, the default).
 func (c *ObjectAccessControlsListCall) Generation(generation int64) *ObjectAccessControlsListCall {
 	c.urlParams_.Set("generation", fmt.Sprint(generation))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectAccessControlsListCall) ProvisionalUserProject(provisionalUserProject string) *ObjectAccessControlsListCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -8212,11 +7827,6 @@ func (c *ObjectAccessControlsListCall) Do(opts ...googleapi.CallOption) (*Object
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -8270,14 +7880,6 @@ func (r *ObjectAccessControlsService) Patch(bucket string, object string, entity
 // version, the default).
 func (c *ObjectAccessControlsPatchCall) Generation(generation int64) *ObjectAccessControlsPatchCall {
 	c.urlParams_.Set("generation", fmt.Sprint(generation))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectAccessControlsPatchCall) ProvisionalUserProject(provisionalUserProject string) *ObjectAccessControlsPatchCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -8414,11 +8016,6 @@ func (c *ObjectAccessControlsPatchCall) Do(opts ...googleapi.CallOption) (*Objec
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -8475,14 +8072,6 @@ func (r *ObjectAccessControlsService) Update(bucket string, object string, entit
 // version, the default).
 func (c *ObjectAccessControlsUpdateCall) Generation(generation int64) *ObjectAccessControlsUpdateCall {
 	c.urlParams_.Set("generation", fmt.Sprint(generation))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectAccessControlsUpdateCall) ProvisionalUserProject(provisionalUserProject string) *ObjectAccessControlsUpdateCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -8619,11 +8208,6 @@ func (c *ObjectAccessControlsUpdateCall) Do(opts ...googleapi.CallOption) (*Obje
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -8718,14 +8302,6 @@ func (c *ObjectsComposeCall) IfMetagenerationMatch(ifMetagenerationMatch int64) 
 // metadata's kms_key_name value, if any.
 func (c *ObjectsComposeCall) KmsKeyName(kmsKeyName string) *ObjectsComposeCall {
 	c.urlParams_.Set("kmsKeyName", kmsKeyName)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsComposeCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsComposeCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -8883,11 +8459,6 @@ func (c *ObjectsComposeCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//     },
 	//     "kmsKeyName": {
 	//       "description": "Resource name of the Cloud KMS key, of the form projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key, that will be used to encrypt the object. Overrides the object metadata's kms_key_name value, if any.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9066,14 +8637,6 @@ func (c *ObjectsCopyCall) IfSourceMetagenerationNotMatch(ifSourceMetagenerationN
 //   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsCopyCall) Projection(projection string) *ObjectsCopyCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsCopyCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsCopyCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -9295,11 +8858,6 @@ func (c *ObjectsCopyCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "sourceBucket": {
 	//       "description": "Name of the bucket in which to find the source object.",
 	//       "location": "path",
@@ -9406,14 +8964,6 @@ func (c *ObjectsDeleteCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *
 // value.
 func (c *ObjectsDeleteCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *ObjectsDeleteCall {
 	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsDeleteCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsDeleteCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -9536,11 +9086,6 @@ func (c *ObjectsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -9633,14 +9178,6 @@ func (c *ObjectsGetCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64
 //   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsGetCall) Projection(projection string) *ObjectsGetCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsGetCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsGetCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -9830,11 +9367,6 @@ func (c *ObjectsGetCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -9887,14 +9419,6 @@ func (r *ObjectsService) GetIamPolicy(bucket string, object string) *ObjectsGetI
 // version, the default).
 func (c *ObjectsGetIamPolicyCall) Generation(generation int64) *ObjectsGetIamPolicyCall {
 	c.urlParams_.Set("generation", fmt.Sprint(generation))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsGetIamPolicyCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsGetIamPolicyCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -10029,11 +9553,6 @@ func (c *ObjectsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	//       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userProject": {
@@ -10176,14 +9695,6 @@ func (c *ObjectsInsertCall) PredefinedAcl(predefinedAcl string) *ObjectsInsertCa
 //   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsInsertCall) Projection(projection string) *ObjectsInsertCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsInsertCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsInsertCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -10486,11 +9997,6 @@ func (c *ObjectsInsertCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -10596,14 +10102,6 @@ func (c *ObjectsListCall) Prefix(prefix string) *ObjectsListCall {
 //   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsListCall) Projection(projection string) *ObjectsListCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsListCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsListCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -10789,11 +10287,6 @@ func (c *ObjectsListCall) Do(opts ...googleapi.CallOption) (*Objects, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "startOffset": {
 	//       "description": "Filter results to objects whose names are lexicographically equal to or after startOffset. If endOffset is also set, the objects listed will have names between startOffset (inclusive) and endOffset (exclusive).",
 	//       "location": "query",
@@ -10944,14 +10437,6 @@ func (c *ObjectsPatchCall) PredefinedAcl(predefinedAcl string) *ObjectsPatchCall
 //   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsPatchCall) Projection(projection string) *ObjectsPatchCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsPatchCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsPatchCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -11135,11 +10620,6 @@ func (c *ObjectsPatchCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//         "Include all properties.",
 	//         "Omit the owner, acl property."
 	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11330,14 +10810,6 @@ func (c *ObjectsRewriteCall) MaxBytesRewrittenPerCall(maxBytesRewrittenPerCall i
 //   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsRewriteCall) Projection(projection string) *ObjectsRewriteCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsRewriteCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsRewriteCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -11576,11 +11048,6 @@ func (c *ObjectsRewriteCall) Do(opts ...googleapi.CallOption) (*RewriteResponse,
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "rewriteToken": {
 	//       "description": "Include this field (from the previous rewrite response) on each rewrite request after the first one, until the rewrite response 'done' flag is true. Calls that provide a rewriteToken can omit all other request fields, but if included those fields must match the values provided in the first rewrite request.",
 	//       "location": "query",
@@ -11656,14 +11123,6 @@ func (r *ObjectsService) SetIamPolicy(bucket string, object string, policy *Poli
 // version, the default).
 func (c *ObjectsSetIamPolicyCall) Generation(generation int64) *ObjectsSetIamPolicyCall {
 	c.urlParams_.Set("generation", fmt.Sprint(generation))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsSetIamPolicyCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsSetIamPolicyCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -11792,11 +11251,6 @@ func (c *ObjectsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -11851,14 +11305,6 @@ func (r *ObjectsService) TestIamPermissions(bucket string, object string, permis
 // version, the default).
 func (c *ObjectsTestIamPermissionsCall) Generation(generation int64) *ObjectsTestIamPermissionsCall {
 	c.urlParams_.Set("generation", fmt.Sprint(generation))
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsTestIamPermissionsCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsTestIamPermissionsCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -12003,11 +11449,6 @@ func (c *ObjectsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestI
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -12126,14 +11567,6 @@ func (c *ObjectsUpdateCall) PredefinedAcl(predefinedAcl string) *ObjectsUpdateCa
 //   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsUpdateCall) Projection(projection string) *ObjectsUpdateCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsUpdateCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsUpdateCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -12320,11 +11753,6 @@ func (c *ObjectsUpdateCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "userProject": {
 	//       "description": "The project to be billed for this request. Required for Requester Pays buckets.",
 	//       "location": "query",
@@ -12429,14 +11857,6 @@ func (c *ObjectsWatchAllCall) Prefix(prefix string) *ObjectsWatchAllCall {
 //   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsWatchAllCall) Projection(projection string) *ObjectsWatchAllCall {
 	c.urlParams_.Set("projection", projection)
-	return c
-}
-
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ObjectsWatchAllCall) ProvisionalUserProject(provisionalUserProject string) *ObjectsWatchAllCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
 	return c
 }
 
@@ -12611,11 +12031,6 @@ func (c *ObjectsWatchAllCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//         "Include all properties.",
 	//         "Omit the owner, acl property."
 	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13530,14 +12945,6 @@ func (r *ProjectsServiceAccountService) Get(projectId string) *ProjectsServiceAc
 	return c
 }
 
-// ProvisionalUserProject sets the optional parameter
-// "provisionalUserProject": The project to be billed for this request
-// if the target bucket is requester-pays bucket.
-func (c *ProjectsServiceAccountGetCall) ProvisionalUserProject(provisionalUserProject string) *ProjectsServiceAccountGetCall {
-	c.urlParams_.Set("provisionalUserProject", provisionalUserProject)
-	return c
-}
-
 // UserProject sets the optional parameter "userProject": The project to
 // be billed for this request.
 func (c *ProjectsServiceAccountGetCall) UserProject(userProject string) *ProjectsServiceAccountGetCall {
@@ -13655,11 +13062,6 @@ func (c *ProjectsServiceAccountGetCall) Do(opts ...googleapi.CallOption) (*Servi
 	//       "description": "Project ID",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "provisionalUserProject": {
-	//       "description": "The project to be billed for this request if the target bucket is requester-pays bucket.",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userProject": {

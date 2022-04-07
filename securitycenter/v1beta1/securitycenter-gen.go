@@ -848,6 +848,9 @@ type Finding struct {
 	// functionality.
 	FindingClass string `json:"findingClass,omitempty"`
 
+	// IamBindings: Represents IAM bindings associated with the Finding.
+	IamBindings []*IamBinding `json:"iamBindings,omitempty"`
+
 	// Indicator: Represents what's commonly known as an Indicator of
 	// compromise (IoC) in computer forensics. This is an artifact observed
 	// on a network or in an operating system that, with high confidence,
@@ -886,6 +889,9 @@ type Finding struct {
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
 	// _id}"
 	Name string `json:"name,omitempty"`
+
+	// NextSteps: Next steps associate to the finding.
+	NextSteps string `json:"nextSteps,omitempty"`
 
 	// Parent: The relative resource name of the source the finding belongs
 	// to. See:
@@ -2245,6 +2251,48 @@ type GroupResult struct {
 
 func (s *GroupResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IamBinding: Represents a particular IAM binding, which captures a
+// member's role addition, removal, or state.
+type IamBinding struct {
+	// Action: The action that was performed on a Binding.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - Unspecified.
+	//   "ADD" - Addition of a Binding.
+	//   "REMOVE" - Removal of a Binding.
+	Action string `json:"action,omitempty"`
+
+	// Member: A single identity requesting access for a Cloud Platform
+	// resource, e.g. "foo@google.com".
+	Member string `json:"member,omitempty"`
+
+	// Role: Role that is assigned to "members". For example,
+	// "roles/viewer", "roles/editor", or "roles/owner".
+	Role string `json:"role,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IamBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod IamBinding
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

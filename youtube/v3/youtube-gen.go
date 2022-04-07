@@ -23631,7 +23631,7 @@ func (c *VideosInsertCall) Do(opts ...googleapi.CallOption) (*Video, error) {
 	//       "video/*",
 	//       "application/octet-stream"
 	//     ],
-	//     "maxSize": "137438953472",
+	//     "maxSize": "274877906944",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,

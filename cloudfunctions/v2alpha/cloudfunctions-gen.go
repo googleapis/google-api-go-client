@@ -1630,6 +1630,52 @@ func (s *Runtime) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SecretEnvVar: Configuration for a secret environment variable. It has
+// the information necessary to fetch the secret value from secret
+// manager and expose it as an environment variable.
+type SecretEnvVar struct {
+	// Key: Name of the environment variable.
+	Key string `json:"key,omitempty"`
+
+	// ProjectId: Project identifier (preferably project number but can also
+	// be the project ID) of the project that contains the secret. If not
+	// set, it will be populated with the function's project assuming that
+	// the secret exists in the same project as of the function.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// Secret: Name of the secret in secret manager (not the full resource
+	// name).
+	Secret string `json:"secret,omitempty"`
+
+	// Version: Version of the secret (version number or the string
+	// 'latest'). It is recommended to use a numeric version for secret
+	// environment variables as any updates to the secret value is not
+	// reflected until new instances start.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecretEnvVar) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretEnvVar
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ServiceConfig: Describes the Service being deployed. Currently
 // Supported : Cloud Run (fully managed).
 type ServiceConfig struct {
@@ -1686,6 +1732,10 @@ type ServiceConfig struct {
 
 	// Revision: Output only. The name of service revision.
 	Revision string `json:"revision,omitempty"`
+
+	// SecretEnvironmentVariables: Secret environment variables
+	// configuration.
+	SecretEnvironmentVariables []*SecretEnvVar `json:"secretEnvironmentVariables,omitempty"`
 
 	// Service: Output only. Name of the service associated with a Function.
 	// The format of this field is
@@ -2025,8 +2075,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2155,7 +2205,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -384,8 +384,9 @@ func (s *GoogleFirebaseFcmDataV1beta1ListAndroidDeliveryDataResponse) MarshalJSO
 // with countMessagesAccepted as the denominator.
 type GoogleFirebaseFcmDataV1beta1MessageInsightPercents struct {
 	// PriorityLowered: The percentage of accepted messages that had their
-	// priority lowered from high to normal due to app standby buckets
-	// (https://firebase.google.com/docs/cloud-messaging/concept-options#setting-the-priority-of-a-message).
+	// priority lowered from high to normal. See documentation for setting
+	// message priority
+	// (https://firebase.google.com/docs/cloud-messaging/android/message-priority).
 	PriorityLowered float64 `json:"priorityLowered,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PriorityLowered") to

@@ -594,7 +594,8 @@ type GoogleChromeManagementV1BatteryStatusReport struct {
 	// on device
 	ReportTime string `json:"reportTime,omitempty"`
 
-	// Sample: Output only. Sampling data for the battery.
+	// Sample: Output only. Sampling data for the battery sorted in a
+	// decreasing order of report_time.
 	Sample []*GoogleChromeManagementV1BatterySampleReport `json:"sample,omitempty"`
 
 	// SerialNumber: Output only. Battery serial number.
@@ -1790,7 +1791,8 @@ func (s *GoogleChromeManagementV1StorageStatusReport) MarshalJSON() ([]byte, err
 // GoogleChromeManagementV1TelemetryDevice: Telemetry data collected
 // from a managed device.
 type GoogleChromeManagementV1TelemetryDevice struct {
-	// AudioStatusReport: Output only. Audio reports collected periodically.
+	// AudioStatusReport: Output only. Audio reports collected periodically
+	// sorted in a decreasing order of report_time.
 	AudioStatusReport []*GoogleChromeManagementV1AudioStatusReport `json:"audioStatusReport,omitempty"`
 
 	// BatteryInfo: Output only. Information on battery specs for the
@@ -1805,7 +1807,7 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	CpuInfo []*GoogleChromeManagementV1CpuInfo `json:"cpuInfo,omitempty"`
 
 	// CpuStatusReport: Output only. CPU status reports collected
-	// periodically.
+	// periodically sorted in a decreasing order of report_time.
 	CpuStatusReport []*GoogleChromeManagementV1CpuStatusReport `json:"cpuStatusReport,omitempty"`
 
 	// Customer: Output only. Google Workspace Customer whose enterprise
@@ -1830,7 +1832,7 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	MemoryInfo *GoogleChromeManagementV1MemoryInfo `json:"memoryInfo,omitempty"`
 
 	// MemoryStatusReport: Output only. Memory status reports collected
-	// periodically.
+	// periodically sorted decreasing by report_time.
 	MemoryStatusReport []*GoogleChromeManagementV1MemoryStatusReport `json:"memoryStatusReport,omitempty"`
 
 	// Name: Output only. Resource name of the device.

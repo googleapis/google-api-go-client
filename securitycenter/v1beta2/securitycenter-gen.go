@@ -900,6 +900,9 @@ type Finding struct {
 	// functionality.
 	FindingClass string `json:"findingClass,omitempty"`
 
+	// IamBindings: Represents IAM bindings associated with the Finding.
+	IamBindings []*IamBinding `json:"iamBindings,omitempty"`
+
 	// Indicator: Represents what's commonly known as an Indicator of
 	// compromise (IoC) in computer forensics. This is an artifact observed
 	// on a network or in an operating system that, with high confidence,
@@ -938,6 +941,9 @@ type Finding struct {
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
 	// _id}"
 	Name string `json:"name,omitempty"`
+
+	// NextSteps: Next steps associate to the finding.
+	NextSteps string `json:"nextSteps,omitempty"`
 
 	// Parent: The relative resource name of the source the finding belongs
 	// to. See:
@@ -1815,6 +1821,48 @@ func (s *GoogleCloudSecuritycenterV1p1beta1SecurityMarks) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IamBinding: Represents a particular IAM binding, which captures a
+// member's role addition, removal, or state.
+type IamBinding struct {
+	// Action: The action that was performed on a Binding.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - Unspecified.
+	//   "ADD" - Addition of a Binding.
+	//   "REMOVE" - Removal of a Binding.
+	Action string `json:"action,omitempty"`
+
+	// Member: A single identity requesting access for a Cloud Platform
+	// resource, e.g. "foo@google.com".
+	Member string `json:"member,omitempty"`
+
+	// Role: Role that is assigned to "members". For example,
+	// "roles/viewer", "roles/editor", or "roles/owner".
+	Role string `json:"role,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IamBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod IamBinding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Indicator: Represents what's commonly known as an Indicator of
 // compromise (IoC) in computer forensics. This is an artifact observed
 // on a network or in an operating system that, with high confidence,
@@ -1997,6 +2045,55 @@ type MitreAttack struct {
 
 func (s *MitreAttack) MarshalJSON() ([]byte, error) {
 	type NoMethod MitreAttack
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OnboardingState: Resource capturing onboarding information for a
+// given CRM resource.
+type OnboardingState struct {
+	// Name: The resource name of the OnboardingState. Format:
+	// organizations/{organization}/onboardingState Format:
+	// folders/{folder}/onboardingState Format:
+	// projects/{project}/onboardingState
+	Name string `json:"name,omitempty"`
+
+	// OnboardingLevel: Describes the level a given organization, folder, or
+	// project is onboarded with SCC. If the resource wasn't onboarded,
+	// NOT_FOUND would have been thrown.
+	//
+	// Possible values:
+	//   "ONBOARDING_LEVEL_UNSPECIFIED" - Unused.
+	//   "ONBOARDING_LEVEL_PROJECT" - This resource is onboarded at the
+	// project level. Only possible for projects.
+	//   "ONBOARDING_LEVEL_ORGANIZATION" - This resource is onboarded at the
+	// organization level. Possible for organizations, folders, and
+	// projects.
+	OnboardingLevel string `json:"onboardingLevel,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OnboardingState) MarshalJSON() ([]byte, error) {
+	type NoMethod OnboardingState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2688,6 +2785,155 @@ func (c *FoldersGetEventThreatDetectionSettingsCall) Do(opts ...googleapi.CallOp
 	//   "path": "v1beta2/{+name}",
 	//   "response": {
 	//     "$ref": "EventThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.getOnboardingState":
+
+type FoldersGetOnboardingStateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetOnboardingState: Retrieve the OnboardingState of a resource.
+//
+// - name: The name of the OnboardingState to retrieve. Formats: *
+//   organizations/{organization}/onboardingState *
+//   folders/{folder}/onboardingState *
+//   projects/{project}/onboardingState.
+func (r *FoldersService) GetOnboardingState(name string) *FoldersGetOnboardingStateCall {
+	c := &FoldersGetOnboardingStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersGetOnboardingStateCall) Fields(s ...googleapi.Field) *FoldersGetOnboardingStateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersGetOnboardingStateCall) IfNoneMatch(entityTag string) *FoldersGetOnboardingStateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersGetOnboardingStateCall) Context(ctx context.Context) *FoldersGetOnboardingStateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersGetOnboardingStateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersGetOnboardingStateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.getOnboardingState" call.
+// Exactly one of *OnboardingState or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *OnboardingState.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersGetOnboardingStateCall) Do(opts ...googleapi.CallOption) (*OnboardingState, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &OnboardingState{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve the OnboardingState of a resource.",
+	//   "flatPath": "v1beta2/folders/{foldersId}/onboardingState",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.getOnboardingState",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the OnboardingState to retrieve. Formats: * organizations/{organization}/onboardingState * folders/{folder}/onboardingState * projects/{project}/onboardingState",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/onboardingState$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "OnboardingState"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -5005,6 +5251,155 @@ func (c *OrganizationsGetEventThreatDetectionSettingsCall) Do(opts ...googleapi.
 	//   "path": "v1beta2/{+name}",
 	//   "response": {
 	//     "$ref": "EventThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.getOnboardingState":
+
+type OrganizationsGetOnboardingStateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetOnboardingState: Retrieve the OnboardingState of a resource.
+//
+// - name: The name of the OnboardingState to retrieve. Formats: *
+//   organizations/{organization}/onboardingState *
+//   folders/{folder}/onboardingState *
+//   projects/{project}/onboardingState.
+func (r *OrganizationsService) GetOnboardingState(name string) *OrganizationsGetOnboardingStateCall {
+	c := &OrganizationsGetOnboardingStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsGetOnboardingStateCall) Fields(s ...googleapi.Field) *OrganizationsGetOnboardingStateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsGetOnboardingStateCall) IfNoneMatch(entityTag string) *OrganizationsGetOnboardingStateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsGetOnboardingStateCall) Context(ctx context.Context) *OrganizationsGetOnboardingStateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsGetOnboardingStateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetOnboardingStateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.getOnboardingState" call.
+// Exactly one of *OnboardingState or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *OnboardingState.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsGetOnboardingStateCall) Do(opts ...googleapi.CallOption) (*OnboardingState, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &OnboardingState{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve the OnboardingState of a resource.",
+	//   "flatPath": "v1beta2/organizations/{organizationsId}/onboardingState",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.getOnboardingState",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the OnboardingState to retrieve. Formats: * organizations/{organization}/onboardingState * folders/{folder}/onboardingState * projects/{project}/onboardingState",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/onboardingState$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "OnboardingState"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -7616,6 +8011,155 @@ func (c *ProjectsGetEventThreatDetectionSettingsCall) Do(opts ...googleapi.CallO
 	//   "path": "v1beta2/{+name}",
 	//   "response": {
 	//     "$ref": "EventThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.getOnboardingState":
+
+type ProjectsGetOnboardingStateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetOnboardingState: Retrieve the OnboardingState of a resource.
+//
+// - name: The name of the OnboardingState to retrieve. Formats: *
+//   organizations/{organization}/onboardingState *
+//   folders/{folder}/onboardingState *
+//   projects/{project}/onboardingState.
+func (r *ProjectsService) GetOnboardingState(name string) *ProjectsGetOnboardingStateCall {
+	c := &ProjectsGetOnboardingStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetOnboardingStateCall) Fields(s ...googleapi.Field) *ProjectsGetOnboardingStateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetOnboardingStateCall) IfNoneMatch(entityTag string) *ProjectsGetOnboardingStateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetOnboardingStateCall) Context(ctx context.Context) *ProjectsGetOnboardingStateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetOnboardingStateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetOnboardingStateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.getOnboardingState" call.
+// Exactly one of *OnboardingState or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *OnboardingState.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetOnboardingStateCall) Do(opts ...googleapi.CallOption) (*OnboardingState, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &OnboardingState{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve the OnboardingState of a resource.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/onboardingState",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.getOnboardingState",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the OnboardingState to retrieve. Formats: * organizations/{organization}/onboardingState * folders/{folder}/onboardingState * projects/{project}/onboardingState",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/onboardingState$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "OnboardingState"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

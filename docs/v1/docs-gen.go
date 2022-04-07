@@ -2313,7 +2313,8 @@ type InlineObject struct {
 	// InlineObjectProperties: The properties of this inline object.
 	InlineObjectProperties *InlineObjectProperties `json:"inlineObjectProperties,omitempty"`
 
-	// ObjectId: The ID of this inline object.
+	// ObjectId: The ID of this inline object. Can be used to update an
+	// object’s properties.
 	ObjectId string `json:"objectId,omitempty"`
 
 	// SuggestedDeletionIds: The suggested deletion IDs. If empty, then
@@ -4527,6 +4528,7 @@ func (s *ReplaceAllTextResponse) MarshalJSON() ([]byte, error) {
 // in order to mirror the behavior of the Docs editor.
 type ReplaceImageRequest struct {
 	// ImageObjectId: The ID of the existing image that will be replaced.
+	// The ID can be retrieved from the response of a get request.
 	ImageObjectId string `json:"imageObjectId,omitempty"`
 
 	// ImageReplaceMethod: The replacement method.
@@ -4537,15 +4539,15 @@ type ReplaceImageRequest struct {
 	//   "CENTER_CROP" - Scales and centers the image to fill the bounds of
 	// the original image. The image may be cropped in order to fill the
 	// original image's bounds. The rendered size of the image will be the
-	// same as that of the original image.
+	// same as the original image.
 	ImageReplaceMethod string `json:"imageReplaceMethod,omitempty"`
 
 	// Uri: The URI of the new image. The image is fetched once at insertion
 	// time and a copy is stored for display inside the document. Images
-	// must be less than 50MB in size, cannot exceed 25 megapixels, and must
-	// be in one of PNG, JPEG, or GIF format. The provided URI can be at
-	// most 2 kB in length. The URI itself is saved with the image, and
-	// exposed via the ImageProperties.source_uri field.
+	// must be less than 50MB, cannot exceed 25 megapixels, and must be in
+	// PNG, JPEG, or GIF format. The provided URI can't surpass 2 KB in
+	// length. The URI is saved with the image, and exposed through the
+	// ImageProperties.source_uri field.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageObjectId") to

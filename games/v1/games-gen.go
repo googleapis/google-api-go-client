@@ -2045,6 +2045,9 @@ type Player struct {
 	//   "FRIEND" - The player and requester are friends.
 	FriendStatus string `json:"friendStatus,omitempty"`
 
+	// GamePlayerId: Per-application unique player identifier.
+	GamePlayerId string `json:"gamePlayerId,omitempty"`
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string `games#player`
 	Kind string `json:"kind,omitempty"`

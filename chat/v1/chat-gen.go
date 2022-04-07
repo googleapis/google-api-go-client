@@ -268,12 +268,12 @@ func (s *ActionParameter) MarshalJSON() ([]byte, error) {
 // ActionResponse: Parameters that a Chat app can use to configure how
 // it's response is posted.
 type ActionResponse struct {
-	// DialogAction: A response to an event related to a dialog
+	// DialogAction: Input only. A response to an event related to a dialog
 	// (https://developers.google.com/chat/how-tos/dialogs). Must be
 	// accompanied by `ResponseType.Dialog`.
 	DialogAction *DialogAction `json:"dialogAction,omitempty"`
 
-	// Type: The type of Chat app response.
+	// Type: Input only. The type of Chat app response.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default type; will be handled as NEW_MESSAGE.
@@ -291,8 +291,8 @@ type ActionResponse struct {
 	// [dialog](https://developers.google.com/chat/how-tos/dialogs).
 	Type string `json:"type,omitempty"`
 
-	// Url: URL for users to auth or config. (Only for REQUEST_CONFIG
-	// response types.)
+	// Url: Input only. URL for users to auth or config. (Only for
+	// REQUEST_CONFIG response types.)
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DialogAction") to
@@ -1104,9 +1104,9 @@ func (s *DeprecatedEvent) MarshalJSON() ([]byte, error) {
 
 // Dialog: Wrapper around the card body of the dialog.
 type Dialog struct {
-	// Body: Body of the dialog, which is rendered in a modal. Google Chat
-	// apps do not support the following card entities: `DateTimePicker`,
-	// `OnChangeAction`.
+	// Body: Input only. Body of the dialog, which is rendered in a modal.
+	// Google Chat apps do not support the following card entities:
+	// `DateTimePicker`, `OnChangeAction`.
 	Body *GoogleAppsCardV1Card `json:"body,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Body") to
@@ -1136,14 +1136,14 @@ func (s *Dialog) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/chat/how-tos/dialogs) and request
 // status code.
 type DialogAction struct {
-	// ActionStatus: Status for a request to either invoke or submit a
-	// dialog (https://developers.google.com/chat/how-tos/dialogs). Displays
-	// a status and message to users, if necessary. For example, in case of
-	// an error or success.
+	// ActionStatus: Input only. Status for a request to either invoke or
+	// submit a dialog (https://developers.google.com/chat/how-tos/dialogs).
+	// Displays a status and message to users, if necessary. For example, in
+	// case of an error or success.
 	ActionStatus *ActionStatus `json:"actionStatus,omitempty"`
 
-	// Dialog: Dialog (https://developers.google.com/chat/how-tos/dialogs)
-	// for the request.
+	// Dialog: Input only. Dialog
+	// (https://developers.google.com/chat/how-tos/dialogs) for the request.
 	Dialog *Dialog `json:"dialog,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionStatus") to
@@ -3096,19 +3096,19 @@ type Message struct {
 	// field will be same as create_time.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 
-	// MatchedUrl: A URL in `spaces.messages.text` that matches a link
-	// unfurling pattern. For more information, refer to Unfurl links
-	// (/chat/how-tos/link-unfurling).
+	// MatchedUrl: Output only. A URL in `spaces.messages.text` that matches
+	// a link unfurling pattern. For more information, refer to Unfurl links
+	// (https://developers.google.com/chat/how-tos/link-unfurling).
 	MatchedUrl *MatchedUrl `json:"matchedUrl,omitempty"`
 
 	// Name: Resource name in the form `spaces/*/messages/*`. Example:
 	// `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`
 	Name string `json:"name,omitempty"`
 
-	// Sender: The user who created the message.
+	// Sender: Output only. The user who created the message.
 	Sender *User `json:"sender,omitempty"`
 
-	// SlashCommand: Slash command information, if applicable.
+	// SlashCommand: Output only. Slash command information, if applicable.
 	SlashCommand *SlashCommand `json:"slashCommand,omitempty"`
 
 	// Space: The space the message belongs to.

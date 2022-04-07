@@ -366,11 +366,11 @@ func (s *AnimationStatic) MarshalJSON() ([]byte, error) {
 // Audio: Audio preprocessing configuration.
 type Audio struct {
 	// HighBoost: Enable boosting high frequency components. The default is
-	// `false`.
+	// `false`. **Note:** This field is not supported.
 	HighBoost bool `json:"highBoost,omitempty"`
 
 	// LowBoost: Enable boosting low frequency components. The default is
-	// `false`.
+	// `false`. **Note:** This field is not supported.
 	LowBoost bool `json:"lowBoost,omitempty"`
 
 	// Lufs: Specify audio loudness normalization in loudness units relative
@@ -537,7 +537,8 @@ func (s *AudioStream) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Color: Color preprocessing configuration.
+// Color: Color preprocessing configuration. **Note:** This
+// configuration is not supported.
 type Color struct {
 	// Brightness: Control brightness of the video. Enter a value between -1
 	// and 1, where -1 is minimum brightness and 1 is maximum brightness. 0
@@ -637,7 +638,8 @@ func (s *Crop) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Deblock: Deblock preprocessing configuration.
+// Deblock: Deblock preprocessing configuration. **Note:** This
+// configuration is not supported.
 type Deblock struct {
 	// Enabled: Enable deblocker. The default is `false`.
 	Enabled bool `json:"enabled,omitempty"`
@@ -684,7 +686,8 @@ func (s *Deblock) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Denoise: Denoise preprocessing configuration.
+// Denoise: Denoise preprocessing configuration. **Note:** This
+// configuration is not supported.
 type Denoise struct {
 	// Strength: Set strength of the denoise. Enter a value between 0 and 1.
 	// The higher the value, the smoother the image. 0 is no denoising. The
@@ -818,8 +821,7 @@ func (s *ElementaryStream) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1198,8 +1200,9 @@ type Input struct {
 
 	// Uri: URI of the media. Input files must be at least 5 seconds in
 	// duration and stored in Cloud Storage (for example,
-	// `gs://bucket/inputs/file.mp4`). If empty, the value will be populated
-	// from `Job.input_uri`.
+	// `gs://bucket/inputs/file.mp4`). If empty, the value is populated from
+	// `Job.input_uri`. See Supported input and output formats
+	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -1244,7 +1247,9 @@ type Job struct {
 	// fields in each element of `Job.config.inputs` or
 	// `JobTemplate.config.inputs` when using template. URI of the media.
 	// Input files must be at least 5 seconds in duration and stored in
-	// Cloud Storage (for example, `gs://bucket/inputs/file.mp4`).
+	// Cloud Storage (for example, `gs://bucket/inputs/file.mp4`). See
+	// Supported input and output formats
+	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// Name: The resource name of the job. Format:
@@ -1254,7 +1259,8 @@ type Job struct {
 	// OutputUri: Input only. Specify the `output_uri` to populate an empty
 	// `Job.config.output.uri` or `JobTemplate.config.output.uri` when using
 	// template. URI for the output file(s). For example,
-	// `gs://my-bucket/outputs/`.
+	// `gs://my-bucket/outputs/`. See Supported input and output formats
+	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
 	OutputUri string `json:"outputUri,omitempty"`
 
 	// StartTime: Output only. The time the transcoding started.
@@ -1533,7 +1539,9 @@ func (s *Manifest) MarshalJSON() ([]byte, error) {
 type MuxStream struct {
 	// Container: The container format. The default is `mp4` Supported
 	// container formats: - `ts` - `fmp4`- the corresponding file extension
-	// is `.m4s` - `mp4` - `vtt`
+	// is `.m4s` - `mp4` - `vtt` See also: Supported input and output
+	// formats
+	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats)
 	Container string `json:"container,omitempty"`
 
 	// ElementaryStreams: List of `ElementaryStream.key`s multiplexed in
@@ -1628,8 +1636,9 @@ func (s *NormalizedCoordinate) UnmarshalJSON(data []byte) error {
 // Output: Location of output file(s) in a Cloud Storage bucket.
 type Output struct {
 	// Uri: URI for the output file(s). For example,
-	// `gs://my-bucket/outputs/`. If empty the value is populated from
-	// `Job.output_uri`.
+	// `gs://my-bucket/outputs/`. If empty, the value is populated from
+	// `Job.output_uri`. See Supported input and output formats
+	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
@@ -2077,7 +2086,7 @@ type Vp9CodecSettings struct {
 
 	// CrfLevel: Target CRF level. Must be between 10 and 36, where 10 is
 	// the highest quality and 36 is the most efficient compression. The
-	// default is 21. *Note*: This field is not supported.
+	// default is 21. **Note:** This field is not supported.
 	CrfLevel int64 `json:"crfLevel,omitempty"`
 
 	// FrameRate: Required. The target video frame rate in frames per second

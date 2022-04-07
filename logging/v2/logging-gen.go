@@ -1219,6 +1219,51 @@ func (s *HttpRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IndexConfig: Configuration for an indexed field.
+type IndexConfig struct {
+	// CreateTime: Output only. The timestamp when the index was last
+	// modified.This is used to return the timestamp, and will be ignored if
+	// supplied during update.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FieldPath: Required. The LogEntry field path to index.Note that some
+	// paths are automatically indexed, and other paths are not eligible for
+	// indexing. See indexing documentation(
+	// https://cloud.google.com/logging/docs/view/advanced-queries#indexed-fields)
+	// for details.For example: jsonPayload.request.status
+	FieldPath string `json:"fieldPath,omitempty"`
+
+	// Type: Required. The type of data in this index.
+	//
+	// Possible values:
+	//   "INDEX_TYPE_UNSPECIFIED" - The index's type is unspecified.
+	//   "INDEX_TYPE_STRING" - The index is a string-type index.
+	//   "INDEX_TYPE_INTEGER" - The index is a integer-type index.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IndexConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IndexConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LabelDescriptor: A description of a label.
 type LabelDescriptor struct {
 	// Description: A human-readable description for the label.
@@ -1846,6 +1891,10 @@ type LogBucket struct {
 
 	// Description: Describes this bucket.
 	Description string `json:"description,omitempty"`
+
+	// IndexConfigs: A list of indexed fields and related configuration
+	// data.
+	IndexConfigs []*IndexConfig `json:"indexConfigs,omitempty"`
 
 	// LifecycleState: Output only. The bucket lifecycle state.
 	//

@@ -232,10 +232,22 @@ type TagKeysService struct {
 
 func NewTagValuesService(s *Service) *TagValuesService {
 	rs := &TagValuesService{s: s}
+	rs.TagHolds = NewTagValuesTagHoldsService(s)
 	return rs
 }
 
 type TagValuesService struct {
+	s *Service
+
+	TagHolds *TagValuesTagHoldsService
+}
+
+func NewTagValuesTagHoldsService(s *Service) *TagValuesTagHoldsService {
+	rs := &TagValuesTagHoldsService{s: s}
+	return rs
+}
+
+type TagValuesTagHoldsService struct {
 	s *Service
 }
 
@@ -348,8 +360,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -1149,6 +1161,47 @@ func (s *ListTagBindingsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListTagHoldsResponse: The ListTagHolds response.
+type ListTagHoldsResponse struct {
+	// NextPageToken: Pagination token. If the result set is too large to
+	// fit in a single response, this token is returned. It encodes the
+	// position of the current result cursor. Feeding this value into a new
+	// list request with the `page_token` parameter gives the next page of
+	// the results. When `next_page_token` is not filled in, there is no
+	// next page and the list returned is the last page in the result set.
+	// Pagination tokens have a limited lifetime.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TagHolds: A possibly paginated list of TagHolds.
+	TagHolds []*TagHold `json:"tagHolds,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListTagHoldsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListTagHoldsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListTagKeysResponse: The ListTagKeys response message.
 type ListTagKeysResponse struct {
 	// NextPageToken: A pagination token returned from a previous call to
@@ -1832,7 +1885,7 @@ func (s *SearchProjectsResponse) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -1947,6 +2000,61 @@ type TagBinding struct {
 
 func (s *TagBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod TagBinding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TagHold: A TagHold represents the use of a TagValue that is not
+// captured by TagBindings. If a TagValue has any TagHolds, deletion
+// will be blocked. This resource is intended to be created in the same
+// cloud location as the `holder`.
+type TagHold struct {
+	// CreateTime: Output only. The time this TagHold was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// HelpLink: Optional. A URL where an end user can learn more about
+	// removing this hold. E.g.
+	// `https://cloud.google.com/resource-manager/docs/tags/tags-creating-and
+	// -managing`
+	HelpLink string `json:"helpLink,omitempty"`
+
+	// Holder: Required. The name of the resource where the TagValue is
+	// being used. Must be less than 200 characters. E.g.
+	// `//compute.googleapis.com/compute/projects/myproject/regions/us-east-1
+	// /instanceGroupManagers/instance-group`
+	Holder string `json:"holder,omitempty"`
+
+	// Name: Output only. The resource name of a TagHold. This is a String
+	// of the form: `tagValues/{tag-value-id}/tagHolds/{tag-hold-id}` (e.g.
+	// `tagValues/123/tagHolds/456`). This resource name is generated by the
+	// server.
+	Name string `json:"name,omitempty"`
+
+	// Origin: Optional. An optional string representing the origin of this
+	// request. This field should include human-understandable information
+	// to distinguish origins from each other. Must be less than 200
+	// characters. E.g. `migs-35678234`
+	Origin string `json:"origin,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TagHold) MarshalJSON() ([]byte, error) {
+	type NoMethod TagHold
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2085,7 +2193,7 @@ func (s *TagValue) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -10323,4 +10431,524 @@ func (c *TagValuesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Tes
 	//   ]
 	// }
 
+}
+
+// method id "cloudresourcemanager.tagValues.tagHolds.create":
+
+type TagValuesTagHoldsCreateCall struct {
+	s          *Service
+	parent     string
+	taghold    *TagHold
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a TagHold. Returns ALREADY_EXISTS if a TagHold with
+// the same resource and origin exists under the same TagValue.
+//
+// - parent: The resource name of the TagHold's parent TagValue. Must be
+//   of the form: `tagValues/{tag-value-id}`.
+func (r *TagValuesTagHoldsService) Create(parent string, taghold *TagHold) *TagValuesTagHoldsCreateCall {
+	c := &TagValuesTagHoldsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.taghold = taghold
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Set to true
+// to perform the validations necessary for creating the resource, but
+// not actually perform the action.
+func (c *TagValuesTagHoldsCreateCall) ValidateOnly(validateOnly bool) *TagValuesTagHoldsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TagValuesTagHoldsCreateCall) Fields(s ...googleapi.Field) *TagValuesTagHoldsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TagValuesTagHoldsCreateCall) Context(ctx context.Context) *TagValuesTagHoldsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TagValuesTagHoldsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TagValuesTagHoldsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.taghold)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/tagHolds")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.tagValues.tagHolds.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TagValuesTagHoldsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a TagHold. Returns ALREADY_EXISTS if a TagHold with the same resource and origin exists under the same TagValue.",
+	//   "flatPath": "v3/tagValues/{tagValuesId}/tagHolds",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.tagValues.tagHolds.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource name of the TagHold's parent TagValue. Must be of the form: `tagValues/{tag-value-id}`.",
+	//       "location": "path",
+	//       "pattern": "^tagValues/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. Set to true to perform the validations necessary for creating the resource, but not actually perform the action.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/tagHolds",
+	//   "request": {
+	//     "$ref": "TagHold"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.tagValues.tagHolds.delete":
+
+type TagValuesTagHoldsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a TagHold.
+//
+// - name: The resource name of the TagHold to delete. Must be of the
+//   form: `tagValues/{tag-value-id}/tagHolds/{tag-hold-id}`.
+func (r *TagValuesTagHoldsService) Delete(name string) *TagValuesTagHoldsDeleteCall {
+	c := &TagValuesTagHoldsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Set to true
+// to perform the validations necessary for deleting the resource, but
+// not actually perform the action.
+func (c *TagValuesTagHoldsDeleteCall) ValidateOnly(validateOnly bool) *TagValuesTagHoldsDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TagValuesTagHoldsDeleteCall) Fields(s ...googleapi.Field) *TagValuesTagHoldsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TagValuesTagHoldsDeleteCall) Context(ctx context.Context) *TagValuesTagHoldsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TagValuesTagHoldsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TagValuesTagHoldsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.tagValues.tagHolds.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TagValuesTagHoldsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a TagHold.",
+	//   "flatPath": "v3/tagValues/{tagValuesId}/tagHolds/{tagHoldsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "cloudresourcemanager.tagValues.tagHolds.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the TagHold to delete. Must be of the form: `tagValues/{tag-value-id}/tagHolds/{tag-hold-id}`.",
+	//       "location": "path",
+	//       "pattern": "^tagValues/[^/]+/tagHolds/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. Set to true to perform the validations necessary for deleting the resource, but not actually perform the action.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.tagValues.tagHolds.list":
+
+type TagValuesTagHoldsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists TagHolds under a TagValue.
+//
+// - parent: The resource name of the parent TagValue. Must be of the
+//   form: `tagValues/{tag-value-id}`.
+func (r *TagValuesTagHoldsService) List(parent string) *TagValuesTagHoldsListCall {
+	c := &TagValuesTagHoldsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Criteria used to select
+// a subset of TagHolds parented by the TagValue to return. This field
+// follows the syntax defined by aip.dev/160; the `holder` and `origin`
+// fields are supported for filtering. Currently only `AND` syntax is
+// supported. Some example queries are: * `holder =
+// //compute.googleapis.com/compute/projects/myproject/regions/us-east-1/
+// instanceGroupManagers/instance-group` * `origin = 35678234` * `holder
+// =
+// //compute.googleapis.com/compute/projects/myproject/regions/us-east-1/
+// instanceGroupManagers/instance-group AND origin = 35678234`
+func (c *TagValuesTagHoldsListCall) Filter(filter string) *TagValuesTagHoldsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of TagHolds to return in the response. The server allows a maximum of
+// 300 TagHolds to return. If unspecified, the server will use 100 as
+// the default.
+func (c *TagValuesTagHoldsListCall) PageSize(pageSize int64) *TagValuesTagHoldsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call to `ListTagHolds` that indicates where
+// this listing should continue from.
+func (c *TagValuesTagHoldsListCall) PageToken(pageToken string) *TagValuesTagHoldsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TagValuesTagHoldsListCall) Fields(s ...googleapi.Field) *TagValuesTagHoldsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TagValuesTagHoldsListCall) IfNoneMatch(entityTag string) *TagValuesTagHoldsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TagValuesTagHoldsListCall) Context(ctx context.Context) *TagValuesTagHoldsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TagValuesTagHoldsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TagValuesTagHoldsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/tagHolds")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.tagValues.tagHolds.list" call.
+// Exactly one of *ListTagHoldsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListTagHoldsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TagValuesTagHoldsListCall) Do(opts ...googleapi.CallOption) (*ListTagHoldsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListTagHoldsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists TagHolds under a TagValue.",
+	//   "flatPath": "v3/tagValues/{tagValuesId}/tagHolds",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.tagValues.tagHolds.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Criteria used to select a subset of TagHolds parented by the TagValue to return. This field follows the syntax defined by aip.dev/160; the `holder` and `origin` fields are supported for filtering. Currently only `AND` syntax is supported. Some example queries are: * `holder = //compute.googleapis.com/compute/projects/myproject/regions/us-east-1/instanceGroupManagers/instance-group` * `origin = 35678234` * `holder = //compute.googleapis.com/compute/projects/myproject/regions/us-east-1/instanceGroupManagers/instance-group AND origin = 35678234`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of TagHolds to return in the response. The server allows a maximum of 300 TagHolds to return. If unspecified, the server will use 100 as the default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A pagination token returned from a previous call to `ListTagHolds` that indicates where this listing should continue from.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the parent TagValue. Must be of the form: `tagValues/{tag-value-id}`.",
+	//       "location": "path",
+	//       "pattern": "^tagValues/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/tagHolds",
+	//   "response": {
+	//     "$ref": "ListTagHoldsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *TagValuesTagHoldsListCall) Pages(ctx context.Context, f func(*ListTagHoldsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

@@ -203,6 +203,10 @@ type GoogleCloudRunV2BinaryAuthorization struct {
 	// https://cloud.google.com/binary-authorization/docs/using-breakglass
 	BreakglassJustification string `json:"breakglassJustification,omitempty"`
 
+	// Policy: The path to a binary authorization policy. Format:
+	// projects/{project}/platforms/cloudRun/{policy-name}
+	Policy string `json:"policy,omitempty"`
+
 	// UseDefault: If True, indicates to use the default project's binary
 	// authorization policy. If False, binary authorization will be
 	// disabled.
@@ -767,7 +771,7 @@ type GoogleCloudRunV2Revision struct {
 	//
 	// Possible values:
 	//   "EXECUTION_ENVIRONMENT_UNSPECIFIED" - Unspecified
-	//   "EXECUTION_ENVIRONMENT_DEFAULT" - Uses the Google-default
+	//   "EXECUTION_ENVIRONMENT_GEN1" - Uses the First Generation
 	// environment.
 	//   "EXECUTION_ENVIRONMENT_GEN2" - Uses Second Generation environment.
 	ExecutionEnvironment string `json:"executionEnvironment,omitempty"`
@@ -971,7 +975,7 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	//
 	// Possible values:
 	//   "EXECUTION_ENVIRONMENT_UNSPECIFIED" - Unspecified
-	//   "EXECUTION_ENVIRONMENT_DEFAULT" - Uses the Google-default
+	//   "EXECUTION_ENVIRONMENT_GEN1" - Uses the First Generation
 	// environment.
 	//   "EXECUTION_ENVIRONMENT_GEN2" - Uses Second Generation environment.
 	ExecutionEnvironment string `json:"executionEnvironment,omitempty"`

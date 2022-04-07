@@ -7690,7 +7690,8 @@ type DebugDatasourcesItemsCheckAccessCall struct {
 }
 
 // CheckAccess: Checks whether an item is accessible by specified
-// principal. **Note:** This API requires an admin account to execute.
+// principal. Principal must be a user; groups and domain values aren't
+// supported. **Note:** This API requires an admin account to execute.
 //
 // - name: Item name, format: datasources/{source_id}/items/{item_id}.
 func (r *DebugDatasourcesItemsService) CheckAccess(name string, principal *Principal) *DebugDatasourcesItemsCheckAccessCall {
@@ -7799,7 +7800,7 @@ func (c *DebugDatasourcesItemsCheckAccessCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks whether an item is accessible by specified principal. **Note:** This API requires an admin account to execute.",
+	//   "description": "Checks whether an item is accessible by specified principal. Principal must be a user; groups and domain values aren't supported. **Note:** This API requires an admin account to execute.",
 	//   "flatPath": "v1/debug/datasources/{datasourcesId}/items/{itemsId}:checkAccess",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsearch.debug.datasources.items.checkAccess",

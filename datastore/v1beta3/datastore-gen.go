@@ -362,6 +362,10 @@ func (s *CommitRequest) MarshalJSON() ([]byte, error) {
 
 // CommitResponse: The response for Datastore.Commit.
 type CommitResponse struct {
+	// CommitTime: The transaction commit timestamp. Not set for
+	// non-transactional commits.
+	CommitTime string `json:"commitTime,omitempty"`
+
 	// IndexUpdates: The number of index entries updated during the commit,
 	// or zero if none were updated.
 	IndexUpdates int64 `json:"indexUpdates,omitempty"`
@@ -374,7 +378,7 @@ type CommitResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "IndexUpdates") to
+	// ForceSendFields is a list of field names (e.g. "CommitTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -382,10 +386,10 @@ type CommitResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IndexUpdates") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CommitTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -484,6 +488,11 @@ type EntityResult struct {
 
 	// Entity: The resulting entity.
 	Entity *Entity `json:"entity,omitempty"`
+
+	// UpdateTime: The time at which the entity was last changed. This field
+	// is set for `FULL` entity results. If this entity is missing, this
+	// field will not be set.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// Version: The version of the entity, a strictly positive number that
 	// monotonically increases with changes to the entity. This field is set
@@ -1594,6 +1603,10 @@ type LookupResponse struct {
 	// the order of the keys in the input.
 	Missing []*EntityResult `json:"missing,omitempty"`
 
+	// ReadTime: The time at which these entities were read or found
+	// missing.
+	ReadTime string `json:"readTime,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1641,6 +1654,11 @@ type Mutation struct {
 	// have a complete key path.
 	Update *Entity `json:"update,omitempty"`
 
+	// UpdateTime: The update time of the entity that this mutation is being
+	// applied to. If this does not match the current update time on the
+	// server, the mutation conflicts.
+	UpdateTime string `json:"updateTime,omitempty"`
+
 	// Upsert: The entity to upsert. The entity may or may not already
 	// exist. The entity key's final path element may be incomplete.
 	Upsert *Entity `json:"upsert,omitempty"`
@@ -1678,6 +1696,12 @@ type MutationResult struct {
 	// Key: The automatically allocated key. Set only when the mutation
 	// allocated a key.
 	Key *Key `json:"key,omitempty"`
+
+	// UpdateTime: The update time of the entity on the server after
+	// processing the mutation. If the mutation doesn't change anything on
+	// the server, then the timestamp will be the update timestamp of the
+	// current entity. This field will not be set after a 'delete'.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// Version: The version of the entity on the server after processing the
 	// mutation. If the mutation doesn't change anything on the server, then
@@ -2051,6 +2075,16 @@ type QueryResultBatch struct {
 	// results.
 	MoreResults string `json:"moreResults,omitempty"`
 
+	// ReadTime: Read timestamp this batch was returned from. This applies
+	// to the range of results from the query's `start_cursor` (or the
+	// beginning of the query if no cursor was given) to this batch's
+	// `end_cursor` (not the query's `end_cursor`). In a single transaction,
+	// subsequent query result batches for the same query can have a greater
+	// timestamp. Each batch's read timestamp is valid for all preceding
+	// batches. This value will not be set for eventually consistent queries
+	// in Cloud Datastore.
+	ReadTime string `json:"readTime,omitempty"`
+
 	// SkippedCursor: A cursor that points to the position after the last
 	// skipped result. Will be set when `skipped_results` != 0.
 	SkippedCursor string `json:"skippedCursor,omitempty"`
@@ -2094,6 +2128,31 @@ func (s *QueryResultBatch) MarshalJSON() ([]byte, error) {
 
 // ReadOnly: Options specific to read-only transactions.
 type ReadOnly struct {
+	// ReadTime: Reads entities at the given time. This may not be older
+	// than 60 seconds.
+	ReadTime string `json:"readTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReadTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReadTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReadOnly) MarshalJSON() ([]byte, error) {
+	type NoMethod ReadOnly
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ReadOptions: The options shared by read requests.
@@ -2107,6 +2166,11 @@ type ReadOptions struct {
 	//   "STRONG" - Strong consistency.
 	//   "EVENTUAL" - Eventual consistency.
 	ReadConsistency string `json:"readConsistency,omitempty"`
+
+	// ReadTime: Reads entities as they were at the given time. This may not
+	// be older than 270 seconds. This value is only supported for Cloud
+	// Firestore in Datastore mode.
+	ReadTime string `json:"readTime,omitempty"`
 
 	// Transaction: The identifier of the transaction in which to read. A
 	// transaction identifier is returned by a call to

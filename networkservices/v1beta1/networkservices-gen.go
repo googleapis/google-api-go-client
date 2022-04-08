@@ -375,8 +375,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -445,8 +445,7 @@ type CancelOperationRequest struct {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2869,11 +2868,6 @@ type ServiceBinding struct {
 	// length 1024 characters.
 	Description string `json:"description,omitempty"`
 
-	// EndpointFilter: Optional. The endpoint filter associated with the
-	// Service Binding. The syntax is described in
-	// http://cloud/service-directory/docs/reference/rpc/google.cloud.servicedirectory.v1#google.cloud.servicedirectory.v1.ResolveServiceRequest
-	EndpointFilter string `json:"endpointFilter,omitempty"`
-
 	// Labels: Optional. Set of label tags associated with the
 	// ServiceBinding resource.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -2921,7 +2915,7 @@ func (s *ServiceBinding) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -3224,7 +3218,7 @@ func (s *TcpRouteRouteRule) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -3418,7 +3412,7 @@ func (s *TlsRouteRouteDestination) MarshalJSON() ([]byte, error) {
 }
 
 // TlsRouteRouteMatch: RouteMatch defines the predicate used to match
-// requests to a given action. Multiple match types are “AND”ed for
+// requests to a given action. Multiple match types are "AND"ed for
 // evaluation. If no routeMatch field is specified, this rule will
 // unconditionally match traffic.
 type TlsRouteRouteMatch struct {
@@ -3466,7 +3460,7 @@ type TlsRouteRouteRule struct {
 	Action *TlsRouteRouteAction `json:"action,omitempty"`
 
 	// Matches: Required. RouteMatch defines the predicate used to match
-	// requests to a given action. Multiple match types are “OR”ed for
+	// requests to a given action. Multiple match types are "OR"ed for
 	// evaluation.
 	Matches []*TlsRouteRouteMatch `json:"matches,omitempty"`
 
@@ -3694,8 +3688,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3824,7 +3818,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10689,166 +10683,6 @@ func (c *ProjectsLocationsServiceBindingsListCall) Pages(ctx context.Context, f 
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "networkservices.projects.locations.serviceBindings.patch":
-
-type ProjectsLocationsServiceBindingsPatchCall struct {
-	s              *Service
-	name           string
-	servicebinding *ServiceBinding
-	urlParams_     gensupport.URLParams
-	ctx_           context.Context
-	header_        http.Header
-}
-
-// Patch: Updates the parameters of a single ServiceBinding.
-//
-// - name: Name of the ServiceBinding resource. It matches pattern
-//   `projects/*/locations/global/serviceBindings/service_binding_name>`.
-func (r *ProjectsLocationsServiceBindingsService) Patch(name string, servicebinding *ServiceBinding) *ProjectsLocationsServiceBindingsPatchCall {
-	c := &ProjectsLocationsServiceBindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.servicebinding = servicebinding
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Field mask is
-// used to specify the fields to be overwritten in the ServiceBinding
-// resource by the update. The fields specified in the update_mask are
-// relative to the resource, not the full request. A field will be
-// overwritten if it is in the mask. If the user does not provide a mask
-// then all fields will be overwritten.
-func (c *ProjectsLocationsServiceBindingsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsServiceBindingsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsServiceBindingsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceBindingsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsServiceBindingsPatchCall) Context(ctx context.Context) *ProjectsLocationsServiceBindingsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsServiceBindingsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsServiceBindingsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.servicebinding)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.serviceBindings.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsServiceBindingsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the parameters of a single ServiceBinding.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/serviceBindings/{serviceBindingsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "networkservices.projects.locations.serviceBindings.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the ServiceBinding resource. It matches pattern `projects/*/locations/global/serviceBindings/service_binding_name\u003e`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceBindings/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Optional. Field mask is used to specify the fields to be overwritten in the ServiceBinding resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "request": {
-	//     "$ref": "ServiceBinding"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // method id "networkservices.projects.locations.serviceBindings.setIamPolicy":

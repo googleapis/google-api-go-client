@@ -8485,7 +8485,7 @@ func (s *GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo) MarshalJSON() ([
 // versions, pre-trained by Google internally or up-trained by the
 // customer. At a time, a processor can only have one default version
 // version. So the processor's behavior (when processing documents) is
-// defined by a default version.
+// defined by a default version
 type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	// CreateTime: The time the processor version was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -9861,8 +9861,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -9993,7 +9993,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

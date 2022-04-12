@@ -940,8 +940,8 @@ type GooglePrivacyDlpV2ByteContentItem struct {
 	//   "TEXT_UTF8" - plain text
 	//   "WORD_DOCUMENT" - docx, docm, dotx, dotm
 	//   "PDF" - pdf
-	//   "POWERPOINT_DOCUMENT" - powerpoint
-	//   "EXCEL_DOCUMENT" - excel
+	//   "POWERPOINT_DOCUMENT" - pptx, pptm, potx, potm, pot
+	//   "EXCEL_DOCUMENT" - xlsx, xlsm, xltx, xltm
 	//   "AVRO" - avro
 	//   "CSV" - csv
 	//   "TSV" - tsv
@@ -2241,6 +2241,280 @@ func (s *GooglePrivacyDlpV2CustomInfoType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2DataProfileAction: A task to execute when a data
+// profile has been generated.
+type GooglePrivacyDlpV2DataProfileAction struct {
+	// ExportData: Export data profiles into a provided location.
+	ExportData *GooglePrivacyDlpV2Export `json:"exportData,omitempty"`
+
+	// PubSubNotification: Publish a message into the Pub/Sub topic.
+	PubSubNotification *GooglePrivacyDlpV2PubSubNotification `json:"pubSubNotification,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExportData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExportData") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DataProfileAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DataProfileAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DataProfileConfigSnapshot: Snapshot of the
+// configurations used to generate the profile.
+type GooglePrivacyDlpV2DataProfileConfigSnapshot struct {
+	// DataProfileJob: A copy of the configuration used to generate this
+	// profile.
+	DataProfileJob *GooglePrivacyDlpV2DataProfileJobConfig `json:"dataProfileJob,omitempty"`
+
+	// InspectConfig: A copy of the inspection config used to generate this
+	// profile. This is a copy of the inspect_template specified in
+	// `DataProfileJobConfig`.
+	InspectConfig *GooglePrivacyDlpV2InspectConfig `json:"inspectConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataProfileJob") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataProfileJob") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DataProfileConfigSnapshot) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DataProfileConfigSnapshot
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DataProfileJobConfig: Configuration for setting up
+// a job to scan resources for profile generation. Only one data profile
+// configuration may exist per organization, folder, or project. The
+// generated data profiles are retained according to the [data retention
+// policy] (https://cloud.google.com/dlp/docs/data-profiles#retention).
+type GooglePrivacyDlpV2DataProfileJobConfig struct {
+	// DataProfileActions: Actions to execute at the completion of the job.
+	DataProfileActions []*GooglePrivacyDlpV2DataProfileAction `json:"dataProfileActions,omitempty"`
+
+	// InspectTemplates: Detection logic for profile generation. Not all
+	// template features are used by profiles. FindingLimits, include_quote
+	// and exclude_info_types have no impact on data profiling. Multiple
+	// templates may be provided if there is data in multiple regions. At
+	// most one template must be specified per-region (including "global").
+	// Each region is scanned using the applicable template. If no
+	// region-specific template is specified, but a "global" template is
+	// specified, it will be copied to that region and used instead. If no
+	// global or region-specific template is provided for a region with
+	// data, that region's data will not be scanned. For more information,
+	// see https://cloud.google.com/dlp/docs/data-profiles#data_residency.
+	InspectTemplates []string `json:"inspectTemplates,omitempty"`
+
+	// Location: The data to scan.
+	Location *GooglePrivacyDlpV2DataProfileLocation `json:"location,omitempty"`
+
+	// ProjectId: The project that will run the scan. The DLP service
+	// account that exists within this project must have access to all
+	// resources that are profiled, and the Cloud DLP API must be enabled.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataProfileActions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataProfileActions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DataProfileJobConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DataProfileJobConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DataProfileLocation: The data that will be
+// profiled.
+type GooglePrivacyDlpV2DataProfileLocation struct {
+	// FolderId: The ID of the Folder within an organization to scan.
+	FolderId int64 `json:"folderId,omitempty,string"`
+
+	// OrganizationId: The ID of an organization to scan.
+	OrganizationId int64 `json:"organizationId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "FolderId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FolderId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DataProfileLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DataProfileLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DataProfilePubSubCondition: A condition for
+// determining whether a PubSub should be triggered.
+type GooglePrivacyDlpV2DataProfilePubSubCondition struct {
+	// Expressions: An expression.
+	Expressions *GooglePrivacyDlpV2PubSubExpressions `json:"expressions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Expressions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Expressions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DataProfilePubSubCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DataProfilePubSubCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DataProfilePubSubMessage: The message that will be
+// published to a Pub/Sub topic. To receive a message of protocol buffer
+// schema type, convert the message data to an object of this proto
+// class.
+// https://cloud.google.com/pubsub/docs/samples/pubsub-subscribe-proto-messages
+type GooglePrivacyDlpV2DataProfilePubSubMessage struct {
+	// Event: The event that caused the Pub/Sub message to be sent.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - Unused.
+	//   "NEW_PROFILE" - New profile (not a re-profile).
+	//   "CHANGED_PROFILE" - Changed one of the following profile metrics: *
+	// Table data risk score * Table sensitivity score * Table resource
+	// visibility * Table encryption type * Table predicted infoTypes *
+	// Table other infoTypes
+	//   "SCORE_INCREASED" - Table data risk score or sensitivity score
+	// increased.
+	//   "ERROR_CHANGED" - A user (non-internal) error occurred.
+	Event string `json:"event,omitempty"`
+
+	// Profile: If `DetailLevel` is `TABLE_PROFILE` this will be fully
+	// populated. Otherwise, if `DetailLevel` is `RESOURCE_NAME`, then only
+	// `name` and `full_resource` will be populated.
+	Profile *GooglePrivacyDlpV2TableDataProfile `json:"profile,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Event") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Event") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DataProfilePubSubMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DataProfilePubSubMessage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DataRiskLevel: Score is a summary of all elements
+// in the data profile. A higher number means more risky.
+type GooglePrivacyDlpV2DataRiskLevel struct {
+	// Score: The score applied to the resource.
+	//
+	// Possible values:
+	//   "RISK_SCORE_UNSPECIFIED" - Unused.
+	//   "RISK_LOW" - Low risk - Lower indication of sensitive data that
+	// appears to have additional access restrictions in place or no
+	// indication of sensitive data found.
+	//   "RISK_MODERATE" - Medium risk - Sensitive data may be present but
+	// additional access or fine grain access restrictions appears to be
+	// present. Consider limiting access even further or transforming data
+	// to mask.
+	//   "RISK_HIGH" - High risk – SPII may be present. Access controls
+	// may include public ACLs. Exfiltration of data may lead to user data
+	// loss. Re-identification of users may be possible. Consider limiting
+	// usage and or removing SPII.
+	Score string `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Score") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Score") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DataRiskLevel) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DataRiskLevel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2DatastoreKey: Record key for a finding in Cloud
 // Datastore.
 type GooglePrivacyDlpV2DatastoreKey struct {
@@ -3147,6 +3421,37 @@ func (s *GooglePrivacyDlpV2ExclusionRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2Export: If set, the detailed data profiles will be
+// persisted to the location of your choice whenever updated.
+type GooglePrivacyDlpV2Export struct {
+	// ProfileTable: Store all table and column profiles in an existing
+	// table or a new table in an existing dataset. Each re-generation will
+	// result in a new row in BigQuery.
+	ProfileTable *GooglePrivacyDlpV2BigQueryTable `json:"profileTable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProfileTable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProfileTable") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2Export) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2Export
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2Expressions: An expression, consisting or an
 // operator and conditions.
 type GooglePrivacyDlpV2Expressions struct {
@@ -4021,6 +4326,35 @@ type GooglePrivacyDlpV2InfoTypeStats struct {
 
 func (s *GooglePrivacyDlpV2InfoTypeStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InfoTypeStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2InfoTypeSummary: The infoType details for this
+// column.
+type GooglePrivacyDlpV2InfoTypeSummary struct {
+	// InfoType: The infoType.
+	InfoType *GooglePrivacyDlpV2InfoType `json:"infoType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InfoType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InfoType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2InfoTypeSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2InfoTypeSummary
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5670,6 +6004,35 @@ func (s *GooglePrivacyDlpV2NumericalStatsResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2OtherInfoTypeSummary: Infotype details for other
+// infoTypes found within a column.
+type GooglePrivacyDlpV2OtherInfoTypeSummary struct {
+	// InfoType: The other infoType.
+	InfoType *GooglePrivacyDlpV2InfoType `json:"infoType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InfoType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InfoType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2OtherInfoTypeSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2OtherInfoTypeSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2OutputStorageConfig: Cloud repository for storing
 // output.
 type GooglePrivacyDlpV2OutputStorageConfig struct {
@@ -5920,6 +6283,36 @@ func (s *GooglePrivacyDlpV2PrivacyMetric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GooglePrivacyDlpV2ProfileStatus struct {
+	// Status: Profiling status code and optional message
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// Timestamp: Time when the profile generation status was updated
+	Timestamp string `json:"timestamp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2ProfileStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ProfileStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2Proximity: Message for specifying a window around a
 // finding to apply a detection rule.
 type GooglePrivacyDlpV2Proximity struct {
@@ -5948,6 +6341,151 @@ type GooglePrivacyDlpV2Proximity struct {
 
 func (s *GooglePrivacyDlpV2Proximity) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Proximity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2PubSubCondition: A condition consisting of a value.
+type GooglePrivacyDlpV2PubSubCondition struct {
+	// MinimumRiskScore: The minimum data risk score that triggers the
+	// condition.
+	//
+	// Possible values:
+	//   "PROFILE_SCORE_BUCKET_UNSPECIFIED" - Unused.
+	//   "HIGH" - High risk/sensitivity detected.
+	//   "MEDIUM_OR_HIGH" - Medium or high risk/sensitivity detected.
+	MinimumRiskScore string `json:"minimumRiskScore,omitempty"`
+
+	// MinimumSensitivityScore: The minimum sensitivity level that triggers
+	// the condition.
+	//
+	// Possible values:
+	//   "PROFILE_SCORE_BUCKET_UNSPECIFIED" - Unused.
+	//   "HIGH" - High risk/sensitivity detected.
+	//   "MEDIUM_OR_HIGH" - Medium or high risk/sensitivity detected.
+	MinimumSensitivityScore string `json:"minimumSensitivityScore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinimumRiskScore") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinimumRiskScore") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2PubSubCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2PubSubCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2PubSubExpressions: An expression, consisting of an
+// operator and conditions.
+type GooglePrivacyDlpV2PubSubExpressions struct {
+	// Conditions: Conditions to apply to the expression.
+	Conditions []*GooglePrivacyDlpV2PubSubCondition `json:"conditions,omitempty"`
+
+	// LogicalOperator: The operator to apply to the collection of
+	// conditions.
+	//
+	// Possible values:
+	//   "LOGICAL_OPERATOR_UNSPECIFIED" - Unused.
+	//   "OR" - Conditional OR.
+	//   "AND" - Conditional AND.
+	LogicalOperator string `json:"logicalOperator,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Conditions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Conditions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2PubSubExpressions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2PubSubExpressions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2PubSubNotification: Send a Pub/Sub message into the
+// given Pub/Sub topic to connect other systems to data profile
+// generation. The message payload data will be the byte serialization
+// of `DataProfilePubSubMessage`.
+type GooglePrivacyDlpV2PubSubNotification struct {
+	// DetailOfMessage: How much data to include in the Pub/Sub message. If
+	// the user wishes to limit the size of the message, they can use
+	// resource_name and fetch the profile fields they wish to. Per table
+	// profile (not per column).
+	//
+	// Possible values:
+	//   "DETAIL_LEVEL_UNSPECIFIED" - Unused.
+	//   "TABLE_PROFILE" - The full table data profile.
+	//   "RESOURCE_NAME" - The resource name of the table.
+	DetailOfMessage string `json:"detailOfMessage,omitempty"`
+
+	// Event: The type of event that triggers a Pub/Sub. At most one
+	// `PubSubNotification` per EventType is permitted.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - Unused.
+	//   "NEW_PROFILE" - New profile (not a re-profile).
+	//   "CHANGED_PROFILE" - Changed one of the following profile metrics: *
+	// Table data risk score * Table sensitivity score * Table resource
+	// visibility * Table encryption type * Table predicted infoTypes *
+	// Table other infoTypes
+	//   "SCORE_INCREASED" - Table data risk score or sensitivity score
+	// increased.
+	//   "ERROR_CHANGED" - A user (non-internal) error occurred.
+	Event string `json:"event,omitempty"`
+
+	// PubsubCondition: Conditions (e.g., data risk or sensitivity level)
+	// for triggering a Pub/Sub.
+	PubsubCondition *GooglePrivacyDlpV2DataProfilePubSubCondition `json:"pubsubCondition,omitempty"`
+
+	// Topic: Cloud Pub/Sub topic to send notifications to. Format is
+	// projects/{project}/topics/{topic}.
+	Topic string `json:"topic,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetailOfMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetailOfMessage") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2PubSubNotification) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2PubSubNotification
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6886,6 +7424,46 @@ func (s *GooglePrivacyDlpV2Schedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2SensitivityScore: Score is a summary of all
+// elements in the data profile. A higher number means more sensitive.
+type GooglePrivacyDlpV2SensitivityScore struct {
+	// Score: The score applied to the resource.
+	//
+	// Possible values:
+	//   "SENSITIVITY_SCORE_UNSPECIFIED" - Unused.
+	//   "SENSITIVITY_LOW" - No sensitive information detected. Limited
+	// access.
+	//   "SENSITIVITY_MODERATE" - Medium risk - PII, potentially sensitive
+	// data, or fields with free-text data that are at higher risk of having
+	// intermittent sensitive data. Consider limiting access.
+	//   "SENSITIVITY_HIGH" - High risk – SPII may be present.
+	// Exfiltration of data may lead to user data loss. Re-identification of
+	// users may be possible. Consider limiting usage and or removing SPII.
+	Score string `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Score") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Score") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2SensitivityScore) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2SensitivityScore
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2StatisticalTable: An auxiliary table containing
 // statistical information on the relative frequency of different
 // quasi-identifiers values. It has one or several quasi-identifiers
@@ -7299,6 +7877,135 @@ type GooglePrivacyDlpV2Table struct {
 
 func (s *GooglePrivacyDlpV2Table) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Table
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2TableDataProfile: The profile for a scanned table.
+type GooglePrivacyDlpV2TableDataProfile struct {
+	// ConfigSnapshot: The snapshot of the configurations used to generate
+	// the profile.
+	ConfigSnapshot *GooglePrivacyDlpV2DataProfileConfigSnapshot `json:"configSnapshot,omitempty"`
+
+	// CreateTime: The time at which the table was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DataRiskLevel: The data risk level of this table.
+	DataRiskLevel *GooglePrivacyDlpV2DataRiskLevel `json:"dataRiskLevel,omitempty"`
+
+	// DatasetId: The BigQuery dataset ID.
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// DatasetLocation: The BigQuery location where the dataset's data is
+	// stored. See https://cloud.google.com/bigquery/docs/locations for
+	// supported locations.
+	DatasetLocation string `json:"datasetLocation,omitempty"`
+
+	// DatasetProjectId: The GCP project ID that owns the BigQuery dataset.
+	DatasetProjectId string `json:"datasetProjectId,omitempty"`
+
+	// EncryptionStatus: How the table is encrypted.
+	//
+	// Possible values:
+	//   "ENCRYPTION_STATUS_UNSPECIFIED" - Unused.
+	//   "ENCRYPTION_GOOGLE_MANAGED" - Google manages server-side encryption
+	// keys on your behalf.
+	//   "ENCRYPTION_CUSTOMER_MANAGED" - Customer provides the key.
+	EncryptionStatus string `json:"encryptionStatus,omitempty"`
+
+	// ExpirationTime: Optional. The time when this table expires.
+	ExpirationTime string `json:"expirationTime,omitempty"`
+
+	// FailedColumnCount: The number of columns skipped in the table because
+	// of an error.
+	FailedColumnCount int64 `json:"failedColumnCount,omitempty,string"`
+
+	// FullResource: The resource name of the table.
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
+	FullResource string `json:"fullResource,omitempty"`
+
+	// LastModifiedTime: The time when this table was last modified
+	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+
+	// Name: The name of the profile.
+	Name string `json:"name,omitempty"`
+
+	// OtherInfoTypes: Other infoTypes found in this table's data.
+	OtherInfoTypes []*GooglePrivacyDlpV2OtherInfoTypeSummary `json:"otherInfoTypes,omitempty"`
+
+	// PredictedInfoTypes: The infoTypes predicted from this table's data.
+	PredictedInfoTypes []*GooglePrivacyDlpV2InfoTypeSummary `json:"predictedInfoTypes,omitempty"`
+
+	// ProfileLastGenerated: The last time the profile was generated.
+	ProfileLastGenerated string `json:"profileLastGenerated,omitempty"`
+
+	// ProfileStatus: Success or error status from the most recent profile
+	// generation attempt. May be empty if the profile is still being
+	// generated.
+	ProfileStatus *GooglePrivacyDlpV2ProfileStatus `json:"profileStatus,omitempty"`
+
+	// ProjectDataProfile: The resource name to the project data profile for
+	// this table.
+	ProjectDataProfile string `json:"projectDataProfile,omitempty"`
+
+	// ResourceLabels: The labels applied to the resource at the time the
+	// profile was generated.
+	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
+
+	// ResourceVisibility: How broadly a resource has been shared.
+	//
+	// Possible values:
+	//   "RESOURCE_VISIBILITY_UNSPECIFIED" - Unused.
+	//   "RESOURCE_VISIBILITY_PUBLIC" - Visible to any user.
+	//   "RESOURCE_VISIBILITY_RESTRICTED" - Visible only to specific users.
+	ResourceVisibility string `json:"resourceVisibility,omitempty"`
+
+	// RowCount: Number of rows in the table when the profile was generated.
+	RowCount int64 `json:"rowCount,omitempty,string"`
+
+	// ScannedColumnCount: The number of columns profiled in the table.
+	ScannedColumnCount int64 `json:"scannedColumnCount,omitempty,string"`
+
+	// SensitivityScore: The sensitivity score of this table.
+	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
+
+	// State: State of a profile.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unused.
+	//   "RUNNING" - The profile is currently running. Once a profile has
+	// finished it will transition to DONE.
+	//   "DONE" - The profile is no longer generating. If
+	// profile_status.status.code is 0, the profile succeeded, otherwise, it
+	// failed.
+	State string `json:"state,omitempty"`
+
+	// TableId: The BigQuery table ID.
+	TableId string `json:"tableId,omitempty"`
+
+	// TableSizeBytes: The size of the table when the profile was generated.
+	TableSizeBytes int64 `json:"tableSizeBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ConfigSnapshot") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConfigSnapshot") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2TableDataProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TableDataProfile
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

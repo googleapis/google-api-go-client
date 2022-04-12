@@ -575,12 +575,10 @@ type AppId struct {
 	//   "SHEETS_APP"
 	//   "SLIDES_APP"
 	//   "MEET_APP"
-	//   "FILE_SUGGESTION_APP" - Powered by Bullseye
+	//   "ASSISTIVE_SUGGESTION_APP" - Powered by Bullseye
 	//   "CONTACTS_APP"
 	//   "ACTIVITY_FEED_APP"
 	//   "DRIVE_APP"
-	//   "ASSISTIVE_SUGGESTION_APP" - TODO (b/220205747): replace the above
-	// FILE_SUGGESTION_APP in the future.
 	GsuiteAppType string `json:"gsuiteAppType,omitempty"`
 
 	// Id: Numeric identifier of the App. Set to Project number for 1/3P

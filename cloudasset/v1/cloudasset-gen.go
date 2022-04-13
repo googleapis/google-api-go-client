@@ -811,8 +811,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -4986,6 +4986,27 @@ type ResourceSearchResult struct {
 	// To search against the `state`: * use a field query. Example:
 	// `state:RUNNING` * use a free text query. Example: `RUNNING`
 	State string `json:"state,omitempty"`
+
+	// TagKeys: TagKey namespaced names, in the format of
+	// {ORG_ID}/{TAG_KEY_SHORT_NAME}. To search against the `tagKeys`: * use
+	// a field query. Example: - `tagKeys:"123456789/e*" -
+	// `tagKeys="123456789/env" - `tagKeys:"env" * use a free text query.
+	// Example: - `env`
+	TagKeys []string `json:"tagKeys,omitempty"`
+
+	// TagValueIds: TagValue IDs, in the format of tagValues/{TAG_VALUE_ID}.
+	// To search against the `tagValueIds`: * use a field query. Example: -
+	// `tagValueIds:"456" - `tagValueIds="tagValues/456" * use a free text
+	// query. Example: - `456`
+	TagValueIds []string `json:"tagValueIds,omitempty"`
+
+	// TagValues: TagValue namespaced names, in the format of
+	// {ORG_ID}/{TAG_KEY_SHORT_NAME}/{TAG_VALUE_SHORT_NAME}. To search
+	// against the `tagValues`: * use a field query. Example: -
+	// `tagValues:"env" - `tagValues:"env/prod" -
+	// `tagValues:"123456789/env/pr*" - `tagValues="123456789/env/prod" *
+	// use a free text query. Example: - `prod`
+	TagValues []string `json:"tagValues,omitempty"`
 
 	// UpdateTime: The last update timestamp of this resource, at which the
 	// resource was last modified or deleted. The granularity is in seconds.
@@ -9528,12 +9549,12 @@ func (c *V1SearchAllResourcesCall) Query(query string) *V1SearchAllResourcesCall
 // "name,versionedResources". The read_mask paths must be valid field
 // paths listed but not limited to (both snake_case and camelCase are
 // supported): * name * assetType * project * displayName * description
-// * location * labels * networkTags * kmsKey * createTime * updateTime
-// * state * additionalAttributes * versionedResources If read_mask is
-// not specified, all fields except versionedResources will be returned.
-// If only '*' is specified, all fields including versionedResources
-// will be returned. Any invalid field path will trigger
-// INVALID_ARGUMENT error.
+// * location * tagKeys * tagValues * tagValueIds * labels * networkTags
+// * kmsKey * createTime * updateTime * state * additionalAttributes *
+// versionedResources If read_mask is not specified, all fields except
+// versionedResources will be returned. If only '*' is specified, all
+// fields including versionedResources will be returned. Any invalid
+// field path will trigger INVALID_ARGUMENT error.
 func (c *V1SearchAllResourcesCall) ReadMask(readMask string) *V1SearchAllResourcesCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -9674,7 +9695,7 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Optional. A comma-separated list of fields specifying which fields to be returned in ResourceSearchResult. Only '*' or combination of top level fields can be specified. Field names of both snake_case and camelCase are supported. Examples: `\"*\"`, `\"name,location\"`, `\"name,versionedResources\"`. The read_mask paths must be valid field paths listed but not limited to (both snake_case and camelCase are supported): * name * assetType * project * displayName * description * location * labels * networkTags * kmsKey * createTime * updateTime * state * additionalAttributes * versionedResources If read_mask is not specified, all fields except versionedResources will be returned. If only '*' is specified, all fields including versionedResources will be returned. Any invalid field path will trigger INVALID_ARGUMENT error.",
+	//       "description": "Optional. A comma-separated list of fields specifying which fields to be returned in ResourceSearchResult. Only '*' or combination of top level fields can be specified. Field names of both snake_case and camelCase are supported. Examples: `\"*\"`, `\"name,location\"`, `\"name,versionedResources\"`. The read_mask paths must be valid field paths listed but not limited to (both snake_case and camelCase are supported): * name * assetType * project * displayName * description * location * tagKeys * tagValues * tagValueIds * labels * networkTags * kmsKey * createTime * updateTime * state * additionalAttributes * versionedResources If read_mask is not specified, all fields except versionedResources will be returned. If only '*' is specified, all fields including versionedResources will be returned. Any invalid field path will trigger INVALID_ARGUMENT error.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

@@ -1177,7 +1177,7 @@ type AgeRangeAssignedTargetingOptionDetails struct {
 	// in this field can be 1) targeted solely, or, 2) part of a larger
 	// continuous age range. The reach of a continuous age range targeting
 	// can be expanded by also targeting an audience of an unknown age.
-	// Output only in v1. Required in v2.
+	// Output only in v1.
 	//
 	// Possible values:
 	//   "AGE_RANGE_UNSPECIFIED" - Default value when age range is not
@@ -2194,8 +2194,7 @@ func (s *AudienceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, err
 // is not supported. Remove all audio content type targeting options to
 // achieve this effect.
 type AudioContentTypeAssignedTargetingOptionDetails struct {
-	// AudioContentType: The audio content type. Output only in v1. Required
-	// in v2.
+	// AudioContentType: The audio content type. Output only in v1.
 	//
 	// Possible values:
 	//   "AUDIO_CONTENT_TYPE_UNSPECIFIED" - Audio content type is not
@@ -4586,7 +4585,7 @@ type ContentInstreamPositionAssignedTargetingOptionDetails struct {
 	AdType string `json:"adType,omitempty"`
 
 	// ContentInstreamPosition: The content instream position for video or
-	// audio ads. Output only in v1. Required in v2.
+	// audio ads. Output only in v1.
 	//
 	// Possible values:
 	//   "CONTENT_INSTREAM_POSITION_UNSPECIFIED" - Content instream position
@@ -4700,7 +4699,7 @@ type ContentOutstreamPositionAssignedTargetingOptionDetails struct {
 	AdType string `json:"adType,omitempty"`
 
 	// ContentOutstreamPosition: The content outstream position. Output only
-	// in v1. Required in v2.
+	// in v1.
 	//
 	// Possible values:
 	//   "CONTENT_OUTSTREAM_POSITION_UNSPECIFIED" - Content outstream
@@ -6439,7 +6438,6 @@ func (s *DeviceMakeModelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_DEVICE_TYPE`.
 type DeviceTypeAssignedTargetingOptionDetails struct {
 	// DeviceType: The display name of the device type. Output only in v1.
-	// Required in v2.
 	//
 	// Possible values:
 	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
@@ -7126,8 +7124,7 @@ type Empty struct {
 // of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_ENVIRONMENT`.
 type EnvironmentAssignedTargetingOptionDetails struct {
-	// Environment: The serving environment. Output only in v1. Required in
-	// v2.
+	// Environment: The serving environment. Output only in v1.
 	//
 	// Possible values:
 	//   "ENVIRONMENT_UNSPECIFIED" - Default value when environment is not
@@ -8044,7 +8041,7 @@ func (s *FloodlightGroup) MarshalJSON() ([]byte, error) {
 type FrequencyCap struct {
 	// MaxImpressions: The maximum number of times a user may be shown the
 	// same ad during this period. Must be greater than 0. Required when
-	// unlimited is `false` and max_views is not set.
+	// unlimited is `false`.
 	MaxImpressions int64 `json:"maxImpressions,omitempty"`
 
 	// TimeUnit: The time unit in which the frequency cap will be applied.
@@ -8110,8 +8107,7 @@ func (s *FrequencyCap) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARTGETING_TYPE_GENDER`.
 type GenderAssignedTargetingOptionDetails struct {
-	// Gender: The gender of the audience. Output only in v1. Required in
-	// v2.
+	// Gender: The gender of the audience. Output only in v1.
 	//
 	// Possible values:
 	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified
@@ -11655,8 +11651,8 @@ type MaximizeSpendBidStrategy struct {
 	// impressions.
 	PerformanceGoalType string `json:"performanceGoalType,omitempty"`
 
-	// RaiseBidForDeals: Controls whether the strategy takes deal floor
-	// prices into account.
+	// RaiseBidForDeals: Whether the strategy takes deal floor prices into
+	// account.
 	RaiseBidForDeals bool `json:"raiseBidForDeals,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -11842,8 +11838,7 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // Explicitly targeting all options is not supported. Remove all native
 // content position targeting options to achieve this effect.
 type NativeContentPositionAssignedTargetingOptionDetails struct {
-	// ContentPosition: The content position. Output only in v1. Required in
-	// v2.
+	// ContentPosition: The content position. Output only in v1.
 	//
 	// Possible values:
 	//   "NATIVE_CONTENT_POSITION_UNSPECIFIED" - Native content position is
@@ -12142,7 +12137,7 @@ func (s *ObaIcon) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_OMID`.
 type OmidAssignedTargetingOptionDetails struct {
 	// Omid: The type of Open Measurement enabled inventory. Output only in
-	// v1. Required in v2.
+	// v1.
 	//
 	// Possible values:
 	//   "OMID_UNSPECIFIED" - Default value when omid targeting is not
@@ -14141,7 +14136,7 @@ type SensitiveCategoryAssignedTargetingOptionDetails struct {
 	ExcludedTargetingOptionId string `json:"excludedTargetingOptionId,omitempty"`
 
 	// SensitiveCategory: An enum for the DV360 Sensitive category content
-	// classifier. Output only in v1. Required in v2.
+	// classifier. Output only in v1.
 	//
 	// Possible values:
 	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - This enum is only a placeholder
@@ -15294,8 +15289,7 @@ type VideoPlayerSizeAssignedTargetingOptionDetails struct {
 	// targeting_type is `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
-	// VideoPlayerSize: The video player size. Output only in v1. Required
-	// in v2.
+	// VideoPlayerSize: The video player size. Output only in v1.
 	//
 	// Possible values:
 	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not
@@ -15396,7 +15390,6 @@ type ViewabilityAssignedTargetingOptionDetails struct {
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// Viewability: The predicted viewability percentage. Output only in v1.
-	// Required in v2.
 	//
 	// Possible values:
 	//   "VIEWABILITY_UNSPECIFIED" - Default value when viewability is not
@@ -24725,8 +24718,8 @@ func (c *AdvertisersLineItemsListCall) Filter(filter string) *AdvertisersLineIte
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list. Acceptable values are: * "displayName" (default) *
-// "entityStatus" * “flight.dateRange.endDate” * "updateTime" The
+// the list. Acceptable values are: * `displayName` (default) *
+// `entityStatus` * `flight.dateRange.endDate` * `updateTime` The
 // default sorting order is ascending. To specify descending order for a
 // field, a suffix "desc" should be added to the field name. Example:
 // `displayName desc`.
@@ -24875,7 +24868,7 @@ func (c *AdvertisersLineItemsListCall) Do(opts ...googleapi.CallOption) (*ListLi
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list. Acceptable values are: * \"displayName\" (default) * \"entityStatus\" * “flight.dateRange.endDate” * \"updateTime\" The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) * `entityStatus` * `flight.dateRange.endDate` * `updateTime` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

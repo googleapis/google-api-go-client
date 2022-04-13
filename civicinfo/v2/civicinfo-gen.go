@@ -954,9 +954,9 @@ type GeocodingSummary struct {
 	//   "typeTransitLine" - A transit line is a collection of transit legs,
 	// associated with some invariant properties of the trips that run over
 	// the legs. See also transitline.proto
-	//   "typeTransitAgency" - A transit agency operates a number of lines,
-	// typically all in the same city, region or country. See also
-	// transitagency.proto
+	//   "typeTransitAgencyDeprecatedValue" - TYPE_TRANSIT_AGENCY was moved
+	// to 0xC91. This deprecated enum value still exists for debugging
+	// purposes only.
 	//   "typeTransitTransfer" - DEPRECATED
 	//   "typeSegmentPath" - ABSTRACT
 	//   "typeRoadSign" - Road sign features have names, point geometry,
@@ -1375,6 +1375,11 @@ type GeocodingSummary struct {
 	// region-specific conventions for structuring addresses. These features
 	// aren't necessarily defined by physical geographic features, so they
 	// are classified as meta-features.
+	//   "typeTransitAgency" - A transit agency operates a number of lines,
+	// typically all in the same city, region or country. See also
+	// transitagency.proto
+	//   "typeFutureGeometry" - A feature whose geometry is planned to
+	// replace the geometry on another feature.
 	//   "typeEvent" - DEPRECATED
 	//   "typeEarthquake" - DEPRECATED
 	//   "typeHurricane" - DEPRECATED
@@ -1779,6 +1784,82 @@ func (s *PollingLocation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+type Precinct struct {
+	// AdministrationRegionId: ID of the AdministrationRegion message for
+	// this precinct. Corresponds to LocalityId xml tag.
+	AdministrationRegionId string `json:"administrationRegionId,omitempty"`
+
+	// ContestId: ID(s) of the Contest message(s) for this precinct.
+	ContestId []string `json:"contestId,omitempty"`
+
+	// DatasetId: Required. Dataset ID. What datasets our Precincts come
+	// from.
+	DatasetId int64 `json:"datasetId,omitempty,string"`
+
+	// EarlyVoteSiteId: ID(s) of the PollingLocation message(s) for this
+	// precinct.
+	EarlyVoteSiteId []string `json:"earlyVoteSiteId,omitempty"`
+
+	// ElectoralDistrictId: ID(s) of the ElectoralDistrict message(s) for
+	// this precinct.
+	ElectoralDistrictId []string `json:"electoralDistrictId,omitempty"`
+
+	// Id: Required. A unique identifier for this precinct.
+	Id string `json:"id,omitempty"`
+
+	// MailOnly: Specifies if the precinct runs mail-only elections.
+	MailOnly bool `json:"mailOnly,omitempty"`
+
+	// Name: Required. The name of the precinct.
+	Name string `json:"name,omitempty"`
+
+	// Number: The number of the precinct.
+	Number string `json:"number,omitempty"`
+
+	// OcdId: Encouraged. The OCD ID of the precinct
+	OcdId []string `json:"ocdId,omitempty"`
+
+	// PollingLocationId: ID(s) of the PollingLocation message(s) for this
+	// precinct.
+	PollingLocationId []string `json:"pollingLocationId,omitempty"`
+
+	// SpatialBoundaryId: ID(s) of the SpatialBoundary message(s) for this
+	// precinct. Used to specify a geometrical boundary of the precinct.
+	SpatialBoundaryId []string `json:"spatialBoundaryId,omitempty"`
+
+	// SplitName: If present, this proto corresponds to one portion of split
+	// precinct. Other portions of this precinct are guaranteed to have the
+	// same `name`. If not present, this proto represents a full precicnt.
+	SplitName string `json:"splitName,omitempty"`
+
+	// Ward: Specifies the ward the precinct is contained within.
+	Ward string `json:"ward,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdministrationRegionId") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdministrationRegionId")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Precinct) MarshalJSON() ([]byte, error) {
+	type NoMethod Precinct
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type RepresentativeInfoData struct {
 	// Divisions: A map of political geographic divisions that contain the
 	// requested address, keyed by the unique Open Civic Data identifier for
@@ -1997,6 +2078,11 @@ type VoterInfoResponse struct {
 	PollingLocations []*PollingLocation `json:"pollingLocations,omitempty"`
 
 	PrecinctId string `json:"precinctId,omitempty"`
+
+	// Precincts: The precincts that match this voter's address. Will only
+	// be returned for project IDs which have been whitelisted as "partner
+	// projects".
+	Precincts []*Precinct `json:"precincts,omitempty"`
 
 	// State: Local Election Information for the state that the voter votes
 	// in. For the US, there will only be one element in this array.

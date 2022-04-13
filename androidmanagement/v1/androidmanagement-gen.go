@@ -437,11 +437,12 @@ func (s *AppTrackInfo) MarshalJSON() ([]byte, error) {
 
 // AppVersion: This represents a single version of the app.
 type AppVersion struct {
-	// Production: True if this version is a production track.
+	// Production: If the value is True, it indicates that this version is a
+	// production track.
 	Production bool `json:"production,omitempty"`
 
-	// TrackIds: Track ids that the app version is published in. This
-	// doesn't include the production track (see production instead).
+	// TrackIds: Track identifiers that the app version is published in.
+	// This does not include the production track (see production instead).
 	TrackIds []string `json:"trackIds,omitempty"`
 
 	// VersionCode: Unique increasing identifier for the app version.
@@ -545,7 +546,7 @@ type Application struct {
 	FullDescription string `json:"fullDescription,omitempty"`
 
 	// IconUrl: A link to an image that can be used as an icon for the app.
-	// This image is suitable for use at up to 512px x 512px
+	// This image is suitable for use up to a pixel size of 512 x 512.
 	IconUrl string `json:"iconUrl,omitempty"`
 
 	// ManagedProperties: The set of managed properties available to be
@@ -575,7 +576,8 @@ type Application struct {
 	ScreenshotUrls []string `json:"screenshotUrls,omitempty"`
 
 	// SmallIconUrl: A link to a smaller image that can be used as an icon
-	// for the app. This image is suitable for use at up to 128px x 128px.
+	// for the app. This image is suitable for use up to a pixel size of 128
+	// x 128.
 	SmallIconUrl string `json:"smallIconUrl,omitempty"`
 
 	// Title: The title of the app. Localized.
@@ -1968,6 +1970,8 @@ type Enterprise struct {
 	// report.
 	//   "COMMAND" - A notification sent when a device command has
 	// completed.
+	//   "USAGE_LOGS" - A notification sent when device sends
+	// BatchUsageLogEvents.
 	EnabledNotificationTypes []string `json:"enabledNotificationTypes,omitempty"`
 
 	// EnterpriseDisplayName: The name of the enterprise displayed to users.
@@ -1988,8 +1992,8 @@ type Enterprise struct {
 	// where the value of each component is between 0 and 255, inclusive.
 	PrimaryColor int64 `json:"primaryColor,omitempty"`
 
-	// PubsubTopic: The topic that Cloud Pub/Sub notifications are published
-	// to, in the form projects/{project}/topics/{topic}. This field is only
+	// PubsubTopic: The topic which Pub/Sub notifications are published to,
+	// in the form projects/{project}/topics/{topic}. This field is only
 	// required if Pub/Sub notifications are enabled.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
@@ -2039,7 +2043,7 @@ type ExtensionConfig struct {
 	// of any local command status updates.
 	NotificationReceiver string `json:"notificationReceiver,omitempty"`
 
-	// SigningKeyFingerprintsSha256: Hex-encoded SHA256 hash of the signing
+	// SigningKeyFingerprintsSha256: Hex-encoded SHA-256 hash of the signing
 	// certificate of the extension app. Only hexadecimal string
 	// representations of 64 characters are valid.If not specified, the
 	// signature for the corresponding package name is obtained from the
@@ -4105,6 +4109,9 @@ type Policy struct {
 	// This is available only on fully managed devices.
 	UnmuteMicrophoneDisabled bool `json:"unmuteMicrophoneDisabled,omitempty"`
 
+	// UsageLog: Configuration of device activity logging.
+	UsageLog *UsageLog `json:"usageLog,omitempty"`
+
 	// UsbFileTransferDisabled: Whether transferring files over USB is
 	// disabled.
 	UsbFileTransferDisabled bool `json:"usbFileTransferDisabled,omitempty"`
@@ -4887,6 +4894,75 @@ func (s *TermsAndConditions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UsageLog: Controls types of device activity logs collected from the
+// device and reported via Pub/Sub notification
+// (https://developers.google.com/android/management/notifications).
+type UsageLog struct {
+	// EnabledLogTypes: Specifies which log types are enabled. Note that
+	// users will receive on-device messaging when usage logging is enabled.
+	//
+	// Possible values:
+	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
+	//   "SECURITY_LOGS" - Enable logging of on-device security events, like
+	// when the device password is incorrectly entered or removable storage
+	// is mounted. See event for a complete description of the logged
+	// security events. Supported for fully managed devices on Android 7.0
+	// and above. Supported for company-owned devices with a work profile on
+	// Android 12 and above, on which only security events from the work
+	// profile are logged.
+	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network
+	// events, like DNS lookups and TCP connections. See event for a
+	// complete description of the logged network events. Supported for
+	// fully managed devices on Android 8 and above. Supported for
+	// company-owned devices with a work profile on Android 12 and above, on
+	// which only network events from the work profile are logged.
+	EnabledLogTypes []string `json:"enabledLogTypes,omitempty"`
+
+	// UploadOnCellularAllowed: Specifies which of the enabled log types can
+	// be uploaded over mobile data. By default logs are queued for upload
+	// when the device connects to WiFi.
+	//
+	// Possible values:
+	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
+	//   "SECURITY_LOGS" - Enable logging of on-device security events, like
+	// when the device password is incorrectly entered or removable storage
+	// is mounted. See event for a complete description of the logged
+	// security events. Supported for fully managed devices on Android 7.0
+	// and above. Supported for company-owned devices with a work profile on
+	// Android 12 and above, on which only security events from the work
+	// profile are logged.
+	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network
+	// events, like DNS lookups and TCP connections. See event for a
+	// complete description of the logged network events. Supported for
+	// fully managed devices on Android 8 and above. Supported for
+	// company-owned devices with a work profile on Android 12 and above, on
+	// which only network events from the work profile are logged.
+	UploadOnCellularAllowed []string `json:"uploadOnCellularAllowed,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnabledLogTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnabledLogTypes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsageLog) MarshalJSON() ([]byte, error) {
+	type NoMethod UsageLog
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // User: A user belonging to an enterprise.
 type User struct {
 	// AccountIdentifier: A unique identifier you create for this user, such
@@ -5191,18 +5267,22 @@ func (r *EnterprisesService) Create(enterprise *Enterprise) *EnterprisesCreateCa
 
 // AgreementAccepted sets the optional parameter "agreementAccepted":
 // Whether the enterprise admin has seen and agreed to the managed
-// Google Play Agreement (https://www.android.com/enterprise/terms/).
-// Always set this to true when creating an EMM-managed enterprise. Do
-// not create the enterprise until the admin has viewed and accepted the
-// agreement.
+// Google Play Agreement (https://www.android.com/enterprise/terms/). Do
+// not set this field for any customer-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises).
+// Set this to field to true for all EMM-managed enterprises
+// (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).
 func (c *EnterprisesCreateCall) AgreementAccepted(agreementAccepted bool) *EnterprisesCreateCall {
 	c.urlParams_.Set("agreementAccepted", fmt.Sprint(agreementAccepted))
 	return c
 }
 
 // EnterpriseToken sets the optional parameter "enterpriseToken": The
-// enterprise token appended to the callback URL. Only set this when
-// creating a customer-managed enterprise.
+// enterprise token appended to the callback URL. Set this when creating
+// a customer-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises)
+// and not when creating a deprecated EMM-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).
 func (c *EnterprisesCreateCall) EnterpriseToken(enterpriseToken string) *EnterprisesCreateCall {
 	c.urlParams_.Set("enterpriseToken", enterpriseToken)
 	return c
@@ -5216,8 +5296,11 @@ func (c *EnterprisesCreateCall) ProjectId(projectId string) *EnterprisesCreateCa
 }
 
 // SignupUrlName sets the optional parameter "signupUrlName": The name
-// of the SignupUrl used to sign up for the enterprise. Only set this
-// when creating a customer-managed enterprise.
+// of the SignupUrl used to sign up for the enterprise. Set this when
+// creating a customer-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises)
+// and not when creating a deprecated EMM-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).
 func (c *EnterprisesCreateCall) SignupUrlName(signupUrlName string) *EnterprisesCreateCall {
 	c.urlParams_.Set("signupUrlName", signupUrlName)
 	return c
@@ -5318,12 +5401,12 @@ func (c *EnterprisesCreateCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "agreementAccepted": {
-	//       "description": "Whether the enterprise admin has seen and agreed to the managed Google Play Agreement (https://www.android.com/enterprise/terms/). Always set this to true when creating an EMM-managed enterprise. Do not create the enterprise until the admin has viewed and accepted the agreement.",
+	//       "description": "Whether the enterprise admin has seen and agreed to the managed Google Play Agreement (https://www.android.com/enterprise/terms/). Do not set this field for any customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises). Set this to field to true for all EMM-managed enterprises (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "enterpriseToken": {
-	//       "description": "The enterprise token appended to the callback URL. Only set this when creating a customer-managed enterprise.",
+	//       "description": "The enterprise token appended to the callback URL. Set this when creating a customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises) and not when creating a deprecated EMM-managed enterprise (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5333,7 +5416,7 @@ func (c *EnterprisesCreateCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	//       "type": "string"
 	//     },
 	//     "signupUrlName": {
-	//       "description": "The name of the SignupUrl used to sign up for the enterprise. Only set this when creating a customer-managed enterprise.",
+	//       "description": "The name of the SignupUrl used to sign up for the enterprise. Set this when creating a customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises) and not when creating a deprecated EMM-managed enterprise (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

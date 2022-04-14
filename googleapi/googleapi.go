@@ -152,6 +152,18 @@ func CheckResponse(res *http.Response) error {
 	}
 }
 
+// IsNotFound reports whether err is the result of the
+// server replying with http.StatusNotFound.
+// Such error values are sometimes returned by "Do" methods
+// on calls when creation of ressource was too recent to return values
+func IsNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	ae, ok := err.(*Error)
+	return ok && ae.Code == http.StatusNotFound
+}
+
 // IsNotModified reports whether err is the result of the
 // server replying with http.StatusNotModified.
 // Such error values are sometimes returned by "Do" methods

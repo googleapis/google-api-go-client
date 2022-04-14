@@ -339,8 +339,9 @@ type Attestor struct {
 	// updated. The field may be displayed in chooser dialogs.
 	Description string `json:"description,omitempty"`
 
-	// Etag: Optional. Used to prevent updating the attestor when another
-	// request has updated it since it was retrieved.
+	// Etag: Optional. A checksum, returned by the server, that can be sent
+	// on update requests to ensure the attestor has an up-to-date value
+	// before attempting to update it. See https://google.aip.dev/154.
 	Etag string `json:"etag,omitempty"`
 
 	// Name: Required. The resource name, in the format:
@@ -449,8 +450,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -857,8 +858,9 @@ type Policy struct {
 	// Description: Optional. A descriptive comment.
 	Description string `json:"description,omitempty"`
 
-	// Etag: Optional. Used to prevent updating the policy when another
-	// request has updated it since it was retrieved.
+	// Etag: Optional. A checksum, returned by the server, that can be sent
+	// on update requests to ensure the policy has an up-to-date value
+	// before attempting to update it. See https://google.aip.dev/154.
 	Etag string `json:"etag,omitempty"`
 
 	// GlobalPolicyEvaluationMode: Optional. Controls the evaluation of a
@@ -930,7 +932,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *IamPolicy `json:"policy,omitempty"`
 
@@ -1028,7 +1030,7 @@ func (s *Signature) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`

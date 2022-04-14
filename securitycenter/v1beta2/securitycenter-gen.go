@@ -1957,6 +1957,7 @@ type MitreAttack struct {
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "DATA_DESTRUCTION" - T1485
+	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
@@ -2019,6 +2020,7 @@ type MitreAttack struct {
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "DATA_DESTRUCTION" - T1485
+	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 
 	// Version: The MITRE ATT&CK version referenced by the above fields.

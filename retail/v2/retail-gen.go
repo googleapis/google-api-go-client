@@ -1946,7 +1946,12 @@ type GoogleCloudRetailV2PredictRequest struct {
 	// UserEvent: Required. Context about the user, what they are looking at
 	// and what action they took to trigger the predict request. Note that
 	// this user event detail won't be ingested to userEvent logs. Thus, a
-	// separate userEvent write request is required for event logging.
+	// separate userEvent write request is required for event logging. Don't
+	// set UserEvent.visitor_id or UserInfo.user_id to the same fixed ID for
+	// different users. If you are trying to receive non-personalized
+	// recommendations (not recommended; this can negatively impact model
+	// performance), instead set UserEvent.visitor_id to a random unique ID
+	// and leave UserInfo.user_id unset.
 	UserEvent *GoogleCloudRetailV2UserEvent `json:"userEvent,omitempty"`
 
 	// ValidateOnly: Use validate only mode for this prediction query. If
@@ -2649,15 +2654,15 @@ type GoogleCloudRetailV2ProductLevelConfig struct {
 	// IngestionProductType: The type of Products allowed to be ingested
 	// into the catalog. Acceptable values are: * `primary` (default): You
 	// can ingest Products of all types. When ingesting a Product, its type
-	// will default to Product.Type.PRIMARY if unset. * `variant`: You can
-	// only ingest Product.Type.VARIANT Products. This means
-	// Product.primary_product_id cannot be empty. If this field is set to
-	// an invalid value other than these, an INVALID_ARGUMENT error is
-	// returned. If this field is `variant` and
-	// merchant_center_product_id_field is `itemGroupId`, an
-	// INVALID_ARGUMENT error is returned. See Using product levels
-	// (https://cloud.google.com/retail/recommendations-ai/docs/catalog#product-levels)
-	// for more details.
+	// will default to Product.Type.PRIMARY if unset. * `variant`
+	// (incompatible with Retail Search): You can only ingest
+	// Product.Type.VARIANT Products. This means Product.primary_product_id
+	// cannot be empty. If this field is set to an invalid value other than
+	// these, an INVALID_ARGUMENT error is returned. If this field is
+	// `variant` and merchant_center_product_id_field is `itemGroupId`, an
+	// INVALID_ARGUMENT error is returned. See Product levels
+	// (https://cloud.google.com/retail/docs/catalog#product-levels) for
+	// more details.
 	IngestionProductType string `json:"ingestionProductType,omitempty"`
 
 	// MerchantCenterProductIdField: Which field of Merchant Center Product
@@ -2669,9 +2674,9 @@ type GoogleCloudRetailV2ProductLevelConfig struct {
 	// represent the item group. If this field is set to an invalid value
 	// other than these, an INVALID_ARGUMENT error is returned. If this
 	// field is `itemGroupId` and ingestion_product_type is `variant`, an
-	// INVALID_ARGUMENT error is returned. See Using product levels
-	// (https://cloud.google.com/retail/recommendations-ai/docs/catalog#product-levels)
-	// for more details.
+	// INVALID_ARGUMENT error is returned. See Product levels
+	// (https://cloud.google.com/retail/docs/catalog#product-levels) for
+	// more details.
 	MerchantCenterProductIdField string `json:"merchantCenterProductIdField,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3234,7 +3239,9 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// PersonalizationSpec: The specification for personalization.
 	PersonalizationSpec *GoogleCloudRetailV2SearchRequestPersonalizationSpec `json:"personalizationSpec,omitempty"`
 
-	// Query: Raw search query.
+	// Query: Raw search query. If this field is empty, the request is
+	// considered a category browsing request and returned results are based
+	// on filter and page_categories.
 	Query string `json:"query,omitempty"`
 
 	// QueryExpansionSpec: The query expansion specification that specifies
@@ -4262,10 +4269,12 @@ type GoogleCloudRetailV2UserEvent struct {
 	// example, this could be implemented with an HTTP cookie, which should
 	// be able to uniquely identify a visitor on a single device. This
 	// unique identifier should not change if the visitor log in/out of the
-	// website. The field must be a UTF-8 encoded string with a length limit
-	// of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.
-	// The field should not contain PII or user-data. We recommend to use
-	// Google Analystics Client ID
+	// website. Don't set the field to the same fixed ID for different
+	// users. This mixes the event history of those users together, which
+	// results in degraded model quality. The field must be a UTF-8 encoded
+	// string with a length limit of 128 characters. Otherwise, an
+	// INVALID_ARGUMENT error is returned. The field should not contain PII
+	// or user-data. We recommend to use Google Analystics Client ID
 	// (https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#clientId)
 	// for this field.
 	VisitorId string `json:"visitorId,omitempty"`
@@ -4430,9 +4439,12 @@ type GoogleCloudRetailV2UserInfo struct {
 	UserAgent string `json:"userAgent,omitempty"`
 
 	// UserId: Highly recommended for logged-in users. Unique identifier for
-	// logged-in user, such as a user name. Always use a hashed value for
-	// this ID. The field must be a UTF-8 encoded string with a length limit
-	// of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.
+	// logged-in user, such as a user name. Don't set for anonymous users.
+	// Always use a hashed value for this ID. Don't set the field to the
+	// same fixed ID for different users. This mixes the event history of
+	// those users together, which results in degraded model quality. The
+	// field must be a UTF-8 encoded string with a length limit of 128
+	// characters. Otherwise, an INVALID_ARGUMENT error is returned.
 	UserId string `json:"userId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DirectUserRequest")
@@ -8025,7 +8037,10 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) AllowMissing(allowM
 // only fields are NOT supported. If not set, all supported fields (the
 // fields that are neither immutable nor output only) are updated. If an
 // unsupported or unknown field is provided, an INVALID_ARGUMENT error
-// is returned.
+// is returned. The attribute key can be updated by setting the mask
+// path as "attributes.${key_name}". If a key name is present in the
+// mask but not in the patching product from the request, this key will
+// be deleted after the update.
 func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCatalogsBranchesProductsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8143,7 +8158,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Indicates which fields in the provided Product to update. The immutable and output only fields are NOT supported. If not set, all supported fields (the fields that are neither immutable nor output only) are updated. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned.",
+	//       "description": "Indicates which fields in the provided Product to update. The immutable and output only fields are NOT supported. If not set, all supported fields (the fields that are neither immutable nor output only) are updated. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned. The attribute key can be updated by setting the mask path as \"attributes.${key_name}\". If a key name is present in the mask but not in the patching product from the request, this key will be deleted after the update.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -9160,15 +9175,18 @@ type ProjectsLocationsCatalogsPlacementsPredictCall struct {
 // Predict: Makes a recommendation prediction.
 //
 // - placement: Full resource name of the format:
-//   {name=projects/*/locations/global/catalogs/default_catalog/placement
-//   s/*} or
 //   {name=projects/*/locations/global/catalogs/default_catalog/servingCo
-//   nfigs/*} The ID of the Recommendations AI placement. Before you can
-//   request predictions from your model, you must create at least one
-//   placement for it. For more information, see Managing placements
-//   (https://cloud.google.com/retail/recommendations-ai/docs/manage-placements).
-//   The full list of available placements can be seen at
-//   https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements.
+//   nfigs/*} or
+//   {name=projects/*/locations/global/catalogs/default_catalog/placement
+//   s/*}. We recommend using the `servingConfigs` resource.
+//   `placements` is a legacy resource. The ID of the Recommendations AI
+//   serving config or placement. Before you can request predictions
+//   from your model, you must create at least one serving config or
+//   placement for it. For more information, see [Managing serving
+//   configurations].
+//   (https://cloud.google.com/retail/docs/manage-configs). The full
+//   list of available serving configs can be seen at
+//   https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
 func (r *ProjectsLocationsCatalogsPlacementsService) Predict(placement string, googlecloudretailv2predictrequest *GoogleCloudRetailV2PredictRequest) *ProjectsLocationsCatalogsPlacementsPredictCall {
 	c := &ProjectsLocationsCatalogsPlacementsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -9277,7 +9295,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/placements/*} or {name=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*} The ID of the Recommendations AI placement. Before you can request predictions from your model, you must create at least one placement for it. For more information, see [Managing placements](https://cloud.google.com/retail/recommendations-ai/docs/manage-placements). The full list of available placements can be seen at https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements",
+	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*} or {name=projects/*/locations/global/catalogs/default_catalog/placements/*}. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Managing serving configurations]. (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -9313,12 +9331,13 @@ type ProjectsLocationsCatalogsPlacementsSearchCall struct {
 // who have Retail Search enabled. Please enable Retail Search on Cloud
 // Console before using this feature.
 //
-// - placement: The resource name of the search engine placement, such
-//   as
-//   `projects/*/locations/global/catalogs/default_catalog/placements/def
-//   ault_search` or
+// - placement: The resource name of the Retail Search serving config,
+//   such as
 //   `projects/*/locations/global/catalogs/default_catalog/servingConfigs
-//   /default_serving_config` This field is used to identify the serving
+//   /default_serving_config` or the name of the legacy placement
+//   resource, such as
+//   `projects/*/locations/global/catalogs/default_catalog/placements/def
+//   ault_search`. This field is used to identify the serving
 //   configuration name and the set of models that will be used to make
 //   the search.
 func (r *ProjectsLocationsCatalogsPlacementsService) Search(placement string, googlecloudretailv2searchrequest *GoogleCloudRetailV2SearchRequest) *ProjectsLocationsCatalogsPlacementsSearchCall {
@@ -9429,7 +9448,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. The resource name of the search engine placement, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search` or `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
+	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -9485,15 +9504,18 @@ type ProjectsLocationsCatalogsServingConfigsPredictCall struct {
 // Predict: Makes a recommendation prediction.
 //
 // - placement: Full resource name of the format:
-//   {name=projects/*/locations/global/catalogs/default_catalog/placement
-//   s/*} or
 //   {name=projects/*/locations/global/catalogs/default_catalog/servingCo
-//   nfigs/*} The ID of the Recommendations AI placement. Before you can
-//   request predictions from your model, you must create at least one
-//   placement for it. For more information, see Managing placements
-//   (https://cloud.google.com/retail/recommendations-ai/docs/manage-placements).
-//   The full list of available placements can be seen at
-//   https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements.
+//   nfigs/*} or
+//   {name=projects/*/locations/global/catalogs/default_catalog/placement
+//   s/*}. We recommend using the `servingConfigs` resource.
+//   `placements` is a legacy resource. The ID of the Recommendations AI
+//   serving config or placement. Before you can request predictions
+//   from your model, you must create at least one serving config or
+//   placement for it. For more information, see [Managing serving
+//   configurations].
+//   (https://cloud.google.com/retail/docs/manage-configs). The full
+//   list of available serving configs can be seen at
+//   https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
 func (r *ProjectsLocationsCatalogsServingConfigsService) Predict(placement string, googlecloudretailv2predictrequest *GoogleCloudRetailV2PredictRequest) *ProjectsLocationsCatalogsServingConfigsPredictCall {
 	c := &ProjectsLocationsCatalogsServingConfigsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -9602,7 +9624,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/placements/*} or {name=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*} The ID of the Recommendations AI placement. Before you can request predictions from your model, you must create at least one placement for it. For more information, see [Managing placements](https://cloud.google.com/retail/recommendations-ai/docs/manage-placements). The full list of available placements can be seen at https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements",
+	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*} or {name=projects/*/locations/global/catalogs/default_catalog/placements/*}. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Managing serving configurations]. (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/servingConfigs/[^/]+$",
 	//       "required": true,
@@ -9638,12 +9660,13 @@ type ProjectsLocationsCatalogsServingConfigsSearchCall struct {
 // who have Retail Search enabled. Please enable Retail Search on Cloud
 // Console before using this feature.
 //
-// - placement: The resource name of the search engine placement, such
-//   as
-//   `projects/*/locations/global/catalogs/default_catalog/placements/def
-//   ault_search` or
+// - placement: The resource name of the Retail Search serving config,
+//   such as
 //   `projects/*/locations/global/catalogs/default_catalog/servingConfigs
-//   /default_serving_config` This field is used to identify the serving
+//   /default_serving_config` or the name of the legacy placement
+//   resource, such as
+//   `projects/*/locations/global/catalogs/default_catalog/placements/def
+//   ault_search`. This field is used to identify the serving
 //   configuration name and the set of models that will be used to make
 //   the search.
 func (r *ProjectsLocationsCatalogsServingConfigsService) Search(placement string, googlecloudretailv2searchrequest *GoogleCloudRetailV2SearchRequest) *ProjectsLocationsCatalogsServingConfigsSearchCall {
@@ -9754,7 +9777,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. The resource name of the search engine placement, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search` or `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
+	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/servingConfigs/[^/]+$",
 	//       "required": true,

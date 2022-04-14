@@ -414,6 +414,41 @@ func (s *AutoscalingPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AuxiliaryServicesConfig: Auxiliary services configuration for a
+// Cluster.
+type AuxiliaryServicesConfig struct {
+	// MetastoreConfig: Optional. The Hive Metastore configuration for this
+	// workload.
+	MetastoreConfig *MetastoreConfig `json:"metastoreConfig,omitempty"`
+
+	// SparkHistoryServerConfig: Optional. The Spark History Server
+	// configuration for the workload.
+	SparkHistoryServerConfig *SparkHistoryServerConfig `json:"sparkHistoryServerConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MetastoreConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MetastoreConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuxiliaryServicesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AuxiliaryServicesConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BasicAutoscalingAlgorithm: Basic algorithm for autoscaling.
 type BasicAutoscalingAlgorithm struct {
 	// CooldownPeriod: Optional. Duration between scaling events. A scaling
@@ -711,8 +746,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. members can have the following values: allUsers: A
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. members can have the following values: allUsers: A
 	// special identifier that represents anyone who is on the internet;
 	// with or without a Google account. allAuthenticatedUsers: A special
 	// identifier that represents anyone who is authenticated with a Google
@@ -789,7 +824,8 @@ type Cluster struct {
 
 	// Config: Optional. The cluster config for a cluster of Compute Engine
 	// Instances. Note that Dataproc may set default values, and values may
-	// change when clusters are updated.
+	// change when clusters are updated.Exactly one of ClusterConfig or
+	// VirtualClusterConfig must be specified.
 	Config *ClusterConfig `json:"config,omitempty"`
 
 	// Labels: Optional. The labels to associate with this cluster. Label
@@ -814,6 +850,16 @@ type Cluster struct {
 
 	// StatusHistory: Output only. The previous cluster status.
 	StatusHistory []*ClusterStatus `json:"statusHistory,omitempty"`
+
+	// VirtualClusterConfig: Optional. The virtual cluster config, used when
+	// creating a Dataproc cluster that does not directly control the
+	// underlying compute resources, for example, when creating a
+	// Dataproc-on-GKE cluster
+	// (https://cloud.google.com/dataproc/docs/concepts/jobs/dataproc-gke#create-a-dataproc-on-gke-cluster).
+	// Note that Dataproc may set default values, and values may change when
+	// clusters are updated. Exactly one of config or virtualClusterConfig
+	// must be specified.
+	VirtualClusterConfig *VirtualClusterConfig `json:"virtualClusterConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -876,7 +922,8 @@ type ClusterConfig struct {
 	// for all instances in a cluster.
 	GceClusterConfig *GceClusterConfig `json:"gceClusterConfig,omitempty"`
 
-	// GkeClusterConfig: Optional. BETA. The Kubernetes Engine config for
+	// GkeClusterConfig: Optional. Deprecated. Use VirtualClusterConfig
+	// based clusters instead. BETA. The Kubernetes Engine config for
 	// Dataproc clusters deployed to Kubernetes. Setting this is considered
 	// mutually exclusive with Compute Engine-based options such as
 	// gce_cluster_config, master_config, worker_config,
@@ -1787,30 +1834,268 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 
 // GkeClusterConfig: The cluster's GKE config.
 type GkeClusterConfig struct {
-	// NamespacedGkeDeploymentTarget: Optional. A target for the deployment.
+	// GkeClusterTarget: Optional. A target GKE cluster to deploy to. It
+	// must be in the same project and region as the Dataproc cluster (the
+	// GKE cluster can be zonal or regional). Format:
+	// 'projects/{project}/locations/{location}/clusters/{cluster_id}'
+	GkeClusterTarget string `json:"gkeClusterTarget,omitempty"`
+
+	// NamespacedGkeDeploymentTarget: Optional. Deprecated. Use
+	// gkeClusterTarget. Used only for the deprecated beta. A target for the
+	// deployment.
 	NamespacedGkeDeploymentTarget *NamespacedGkeDeploymentTarget `json:"namespacedGkeDeploymentTarget,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "NamespacedGkeDeploymentTarget") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// NodePoolTarget: Optional. GKE NodePools where workloads will be
+	// scheduled. At least one node pool must be assigned the 'default'
+	// role. Each role can be given to only a single NodePoolTarget. All
+	// NodePools must have the same location settings. If a nodePoolTarget
+	// is not specified, Dataproc constructs a default nodePoolTarget.
+	NodePoolTarget []*GkeNodePoolTarget `json:"nodePoolTarget,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GkeClusterTarget") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "NamespacedGkeDeploymentTarget") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GkeClusterTarget") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
 func (s *GkeClusterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GkeClusterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GkeNodeConfig: Parameters that describe cluster nodes.
+type GkeNodeConfig struct {
+	// Accelerators: Optional. A list of hardware accelerators
+	// (https://cloud.google.com/compute/docs/gpus) to attach to each node.
+	Accelerators []*GkeNodePoolAcceleratorConfig `json:"accelerators,omitempty"`
+
+	// LocalSsdCount: Optional. The number of local SSD disks to attach to
+	// the node, which is limited by the maximum number of disks allowable
+	// per zone (see Adding Local SSDs
+	// (https://cloud.google.com/compute/docs/disks/local-ssd)).
+	LocalSsdCount int64 `json:"localSsdCount,omitempty"`
+
+	// MachineType: Optional. The name of a Compute Engine machine type
+	// (https://cloud.google.com/compute/docs/machine-types).
+	MachineType string `json:"machineType,omitempty"`
+
+	// MinCpuPlatform: Optional. Minimum CPU platform
+	// (https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform)
+	// to be used by this instance. The instance may be scheduled on the
+	// specified or a newer CPU platform. Specify the friendly names of CPU
+	// platforms, such as "Intel Haswell" or Intel Sandy Bridge".
+	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
+
+	// Preemptible: Optional. Whether the nodes are created as preemptible
+	// VM instances
+	// (https://cloud.google.com/compute/docs/instances/preemptible).
+	Preemptible bool `json:"preemptible,omitempty"`
+
+	// Spot: Optional. Spot flag for enabling Spot VM, which is a rebrand of
+	// the existing preemptible flag.
+	Spot bool `json:"spot,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Accelerators") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Accelerators") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GkeNodeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeNodeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GkeNodePoolAcceleratorConfig: A GkeNodeConfigAcceleratorConfig
+// represents a Hardware Accelerator request for a NodePool.
+type GkeNodePoolAcceleratorConfig struct {
+	// AcceleratorCount: The number of accelerator cards exposed to an
+	// instance.
+	AcceleratorCount int64 `json:"acceleratorCount,omitempty,string"`
+
+	// AcceleratorType: The accelerator type resource namename (see GPUs on
+	// Compute Engine).
+	AcceleratorType string `json:"acceleratorType,omitempty"`
+
+	// GpuPartitionSize: Size of partitions to create on the GPU. Valid
+	// values are described in the NVIDIA mig user guide
+	// (https://docs.nvidia.com/datacenter/tesla/mig-user-guide/#partitioning).
+	GpuPartitionSize string `json:"gpuPartitionSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AcceleratorCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AcceleratorCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GkeNodePoolAcceleratorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeNodePoolAcceleratorConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GkeNodePoolAutoscalingConfig: GkeNodePoolAutoscaling contains
+// information the cluster autoscaler needs to adjust the size of the
+// node pool to the current cluster usage.
+type GkeNodePoolAutoscalingConfig struct {
+	// MaxNodeCount: The maximum number of nodes in the NodePool. Must be >=
+	// min_node_count. Note: Quota must be sufficient to scale up the
+	// cluster.
+	MaxNodeCount int64 `json:"maxNodeCount,omitempty"`
+
+	// MinNodeCount: The minimum number of nodes in the NodePool. Must be >=
+	// 0 and <= max_node_count.
+	MinNodeCount int64 `json:"minNodeCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxNodeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxNodeCount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GkeNodePoolAutoscalingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeNodePoolAutoscalingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GkeNodePoolConfig: The configuration of a GKE NodePool used by a
+// Dataproc-on-GKE cluster
+// (https://cloud.google.com/dataproc/docs/concepts/jobs/dataproc-gke#create-a-dataproc-on-gke-cluster).
+type GkeNodePoolConfig struct {
+	// Autoscaling: Optional. The autoscaler configuration for this
+	// NodePool. The autoscaler is enabled only when a valid configuration
+	// is present.
+	Autoscaling *GkeNodePoolAutoscalingConfig `json:"autoscaling,omitempty"`
+
+	// Config: Optional. The node pool configuration.
+	Config *GkeNodeConfig `json:"config,omitempty"`
+
+	// Locations: Optional. The list of Compute Engine zones
+	// (https://cloud.google.com/compute/docs/zones#available) where
+	// NodePool's nodes will be located.Note: Currently, only one zone may
+	// be specified.If a location is not specified during NodePool creation,
+	// Dataproc will choose a location.
+	Locations []string `json:"locations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Autoscaling") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Autoscaling") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GkeNodePoolConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeNodePoolConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GkeNodePoolTarget: GKE NodePools that Dataproc workloads run on.
+type GkeNodePoolTarget struct {
+	// NodePool: Required. The target GKE NodePool. Format:
+	// 'projects/{project}/locations/{location}/clusters/{cluster}/nodePools/
+	// {node_pool}'
+	NodePool string `json:"nodePool,omitempty"`
+
+	// NodePoolConfig: Input only. The configuration for the GKE NodePool.If
+	// specified, Dataproc attempts to create a NodePool with the specified
+	// shape. If one with the same name already exists, it is verified
+	// against all specified fields. If a field differs, the virtual cluster
+	// creation will fail.If omitted, any NodePool with the specified name
+	// is used. If a NodePool with the specified name does not exist,
+	// Dataproc create a NodePool with default values.This is an input only
+	// field. It will not be returned by the API.
+	NodePoolConfig *GkeNodePoolConfig `json:"nodePoolConfig,omitempty"`
+
+	// Roles: Required. The types of role for a GKE NodePool
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Role is unspecified.
+	//   "DEFAULT" - Any roles that are not directly assigned to a NodePool
+	// run on the default role's NodePool.
+	//   "CONTROLLER" - Run controllers and webhooks.
+	//   "SPARK_DRIVER" - Run spark driver.
+	//   "SPARK_EXECUTOR" - Run spark executors.
+	Roles []string `json:"roles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NodePool") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NodePool") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GkeNodePoolTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeNodePoolTarget
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2679,6 +2964,89 @@ func (s *KerberosConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// KubernetesClusterConfig: The configuration for running the Dataproc
+// cluster on Kubernetes.
+type KubernetesClusterConfig struct {
+	// GkeClusterConfig: Required. The configuration for running the
+	// Dataproc cluster on GKE.
+	GkeClusterConfig *GkeClusterConfig `json:"gkeClusterConfig,omitempty"`
+
+	// KubernetesNamespace: Optional. A namespace within the Kubernetes
+	// cluster to deploy into. If this namespace does not exist, it is
+	// created. If it exists, Dataproc verifies that another Dataproc
+	// VirtualCluster is not installed into it. If not specified, the name
+	// of the Dataproc Cluster is used.
+	KubernetesNamespace string `json:"kubernetesNamespace,omitempty"`
+
+	// KubernetesSoftwareConfig: Optional. The software configuration for
+	// this Dataproc cluster running on Kubernetes.
+	KubernetesSoftwareConfig *KubernetesSoftwareConfig `json:"kubernetesSoftwareConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GkeClusterConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GkeClusterConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KubernetesClusterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod KubernetesClusterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KubernetesSoftwareConfig: The software configuration for this
+// Dataproc cluster running on Kubernetes.
+type KubernetesSoftwareConfig struct {
+	// ComponentVersion: The components that should be installed in this
+	// Dataproc cluster. The key must be a string from the
+	// KubernetesComponent enumeration. The value is the version of the
+	// software to be installed. At least one entry must be specified.
+	ComponentVersion map[string]string `json:"componentVersion,omitempty"`
+
+	// Properties: The properties to set on daemon config files.Property
+	// keys are specified in prefix:property format, for example
+	// spark:spark.kubernetes.container.image. The following are supported
+	// prefixes and their mappings: spark: spark-defaults.confFor more
+	// information, see Cluster properties
+	// (https://cloud.google.com/dataproc/docs/concepts/cluster-properties).
+	Properties map[string]string `json:"properties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComponentVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ComponentVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KubernetesSoftwareConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod KubernetesSoftwareConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LifecycleConfig: Specifies the cluster auto-delete schedule
 // configuration.
 type LifecycleConfig struct {
@@ -3143,8 +3511,9 @@ func (s *Metric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NamespacedGkeDeploymentTarget: A full, namespace-isolated deployment
-// target for an existing GKE cluster.
+// NamespacedGkeDeploymentTarget: Deprecated. Used only for the
+// deprecated beta. A full, namespace-isolated deployment target for an
+// existing GKE cluster.
 type NamespacedGkeDeploymentTarget struct {
 	// ClusterNamespace: Optional. A namespace within the GKE cluster to
 	// deploy into.
@@ -4105,7 +4474,7 @@ func (s *SessionOperationMetadata) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the resource.
 	// The size of the policy is limited to a few 10s of KB. An empty policy
-	// is a valid policy but certain Cloud Platform services (such as
+	// is a valid policy but certain Google Cloud services (such as
 	// Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -4949,8 +5318,8 @@ func (s *TemplateParameter) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the resource.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see IAM Overview
+	// Permissions with wildcards (such as * or storage.*) are not allowed.
+	// For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
@@ -5035,6 +5404,56 @@ type ValueValidation struct {
 
 func (s *ValueValidation) MarshalJSON() ([]byte, error) {
 	type NoMethod ValueValidation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VirtualClusterConfig: Dataproc cluster config for a cluster that does
+// not directly control the underlying compute resources, such as a
+// Dataproc-on-GKE cluster
+// (https://cloud.google.com/dataproc/docs/concepts/jobs/dataproc-gke#create-a-dataproc-on-gke-cluster).
+type VirtualClusterConfig struct {
+	// AuxiliaryServicesConfig: Optional. Configuration of auxiliary
+	// services used by this cluster.
+	AuxiliaryServicesConfig *AuxiliaryServicesConfig `json:"auxiliaryServicesConfig,omitempty"`
+
+	// KubernetesClusterConfig: Required. The configuration for running the
+	// Dataproc cluster on Kubernetes.
+	KubernetesClusterConfig *KubernetesClusterConfig `json:"kubernetesClusterConfig,omitempty"`
+
+	// StagingBucket: Optional. A Storage bucket used to stage job
+	// dependencies, config files, and job driver console output. If you do
+	// not specify a staging bucket, Cloud Dataproc will determine a Cloud
+	// Storage location (US, ASIA, or EU) for your cluster's staging bucket
+	// according to the Compute Engine zone where your cluster is deployed,
+	// and then create and manage this project-level, per-location bucket
+	// (see Dataproc staging and temp buckets
+	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/staging-bucket)).
+	// This field requires a Cloud Storage bucket name, not a gs://... URI
+	// to a Cloud Storage bucket.
+	StagingBucket string `json:"stagingBucket,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuxiliaryServicesConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuxiliaryServicesConfig")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VirtualClusterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VirtualClusterConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -284,7 +284,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/analytics-hub/",
+      "documentationLink": "https://cloud.google.com/bigquery/docs/analytics-hub-introduction",
       "preferred": true
     },
     {
@@ -2809,6 +2809,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/genomics",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "gkebackup:v1",
+      "name": "gkebackup",
+      "version": "v1",
+      "title": "Backup for GKE API",
+      "description": "Backup for GKE is a managed Kubernetes workload backup and restore service for GKE clusters.",
+      "discoveryRestUrl": "https://gkebackup.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/kubernetes-engine/docs/add-on/backup-for-gke",
       "preferred": true
     },
     {

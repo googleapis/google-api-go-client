@@ -1843,10 +1843,13 @@ type Grant struct {
 	AppLevelPermissions []string `json:"appLevelPermissions,omitempty"`
 
 	// Name: Required. Resource name for this grant, following the pattern
-	// "developers/{developer}/users/{email}/grants/{package_name}".
+	// "developers/{developer}/users/{email}/grants/{package_name}". If this
+	// grant is for a draft app, the app ID will be used in this resource
+	// name instead of the package name.
 	Name string `json:"name,omitempty"`
 
-	// PackageName: Immutable. The package name of the app.
+	// PackageName: Immutable. The package name of the app. This will be
+	// empty for draft apps.
 	PackageName string `json:"packageName,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3876,6 +3879,7 @@ type User struct {
 	Email string `json:"email,omitempty"`
 
 	// ExpirationTime: The time at which the user's access expires, if set.
+	// When setting this value, it must always be in the future.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 
 	// Grants: Output only. Per-app permissions for the user.
@@ -3886,7 +3890,13 @@ type User struct {
 	Name string `json:"name,omitempty"`
 
 	// Partial: Output only. Whether there are more permissions for the user
-	// that are not represented here.
+	// that are not represented here. This can happen if the caller does not
+	// have permission to manage all apps in the account. This is also
+	// `true` if this user is the account owner. If this field is `true`, it
+	// should be taken as a signal that this user cannot be fully managed
+	// via the API. That is, the API caller is not be able to manage all of
+	// the permissions this user holds, either because it doesn't know about
+	// them or because the user is the account owner.
 	Partial bool `json:"partial,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -11493,7 +11503,9 @@ type GrantsPatchCall struct {
 // Patch: Updates access for the user to the given package.
 //
 // - name: Resource name for this grant, following the pattern
-//   "developers/{developer}/users/{email}/grants/{package_name}".
+//   "developers/{developer}/users/{email}/grants/{package_name}". If
+//   this grant is for a draft app, the app ID will be used in this
+//   resource name instead of the package name.
 func (r *GrantsService) Patch(name string, grant *Grant) *GrantsPatchCall {
 	c := &GrantsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11608,7 +11620,7 @@ func (c *GrantsPatchCall) Do(opts ...googleapi.CallOption) (*Grant, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name for this grant, following the pattern \"developers/{developer}/users/{email}/grants/{package_name}\".",
+	//       "description": "Required. Resource name for this grant, following the pattern \"developers/{developer}/users/{email}/grants/{package_name}\". If this grant is for a draft app, the app ID will be used in this resource name instead of the package name.",
 	//       "location": "path",
 	//       "pattern": "^developers/[^/]+/users/[^/]+/grants/[^/]+$",
 	//       "required": true,

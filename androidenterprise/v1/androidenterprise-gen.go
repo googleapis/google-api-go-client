@@ -1434,6 +1434,35 @@ func (s *EnterpriseAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EnterpriseAuthenticationAppLinkConfig: An authentication URL
+// configuration for the authenticator app of an identity provider.
+type EnterpriseAuthenticationAppLinkConfig struct {
+	// Uri: An authentication url.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseAuthenticationAppLinkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseAuthenticationAppLinkConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type EnterprisesListResponse struct {
 	// Enterprise: An enterprise.
 	Enterprise []*Enterprise `json:"enterprise,omitempty"`
@@ -3026,6 +3055,15 @@ type ProductPolicy struct {
 	// No constraints are applied. The device is notified immediately about
 	// a new app update after it is published by the developer.
 	AutoUpdateMode string `json:"autoUpdateMode,omitempty"`
+
+	// EnterpriseAuthenticationAppLinkConfigs: An authentication URL
+	// configuration for the authenticator app of an identity provider. This
+	// helps to launch the identity provider's authenticator app during the
+	// authentication happening in a private app using Android WebView.
+	// Authenticator app should already be the default handler
+	// (https://developer.android.com/training/app-links/verify-site-associations)
+	// for the authentication url on the device.
+	EnterpriseAuthenticationAppLinkConfigs []*EnterpriseAuthenticationAppLinkConfig `json:"enterpriseAuthenticationAppLinkConfigs,omitempty"`
 
 	// ManagedConfiguration: The managed configuration for the product.
 	ManagedConfiguration *ManagedConfiguration `json:"managedConfiguration,omitempty"`

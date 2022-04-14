@@ -481,6 +481,36 @@ func (s *GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata) Marsh
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiUiv1beta3DeleteDataLabelingJobOperationMetadata:
+// The long running operation metadata for DeleteDataLabelingJob.
+type GoogleCloudDocumentaiUiv1beta3DeleteDataLabelingJobOperationMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3DeleteDataLabelingJobOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3DeleteDataLabelingJobOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiUiv1beta3DeleteLabelerPoolOperationMetadata: The
 // long running operation metadata for DeleteLabelerPool.
 type GoogleCloudDocumentaiUiv1beta3DeleteLabelerPoolOperationMetadata struct {
@@ -3967,10 +3997,14 @@ func (s *GoogleCloudDocumentaiV1ProcessorTypeLocationInfo) MarshalJSON() ([]byte
 // versions, pre-trained by Google internally or up-trained by the
 // customer. At a time, a processor can only have one default version
 // version. So the processor's behavior (when processing documents) is
-// defined by a default version.
+// defined by a default version
 type GoogleCloudDocumentaiV1ProcessorVersion struct {
 	// CreateTime: The time the processor version was created.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// DeprecationInfo: If set, information about the eventual deprecation
+	// of this version.
+	DeprecationInfo *GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo `json:"deprecationInfo,omitempty"`
 
 	// DisplayName: The display name of the processor version.
 	DisplayName string `json:"displayName,omitempty"`
@@ -4030,6 +4064,41 @@ type GoogleCloudDocumentaiV1ProcessorVersion struct {
 
 func (s *GoogleCloudDocumentaiV1ProcessorVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1ProcessorVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo: Information
+// about the upcoming deprecation of this processor version.
+type GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo struct {
+	// DeprecationTime: The time at which this processor version will be
+	// deprecated.
+	DeprecationTime string `json:"deprecationTime,omitempty"`
+
+	// ReplacementProcessorVersion: If set, the processor version that will
+	// be used as a replacement.
+	ReplacementProcessorVersion string `json:"replacementProcessorVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeprecationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeprecationTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9980,8 +10049,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -10112,7 +10181,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13540,8 +13609,8 @@ func (r *Uiv1beta3ProjectsLocationsService) List(name string) *Uiv1beta3Projects
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *Uiv1beta3ProjectsLocationsListCall) Filter(filter string) *Uiv1beta3ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -13672,7 +13741,7 @@ func (c *Uiv1beta3ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

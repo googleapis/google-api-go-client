@@ -3024,8 +3024,8 @@ type Explanation struct {
 	// Attribution: Attribution of feature.
 	Attribution float64 `json:"attribution,omitempty"`
 
-	// FeatureName: Full name of the feature. For non-numerical features,
-	// will be formatted like .. Overall size of feature name will always be
+	// FeatureName: The full feature name. For non-numerical features, will
+	// be formatted like `.`. Overall size of feature name will always be
 	// truncated to first 120 characters.
 	FeatureName string `json:"featureName,omitempty"`
 
@@ -3727,7 +3727,9 @@ func (s *HparamSearchSpaces) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HparamTuningTrial: Training info of a trial in hyperparameter tuning.
+// HparamTuningTrial: Training info of a trial in hyperparameter tuning
+// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-
+// overview) models.
 type HparamTuningTrial struct {
 	// EndTimeMs: Ending time of the trial.
 	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
@@ -5591,9 +5593,13 @@ type Model struct {
 
 	// DefaultTrialId: Output only. The default trial_id to use in TVFs when
 	// the trial_id is not passed in. For single-objective hyperparameter
-	// tuning, this is the best trial id. For multi-objective hyperparameter
-	// tuning, this is the smallest trial id among all Pareto optimal
-	// trials.
+	// tuning
+	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-
+	// overview) models, this is the best trial ID. For multi-objective
+	// hyperparameter tuning
+	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-
+	// overview) models, this is the smallest trial ID among all Pareto
+	// optimal trials.
 	DefaultTrialId int64 `json:"defaultTrialId,omitempty,string"`
 
 	// Description: Optional. A user-friendly description of this model.
@@ -5627,8 +5633,9 @@ type Model struct {
 	// this model.
 	HparamSearchSpaces *HparamSearchSpaces `json:"hparamSearchSpaces,omitempty"`
 
-	// HparamTrials: Output only. Trials of a hyperparameter tuning model
-	// sorted by trial_id.
+	// HparamTrials: Output only. Trials of a hyperparameter tuning
+	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-
+	// overview) model sorted by trial_id.
 	HparamTrials []*HparamTuningTrial `json:"hparamTrials,omitempty"`
 
 	// LabelColumns: Output only. Label columns that were used to train this
@@ -5678,9 +5685,13 @@ type Model struct {
 	ModelType string `json:"modelType,omitempty"`
 
 	// OptimalTrialIds: Output only. For single-objective hyperparameter
-	// tuning, it only contains the best trial. For multi-objective
-	// hyperparameter tuning, it contains all Pareto optimal trials sorted
-	// by trial_id.
+	// tuning
+	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-
+	// overview) models, it only contains the best trial. For
+	// multi-objective hyperparameter tuning
+	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-
+	// overview) models, it contains all Pareto optimal trials sorted by
+	// trial_id.
 	OptimalTrialIds googleapi.Int64s `json:"optimalTrialIds,omitempty"`
 
 	// TrainingRuns: Output only. Information for all training runs in
@@ -7588,6 +7599,45 @@ type Table struct {
 	// NumRows: [Output-only] The number of rows of data in this table,
 	// excluding any data in the streaming buffer.
 	NumRows uint64 `json:"numRows,omitempty,string"`
+
+	// NumActiveLogicalBytes: [Output-only] Number of logical bytes that are
+	// less than 90 days old.
+	NumActiveLogicalBytes int64 `json:"num_active_logical_bytes,omitempty,string"`
+
+	// NumActivePhysicalBytes: [Output-only] Number of physical bytes less
+	// than 90 days old. This data is not kept in real time, and might be
+	// delayed by a few seconds to a few minutes.
+	NumActivePhysicalBytes int64 `json:"num_active_physical_bytes,omitempty,string"`
+
+	// NumLongTermLogicalBytes: [Output-only] Number of logical bytes that
+	// are more than 90 days old.
+	NumLongTermLogicalBytes int64 `json:"num_long_term_logical_bytes,omitempty,string"`
+
+	// NumLongTermPhysicalBytes: [Output-only] Number of physical bytes more
+	// than 90 days old. This data is not kept in real time, and might be
+	// delayed by a few seconds to a few minutes.
+	NumLongTermPhysicalBytes int64 `json:"num_long_term_physical_bytes,omitempty,string"`
+
+	// NumPartitions: [Output-only] The number of partitions present in the
+	// table or materialized view. This data is not kept in real time, and
+	// might be delayed by a few seconds to a few minutes.
+	NumPartitions int64 `json:"num_partitions,omitempty,string"`
+
+	// NumTimeTravelPhysicalBytes: [Output-only] Number of physical bytes
+	// used by time travel storage (deleted or changed data). This data is
+	// not kept in real time, and might be delayed by a few seconds to a few
+	// minutes.
+	NumTimeTravelPhysicalBytes int64 `json:"num_time_travel_physical_bytes,omitempty,string"`
+
+	// NumTotalLogicalBytes: [Output-only] Total number of logical bytes in
+	// the table or materialized view.
+	NumTotalLogicalBytes int64 `json:"num_total_logical_bytes,omitempty,string"`
+
+	// NumTotalPhysicalBytes: [Output-only] The physical size of this table
+	// in bytes. This also includes storage used for time travel. This data
+	// is not kept in real time, and might be delayed by a few seconds to a
+	// few minutes.
+	NumTotalPhysicalBytes int64 `json:"num_total_physical_bytes,omitempty,string"`
 
 	// RangePartitioning: [TrustedTester] Range partitioning specification
 	// for this table. Only one of timePartitioning and rangePartitioning

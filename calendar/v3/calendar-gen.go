@@ -1302,8 +1302,7 @@ type Event struct {
 	// (deprecated). Optional. The default is False.
 	AnyoneCanAddSelf bool `json:"anyoneCanAddSelf,omitempty"`
 
-	// Attachments: File attachments for the event. Currently only Google
-	// Drive attachments are supported.
+	// Attachments: File attachments for the event.
 	// In order to modify attachments the supportsAttachments request
 	// parameter should be set to true.
 	// There can be at most 25 attachments per event,
@@ -1828,7 +1827,8 @@ type EventAttachment struct {
 	// Required when adding an attachment.
 	FileUrl string `json:"fileUrl,omitempty"`
 
-	// IconLink: URL link to the attachment's icon. Read-only.
+	// IconLink: URL link to the attachment's icon. This field can only be
+	// modified for custom third-party attachments.
 	IconLink string `json:"iconLink,omitempty"`
 
 	// MimeType: Internet media type (MIME type) of the attachment.

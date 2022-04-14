@@ -3843,7 +3843,7 @@ type ReplaceAllShapesWithImageRequest struct {
 	// shape. This is the default method when one is not specified.
 	//   "CENTER_CROP" - Scales and centers the image to fill the bounds of
 	// the original shape. The image may be cropped in order to fill the
-	// shape. The rendered size of the image will be the same as that of the
+	// shape. The rendered size of the image will be the same as the
 	// original shape.
 	ImageReplaceMethod string `json:"imageReplaceMethod,omitempty"`
 
@@ -4094,6 +4094,7 @@ func (s *ReplaceAllTextResponse) MarshalJSON() ([]byte, error) {
 // image.
 type ReplaceImageRequest struct {
 	// ImageObjectId: The ID of the existing image that will be replaced.
+	// The ID can be retrieved from the response of a get request.
 	ImageObjectId string `json:"imageObjectId,omitempty"`
 
 	// ImageReplaceMethod: The replacement method.
@@ -4107,16 +4108,16 @@ type ReplaceImageRequest struct {
 	// shape. This is the default method when one is not specified.
 	//   "CENTER_CROP" - Scales and centers the image to fill the bounds of
 	// the original shape. The image may be cropped in order to fill the
-	// shape. The rendered size of the image will be the same as that of the
+	// shape. The rendered size of the image will be the same as the
 	// original shape.
 	ImageReplaceMethod string `json:"imageReplaceMethod,omitempty"`
 
 	// Url: The image URL. The image is fetched once at insertion time and a
 	// copy is stored for display inside the presentation. Images must be
-	// less than 50MB in size, cannot exceed 25 megapixels, and must be in
-	// one of PNG, JPEG, or GIF format. The provided URL can be at most 2 kB
-	// in length. The URL itself is saved with the image, and exposed via
-	// the Image.source_url field.
+	// less than 50MB, cannot exceed 25 megapixels, and must be in PNG,
+	// JPEG, or GIF format. The provided URL can't surpass 2 KB in length.
+	// The URL is saved with the image, and exposed through the
+	// Image.source_url field.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageObjectId") to

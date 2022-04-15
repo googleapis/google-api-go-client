@@ -1849,8 +1849,7 @@ func (s *DnsCacheConfig) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2505,10 +2504,10 @@ func (s *LegacyAbac) MarshalJSON() ([]byte, error) {
 type LinuxNodeConfig struct {
 	// Sysctls: The Linux kernel parameters to be applied to the nodes and
 	// all pods running on the nodes. The following parameters are
-	// supported. net.core.netdev_max_backlog net.core.rmem_max
-	// net.core.wmem_default net.core.wmem_max net.core.optmem_max
-	// net.core.somaxconn net.ipv4.tcp_rmem net.ipv4.tcp_wmem
-	// net.ipv4.tcp_tw_reuse
+	// supported. net.core.busy_poll net.core.busy_read
+	// net.core.netdev_max_backlog net.core.rmem_max net.core.wmem_default
+	// net.core.wmem_max net.core.optmem_max net.core.somaxconn
+	// net.ipv4.tcp_rmem net.ipv4.tcp_wmem net.ipv4.tcp_tw_reuse
 	Sysctls map[string]string `json:"sysctls,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Sysctls") to
@@ -3573,6 +3572,12 @@ type NodeKubeletConfig struct {
 	// unspecified.
 	CpuManagerPolicy string `json:"cpuManagerPolicy,omitempty"`
 
+	// PodPidsLimit: Set the Pod PID limits. See
+	// https://kubernetes.io/docs/concepts/policy/pid-limiting/#pod-pid-limits
+	// Controls the maximum number of processes allowed to run in a pod. The
+	// value must be greater than or equal to 1024 and less than 4194304.
+	PodPidsLimit int64 `json:"podPidsLimit,omitempty,string"`
+
 	// ForceSendFields is a list of field names (e.g. "CpuCfsQuota") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3592,6 +3597,35 @@ type NodeKubeletConfig struct {
 
 func (s *NodeKubeletConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeKubeletConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NodeLabels: Collection of node-level Kubernetes labels
+// (https://kubernetes.io/docs/concepts/overview/working-with-objects/labels).
+type NodeLabels struct {
+	// Labels: Map of node label keys and node label values.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeLabels) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeLabels
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3955,6 +3989,35 @@ type NodeTaint struct {
 
 func (s *NodeTaint) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeTaint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NodeTaints: Collection of Kubernetes node taints
+// (https://kubernetes.io/docs/concepts/configuration/taint-and-toleration).
+type NodeTaints struct {
+	// Taints: List of node taints.
+	Taints []*NodeTaint `json:"taints,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Taints") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Taints") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeTaints) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeTaints
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5885,6 +5948,12 @@ type UpdateNodePoolRequest struct {
 	// KubeletConfig: Node kubelet configs.
 	KubeletConfig *NodeKubeletConfig `json:"kubeletConfig,omitempty"`
 
+	// Labels: The desired node labels to be applied to all nodes in the
+	// node pool. If this field is not present, the labels will not be
+	// changed. Otherwise, the existing node labels will be *replaced* with
+	// the provided labels.
+	Labels *NodeLabels `json:"labels,omitempty"`
+
 	// LinuxNodeConfig: Parameters that can be configured on Linux nodes.
 	LinuxNodeConfig *LinuxNodeConfig `json:"linuxNodeConfig,omitempty"`
 
@@ -5919,6 +5988,18 @@ type UpdateNodePoolRequest struct {
 	// project number (https://support.google.com/cloud/answer/6158840).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// Tags: The desired network tags to be applied to all nodes in the node
+	// pool. If this field is not present, the tags will not be changed.
+	// Otherwise, the existing network tags will be *replaced* with the
+	// provided tags.
+	Tags *NetworkTags `json:"tags,omitempty"`
+
+	// Taints: The desired node taints to be applied to all nodes in the
+	// node pool. If this field is not present, the taints will not be
+	// changed. Otherwise, the existing node taints will be *replaced* with
+	// the provided taints.
+	Taints *NodeTaints `json:"taints,omitempty"`
 
 	// UpgradeSettings: Upgrade settings control disruption and speed of the
 	// upgrade.

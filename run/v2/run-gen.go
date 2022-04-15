@@ -240,14 +240,14 @@ func (s *GoogleCloudRunV2BinaryAuthorization) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2CloudSqlInstance: Represents a specific Cloud SQL
 // instance.
 type GoogleCloudRunV2CloudSqlInstance struct {
-	// Connections: The Cloud SQL instance connection names, as can be found
+	// Instances: The Cloud SQL instance connection names, as can be found
 	// in https://console.cloud.google.com/sql/instances. Visit
 	// https://cloud.google.com/sql/docs/mysql/connect-run for more
 	// information on how to connect Cloud SQL and Cloud Run. Format:
 	// {project}:{location}:{instance}
-	Connections []string `json:"connections,omitempty"`
+	Instances []string `json:"instances,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Connections") to
+	// ForceSendFields is a list of field names (e.g. "Instances") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -255,10 +255,10 @@ type GoogleCloudRunV2CloudSqlInstance struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Connections") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Instances") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -311,8 +311,8 @@ type GoogleCloudRunV2Condition struct {
 	// settings; this is a transient reason.
 	//   "REVISION_ORG_POLICY_VIOLATION" - The revision can't be created
 	// because it violates an org policy setting.
-	//   "ENABLING_GCFV2_URI_SUPPORT" - Enabling GCFv2 URI support; this is
-	// a transient reason.
+	//   "UPDATING_GCFV2_URI_DATA" - Updating GCFv2 URI data; this is a
+	// transient reason.
 	InternalReason string `json:"internalReason,omitempty"`
 
 	// LastTransitionTime: Last time the condition transitioned from one
@@ -1728,8 +1728,8 @@ type GoogleIamV1Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *GoogleTypeExpr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -1904,7 +1904,7 @@ func (s *GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 type GoogleIamV1SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *GoogleIamV1Policy `json:"policy,omitempty"`
 
@@ -1941,7 +1941,7 @@ func (s *GoogleIamV1SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // `TestIamPermissions` method.
 type GoogleIamV1TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`

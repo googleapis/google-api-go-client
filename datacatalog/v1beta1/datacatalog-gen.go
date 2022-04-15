@@ -302,8 +302,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -2160,7 +2160,8 @@ type GoogleCloudDatacatalogV1beta1Taxonomy struct {
 	// DisplayName: Required. User defined name of this taxonomy. It must:
 	// contain only unicode letters, numbers, underscores, dashes and
 	// spaces; not start or end with spaces; and be at most 200 bytes long
-	// when encoded in UTF-8.
+	// when encoded in UTF-8. The taxonomy display name must be unique
+	// within an organization.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Output only. Resource name of this taxonomy, whose format is:
@@ -2444,7 +2445,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -2475,7 +2476,7 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`

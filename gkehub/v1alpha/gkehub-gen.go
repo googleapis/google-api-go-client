@@ -516,8 +516,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -4149,6 +4149,19 @@ type ServiceMeshMembershipSpec struct {
 	// CLI, or via the ControlPlaneRevision KRM API)
 	ControlPlane string `json:"controlPlane,omitempty"`
 
+	// DefaultChannel: Determines which release channel to use for default
+	// injection and service mesh APIs.
+	//
+	// Possible values:
+	//   "CHANNEL_UNSPECIFIED" - Unspecified
+	//   "RAPID" - RAPID channel is offered on an early access basis for
+	// customers who want to test new releases.
+	//   "REGULAR" - REGULAR channel is intended for production users who
+	// want to take advantage of new features.
+	//   "STABLE" - STABLE channel includes versions that are known to be
+	// stable and reliable in production.
+	DefaultChannel string `json:"defaultChannel,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ControlPlane") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4178,6 +4191,11 @@ type ServiceMeshMembershipState struct {
 	// AnalysisMessages: Output only. Results of running Service Mesh
 	// analyzers.
 	AnalysisMessages []*ServiceMeshAnalysisMessage `json:"analysisMessages,omitempty"`
+
+	// ConfigApiVersion: The API version (i.e. Istio CRD version) for
+	// configuring service mesh in this cluster. This version is influenced
+	// by the `default_channel` field.
+	ConfigApiVersion string `json:"configApiVersion,omitempty"`
 
 	// ControlPlaneManagement: Output only. Status of control plane
 	// management
@@ -4284,7 +4302,7 @@ func (s *ServiceMeshType) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -4364,7 +4382,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`

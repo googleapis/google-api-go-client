@@ -521,6 +521,10 @@ func (s *DiscoverConnectionProfileResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DropLargeObjects: Configuration to drop large object values.
+type DropLargeObjects struct {
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -1594,10 +1598,6 @@ func (s *OracleColumn) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OracleDropLargeObjects: Configuration to drop large object values.
-type OracleDropLargeObjects struct {
-}
-
 // OracleObjectIdentifier: Oracle data source object identifier.
 type OracleObjectIdentifier struct {
 	// Schema: Required. The schema name.
@@ -1739,7 +1739,7 @@ type OracleSourceConfig struct {
 	Allowlist *OracleRdbms `json:"allowlist,omitempty"`
 
 	// DropLargeObjects: Drop large object values.
-	DropLargeObjects *OracleDropLargeObjects `json:"dropLargeObjects,omitempty"`
+	DropLargeObjects *DropLargeObjects `json:"dropLargeObjects,omitempty"`
 
 	// Rejectlist: Oracle objects to exclude from the stream.
 	Rejectlist *OracleRdbms `json:"rejectlist,omitempty"`
@@ -2776,8 +2776,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2906,7 +2906,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

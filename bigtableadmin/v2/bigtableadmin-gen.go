@@ -255,6 +255,7 @@ type ProjectsInstancesAppProfilesService struct {
 func NewProjectsInstancesClustersService(s *Service) *ProjectsInstancesClustersService {
 	rs := &ProjectsInstancesClustersService{s: s}
 	rs.Backups = NewProjectsInstancesClustersBackupsService(s)
+	rs.HotTablets = NewProjectsInstancesClustersHotTabletsService(s)
 	return rs
 }
 
@@ -262,6 +263,8 @@ type ProjectsInstancesClustersService struct {
 	s *Service
 
 	Backups *ProjectsInstancesClustersBackupsService
+
+	HotTablets *ProjectsInstancesClustersHotTabletsService
 }
 
 func NewProjectsInstancesClustersBackupsService(s *Service) *ProjectsInstancesClustersBackupsService {
@@ -270,6 +273,15 @@ func NewProjectsInstancesClustersBackupsService(s *Service) *ProjectsInstancesCl
 }
 
 type ProjectsInstancesClustersBackupsService struct {
+	s *Service
+}
+
+func NewProjectsInstancesClustersHotTabletsService(s *Service) *ProjectsInstancesClustersHotTabletsService {
+	rs := &ProjectsInstancesClustersHotTabletsService{s: s}
+	return rs
+}
+
+type ProjectsInstancesClustersHotTabletsService struct {
 	s *Service
 }
 
@@ -1168,8 +1180,7 @@ type CreateInstanceRequest struct {
 	// Clusters: Required. The clusters to be created within the instance,
 	// mapped by desired cluster ID, e.g., just `mycluster` rather than
 	// `projects/myproject/instances/myinstance/clusters/mycluster`. Fields
-	// marked `OutputOnly` must be left blank. Currently, at most four
-	// clusters can be specified.
+	// marked `OutputOnly` must be left blank.
 	Clusters map[string]Cluster `json:"clusters,omitempty"`
 
 	// Instance: Required. The instance to create. Fields marked
@@ -1608,6 +1619,79 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// HotTablet: A tablet is a defined by a start and end key and is
+// explained in
+// https://cloud.google.com/bigtable/docs/overview#architecture and
+// https://cloud.google.com/bigtable/docs/performance#optimization. A
+// Hot tablet is a tablet that exhibits high average cpu usage during
+// the time interval from start time to end time.
+type HotTablet struct {
+	// EndKey: Tablet End Key (inclusive).
+	EndKey string `json:"endKey,omitempty"`
+
+	// EndTime: Output only. The end time of the hot tablet.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Name: The unique name of the hot tablet. Values are of the form
+	// `projects/{project}/instances/{instance}/clusters/{cluster}/hotTablets
+	// /[a-zA-Z0-9_-]*`.
+	Name string `json:"name,omitempty"`
+
+	// NodeCpuUsagePercent: Output only. The average CPU usage spent by a
+	// node on this tablet over the start_time to end_time time range. The
+	// percentage is the amount of CPU used by the node to serve the tablet,
+	// from 0% (tablet was not interacted with) to 100% (the node spent all
+	// cycles serving the hot tablet).
+	NodeCpuUsagePercent float64 `json:"nodeCpuUsagePercent,omitempty"`
+
+	// StartKey: Tablet Start Key (inclusive).
+	StartKey string `json:"startKey,omitempty"`
+
+	// StartTime: Output only. The start time of the hot tablet.
+	StartTime string `json:"startTime,omitempty"`
+
+	// TableName: Name of the table that contains the tablet. Values are of
+	// the form
+	// `projects/{project}/instances/{instance}/tables/_a-zA-Z0-9*`.
+	TableName string `json:"tableName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndKey") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HotTablet) MarshalJSON() ([]byte, error) {
+	type NoMethod HotTablet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *HotTablet) UnmarshalJSON(data []byte) error {
+	type NoMethod HotTablet
+	var s1 struct {
+		NodeCpuUsagePercent gensupport.JSONFloat64 `json:"nodeCpuUsagePercent"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NodeCpuUsagePercent = float64(s1.NodeCpuUsagePercent)
+	return nil
+}
+
 // Instance: A collection of Bigtable Tables and the resources that
 // serve them. All tables in an instance are served from all Clusters in
 // the instance.
@@ -1838,6 +1922,49 @@ type ListClustersResponse struct {
 
 func (s *ListClustersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListClustersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListHotTabletsResponse: Response message for
+// BigtableInstanceAdmin.ListHotTablets.
+type ListHotTabletsResponse struct {
+	// HotTablets: List of hot tablets in the tables of the requested
+	// cluster that fall within the requested time range. Hot tablets are
+	// ordered by node cpu usage percent. If there are multiple hot tablets
+	// that correspond to the same tablet within a 15-minute interval, only
+	// the hot tablet with the highest node cpu usage will be included in
+	// the response.
+	HotTablets []*HotTablet `json:"hotTablets,omitempty"`
+
+	// NextPageToken: Set if not all hot tablets could be returned in a
+	// single response. Pass this value to `page_token` in another request
+	// to get the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "HotTablets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HotTablets") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListHotTabletsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListHotTabletsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8274,6 +8401,244 @@ func (c *ProjectsInstancesClustersBackupsTestIamPermissionsCall) Do(opts ...goog
 	//   ]
 	// }
 
+}
+
+// method id "bigtableadmin.projects.instances.clusters.hotTablets.list":
+
+type ProjectsInstancesClustersHotTabletsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists hot tablets in a cluster, within the time range provided.
+// Hot tablets are ordered based on CPU usage.
+//
+// - parent: The cluster name to list hot tablets. Value is in the
+//   following form:
+//   `projects/{project}/instances/{instance}/clusters/{cluster}`.
+func (r *ProjectsInstancesClustersHotTabletsService) List(parent string) *ProjectsInstancesClustersHotTabletsListCall {
+	c := &ProjectsInstancesClustersHotTabletsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": The end time to list
+// hot tablets.
+func (c *ProjectsInstancesClustersHotTabletsListCall) EndTime(endTime string) *ProjectsInstancesClustersHotTabletsListCall {
+	c.urlParams_.Set("endTime", endTime)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// results per page. A page_size that is empty or zero lets the server
+// choose the number of items to return. A page_size which is strictly
+// positive will return at most that many items. A negative page_size
+// will cause an error. Following the first request, subsequent
+// paginated calls do not need a page_size field. If a page_size is set
+// in subsequent calls, it must match the page_size given in the first
+// request.
+func (c *ProjectsInstancesClustersHotTabletsListCall) PageSize(pageSize int64) *ProjectsInstancesClustersHotTabletsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of
+// `next_page_token` returned by a previous call.
+func (c *ProjectsInstancesClustersHotTabletsListCall) PageToken(pageToken string) *ProjectsInstancesClustersHotTabletsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": The start time to
+// list hot tablets. The hot tablets in the response will have start
+// times between the requested start time and end time. Start time
+// defaults to Now if it is unset, and end time defaults to Now - 24
+// hours if it is unset. The start time should be less than the end
+// time, and the maximum allowed time range between start time and end
+// time is 48 hours. Start time and end time should have values between
+// Now and Now - 14 days.
+func (c *ProjectsInstancesClustersHotTabletsListCall) StartTime(startTime string) *ProjectsInstancesClustersHotTabletsListCall {
+	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesClustersHotTabletsListCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersHotTabletsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesClustersHotTabletsListCall) IfNoneMatch(entityTag string) *ProjectsInstancesClustersHotTabletsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesClustersHotTabletsListCall) Context(ctx context.Context) *ProjectsInstancesClustersHotTabletsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesClustersHotTabletsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersHotTabletsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/hotTablets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.hotTablets.list" call.
+// Exactly one of *ListHotTabletsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListHotTabletsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesClustersHotTabletsListCall) Do(opts ...googleapi.CallOption) (*ListHotTabletsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListHotTabletsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists hot tablets in a cluster, within the time range provided. Hot tablets are ordered based on CPU usage.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/hotTablets",
+	//   "httpMethod": "GET",
+	//   "id": "bigtableadmin.projects.instances.clusters.hotTablets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "endTime": {
+	//       "description": "The end time to list hot tablets.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of results per page. A page_size that is empty or zero lets the server choose the number of items to return. A page_size which is strictly positive will return at most that many items. A negative page_size will cause an error. Following the first request, subsequent paginated calls do not need a page_size field. If a page_size is set in subsequent calls, it must match the page_size given in the first request.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value of `next_page_token` returned by a previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The cluster name to list hot tablets. Value is in the following form: `projects/{project}/instances/{instance}/clusters/{cluster}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "The start time to list hot tablets. The hot tablets in the response will have start times between the requested start time and end time. Start time defaults to Now if it is unset, and end time defaults to Now - 24 hours if it is unset. The start time should be less than the end time, and the maximum allowed time range between start time and end time is 48 hours. Start time and end time should have values between Now and Now - 14 days.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/hotTablets",
+	//   "response": {
+	//     "$ref": "ListHotTabletsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.cluster",
+	//     "https://www.googleapis.com/auth/bigtable.admin.instance",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.cluster",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstancesClustersHotTabletsListCall) Pages(ctx context.Context, f func(*ListHotTabletsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "bigtableadmin.projects.instances.tables.checkConsistency":

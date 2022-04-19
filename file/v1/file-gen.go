@@ -349,11 +349,12 @@ func (s *DailyCycle) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -439,8 +440,7 @@ func (s *DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -500,11 +500,12 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// InstanceType: Optional. The instance_type of this instance of format:
-	// projects/{project_id}/locations/{location_id}/instanceTypes/{instance_
-	// type_id}. Instance Type represents a high-level tier or SKU of the
-	// service that this instance belong to. When enabled(eg: Maintenance
-	// Rollout), Rollout uses 'instance_type' along with 'software_versions'
-	// to determine whether instance needs an update or not.
+	// projects/{project_number}/locations/{location_id}/instanceTypes/{insta
+	// nce_type_id}. Instance Type represents a high-level tier or SKU of
+	// the service that this instance belong to. When enabled(eg:
+	// Maintenance Rollout), Rollout uses 'instance_type' along with
+	// 'software_versions' to determine whether instance needs an update or
+	// not.
 	InstanceType string `json:"instanceType,omitempty"`
 
 	// Labels: Optional. Resource labels to represent user provided
@@ -529,16 +530,18 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	MaintenanceSettings *GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings `json:"maintenanceSettings,omitempty"`
 
 	// Name: Unique name of the resource. It uses the form:
-	// `projects/{project_id|project_number}/locations/{location_id}/instance
-	// s/{instance_id}` Note: Either project_id or project_number can be
-	// used, but keep it consistent with other APIs (e.g. RescheduleUpdate)
+	// `projects/{project_number}/locations/{location_id}/instances/{instance
+	// _id}` Note: This name is passed, stored and logged across the rollout
+	// system. So use of consumer project_id or any other consumer PII in
+	// the name is strongly discouraged for wipeout (go/wipeout) compliance.
+	// See go/elysium/project_ids#storage-guidance for more details.
 	Name string `json:"name,omitempty"`
 
-	// NotificationParameters: Optional. notification_parameters are
+	// NotificationParameters: Optional. notification_parameter are
 	// information that service producers may like to include that is not
 	// relevant to Rollout. This parameter will only be passed to Gamma and
 	// Cloud Logging for notification/logging purpose.
-	NotificationParameters map[string]string `json:"notificationParameters,omitempty"`
+	NotificationParameters map[string]GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter `json:"notificationParameters,omitempty"`
 
 	// ProducerMetadata: Output only. Custom string attributes used
 	// primarily to expose producer-specific information in monitoring
@@ -748,6 +751,36 @@ type GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata struct {
 
 func (s *GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter:
+// Contains notification related data.
+type GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter struct {
+	// Values: Optional. Array of string values. e.g. instance's replica
+	// information.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2093,8 +2126,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2231,7 +2264,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

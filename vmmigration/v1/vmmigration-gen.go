@@ -408,6 +408,39 @@ func (s *AvailableUpdates) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AwsSourceVmDetails: Represent the source AWS VM details.
+type AwsSourceVmDetails struct {
+	// Firmware: The firmware type of the source VM.
+	//
+	// Possible values:
+	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.
+	//   "EFI" - The firmware is EFI.
+	//   "BIOS" - The firmware is BIOS.
+	Firmware string `json:"firmware,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Firmware") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Firmware") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsSourceVmDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsSourceVmDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelCloneJobRequest: Request message for 'CancelCloneJob' request.
 type CancelCloneJobRequest struct {
 }
@@ -1572,6 +1605,10 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // MigratingVm: MigratingVm describes the VM that will be migrated from
 // a Source environment and its replication state.
 type MigratingVm struct {
+	// AwsSourceVmDetails: Output only. Details of the VM from an AWS
+	// source.
+	AwsSourceVmDetails *AwsSourceVmDetails `json:"awsSourceVmDetails,omitempty"`
+
 	// ComputeEngineTargetDefaults: Details of the target VM in Compute
 	// Engine.
 	ComputeEngineTargetDefaults *ComputeEngineTargetDefaults `json:"computeEngineTargetDefaults,omitempty"`
@@ -1673,22 +1710,21 @@ type MigratingVm struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ComputeEngineTargetDefaults") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AwsSourceVmDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "ComputeEngineTargetDefaults") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AwsSourceVmDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

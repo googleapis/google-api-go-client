@@ -1701,8 +1701,11 @@ type GoogleCloudDialogflowCxV3Fulfillment struct {
 	// webhook.
 	SetParameterActions []*GoogleCloudDialogflowCxV3FulfillmentSetParameterAction `json:"setParameterActions,omitempty"`
 
-	// Tag: The tag used by the webhook to identify which fulfillment is
-	// being called. This field is required if `webhook` is specified.
+	// Tag: The value of this field will be populated in the WebhookRequest
+	// `fulfillmentInfo.tag` field by Dialogflow when the associated webhook
+	// is called. The tag is typically used by the webhook service to
+	// identify which fulfillment is being called, but it could be used for
+	// other purposes. This field is required if `webhook` is specified.
 	Tag string `json:"tag,omitempty"`
 
 	// Webhook: The webhook to call. Format:
@@ -2433,7 +2436,7 @@ func (s *GoogleCloudDialogflowCxV3IntentTrainingPhrasePart) MarshalJSON() ([]byt
 // (https://cloud.google.com/dialogflow/cx/docs/concept/page).
 type GoogleCloudDialogflowCxV3Page struct {
 	// DisplayName: Required. The human-readable name of the page, unique
-	// within the agent.
+	// within the flow.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// EntryFulfillment: The fulfillment to call when the session is
@@ -3702,8 +3705,11 @@ func (s *GoogleCloudDialogflowCxV3WebhookRequest) MarshalJSON() ([]byte, error) 
 // GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo: Represents
 // fulfillment information communicated to the webhook.
 type GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo struct {
-	// Tag: Always present. The tag used to identify which fulfillment is
-	// being called.
+	// Tag: Always present. The value of the Fulfillment.tag field will be
+	// populated in this field by Dialogflow when the associated webhook is
+	// called. The tag is typically used by the webhook service to identify
+	// which fulfillment is being called, but it could be used for other
+	// purposes.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to
@@ -4924,8 +4930,11 @@ type GoogleCloudDialogflowCxV3beta1Fulfillment struct {
 	// webhook.
 	SetParameterActions []*GoogleCloudDialogflowCxV3beta1FulfillmentSetParameterAction `json:"setParameterActions,omitempty"`
 
-	// Tag: The tag used by the webhook to identify which fulfillment is
-	// being called. This field is required if `webhook` is specified.
+	// Tag: The value of this field will be populated in the WebhookRequest
+	// `fulfillmentInfo.tag` field by Dialogflow when the associated webhook
+	// is called. The tag is typically used by the webhook service to
+	// identify which fulfillment is being called, but it could be used for
+	// other purposes. This field is required if `webhook` is specified.
 	Tag string `json:"tag,omitempty"`
 
 	// Webhook: The webhook to call. Format:
@@ -5658,7 +5667,7 @@ func (s *GoogleCloudDialogflowCxV3beta1IntentTrainingPhrasePart) MarshalJSON() (
 // (https://cloud.google.com/dialogflow/cx/docs/concept/page).
 type GoogleCloudDialogflowCxV3beta1Page struct {
 	// DisplayName: Required. The human-readable name of the page, unique
-	// within the agent.
+	// within the flow.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// EntryFulfillment: The fulfillment to call when the session is
@@ -6929,8 +6938,11 @@ func (s *GoogleCloudDialogflowCxV3beta1WebhookRequest) MarshalJSON() ([]byte, er
 // GoogleCloudDialogflowCxV3beta1WebhookRequestFulfillmentInfo:
 // Represents fulfillment information communicated to the webhook.
 type GoogleCloudDialogflowCxV3beta1WebhookRequestFulfillmentInfo struct {
-	// Tag: Always present. The tag used to identify which fulfillment is
-	// being called.
+	// Tag: Always present. The value of the Fulfillment.tag field will be
+	// populated in this field by Dialogflow when the associated webhook is
+	// called. The tag is typically used by the webhook service to identify
+	// which fulfillment is being called, but it could be used for other
+	// purposes.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to

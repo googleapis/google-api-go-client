@@ -7679,7 +7679,7 @@ type ProjectsLocationsBitbucketServerConfigsRemoveBitbucketServerConnectedReposi
 }
 
 // RemoveBitbucketServerConnectedRepository: Remove a Bitbucket Server
-// repository from an given BitbucketServerConfig’s connected
+// repository from a given BitbucketServerConfig's connected
 // repositories. This API is experimental.
 //
 // - config: The name of the `BitbucketServerConfig` to remove a
@@ -7784,7 +7784,7 @@ func (c *ProjectsLocationsBitbucketServerConfigsRemoveBitbucketServerConnectedRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Remove a Bitbucket Server repository from an given BitbucketServerConfig’s connected repositories. This API is experimental.",
+	//   "description": "Remove a Bitbucket Server repository from a given BitbucketServerConfig's connected repositories. This API is experimental.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/bitbucketServerConfigs/{bitbucketServerConfigsId}:removeBitbucketServerConnectedRepository",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.locations.bitbucketServerConfigs.removeBitbucketServerConnectedRepository",

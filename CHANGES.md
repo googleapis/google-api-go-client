@@ -1,5 +1,13 @@
 # Changes
 
+## [0.75.0](https://github.com/googleapis/google-api-go-client/compare/v0.74.0...v0.75.0) (2022-04-20)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1516](https://github.com/googleapis/google-api-go-client/issues/1516) [#1514](https://github.com/googleapis/google-api-go-client/issues/1514) [#1513](https://github.com/googleapis/google-api-go-client/issues/1513) [#1511](https://github.com/googleapis/google-api-go-client/issues/1511) [#1510](https://github.com/googleapis/google-api-go-client/issues/1510) [#1509](https://github.com/googleapis/google-api-go-client/issues/1509) [#1504](https://github.com/googleapis/google-api-go-client/issues/1504) [#1503](https://github.com/googleapis/google-api-go-client/issues/1503) [#1500](https://github.com/googleapis/google-api-go-client/issues/1500) [#1498](https://github.com/googleapis/google-api-go-client/issues/1498) [#1496](https://github.com/googleapis/google-api-go-client/issues/1496)
+* **transport:** remove grpc version guard ([#1506](https://github.com/googleapis/google-api-go-client/issues/1506)) ([d349e85](https://github.com/googleapis/google-api-go-client/commit/d349e8569473af826a87ebbeff59c90455f8490f))
+
 ## [0.74.0](https://github.com/googleapis/google-api-go-client/compare/v0.73.0...v0.74.0) (2022-03-30)
 
 

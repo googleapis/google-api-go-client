@@ -356,34 +356,31 @@ type Backup struct {
 	// CompleteTime: Output only. Completion time of the Backup
 	CompleteTime string `json:"completeTime,omitempty"`
 
-	// ConfigBackupSizeBytes: Output only. cluster config backup size in
+	// ConfigBackupSizeBytes: Output only. The size of the config backup in
 	// bytes.
 	ConfigBackupSizeBytes int64 `json:"configBackupSizeBytes,omitempty,string"`
 
 	// ContainsSecrets: Output only. Whether or not the Backup contains
-	// Kubernetes Secrets. Inherited from the parent BackupPlan's
-	// backup_config.include_secrets.
+	// Kubernetes Secrets. Controlled by the parent BackupPlan's
+	// include_secrets value.
 	ContainsSecrets bool `json:"containsSecrets,omitempty"`
 
 	// ContainsVolumeData: Output only. Whether or not the Backup contains
-	// volume data. Inherited from the parent BackupPlan's
-	// backup_config.include_volume_data.
+	// volume data. Controlled by the parent BackupPlan's
+	// include_volume_data value.
 	ContainsVolumeData bool `json:"containsVolumeData,omitempty"`
 
-	// CreateTime: Output only. [Output Only] The timestamp when this Backup
-	// resource was created - can be converted to and from RFC3339
-	// (https://www.ietf.org/rfc/rfc3339.txt)
+	// CreateTime: Output only. The timestamp when this Backup resource was
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DeleteLockDays: Minimum age for this Backup (in days). If this field
 	// is set to a non-zero value, the Backup will be "locked" against
 	// deletion (either manual or automatic deletion) for the number of days
-	// provided (measured from the creation time of the Backup). This value
-	// is inherited from the parent BackupPlan's
-	// retention_policy.backup_delete_lock_days value and may only be
-	// increased (either at creation time or in a subsequent update). This
-	// field MUST be an integer value between 0-90 (inclusive). Default:
-	// inherited from BackupPlan.
+	// provided (measured from the creation time of the Backup). MUST be an
+	// integer value between 0-90 (inclusive). Defaults to parent
+	// BackupPlan's backup_delete_lock_days setting and may only be
+	// increased (either at creation time or in a subsequent update).
 	DeleteLockDays int64 `json:"deleteLockDays,omitempty"`
 
 	// DeleteLockExpireTime: Output only. The time at which an existing
@@ -396,7 +393,7 @@ type Backup struct {
 
 	// EncryptionKey: Output only. The customer managed encryption key that
 	// was used to encrypt the Backup's artifacts. Inherited from the parent
-	// BackupPlan's backup_config.encryption_key.
+	// BackupPlan's encryption_key value.
 	EncryptionKey *EncryptionKey `json:"encryptionKey,omitempty"`
 
 	// Etag: Output only. `etag` is used for optimistic concurrency control
@@ -405,8 +402,9 @@ type Backup struct {
 	// use of the `etag` in the read-modify-write cycle to perform backup
 	// updates in order to avoid race conditions: An `etag` is returned in
 	// the response to `GetBackup`, and systems are expected to put that
-	// etag in the request to `UpdateBackup` to ensure that their change
-	// will be applied to the same version.
+	// etag in the request to `UpdateBackup` or `DeleteBackup` to ensure
+	// that their change will be applied to the same version of the
+	// resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Labels: A set of custom labels supplied by user.
@@ -430,12 +428,11 @@ type Backup struct {
 	ResourceCount int64 `json:"resourceCount,omitempty"`
 
 	// RetainDays: The age (in days) after which this Backup will be
-	// automatically deleted. If not specified at Backup creation time, this
-	// value is inherited from the parent BackupPlan's
-	// retention_policy.backup_retain_days value. Once a Backup is created,
-	// this value may only be increased. This must be an integer value >= 0.
-	// If 0, no automatic deletion will occur for this Backup. If not 0,
-	// this must be >= delete_lock_days. Default: inherited from BackupPlan.
+	// automatically deleted. Must be an integer value >= 0: - If 0, no
+	// automatic deletion will occur for this Backup. - If not 0, this must
+	// be >= delete_lock_days. Once a Backup is created, this value may only
+	// be increased. Defaults to the parent BackupPlan's backup_retain_days
+	// value.
 	RetainDays int64 `json:"retainDays,omitempty"`
 
 	// RetainExpireTime: Output only. The time at which this Backup will be
@@ -474,14 +471,12 @@ type Backup struct {
 	// backup is in the current `state`.
 	StateReason string `json:"stateReason,omitempty"`
 
-	// Uid: Output only. [Output Only] Server generated global unique
-	// identifier of UUID4
+	// Uid: Output only. Server generated global unique identifier of UUID4
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier)
 	Uid string `json:"uid,omitempty"`
 
-	// UpdateTime: Output only. [Output Only] The timestamp when this Backup
-	// resource was last updated - can be converted to and from RFC3339
-	// (https://www.ietf.org/rfc/rfc3339.txt)
+	// UpdateTime: Output only. The timestamp when this Backup resource was
+	// last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// VolumeCount: Output only. The total number of volume backups
@@ -522,8 +517,9 @@ type BackupConfig struct {
 	AllNamespaces bool `json:"allNamespaces,omitempty"`
 
 	// EncryptionKey: This defines a customer managed encryption key that
-	// will be used to encrypt the Backup artifacts for Backups created via
-	// this BackupPlan.
+	// will be used to encrypt the "config" portion (the Kubernetes
+	// resources) of Backups created via this plan. Default (empty): Config
+	// backup artifacts will not be encrypted.
 	EncryptionKey *EncryptionKey `json:"encryptionKey,omitempty"`
 
 	// IncludeSecrets: This flag specifies whether Kubernetes Secret
@@ -541,7 +537,7 @@ type BackupConfig struct {
 	SelectedApplications *NamespacedNames `json:"selectedApplications,omitempty"`
 
 	// SelectedNamespaces: If set, include just the resources in the listed
-	// namespaces
+	// namespaces.
 	SelectedNamespaces *Namespaces `json:"selectedNamespaces,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllNamespaces") to
@@ -579,20 +575,20 @@ type BackupPlan struct {
 	BackupSchedule *Schedule `json:"backupSchedule,omitempty"`
 
 	// Cluster: Required. Immutable. The source cluster from which Backups
-	// will be created via this BackupPlan. Possible formats: 1.
-	// projects/*/locations/*/clusters/* 2. projects/*/zones/*/clusters/*
+	// will be created via this BackupPlan. Valid formats: -
+	// projects/*/locations/*/clusters/* - projects/*/zones/*/clusters/*
 	Cluster string `json:"cluster,omitempty"`
 
-	// CreateTime: Output only. [Output Only] The timestamp when this
-	// BackupPlan resource was created - can be converted to and from
-	// RFC3339 (https://www.ietf.org/rfc/rfc3339.txt)
+	// CreateTime: Output only. The timestamp when this BackupPlan resource
+	// was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Deactivated: This flag indicates whether this BackupPlan has been
 	// deactivated. Setting this field to True locks the BackupPlan such
-	// that no further updates will be allowed, including the deactivated
-	// field. It also prevents any new Backups from being created via this
-	// BackupPlan (including scheduled Backups). Default: False
+	// that no further updates will be allowed (except deletes), including
+	// the deactivated field itself. It also prevents any new Backups from
+	// being created via this BackupPlan (including scheduled Backups).
+	// Default: False
 	Deactivated bool `json:"deactivated,omitempty"`
 
 	// Description: User specified descriptive string for this BackupPlan.
@@ -604,34 +600,32 @@ type BackupPlan struct {
 	// use of the 'etag' in the read-modify-write cycle to perform
 	// BackupPlan updates in order to avoid race conditions: An `etag` is
 	// returned in the response to `GetBackupPlan`, and systems are expected
-	// to put that etag in the request to `UpdateBackupPlan` to ensure that
-	// their change will be applied to the same version.
+	// to put that etag in the request to `UpdateBackupPlan` or
+	// `DeleteBackupPlan` to ensure that their change will be applied to the
+	// same version of the resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Labels: A set of custom labels supplied by user.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only. [Output Only] The full name of the BackupPlan
-	// resource. Format: projects/*/locations/*/backupPlans/*
+	// Name: Output only. The full name of the BackupPlan resource. Format:
+	// projects/*/locations/*/backupPlans/*
 	Name string `json:"name,omitempty"`
 
-	// ProtectedPodCount: Output only. [Output Only] Represents the number
-	// of Kubernetes Pods backed up in the last successful Backup created
-	// underneath this BackupPlan.
+	// ProtectedPodCount: Output only. The number of Kubernetes Pods backed
+	// up in the last successful Backup created via this BackupPlan.
 	ProtectedPodCount int64 `json:"protectedPodCount,omitempty"`
 
 	// RetentionPolicy: RetentionPolicy governs lifecycle of Backups created
 	// under this plan.
 	RetentionPolicy *RetentionPolicy `json:"retentionPolicy,omitempty"`
 
-	// Uid: Output only. [Output Only] Server generated global unique
-	// identifier of UUID
+	// Uid: Output only. Server generated global unique identifier of UUID
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
 	Uid string `json:"uid,omitempty"`
 
-	// UpdateTime: Output only. [Output Only] The timestamp when this
-	// BackupPlan resource was last updated - can be converted to and from
-	// RFC3339 (https://www.ietf.org/rfc/rfc3339.txt)
+	// UpdateTime: Output only. The timestamp when this BackupPlan resource
+	// was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -744,10 +738,10 @@ type ClusterMetadata struct {
 	// the cluster.
 	BackupCrdVersions map[string]string `json:"backupCrdVersions,omitempty"`
 
-	// Cluster: The source cluster from which this Backup was created.
-	// Possible formats: 1. projects/*/locations/*/clusters/* 2.
-	// projects/*/zones/*/clusters/* This will be the same value as the
-	// parent BackupPlan's cluster field.
+	// Cluster: The source cluster from which this Backup was created. Valid
+	// formats: - projects/*/locations/*/clusters/* -
+	// projects/*/zones/*/clusters/* This is inherited from the parent
+	// BackupPlan's cluster field.
 	Cluster string `json:"cluster,omitempty"`
 
 	// GkeVersion: GKE version
@@ -828,7 +822,7 @@ type Empty struct {
 // used to encrypt Backup artifacts.
 type EncryptionKey struct {
 	// GcpKmsEncryptionKey: Google Cloud KMS encryption key. Format:
-	// projects//locations//keyRings//cryptoKeys/
+	// projects/*/locations/*/keyRings/*/cryptoKeys/*
 	GcpKmsEncryptionKey string `json:"gcpKmsEncryptionKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcpKmsEncryptionKey")
@@ -1102,10 +1096,10 @@ func (s *GroupKind) MarshalJSON() ([]byte, error) {
 
 // ListBackupPlansResponse: Response message for ListBackupPlans.
 type ListBackupPlansResponse struct {
-	// BackupPlans: The list of BackupPlans.
+	// BackupPlans: The list of BackupPlans matching the given criteria.
 	BackupPlans []*BackupPlan `json:"backupPlans,omitempty"`
 
-	// NextPageToken: A token which may be sent as `page_token` in a
+	// NextPageToken: A token which may be sent as page_token in a
 	// subsequent `ListBackupPlans` call to retrieve the next page of
 	// results. If this field is omitted or empty, then there are no more
 	// results to return.
@@ -1143,10 +1137,10 @@ func (s *ListBackupPlansResponse) MarshalJSON() ([]byte, error) {
 
 // ListBackupsResponse: Response message for ListBackups.
 type ListBackupsResponse struct {
-	// Backups: The list of restore resources within the parent.
+	// Backups: The list of Backups matching the given criteria.
 	Backups []*Backup `json:"backups,omitempty"`
 
-	// NextPageToken: A token which may be sent as `page_token` in a
+	// NextPageToken: A token which may be sent as page_token in a
 	// subsequent `ListBackups` call to retrieve the next page of results.
 	// If this field is omitted or empty, then there are no more results to
 	// return.
@@ -1218,13 +1212,13 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 
 // ListRestorePlansResponse: Response message for ListRestorePlans.
 type ListRestorePlansResponse struct {
-	// NextPageToken: A token which may be sent as `page_token` in a
+	// NextPageToken: A token which may be sent as page_token in a
 	// subsequent `ListRestorePlans` call to retrieve the next page of
 	// results. If this field is omitted or empty, then there are no more
 	// results to return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// RestorePlans: The list of RestorePlans.
+	// RestorePlans: The list of RestorePlans matching the given criteria.
 	RestorePlans []*RestorePlan `json:"restorePlans,omitempty"`
 
 	// Unreachable: Locations that could not be reached.
@@ -1259,13 +1253,13 @@ func (s *ListRestorePlansResponse) MarshalJSON() ([]byte, error) {
 
 // ListRestoresResponse: Response message for ListRestores.
 type ListRestoresResponse struct {
-	// NextPageToken: A token which may be sent as `page_token` in a
+	// NextPageToken: A token which may be sent as page_token in a
 	// subsequent `ListRestores` call to retrieve the next page of results.
 	// If this field is omitted or empty, then there are no more results to
 	// return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Restores: The list of restore resources within the parent.
+	// Restores: The list of Restores matching the given criteria.
 	Restores []*Restore `json:"restores,omitempty"`
 
 	// Unreachable: Locations that could not be reached.
@@ -1300,13 +1294,13 @@ func (s *ListRestoresResponse) MarshalJSON() ([]byte, error) {
 
 // ListVolumeBackupsResponse: Response message for ListVolumeBackups.
 type ListVolumeBackupsResponse struct {
-	// NextPageToken: A token which may be sent as `page_token` in a
+	// NextPageToken: A token which may be sent as page_token in a
 	// subsequent `ListVolumeBackups` call to retrieve the next page of
 	// results. If this field is omitted or empty, then there are no more
 	// results to return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// VolumeBackups: The list of VolumeBackups resources within the parent.
+	// VolumeBackups: The list of VolumeBackups matching the given criteria.
 	VolumeBackups []*VolumeBackup `json:"volumeBackups,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1338,14 +1332,14 @@ func (s *ListVolumeBackupsResponse) MarshalJSON() ([]byte, error) {
 
 // ListVolumeRestoresResponse: Response message for ListVolumeRestores.
 type ListVolumeRestoresResponse struct {
-	// NextPageToken: A token which may be sent as `page_token` in a
+	// NextPageToken: A token which may be sent as page_token in a
 	// subsequent `ListVolumeRestores` call to retrieve the next page of
 	// results. If this field is omitted or empty, then there are no more
 	// results to return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// VolumeRestores: The list of VolumeRestores resources within the
-	// parent.
+	// VolumeRestores: The list of VolumeRestores matching the given
+	// criteria.
 	VolumeRestores []*VolumeRestore `json:"volumeRestores,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1679,25 +1673,24 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // Backup into a target GKE cluster and a record of the restore
 // operation itself. Next id: 18
 type Restore struct {
-	// Backup: Required. Immutable. The Backup used as the source from which
-	// this Restore will restore. Note that this Backup must be a
-	// sub-resource of the RestorePlan's backup_plan. Format:
+	// Backup: Required. Immutable. A reference to the Backup used as the
+	// source from which this Restore will restore. Note that this Backup
+	// must be a sub-resource of the RestorePlan's backup_plan. Format:
 	// projects/*/locations/*/backupPlans/*/backups/*.
 	Backup string `json:"backup,omitempty"`
 
 	// Cluster: Output only. The target cluster into which this Restore will
-	// restore data. Possible formats: 1. projects/*/locations/*/clusters/*
-	// 2. projects/*/zones/*/clusters/* Inherited from parent RestorePlan's
-	// cluster field.
+	// restore data. Valid formats: - projects/*/locations/*/clusters/* -
+	// projects/*/zones/*/clusters/* Inherited from parent RestorePlan's
+	// cluster value.
 	Cluster string `json:"cluster,omitempty"`
 
-	// CompleteTime: Output only. When the restore operation either
-	// successfully completed or failed.
+	// CompleteTime: Output only. Timestamp of when the restore operation
+	// completed.
 	CompleteTime string `json:"completeTime,omitempty"`
 
-	// CreateTime: Output only. [Output Only] The timestamp when this
-	// Restore resource was created - can be converted to and from RFC3339
-	// (https://www.ietf.org/rfc/rfc3339.txt)
+	// CreateTime: Output only. The timestamp when this Restore resource was
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: User specified descriptive string for this Restore.
@@ -1709,27 +1702,28 @@ type Restore struct {
 	// use of the `etag` in the read-modify-write cycle to perform restore
 	// updates in order to avoid race conditions: An `etag` is returned in
 	// the response to `GetRestore`, and systems are expected to put that
-	// etag in the request to `UpdateRestore` to ensure that their change
-	// will be applied to the same version.
+	// etag in the request to `UpdateRestore` or `DeleteRestore` to ensure
+	// that their change will be applied to the same version of the
+	// resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Labels: GCP Labels.
+	// Labels: A set of custom labels supplied by user.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. The full name of the Restore resource. Format:
 	// projects/*/locations/*/restorePlans/*/restores/*
 	Name string `json:"name,omitempty"`
 
-	// ResourcesExcludedCount: Output only. Number of resources excluded in
-	// this restore action.
+	// ResourcesExcludedCount: Output only. Number of resources excluded
+	// during the restore execution.
 	ResourcesExcludedCount int64 `json:"resourcesExcludedCount,omitempty"`
 
-	// ResourcesFailedCount: Output only. Number of resources failed to be
-	// restored in this restore action.
+	// ResourcesFailedCount: Output only. Number of resources that failed to
+	// be restored during the restore execution.
 	ResourcesFailedCount int64 `json:"resourcesFailedCount,omitempty"`
 
-	// ResourcesRestoredCount: Output only. Number of resources restored in
-	// this restore action.
+	// ResourcesRestoredCount: Output only. Number of resources restored
+	// during the restore execution.
 	ResourcesRestoredCount int64 `json:"resourcesRestoredCount,omitempty"`
 
 	// RestoreConfig: Output only. Configuration of the Restore. Inherited
@@ -1757,18 +1751,16 @@ type Restore struct {
 	// Restore is in its current state.
 	StateReason string `json:"stateReason,omitempty"`
 
-	// Uid: Output only. [Output Only] Server generated global unique
-	// identifier of UUID
+	// Uid: Output only. Server generated global unique identifier of UUID
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
 	Uid string `json:"uid,omitempty"`
 
-	// UpdateTime: Output only. [Output Only] The timestamp when this
-	// Restore resource was last updated - can be converted to and from
-	// RFC3339 (https://www.ietf.org/rfc/rfc3339.txt)
+	// UpdateTime: Output only. The timestamp when this Restore resource was
+	// last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VolumesRestoredCount: Output only. Number of volumes restored in this
-	// restore action.
+	// VolumesRestoredCount: Output only. Number of volumes restored during
+	// the restore execution.
 	VolumesRestoredCount int64 `json:"volumesRestoredCount,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1830,12 +1822,11 @@ type RestoreConfig struct {
 	// NamespacedResourceRestoreMode: Defines the behavior for handling the
 	// situation where sets of namespaced resources being restored already
 	// exist in the target cluster. This MUST be set to a value other than
-	// NAMESPACED_RESOURCE_RESTORE_MODE_UNSPECIFIED if any namespaced
-	// restoration is configured via namespaced_resource_restore_scope .
+	// NAMESPACED_RESOURCE_RESTORE_MODE_UNSPECIFIED.
 	//
 	// Possible values:
-	//   "NAMESPACED_RESOURCE_RESTORE_MODE_UNSPECIFIED" - Unspecified. Only
-	// allowed if no namespaced resources will be restored.
+	//   "NAMESPACED_RESOURCE_RESTORE_MODE_UNSPECIFIED" - Unspecified
+	// (invalid).
 	//   "DELETE_AND_RESTORE" - When conflicting top-level resources (either
 	// Namespaces or ProtectedApplications, depending upon the scope) are
 	// encountered, this will first trigger a delete of the conflicting
@@ -1874,8 +1865,7 @@ type RestoreConfig struct {
 	// (will be treated as NO_VOLUME_DATA_RESTORATION).
 	//
 	// Possible values:
-	//   "VOLUME_DATA_RESTORE_POLICY_UNSPECIFIED" - unspecified, default
-	// value
+	//   "VOLUME_DATA_RESTORE_POLICY_UNSPECIFIED" - Unspecified (illegal).
 	//   "RESTORE_VOLUME_DATA_FROM_BACKUP" - For each PVC to be restored,
 	// will create a new underlying volume (and PV) from the corresponding
 	// VolumeBackup contained within the Backup.
@@ -1917,20 +1907,19 @@ func (s *RestoreConfig) MarshalJSON() ([]byte, error) {
 // operations to be performed against Backups belong to a particular
 // BackupPlan. Next id: 11
 type RestorePlan struct {
-	// BackupPlan: Required. Immutable. The BackupPlan from which Backups
-	// may be used as the source for Restores created via this RestorePlan.
-	// Format: projects/*/locations/*/backupPlans/*.
+	// BackupPlan: Required. Immutable. A reference to the BackupPlan from
+	// which Backups may be used as the source for Restores created via this
+	// RestorePlan. Format: projects/*/locations/*/backupPlans/*.
 	BackupPlan string `json:"backupPlan,omitempty"`
 
 	// Cluster: Required. Immutable. The target cluster into which Restores
 	// created via this RestorePlan will restore data. NOTE: the cluster's
-	// region must be the same as the RestorePlan. Possible formats: 1.
-	// projects/*/locations/*/clusters/* 2. projects/*/zones/*/clusters/*
+	// region must be the same as the RestorePlan. Valid formats: -
+	// projects/*/locations/*/clusters/* - projects/*/zones/*/clusters/*
 	Cluster string `json:"cluster,omitempty"`
 
-	// CreateTime: Output only. [Output Only] The timestamp when this
-	// RestorePlan resource was created - can be converted to and from
-	// RFC3339 (https://www.ietf.org/rfc/rfc3339.txt)
+	// CreateTime: Output only. The timestamp when this RestorePlan resource
+	// was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: User specified descriptive string for this RestorePlan.
@@ -1942,29 +1931,28 @@ type RestorePlan struct {
 	// use of the `etag` in the read-modify-write cycle to perform restore
 	// updates in order to avoid race conditions: An `etag` is returned in
 	// the response to `GetRestorePlan`, and systems are expected to put
-	// that etag in the request to `UpdateRestorePlan` to ensure that their
-	// change will be applied to the same version.
+	// that etag in the request to `UpdateRestorePlan` or
+	// `DeleteRestorePlan` to ensure that their change will be applied to
+	// the same version of the resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Labels: A set of custom labels supplied by user.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only. [Output Only] The full name of the RestorePlan
-	// resource. Format: projects/*/locations/*/restorePlans/*
+	// Name: Output only. The full name of the RestorePlan resource. Format:
+	// projects/*/locations/*/restorePlans/*.
 	Name string `json:"name,omitempty"`
 
 	// RestoreConfig: Required. Configuration of Restores created via this
 	// RestorePlan.
 	RestoreConfig *RestoreConfig `json:"restoreConfig,omitempty"`
 
-	// Uid: Output only. [Output Only] Server generated global unique
-	// identifier of UUID
+	// Uid: Output only. Server generated global unique identifier of UUID
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
 	Uid string `json:"uid,omitempty"`
 
-	// UpdateTime: Output only. [Output Only] The timestamp when this
-	// RestorePlan resource was last updated - can be converted to and from
-	// RFC3339 (https://www.ietf.org/rfc/rfc3339.txt)
+	// UpdateTime: Output only. The timestamp when this RestorePlan resource
+	// was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1994,34 +1982,29 @@ func (s *RestorePlan) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RetentionPolicy: RentionPolicy is an inner message type to define: 1.
-// Minimum age for Backups created via this BackupPlan - deletion
-// (either manual or automatic) of Backups younger than this age will be
-// blocked 2. Default maximum age of Backups created via this
-// BackupPlan, after which automatic deletion will occur 3. Lock to
-// disallow any changes to any RetentionPolicy settings
+// RetentionPolicy: RetentionPolicy defines a Backup retention policy
+// for a BackupPlan.
 type RetentionPolicy struct {
 	// BackupDeleteLockDays: Minimum age for Backups created via this
 	// BackupPlan (in days). This field MUST be an integer value between
-	// 0-90(inclusive). A Backup created under this BackupPlan will NOT be
-	// deletable until it reaches Backup's create_time +
-	// backup_delete_lock_days. Updating this field of a BackupPlan does NOT
-	// affect existing Backups under it. Backups created AFTER a successful
-	// update will inherit the new value. Default: 0 (no delete blocking)
+	// 0-90 (inclusive). A Backup created under this BackupPlan will NOT be
+	// deletable until it reaches Backup's (create_time +
+	// backup_delete_lock_days). Updating this field of a BackupPlan does
+	// NOT affect existing Backups under it. Backups created AFTER a
+	// successful update will inherit the new value. Default: 0 (no delete
+	// blocking)
 	BackupDeleteLockDays int64 `json:"backupDeleteLockDays,omitempty"`
 
 	// BackupRetainDays: The default maximum age of a Backup created via
 	// this BackupPlan. This field MUST be an integer value >= 0. If
 	// specified, a Backup created under this BackupPlan will be
-	// automatically deleted after its age reaches create_time +
-	// backup_retain_days. If not specified, Backups created under this
+	// automatically deleted after its age reaches (create_time +
+	// backup_retain_days). If not specified, Backups created under this
 	// BackupPlan will NOT be subject to automatic deletion. Updating this
 	// field does NOT affect existing Backups under it. Backups created
 	// AFTER a successful update will automatically pick up the new value.
-	// NOTE: Specifying a backup_retain_days smaller than
-	// backup_delete_lock_days at creation/updating time will be considered
-	// as invalid, and the request will be rejected immediately. Default: 0
-	// (no automatic deletion)
+	// NOTE: backup_retain_days must be >= backup_delete_lock_days. Default:
+	// 0 (no automatic deletion)
 	BackupRetainDays int64 `json:"backupRetainDays,omitempty"`
 
 	// Locked: This flag denotes whether the retention policy of this
@@ -2057,8 +2040,10 @@ func (s *RetentionPolicy) MarshalJSON() ([]byte, error) {
 // Schedule: Schedule defines scheduling parameters for automatically
 // creating Backups via this BackupPlan.
 type Schedule struct {
-	// CronSchedule: A standard cron-style string that defines a repeating
-	// schedule for creating Backups via this BackupPlan.
+	// CronSchedule: A standard cron (https://wikipedia.com/wiki/cron)
+	// string that defines a repeating schedule for creating Backups via
+	// this BackupPlan. Default (empty): no automatic backup creation will
+	// occur.
 	CronSchedule string `json:"cronSchedule,omitempty"`
 
 	// Paused: This flag denotes whether automatic Backup creation is paused
@@ -2265,14 +2250,12 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // as a component of a Backup - both the record of the operation and a
 // pointer to the underlying storage-specific artifacts. Next id: 14
 type VolumeBackup struct {
-	// CompleteTime: Output only. [Output Only] The timestamp when the
-	// associated underlying volume backup operation completes - can be
-	// converted to and from RFC3339 (https://www.ietf.org/rfc/rfc3339.txt)
+	// CompleteTime: Output only. The timestamp when the associated
+	// underlying volume backup operation completed.
 	CompleteTime string `json:"completeTime,omitempty"`
 
-	// CreateTime: Output only. [Output Only] The timestamp when this
-	// VolumeBackup resource was created - can be converted to and from
-	// RFC3339 (https://www.ietf.org/rfc/rfc3339.txt)
+	// CreateTime: Output only. The timestamp when this VolumeBackup
+	// resource was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DiskSizeBytes: Output only. The minimum size of the disk to which
@@ -2283,10 +2266,7 @@ type VolumeBackup struct {
 	// as a way to help prevent simultaneous updates of a volume backup from
 	// overwriting each other. It is strongly suggested that systems make
 	// use of the `etag` in the read-modify-write cycle to perform volume
-	// backup updates in order to avoid race conditions: An `etag` is
-	// returned in the response to `GetVolumeBackup', and systems are
-	// expected to put that etag in the request to `UpdateVolumeBackup` to
-	// ensure that their change will be applied to the same version.
+	// backup updates in order to avoid race conditions.
 	Etag string `json:"etag,omitempty"`
 
 	// Format: Output only. The format used for the volume backup.
@@ -2297,10 +2277,9 @@ type VolumeBackup struct {
 	// based volume backup.
 	Format string `json:"format,omitempty"`
 
-	// Name: Output only. [Output Only] The full name of the VolumeBackup
-	// resource. Format:
-	// projects/*/locations/*/backupPlans/*/backups/*/volumeBackups/* Note
-	// that the last segment of the name will have the format: 'pvc-'.
+	// Name: Output only. The full name of the VolumeBackup resource.
+	// Format:
+	// projects/*/locations/*/backupPlans/*/backups/*/volumeBackups/*.
 	Name string `json:"name,omitempty"`
 
 	// SourcePvc: Output only. A reference to the source Kubernetes PVC from
@@ -2339,20 +2318,16 @@ type VolumeBackup struct {
 	// volume is deleted.
 	StorageBytes int64 `json:"storageBytes,omitempty,string"`
 
-	// Uid: Output only. [Output Only] Server generated global unique
-	// identifier of UUID
+	// Uid: Output only. Server generated global unique identifier of UUID
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
 	Uid string `json:"uid,omitempty"`
 
-	// UpdateTime: Output only. [Output Only] The timestamp when this
-	// VolumeBackup resource was last updated - can be converted to and from
-	// RFC3339 (https://www.ietf.org/rfc/rfc3339.txt)
+	// UpdateTime: Output only. The timestamp when this VolumeBackup
+	// resource was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// VolumeBackupHandle: Output only. A storage system-specific opaque
-	// handle to the underlying volume backup. This field is interpreted by
-	// the volume backup and restore drivers running in the GKE cluster and
-	// not by the service.
+	// handle to the underlying volume backup.
 	VolumeBackupHandle string `json:"volumeBackupHandle,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2385,32 +2360,26 @@ func (s *VolumeBackup) MarshalJSON() ([]byte, error) {
 // VolumeRestore: Represents the operation of restoring a volume from a
 // VolumeBackup. Next id: 13
 type VolumeRestore struct {
-	// CompleteTime: Output only. [Output Only] The timestamp when the
-	// associated underlying volume restoration completed - can be converted
-	// to and from RFC3339 (https://www.ietf.org/rfc/rfc3339.txt)
+	// CompleteTime: Output only. The timestamp when the associated
+	// underlying volume restoration completed.
 	CompleteTime string `json:"completeTime,omitempty"`
 
-	// CreateTime: Output only. [Output Only] The timestamp when this
-	// VolumeRestore resource was created - can be converted to and from
-	// RFC3339 (https://www.ietf.org/rfc/rfc3339.txt)
+	// CreateTime: Output only. The timestamp when this VolumeRestore
+	// resource was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Etag: Output only. `etag` is used for optimistic concurrency control
 	// as a way to help prevent simultaneous updates of a volume restore
 	// from overwriting each other. It is strongly suggested that systems
 	// make use of the `etag` in the read-modify-write cycle to perform
-	// volume restore updates in order to avoid race conditions: An `etag`
-	// is returned in the response to `GetVolumeRestore', and systems are
-	// expected to put that etag in the request to `UpdateVolumeRestore` to
-	// ensure that their change will be applied to the same version.
+	// volume restore updates in order to avoid race conditions.
 	Etag string `json:"etag,omitempty"`
 
 	// Name: Output only. Full name of the VolumeRestore resource. Format:
-	// projects/*/locations/*/restorePlans/*/restores/*/volumeRestores/*
-	// Note that the last segment of the name will have the format: 'pvc-'.
+	// projects/*/locations/*/restorePlans/*/restores/*/volumeRestores/*.
 	Name string `json:"name,omitempty"`
 
-	// State: Output only. The current state of this VolumeRestore
+	// State: Output only. The current state of this VolumeRestore.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - This is an illegal state and should not be
@@ -2432,25 +2401,22 @@ type VolumeRestore struct {
 	// be restored.
 	TargetPvc *NamespacedName `json:"targetPvc,omitempty"`
 
-	// Uid: Output only. [Output Only] Server generated global unique
-	// identifier of UUID
+	// Uid: Output only. Server generated global unique identifier of UUID
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
 	Uid string `json:"uid,omitempty"`
 
-	// UpdateTime: Output only. [Output Only] The timestamp when this
-	// VolumeRestore resource was last updated - can be converted to and
-	// from RFC3339 (https://www.ietf.org/rfc/rfc3339.txt)
+	// UpdateTime: Output only. The timestamp when this VolumeRestore
+	// resource was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// VolumeBackup: Output only. The full name of the VolumeBackup from
 	// which the volume will be restored. Format:
-	// projects/*/locations/*/backupPlans/*/backups/*/volumeBackups/*
+	// projects/*/locations/*/backupPlans/*/backups/*/volumeBackups/*.
 	VolumeBackup string `json:"volumeBackup,omitempty"`
 
 	// VolumeHandle: Output only. A storage system-specific opaque handler
 	// to the underlying volume created for the target PVC from the volume
-	// backup. This field is interpreted by the volume backup and restore
-	// drivers running in the GKE cluster and not by the service.
+	// backup.
 	VolumeHandle string `json:"volumeHandle,omitempty"`
 
 	// VolumeType: Output only. The type of volume provisioned
@@ -2991,7 +2957,7 @@ type ProjectsLocationsBackupPlansCreateCall struct {
 // Create: Creates a new BackupPlan in a given location.
 //
 // - parent: The location within which to create the BackupPlan. Format:
-//   projects/{project}/locations/{location}.
+//   projects/*/locations/*.
 func (r *ProjectsLocationsBackupPlansService) Create(parent string, backupplan *BackupPlan) *ProjectsLocationsBackupPlansCreateCall {
 	c := &ProjectsLocationsBackupPlansCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3001,9 +2967,9 @@ func (r *ProjectsLocationsBackupPlansService) Create(parent string, backupplan *
 
 // BackupPlanId sets the optional parameter "backupPlanId": Required.
 // The client-provided short name for the BackupPlan resource. This name
-// must: a. be between 1 and 63 characters long (inclusive) b. consist
-// of only lower-case ASCII letters, numbers, and dashes c. start with a
-// lower-case letter d. end with a lower-case letter or number e. be
+// must: - be between 1 and 63 characters long (inclusive) - consist of
+// only lower-case ASCII letters, numbers, and dashes - start with a
+// lower-case letter - end with a lower-case letter or number - be
 // unique within the set of BackupPlans in this location
 func (c *ProjectsLocationsBackupPlansCreateCall) BackupPlanId(backupPlanId string) *ProjectsLocationsBackupPlansCreateCall {
 	c.urlParams_.Set("backupPlanId", backupPlanId)
@@ -3110,12 +3076,12 @@ func (c *ProjectsLocationsBackupPlansCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "backupPlanId": {
-	//       "description": "Required. The client-provided short name for the BackupPlan resource. This name must: a. be between 1 and 63 characters long (inclusive) b. consist of only lower-case ASCII letters, numbers, and dashes c. start with a lower-case letter d. end with a lower-case letter or number e. be unique within the set of BackupPlans in this location",
+	//       "description": "Required. The client-provided short name for the BackupPlan resource. This name must: - be between 1 and 63 characters long (inclusive) - consist of only lower-case ASCII letters, numbers, and dashes - start with a lower-case letter - end with a lower-case letter or number - be unique within the set of BackupPlans in this location",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The location within which to create the BackupPlan. Format: projects/{project}/locations/{location}",
+	//       "description": "Required. The location within which to create the BackupPlan. Format: projects/*/locations/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3149,7 +3115,7 @@ type ProjectsLocationsBackupPlansDeleteCall struct {
 // Delete: Deletes an existing BackupPlan.
 //
 // - name: Fully qualified BackupPlan name. Format:
-//   projects/{project}/locations/{location}/backupPlans/{backup_plan}.
+//   projects/*/locations/*/backupPlans/*.
 func (r *ProjectsLocationsBackupPlansService) Delete(name string) *ProjectsLocationsBackupPlansDeleteCall {
 	c := &ProjectsLocationsBackupPlansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3157,7 +3123,8 @@ func (r *ProjectsLocationsBackupPlansService) Delete(name string) *ProjectsLocat
 }
 
 // Etag sets the optional parameter "etag": If provided, this value must
-// match the value currently assigned to the target resource.
+// match the current value of the target BackupPlan's etag field or the
+// request is rejected.
 func (c *ProjectsLocationsBackupPlansDeleteCall) Etag(etag string) *ProjectsLocationsBackupPlansDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -3258,12 +3225,12 @@ func (c *ProjectsLocationsBackupPlansDeleteCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If provided, this value must match the value currently assigned to the target resource.",
+	//       "description": "If provided, this value must match the current value of the target BackupPlan's etag field or the request is rejected.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. Fully qualified BackupPlan name. Format: projects/{project}/locations/{location}/backupPlans/{backup_plan}",
+	//       "description": "Required. Fully qualified BackupPlan name. Format: projects/*/locations/*/backupPlans/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/backupPlans/[^/]+$",
 	//       "required": true,
@@ -3295,7 +3262,7 @@ type ProjectsLocationsBackupPlansGetCall struct {
 // Get: Retrieve the details of a single BackupPlan.
 //
 // - name: Fully qualified BackupPlan name. Format:
-//   projects/{project}/locations/{location}/backupPlans/{backup_plan}.
+//   projects/*/locations/*/backupPlans/*.
 func (r *ProjectsLocationsBackupPlansService) Get(name string) *ProjectsLocationsBackupPlansGetCall {
 	c := &ProjectsLocationsBackupPlansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3410,7 +3377,7 @@ func (c *ProjectsLocationsBackupPlansGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Fully qualified BackupPlan name. Format: projects/{project}/locations/{location}/backupPlans/{backup_plan}",
+	//       "description": "Required. Fully qualified BackupPlan name. Format: projects/*/locations/*/backupPlans/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/backupPlans/[^/]+$",
 	//       "required": true,
@@ -3616,20 +3583,22 @@ type ProjectsLocationsBackupPlansListCall struct {
 // List: Lists BackupPlans in a given location.
 //
 // - parent: The location that contains the BackupPlans to list. Format:
-//   projects/{project}/locations/{location}.
+//   projects/*/locations/*.
 func (r *ProjectsLocationsBackupPlansService) List(parent string) *ProjectsLocationsBackupPlansListCall {
 	c := &ProjectsLocationsBackupPlansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": List filter.
+// Filter sets the optional parameter "filter": Field match expression
+// used to filter the results.
 func (c *ProjectsLocationsBackupPlansListCall) Filter(filter string) *ProjectsLocationsBackupPlansListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sort results.
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the results.
 func (c *ProjectsLocationsBackupPlansListCall) OrderBy(orderBy string) *ProjectsLocationsBackupPlansListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -3764,12 +3733,12 @@ func (c *ProjectsLocationsBackupPlansListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "List filter.",
+	//       "description": "Field match expression used to filter the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sort results.",
+	//       "description": "Field by which to sort the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3785,7 +3754,7 @@ func (c *ProjectsLocationsBackupPlansListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The location that contains the BackupPlans to list. Format: projects/{project}/locations/{location}",
+	//       "description": "Required. The location that contains the BackupPlans to list. Format: projects/*/locations/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3837,8 +3806,8 @@ type ProjectsLocationsBackupPlansPatchCall struct {
 
 // Patch: Update a BackupPlan.
 //
-// - name: Output only. [Output Only] The full name of the BackupPlan
-//   resource. Format: projects/*/locations/*/backupPlans/*.
+// - name: Output only. The full name of the BackupPlan resource.
+//   Format: projects/*/locations/*/backupPlans/*.
 func (r *ProjectsLocationsBackupPlansService) Patch(name string, backupplan *BackupPlan) *ProjectsLocationsBackupPlansPatchCall {
 	c := &ProjectsLocationsBackupPlansPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3961,7 +3930,7 @@ func (c *ProjectsLocationsBackupPlansPatchCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. [Output Only] The full name of the BackupPlan resource. Format: projects/*/locations/*/backupPlans/*",
+	//       "description": "Output only. The full name of the BackupPlan resource. Format: projects/*/locations/*/backupPlans/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/backupPlans/[^/]+$",
 	//       "required": true,
@@ -4297,7 +4266,7 @@ type ProjectsLocationsBackupPlansBackupsCreateCall struct {
 // Create: Creates a Backup for the given BackupPlan.
 //
 // - parent: The BackupPlan within which to create the Backup. Format:
-//   projects/{project}/locations/{location}/backupPlans/{backup_plan}.
+//   projects/*/locations/*/backupPlans/*.
 func (r *ProjectsLocationsBackupPlansBackupsService) Create(parent string, backup *Backup) *ProjectsLocationsBackupPlansBackupsCreateCall {
 	c := &ProjectsLocationsBackupPlansBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4306,11 +4275,11 @@ func (r *ProjectsLocationsBackupPlansBackupsService) Create(parent string, backu
 }
 
 // BackupId sets the optional parameter "backupId": The client-provided
-// short name for the Backup resource. This name must: a. be between 1
-// and 63 characters long (inclusive) b. consist of only lower-case
-// ASCII letters, numbers, and dashes c. start with a lower-case letter
-// d. end with a lower-case letter or number e. be unique within the set
-// of Backups in this BackupPlan
+// short name for the Backup resource. This name must: - be between 1
+// and 63 characters long (inclusive) - consist of only lower-case ASCII
+// letters, numbers, and dashes - start with a lower-case letter - end
+// with a lower-case letter or number - be unique within the set of
+// Backups in this BackupPlan
 func (c *ProjectsLocationsBackupPlansBackupsCreateCall) BackupId(backupId string) *ProjectsLocationsBackupPlansBackupsCreateCall {
 	c.urlParams_.Set("backupId", backupId)
 	return c
@@ -4416,12 +4385,12 @@ func (c *ProjectsLocationsBackupPlansBackupsCreateCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "backupId": {
-	//       "description": "The client-provided short name for the Backup resource. This name must: a. be between 1 and 63 characters long (inclusive) b. consist of only lower-case ASCII letters, numbers, and dashes c. start with a lower-case letter d. end with a lower-case letter or number e. be unique within the set of Backups in this BackupPlan",
+	//       "description": "The client-provided short name for the Backup resource. This name must: - be between 1 and 63 characters long (inclusive) - consist of only lower-case ASCII letters, numbers, and dashes - start with a lower-case letter - end with a lower-case letter or number - be unique within the set of Backups in this BackupPlan",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BackupPlan within which to create the Backup. Format: projects/{project}/locations/{location}/backupPlans/{backup_plan}",
+	//       "description": "Required. The BackupPlan within which to create the Backup. Format: projects/*/locations/*/backupPlans/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/backupPlans/[^/]+$",
 	//       "required": true,
@@ -4455,24 +4424,24 @@ type ProjectsLocationsBackupPlansBackupsDeleteCall struct {
 // Delete: Deletes an existing Backup.
 //
 // - name: Name of the Backup resource. Format:
-//   projects/{project}/locations/{location}/backupPlans/{backup_plan}/ba
-//   ckups/{backup}.
+//   projects/*/locations/*/backupPlans/*/backups/*.
 func (r *ProjectsLocationsBackupPlansBackupsService) Delete(name string) *ProjectsLocationsBackupPlansBackupsDeleteCall {
 	c := &ProjectsLocationsBackupPlansBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Etag sets the optional parameter "etag": etag, if provided, it must
-// match the server's etag for the delete to happen.
+// Etag sets the optional parameter "etag": If provided, this value must
+// match the current value of the target Backup's etag field or the
+// request is rejected.
 func (c *ProjectsLocationsBackupPlansBackupsDeleteCall) Etag(etag string) *ProjectsLocationsBackupPlansBackupsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
 }
 
 // Force sets the optional parameter "force": If set to true, any
-// volumeBackups below this backup will also be deleted. Otherwise, the
-// request will only succeed if the backup has no volumeBackups.
+// VolumeBackups below this Backup will also be deleted. Otherwise, the
+// request will only succeed if the Backup has no VolumeBackups.
 func (c *ProjectsLocationsBackupPlansBackupsDeleteCall) Force(force bool) *ProjectsLocationsBackupPlansBackupsDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
@@ -4573,17 +4542,17 @@ func (c *ProjectsLocationsBackupPlansBackupsDeleteCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "etag, if provided, it must match the server's etag for the delete to happen.",
+	//       "description": "If provided, this value must match the current value of the target Backup's etag field or the request is rejected.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "force": {
-	//       "description": "If set to true, any volumeBackups below this backup will also be deleted. Otherwise, the request will only succeed if the backup has no volumeBackups.",
+	//       "description": "If set to true, any VolumeBackups below this Backup will also be deleted. Otherwise, the request will only succeed if the Backup has no VolumeBackups.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. Name of the Backup resource. Format: projects/{project}/locations/{location}/backupPlans/{backup_plan}/backups/{backup}",
+	//       "description": "Required. Name of the Backup resource. Format: projects/*/locations/*/backupPlans/*/backups/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/backupPlans/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -4615,8 +4584,7 @@ type ProjectsLocationsBackupPlansBackupsGetCall struct {
 // Get: Retrieve the details of a single Backup.
 //
 // - name: Full name of the Backup resource. Format:
-//   projects/{project}/locations/{location}/backupPlans/{backup_plan}/ba
-//   ckups/{backup}.
+//   projects/*/locations/*/backupPlans/*/backups/*.
 func (r *ProjectsLocationsBackupPlansBackupsService) Get(name string) *ProjectsLocationsBackupPlansBackupsGetCall {
 	c := &ProjectsLocationsBackupPlansBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4731,7 +4699,7 @@ func (c *ProjectsLocationsBackupPlansBackupsGetCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full name of the Backup resource. Format: projects/{project}/locations/{location}/backupPlans/{backup_plan}/backups/{backup}",
+	//       "description": "Required. Full name of the Backup resource. Format: projects/*/locations/*/backupPlans/*/backups/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/backupPlans/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -4937,20 +4905,22 @@ type ProjectsLocationsBackupPlansBackupsListCall struct {
 // List: Lists the Backups for a given BackupPlan.
 //
 // - parent: The BackupPlan that contains the Backups to list. Format:
-//   projects/{project}/locations/{location}/backupPlans/{backup_plan}.
+//   projects/*/locations/*/backupPlans/*.
 func (r *ProjectsLocationsBackupPlansBackupsService) List(parent string) *ProjectsLocationsBackupPlansBackupsListCall {
 	c := &ProjectsLocationsBackupPlansBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": List filter.
+// Filter sets the optional parameter "filter": Field match expression
+// used to filter the results.
 func (c *ProjectsLocationsBackupPlansBackupsListCall) Filter(filter string) *ProjectsLocationsBackupPlansBackupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sort results.
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the results.
 func (c *ProjectsLocationsBackupPlansBackupsListCall) OrderBy(orderBy string) *ProjectsLocationsBackupPlansBackupsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -5085,12 +5055,12 @@ func (c *ProjectsLocationsBackupPlansBackupsListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "List filter.",
+	//       "description": "Field match expression used to filter the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sort results.",
+	//       "description": "Field by which to sort the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5106,7 +5076,7 @@ func (c *ProjectsLocationsBackupPlansBackupsListCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BackupPlan that contains the Backups to list. Format: projects/{project}/locations/{location}/backupPlans/{backup_plan}",
+	//       "description": "Required. The BackupPlan that contains the Backups to list. Format: projects/*/locations/*/backupPlans/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/backupPlans/[^/]+$",
 	//       "required": true,
@@ -5616,8 +5586,7 @@ type ProjectsLocationsBackupPlansBackupsVolumeBackupsGetCall struct {
 // Get: Retrieve the details of a single VolumeBackup.
 //
 // - name: Full name of the VolumeBackup resource. Format:
-//   projects/{project}/locations/{location}/backupPlans/{backup_plan}/ba
-//   ckups/{backup}/volumeBackups/{volume_backup}.
+//   projects/*/locations/*/backupPlans/*/backups/*/volumeBackups/*.
 func (r *ProjectsLocationsBackupPlansBackupsVolumeBackupsService) Get(name string) *ProjectsLocationsBackupPlansBackupsVolumeBackupsGetCall {
 	c := &ProjectsLocationsBackupPlansBackupsVolumeBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5732,7 +5701,7 @@ func (c *ProjectsLocationsBackupPlansBackupsVolumeBackupsGetCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full name of the VolumeBackup resource. Format: projects/{project}/locations/{location}/backupPlans/{backup_plan}/backups/{backup}/volumeBackups/{volume_backup}",
+	//       "description": "Required. Full name of the VolumeBackup resource. Format: projects/*/locations/*/backupPlans/*/backups/*/volumeBackups/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/backupPlans/[^/]+/backups/[^/]+/volumeBackups/[^/]+$",
 	//       "required": true,
@@ -5938,21 +5907,22 @@ type ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall struct {
 // List: Lists the VolumeBackups for a given Backup.
 //
 // - parent: The Backup that contains the VolumeBackups to list. Format:
-//   projects/{project}/locations/{location}/backupPlans/{backup_plan}/ba
-//   ckups/{backup}.
+//   projects/*/locations/*/backupPlans/*/backups/*.
 func (r *ProjectsLocationsBackupPlansBackupsVolumeBackupsService) List(parent string) *ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall {
 	c := &ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": List filter.
+// Filter sets the optional parameter "filter": Field match expression
+// used to filter the results.
 func (c *ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall) Filter(filter string) *ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sort results.
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the results.
 func (c *ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall) OrderBy(orderBy string) *ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6087,12 +6057,12 @@ func (c *ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "List filter.",
+	//       "description": "Field match expression used to filter the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sort results.",
+	//       "description": "Field by which to sort the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6108,7 +6078,7 @@ func (c *ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The Backup that contains the VolumeBackups to list. Format: projects/{project}/locations/{location}/backupPlans/{backup_plan}/backups/{backup}",
+	//       "description": "Required. The Backup that contains the VolumeBackups to list. Format: projects/*/locations/*/backupPlans/*/backups/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/backupPlans/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -6969,7 +6939,7 @@ type ProjectsLocationsRestorePlansCreateCall struct {
 // Create: Creates a new RestorePlan in a given location.
 //
 // - parent: The location within which to create the RestorePlan.
-//   Format: projects/{project}/locations/{location}.
+//   Format: projects/*/locations/*.
 func (r *ProjectsLocationsRestorePlansService) Create(parent string, restoreplan *RestorePlan) *ProjectsLocationsRestorePlansCreateCall {
 	c := &ProjectsLocationsRestorePlansCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6979,10 +6949,10 @@ func (r *ProjectsLocationsRestorePlansService) Create(parent string, restoreplan
 
 // RestorePlanId sets the optional parameter "restorePlanId": Required.
 // The client-provided short name for the RestorePlan resource. This
-// name must: a. be between 1 and 63 characters long (inclusive) b.
-// consist of only lower-case ASCII letters, numbers, and dashes c.
-// start with a lower-case letter d. end with a lower-case letter or
-// number e. be unique within the set of RestorePlans in this location
+// name must: - be between 1 and 63 characters long (inclusive) -
+// consist of only lower-case ASCII letters, numbers, and dashes - start
+// with a lower-case letter - end with a lower-case letter or number -
+// be unique within the set of RestorePlans in this location
 func (c *ProjectsLocationsRestorePlansCreateCall) RestorePlanId(restorePlanId string) *ProjectsLocationsRestorePlansCreateCall {
 	c.urlParams_.Set("restorePlanId", restorePlanId)
 	return c
@@ -7088,14 +7058,14 @@ func (c *ProjectsLocationsRestorePlansCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The location within which to create the RestorePlan. Format: projects/{project}/locations/{location}",
+	//       "description": "Required. The location within which to create the RestorePlan. Format: projects/*/locations/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "restorePlanId": {
-	//       "description": "Required. The client-provided short name for the RestorePlan resource. This name must: a. be between 1 and 63 characters long (inclusive) b. consist of only lower-case ASCII letters, numbers, and dashes c. start with a lower-case letter d. end with a lower-case letter or number e. be unique within the set of RestorePlans in this location",
+	//       "description": "Required. The client-provided short name for the RestorePlan resource. This name must: - be between 1 and 63 characters long (inclusive) - consist of only lower-case ASCII letters, numbers, and dashes - start with a lower-case letter - end with a lower-case letter or number - be unique within the set of RestorePlans in this location",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7127,7 +7097,7 @@ type ProjectsLocationsRestorePlansDeleteCall struct {
 // Delete: Deletes an existing RestorePlan.
 //
 // - name: Fully qualified RestorePlan name. Format:
-//   projects/{project}/locations/{location}/restorePlans/{restore_plan}.
+//   projects/*/locations/*/restorePlans/*.
 func (r *ProjectsLocationsRestorePlansService) Delete(name string) *ProjectsLocationsRestorePlansDeleteCall {
 	c := &ProjectsLocationsRestorePlansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7135,15 +7105,16 @@ func (r *ProjectsLocationsRestorePlansService) Delete(name string) *ProjectsLoca
 }
 
 // Etag sets the optional parameter "etag": If provided, this value must
-// match the value currently assigned to the target resource.
+// match the current value of the target RestorePlan's etag field or the
+// request is rejected.
 func (c *ProjectsLocationsRestorePlansDeleteCall) Etag(etag string) *ProjectsLocationsRestorePlansDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
 }
 
 // Force sets the optional parameter "force": If set to true, any
-// restores below this restorePlan will also be deleted. Otherwise, the
-// request will only succeed if the restorePlan has no restores.
+// Restores below this RestorePlan will also be deleted. Otherwise, the
+// request will only succeed if the RestorePlan has no Restores.
 func (c *ProjectsLocationsRestorePlansDeleteCall) Force(force bool) *ProjectsLocationsRestorePlansDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
@@ -7244,17 +7215,17 @@ func (c *ProjectsLocationsRestorePlansDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If provided, this value must match the value currently assigned to the target resource.",
+	//       "description": "If provided, this value must match the current value of the target RestorePlan's etag field or the request is rejected.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "force": {
-	//       "description": "If set to true, any restores below this restorePlan will also be deleted. Otherwise, the request will only succeed if the restorePlan has no restores.",
+	//       "description": "If set to true, any Restores below this RestorePlan will also be deleted. Otherwise, the request will only succeed if the RestorePlan has no Restores.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. Fully qualified RestorePlan name. Format: projects/{project}/locations/{location}/restorePlans/{restore_plan}",
+	//       "description": "Required. Fully qualified RestorePlan name. Format: projects/*/locations/*/restorePlans/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/restorePlans/[^/]+$",
 	//       "required": true,
@@ -7286,7 +7257,7 @@ type ProjectsLocationsRestorePlansGetCall struct {
 // Get: Retrieve the details of a single RestorePlan.
 //
 // - name: Fully qualified RestorePlan name. Format:
-//   projects/{project}/locations/{location}/restorePlans/{restore_plan}.
+//   projects/*/locations/*/restorePlans/*.
 func (r *ProjectsLocationsRestorePlansService) Get(name string) *ProjectsLocationsRestorePlansGetCall {
 	c := &ProjectsLocationsRestorePlansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7401,7 +7372,7 @@ func (c *ProjectsLocationsRestorePlansGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Fully qualified RestorePlan name. Format: projects/{project}/locations/{location}/restorePlans/{restore_plan}",
+	//       "description": "Required. Fully qualified RestorePlan name. Format: projects/*/locations/*/restorePlans/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/restorePlans/[^/]+$",
 	//       "required": true,
@@ -7607,20 +7578,22 @@ type ProjectsLocationsRestorePlansListCall struct {
 // List: Lists RestorePlans in a given location.
 //
 // - parent: The location that contains the RestorePlans to list.
-//   Format: projects/{project}/locations/{location}.
+//   Format: projects/*/locations/*.
 func (r *ProjectsLocationsRestorePlansService) List(parent string) *ProjectsLocationsRestorePlansListCall {
 	c := &ProjectsLocationsRestorePlansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": List filter.
+// Filter sets the optional parameter "filter": Field match expression
+// used to filter the results.
 func (c *ProjectsLocationsRestorePlansListCall) Filter(filter string) *ProjectsLocationsRestorePlansListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sort results.
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the results.
 func (c *ProjectsLocationsRestorePlansListCall) OrderBy(orderBy string) *ProjectsLocationsRestorePlansListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -7755,12 +7728,12 @@ func (c *ProjectsLocationsRestorePlansListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "List filter.",
+	//       "description": "Field match expression used to filter the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sort results.",
+	//       "description": "Field by which to sort the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7776,7 +7749,7 @@ func (c *ProjectsLocationsRestorePlansListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The location that contains the RestorePlans to list. Format: projects/{project}/locations/{location}",
+	//       "description": "Required. The location that contains the RestorePlans to list. Format: projects/*/locations/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -7828,8 +7801,8 @@ type ProjectsLocationsRestorePlansPatchCall struct {
 
 // Patch: Update a RestorePlan.
 //
-// - name: Output only. [Output Only] The full name of the RestorePlan
-//   resource. Format: projects/*/locations/*/restorePlans/*.
+// - name: Output only. The full name of the RestorePlan resource.
+//   Format: projects/*/locations/*/restorePlans/*.
 func (r *ProjectsLocationsRestorePlansService) Patch(name string, restoreplan *RestorePlan) *ProjectsLocationsRestorePlansPatchCall {
 	c := &ProjectsLocationsRestorePlansPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7951,7 +7924,7 @@ func (c *ProjectsLocationsRestorePlansPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. [Output Only] The full name of the RestorePlan resource. Format: projects/*/locations/*/restorePlans/*",
+	//       "description": "Output only. The full name of the RestorePlan resource. Format: projects/*/locations/*/restorePlans/*.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/restorePlans/[^/]+$",
 	//       "required": true,
@@ -8287,7 +8260,7 @@ type ProjectsLocationsRestorePlansRestoresCreateCall struct {
 // Create: Creates a new Restore for the given RestorePlan.
 //
 // - parent: The RestorePlan within which to create the Restore. Format:
-//   projects/{project}/locations/{location}/restorePlans/{restore_plan}.
+//   projects/*/locations/*/restorePlans/*.
 func (r *ProjectsLocationsRestorePlansRestoresService) Create(parent string, restore *Restore) *ProjectsLocationsRestorePlansRestoresCreateCall {
 	c := &ProjectsLocationsRestorePlansRestoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8297,9 +8270,9 @@ func (r *ProjectsLocationsRestorePlansRestoresService) Create(parent string, res
 
 // RestoreId sets the optional parameter "restoreId": Required. The
 // client-provided short name for the Restore resource. This name must:
-// a. be between 1 and 63 characters long (inclusive) b. consist of only
-// lower-case ASCII letters, numbers, and dashes c. start with a
-// lower-case letter d. end with a lower-case letter or number e. be
+// - be between 1 and 63 characters long (inclusive) - consist of only
+// lower-case ASCII letters, numbers, and dashes - start with a
+// lower-case letter - end with a lower-case letter or number - be
 // unique within the set of Restores in this RestorePlan.
 func (c *ProjectsLocationsRestorePlansRestoresCreateCall) RestoreId(restoreId string) *ProjectsLocationsRestorePlansRestoresCreateCall {
 	c.urlParams_.Set("restoreId", restoreId)
@@ -8406,14 +8379,14 @@ func (c *ProjectsLocationsRestorePlansRestoresCreateCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The RestorePlan within which to create the Restore. Format: projects/{project}/locations/{location}/restorePlans/{restore_plan}",
+	//       "description": "Required. The RestorePlan within which to create the Restore. Format: projects/*/locations/*/restorePlans/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/restorePlans/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "restoreId": {
-	//       "description": "Required. The client-provided short name for the Restore resource. This name must: a. be between 1 and 63 characters long (inclusive) b. consist of only lower-case ASCII letters, numbers, and dashes c. start with a lower-case letter d. end with a lower-case letter or number e. be unique within the set of Restores in this RestorePlan.",
+	//       "description": "Required. The client-provided short name for the Restore resource. This name must: - be between 1 and 63 characters long (inclusive) - consist of only lower-case ASCII letters, numbers, and dashes - start with a lower-case letter - end with a lower-case letter or number - be unique within the set of Restores in this RestorePlan.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -8445,24 +8418,24 @@ type ProjectsLocationsRestorePlansRestoresDeleteCall struct {
 // Delete: Deletes an existing Restore.
 //
 // - name: Full name of the Restore Format:
-//   projects/{project}/locations/{location}/restorePlans/{restore_plan}/
-//   restores/{restore}.
+//   projects/*/locations/*/restorePlans/*/restores/*.
 func (r *ProjectsLocationsRestorePlansRestoresService) Delete(name string) *ProjectsLocationsRestorePlansRestoresDeleteCall {
 	c := &ProjectsLocationsRestorePlansRestoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Etag sets the optional parameter "etag": etag, if provided, it must
-// match the server's etag for delete to happen.
+// Etag sets the optional parameter "etag": If provided, this value must
+// match the current value of the target Restore's etag field or the
+// request is rejected.
 func (c *ProjectsLocationsRestorePlansRestoresDeleteCall) Etag(etag string) *ProjectsLocationsRestorePlansRestoresDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
 }
 
 // Force sets the optional parameter "force": If set to true, any
-// volumeRestores below this restore will also be deleted. Otherwise,
-// the request will only succeed if the restore has no volumeRestores.
+// VolumeRestores below this restore will also be deleted. Otherwise,
+// the request will only succeed if the restore has no VolumeRestores.
 func (c *ProjectsLocationsRestorePlansRestoresDeleteCall) Force(force bool) *ProjectsLocationsRestorePlansRestoresDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
@@ -8563,17 +8536,17 @@ func (c *ProjectsLocationsRestorePlansRestoresDeleteCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "etag, if provided, it must match the server's etag for delete to happen.",
+	//       "description": "If provided, this value must match the current value of the target Restore's etag field or the request is rejected.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "force": {
-	//       "description": "If set to true, any volumeRestores below this restore will also be deleted. Otherwise, the request will only succeed if the restore has no volumeRestores.",
+	//       "description": "If set to true, any VolumeRestores below this restore will also be deleted. Otherwise, the request will only succeed if the restore has no VolumeRestores.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. Full name of the Restore Format: projects/{project}/locations/{location}/restorePlans/{restore_plan}/restores/{restore}",
+	//       "description": "Required. Full name of the Restore Format: projects/*/locations/*/restorePlans/*/restores/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/restorePlans/[^/]+/restores/[^/]+$",
 	//       "required": true,
@@ -8605,8 +8578,7 @@ type ProjectsLocationsRestorePlansRestoresGetCall struct {
 // Get: Retrieves the details of a single Restore.
 //
 // - name: Name of the restore resource. Format:
-//   projects/{project}/locations/{location}/restorePlans/{restore_plan}/
-//   restores/{restore}.
+//   projects/*/locations/*/restorePlans/*/restores/*.
 func (r *ProjectsLocationsRestorePlansRestoresService) Get(name string) *ProjectsLocationsRestorePlansRestoresGetCall {
 	c := &ProjectsLocationsRestorePlansRestoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8721,7 +8693,7 @@ func (c *ProjectsLocationsRestorePlansRestoresGetCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the restore resource. Format: projects/{project}/locations/{location}/restorePlans/{restore_plan}/restores/{restore}",
+	//       "description": "Required. Name of the restore resource. Format: projects/*/locations/*/restorePlans/*/restores/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/restorePlans/[^/]+/restores/[^/]+$",
 	//       "required": true,
@@ -8927,20 +8899,22 @@ type ProjectsLocationsRestorePlansRestoresListCall struct {
 // List: Lists the Restores for a given RestorePlan.
 //
 // - parent: The RestorePlan that contains the Restores to list. Format:
-//   projects/{project}/locations/{location}/restorePlans/{restore_plan}.
+//   projects/*/locations/*/restorePlans/*.
 func (r *ProjectsLocationsRestorePlansRestoresService) List(parent string) *ProjectsLocationsRestorePlansRestoresListCall {
 	c := &ProjectsLocationsRestorePlansRestoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": List filter.
+// Filter sets the optional parameter "filter": Field match expression
+// used to filter the results.
 func (c *ProjectsLocationsRestorePlansRestoresListCall) Filter(filter string) *ProjectsLocationsRestorePlansRestoresListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sort results.
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the results.
 func (c *ProjectsLocationsRestorePlansRestoresListCall) OrderBy(orderBy string) *ProjectsLocationsRestorePlansRestoresListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -9075,12 +9049,12 @@ func (c *ProjectsLocationsRestorePlansRestoresListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "List filter.",
+	//       "description": "Field match expression used to filter the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sort results.",
+	//       "description": "Field by which to sort the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9096,7 +9070,7 @@ func (c *ProjectsLocationsRestorePlansRestoresListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The RestorePlan that contains the Restores to list. Format: projects/{project}/locations/{location}/restorePlans/{restore_plan}",
+	//       "description": "Required. The RestorePlan that contains the Restores to list. Format: projects/*/locations/*/restorePlans/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/restorePlans/[^/]+$",
 	//       "required": true,
@@ -9606,8 +9580,7 @@ type ProjectsLocationsRestorePlansRestoresVolumeRestoresGetCall struct {
 // Get: Retrieve the details of a single VolumeRestore.
 //
 // - name: Full name of the VolumeRestore resource. Format:
-//   projects/{project}/locations/{location}/restorePlans/{restore_plan}/
-//   restores/{restore}/volumeRestores/{volume_restore}.
+//   projects/*/locations/*/restorePlans/*/restores/*/volumeRestores/*.
 func (r *ProjectsLocationsRestorePlansRestoresVolumeRestoresService) Get(name string) *ProjectsLocationsRestorePlansRestoresVolumeRestoresGetCall {
 	c := &ProjectsLocationsRestorePlansRestoresVolumeRestoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9722,7 +9695,7 @@ func (c *ProjectsLocationsRestorePlansRestoresVolumeRestoresGetCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full name of the VolumeRestore resource. Format: projects/{project}/locations/{location}/restorePlans/{restore_plan}/restores/{restore}/volumeRestores/{volume_restore}",
+	//       "description": "Required. Full name of the VolumeRestore resource. Format: projects/*/locations/*/restorePlans/*/restores/*/volumeRestores/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/restorePlans/[^/]+/restores/[^/]+/volumeRestores/[^/]+$",
 	//       "required": true,
@@ -9928,22 +9901,22 @@ type ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall struct {
 // List: Lists the VolumeRestores for a given Restore.
 //
 // - parent: The Restore that contains the VolumeRestores to list.
-//   Format:
-//   projects/{project}/locations/{location}/restorePlans/{restore_plan}/
-//   restores/{restore}.
+//   Format: projects/*/locations/*/restorePlans/*/restores/*.
 func (r *ProjectsLocationsRestorePlansRestoresVolumeRestoresService) List(parent string) *ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall {
 	c := &ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": List filter.
+// Filter sets the optional parameter "filter": Field match expression
+// used to filter the results.
 func (c *ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall) Filter(filter string) *ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sort results.
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the results.
 func (c *ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall) OrderBy(orderBy string) *ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -10079,12 +10052,12 @@ func (c *ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "List filter.",
+	//       "description": "Field match expression used to filter the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sort results.",
+	//       "description": "Field by which to sort the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10100,7 +10073,7 @@ func (c *ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The Restore that contains the VolumeRestores to list. Format: projects/{project}/locations/{location}/restorePlans/{restore_plan}/restores/{restore}",
+	//       "description": "Required. The Restore that contains the VolumeRestores to list. Format: projects/*/locations/*/restorePlans/*/restores/*",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/restorePlans/[^/]+/restores/[^/]+$",
 	//       "required": true,

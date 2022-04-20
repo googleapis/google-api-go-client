@@ -8164,10 +8164,8 @@ func (r *ServicesRolloutsService) List(serviceName string) *ServicesRolloutsList
 
 // Filter sets the optional parameter "filter": Required. Use `filter`
 // to return subset of rollouts. The following filters are supported: --
-// To limit the results to only those in status 'SUCCESS', use
-// filter='status=SUCCESS' -- To limit the results to those in status
-// 'CANCELLED' or 'FAILED', use filter='status=CANCELLED OR
-// status=FAILED'
+// By status. For example, `filter='status=SUCCESS'` -- By strategy. For
+// example, `filter='strategy=TrafficPercentStrategy'`
 func (c *ServicesRolloutsListCall) Filter(filter string) *ServicesRolloutsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8296,7 +8294,7 @@ func (c *ServicesRolloutsListCall) Do(opts ...googleapi.CallOption) (*ListServic
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required. Use `filter` to return subset of rollouts. The following filters are supported: -- To limit the results to only those in status 'SUCCESS', use filter='status=SUCCESS' -- To limit the results to those in status 'CANCELLED' or 'FAILED', use filter='status=CANCELLED OR status=FAILED'",
+	//       "description": "Required. Use `filter` to return subset of rollouts. The following filters are supported: -- By status. For example, `filter='status=SUCCESS'` -- By strategy. For example, `filter='strategy=TrafficPercentStrategy'`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

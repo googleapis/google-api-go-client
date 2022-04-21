@@ -1,13 +1,4 @@
 {
-  "auth": {
-    "oauth2": {
-      "scopes": {
-        "https://www.googleapis.com/auth/userinfo.email": {
-          "description": "See your primary Google Account email address"
-        }
-      }
-    }
-  },
   "basePath": "",
   "baseUrl": "https://sasportal.googleapis.com/",
   "batchPath": "batch",
@@ -126,10 +117,7 @@
           "path": "v1alpha1/{+name}",
           "response": {
             "$ref": "SasPortalCustomer"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/userinfo.email"
-          ]
+          }
         },
         "list": {
           "description": "Returns a list of requested customers.",
@@ -153,10 +141,7 @@
           "path": "v1alpha1/customers",
           "response": {
             "$ref": "SasPortalListCustomersResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/userinfo.email"
-          ]
+          }
         },
         "patch": {
           "description": "Updates an existing customer.",
@@ -187,10 +172,7 @@
           },
           "response": {
             "$ref": "SasPortalCustomer"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/userinfo.email"
-          ]
+          }
         }
       },
       "resources": {
@@ -219,10 +201,7 @@
               },
               "response": {
                 "$ref": "SasPortalDeployment"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "delete": {
               "description": "Deletes a deployment.",
@@ -244,10 +223,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "get": {
               "description": "Returns a requested deployment.",
@@ -269,10 +245,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalDeployment"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "list": {
               "description": "Lists deployments.",
@@ -310,10 +283,7 @@
               "path": "v1alpha1/{+parent}/deployments",
               "response": {
                 "$ref": "SasPortalListDeploymentsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "move": {
               "description": "Moves a deployment under another node or customer.",
@@ -338,10 +308,7 @@
               },
               "response": {
                 "$ref": "SasPortalOperation"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "patch": {
               "description": "Updates an existing deployment.",
@@ -372,10 +339,7 @@
               },
               "response": {
                 "$ref": "SasPortalDeployment"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             }
           },
           "resources": {
@@ -404,10 +368,7 @@
                   },
                   "response": {
                     "$ref": "SasPortalDevice"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 },
                 "createSigned": {
                   "description": "Creates a signed device under a node or customer.",
@@ -432,10 +393,7 @@
                   },
                   "response": {
                     "$ref": "SasPortalDevice"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 },
                 "list": {
                   "description": "Lists devices under a node or customer.",
@@ -473,10 +431,7 @@
                   "path": "v1alpha1/{+parent}/devices",
                   "response": {
                     "$ref": "SasPortalListDevicesResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 }
               }
             }
@@ -507,10 +462,7 @@
               },
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "createSigned": {
               "description": "Creates a signed device under a node or customer.",
@@ -535,10 +487,7 @@
               },
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "delete": {
               "description": "Deletes a device.",
@@ -560,10 +509,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "get": {
               "description": "Gets details about a device.",
@@ -585,10 +531,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "list": {
               "description": "Lists devices under a node or customer.",
@@ -626,10 +569,7 @@
               "path": "v1alpha1/{+parent}/devices",
               "response": {
                 "$ref": "SasPortalListDevicesResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "move": {
               "description": "Moves a device under another node or customer.",
@@ -654,10 +594,7 @@
               },
               "response": {
                 "$ref": "SasPortalOperation"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "patch": {
               "description": "Updates a device.",
@@ -688,10 +625,7 @@
               },
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "signDevice": {
               "description": "Signs a device.",
@@ -716,10 +650,7 @@
               },
               "response": {
                 "$ref": "SasPortalEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "updateSigned": {
               "description": "Updates a signed device.",
@@ -744,10 +675,7 @@
               },
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             }
           }
         },
@@ -776,10 +704,7 @@
               },
               "response": {
                 "$ref": "SasPortalNode"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "delete": {
               "description": "Deletes a node.",
@@ -801,10 +726,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "get": {
               "description": "Returns a requested node.",
@@ -826,10 +748,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalNode"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "list": {
               "description": "Lists nodes.",
@@ -867,10 +786,7 @@
               "path": "v1alpha1/{+parent}/nodes",
               "response": {
                 "$ref": "SasPortalListNodesResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "move": {
               "description": "Moves a node under another node or customer.",
@@ -895,10 +811,7 @@
               },
               "response": {
                 "$ref": "SasPortalOperation"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "patch": {
               "description": "Updates an existing node.",
@@ -929,10 +842,7 @@
               },
               "response": {
                 "$ref": "SasPortalNode"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             }
           },
           "resources": {
@@ -961,10 +871,7 @@
                   },
                   "response": {
                     "$ref": "SasPortalDeployment"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 },
                 "list": {
                   "description": "Lists deployments.",
@@ -1002,10 +909,7 @@
                   "path": "v1alpha1/{+parent}/deployments",
                   "response": {
                     "$ref": "SasPortalListDeploymentsResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 }
               }
             },
@@ -1034,10 +938,7 @@
                   },
                   "response": {
                     "$ref": "SasPortalDevice"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 },
                 "createSigned": {
                   "description": "Creates a signed device under a node or customer.",
@@ -1062,10 +963,7 @@
                   },
                   "response": {
                     "$ref": "SasPortalDevice"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 },
                 "list": {
                   "description": "Lists devices under a node or customer.",
@@ -1103,10 +1001,7 @@
                   "path": "v1alpha1/{+parent}/devices",
                   "response": {
                     "$ref": "SasPortalListDevicesResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 }
               }
             },
@@ -1135,10 +1030,7 @@
                   },
                   "response": {
                     "$ref": "SasPortalNode"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 },
                 "list": {
                   "description": "Lists nodes.",
@@ -1176,10 +1068,7 @@
                   "path": "v1alpha1/{+parent}/nodes",
                   "response": {
                     "$ref": "SasPortalListNodesResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 }
               }
             }
@@ -1209,10 +1098,7 @@
           "path": "v1alpha1/{+name}",
           "response": {
             "$ref": "SasPortalDeployment"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/userinfo.email"
-          ]
+          }
         }
       },
       "resources": {
@@ -1238,10 +1124,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "get": {
               "description": "Gets details about a device.",
@@ -1263,10 +1146,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "move": {
               "description": "Moves a device under another node or customer.",
@@ -1291,10 +1171,7 @@
               },
               "response": {
                 "$ref": "SasPortalOperation"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "patch": {
               "description": "Updates a device.",
@@ -1325,10 +1202,7 @@
               },
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "signDevice": {
               "description": "Signs a device.",
@@ -1353,10 +1227,7 @@
               },
               "response": {
                 "$ref": "SasPortalEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "updateSigned": {
               "description": "Updates a signed device.",
@@ -1381,10 +1252,7 @@
               },
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             }
           }
         }
@@ -1405,10 +1273,7 @@
           },
           "response": {
             "$ref": "SasPortalGenerateSecretResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/userinfo.email"
-          ]
+          }
         },
         "validate": {
           "description": "Validates the identity of a Certified Professional Installer (CPI).",
@@ -1423,10 +1288,7 @@
           },
           "response": {
             "$ref": "SasPortalValidateInstallerResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/userinfo.email"
-          ]
+          }
         }
       }
     },
@@ -1452,10 +1314,7 @@
           "path": "v1alpha1/{+name}",
           "response": {
             "$ref": "SasPortalNode"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/userinfo.email"
-          ]
+          }
         }
       },
       "resources": {
@@ -1481,10 +1340,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "get": {
               "description": "Returns a requested deployment.",
@@ -1506,10 +1362,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalDeployment"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "list": {
               "description": "Lists deployments.",
@@ -1547,10 +1400,7 @@
               "path": "v1alpha1/{+parent}/deployments",
               "response": {
                 "$ref": "SasPortalListDeploymentsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "move": {
               "description": "Moves a deployment under another node or customer.",
@@ -1575,10 +1425,7 @@
               },
               "response": {
                 "$ref": "SasPortalOperation"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "patch": {
               "description": "Updates an existing deployment.",
@@ -1609,10 +1456,7 @@
               },
               "response": {
                 "$ref": "SasPortalDeployment"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             }
           },
           "resources": {
@@ -1641,10 +1485,7 @@
                   },
                   "response": {
                     "$ref": "SasPortalDevice"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 },
                 "createSigned": {
                   "description": "Creates a signed device under a node or customer.",
@@ -1669,10 +1510,7 @@
                   },
                   "response": {
                     "$ref": "SasPortalDevice"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 },
                 "list": {
                   "description": "Lists devices under a node or customer.",
@@ -1710,10 +1548,7 @@
                   "path": "v1alpha1/{+parent}/devices",
                   "response": {
                     "$ref": "SasPortalListDevicesResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 }
               }
             }
@@ -1744,10 +1579,7 @@
               },
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "createSigned": {
               "description": "Creates a signed device under a node or customer.",
@@ -1772,10 +1604,7 @@
               },
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "delete": {
               "description": "Deletes a device.",
@@ -1797,10 +1626,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "get": {
               "description": "Gets details about a device.",
@@ -1822,10 +1648,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "list": {
               "description": "Lists devices under a node or customer.",
@@ -1863,10 +1686,7 @@
               "path": "v1alpha1/{+parent}/devices",
               "response": {
                 "$ref": "SasPortalListDevicesResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "move": {
               "description": "Moves a device under another node or customer.",
@@ -1891,10 +1711,7 @@
               },
               "response": {
                 "$ref": "SasPortalOperation"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "patch": {
               "description": "Updates a device.",
@@ -1925,10 +1742,7 @@
               },
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "signDevice": {
               "description": "Signs a device.",
@@ -1953,10 +1767,7 @@
               },
               "response": {
                 "$ref": "SasPortalEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "updateSigned": {
               "description": "Updates a signed device.",
@@ -1981,10 +1792,7 @@
               },
               "response": {
                 "$ref": "SasPortalDevice"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             }
           }
         },
@@ -2013,10 +1821,7 @@
               },
               "response": {
                 "$ref": "SasPortalNode"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "delete": {
               "description": "Deletes a node.",
@@ -2038,10 +1843,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "get": {
               "description": "Returns a requested node.",
@@ -2063,10 +1865,7 @@
               "path": "v1alpha1/{+name}",
               "response": {
                 "$ref": "SasPortalNode"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "list": {
               "description": "Lists nodes.",
@@ -2104,10 +1903,7 @@
               "path": "v1alpha1/{+parent}/nodes",
               "response": {
                 "$ref": "SasPortalListNodesResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "move": {
               "description": "Moves a node under another node or customer.",
@@ -2132,10 +1928,7 @@
               },
               "response": {
                 "$ref": "SasPortalOperation"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             },
             "patch": {
               "description": "Updates an existing node.",
@@ -2166,10 +1959,7 @@
               },
               "response": {
                 "$ref": "SasPortalNode"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
+              }
             }
           },
           "resources": {
@@ -2198,10 +1988,7 @@
                   },
                   "response": {
                     "$ref": "SasPortalDeployment"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 },
                 "list": {
                   "description": "Lists deployments.",
@@ -2239,10 +2026,7 @@
                   "path": "v1alpha1/{+parent}/deployments",
                   "response": {
                     "$ref": "SasPortalListDeploymentsResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 }
               }
             },
@@ -2271,10 +2055,7 @@
                   },
                   "response": {
                     "$ref": "SasPortalDevice"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 },
                 "createSigned": {
                   "description": "Creates a signed device under a node or customer.",
@@ -2299,10 +2080,7 @@
                   },
                   "response": {
                     "$ref": "SasPortalDevice"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 },
                 "list": {
                   "description": "Lists devices under a node or customer.",
@@ -2340,10 +2118,7 @@
                   "path": "v1alpha1/{+parent}/devices",
                   "response": {
                     "$ref": "SasPortalListDevicesResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 }
               }
             },
@@ -2372,10 +2147,7 @@
                   },
                   "response": {
                     "$ref": "SasPortalNode"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 },
                 "list": {
                   "description": "Lists nodes.",
@@ -2413,10 +2185,7 @@
                   "path": "v1alpha1/{+parent}/nodes",
                   "response": {
                     "$ref": "SasPortalListNodesResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
+                  }
                 }
               }
             }
@@ -2439,10 +2208,7 @@
           },
           "response": {
             "$ref": "SasPortalPolicy"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/userinfo.email"
-          ]
+          }
         },
         "set": {
           "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
@@ -2457,10 +2223,7 @@
           },
           "response": {
             "$ref": "SasPortalPolicy"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/userinfo.email"
-          ]
+          }
         },
         "test": {
           "description": "Returns permissions that a caller has on the specified resource.",
@@ -2475,15 +2238,12 @@
           },
           "response": {
             "$ref": "SasPortalTestPermissionsResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/userinfo.email"
-          ]
+          }
         }
       }
     }
   },
-  "revision": "20220319",
+  "revision": "20220419",
   "rootUrl": "https://sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {

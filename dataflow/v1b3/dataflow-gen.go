@@ -2804,7 +2804,8 @@ type Job struct {
 	Location string `json:"location,omitempty"`
 
 	// Name: The user-specified Cloud Dataflow job name. Only one Job with a
-	// given name may exist in a project at any given time. If a caller
+	// given name can exist in a project within one region at any given
+	// time. Jobs in different regions can have the same name. If a caller
 	// attempts to create a Job with the same name as an already-existing
 	// Job, the attempt returns the existing Job. The name must match the
 	// regular expression `[a-z]([-a-z0-9]{0,38}[a-z0-9])?`
@@ -5094,12 +5095,12 @@ func (s *SDKInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SdkHarnessContainerImage: Defines a SDK harness container for
+// SdkHarnessContainerImage: Defines an SDK harness container for
 // executing Dataflow pipelines.
 type SdkHarnessContainerImage struct {
 	// Capabilities: The set of capabilities enumerated in the above
-	// Environment proto. See also
-	// https://github.com/apache/beam/blob/master/model/pipeline/src/main/proto/beam_runner_api.proto
+	// Environment proto. See also beam_runner_api.proto
+	// (https://github.com/apache/beam/blob/master/model/pipeline/src/main/proto/org/apache/beam/model/pipeline/v1/beam_runner_api.proto)
 	Capabilities []string `json:"capabilities,omitempty"`
 
 	// ContainerImage: A docker container image that resides in Google

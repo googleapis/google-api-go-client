@@ -1980,6 +1980,10 @@ type PackageData struct {
 	//   "GO_STDLIB" - Go toolchain + standard library packages.
 	PackageType string `json:"packageType,omitempty"`
 
+	// PathToFile: The path to the jar file / go binary file. The same jar
+	// file can be in multiple locations - all of them will be listed.
+	PathToFile []string `json:"pathToFile,omitempty"`
+
 	Unused string `json:"unused,omitempty"`
 
 	// Version: The version of the package being analysed

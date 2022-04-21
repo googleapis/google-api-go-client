@@ -1874,11 +1874,12 @@ func (r *ProjectsLocationsKeysService) Patch(name string, v2key *V2Key) *Project
 
 // UpdateMask sets the optional parameter "updateMask": The field mask
 // specifies which fields to be updated as part of this request. All
-// other fields are ignored. Mutable fields are: `display_name` and
-// `restrictions`. If an update mask is not provided, the service treats
-// it as an implied mask equivalent to all allowed fields that are set
-// on the wire. If the field mask has a special value "*", the service
-// treats it equivalent to replace all allowed mutable fields.
+// other fields are ignored. Mutable fields are:
+// `display_name`,`restrictions` and `annotations`. If an update mask is
+// not provided, the service treats it as an implied mask equivalent to
+// all allowed fields that are set on the wire. If the field mask has a
+// special value "*", the service treats it equivalent to replace all
+// allowed mutable fields.
 func (c *ProjectsLocationsKeysPatchCall) UpdateMask(updateMask string) *ProjectsLocationsKeysPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -1991,7 +1992,7 @@ func (c *ProjectsLocationsKeysPatchCall) Do(opts ...googleapi.CallOption) (*Oper
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The field mask specifies which fields to be updated as part of this request. All other fields are ignored. Mutable fields are: `display_name` and `restrictions`. If an update mask is not provided, the service treats it as an implied mask equivalent to all allowed fields that are set on the wire. If the field mask has a special value \"*\", the service treats it equivalent to replace all allowed mutable fields.",
+	//       "description": "The field mask specifies which fields to be updated as part of this request. All other fields are ignored. Mutable fields are: `display_name`,`restrictions` and `annotations`. If an update mask is not provided, the service treats it as an implied mask equivalent to all allowed fields that are set on the wire. If the field mask has a special value \"*\", the service treats it equivalent to replace all allowed mutable fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

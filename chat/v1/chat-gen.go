@@ -737,6 +737,44 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ChatAppLogEntry: JSON payload of error messages. If the Cloud Logging
+// API is enabled, these error messages are logged to Google Cloud
+// Logging (https://cloud.google.com/logging/docs).
+type ChatAppLogEntry struct {
+	// Deployment: The deployment that caused the error. For Chat bots built
+	// in Apps Script, this is the deployment ID defined by Apps Script.
+	Deployment string `json:"deployment,omitempty"`
+
+	// DeploymentFunction: The unencrypted `callback_method` name that was
+	// running when the error was encountered.
+	DeploymentFunction string `json:"deploymentFunction,omitempty"`
+
+	// Error: The error code and message.
+	Error *Status `json:"error,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Deployment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Deployment") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChatAppLogEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod ChatAppLogEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Color: Represents a color in the RGBA color space. This
 // representation is designed for simplicity of conversion to/from color
 // representations in various languages over compactness. For example,
@@ -1197,44 +1235,6 @@ type DriveDataRef struct {
 
 func (s *DriveDataRef) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveDataRef
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DynamiteIntegrationLogEntry: JSON payload of error messages. If the
-// Cloud Logging API is enabled, these error messages are logged to
-// Google Cloud Logging (https://cloud.google.com/logging/docs).
-type DynamiteIntegrationLogEntry struct {
-	// Deployment: The deployment that caused the error. For Chat bots built
-	// in Apps Script, this is the deployment ID defined by Apps Script.
-	Deployment string `json:"deployment,omitempty"`
-
-	// DeploymentFunction: The unencrypted `callback_method` name that was
-	// running when the error was encountered.
-	DeploymentFunction string `json:"deploymentFunction,omitempty"`
-
-	// Error: The error code and message.
-	Error *Status `json:"error,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Deployment") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Deployment") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DynamiteIntegrationLogEntry) MarshalJSON() ([]byte, error) {
-	type NoMethod DynamiteIntegrationLogEntry
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3328,8 +3328,8 @@ type Space struct {
 	// humans, this field might be empty.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Optional. Resource name of the space, in the form "spaces/*".
-	// Example: spaces/AAAAAAAAAAAA
+	// Name: Resource name of the space, in the form "spaces/*". Example:
+	// spaces/AAAAAAAAAAAA
 	Name string `json:"name,omitempty"`
 
 	// SingleUserBotDm: Output only. Whether the space is a DM between a
@@ -3762,14 +3762,11 @@ func (c *DmsMessagesCall) RequestId(requestId string) *DmsMessagesCall {
 }
 
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves Chat apps and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *DmsMessagesCall) ThreadKey(threadKey string) *DmsMessagesCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -3887,7 +3884,7 @@ func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves Chat apps and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3935,14 +3932,11 @@ func (c *DmsWebhooksCall) RequestId(requestId string) *DmsWebhooksCall {
 }
 
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves Chat apps and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *DmsWebhooksCall) ThreadKey(threadKey string) *DmsWebhooksCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4060,7 +4054,7 @@ func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves Chat apps and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4108,14 +4102,11 @@ func (c *DmsConversationsMessagesCall) RequestId(requestId string) *DmsConversat
 }
 
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves Chat apps and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *DmsConversationsMessagesCall) ThreadKey(threadKey string) *DmsConversationsMessagesCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4233,7 +4224,7 @@ func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Messag
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves Chat apps and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4443,14 +4434,11 @@ func (c *RoomsMessagesCall) RequestId(requestId string) *RoomsMessagesCall {
 }
 
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves Chat apps and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *RoomsMessagesCall) ThreadKey(threadKey string) *RoomsMessagesCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4568,7 +4556,7 @@ func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves Chat apps and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4616,14 +4604,11 @@ func (c *RoomsWebhooksCall) RequestId(requestId string) *RoomsWebhooksCall {
 }
 
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves Chat apps and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *RoomsWebhooksCall) ThreadKey(threadKey string) *RoomsWebhooksCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4741,7 +4726,7 @@ func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves Chat apps and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4789,14 +4774,11 @@ func (c *RoomsConversationsMessagesCall) RequestId(requestId string) *RoomsConve
 }
 
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves Chat apps and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *RoomsConversationsMessagesCall) ThreadKey(threadKey string) *RoomsConversationsMessagesCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4914,7 +4896,7 @@ func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Mess
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves Chat apps and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5283,14 +5265,11 @@ func (c *SpacesWebhooksCall) RequestId(requestId string) *SpacesWebhooksCall {
 }
 
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves Chat apps and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *SpacesWebhooksCall) ThreadKey(threadKey string) *SpacesWebhooksCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -5408,7 +5387,7 @@ func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) 
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves Chat apps and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5795,14 +5774,11 @@ func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCr
 }
 
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves Chat apps and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *SpacesMessagesCreateCall) ThreadKey(threadKey string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -5920,7 +5896,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves Chat apps and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

@@ -239,7 +239,7 @@ type GoogleIamV1BindingDelta struct {
 	// Condition: The condition that is associated with this binding.
 	Condition *GoogleTypeExpr `json:"condition,omitempty"`
 
-	// Member: A single identity requesting access for a Cloud Platform
+	// Member: A single identity requesting access for a Google Cloud
 	// resource. Follows the same format of Binding.members. Required
 	Member string `json:"member,omitempty"`
 

@@ -412,7 +412,8 @@ type PubsubMessage struct {
 	// same non-empty `ordering_key` value will be delivered to subscribers
 	// in the order in which they are received by the Pub/Sub system. All
 	// `PubsubMessage`s published in a given `PublishRequest` must specify
-	// the same `ordering_key` value.
+	// the same `ordering_key` value. For more information, see ordering
+	// messages (https://cloud.google.com/pubsub/docs/ordering).
 	OrderingKey string `json:"orderingKey,omitempty"`
 
 	// PublishTime: The time at which the message was published, populated

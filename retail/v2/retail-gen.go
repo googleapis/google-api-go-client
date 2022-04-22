@@ -1515,12 +1515,16 @@ type GoogleCloudRetailV2ImportProductsRequest struct {
 	// InputConfig: Required. The desired input location of the data.
 	InputConfig *GoogleCloudRetailV2ProductInputConfig `json:"inputConfig,omitempty"`
 
-	// NotificationPubsubTopic: Pub/Sub topic for receiving notification. If
-	// this field is set, when the import is finished, a notification will
-	// be sent to specified Pub/Sub topic. The message data will be JSON
-	// string of a Operation. Format of the Pub/Sub topic is
-	// `projects/{project}/topics/{topic}`. Only supported when
-	// ImportProductsRequest.reconciliation_mode is set to `FULL`.
+	// NotificationPubsubTopic: Full Pub/Sub topic name for receiving
+	// notification. If this field is set, when the import is finished, a
+	// notification will be sent to specified Pub/Sub topic. The message
+	// data will be JSON string of a Operation. Format of the Pub/Sub topic
+	// is `projects/{project}/topics/{topic}`. It has to be within the same
+	// project as ImportProductsRequest.parent. Make sure that both
+	// `cloud-retail-customer-data-access@system.gserviceaccount.com` and
+	// `service-@gcp-sa-retail.iam.gserviceaccount.com` have the
+	// `pubsub.topics.publish` IAM permission on the topic. Only supported
+	// when ImportProductsRequest.reconciliation_mode is set to `FULL`.
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
 
 	// ReconciliationMode: The mode of reconciliation between existing
@@ -2084,7 +2088,9 @@ type GoogleCloudRetailV2PriceInfo struct {
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// OriginalPrice: Price of the product without any discount. If zero, by
-	// default set to be the price.
+	// default set to be the price. If set, original_price should be greater
+	// than or equal to price, otherwise an INVALID_ARGUMENT error is
+	// thrown.
 	OriginalPrice float64 `json:"originalPrice,omitempty"`
 
 	// Price: Price of the product. Google Merchant Center property price
@@ -3196,6 +3202,21 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// (https://cloud.google.com/retail/docs/filter-and-order#filter). If
 	// this field is unrecognizable, an INVALID_ARGUMENT is returned.
 	Filter string `json:"filter,omitempty"`
+
+	// Labels: The labels applied to a resource must meet the following
+	// requirements: * Each resource can have multiple labels, up to a
+	// maximum of 64. * Each label must be a key-value pair. * Keys have a
+	// minimum length of 1 character and a maximum length of 63 characters,
+	// and cannot be empty. Values can be empty, and have a maximum length
+	// of 63 characters. * Keys and values can contain only lowercase
+	// letters, numeric characters, underscores, and dashes. All characters
+	// must use UTF-8 encoding, and international characters are allowed. *
+	// The key portion of a label must be unique. However, you can use the
+	// same key with multiple resources. * Keys must start with a lowercase
+	// letter or international character. See Google Cloud Document
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
+	// for more details.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Offset: A 0-indexed integer that specifies the current offset (that
 	// is, starting result location, amongst the Products deemed by the API
@@ -9183,7 +9204,7 @@ type ProjectsLocationsCatalogsPlacementsPredictCall struct {
 //   serving config or placement. Before you can request predictions
 //   from your model, you must create at least one serving config or
 //   placement for it. For more information, see [Managing serving
-//   configurations].
+//   configurations]
 //   (https://cloud.google.com/retail/docs/manage-configs). The full
 //   list of available serving configs can be seen at
 //   https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
@@ -9295,7 +9316,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*} or {name=projects/*/locations/global/catalogs/default_catalog/placements/*}. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Managing serving configurations]. (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
+	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*} or {name=projects/*/locations/global/catalogs/default_catalog/placements/*}. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Managing serving configurations] (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -9512,7 +9533,7 @@ type ProjectsLocationsCatalogsServingConfigsPredictCall struct {
 //   serving config or placement. Before you can request predictions
 //   from your model, you must create at least one serving config or
 //   placement for it. For more information, see [Managing serving
-//   configurations].
+//   configurations]
 //   (https://cloud.google.com/retail/docs/manage-configs). The full
 //   list of available serving configs can be seen at
 //   https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
@@ -9624,7 +9645,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*} or {name=projects/*/locations/global/catalogs/default_catalog/placements/*}. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Managing serving configurations]. (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
+	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*} or {name=projects/*/locations/global/catalogs/default_catalog/placements/*}. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Managing serving configurations] (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/servingConfigs/[^/]+$",
 	//       "required": true,

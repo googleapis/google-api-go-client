@@ -533,7 +533,7 @@ type Location struct {
 	Name string `json:"name,omitempty"`
 
 	// PrimaryCategoryId: Required. Id of the category that best describes
-	// the core business this location engages in.
+	// the core business this location engages in. e.g. gcid:bakery.
 	PrimaryCategoryId string `json:"primaryCategoryId,omitempty"`
 
 	// PrimaryPhone: Optional. A phone number that connects to your

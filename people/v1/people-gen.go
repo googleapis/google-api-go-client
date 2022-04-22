@@ -4759,6 +4759,10 @@ func (c *OtherContactsListCall) RequestSyncToken(requestSyncToken bool) *OtherCo
 
 // Sources sets the optional parameter "sources": A mask of what source
 // types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.
+// Possible values for this field are: * READ_SOURCE_TYPE_CONTACT *
+// READ_SOURCE_TYPE_CONTACT,READ_SOURCE_TYPE_PROFILE Specifying
+// READ_SOURCE_TYPE_PROFILE without specifying READ_SOURCE_TYPE_CONTACT
+// is not permitted.
 //
 // Possible values:
 //   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
@@ -4908,7 +4912,7 @@ func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherCont
 	//       "type": "boolean"
 	//     },
 	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.",
+	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set. Possible values for this field are: * READ_SOURCE_TYPE_CONTACT * READ_SOURCE_TYPE_CONTACT,READ_SOURCE_TYPE_PROFILE Specifying READ_SOURCE_TYPE_PROFILE without specifying READ_SOURCE_TYPE_CONTACT is not permitted.",
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",

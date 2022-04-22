@@ -494,6 +494,9 @@ type GoogleCloudPolicytroubleshooterV1TroubleshootIamPolicyResponse struct {
 	// evaluate.
 	Access string `json:"access,omitempty"`
 
+	// Errors: The general errors contained in the troubleshooting response.
+	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
+
 	// ExplainedPolicies: List of IAM policies that were evaluated to check
 	// the principal's permissions, with annotations to indicate how each
 	// policy contributed to the final result. The list of policies can
@@ -804,6 +807,50 @@ type GoogleIamV1Policy struct {
 
 func (s *GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Policy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleRpcStatus: The `Status` type defines a logical error model that
+// is suitable for different programming environments, including REST
+// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type GoogleRpcStatus struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleRpcStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

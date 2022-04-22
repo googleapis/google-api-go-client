@@ -558,26 +558,11 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "baremetalsolution:v1alpha1",
-      "name": "baremetalsolution",
-      "version": "v1alpha1",
-      "title": "Bare Metal Solution API",
-      "description": "Provides ways to manage Bare Metal Solution hardware installed in a regional extension located near a Google Cloud data center.",
-      "discoveryRestUrl": "https://baremetalsolution.googleapis.com/$discovery/rest?version=v1alpha1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/bare-metal",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "baremetalsolution:v1",
       "name": "baremetalsolution",
       "version": "v1",
       "title": "Bare Metal Solution API",
-      "description": "Provides ways to manage Bare Metal Solution hardware installed in a regional extension located near a Google Cloud data center.",
+      "description": "Bare Metal Solution provides hardware to run specialized workloads with low latency on Google Cloud.",
       "discoveryRestUrl": "https://baremetalsolution.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -592,7 +577,7 @@
       "name": "baremetalsolution",
       "version": "v2",
       "title": "Bare Metal Solution API",
-      "description": "Provides ways to manage Bare Metal Solution hardware installed in a regional extension located near a Google Cloud data center.",
+      "description": "Bare Metal Solution provides hardware to run specialized workloads with low latency on Google Cloud.",
       "discoveryRestUrl": "https://baremetalsolution.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3050,6 +3035,21 @@
       },
       "documentationLink": "https://developers.google.com/actions/smarthome/create-app#request-sync",
       "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "iam:v2beta",
+      "name": "iam",
+      "version": "v2beta",
+      "title": "Identity and Access Management (IAM) API",
+      "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls.",
+      "discoveryRestUrl": "https://iam.googleapis.com/$discovery/rest?version=v2beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/iam/",
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",

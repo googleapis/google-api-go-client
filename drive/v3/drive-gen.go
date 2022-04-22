@@ -5058,6 +5058,24 @@ func (r *DrivesService) Delete(driveId string) *DrivesDeleteCall {
 	return c
 }
 
+// AllowItemDeletion sets the optional parameter "allowItemDeletion":
+// Whether any items inside the shared drive should also be deleted.
+// This option is only supported when useDomainAdminAccess is also set
+// to true.
+func (c *DrivesDeleteCall) AllowItemDeletion(allowItemDeletion bool) *DrivesDeleteCall {
+	c.urlParams_.Set("allowItemDeletion", fmt.Sprint(allowItemDeletion))
+	return c
+}
+
+// UseDomainAdminAccess sets the optional parameter
+// "useDomainAdminAccess": Issue the request as a domain administrator;
+// if set to true, then the requester will be granted access if they are
+// an administrator of the domain to which the shared drive belongs.
+func (c *DrivesDeleteCall) UseDomainAdminAccess(useDomainAdminAccess bool) *DrivesDeleteCall {
+	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5126,11 +5144,23 @@ func (c *DrivesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     "driveId"
 	//   ],
 	//   "parameters": {
+	//     "allowItemDeletion": {
+	//       "default": "false",
+	//       "description": "Whether any items inside the shared drive should also be deleted. This option is only supported when useDomainAdminAccess is also set to true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "driveId": {
 	//       "description": "The ID of the shared drive.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "useDomainAdminAccess": {
+	//       "default": "false",
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the shared drive belongs.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "drives/{driveId}",
@@ -8020,7 +8050,7 @@ type FilesWatchCall struct {
 }
 
 // Watch: Subscribes to changes to a file. While you can establish a
-// channel forchanges to a file on a shared drive, a change to a shared
+// channel for changes to a file on a shared drive, a change to a shared
 // drive file won't create a notification.
 //
 // - fileId: The ID of the file.
@@ -8171,7 +8201,7 @@ func (c *FilesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Subscribes to changes to a file. While you can establish a channel forchanges to a file on a shared drive, a change to a shared drive file won't create a notification.",
+	//   "description": "Subscribes to changes to a file. While you can establish a channel for changes to a file on a shared drive, a change to a shared drive file won't create a notification.",
 	//   "httpMethod": "POST",
 	//   "id": "drive.files.watch",
 	//   "parameterOrder": [

@@ -419,14 +419,14 @@ func (s *AdClientAdCode) MarshalJSON() ([]byte, error) {
 // ad unit with a specific set of ad settings that have been customized
 // within an account.
 type AdUnit struct {
-	// ContentAdsSettings: Settings specific to content ads (AFC).
+	// ContentAdsSettings: Required. Settings specific to content ads (AFC).
 	ContentAdsSettings *ContentAdsSettings `json:"contentAdsSettings,omitempty"`
 
 	// DisplayName: Required. Display name of the ad unit, as provided when
 	// the ad unit was created.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Required. Resource name of the ad unit. Format:
+	// Name: Resource name of the ad unit. Format:
 	// accounts/{account}/adclients/{adclient}/adunits/{adunit}
 	Name string `json:"name,omitempty"`
 
@@ -583,11 +583,11 @@ func (s *Cell) MarshalJSON() ([]byte, error) {
 
 // ContentAdsSettings: Settings specific to content ads (AFC).
 type ContentAdsSettings struct {
-	// Size: Size of the ad unit. e.g. "728x90", "1x3" (for responsive ad
-	// units).
+	// Size: Required. Size of the ad unit. e.g. "728x90", "1x3" (for
+	// responsive ad units).
 	Size string `json:"size,omitempty"`
 
-	// Type: Type of the ad unit.
+	// Type: Required. Type of the ad unit.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified ad unit type.
@@ -624,7 +624,7 @@ func (s *ContentAdsSettings) MarshalJSON() ([]byte, error) {
 
 // CustomChannel: Representation of a custom channel.
 type CustomChannel struct {
-	// DisplayName: Display name of the custom channel.
+	// DisplayName: Required. Display name of the custom channel.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Resource name of the custom channel. Format:

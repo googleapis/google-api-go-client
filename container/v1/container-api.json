@@ -2459,7 +2459,7 @@
       }
     }
   },
-  "revision": "20220328",
+  "revision": "20220330",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -3946,6 +3946,17 @@
       },
       "type": "object"
     },
+    "ManagedPrometheusConfig": {
+      "description": "ManagedPrometheusConfig defines the configuration for Google Cloud Managed Service for Prometheus.",
+      "id": "ManagedPrometheusConfig",
+      "properties": {
+        "enabled": {
+          "description": "Enable Managed Collection.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "MasterAuth": {
       "description": "The authentication information for accessing the master endpoint. Authentication can be done using HTTP basic auth or using client certificates.",
       "id": "MasterAuth",
@@ -4072,6 +4083,10 @@
         "componentConfig": {
           "$ref": "MonitoringComponentConfig",
           "description": "Monitoring components configuration"
+        },
+        "managedPrometheusConfig": {
+          "$ref": "ManagedPrometheusConfig",
+          "description": "Enable Google Cloud Managed Service for Prometheus in the cluster."
         }
       },
       "type": "object"
@@ -4136,6 +4151,25 @@
         },
         "subnetwork": {
           "description": "Output only. The relative name of the Google Compute Engine [subnetwork](https://cloud.google.com/compute/docs/vpc) to which the cluster is connected. Example: projects/my-project/regions/us-central1/subnetworks/my-subnet",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "NetworkPerformanceConfig": {
+      "description": "Configuration of all network bandwidth tiers",
+      "id": "NetworkPerformanceConfig",
+      "properties": {
+        "totalEgressBandwidthTier": {
+          "description": "Specifies the total network bandwidth tier for the NodePool.",
+          "enum": [
+            "TIER_UNSPECIFIED",
+            "TIER_1"
+          ],
+          "enumDescriptions": [
+            "Default value",
+            "Higher bandwidth, actual values based on VM size."
+          ],
           "type": "string"
         }
       },
@@ -4395,6 +4429,10 @@
         "createPodRange": {
           "description": "Input only. Whether to create a new range for pod IPs in this node pool. Defaults are provided for `pod_range` and `pod_ipv4_cidr_block` if they are not specified. If neither `create_pod_range` or `pod_range` are specified, the cluster-level default (`ip_allocation_policy.cluster_ipv4_cidr_block`) is used. Only applicable if `ip_allocation_policy.use_ip_aliases` is true. This field cannot be changed after the node pool has been created.",
           "type": "boolean"
+        },
+        "networkPerformanceConfig": {
+          "$ref": "NetworkPerformanceConfig",
+          "description": "Network bandwidth tier configuration."
         },
         "podIpv4CidrBlock": {
           "description": "The IP address range for pod IPs in this node pool. Only applicable if `create_pod_range` is true. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. `/14`) to have a range chosen with a specific netmask. Set to a [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g. `10.96.0.0/14`) to pick a specific range to use. Only applicable if `ip_allocation_policy.use_ip_aliases` is true. This field cannot be changed after the node pool has been created.",

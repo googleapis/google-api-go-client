@@ -2869,6 +2869,35 @@ func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ManagedPrometheusConfig: ManagedPrometheusConfig defines the
+// configuration for Google Cloud Managed Service for Prometheus.
+type ManagedPrometheusConfig struct {
+	// Enabled: Enable Managed Collection.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ManagedPrometheusConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedPrometheusConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MasterAuth: The authentication information for accessing the master
 // endpoint. Authentication can be done using HTTP basic auth or using
 // client certificates.
@@ -3126,6 +3155,10 @@ type MonitoringConfig struct {
 	// ComponentConfig: Monitoring components configuration
 	ComponentConfig *MonitoringComponentConfig `json:"componentConfig,omitempty"`
 
+	// ManagedPrometheusConfig: Enable Google Cloud Managed Service for
+	// Prometheus in the cluster.
+	ManagedPrometheusConfig *ManagedPrometheusConfig `json:"managedPrometheusConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ComponentConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3236,6 +3269,42 @@ type NetworkConfig struct {
 
 func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NetworkPerformanceConfig: Configuration of all network bandwidth
+// tiers
+type NetworkPerformanceConfig struct {
+	// TotalEgressBandwidthTier: Specifies the total network bandwidth tier
+	// for the NodePool.
+	//
+	// Possible values:
+	//   "TIER_UNSPECIFIED" - Default value
+	//   "TIER_1" - Higher bandwidth, actual values based on VM size.
+	TotalEgressBandwidthTier string `json:"totalEgressBandwidthTier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TotalEgressBandwidthTier") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TotalEgressBandwidthTier")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NetworkPerformanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkPerformanceConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3681,6 +3750,9 @@ type NodeNetworkConfig struct {
 	// Only applicable if `ip_allocation_policy.use_ip_aliases` is true.
 	// This field cannot be changed after the node pool has been created.
 	CreatePodRange bool `json:"createPodRange,omitempty"`
+
+	// NetworkPerformanceConfig: Network bandwidth tier configuration.
+	NetworkPerformanceConfig *NetworkPerformanceConfig `json:"networkPerformanceConfig,omitempty"`
 
 	// PodIpv4CidrBlock: The IP address range for pod IPs in this node pool.
 	// Only applicable if `create_pod_range` is true. Set to blank to have a

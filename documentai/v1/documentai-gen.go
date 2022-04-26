@@ -282,6 +282,10 @@ type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata struct {
 	// CommonMetadata: The basic metadata of the long running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
+	// IndividualBatchDeleteStatuses: The list of response details of each
+	// document.
+	IndividualBatchDeleteStatuses []*GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus `json:"individualBatchDeleteStatuses,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -302,6 +306,39 @@ type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata struct {
 
 func (s *GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBa
+// tchDeleteStatus: The status of each individual document in the batch
+// delete process.
+type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus struct {
+	// DocumentId: The document id of the document.
+	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
+
+	// Status: The status of deleting the document.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

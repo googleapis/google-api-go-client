@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -172,7 +172,7 @@
               ],
               "parameters": {
                 "pageSize": {
-                  "description": "The maximum number of entries that are requested. Default size is 200.",
+                  "description": "The maximum number of entries that are requested The default page size is 25 and the maximum page size is 200.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -354,7 +354,7 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The maximum number of entries that are requested.",
+                  "description": "The maximum number of entries that are requested. The default page size is 200.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -503,7 +503,7 @@
       }
     }
   },
-  "revision": "20210417",
+  "revision": "20220422",
   "rootUrl": "https://cloudcommerceprocurement.googleapis.com/",
   "schemas": {
     "Account": {
@@ -633,6 +633,10 @@
       "description": "Request message for [PartnerProcurementService.ApproveEntitlement[].",
       "id": "ApproveEntitlementRequest",
       "properties": {
+        "entitlementMigrated": {
+          "description": "Optional. The resource name of the entitlement that was migrated. Format: providers/{provider_id}/entitlements/{entitlement_id}. Should only be sent when resources have been migrated from entitlement_migrated to the new entitlement. Optional.",
+          "type": "string"
+        },
         "properties": {
           "additionalProperties": {
             "type": "string"
@@ -655,13 +659,13 @@
       "type": "object"
     },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
       "type": "object"
     },
     "Entitlement": {
-      "description": "Represents a procured product of a customer. Next Id: 24",
+      "description": "Represents a procured product of a customer.",
       "id": "Entitlement",
       "properties": {
         "account": {
@@ -701,12 +705,22 @@
           "readOnly": true,
           "type": "string"
         },
+        "newPendingOfferDuration": {
+          "description": "Output only. The offer duration of the new offer in ISO 8601 duration format. Field is empty if the pending plan change is not moving to an offer since the entitlement is not pending, only the plan change is pending.",
+          "readOnly": true,
+          "type": "string"
+        },
         "newPendingPlan": {
           "description": "Output only. The identifier of the pending new plan. Required if the product has plans and the entitlement has a pending plan change.",
           "type": "string"
         },
         "offer": {
           "description": "Output only. The name of the offer that was procured. Field is empty if order was not made using an offer. Format: 'projects/{project}/services/{service}/privateOffers/{offer-id}' OR 'projects/{project}/services/{service}/standardOffers/{offer-id}', depending on whether the offer is private or public.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "offerDuration": {
+          "description": "Output only. The offer duration of the current offer in ISO 8601 duration format. Field is empty if entitlement was not made using an offer.",
           "readOnly": true,
           "type": "string"
         },
@@ -721,7 +735,7 @@
           "type": "string"
         },
         "product": {
-          "description": "Output only. The identifier of the entity that was purchased. This may actually represent a product, quote, or offer.",
+          "description": "Output only. The identifier of the entity that was purchased. This may actually represent a product, quote, or offer. It is highly recommended to use the more explicit fields productExternalName, quoteExternalName, or offer listed below based on your needs.",
           "type": "string"
         },
         "productExternalName": {
@@ -753,8 +767,8 @@
           "enumDescriptions": [
             "Default state of the entitlement. It's only set to this value when the entitlement is first created and has not been initialized.",
             "Indicates that the entitlement is being created and the backend has sent a notification to the provider for the activation approval. If the provider approves, then the entitlement will transition to the EntitlementState.ENTITLEMENT_ACTIVE state. Otherwise, the entitlement will be removed. Plan changes are not allowed in this state. Instead the entitlement is cancelled and re-created with a new plan name.",
-            "Indicates that the entitlement is active. The procured item is now usable and any associated billing events will start occurring. In this state, the customer can decide to cancel the entitlement, which would change the state to EntitlementState.ENTITLEMENT_PENDING_CANCELLATION, and then EntitlementState.ENTITLEMENT_CANCELLED. The user can also request a change of plan, which will transition the state to EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE, and then back to EntitlementState.ENTITLEMENT_ACTIVE.",
-            "Indicates that the entitlement was cancelled by the customer. The entitlement typically stays in this state if the entitlement/plan allows use of the underlying resource until the end of the current billing cycle. Once the billing cycle completes, the resource will transition to EntitlementState.ENTITLEMENT_CANCELLED state. The resource cannot be modified during this state.",
+            "Indicates that the entitlement is active. The procured item is now usable and any associated billing events will start occurring. Entitlements in this state WILL renew. The analogous state for an unexpired but non-renewing entitlement is ENTITLEMENT_PENDING_CANCELLATION. In this state, the customer can decide to cancel the entitlement, which would change the state to EntitlementState.ENTITLEMENT_PENDING_CANCELLATION, and then EntitlementState.ENTITLEMENT_CANCELLED. The user can also request a change of plan, which will transition the state to EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE, and then back to EntitlementState.ENTITLEMENT_ACTIVE.",
+            "Indicates that the entitlement will expire at the end of its term. This could mean the customer has elected not to renew this entitlement or the customer elected to cancel an entitlement that only expires at term end. The entitlement typically stays in this state if the entitlement/plan allows use of the underlying resource until the end of the current billing cycle. Once the billing cycle completes, the resource will transition to EntitlementState.ENTITLEMENT_CANCELLED state. The resource cannot be modified during this state.",
             "Indicates that the entitlement was cancelled. The entitlement can now be deleted.",
             "Indicates that the entitlement is currently active, but there is a pending plan change that is requested by the customer. The entitlement typically stays in this state, if the entitlement/plan requires the completion of the current billing cycle before the plan can be changed. Once the billing cycle completes, the resource will transition to EntitlementState.ENTITLEMENT_ACTIVE, with its plan changed.",
             "Indicates that the entitlement is currently active, but there is a plan change request pending provider approval. If the provider approves the plan change, then the entitlement will transition either to EntitlementState.ENTITLEMENT_ACTIVE or EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE depending on whether current plan requires that the billing cycle completes. If the provider rejects the plan change, then the pending plan change request is removed and the entitlement stays in EntitlementState.ENTITLEMENT_ACTIVE state with the old plan.",

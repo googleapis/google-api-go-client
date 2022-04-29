@@ -87,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -404,6 +404,39 @@ type AvailableUpdates struct {
 
 func (s *AvailableUpdates) MarshalJSON() ([]byte, error) {
 	type NoMethod AvailableUpdates
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AwsSourceVmDetails: Represent the source AWS VM details.
+type AwsSourceVmDetails struct {
+	// Firmware: The firmware type of the source VM.
+	//
+	// Possible values:
+	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.
+	//   "EFI" - The firmware is EFI.
+	//   "BIOS" - The firmware is BIOS.
+	Firmware string `json:"firmware,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Firmware") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Firmware") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsSourceVmDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsSourceVmDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -869,6 +902,46 @@ func (s *CutoverJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CycleStep: CycleStep hold information about a step progress.
+type CycleStep struct {
+	// EndTime: The time the cycle step has ended.
+	EndTime string `json:"endTime,omitempty"`
+
+	// InitializingReplication: Initializing replication step.
+	InitializingReplication *InitializingReplicationStep `json:"initializingReplication,omitempty"`
+
+	// PostProcessing: Post processing step.
+	PostProcessing *PostProcessingStep `json:"postProcessing,omitempty"`
+
+	// Replicating: Replicating step.
+	Replicating *ReplicatingStep `json:"replicating,omitempty"`
+
+	// StartTime: The time the cycle step has started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CycleStep) MarshalJSON() ([]byte, error) {
+	type NoMethod CycleStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DatacenterConnector: DatacenterConnector message describes a
 // connector between the Source and GCP, which is installed on a vmware
 // datacenter (an OVA vm installed by the user) to connect the
@@ -978,8 +1051,7 @@ func (s *DatacenterConnector) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1071,6 +1143,11 @@ func (s *Group) MarshalJSON() ([]byte, error) {
 	type NoMethod Group
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InitializingReplicationStep: InitializingReplicationStep contains
+// specific step details.
+type InitializingReplicationStep struct {
 }
 
 // Link: Describes a URL link.
@@ -1592,6 +1669,10 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // MigratingVm: MigratingVm describes the VM that will be migrated from
 // a Source environment and its replication state.
 type MigratingVm struct {
+	// AwsSourceVmDetails: Output only. Details of the VM from an AWS
+	// source.
+	AwsSourceVmDetails *AwsSourceVmDetails `json:"awsSourceVmDetails,omitempty"`
+
 	// ComputeEngineTargetDefaults: Details of the target VM in Compute
 	// Engine.
 	ComputeEngineTargetDefaults *ComputeEngineTargetDefaults `json:"computeEngineTargetDefaults,omitempty"`
@@ -1702,22 +1783,21 @@ type MigratingVm struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ComputeEngineTargetDefaults") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AwsSourceVmDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "ComputeEngineTargetDefaults") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AwsSourceVmDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1947,6 +2027,11 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 type PauseMigrationRequest struct {
 }
 
+// PostProcessingStep: PostProcessingStep contains specific step
+// details.
+type PostProcessingStep struct {
+}
+
 // RemoveGroupMigrationRequest: Request message for 'RemoveMigration'
 // request.
 type RemoveGroupMigrationRequest struct {
@@ -1976,6 +2061,47 @@ func (s *RemoveGroupMigrationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReplicatingStep: ReplicatingStep contains specific step details.
+type ReplicatingStep struct {
+	// LastThirtyMinutesAverageBytesPerSecond: The source disks replication
+	// rate for the last 30 minutes in bytes per second.
+	LastThirtyMinutesAverageBytesPerSecond int64 `json:"lastThirtyMinutesAverageBytesPerSecond,omitempty,string"`
+
+	// LastTwoMinutesAverageBytesPerSecond: The source disks replication
+	// rate for the last 2 minutes in bytes per second.
+	LastTwoMinutesAverageBytesPerSecond int64 `json:"lastTwoMinutesAverageBytesPerSecond,omitempty,string"`
+
+	// ReplicatedBytes: Replicated bytes in the step.
+	ReplicatedBytes int64 `json:"replicatedBytes,omitempty,string"`
+
+	// TotalBytes: Total bytes to be handled in the step.
+	TotalBytes int64 `json:"totalBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LastThirtyMinutesAverageBytesPerSecond") to unconditionally include
+	// in API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "LastThirtyMinutesAverageBytesPerSecond") to include in API requests
+	// with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. However, any field with an empty value
+	// appearing in NullFields will be sent to the server as null. It is an
+	// error if a field in this list has a non-empty value. This may be used
+	// to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplicatingStep) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicatingStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReplicationCycle: ReplicationCycle contains information about the
 // current replication cycle status.
 type ReplicationCycle struct {
@@ -1987,6 +2113,9 @@ type ReplicationCycle struct {
 
 	// StartTime: The time the replication cycle has started.
 	StartTime string `json:"startTime,omitempty"`
+
+	// Steps: The cycle's steps list representing its progress.
+	Steps []*CycleStep `json:"steps,omitempty"`
 
 	// TotalPauseDuration: The accumulated duration the replication cycle
 	// was paused.
@@ -3000,8 +3129,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3130,7 +3259,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -1193,7 +1193,7 @@
       }
     }
   },
-  "revision": "20220222",
+  "revision": "20220331",
   "rootUrl": "https://vault.googleapis.com/",
   "schemas": {
     "AccountCount": {
@@ -1499,6 +1499,22 @@
       "description": "Additional options for Drive search",
       "id": "DriveOptions",
       "properties": {
+        "clientSideEncryptedOption": {
+          "description": "Set whether the results include only content encrypted with [Google Workspace Client-side encryption](https://support.google.com/a?p=cse_ov) content, only unencrypted content, or both. Defaults to both. Currently supported for Drive.",
+          "enum": [
+            "CLIENT_SIDE_ENCRYPTED_OPTION_UNSPECIFIED",
+            "CLIENT_SIDE_ENCRYPTED_OPTION_ANY",
+            "CLIENT_SIDE_ENCRYPTED_OPTION_ENCRYPTED",
+            "CLIENT_SIDE_ENCRYPTED_OPTION_UNENCRYPTED"
+          ],
+          "enumDescriptions": [
+            "Encryption status unspecified. Results include both client-side encrypted and non-encrypted content.",
+            "Include both client-side encrypted and unencrypted content in results.",
+            "Include client-side encrypted content only.",
+            "Include unencrypted content only."
+          ],
+          "type": "string"
+        },
         "includeSharedDrives": {
           "description": "Set to **true** to include shared drives.",
           "type": "boolean"
@@ -1516,7 +1532,7 @@
       "type": "object"
     },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
       "type": "object"
@@ -1547,7 +1563,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The export name.",
+          "description": "The export name. Don't use special characters (~!$'(),;@:/?) in the name, they can prevent you from downloading exports.",
           "type": "string"
         },
         "query": {
@@ -1697,8 +1713,8 @@
           ],
           "enumDescriptions": [
             "No export format specified.",
-            "Export as MBOX.",
-            "Export as PST."
+            "Export as MBOX. Only available for Gmail, Groups, Hangouts and Voice.",
+            "Export as PST. Only available for Gmail, Groups, Hangouts, Voice and Calendar."
           ],
           "type": "string"
         }
@@ -1718,8 +1734,8 @@
           ],
           "enumDescriptions": [
             "No export format specified.",
-            "Export as MBOX.",
-            "Export as PST."
+            "Export as MBOX. Only available for Gmail, Groups, Hangouts and Voice.",
+            "Export as PST. Only available for Gmail, Groups, Hangouts, Voice and Calendar."
           ],
           "type": "string"
         }
@@ -1915,7 +1931,7 @@
             "Drive, including Meet and Sites.",
             "For search, Gmail and classic Hangouts. For holds, Gmail only.",
             "Groups.",
-            "For search, Google Chat only. For holds, Google Chat and classic Hangouts.",
+            "For export, Google Chat only. For holds, Google Chat and classic Hangouts.",
             "Google Voice."
           ],
           "type": "string"
@@ -2099,8 +2115,8 @@
           ],
           "enumDescriptions": [
             "No export format specified.",
-            "Export as MBOX.",
-            "Export as PST."
+            "Export as MBOX. Only available for Gmail, Groups, Hangouts and Voice.",
+            "Export as PST. Only available for Gmail, Groups, Hangouts, Voice and Calendar."
           ],
           "type": "string"
         },
@@ -2262,7 +2278,7 @@
             "Drive, including Meet and Sites.",
             "For search, Gmail and classic Hangouts. For holds, Gmail only.",
             "Groups.",
-            "For search, Google Chat only. For holds, Google Chat and classic Hangouts.",
+            "For export, Google Chat only. For holds, Google Chat and classic Hangouts.",
             "Google Voice."
           ],
           "type": "string"
@@ -2553,8 +2569,8 @@
           ],
           "enumDescriptions": [
             "No export format specified.",
-            "Export as MBOX.",
-            "Export as PST."
+            "Export as MBOX. Only available for Gmail, Groups, Hangouts and Voice.",
+            "Export as PST. Only available for Gmail, Groups, Hangouts, Voice and Calendar."
           ],
           "type": "string"
         }

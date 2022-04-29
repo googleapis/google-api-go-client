@@ -109,7 +109,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/drive",
 		"https://www.googleapis.com/auth/drive.file",
 		"https://www.googleapis.com/auth/drive.readonly",
@@ -3108,18 +3108,18 @@ type Page struct {
 	//   "NOTES_MASTER" - A notes master page.
 	PageType string `json:"pageType,omitempty"`
 
-	// RevisionId: The revision ID of the presentation containing this page.
-	// Can be used in update requests to assert that the presentation
-	// revision hasn't changed since the last read operation. Only populated
-	// if the user has edit access to the presentation. The format of the
-	// revision ID may change over time, so it should be treated opaquely. A
-	// returned revision ID is only guaranteed to be valid for 24 hours
-	// after it has been returned and cannot be shared across users. If the
-	// revision ID is unchanged between calls, then the presentation has not
-	// changed. Conversely, a changed ID (for the same presentation and
-	// user) usually means the presentation has been updated; however, a
-	// changed ID can also be due to internal factors such as ID format
-	// changes.
+	// RevisionId: Output only. The revision ID of the presentation. Can be
+	// used in update requests to assert the presentation revision hasn't
+	// changed since the last read operation. Only populated if the user has
+	// edit access to the presentation. The revision ID is not a sequential
+	// number but an opaque string. The format of the revision ID might
+	// change over time. A returned revision ID is only guaranteed to be
+	// valid for 24 hours after it has been returned and cannot be shared
+	// across users. If the revision ID is unchanged between calls, then the
+	// presentation has not changed. Conversely, a changed ID (for the same
+	// presentation and user) usually means the presentation has been
+	// updated. However, a changed ID can also be due to internal factors
+	// such as ID format changes.
 	RevisionId string `json:"revisionId,omitempty"`
 
 	// SlideProperties: Slide specific properties. Only set if page_type =
@@ -3603,16 +3603,17 @@ type Presentation struct {
 	// PresentationId: The ID of the presentation.
 	PresentationId string `json:"presentationId,omitempty"`
 
-	// RevisionId: The revision ID of the presentation. Can be used in
-	// update requests to assert that the presentation revision hasn't
+	// RevisionId: Output only. The revision ID of the presentation. Can be
+	// used in update requests to assert the presentation revision hasn't
 	// changed since the last read operation. Only populated if the user has
-	// edit access to the presentation. The format of the revision ID may
+	// edit access to the presentation. The revision ID is not a sequential
+	// number but a nebulous string. The format of the revision ID may
 	// change over time, so it should be treated opaquely. A returned
 	// revision ID is only guaranteed to be valid for 24 hours after it has
 	// been returned and cannot be shared across users. If the revision ID
 	// is unchanged between calls, then the presentation has not changed.
 	// Conversely, a changed ID (for the same presentation and user) usually
-	// means the presentation has been updated; however, a changed ID can
+	// means the presentation has been updated. However, a changed ID can
 	// also be due to internal factors such as ID format changes.
 	RevisionId string `json:"revisionId,omitempty"`
 
@@ -3842,7 +3843,7 @@ type ReplaceAllShapesWithImageRequest struct {
 	// shape. This is the default method when one is not specified.
 	//   "CENTER_CROP" - Scales and centers the image to fill the bounds of
 	// the original shape. The image may be cropped in order to fill the
-	// shape. The rendered size of the image will be the same as that of the
+	// shape. The rendered size of the image will be the same as the
 	// original shape.
 	ImageReplaceMethod string `json:"imageReplaceMethod,omitempty"`
 
@@ -4093,6 +4094,7 @@ func (s *ReplaceAllTextResponse) MarshalJSON() ([]byte, error) {
 // image.
 type ReplaceImageRequest struct {
 	// ImageObjectId: The ID of the existing image that will be replaced.
+	// The ID can be retrieved from the response of a get request.
 	ImageObjectId string `json:"imageObjectId,omitempty"`
 
 	// ImageReplaceMethod: The replacement method.
@@ -4106,16 +4108,16 @@ type ReplaceImageRequest struct {
 	// shape. This is the default method when one is not specified.
 	//   "CENTER_CROP" - Scales and centers the image to fill the bounds of
 	// the original shape. The image may be cropped in order to fill the
-	// shape. The rendered size of the image will be the same as that of the
+	// shape. The rendered size of the image will be the same as the
 	// original shape.
 	ImageReplaceMethod string `json:"imageReplaceMethod,omitempty"`
 
 	// Url: The image URL. The image is fetched once at insertion time and a
 	// copy is stored for display inside the presentation. Images must be
-	// less than 50MB in size, cannot exceed 25 megapixels, and must be in
-	// one of PNG, JPEG, or GIF format. The provided URL can be at most 2 kB
-	// in length. The URL itself is saved with the image, and exposed via
-	// the Image.source_url field.
+	// less than 50MB, cannot exceed 25 megapixels, and must be in PNG,
+	// JPEG, or GIF format. The provided URL can't surpass 2 KB in length.
+	// The URL is saved with the image, and exposed through the
+	// Image.source_url field.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageObjectId") to
@@ -7132,10 +7134,11 @@ func (s *WordArt) MarshalJSON() ([]byte, error) {
 // WriteControl: Provides control over how write requests are executed.
 type WriteControl struct {
 	// RequiredRevisionId: The revision ID of the presentation required for
-	// the write request. If specified and the `required_revision_id`
-	// doesn't exactly match the presentation's current `revision_id`, the
-	// request will not be processed and will return a 400 bad request
-	// error.
+	// the write request. If specified and the required revision ID doesn't
+	// match the presentation's current revision ID, the request is not
+	// processed and returns a 400 bad request error. When a required
+	// revision ID is returned in a response, it indicates the revision ID
+	// of the document after the request was applied.
 	RequiredRevisionId string `json:"requiredRevisionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RequiredRevisionId")

@@ -93,7 +93,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/adsense",
 		"https://www.googleapis.com/auth/adsense.readonly",
 	)
@@ -280,6 +280,16 @@ type Account struct {
 	// Premium: Output only. Whether this account is premium.
 	Premium bool `json:"premium,omitempty"`
 
+	// State: Output only. State of the account.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "READY" - The account is open and ready to serve ads.
+	//   "NEEDS_ATTENTION" - There are some issues with this account.
+	// Publishers should visit AdSense in order to fix the account.
+	//   "CLOSED" - The account is closed and can't serve ads.
+	State string `json:"state,omitempty"`
+
 	// TimeZone: The account time zone, as used by reporting. For more
 	// information, see changing the time zone of your reports
 	// (https://support.google.com/adsense/answer/9830725).
@@ -327,6 +337,17 @@ type AdClient struct {
 	// in the `AD_CLIENT_ID` reporting dimension. Present only if the ad
 	// client supports reporting.
 	ReportingDimensionId string `json:"reportingDimensionId,omitempty"`
+
+	// State: Output only. State of the ad client.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "READY" - The ad client is ready to show ads.
+	//   "GETTING_READY" - Running some checks on the ad client before it is
+	// ready to serve ads.
+	//   "REQUIRES_REVIEW" - The ad client hasn't been checked yet. There
+	// are tasks pending before AdSense will start the review.
+	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -398,11 +419,11 @@ func (s *AdClientAdCode) MarshalJSON() ([]byte, error) {
 // ad unit with a specific set of ad settings that have been customized
 // within an account.
 type AdUnit struct {
-	// ContentAdsSettings: Settings specific to content ads (AFC).
+	// ContentAdsSettings: Required. Settings specific to content ads (AFC).
 	ContentAdsSettings *ContentAdsSettings `json:"contentAdsSettings,omitempty"`
 
-	// DisplayName: Display name of the ad unit, as provided when the ad
-	// unit was created.
+	// DisplayName: Required. Display name of the ad unit, as provided when
+	// the ad unit was created.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Resource name of the ad unit. Format:
@@ -562,11 +583,11 @@ func (s *Cell) MarshalJSON() ([]byte, error) {
 
 // ContentAdsSettings: Settings specific to content ads (AFC).
 type ContentAdsSettings struct {
-	// Size: Size of the ad unit. e.g. "728x90", "1x3" (for responsive ad
-	// units).
+	// Size: Required. Size of the ad unit. e.g. "728x90", "1x3" (for
+	// responsive ad units).
 	Size string `json:"size,omitempty"`
 
-	// Type: Type of the ad unit.
+	// Type: Required. Type of the ad unit.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified ad unit type.
@@ -603,7 +624,7 @@ func (s *ContentAdsSettings) MarshalJSON() ([]byte, error) {
 
 // CustomChannel: Representation of a custom channel.
 type CustomChannel struct {
-	// DisplayName: Display name of the custom channel.
+	// DisplayName: Required. Display name of the custom channel.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Resource name of the custom channel. Format:
@@ -4457,7 +4478,9 @@ func (c *AccountsReportsGenerateCall) Limit(limit int64) *AccountsReportsGenerat
 // clicks on an ad. CPC is calculated by dividing the estimated revenue
 // by the number of clicks received.
 //   "ADS_PER_IMPRESSION" - Number of ad views per impression.
-//   "TOTAL_EARNINGS" - Total earnings.
+//   "TOTAL_EARNINGS" - Total earnings are the gross estimated earnings
+// from revenue shared traffic before any parent and child account
+// revenue share is applied.
 //   "WEBSEARCH_RESULT_PAGES" - Number of results pages.
 func (c *AccountsReportsGenerateCall) Metrics(metrics ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("metrics", append([]string{}, metrics...))
@@ -4864,7 +4887,7 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "Revenue per thousand individual ad impressions. This is calculated by dividing estimated revenue by the number of individual ad impressions multiplied by 1000.",
 	//         "Amount the publisher earns each time a user clicks on an ad. CPC is calculated by dividing the estimated revenue by the number of clicks received.",
 	//         "Number of ad views per impression.",
-	//         "Total earnings.",
+	//         "Total earnings are the gross estimated earnings from revenue shared traffic before any parent and child account revenue share is applied.",
 	//         "Number of results pages."
 	//       ],
 	//       "location": "query",
@@ -5209,7 +5232,9 @@ func (c *AccountsReportsGenerateCsvCall) Limit(limit int64) *AccountsReportsGene
 // clicks on an ad. CPC is calculated by dividing the estimated revenue
 // by the number of clicks received.
 //   "ADS_PER_IMPRESSION" - Number of ad views per impression.
-//   "TOTAL_EARNINGS" - Total earnings.
+//   "TOTAL_EARNINGS" - Total earnings are the gross estimated earnings
+// from revenue shared traffic before any parent and child account
+// revenue share is applied.
 //   "WEBSEARCH_RESULT_PAGES" - Number of results pages.
 func (c *AccountsReportsGenerateCsvCall) Metrics(metrics ...string) *AccountsReportsGenerateCsvCall {
 	c.urlParams_.SetMulti("metrics", append([]string{}, metrics...))
@@ -5616,7 +5641,7 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "Revenue per thousand individual ad impressions. This is calculated by dividing estimated revenue by the number of individual ad impressions multiplied by 1000.",
 	//         "Amount the publisher earns each time a user clicks on an ad. CPC is calculated by dividing the estimated revenue by the number of clicks received.",
 	//         "Number of ad views per impression.",
-	//         "Total earnings.",
+	//         "Total earnings are the gross estimated earnings from revenue shared traffic before any parent and child account revenue share is applied.",
 	//         "Number of results pages."
 	//       ],
 	//       "location": "query",

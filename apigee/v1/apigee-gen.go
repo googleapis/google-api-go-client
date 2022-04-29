@@ -87,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -1746,7 +1746,7 @@ type GoogleCloudApigeeV1ApiProxy struct {
 	// an archive.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
-	// Revision: Output only. List of revisons defined for the API proxy.
+	// Revision: Output only. List of revisions defined for the API proxy.
 	Revision []string `json:"revision,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4003,6 +4003,17 @@ type GoogleCloudApigeeV1EndpointAttachment struct {
 	// ServiceAttachment: Format: projects/*/regions/*/serviceAttachments/*
 	ServiceAttachment string `json:"serviceAttachment,omitempty"`
 
+	// State: Output only. State of the endpoint attachment. Values other
+	// than `ACTIVE` mean the resource is not ready to use.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Resource is in an unspecified state.
+	//   "CREATING" - Resource is being created.
+	//   "ACTIVE" - Resource is provisioned and ready to use.
+	//   "DELETING" - The resource is being deleted.
+	//   "UPDATING" - The resource is being updated.
+	State string `json:"state,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -4334,6 +4345,9 @@ type GoogleCloudApigeeV1EnvironmentGroupAttachment struct {
 
 	// Environment: Required. ID of the attached environment.
 	Environment string `json:"environment,omitempty"`
+
+	// EnvironmentGroupId: Output only. ID of the environment group.
+	EnvironmentGroupId string `json:"environmentGroupId,omitempty"`
 
 	// Name: ID of the environment group attachment.
 	Name string `json:"name,omitempty"`
@@ -5479,6 +5493,8 @@ func (s *GoogleCloudApigeeV1ListApiProductsResponse) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ListApiProxiesResponse: To change this message, in
+// the same CL add a change log in go/changing-api-proto-breaks-ui
 type GoogleCloudApigeeV1ListApiProxiesResponse struct {
 	Proxies []*GoogleCloudApigeeV1ApiProxy `json:"proxies,omitempty"`
 
@@ -6283,6 +6299,8 @@ func (s *GoogleCloudApigeeV1ListRatePlansResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ListSharedFlowsResponse: To change this message,
+// in the same CL add a change log in go/changing-api-proto-breaks-ui
 type GoogleCloudApigeeV1ListSharedFlowsResponse struct {
 	SharedFlows []*GoogleCloudApigeeV1SharedFlow `json:"sharedFlows,omitempty"`
 
@@ -6646,6 +6664,9 @@ type GoogleCloudApigeeV1OperationMetadata struct {
 	// TargetResourceName: Name of the resource for which the operation is
 	// operating on.
 	TargetResourceName string `json:"targetResourceName,omitempty"`
+
+	// Warnings: Warnings encountered while executing the operation.
+	Warnings []string `json:"warnings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OperationType") to
 	// unconditionally include in API requests. By default, fields with
@@ -9644,8 +9665,8 @@ type GoogleIamV1Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *GoogleTypeExpr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -9820,7 +9841,7 @@ func (s *GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 type GoogleIamV1SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *GoogleIamV1Policy `json:"policy,omitempty"`
 
@@ -9857,7 +9878,7 @@ func (s *GoogleIamV1SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // `TestIamPermissions` method.
 type GoogleIamV1TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -10022,8 +10043,7 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
 // method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); } The JSON representation for
-// `Empty` is empty JSON object `{}`.
+// returns (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

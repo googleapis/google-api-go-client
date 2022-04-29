@@ -86,7 +86,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/androidpublisher",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -117,6 +117,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Applications = NewApplicationsService(s)
 	s.Edits = NewEditsService(s)
 	s.Generatedapks = NewGeneratedapksService(s)
 	s.Grants = NewGrantsService(s)
@@ -135,6 +136,8 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
+
+	Applications *ApplicationsService
 
 	Edits *EditsService
 
@@ -164,6 +167,27 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewApplicationsService(s *Service) *ApplicationsService {
+	rs := &ApplicationsService{s: s}
+	rs.DeviceTierConfigs = NewApplicationsDeviceTierConfigsService(s)
+	return rs
+}
+
+type ApplicationsService struct {
+	s *Service
+
+	DeviceTierConfigs *ApplicationsDeviceTierConfigsService
+}
+
+func NewApplicationsDeviceTierConfigsService(s *Service) *ApplicationsDeviceTierConfigsService {
+	rs := &ApplicationsDeviceTierConfigsService{s: s}
+	return rs
+}
+
+type ApplicationsDeviceTierConfigsService struct {
+	s *Service
 }
 
 func NewEditsService(s *Service) *EditsService {
@@ -1063,6 +1087,72 @@ func (s *DeveloperComment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeviceGroup: LINT.IfChange A group of devices. A group is defined by
+// a set of device selectors. A device belongs to the group if it
+// matches any selector (logical OR).
+type DeviceGroup struct {
+	// DeviceSelectors: Device selectors for this group. A device matching
+	// any of the selectors is included in this group.
+	DeviceSelectors []*DeviceSelector `json:"deviceSelectors,omitempty"`
+
+	// Name: The name of the group.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceSelectors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceSelectors") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceId: Identifier of a device.
+type DeviceId struct {
+	// BuildBrand: Value of Build.BRAND.
+	BuildBrand string `json:"buildBrand,omitempty"`
+
+	// BuildDevice: Value of Build.DEVICE.
+	BuildDevice string `json:"buildDevice,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildBrand") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildBrand") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceId) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeviceMetadata: Characteristics of the user's device.
 type DeviceMetadata struct {
 	// CpuMake: Device CPU make, e.g. "Qualcomm"
@@ -1122,6 +1212,87 @@ func (s *DeviceMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeviceRam: Conditions about a device's RAM capabilities.
+type DeviceRam struct {
+	// MaxBytes: Maximum RAM in bytes (bound excluded).
+	MaxBytes int64 `json:"maxBytes,omitempty,string"`
+
+	// MinBytes: Minimum RAM in bytes (bound included).
+	MinBytes int64 `json:"minBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxBytes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceRam) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceRam
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceSelector: Selector for a device group. A selector consists of a
+// set of conditions on the device that should all match (logical AND)
+// to determine a device group eligibility. For instance, if a selector
+// specifies RAM conditions, device model inclusion and device model
+// exclusion, a device is considered to match if: device matches RAM
+// conditions AND device matches one of the included device models AND
+// device doesn't match excluded device models
+type DeviceSelector struct {
+	// DeviceRam: Conditions on the device's RAM.
+	DeviceRam *DeviceRam `json:"deviceRam,omitempty"`
+
+	// ExcludedDeviceIds: Device models excluded by this selector, even if
+	// they match all other conditions.
+	ExcludedDeviceIds []*DeviceId `json:"excludedDeviceIds,omitempty"`
+
+	// ForbiddenSystemFeatures: A device that has any of these system
+	// features is excluded by this selector, even if it matches all other
+	// conditions.
+	ForbiddenSystemFeatures []*SystemFeature `json:"forbiddenSystemFeatures,omitempty"`
+
+	// IncludedDeviceIds: Device models included by this selector.
+	IncludedDeviceIds []*DeviceId `json:"includedDeviceIds,omitempty"`
+
+	// RequiredSystemFeatures: A device needs to have all these system
+	// features to be included by the selector.
+	RequiredSystemFeatures []*SystemFeature `json:"requiredSystemFeatures,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceRam") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceRam") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeviceSpec: The device spec used to generate a system APK.
 type DeviceSpec struct {
 	// ScreenDensity: Screen dpi.
@@ -1155,6 +1326,121 @@ type DeviceSpec struct {
 
 func (s *DeviceSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceTier: A single device tier. Devices matching any of the device
+// groups in device_group_names are considered to match the tier.
+type DeviceTier struct {
+	// DeviceGroupNames: Groups of devices included in this tier. These
+	// groups must be defined explicitly under device_groups in this
+	// configuration.
+	DeviceGroupNames []string `json:"deviceGroupNames,omitempty"`
+
+	// Level: The priority level of the tier. Tiers are evaluated in
+	// descending order of level: the highest level tier has the highest
+	// priority. The highest tier matching a given device is selected for
+	// that device. You should use a contiguous range of levels for your
+	// tiers in a tier set; tier levels in a tier set must be unique. For
+	// instance, if your tier set has 4 tiers (including the global
+	// fallback), you should define tiers 1, 2 and 3 in this configuration.
+	// Note: tier 0 is implicitly defined as a global fallback and selected
+	// for devices that don't match any of the tiers explicitly defined
+	// here. You mustn't define level 0 explicitly in this configuration.
+	Level int64 `json:"level,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceGroupNames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceGroupNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceTier) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceTier
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceTierConfig: LINT.IfChange Configuration describing device
+// targeting criteria for the content of an app.
+type DeviceTierConfig struct {
+	// DeviceGroups: Definition of device groups for the app.
+	DeviceGroups []*DeviceGroup `json:"deviceGroups,omitempty"`
+
+	// DeviceTierConfigId: Output only. The device tier config ID.
+	DeviceTierConfigId int64 `json:"deviceTierConfigId,omitempty,string"`
+
+	// DeviceTierSet: Definition of the set of device tiers for the app.
+	DeviceTierSet *DeviceTierSet `json:"deviceTierSet,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceGroups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceGroups") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceTierConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceTierConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceTierSet: A set of device tiers. A tier set determines what
+// variation of app content gets served to a specific device, for
+// device-targeted content. You should assign a priority level to each
+// tier, which determines the ordering by which they are evaluated by
+// Play. See the documentation of DeviceTier.level for more details.
+type DeviceTierSet struct {
+	// DeviceTiers: Device tiers belonging to the set.
+	DeviceTiers []*DeviceTier `json:"deviceTiers,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceTiers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceTiers") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceTierSet) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceTierSet
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1557,10 +1843,13 @@ type Grant struct {
 	AppLevelPermissions []string `json:"appLevelPermissions,omitempty"`
 
 	// Name: Required. Resource name for this grant, following the pattern
-	// "developers/{developer}/users/{email}/grants/{package_name}".
+	// "developers/{developer}/users/{email}/grants/{package_name}". If this
+	// grant is for a draft app, the app ID will be used in this resource
+	// name instead of the package name.
 	Name string `json:"name,omitempty"`
 
-	// PackageName: Immutable. The package name of the app.
+	// PackageName: Immutable. The package name of the app. This will be
+	// empty for draft apps.
 	PackageName string `json:"packageName,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1990,6 +2279,45 @@ type IntroductoryPriceInfo struct {
 
 func (s *IntroductoryPriceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod IntroductoryPriceInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListDeviceTierConfigsResponse: Response listing existing device tier
+// configs.
+type ListDeviceTierConfigsResponse struct {
+	// DeviceTierConfigs: Device tier configs created by the developer.
+	DeviceTierConfigs []*DeviceTierConfig `json:"deviceTierConfigs,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceTierConfigs")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceTierConfigs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListDeviceTierConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDeviceTierConfigsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3134,7 +3462,37 @@ func (s *SystemApksListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SystemFeature: Representation of a system feature.
+type SystemFeature struct {
+	// Name: The name of the feature.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SystemFeature) MarshalJSON() ([]byte, error) {
+	type NoMethod SystemFeature
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Testers: The testers of an app. The resource for TestersService.
+// Note: while it is possible in the Play Console UI to add testers via
+// email lists, email lists are not supported by this resource.
 type Testers struct {
 	// GoogleGroups: All testing Google Groups, as email addresses.
 	GoogleGroups []string `json:"googleGroups,omitempty"`
@@ -3521,6 +3879,7 @@ type User struct {
 	Email string `json:"email,omitempty"`
 
 	// ExpirationTime: The time at which the user's access expires, if set.
+	// When setting this value, it must always be in the future.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 
 	// Grants: Output only. Per-app permissions for the user.
@@ -3531,7 +3890,13 @@ type User struct {
 	Name string `json:"name,omitempty"`
 
 	// Partial: Output only. Whether there are more permissions for the user
-	// that are not represented here.
+	// that are not represented here. This can happen if the caller does not
+	// have permission to manage all apps in the account. This is also
+	// `true` if this user is the account owner. If this field is `true`, it
+	// should be taken as a signal that this user cannot be fully managed
+	// via the API. That is, the API caller is not be able to manage all of
+	// the permissions this user holds, either because it doesn't know about
+	// them or because the user is the account owner.
 	Partial bool `json:"partial,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3799,6 +4164,514 @@ func (s *VoidedPurchasesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VoidedPurchasesListResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "androidpublisher.applications.deviceTierConfigs.create":
+
+type ApplicationsDeviceTierConfigsCreateCall struct {
+	s                *Service
+	packageName      string
+	devicetierconfig *DeviceTierConfig
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Creates a new device tier config for an app.
+//
+// - packageName: Package name of the app.
+func (r *ApplicationsDeviceTierConfigsService) Create(packageName string, devicetierconfig *DeviceTierConfig) *ApplicationsDeviceTierConfigsCreateCall {
+	c := &ApplicationsDeviceTierConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.devicetierconfig = devicetierconfig
+	return c
+}
+
+// AllowUnknownDevices sets the optional parameter
+// "allowUnknownDevices": Whether the service should accept device IDs
+// that are unknown to Play's device catalog.
+func (c *ApplicationsDeviceTierConfigsCreateCall) AllowUnknownDevices(allowUnknownDevices bool) *ApplicationsDeviceTierConfigsCreateCall {
+	c.urlParams_.Set("allowUnknownDevices", fmt.Sprint(allowUnknownDevices))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApplicationsDeviceTierConfigsCreateCall) Fields(s ...googleapi.Field) *ApplicationsDeviceTierConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApplicationsDeviceTierConfigsCreateCall) Context(ctx context.Context) *ApplicationsDeviceTierConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApplicationsDeviceTierConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApplicationsDeviceTierConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.devicetierconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/deviceTierConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.applications.deviceTierConfigs.create" call.
+// Exactly one of *DeviceTierConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *DeviceTierConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApplicationsDeviceTierConfigsCreateCall) Do(opts ...googleapi.CallOption) (*DeviceTierConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &DeviceTierConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new device tier config for an app.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/deviceTierConfigs",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.applications.deviceTierConfigs.create",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "allowUnknownDevices": {
+	//       "description": "Whether the service should accept device IDs that are unknown to Play's device catalog.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "packageName": {
+	//       "description": "Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/deviceTierConfigs",
+	//   "request": {
+	//     "$ref": "DeviceTierConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "DeviceTierConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.applications.deviceTierConfigs.get":
+
+type ApplicationsDeviceTierConfigsGetCall struct {
+	s                  *Service
+	packageName        string
+	deviceTierConfigId int64
+	urlParams_         gensupport.URLParams
+	ifNoneMatch_       string
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Get: Returns a particular device tier config.
+//
+// - deviceTierConfigId: Id of an existing device tier config.
+// - packageName: Package name of the app.
+func (r *ApplicationsDeviceTierConfigsService) Get(packageName string, deviceTierConfigId int64) *ApplicationsDeviceTierConfigsGetCall {
+	c := &ApplicationsDeviceTierConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.deviceTierConfigId = deviceTierConfigId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApplicationsDeviceTierConfigsGetCall) Fields(s ...googleapi.Field) *ApplicationsDeviceTierConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ApplicationsDeviceTierConfigsGetCall) IfNoneMatch(entityTag string) *ApplicationsDeviceTierConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApplicationsDeviceTierConfigsGetCall) Context(ctx context.Context) *ApplicationsDeviceTierConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApplicationsDeviceTierConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApplicationsDeviceTierConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/deviceTierConfigs/{deviceTierConfigId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":        c.packageName,
+		"deviceTierConfigId": strconv.FormatInt(c.deviceTierConfigId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.applications.deviceTierConfigs.get" call.
+// Exactly one of *DeviceTierConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *DeviceTierConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApplicationsDeviceTierConfigsGetCall) Do(opts ...googleapi.CallOption) (*DeviceTierConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &DeviceTierConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a particular device tier config.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/deviceTierConfigs/{deviceTierConfigId}",
+	//   "httpMethod": "GET",
+	//   "id": "androidpublisher.applications.deviceTierConfigs.get",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "deviceTierConfigId"
+	//   ],
+	//   "parameters": {
+	//     "deviceTierConfigId": {
+	//       "description": "Required. Id of an existing device tier config.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/deviceTierConfigs/{deviceTierConfigId}",
+	//   "response": {
+	//     "$ref": "DeviceTierConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.applications.deviceTierConfigs.list":
+
+type ApplicationsDeviceTierConfigsListCall struct {
+	s            *Service
+	packageName  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns created device tier configs, ordered by descending
+// creation time.
+//
+// - packageName: Package name of the app.
+func (r *ApplicationsDeviceTierConfigsService) List(packageName string) *ApplicationsDeviceTierConfigsListCall {
+	c := &ApplicationsDeviceTierConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of device tier configs to return. The service may return fewer than
+// this value. If unspecified, at most 10 device tier configs will be
+// returned. The maximum value for this field is 100; values above 100
+// will be coerced to 100. Device tier configs will be ordered by
+// descending creation time.
+func (c *ApplicationsDeviceTierConfigsListCall) PageSize(pageSize int64) *ApplicationsDeviceTierConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDeviceTierConfigs` call. Provide this
+// to retrieve the subsequent page.
+func (c *ApplicationsDeviceTierConfigsListCall) PageToken(pageToken string) *ApplicationsDeviceTierConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApplicationsDeviceTierConfigsListCall) Fields(s ...googleapi.Field) *ApplicationsDeviceTierConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ApplicationsDeviceTierConfigsListCall) IfNoneMatch(entityTag string) *ApplicationsDeviceTierConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApplicationsDeviceTierConfigsListCall) Context(ctx context.Context) *ApplicationsDeviceTierConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApplicationsDeviceTierConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApplicationsDeviceTierConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/deviceTierConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.applications.deviceTierConfigs.list" call.
+// Exactly one of *ListDeviceTierConfigsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListDeviceTierConfigsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApplicationsDeviceTierConfigsListCall) Do(opts ...googleapi.CallOption) (*ListDeviceTierConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListDeviceTierConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns created device tier configs, ordered by descending creation time.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/deviceTierConfigs",
+	//   "httpMethod": "GET",
+	//   "id": "androidpublisher.applications.deviceTierConfigs.list",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of device tier configs to return. The service may return fewer than this value. If unspecified, at most 10 device tier configs will be returned. The maximum value for this field is 100; values above 100 will be coerced to 100. Device tier configs will be ordered by descending creation time.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListDeviceTierConfigs` call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/deviceTierConfigs",
+	//   "response": {
+	//     "$ref": "ListDeviceTierConfigsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ApplicationsDeviceTierConfigsListCall) Pages(ctx context.Context, f func(*ListDeviceTierConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "androidpublisher.edits.commit":
@@ -8917,7 +9790,8 @@ type EditsTestersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets testers.
+// Get: Gets testers. Note: Testers resource does not support email
+// lists.
 //
 // - editId: Identifier of the edit.
 // - packageName: Package name of the app.
@@ -9031,7 +9905,7 @@ func (c *EditsTestersGetCall) Do(opts ...googleapi.CallOption) (*Testers, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets testers.",
+	//   "description": "Gets testers. Note: Testers resource does not support email lists.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/testers/{track}",
 	//   "httpMethod": "GET",
 	//   "id": "androidpublisher.edits.testers.get",
@@ -9084,7 +9958,8 @@ type EditsTestersPatchCall struct {
 	header_     http.Header
 }
 
-// Patch: Patches testers.
+// Patch: Patches testers. Note: Testers resource does not support email
+// lists.
 //
 // - editId: Identifier of the edit.
 // - packageName: Package name of the app.
@@ -9191,7 +10066,7 @@ func (c *EditsTestersPatchCall) Do(opts ...googleapi.CallOption) (*Testers, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Patches testers.",
+	//   "description": "Patches testers. Note: Testers resource does not support email lists.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/testers/{track}",
 	//   "httpMethod": "PATCH",
 	//   "id": "androidpublisher.edits.testers.patch",
@@ -9247,7 +10122,8 @@ type EditsTestersUpdateCall struct {
 	header_     http.Header
 }
 
-// Update: Updates testers.
+// Update: Updates testers. Note: Testers resource does not support
+// email lists.
 //
 // - editId: Identifier of the edit.
 // - packageName: Package name of the app.
@@ -9354,7 +10230,7 @@ func (c *EditsTestersUpdateCall) Do(opts ...googleapi.CallOption) (*Testers, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates testers.",
+	//   "description": "Updates testers. Note: Testers resource does not support email lists.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/testers/{track}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidpublisher.edits.testers.update",
@@ -10627,7 +11503,9 @@ type GrantsPatchCall struct {
 // Patch: Updates access for the user to the given package.
 //
 // - name: Resource name for this grant, following the pattern
-//   "developers/{developer}/users/{email}/grants/{package_name}".
+//   "developers/{developer}/users/{email}/grants/{package_name}". If
+//   this grant is for a draft app, the app ID will be used in this
+//   resource name instead of the package name.
 func (r *GrantsService) Patch(name string, grant *Grant) *GrantsPatchCall {
 	c := &GrantsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10742,7 +11620,7 @@ func (c *GrantsPatchCall) Do(opts ...googleapi.CallOption) (*Grant, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name for this grant, following the pattern \"developers/{developer}/users/{email}/grants/{package_name}\".",
+	//       "description": "Required. Resource name for this grant, following the pattern \"developers/{developer}/users/{email}/grants/{package_name}\". If this grant is for a draft app, the app ID will be used in this resource name instead of the package name.",
 	//       "location": "path",
 	//       "pattern": "^developers/[^/]+/users/[^/]+/grants/[^/]+$",
 	//       "required": true,

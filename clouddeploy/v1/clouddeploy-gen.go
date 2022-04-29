@@ -87,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -393,8 +393,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -539,11 +539,12 @@ func (s *Config) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day, with a
-// zero year (e.g., an anniversary) * A year on its own, with a zero
-// month and a zero day * A year and month, with a zero day (e.g., a
-// credit card expiration date) Related types: * google.type.TimeOfDay *
-// google.type.DateTime * google.protobuf.Timestamp
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -697,12 +698,56 @@ func (s *DeliveryPipeline) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeliveryPipelineNotificationEvent: Payload proto for
+// "clouddeploy.googleapis.com/deliverypipeline_notification" Platform
+// Log event that describes the failure to send delivery pipeline status
+// change Pub/Sub notification.
+type DeliveryPipelineNotificationEvent struct {
+	// DeliveryPipeline: The name of the `Delivery Pipeline`.
+	DeliveryPipeline string `json:"deliveryPipeline,omitempty"`
+
+	// Message: Debug message for when a notification fails to send.
+	Message string `json:"message,omitempty"`
+
+	// Type: Type of this notification, e.g. for a Pub/Sub failure.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
+	// to be sent.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Release render status changed
+	// notification.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeliveryPipeline") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeliveryPipeline") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeliveryPipelineNotificationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod DeliveryPipelineNotificationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1608,6 +1653,84 @@ func (s *Release) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReleaseNotificationEvent: Payload proto for
+// "clouddeploy.googleapis.com/release_notification" Platform Log event
+// that describes the failure to send release status change Pub/Sub
+// notification.
+type ReleaseNotificationEvent struct {
+	// Message: Debug message for when a notification fails to send.
+	Message string `json:"message,omitempty"`
+
+	// Release: The name of the `Release`.
+	Release string `json:"release,omitempty"`
+
+	// Type: Type of this notification, e.g. for a Pub/Sub failure.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
+	// to be sent.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Release render status changed
+	// notification.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReleaseNotificationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod ReleaseNotificationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReleaseRenderEvent: Payload proto for
+// "clouddeploy.googleapis.com/release_render" Platform Log event that
+// describes the render status change.
+type ReleaseRenderEvent struct {
+	// Message: Debug message for when a render transition occurs. Provides
+	// further details as rendering progresses through render states.
+	Message string `json:"message,omitempty"`
+
+	// Release: The name of the `Release`.
+	Release string `json:"release,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReleaseRenderEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod ReleaseRenderEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Rollout: A `Rollout` resource in the Google Cloud Deploy API. A
 // `Rollout` contains information around a specific deployment to a
 // `Target`.
@@ -1745,6 +1868,59 @@ func (s *Rollout) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RolloutNotificationEvent: Payload proto for
+// "clouddeploy.googleapis.com/rollout_notification" Platform Log event
+// that describes the failure to send rollout status change Pub/Sub
+// notification.
+type RolloutNotificationEvent struct {
+	// Message: Debug message for when a notification fails to send.
+	Message string `json:"message,omitempty"`
+
+	// PipelineUid: Unique identifier of the `DeliveryPipeline`.
+	PipelineUid string `json:"pipelineUid,omitempty"`
+
+	// ReleaseUid: Unique identifier of the `Release`.
+	ReleaseUid string `json:"releaseUid,omitempty"`
+
+	// Rollout: The name of the `Rollout`.
+	Rollout string `json:"rollout,omitempty"`
+
+	// TargetId: ID of the `Target` that the rollout is deployed to.
+	TargetId string `json:"targetId,omitempty"`
+
+	// Type: Type of this notification, e.g. for a Pub/Sub failure.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
+	// to be sent.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Release render status changed
+	// notification.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RolloutNotificationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod RolloutNotificationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SerialPipeline: SerialPipeline defines a sequential set of stages for
 // a `DeliveryPipeline`.
 type SerialPipeline struct {
@@ -1779,7 +1955,7 @@ func (s *SerialPipeline) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -2056,6 +2232,50 @@ func (s *TargetArtifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TargetNotificationEvent: Payload proto for
+// "clouddeploy.googleapis.com/target_notification" Platform Log event
+// that describes the failure to send target status change Pub/Sub
+// notification.
+type TargetNotificationEvent struct {
+	// Message: Debug message for when a notification fails to send.
+	Message string `json:"message,omitempty"`
+
+	// Target: The name of the `Target`.
+	Target string `json:"target,omitempty"`
+
+	// Type: Type of this notification, e.g. for a Pub/Sub failure.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
+	// to be sent.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Release render status changed
+	// notification.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TargetNotificationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetNotificationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TargetRender: Details of rendering for a single target.
 type TargetRender struct {
 	// FailureCause: Output only. Reason this render failed. This will
@@ -2154,7 +2374,7 @@ func (s *TargetsPresentCondition) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -2532,8 +2752,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2662,7 +2882,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3462,7 +3682,7 @@ func (r *ProjectsLocationsDeliveryPipelinesService) List(parent string) *Project
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter builds to be
+// Filter sets the optional parameter "filter": Filter pipelines to be
 // returned. See https://google.aip.dev/160 for more details.
 func (c *ProjectsLocationsDeliveryPipelinesListCall) Filter(filter string) *ProjectsLocationsDeliveryPipelinesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -3602,7 +3822,7 @@ func (c *ProjectsLocationsDeliveryPipelinesListCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter builds to be returned. See https://google.aip.dev/160 for more details.",
+	//       "description": "Filter pipelines to be returned. See https://google.aip.dev/160 for more details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4527,7 +4747,7 @@ func (r *ProjectsLocationsDeliveryPipelinesReleasesService) List(parent string) 
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter builds to be
+// Filter sets the optional parameter "filter": Filter releases to be
 // returned. See https://google.aip.dev/160 for more details.
 func (c *ProjectsLocationsDeliveryPipelinesReleasesListCall) Filter(filter string) *ProjectsLocationsDeliveryPipelinesReleasesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -4668,7 +4888,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesListCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter builds to be returned. See https://google.aip.dev/160 for more details.",
+	//       "description": "Optional. Filter releases to be returned. See https://google.aip.dev/160 for more details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5233,7 +5453,7 @@ func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) List(parent 
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter builds to be
+// Filter sets the optional parameter "filter": Filter rollouts to be
 // returned. See https://google.aip.dev/160 for more details.
 func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsListCall) Filter(filter string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -5374,7 +5594,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsListCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter builds to be returned. See https://google.aip.dev/160 for more details.",
+	//       "description": "Optional. Filter rollouts to be returned. See https://google.aip.dev/160 for more details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6811,7 +7031,7 @@ func (r *ProjectsLocationsTargetsService) List(parent string) *ProjectsLocations
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter builds to be
+// Filter sets the optional parameter "filter": Filter targets to be
 // returned. See https://google.aip.dev/160 for more details.
 func (c *ProjectsLocationsTargetsListCall) Filter(filter string) *ProjectsLocationsTargetsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -6951,7 +7171,7 @@ func (c *ProjectsLocationsTargetsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter builds to be returned. See https://google.aip.dev/160 for more details.",
+	//       "description": "Optional. Filter targets to be returned. See https://google.aip.dev/160 for more details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

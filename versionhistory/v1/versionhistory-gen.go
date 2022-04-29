@@ -462,6 +462,11 @@ type Release struct {
 	// fraction is 1.
 	Fraction float64 `json:"fraction,omitempty"`
 
+	// FractionGroup: Rollout fraction group. Only fractions with the same
+	// fraction_group are statistically comparable: there may be
+	// non-fractional differences between different fraction groups.
+	FractionGroup int64 `json:"fractionGroup,omitempty,string"`
+
 	// Name: Release name. Format is
 	// "{product}/platforms/{platform}/channels/{channel}/versions/{version}/
 	// releases/{release}"

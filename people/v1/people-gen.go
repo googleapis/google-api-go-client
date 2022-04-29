@@ -125,7 +125,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/contacts",
 		"https://www.googleapis.com/auth/contacts.other.readonly",
 		"https://www.googleapis.com/auth/contacts.readonly",
@@ -1286,8 +1286,7 @@ func (s *EmailAddress) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -4760,6 +4759,10 @@ func (c *OtherContactsListCall) RequestSyncToken(requestSyncToken bool) *OtherCo
 
 // Sources sets the optional parameter "sources": A mask of what source
 // types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.
+// Possible values for this field are: * READ_SOURCE_TYPE_CONTACT *
+// READ_SOURCE_TYPE_CONTACT,READ_SOURCE_TYPE_PROFILE Specifying
+// READ_SOURCE_TYPE_PROFILE without specifying READ_SOURCE_TYPE_CONTACT
+// is not permitted.
 //
 // Possible values:
 //   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
@@ -4909,7 +4912,7 @@ func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherCont
 	//       "type": "boolean"
 	//     },
 	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.",
+	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set. Possible values for this field are: * READ_SOURCE_TYPE_CONTACT * READ_SOURCE_TYPE_CONTACT,READ_SOURCE_TYPE_PROFILE Specifying READ_SOURCE_TYPE_PROFILE without specifying READ_SOURCE_TYPE_CONTACT is not permitted.",
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",

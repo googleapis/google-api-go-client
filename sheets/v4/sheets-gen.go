@@ -103,7 +103,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/drive",
 		"https://www.googleapis.com/auth/drive.file",
 		"https://www.googleapis.com/auth/drive.readonly",
@@ -1591,10 +1591,11 @@ func (s *BatchClearValuesByDataFilterRequest) MarshalJSON() ([]byte, error) {
 // BatchClearValuesByDataFilterResponse: The response when clearing a
 // range of values selected with DataFilters in a spreadsheet.
 type BatchClearValuesByDataFilterResponse struct {
-	// ClearedRanges: The ranges that were cleared, in A1 notation. If the
-	// requests are for an unbounded range or a ranger larger than the
-	// bounds of the sheet, this is the actual ranges that were cleared,
-	// bounded to the sheet's limits.
+	// ClearedRanges: The ranges that were cleared, in A1 notation
+	// (/sheets/api/guides/concepts#cell). If the requests are for an
+	// unbounded range or a ranger larger than the bounds of the sheet, this
+	// is the actual ranges that were cleared, bounded to the sheet's
+	// limits.
 	ClearedRanges []string `json:"clearedRanges,omitempty"`
 
 	// SpreadsheetId: The spreadsheet the updates were applied to.
@@ -1630,7 +1631,8 @@ func (s *BatchClearValuesByDataFilterResponse) MarshalJSON() ([]byte, error) {
 // BatchClearValuesRequest: The request for clearing more than one range
 // of values in a spreadsheet.
 type BatchClearValuesRequest struct {
-	// Ranges: The ranges to clear, in A1 or R1C1 notation.
+	// Ranges: The ranges to clear, in A1 notation or R1C1 notation
+	// (/sheets/api/guides/concepts#cell).
 	Ranges []string `json:"ranges,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Ranges") to
@@ -4050,6 +4052,8 @@ type DataExecutionStatus struct {
 	//   "TIMED_OUT" - The data execution timed out.
 	//   "TOO_MANY_ROWS" - The data execution returns more rows than the
 	// limit.
+	//   "TOO_MANY_COLUMNS" - The data execution returns more columns than
+	// the limit.
 	//   "TOO_MANY_CELLS" - The data execution returns more cells than the
 	// limit.
 	//   "ENGINE" - Error is received from the backend data execution engine
@@ -6727,17 +6731,17 @@ func (s *GridProperties) MarshalJSON() ([]byte, error) {
 // are half open, i.e. the start index is inclusive and the end index is
 // exclusive -- [start_index, end_index). Missing indexes indicate the
 // range is unbounded on that side. For example, if "Sheet1" is sheet
-// ID 0, then: `Sheet1!A1:A1 == sheet_id: 0, start_row_index: 0,
-// end_row_index: 1, start_column_index: 0, end_column_index: 1`
-// `Sheet1!A3:B4 == sheet_id: 0, start_row_index: 2, end_row_index: 4,
-// start_column_index: 0, end_column_index: 2` `Sheet1!A:B == sheet_id:
-// 0, start_column_index: 0, end_column_index: 2` `Sheet1!A5:B ==
-// sheet_id: 0, start_row_index: 4, start_column_index: 0,
-// end_column_index: 2` `Sheet1 == sheet_id:0` The start index must
-// always be less than or equal to the end index. If the start index
-// equals the end index, then the range is empty. Empty ranges are
-// typically not meaningful and are usually rendered in the UI as
-// `#REF!`.
+// ID 123456, then: `Sheet1!A1:A1 == sheet_id: 123456, start_row_index:
+// 0, end_row_index: 1, start_column_index: 0, end_column_index: 1`
+// `Sheet1!A3:B4 == sheet_id: 123456, start_row_index: 2, end_row_index:
+// 4, start_column_index: 0, end_column_index: 2` `Sheet1!A:B ==
+// sheet_id: 123456, start_column_index: 0, end_column_index: 2`
+// `Sheet1!A5:B == sheet_id: 123456, start_row_index: 4,
+// start_column_index: 0, end_column_index: 2` `Sheet1 == sheet_id:
+// 123456` The start index must always be less than or equal to the end
+// index. If the start index equals the end index, then the range is
+// empty. Empty ranges are typically not meaningful and are usually
+// rendered in the UI as `#REF!`.
 type GridRange struct {
 	// EndColumnIndex: The end column (exclusive) of the range, or not set
 	// if unbounded.
@@ -11202,8 +11206,8 @@ type UpdateValuesByDataFilterResponse struct {
 	// the request's `includeValuesInResponse` field was `true`.
 	UpdatedData *ValueRange `json:"updatedData,omitempty"`
 
-	// UpdatedRange: The range (in A1 notation) that updates were applied
-	// to.
+	// UpdatedRange: The range (in A1 notation
+	// (/sheets/api/guides/concepts#cell)) that updates were applied to.
 	UpdatedRange string `json:"updatedRange,omitempty"`
 
 	// UpdatedRows: The number of rows where at least one cell in the row
@@ -11304,11 +11308,12 @@ type ValueRange struct {
 	//   "COLUMNS" - Operates on the columns of a sheet.
 	MajorDimension string `json:"majorDimension,omitempty"`
 
-	// Range: The range the values cover, in A1 notation. For output, this
-	// range indicates the entire requested range, even though the values
-	// will exclude trailing rows and columns. When appending values, this
-	// field represents the range to search for a table, after which values
-	// will be appended.
+	// Range: The range the values cover, in A1 notation
+	// (/sheets/api/guides/concepts#cell). For output, this range indicates
+	// the entire requested range, even though the values will exclude
+	// trailing rows and columns. When appending values, this field
+	// represents the range to search for a table, after which values will
+	// be appended.
 	Range string `json:"range,omitempty"`
 
 	// Values: The data that was read or to be written. This is an array of
@@ -11866,17 +11871,21 @@ type SpreadsheetsGetCall struct {
 }
 
 // Get: Returns the spreadsheet at the given ID. The caller must specify
-// the spreadsheet ID. By default, data within grids will not be
-// returned. You can include grid data one of two ways: * Specify a
-// field mask listing your desired fields using the `fields` URL
-// parameter in HTTP * Set the includeGridData URL parameter to true. If
-// a field mask is set, the `includeGridData` parameter is ignored For
-// large spreadsheets, it is recommended to retrieve only the specific
-// fields of the spreadsheet that you want. To retrieve only subsets of
-// the spreadsheet, use the ranges URL parameter. Multiple ranges can be
-// specified. Limiting the range will return only the portions of the
-// spreadsheet that intersect the requested ranges. Ranges are specified
-// using A1 notation.
+// the spreadsheet ID. By default, data within grids is not returned.
+// You can include grid data in one of 2 ways: * Specify a field mask
+// listing your desired fields using the `fields` URL parameter in HTTP
+// * Set the includeGridData URL parameter to true. If a field mask is
+// set, the `includeGridData` parameter is ignored For large
+// spreadsheets, as a best practice, retrieve only the specific
+// spreadsheet fields that you want. To retrieve only subsets of
+// spreadsheet data, use the ranges URL parameter. Ranges are specified
+// using A1 notation (/sheets/api/guides/concepts#cell). You can define
+// a single cell (for example, `A1`) or multiple cells (for example,
+// `A1:D5`). You can also get cells from other sheets within the same
+// spreadsheet (for example, `Sheet2!A1:C4`) or retrieve multiple ranges
+// at once (for example, `?ranges=A1:D5&ranges=Sheet2!A1:C4`). Limiting
+// the range returns only the portions of the spreadsheet that intersect
+// the requested ranges.
 //
 // - spreadsheetId: The spreadsheet to request.
 func (r *SpreadsheetsService) Get(spreadsheetId string) *SpreadsheetsGetCall {
@@ -11999,7 +12008,7 @@ func (c *SpreadsheetsGetCall) Do(opts ...googleapi.CallOption) (*Spreadsheet, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the spreadsheet at the given ID. The caller must specify the spreadsheet ID. By default, data within grids will not be returned. You can include grid data one of two ways: * Specify a field mask listing your desired fields using the `fields` URL parameter in HTTP * Set the includeGridData URL parameter to true. If a field mask is set, the `includeGridData` parameter is ignored For large spreadsheets, it is recommended to retrieve only the specific fields of the spreadsheet that you want. To retrieve only subsets of the spreadsheet, use the ranges URL parameter. Multiple ranges can be specified. Limiting the range will return only the portions of the spreadsheet that intersect the requested ranges. Ranges are specified using A1 notation.",
+	//   "description": "Returns the spreadsheet at the given ID. The caller must specify the spreadsheet ID. By default, data within grids is not returned. You can include grid data in one of 2 ways: * Specify a field mask listing your desired fields using the `fields` URL parameter in HTTP * Set the includeGridData URL parameter to true. If a field mask is set, the `includeGridData` parameter is ignored For large spreadsheets, as a best practice, retrieve only the specific spreadsheet fields that you want. To retrieve only subsets of spreadsheet data, use the ranges URL parameter. Ranges are specified using [A1 notation](/sheets/api/guides/concepts#cell). You can define a single cell (for example, `A1`) or multiple cells (for example, `A1:D5`). You can also get cells from other sheets within the same spreadsheet (for example, `Sheet2!A1:C4`) or retrieve multiple ranges at once (for example, `?ranges=A1:D5\u0026ranges=Sheet2!A1:C4`). Limiting the range returns only the portions of the spreadsheet that intersect the requested ranges.",
 	//   "flatPath": "v4/spreadsheets/{spreadsheetId}",
 	//   "httpMethod": "GET",
 	//   "id": "sheets.spreadsheets.get",
@@ -12056,14 +12065,14 @@ type SpreadsheetsGetByDataFilterCall struct {
 // GetSpreadsheet in that it allows selecting which subsets of
 // spreadsheet data to return by specifying a dataFilters parameter.
 // Multiple DataFilters can be specified. Specifying one or more data
-// filters will return the portions of the spreadsheet that intersect
-// ranges matched by any of the filters. By default, data within grids
-// will not be returned. You can include grid data one of two ways: *
-// Specify a field mask listing your desired fields using the `fields`
-// URL parameter in HTTP * Set the includeGridData parameter to true. If
-// a field mask is set, the `includeGridData` parameter is ignored For
-// large spreadsheets, it is recommended to retrieve only the specific
-// fields of the spreadsheet that you want.
+// filters returns the portions of the spreadsheet that intersect ranges
+// matched by any of the filters. By default, data within grids is not
+// returned. You can include grid data one of 2 ways: * Specify a field
+// mask listing your desired fields using the `fields` URL parameter in
+// HTTP * Set the includeGridData parameter to true. If a field mask is
+// set, the `includeGridData` parameter is ignored For large
+// spreadsheets, as a best practice, retrieve only the specific
+// spreadsheet fields that you want.
 //
 // - spreadsheetId: The spreadsheet to request.
 func (r *SpreadsheetsService) GetByDataFilter(spreadsheetId string, getspreadsheetbydatafilterrequest *GetSpreadsheetByDataFilterRequest) *SpreadsheetsGetByDataFilterCall {
@@ -12164,7 +12173,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Do(opts ...googleapi.CallOption) (*Spr
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the spreadsheet at the given ID. The caller must specify the spreadsheet ID. This method differs from GetSpreadsheet in that it allows selecting which subsets of spreadsheet data to return by specifying a dataFilters parameter. Multiple DataFilters can be specified. Specifying one or more data filters will return the portions of the spreadsheet that intersect ranges matched by any of the filters. By default, data within grids will not be returned. You can include grid data one of two ways: * Specify a field mask listing your desired fields using the `fields` URL parameter in HTTP * Set the includeGridData parameter to true. If a field mask is set, the `includeGridData` parameter is ignored For large spreadsheets, it is recommended to retrieve only the specific fields of the spreadsheet that you want.",
+	//   "description": "Returns the spreadsheet at the given ID. The caller must specify the spreadsheet ID. This method differs from GetSpreadsheet in that it allows selecting which subsets of spreadsheet data to return by specifying a dataFilters parameter. Multiple DataFilters can be specified. Specifying one or more data filters returns the portions of the spreadsheet that intersect ranges matched by any of the filters. By default, data within grids is not returned. You can include grid data one of 2 ways: * Specify a field mask listing your desired fields using the `fields` URL parameter in HTTP * Set the includeGridData parameter to true. If a field mask is set, the `includeGridData` parameter is ignored For large spreadsheets, as a best practice, retrieve only the specific spreadsheet fields that you want.",
 	//   "flatPath": "v4/spreadsheets/{spreadsheetId}:getByDataFilter",
 	//   "httpMethod": "POST",
 	//   "id": "sheets.spreadsheets.getByDataFilter",
@@ -12686,8 +12695,9 @@ type SpreadsheetsValuesAppendCall struct {
 // the sheet (column-wise or row-wise), it does not influence what cell
 // the data starts being written to.
 //
-// - range: The A1 notation of a range to search for a logical table of
-//   data. Values are appended after the last row of the table.
+// - range: The A1 notation (/sheets/api/guides/concepts#cell) of a
+//   range to search for a logical table of data. Values are appended
+//   after the last row of the table.
 // - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Append(spreadsheetId string, range_ string, valuerange *ValueRange) *SpreadsheetsValuesAppendCall {
 	c := &SpreadsheetsValuesAppendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12901,7 +12911,7 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 	//       "type": "string"
 	//     },
 	//     "range": {
-	//       "description": "The A1 notation of a range to search for a logical table of data. Values are appended after the last row of the table.",
+	//       "description": "The [A1 notation](/sheets/api/guides/concepts#cell) of a range to search for a logical table of data. Values are appended after the last row of the table.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12986,7 +12996,7 @@ type SpreadsheetsValuesBatchClearCall struct {
 // BatchClear: Clears one or more ranges of values from a spreadsheet.
 // The caller must specify the spreadsheet ID and one or more ranges.
 // Only values are cleared -- all other properties of the cell (such as
-// formatting, data validation, etc..) are kept.
+// formatting and data validation) are kept.
 //
 // - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) BatchClear(spreadsheetId string, batchclearvaluesrequest *BatchClearValuesRequest) *SpreadsheetsValuesBatchClearCall {
@@ -13087,7 +13097,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Do(opts ...googleapi.CallOption) (*Ba
 	}
 	return ret, nil
 	// {
-	//   "description": "Clears one or more ranges of values from a spreadsheet. The caller must specify the spreadsheet ID and one or more ranges. Only values are cleared -- all other properties of the cell (such as formatting, data validation, etc..) are kept.",
+	//   "description": "Clears one or more ranges of values from a spreadsheet. The caller must specify the spreadsheet ID and one or more ranges. Only values are cleared -- all other properties of the cell (such as formatting and data validation) are kept.",
 	//   "flatPath": "v4/spreadsheets/{spreadsheetId}/values:batchClear",
 	//   "httpMethod": "POST",
 	//   "id": "sheets.spreadsheets.values.batchClear",
@@ -13313,8 +13323,8 @@ func (c *SpreadsheetsValuesBatchGetCall) DateTimeRenderOption(dateTimeRenderOpti
 // MajorDimension sets the optional parameter "majorDimension": The
 // major dimension that results should use. For example, if the
 // spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`, then requesting
-// `range=A1:B2,majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas
-// requesting `range=A1:B2,majorDimension=COLUMNS` returns
+// `ranges=["A1:B2"],majorDimension=ROWS` returns `[[1,2],[3,4]]`,
+// whereas requesting `ranges=["A1:B2"],majorDimension=COLUMNS` returns
 // `[[1,3],[2,4]]`.
 //
 // Possible values:
@@ -13327,7 +13337,8 @@ func (c *SpreadsheetsValuesBatchGetCall) MajorDimension(majorDimension string) *
 }
 
 // Ranges sets the optional parameter "ranges": The A1 notation or R1C1
-// notation of the range to retrieve values from.
+// notation (/sheets/api/guides/concepts#cell) of the range to retrieve
+// values from.
 func (c *SpreadsheetsValuesBatchGetCall) Ranges(ranges ...string) *SpreadsheetsValuesBatchGetCall {
 	c.urlParams_.SetMulti("ranges", append([]string{}, ranges...))
 	return c
@@ -13475,7 +13486,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//       "type": "string"
 	//     },
 	//     "majorDimension": {
-	//       "description": "The major dimension that results should use. For example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`, then requesting `range=A1:B2,majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas requesting `range=A1:B2,majorDimension=COLUMNS` returns `[[1,3],[2,4]]`.",
+	//       "description": "The major dimension that results should use. For example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`, then requesting `ranges=[\"A1:B2\"],majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas requesting `ranges=[\"A1:B2\"],majorDimension=COLUMNS` returns `[[1,3],[2,4]]`.",
 	//       "enum": [
 	//         "DIMENSION_UNSPECIFIED",
 	//         "ROWS",
@@ -13490,7 +13501,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//       "type": "string"
 	//     },
 	//     "ranges": {
-	//       "description": "The A1 notation or R1C1 notation of the range to retrieve values from.",
+	//       "description": "The [A1 notation or R1C1 notation](/sheets/api/guides/concepts#cell) of the range to retrieve values from.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -13987,7 +13998,8 @@ type SpreadsheetsValuesClearCall struct {
 // properties of the cell (such as formatting, data validation, etc..)
 // are kept.
 //
-// - range: The A1 notation or R1C1 notation of the values to clear.
+// - range: The A1 notation or R1C1 notation
+//   (/sheets/api/guides/concepts#cell) of the values to clear.
 // - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Clear(spreadsheetId string, range_ string, clearvaluesrequest *ClearValuesRequest) *SpreadsheetsValuesClearCall {
 	c := &SpreadsheetsValuesClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14099,7 +14111,7 @@ func (c *SpreadsheetsValuesClearCall) Do(opts ...googleapi.CallOption) (*ClearVa
 	//   ],
 	//   "parameters": {
 	//     "range": {
-	//       "description": "The A1 notation or R1C1 notation of the values to clear.",
+	//       "description": "The [A1 notation or R1C1 notation](/sheets/api/guides/concepts#cell) of the values to clear.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14142,8 +14154,9 @@ type SpreadsheetsValuesGetCall struct {
 // Get: Returns a range of values from a spreadsheet. The caller must
 // specify the spreadsheet ID and a range.
 //
-// - range: The A1 notation or R1C1 notation of the range to retrieve
-//   values from.
+// - range: The A1 notation or R1C1 notation
+//   (/sheets/api/guides/concepts#cell) of the range to retrieve values
+//   from.
 // - spreadsheetId: The ID of the spreadsheet to retrieve data from.
 func (r *SpreadsheetsValuesService) Get(spreadsheetId string, range_ string) *SpreadsheetsValuesGetCall {
 	c := &SpreadsheetsValuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14350,7 +14363,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//       "type": "string"
 	//     },
 	//     "range": {
-	//       "description": "The A1 notation or R1C1 notation of the range to retrieve values from.",
+	//       "description": "The [A1 notation or R1C1 notation](/sheets/api/guides/concepts#cell) of the range to retrieve values from.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14407,7 +14420,8 @@ type SpreadsheetsValuesUpdateCall struct {
 // Update: Sets values in a range of a spreadsheet. The caller must
 // specify the spreadsheet ID, range, and a valueInputOption.
 //
-// - range: The A1 notation of the values to update.
+// - range: The A1 notation (/sheets/api/guides/concepts#cell) of the
+//   values to update.
 // - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Update(spreadsheetId string, range_ string, valuerange *ValueRange) *SpreadsheetsValuesUpdateCall {
 	c := &SpreadsheetsValuesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14598,7 +14612,7 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 	//       "type": "boolean"
 	//     },
 	//     "range": {
-	//       "description": "The A1 notation of the values to update.",
+	//       "description": "The [A1 notation](/sheets/api/guides/concepts#cell) of the values to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

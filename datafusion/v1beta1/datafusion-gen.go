@@ -87,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -252,41 +252,6 @@ func (s *Accelerator) MarshalJSON() ([]byte, error) {
 	type NoMethod Accelerator
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AddDnsPeeringRequest: Request message to create dns peering.
-type AddDnsPeeringRequest struct {
-	// DnsPeering: Dns peering config.
-	DnsPeering *DnsPeering `json:"dnsPeering,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DnsPeering") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DnsPeering") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AddDnsPeeringRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod AddDnsPeeringRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AddDnsPeeringResponse: Response message for set dns peering method.
-type AddDnsPeeringResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -501,8 +466,13 @@ type DnsPeering struct {
 	// Description: Optional. Optional description of the dns zone.
 	Description string `json:"description,omitempty"`
 
-	// Domain: Required. Name of the dns.
+	// Domain: Required. The dns name suffix of the zone.
 	Domain string `json:"domain,omitempty"`
+
+	// Name: Required. The resource name of the dns peering zone. Format:
+	// projects/{project}/locations/{location}/instances/{instance}/dnsPeerin
+	// gs/{dns_peering}
+	Name string `json:"name,omitempty"`
 
 	// TargetNetwork: Optional. Optional target network to which dns peering
 	// should happen.
@@ -512,8 +482,9 @@ type DnsPeering struct {
 	// should happen.
 	TargetProject string `json:"targetProject,omitempty"`
 
-	// Zone: Required. Name of the zone.
-	Zone string `json:"zone,omitempty"`
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
@@ -848,13 +819,14 @@ func (s *ListAvailableVersionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListDnsPeeringsResponse: List dns peering response.
+// ListDnsPeeringsResponse: Response message for list DNS peerings.
 type ListDnsPeeringsResponse struct {
-	// DnsPeerings: List of dns peering configs.
+	// DnsPeerings: List of dns peering.
 	DnsPeerings []*DnsPeering `json:"dnsPeerings,omitempty"`
 
-	// NextPageToken: Token to retrieve the next page of results or empty if
-	// there are no more results in the list.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1378,42 +1350,6 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// RemoveDnsPeeringRequest: Request message to remove dns peering.
-type RemoveDnsPeeringRequest struct {
-	// Zone: Required. The zone to be removed.
-	Zone string `json:"zone,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Zone") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Zone") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RemoveDnsPeeringRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod RemoveDnsPeeringRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// RemoveDnsPeeringResponse: Response message for set dns peering
-// method.
-type RemoveDnsPeeringResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
 }
 
 // RemoveIamPolicyRequest: Request message for RemoveIamPolicy method.
@@ -2605,13 +2541,17 @@ func (r *ProjectsLocationsInstancesService) GetIamPolicy(resource string) *Proje
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsInstancesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsInstancesGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -2726,7 +2666,7 @@ func (c *ProjectsLocationsInstancesGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3719,31 +3659,31 @@ func (c *ProjectsLocationsInstancesUpgradeCall) Do(opts ...googleapi.CallOption)
 
 }
 
-// method id "datafusion.projects.locations.instances.dnsPeerings.add":
+// method id "datafusion.projects.locations.instances.dnsPeerings.create":
 
-type ProjectsLocationsInstancesDnsPeeringsAddCall struct {
-	s                    *Service
-	parent               string
-	adddnspeeringrequest *AddDnsPeeringRequest
-	urlParams_           gensupport.URLParams
-	ctx_                 context.Context
-	header_              http.Header
+type ProjectsLocationsInstancesDnsPeeringsCreateCall struct {
+	s          *Service
+	parent     string
+	dnspeering *DnsPeering
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
-// Add: Add DNS peering on the given resource.
+// Create: Add DNS peering on the given resource.
 //
 // - parent: The resource on which DNS peering will be created.
-func (r *ProjectsLocationsInstancesDnsPeeringsService) Add(parent string, adddnspeeringrequest *AddDnsPeeringRequest) *ProjectsLocationsInstancesDnsPeeringsAddCall {
-	c := &ProjectsLocationsInstancesDnsPeeringsAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsInstancesDnsPeeringsService) Create(parent string, dnspeering *DnsPeering) *ProjectsLocationsInstancesDnsPeeringsCreateCall {
+	c := &ProjectsLocationsInstancesDnsPeeringsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.adddnspeeringrequest = adddnspeeringrequest
+	c.dnspeering = dnspeering
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsInstancesDnsPeeringsAddCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesDnsPeeringsAddCall {
+func (c *ProjectsLocationsInstancesDnsPeeringsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesDnsPeeringsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3751,21 +3691,21 @@ func (c *ProjectsLocationsInstancesDnsPeeringsAddCall) Fields(s ...googleapi.Fie
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsInstancesDnsPeeringsAddCall) Context(ctx context.Context) *ProjectsLocationsInstancesDnsPeeringsAddCall {
+func (c *ProjectsLocationsInstancesDnsPeeringsCreateCall) Context(ctx context.Context) *ProjectsLocationsInstancesDnsPeeringsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsInstancesDnsPeeringsAddCall) Header() http.Header {
+func (c *ProjectsLocationsInstancesDnsPeeringsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsInstancesDnsPeeringsAddCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsInstancesDnsPeeringsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3773,14 +3713,14 @@ func (c *ProjectsLocationsInstancesDnsPeeringsAddCall) doRequest(alt string) (*h
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adddnspeeringrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dnspeering)
 	if err != nil {
 		return nil, err
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dnsPeerings:add")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dnsPeerings")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -3793,14 +3733,14 @@ func (c *ProjectsLocationsInstancesDnsPeeringsAddCall) doRequest(alt string) (*h
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "datafusion.projects.locations.instances.dnsPeerings.add" call.
-// Exactly one of *AddDnsPeeringResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *AddDnsPeeringResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsInstancesDnsPeeringsAddCall) Do(opts ...googleapi.CallOption) (*AddDnsPeeringResponse, error) {
+// Do executes the "datafusion.projects.locations.instances.dnsPeerings.create" call.
+// Exactly one of *DnsPeering or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *DnsPeering.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesDnsPeeringsCreateCall) Do(opts ...googleapi.CallOption) (*DnsPeering, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3819,7 +3759,7 @@ func (c *ProjectsLocationsInstancesDnsPeeringsAddCall) Do(opts ...googleapi.Call
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &AddDnsPeeringResponse{
+	ret := &DnsPeering{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3832,9 +3772,9 @@ func (c *ProjectsLocationsInstancesDnsPeeringsAddCall) Do(opts ...googleapi.Call
 	return ret, nil
 	// {
 	//   "description": "Add DNS peering on the given resource.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/dnsPeerings:add",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/dnsPeerings",
 	//   "httpMethod": "POST",
-	//   "id": "datafusion.projects.locations.instances.dnsPeerings.add",
+	//   "id": "datafusion.projects.locations.instances.dnsPeerings.create",
 	//   "parameterOrder": [
 	//     "parent"
 	//   ],
@@ -3847,12 +3787,146 @@ func (c *ProjectsLocationsInstancesDnsPeeringsAddCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta1/{+parent}/dnsPeerings:add",
+	//   "path": "v1beta1/{+parent}/dnsPeerings",
 	//   "request": {
-	//     "$ref": "AddDnsPeeringRequest"
+	//     "$ref": "DnsPeering"
 	//   },
 	//   "response": {
-	//     "$ref": "AddDnsPeeringResponse"
+	//     "$ref": "DnsPeering"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datafusion.projects.locations.instances.dnsPeerings.delete":
+
+type ProjectsLocationsInstancesDnsPeeringsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Remove DNS peering on the given resource.
+//
+// - name: The name of the DNS peering zone to delete. Format:
+//   projects/{project}/locations/{location}/instances/{instance}/dnsPeer
+//   ings/{dns_peering}.
+func (r *ProjectsLocationsInstancesDnsPeeringsService) Delete(name string) *ProjectsLocationsInstancesDnsPeeringsDeleteCall {
+	c := &ProjectsLocationsInstancesDnsPeeringsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesDnsPeeringsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesDnsPeeringsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesDnsPeeringsDeleteCall) Context(ctx context.Context) *ProjectsLocationsInstancesDnsPeeringsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesDnsPeeringsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesDnsPeeringsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datafusion.projects.locations.instances.dnsPeerings.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsInstancesDnsPeeringsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Remove DNS peering on the given resource.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/dnsPeerings/{dnsPeeringsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "datafusion.projects.locations.instances.dnsPeerings.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the DNS peering zone to delete. Format: projects/{project}/locations/{location}/instances/{instance}/dnsPeerings/{dns_peering}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+/dnsPeerings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -3874,7 +3948,9 @@ type ProjectsLocationsInstancesDnsPeeringsListCall struct {
 
 // List: List DNS peering for a given resource.
 //
-// - parent: The resource on which dns peering will be listed.
+// - parent: The parent, which owns this collection of dns peerings.
+//   Format:
+//   projects/{project}/locations/{location}/instances/{instance}.
 func (r *ProjectsLocationsInstancesDnsPeeringsService) List(parent string) *ProjectsLocationsInstancesDnsPeeringsListCall {
 	c := &ProjectsLocationsInstancesDnsPeeringsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3882,15 +3958,19 @@ func (r *ProjectsLocationsInstancesDnsPeeringsService) List(parent string) *Proj
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return.
+// of dns peerings to return. The service may return fewer than this
+// value. If unspecified, at most 10 dns peerings will be returned. The
+// maximum value is 50; values above 50 will be coerced to 50.
 func (c *ProjectsLocationsInstancesDnsPeeringsListCall) PageSize(pageSize int64) *ProjectsLocationsInstancesDnsPeeringsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token value to use if there are additional results to
-// retrieve for this list request.
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDnsPeerings` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListDnsPeerings` must match the call that provided the
+// page token.
 func (c *ProjectsLocationsInstancesDnsPeeringsListCall) PageToken(pageToken string) *ProjectsLocationsInstancesDnsPeeringsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3944,7 +4024,7 @@ func (c *ProjectsLocationsInstancesDnsPeeringsListCall) doRequest(alt string) (*
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dnsPeerings:list")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dnsPeerings")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -3996,7 +4076,7 @@ func (c *ProjectsLocationsInstancesDnsPeeringsListCall) Do(opts ...googleapi.Cal
 	return ret, nil
 	// {
 	//   "description": "List DNS peering for a given resource.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/dnsPeerings:list",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/dnsPeerings",
 	//   "httpMethod": "GET",
 	//   "id": "datafusion.projects.locations.instances.dnsPeerings.list",
 	//   "parameterOrder": [
@@ -4004,25 +4084,25 @@ func (c *ProjectsLocationsInstancesDnsPeeringsListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of items to return.",
+	//       "description": "The maximum number of dns peerings to return. The service may return fewer than this value. If unspecified, at most 10 dns peerings will be returned. The maximum value is 50; values above 50 will be coerced to 50.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token value to use if there are additional results to retrieve for this list request.",
+	//       "description": "A page token, received from a previous `ListDnsPeerings` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDnsPeerings` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource on which dns peering will be listed.",
+	//       "description": "Required. The parent, which owns this collection of dns peerings. Format: projects/{project}/locations/{location}/instances/{instance}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta1/{+parent}/dnsPeerings:list",
+	//   "path": "v1beta1/{+parent}/dnsPeerings",
 	//   "response": {
 	//     "$ref": "ListDnsPeeringsResponse"
 	//   },
@@ -4054,148 +4134,6 @@ func (c *ProjectsLocationsInstancesDnsPeeringsListCall) Pages(ctx context.Contex
 	}
 }
 
-// method id "datafusion.projects.locations.instances.dnsPeerings.remove":
-
-type ProjectsLocationsInstancesDnsPeeringsRemoveCall struct {
-	s                       *Service
-	parent                  string
-	removednspeeringrequest *RemoveDnsPeeringRequest
-	urlParams_              gensupport.URLParams
-	ctx_                    context.Context
-	header_                 http.Header
-}
-
-// Remove: Remove DNS peering on the given resource.
-//
-// - parent: The resource on which DNS peering will be removed.
-func (r *ProjectsLocationsInstancesDnsPeeringsService) Remove(parent string, removednspeeringrequest *RemoveDnsPeeringRequest) *ProjectsLocationsInstancesDnsPeeringsRemoveCall {
-	c := &ProjectsLocationsInstancesDnsPeeringsRemoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.removednspeeringrequest = removednspeeringrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsInstancesDnsPeeringsRemoveCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesDnsPeeringsRemoveCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsInstancesDnsPeeringsRemoveCall) Context(ctx context.Context) *ProjectsLocationsInstancesDnsPeeringsRemoveCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsInstancesDnsPeeringsRemoveCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsInstancesDnsPeeringsRemoveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.removednspeeringrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dnsPeerings:remove")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "datafusion.projects.locations.instances.dnsPeerings.remove" call.
-// Exactly one of *RemoveDnsPeeringResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *RemoveDnsPeeringResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsInstancesDnsPeeringsRemoveCall) Do(opts ...googleapi.CallOption) (*RemoveDnsPeeringResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &RemoveDnsPeeringResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Remove DNS peering on the given resource.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/dnsPeerings:remove",
-	//   "httpMethod": "POST",
-	//   "id": "datafusion.projects.locations.instances.dnsPeerings.remove",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource on which DNS peering will be removed.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/dnsPeerings:remove",
-	//   "request": {
-	//     "$ref": "RemoveDnsPeeringRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RemoveDnsPeeringResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "datafusion.projects.locations.instances.namespaces.getIamPolicy":
 
 type ProjectsLocationsInstancesNamespacesGetIamPolicyCall struct {
@@ -4221,13 +4159,17 @@ func (r *ProjectsLocationsInstancesNamespacesService) GetIamPolicy(resource stri
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsInstancesNamespacesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsInstancesNamespacesGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -4342,7 +4284,7 @@ func (c *ProjectsLocationsInstancesNamespacesGetIamPolicyCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

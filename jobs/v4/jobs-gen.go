@@ -94,7 +94,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/jobs",
 	)
@@ -1325,8 +1325,7 @@ func (s *DeviceInfo) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1998,10 +1997,10 @@ type JobQuery struct {
 	// CompanyDisplayNames: This filter specifies the company
 	// Company.display_name of the jobs to search against. The company name
 	// must match the value exactly. Alternatively, if the value being
-	// searched for is wrapped in SUBSTRING_MATCH([value]), the company name
-	// must contain a case insensitive substring match of the value. Using
-	// this function may increase latency. Sample Value:
-	// SUBSTRING_MATCH(google) If a value isn't specified, jobs within the
+	// searched for is wrapped in `SUBSTRING_MATCH([value])`, the company
+	// name must contain a case insensitive substring match of the value.
+	// Using this function may increase latency. Sample Value:
+	// `SUBSTRING_MATCH(google)` If a value isn't specified, jobs within the
 	// search results are associated with any company. If multiple values
 	// are specified, jobs within the search results may be associated with
 	// any of the specified companies. At most 20 company display name
@@ -2516,23 +2515,25 @@ type LocationFilter struct {
 
 	// TelecommutePreference: Allows the client to return jobs without a set
 	// location, specifically, telecommuting jobs (telecommuting is
-	// considered by the service as a special location. Job.posting_region
+	// considered by the service as a special location). Job.posting_region
 	// indicates if a job permits telecommuting. If this field is set to
 	// TelecommutePreference.TELECOMMUTE_ALLOWED, telecommuting jobs are
 	// searched, and address and lat_lng are ignored. If not set or set to
-	// TelecommutePreference.TELECOMMUTE_EXCLUDED, telecommute job are not
-	// searched. This filter can be used by itself to search exclusively for
-	// telecommuting jobs, or it can be combined with another location
-	// filter to search for a combination of job locations, such as
-	// "Mountain View" or "telecommuting" jobs. However, when used in
-	// combination with other location filters, telecommuting jobs can be
-	// treated as less relevant than other jobs in the search response. This
-	// field is only used for job search requests.
+	// TelecommutePreference.TELECOMMUTE_EXCLUDED, the telecommute status of
+	// the jobs is ignored. Jobs that have PostingRegion.TELECOMMUTE and
+	// have additional Job.addresses may still be matched based on other
+	// location filters using address or latlng. This filter can be used by
+	// itself to search exclusively for telecommuting jobs, or it can be
+	// combined with another location filter to search for a combination of
+	// job locations, such as "Mountain View" or "telecommuting" jobs.
+	// However, when used in combination with other location filters,
+	// telecommuting jobs can be treated as less relevant than other jobs in
+	// the search response. This field is only used for job search requests.
 	//
 	// Possible values:
 	//   "TELECOMMUTE_PREFERENCE_UNSPECIFIED" - Default value if the
 	// telecommute preference isn't specified.
-	//   "TELECOMMUTE_EXCLUDED" - Exclude telecommute jobs.
+	//   "TELECOMMUTE_EXCLUDED" - Ignore telecommute status of jobs.
 	//   "TELECOMMUTE_ALLOWED" - Allow telecommute jobs.
 	TelecommutePreference string `json:"telecommutePreference,omitempty"`
 

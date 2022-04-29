@@ -157,6 +157,31 @@
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
+        "getOnboardingState": {
+          "description": "Retrieve the OnboardingState of a resource.",
+          "flatPath": "v1beta2/folders/{foldersId}/onboardingState",
+          "httpMethod": "GET",
+          "id": "securitycenter.folders.getOnboardingState",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The name of the OnboardingState to retrieve. Formats: * organizations/{organization}/onboardingState * folders/{folder}/onboardingState * projects/{project}/onboardingState",
+              "location": "path",
+              "pattern": "^folders/[^/]+/onboardingState$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1beta2/{+name}",
+          "response": {
+            "$ref": "OnboardingState"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
         "getSecurityHealthAnalyticsSettings": {
           "description": "Get the SecurityHealthAnalyticsSettings resource.",
           "flatPath": "v1beta2/folders/{foldersId}/securityHealthAnalyticsSettings",
@@ -598,6 +623,31 @@
           "path": "v1beta2/{+name}",
           "response": {
             "$ref": "EventThreatDetectionSettings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
+        "getOnboardingState": {
+          "description": "Retrieve the OnboardingState of a resource.",
+          "flatPath": "v1beta2/organizations/{organizationsId}/onboardingState",
+          "httpMethod": "GET",
+          "id": "securitycenter.organizations.getOnboardingState",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The name of the OnboardingState to retrieve. Formats: * organizations/{organization}/onboardingState * folders/{folder}/onboardingState * projects/{project}/onboardingState",
+              "location": "path",
+              "pattern": "^organizations/[^/]+/onboardingState$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1beta2/{+name}",
+          "response": {
+            "$ref": "OnboardingState"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
@@ -1099,6 +1149,31 @@
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
+        "getOnboardingState": {
+          "description": "Retrieve the OnboardingState of a resource.",
+          "flatPath": "v1beta2/projects/{projectsId}/onboardingState",
+          "httpMethod": "GET",
+          "id": "securitycenter.projects.getOnboardingState",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The name of the OnboardingState to retrieve. Formats: * organizations/{organization}/onboardingState * folders/{folder}/onboardingState * projects/{project}/onboardingState",
+              "location": "path",
+              "pattern": "^projects/[^/]+/onboardingState$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1beta2/{+name}",
+          "response": {
+            "$ref": "OnboardingState"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
         "getSecurityHealthAnalyticsSettings": {
           "description": "Get the SecurityHealthAnalyticsSettings resource.",
           "flatPath": "v1beta2/projects/{projectsId}/securityHealthAnalyticsSettings",
@@ -1592,7 +1667,7 @@
       }
     }
   },
-  "revision": "20220303",
+  "revision": "20220414",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {
@@ -1653,6 +1728,51 @@
           },
           "description": "The configuration value for the module. The absence of this field implies its inheritance from the parent.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Connection": {
+      "description": "Contains information about the IP connection associated with the finding.",
+      "id": "Connection",
+      "properties": {
+        "destinationIp": {
+          "description": "Destination IP address. Not present for sockets that are listening and not connected.",
+          "type": "string"
+        },
+        "destinationPort": {
+          "description": "Destination port. Not present for sockets that are listening and not connected.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "protocol": {
+          "description": "IANA Internet Protocol Number such as TCP(6) and UDP(17).",
+          "enum": [
+            "PROTOCOL_UNSPECIFIED",
+            "ICMP",
+            "TCP",
+            "UDP",
+            "GRE",
+            "ESP"
+          ],
+          "enumDescriptions": [
+            "Unspecified protocol (not HOPOPT).",
+            "Internet Control Message Protocol.",
+            "Transmission Control Protocol.",
+            "User Datagram Protocol.",
+            "Generic Routing Encapsulation.",
+            "Encap Security Payload."
+          ],
+          "type": "string"
+        },
+        "sourceIp": {
+          "description": "Source IP address.",
+          "type": "string"
+        },
+        "sourcePort": {
+          "description": "Source port.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -1955,9 +2075,20 @@
           "description": "The additional taxonomy group within findings from a given source. This field is immutable after creation time. Example: \"XSS_FLASH_INJECTION\"",
           "type": "string"
         },
+        "connections": {
+          "description": "Contains information about the IP connection associated with the finding.",
+          "items": {
+            "$ref": "Connection"
+          },
+          "type": "array"
+        },
         "createTime": {
           "description": "The time at which the finding was created in Security Command Center.",
           "format": "google-datetime",
+          "type": "string"
+        },
+        "description": {
+          "description": "Contains more detail about the finding.",
           "type": "string"
         },
         "eventTime": {
@@ -1997,6 +2128,13 @@
           ],
           "type": "string"
         },
+        "iamBindings": {
+          "description": "Represents IAM bindings associated with the Finding.",
+          "items": {
+            "$ref": "IamBinding"
+          },
+          "type": "array"
+        },
         "indicator": {
           "$ref": "Indicator",
           "description": "Represents what's commonly known as an Indicator of compromise (IoC) in computer forensics. This is an artifact observed on a network or in an operating system that, with high confidence, indicates a computer intrusion. Reference: https://en.wikipedia.org/wiki/Indicator_of_compromise"
@@ -2006,7 +2144,7 @@
           "description": "MITRE ATT\u0026CK tactics and techniques related to this finding. See: https://attack.mitre.org"
         },
         "mute": {
-          "description": "Indicates the mute state of a finding (either unspecified, muted, unmuted or undefined). Unlike other attributes of a finding, a finding provider shouldn't set the value of mute.",
+          "description": "Indicates the mute state of a finding (either muted, unmuted or undefined). Unlike other attributes of a finding, a finding provider shouldn't set the value of mute.",
           "enum": [
             "MUTE_UNSPECIFIED",
             "MUTED",
@@ -2033,6 +2171,10 @@
         },
         "name": {
           "description": "The relative resource name of this finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
+          "type": "string"
+        },
+        "nextSteps": {
+          "description": "Next steps associate to the finding.",
           "type": "string"
         },
         "parent": {
@@ -2062,7 +2204,7 @@
             "Vulnerability: A critical vulnerability is easily discoverable by an external actor, exploitable, and results in the direct ability to execute arbitrary code, exfiltrate data, and otherwise gain additional access and privileges to cloud resources and workloads. Examples include publicly accessible unprotected user data, public SSH access with weak or no passwords, etc. Threat: Indicates a threat that is able to access, modify, or delete data or execute unauthorized code within existing resources.",
             "Vulnerability: A high risk vulnerability can be easily discovered and exploited in combination with other vulnerabilities in order to gain direct access and the ability to execute arbitrary code, exfiltrate data, and otherwise gain additional access and privileges to cloud resources and workloads. An example is a database with weak or no passwords that is only accessible internally. This database could easily be compromised by an actor that had access to the internal network. Threat: Indicates a threat that is able to create new computational resources in an environment but not able to access data or execute code in existing resources.",
             "Vulnerability: A medium risk vulnerability could be used by an actor to gain access to resources or privileges that enable them to eventually (through multiple steps or a complex exploit) gain access and the ability to execute arbitrary code or exfiltrate data. An example is a service account with access to more projects than it should have. If an actor gains access to the service account, they could potentially use that access to manipulate a project the service account was not intended to. Threat: Indicates a threat that is able to cause operational impact but may not access data or execute unauthorized code.",
-            "Vulnerability: A low risk vulnerability hampers a security organization’s ability to detect vulnerabilities or active threats in their deployment, or prevents the root cause investigation of security issues. An example is monitoring and logs being disabled for resource configurations and access. Threat: Indicates a threat that has obtained minimal access to an environment but is not able to access data, execute code, or create resources."
+            "Vulnerability: A low risk vulnerability hampers a security organization's ability to detect vulnerabilities or active threats in their deployment, or prevents the root cause investigation of security issues. An example is monitoring and logs being disabled for resource configurations and access. Threat: Indicates a threat that has obtained minimal access to an environment but is not able to access data, execute code, or create resources."
           ],
           "type": "string"
         },
@@ -2139,7 +2281,7 @@
           "type": "string"
         },
         "filter": {
-          "description": "Expression that defines the filter to apply across create/update events of findings. The expression is a list of zero or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. The fields map to those defined in the corresponding resource. The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. Please see the proto documentation in the finding (https://source.corp.google.com/piper///depot/google3/google/cloud/securitycenter/v1/finding.proto) and in the ListFindingsRequest for valid filter syntax. (https://source.corp.google.com/piper///depot/google3/google/cloud/securitycenter/v1/securitycenter_service.proto).",
+          "description": "Expression that defines the filter to apply across create/update events of findings. The expression is a list of zero or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. The fields map to those defined in the corresponding resource. The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes.",
           "type": "string"
         },
         "mostRecentEditor": {
@@ -2294,7 +2436,7 @@
           "type": "string"
         },
         "projectDisplayName": {
-          "description": "The project id that the resource belongs to.",
+          "description": "The project ID that the resource belongs to.",
           "type": "string"
         },
         "type": {
@@ -2564,6 +2706,35 @@
       },
       "type": "object"
     },
+    "IamBinding": {
+      "description": "Represents a particular IAM binding, which captures a member's role addition, removal, or state.",
+      "id": "IamBinding",
+      "properties": {
+        "action": {
+          "description": "The action that was performed on a Binding.",
+          "enum": [
+            "ACTION_UNSPECIFIED",
+            "ADD",
+            "REMOVE"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "Addition of a Binding.",
+            "Removal of a Binding."
+          ],
+          "type": "string"
+        },
+        "member": {
+          "description": "A single identity requesting access for a Cloud Platform resource, e.g. \"foo@google.com\".",
+          "type": "string"
+        },
+        "role": {
+          "description": "Role that is assigned to \"members\". For example, \"roles/viewer\", \"roles/editor\", or \"roles/owner\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Indicator": {
       "description": "Represents what's commonly known as an Indicator of compromise (IoC) in computer forensics. This is an artifact observed on a network or in an operating system that, with high confidence, indicates a computer intrusion. Reference: https://en.wikipedia.org/wiki/Indicator_of_compromise",
       "id": "Indicator",
@@ -2662,7 +2833,9 @@
               "STEAL_WEB_SESSION_COOKIE",
               "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE",
               "EXPLOIT_PUBLIC_FACING_APPLICATION",
-              "MODIFY_AUTHENTICATION_PROCESS"
+              "MODIFY_AUTHENTICATION_PROCESS",
+              "DATA_DESTRUCTION",
+              "DOMAIN_POLICY_MODIFICATION"
             ],
             "enumDescriptions": [
               "Unspecified value.",
@@ -2693,7 +2866,9 @@
               "T1539",
               "T1578",
               "T1190",
-              "T1556"
+              "T1556",
+              "T1485",
+              "T1484"
             ],
             "type": "string"
           },
@@ -2769,7 +2944,9 @@
               "STEAL_WEB_SESSION_COOKIE",
               "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE",
               "EXPLOIT_PUBLIC_FACING_APPLICATION",
-              "MODIFY_AUTHENTICATION_PROCESS"
+              "MODIFY_AUTHENTICATION_PROCESS",
+              "DATA_DESTRUCTION",
+              "DOMAIN_POLICY_MODIFICATION"
             ],
             "enumDescriptions": [
               "Unspecified value.",
@@ -2800,7 +2977,9 @@
               "T1539",
               "T1578",
               "T1190",
-              "T1556"
+              "T1556",
+              "T1485",
+              "T1484"
             ],
             "type": "string"
           },
@@ -2808,6 +2987,31 @@
         },
         "version": {
           "description": "The MITRE ATT\u0026CK version referenced by the above fields. E.g. \"8\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OnboardingState": {
+      "description": "Resource capturing onboarding information for a given CRM resource.",
+      "id": "OnboardingState",
+      "properties": {
+        "name": {
+          "description": "The resource name of the OnboardingState. Format: organizations/{organization}/onboardingState Format: folders/{folder}/onboardingState Format: projects/{project}/onboardingState",
+          "type": "string"
+        },
+        "onboardingLevel": {
+          "description": "Describes the level a given organization, folder, or project is onboarded with SCC. If the resource wasn't onboarded, NOT_FOUND would have been thrown.",
+          "enum": [
+            "ONBOARDING_LEVEL_UNSPECIFIED",
+            "ONBOARDING_LEVEL_PROJECT",
+            "ONBOARDING_LEVEL_ORGANIZATION"
+          ],
+          "enumDescriptions": [
+            "Unused.",
+            "This resource is onboarded at the project level. Only possible for projects.",
+            "This resource is onboarded at the organization level. Possible for organizations, folders, and projects."
+          ],
           "type": "string"
         }
       },

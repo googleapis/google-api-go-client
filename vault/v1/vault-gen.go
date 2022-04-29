@@ -93,7 +93,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/ediscovery",
 		"https://www.googleapis.com/auth/ediscovery.readonly",
 	)
@@ -761,6 +761,23 @@ func (s *DriveExportOptions) MarshalJSON() ([]byte, error) {
 
 // DriveOptions: Additional options for Drive search
 type DriveOptions struct {
+	// ClientSideEncryptedOption: Set whether the results include only
+	// content encrypted with Google Workspace Client-side encryption
+	// (https://support.google.com/a?p=cse_ov) content, only unencrypted
+	// content, or both. Defaults to both. Currently supported for Drive.
+	//
+	// Possible values:
+	//   "CLIENT_SIDE_ENCRYPTED_OPTION_UNSPECIFIED" - Encryption status
+	// unspecified. Results include both client-side encrypted and
+	// non-encrypted content.
+	//   "CLIENT_SIDE_ENCRYPTED_OPTION_ANY" - Include both client-side
+	// encrypted and unencrypted content in results.
+	//   "CLIENT_SIDE_ENCRYPTED_OPTION_ENCRYPTED" - Include client-side
+	// encrypted content only.
+	//   "CLIENT_SIDE_ENCRYPTED_OPTION_UNENCRYPTED" - Include unencrypted
+	// content only.
+	ClientSideEncryptedOption string `json:"clientSideEncryptedOption,omitempty"`
+
 	// IncludeSharedDrives: Set to **true** to include shared drives.
 	IncludeSharedDrives bool `json:"includeSharedDrives,omitempty"`
 
@@ -772,21 +789,22 @@ type DriveOptions struct {
 	// specified date. Enter the date in UTC.
 	VersionDate string `json:"versionDate,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "IncludeSharedDrives")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ClientSideEncryptedOption") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IncludeSharedDrives") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "ClientSideEncryptedOption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -800,8 +818,7 @@ func (s *DriveOptions) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -831,7 +848,8 @@ type Export struct {
 	// MatterId: Output only. The matter ID.
 	MatterId string `json:"matterId,omitempty"`
 
-	// Name: The export name.
+	// Name: The export name. Don't use special characters (~!$'(),;@:/?) in
+	// the name, they can prevent you from downloading exports.
 	Name string `json:"name,omitempty"`
 
 	// Query: The query parameters used to create the export.
@@ -1019,8 +1037,10 @@ type GroupsExportOptions struct {
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - Export as MBOX.
-	//   "PST" - Export as PST.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -1052,8 +1072,10 @@ type HangoutsChatExportOptions struct {
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - Export as MBOX.
-	//   "PST" - Export as PST.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -1420,7 +1442,7 @@ type Hold struct {
 	//   "MAIL" - For search, Gmail and classic Hangouts. For holds, Gmail
 	// only.
 	//   "GROUPS" - Groups.
-	//   "HANGOUTS_CHAT" - For search, Google Chat only. For holds, Google
+	//   "HANGOUTS_CHAT" - For export, Google Chat only. For holds, Google
 	// Chat and classic Hangouts.
 	//   "VOICE" - Google Voice.
 	Corpus string `json:"corpus,omitempty"`
@@ -1739,8 +1761,10 @@ type MailExportOptions struct {
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - Export as MBOX.
-	//   "PST" - Export as PST.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ShowConfidentialModeContent: To export confidential mode content, set
@@ -2008,7 +2032,7 @@ type Query struct {
 	//   "MAIL" - For search, Gmail and classic Hangouts. For holds, Gmail
 	// only.
 	//   "GROUPS" - Groups.
-	//   "HANGOUTS_CHAT" - For search, Google Chat only. For holds, Google
+	//   "HANGOUTS_CHAT" - For export, Google Chat only. For holds, Google
 	// Chat and classic Hangouts.
 	//   "VOICE" - Google Voice.
 	Corpus string `json:"corpus,omitempty"`
@@ -2465,8 +2489,10 @@ type VoiceExportOptions struct {
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - Export as MBOX.
-	//   "PST" - Export as PST.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to

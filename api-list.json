@@ -274,6 +274,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "analyticshub:v1beta1",
+      "name": "analyticshub",
+      "version": "v1beta1",
+      "title": "Analytics Hub API",
+      "description": "Exchange data and analytics assets securely and efficiently.",
+      "discoveryRestUrl": "https://analyticshub.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/bigquery/docs/analytics-hub-introduction",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "analyticsreporting:v4",
       "name": "analyticsreporting",
       "version": "v4",
@@ -532,7 +547,7 @@
       "name": "authorizedbuyersmarketplace",
       "version": "v1",
       "title": "Authorized Buyers Marketplace API",
-      "description": "The Authorized Buyers Marketplace API allows buyers programmatically discover inventory; propose, retrieve and negotiate deals with publishers.",
+      "description": "The Authorized Buyers Marketplace API lets buyers programmatically discover inventory; propose, retrieve and negotiate deals with publishers.",
       "discoveryRestUrl": "https://authorizedbuyersmarketplace.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1986,36 +2001,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "dfareporting:v3.3",
-      "name": "dfareporting",
-      "version": "v3.3",
-      "title": "Campaign Manager 360 API",
-      "description": "Build applications to efficiently manage large or complex trafficking, reporting, and attribution workflows for Campaign Manager 360.",
-      "discoveryRestUrl": "https://dfareporting.googleapis.com/$discovery/rest?version=v3.3",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "dfareporting:v3.4",
-      "name": "dfareporting",
-      "version": "v3.4",
-      "title": "Campaign Manager 360 API",
-      "description": "Build applications to efficiently manage large or complex trafficking, reporting, and attribution workflows for Campaign Manager 360.",
-      "discoveryRestUrl": "https://dfareporting.googleapis.com/$discovery/rest?version=v3.4",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "dfareporting:v3.5",
       "name": "dfareporting",
       "version": "v3.5",
@@ -2412,7 +2397,7 @@
       "name": "eventarc",
       "version": "v1beta1",
       "title": "Eventarc API",
-      "description": "",
+      "description": "Build event-driven applications on Google Cloud Platform.",
       "discoveryRestUrl": "https://eventarc.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2427,7 +2412,7 @@
       "name": "eventarc",
       "version": "v1",
       "title": "Eventarc API",
-      "description": "",
+      "description": "Build event-driven applications on Google Cloud Platform.",
       "discoveryRestUrl": "https://eventarc.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2828,6 +2813,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "gkebackup:v1",
+      "name": "gkebackup",
+      "version": "v1",
+      "title": "Backup for GKE API",
+      "description": "Backup for GKE is a managed Kubernetes workload backup and restore service for GKE clusters.",
+      "discoveryRestUrl": "https://gkebackup.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/kubernetes-engine/docs/add-on/backup-for-gke",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "gkehub:v1alpha",
       "name": "gkehub",
       "version": "v1alpha",
@@ -3038,6 +3038,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "iam:v2beta",
+      "name": "iam",
+      "version": "v2beta",
+      "title": "Identity and Access Management (IAM) API",
+      "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls.",
+      "discoveryRestUrl": "https://iam.googleapis.com/$discovery/rest?version=v2beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/iam/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "iam:v1",
       "name": "iam",
       "version": "v1",
@@ -3222,7 +3237,7 @@
       "name": "keep",
       "version": "v1",
       "title": "Google Keep API",
-      "description": "This API is an enterprise-only API used to create and manage the Keep notes within your domain, including resolving issues identified by CASB software.",
+      "description": "The Google Keep API is used in an enterprise environment to manage Google Keep content and resolve issues identified by cloud security software.",
       "discoveryRestUrl": "https://keep.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

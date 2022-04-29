@@ -86,7 +86,7 @@ const (
 
 // NewService creates a new APIService.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/content",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -118,7 +118,9 @@ func New(client *http.Client) (*APIService, error) {
 	}
 	s := &APIService{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
+	s.Accountsbyexternalsellerid = NewAccountsbyexternalselleridService(s)
 	s.Accountstatuses = NewAccountstatusesService(s)
+	s.Accountstatusesbyexternalsellerid = NewAccountstatusesbyexternalselleridService(s)
 	s.Accounttax = NewAccounttaxService(s)
 	s.Buyongoogleprograms = NewBuyongoogleprogramsService(s)
 	s.Collections = NewCollectionsService(s)
@@ -160,7 +162,11 @@ type APIService struct {
 
 	Accounts *AccountsService
 
+	Accountsbyexternalsellerid *AccountsbyexternalselleridService
+
 	Accountstatuses *AccountstatusesService
+
+	Accountstatusesbyexternalsellerid *AccountstatusesbyexternalselleridService
 
 	Accounttax *AccounttaxService
 
@@ -277,12 +283,30 @@ type AccountsReturncarrierService struct {
 	s *APIService
 }
 
+func NewAccountsbyexternalselleridService(s *APIService) *AccountsbyexternalselleridService {
+	rs := &AccountsbyexternalselleridService{s: s}
+	return rs
+}
+
+type AccountsbyexternalselleridService struct {
+	s *APIService
+}
+
 func NewAccountstatusesService(s *APIService) *AccountstatusesService {
 	rs := &AccountstatusesService{s: s}
 	return rs
 }
 
 type AccountstatusesService struct {
+	s *APIService
+}
+
+func NewAccountstatusesbyexternalselleridService(s *APIService) *AccountstatusesbyexternalselleridService {
+	rs := &AccountstatusesbyexternalselleridService{s: s}
+	return rs
+}
+
+type AccountstatusesbyexternalselleridService struct {
 	s *APIService
 }
 
@@ -4475,14 +4499,14 @@ func (s *Errors) MarshalJSON() ([]byte, error) {
 // FreeListingsProgramStatus: Response message for
 // GetFreeListingsProgramStatus.
 type FreeListingsProgramStatus struct {
-	// GlobalState: State of the program, It is set to enabled if there are
-	// offers for at least one region.
+	// GlobalState: State of the program. `ENABLED` if there are offers for
+	// at least one region.
 	//
 	// Possible values:
-	//   "PROGRAM_STATE_UNSPECIFIED" - State is not known.
+	//   "PROGRAM_STATE_UNSPECIFIED" - State is unknown.
 	//   "NOT_ENABLED" - Program is not enabled for any country.
-	//   "NO_OFFERS_UPLOADED" - Offers are not uploaded targeting even a
-	// single country for this program.
+	//   "NO_OFFERS_UPLOADED" - No products have been uploaded for any
+	// region. Upload products to Merchant Center.
 	//   "ENABLED" - Program is enabled and offers are uploaded for at least
 	// one country.
 	GlobalState string `json:"globalState,omitempty"`
@@ -4521,10 +4545,10 @@ func (s *FreeListingsProgramStatus) MarshalJSON() ([]byte, error) {
 
 // FreeListingsProgramStatusRegionStatus: Status of program and region.
 type FreeListingsProgramStatusRegionStatus struct {
-	// DisapprovalDate: Date by which `eligibility_status` will go from
-	// `WARNING` to `DISAPPROVED`. It will be present when
-	// `eligibility_status` is `WARNING`. Date will be provided in ISO 8601
-	// format: YYYY-MM-DD
+	// DisapprovalDate: Date by which eligibilityStatus will go from
+	// `WARNING` to `DISAPPROVED`. Only visible when your eligibilityStatus
+	// is WARNING. In ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601)
+	// format: `YYYY-MM-DD`.
 	DisapprovalDate string `json:"disapprovalDate,omitempty"`
 
 	// EligibilityStatus: Eligibility status of the standard free listing
@@ -4541,15 +4565,14 @@ type FreeListingsProgramStatusRegionStatus struct {
 	// ence/rest/v2.1/accountstatuses) API.
 	//   "WARNING" - If account has issues but offers are servable. Some of
 	// the issue can make account DISAPPROVED after a certain deadline.
-	//   "UNDER_REVIEW" - Account is under review. Deprecated: This state is
-	// not created.
+	//   "UNDER_REVIEW" - Account is under review.
 	//   "PENDING_REVIEW" - Account is waiting for review to start.
 	//   "ONBOARDING" - Program is currently onboarding. Upload valid offers
 	// to complete onboarding.
 	EligibilityStatus string `json:"eligibilityStatus,omitempty"`
 
-	// OnboardingIssues: These issues must be fixed to become eligible for
-	// the review.
+	// OnboardingIssues: Issues that must be fixed to be eligible for
+	// review.
 	OnboardingIssues []string `json:"onboardingIssues,omitempty"`
 
 	// RegionCodes: The two-letter ISO 3166-1 alpha-2
@@ -4557,13 +4580,13 @@ type FreeListingsProgramStatusRegionStatus struct {
 	// regions with the same `eligibilityStatus` and `reviewEligibility`.
 	RegionCodes []string `json:"regionCodes,omitempty"`
 
-	// ReviewEligibilityStatus: If a program in a given country is eligible
-	// for review. It will be present only if eligibility status is
+	// ReviewEligibilityStatus: If a program is eligible for review in a
+	// specific region. Only visible if `eligibilityStatus` is
 	// `DISAPPROVED`.
 	//
 	// Possible values:
-	//   "REVIEW_ELIGIBILITY_UNSPECIFIED" - Review eligibility reason state
-	// is unknown.
+	//   "REVIEW_ELIGIBILITY_UNSPECIFIED" - Review eligibility state is
+	// unknown.
 	//   "ELIGIBLE" - Account is eligible for review for a specified region
 	// code.
 	//   "INELIGIBLE" - Account is not eligible for review for a specified
@@ -4582,21 +4605,25 @@ type FreeListingsProgramStatusRegionStatus struct {
 	// period ends.
 	//   "ALREADY_UNDER_REVIEW" - Account is already under review.
 	//   "NO_REVIEW_REQUIRED" - No issues available to review.
+	//   "WILL_BE_REVIEWED_AUTOMATICALLY" - Account will be automatically
+	// reviewed at the end of the grace period.
+	//   "IS_RETIRED" - Account is retired. Should not appear in MC.
+	//   "ALREADY_REVIEWED" - Account was already reviewd.
 	ReviewIneligibilityReason string `json:"reviewIneligibilityReason,omitempty"`
 
-	// ReviewIneligibilityReasonDescription: Reason if a program in a given
-	// country is not eligible for review. Populated only if
-	// `review_eligibility_status` is `INELIGIBLE`.
+	// ReviewIneligibilityReasonDescription: Reason a program in a specific
+	// region isn’t eligible for review. Only visible if
+	// `reviewEligibilityStatus` is `INELIGIBLE`.
 	ReviewIneligibilityReasonDescription string `json:"reviewIneligibilityReasonDescription,omitempty"`
 
-	// ReviewIneligibilityReasonDetails: This contains additional
-	// information specific to review ineligibility reasons. If review is
-	// ineligible because of `IN_COOLDOWN_PERIOD`, it will contain timestamp
-	// for cooldown period.
+	// ReviewIneligibilityReasonDetails: Additional information for
+	// ineligibility. If `reviewIneligibilityReason` is
+	// `IN_COOLDOWN_PERIOD`, a timestamp for the end of the cooldown period
+	// is provided.
 	ReviewIneligibilityReasonDetails *FreeListingsProgramStatusReviewIneligibilityReasonDetails `json:"reviewIneligibilityReasonDetails,omitempty"`
 
-	// ReviewIssues: These issues will be evaluated in review process. Fix
-	// all the issues before requesting the review.
+	// ReviewIssues: Issues evaluated in the review process. Fix all issues
+	// before requesting a review.
 	ReviewIssues []string `json:"reviewIssues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisapprovalDate") to
@@ -11903,6 +11930,11 @@ type Product struct {
 	// too far in the future.
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
+	// ExternalSellerId: Required for multi-seller accounts. Use this
+	// attribute if you're a marketplace uploading products for various
+	// sellers to your multi-seller account.
+	ExternalSellerId string `json:"externalSellerId,omitempty"`
+
 	// Gender: Target gender of the item.
 	Gender string `json:"gender,omitempty"`
 
@@ -13071,6 +13103,8 @@ type ProductstatusesCustomBatchRequestEntry struct {
 	// returned, otherwise only issues for the Shopping destination.
 	Destinations []string `json:"destinations,omitempty"`
 
+	// IncludeAttributes: Deprecated: Setting this field has no effect and
+	// attributes are never included.
 	IncludeAttributes bool `json:"includeAttributes,omitempty"`
 
 	// MerchantId: The ID of the managing account.
@@ -13237,7 +13271,7 @@ type Promotion struct {
 	BrandExclusion []string `json:"brandExclusion,omitempty"`
 
 	// ContentLanguage: Required. The content language used as part of the
-	// unique identifier.
+	// unique identifier. Currently only en value is supported.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// CouponValueType: Required. Coupon value type for the promotion.
@@ -13399,7 +13433,7 @@ type Promotion struct {
 	ShippingServiceNames []string `json:"shippingServiceNames,omitempty"`
 
 	// TargetCountry: Required. The target country used as part of the
-	// unique identifier.
+	// unique identifier. Currently only US and CA are supported.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -16906,14 +16940,14 @@ func (s *ShippingsettingsListResponse) MarshalJSON() ([]byte, error) {
 // ShoppingAdsProgramStatus: Response message for
 // GetShoppingAdsProgramStatus.
 type ShoppingAdsProgramStatus struct {
-	// GlobalState: State of the program, It is set to enabled if there are
-	// offers for at least one region.
+	// GlobalState: State of the program. `ENABLED` if there are offers for
+	// at least one region.
 	//
 	// Possible values:
-	//   "PROGRAM_STATE_UNSPECIFIED" - State is not known.
+	//   "PROGRAM_STATE_UNSPECIFIED" - State is unknown.
 	//   "NOT_ENABLED" - Program is not enabled for any country.
-	//   "NO_OFFERS_UPLOADED" - Offers are not uploaded targeting even a
-	// single country for this program.
+	//   "NO_OFFERS_UPLOADED" - No products have been uploaded for any
+	// region. Upload products to Merchant Center.
 	//   "ENABLED" - Program is enabled and offers are uploaded for at least
 	// one country.
 	GlobalState string `json:"globalState,omitempty"`
@@ -16952,10 +16986,10 @@ func (s *ShoppingAdsProgramStatus) MarshalJSON() ([]byte, error) {
 
 // ShoppingAdsProgramStatusRegionStatus: Status of program and region.
 type ShoppingAdsProgramStatusRegionStatus struct {
-	// DisapprovalDate: Date by which `eligibility_status` will go from
-	// `WARNING` to `DISAPPROVED`. It will be present when
-	// `eligibility_status` is `WARNING`. Date will be provided in ISO 8601
-	// (https://en.wikipedia.org/wiki/ISO_8601) format: YYYY-MM-DD
+	// DisapprovalDate: Date by which eligibilityStatus will go from
+	// `WARNING` to `DISAPPROVED`. Only visible when your eligibilityStatus
+	// is WARNING. In ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601)
+	// format: `YYYY-MM-DD`.
 	DisapprovalDate string `json:"disapprovalDate,omitempty"`
 
 	// EligibilityStatus: Eligibility status of the Shopping Ads program.
@@ -16971,15 +17005,14 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 	// ence/rest/v2.1/accountstatuses) API.
 	//   "WARNING" - If account has issues but offers are servable. Some of
 	// the issue can make account DISAPPROVED after a certain deadline.
-	//   "UNDER_REVIEW" - Account is under review. Deprecated: This state is
-	// not created.
+	//   "UNDER_REVIEW" - Account is under review.
 	//   "PENDING_REVIEW" - Account is waiting for review to start.
 	//   "ONBOARDING" - Program is currently onboarding. Upload valid offers
 	// to complete onboarding.
 	EligibilityStatus string `json:"eligibilityStatus,omitempty"`
 
-	// OnboardingIssues: These issues must be fixed to become eligible for
-	// the review.
+	// OnboardingIssues: Issues that must be fixed to be eligible for
+	// review.
 	OnboardingIssues []string `json:"onboardingIssues,omitempty"`
 
 	// RegionCodes: The two-letter ISO 3166-1 alpha-2
@@ -16987,13 +17020,13 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 	// regions with the same `eligibilityStatus` and `reviewEligibility`.
 	RegionCodes []string `json:"regionCodes,omitempty"`
 
-	// ReviewEligibilityStatus: If a program in a given country is eligible
-	// for review. It will be present only if eligibility status is
+	// ReviewEligibilityStatus: If a program is eligible for review in a
+	// specific region. Only visible if `eligibilityStatus` is
 	// `DISAPPROVED`.
 	//
 	// Possible values:
-	//   "REVIEW_ELIGIBILITY_UNSPECIFIED" - Review eligibility reason state
-	// is unknown.
+	//   "REVIEW_ELIGIBILITY_UNSPECIFIED" - Review eligibility state is
+	// unknown.
 	//   "ELIGIBLE" - Account is eligible for review for a specified region
 	// code.
 	//   "INELIGIBLE" - Account is not eligible for review for a specified
@@ -17012,21 +17045,25 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 	// period ends.
 	//   "ALREADY_UNDER_REVIEW" - Account is already under review.
 	//   "NO_REVIEW_REQUIRED" - No issues available to review.
+	//   "WILL_BE_REVIEWED_AUTOMATICALLY" - Account will be automatically
+	// reviewed at the end of the grace period.
+	//   "IS_RETIRED" - Account is retired. Should not appear in MC.
+	//   "ALREADY_REVIEWED" - Account was already reviewd.
 	ReviewIneligibilityReason string `json:"reviewIneligibilityReason,omitempty"`
 
-	// ReviewIneligibilityReasonDescription: Reason if a program in a given
-	// country is not eligible for review. Populated only if
-	// `review_eligibility_status` is `INELIGIBLE`.
+	// ReviewIneligibilityReasonDescription: Reason a program in a specific
+	// region isn’t eligible for review. Only visible if
+	// `reviewEligibilityStatus` is `INELIGIBLE`.
 	ReviewIneligibilityReasonDescription string `json:"reviewIneligibilityReasonDescription,omitempty"`
 
-	// ReviewIneligibilityReasonDetails: This contains additional
-	// information specific to review ineligibility reasons. If review is
-	// ineligible because of `IN_COOLDOWN_PERIOD`, it will contain timestamp
-	// for cooldown period.
+	// ReviewIneligibilityReasonDetails: Additional information for
+	// ineligibility. If `reviewIneligibilityReason` is
+	// `IN_COOLDOWN_PERIOD`, a timestamp for the end of the cooldown period
+	// is provided.
 	ReviewIneligibilityReasonDetails *ShoppingAdsProgramStatusReviewIneligibilityReasonDetails `json:"reviewIneligibilityReasonDetails,omitempty"`
 
-	// ReviewIssues: These issues will be evaluated in review process. Fix
-	// all the issues before requesting the review.
+	// ReviewIssues: Issues evaluated in the review process. Fix all issues
+	// before requesting a review.
 	ReviewIssues []string `json:"reviewIssues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisapprovalDate") to
@@ -21479,6 +21516,165 @@ func (c *AccountsReturncarrierPatchCall) Do(opts ...googleapi.CallOption) (*Acco
 
 }
 
+// method id "content.accountsbyexternalsellerid.get":
+
+type AccountsbyexternalselleridGetCall struct {
+	s                *APIService
+	merchantId       int64
+	externalSellerId string
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Get: Gets data of the account with the specified external_seller_id
+// belonging to the MCA with the specified merchant_id.
+//
+// - externalSellerId: The External Seller ID of the seller account to
+//   be retrieved.
+// - merchantId: The ID of the MCA containing the seller.
+func (r *AccountsbyexternalselleridService) Get(merchantId int64, externalSellerId string) *AccountsbyexternalselleridGetCall {
+	c := &AccountsbyexternalselleridGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.externalSellerId = externalSellerId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsbyexternalselleridGetCall) Fields(s ...googleapi.Field) *AccountsbyexternalselleridGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsbyexternalselleridGetCall) IfNoneMatch(entityTag string) *AccountsbyexternalselleridGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsbyexternalselleridGetCall) Context(ctx context.Context) *AccountsbyexternalselleridGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsbyexternalselleridGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsbyexternalselleridGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountsbyexternalsellerid/{externalSellerId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId":       strconv.FormatInt(c.merchantId, 10),
+		"externalSellerId": c.externalSellerId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.accountsbyexternalsellerid.get" call.
+// Exactly one of *Account or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Account.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AccountsbyexternalselleridGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Account{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets data of the account with the specified external_seller_id belonging to the MCA with the specified merchant_id.",
+	//   "flatPath": "{merchantId}/accountsbyexternalsellerid/{externalSellerId}",
+	//   "httpMethod": "GET",
+	//   "id": "content.accountsbyexternalsellerid.get",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "externalSellerId"
+	//   ],
+	//   "parameters": {
+	//     "externalSellerId": {
+	//       "description": "Required. The External Seller ID of the seller account to be retrieved.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "Required. The ID of the MCA containing the seller.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/accountsbyexternalsellerid/{externalSellerId}",
+	//   "response": {
+	//     "$ref": "Account"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
 // method id "content.accountstatuses.custombatch":
 
 type AccountstatusesCustombatchCall struct {
@@ -22001,6 +22197,179 @@ func (c *AccountstatusesListCall) Pages(ctx context.Context, f func(*Accountstat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "content.accountstatusesbyexternalsellerid.get":
+
+type AccountstatusesbyexternalselleridGetCall struct {
+	s                *APIService
+	merchantId       int64
+	externalSellerId string
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Get: Gets status of the account with the specified external_seller_id
+// belonging to the MCA with the specified merchant_id.
+//
+// - externalSellerId: The External Seller ID of the seller account to
+//   be retrieved.
+// - merchantId: The ID of the MCA containing the seller.
+func (r *AccountstatusesbyexternalselleridService) Get(merchantId int64, externalSellerId string) *AccountstatusesbyexternalselleridGetCall {
+	c := &AccountstatusesbyexternalselleridGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.externalSellerId = externalSellerId
+	return c
+}
+
+// Destinations sets the optional parameter "destinations": If set, only
+// issues for the specified destinations are returned, otherwise only
+// issues for the Shopping destination.
+func (c *AccountstatusesbyexternalselleridGetCall) Destinations(destinations ...string) *AccountstatusesbyexternalselleridGetCall {
+	c.urlParams_.SetMulti("destinations", append([]string{}, destinations...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountstatusesbyexternalselleridGetCall) Fields(s ...googleapi.Field) *AccountstatusesbyexternalselleridGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountstatusesbyexternalselleridGetCall) IfNoneMatch(entityTag string) *AccountstatusesbyexternalselleridGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountstatusesbyexternalselleridGetCall) Context(ctx context.Context) *AccountstatusesbyexternalselleridGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountstatusesbyexternalselleridGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountstatusesbyexternalselleridGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountstatusesbyexternalsellerid/{externalSellerId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId":       strconv.FormatInt(c.merchantId, 10),
+		"externalSellerId": c.externalSellerId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.accountstatusesbyexternalsellerid.get" call.
+// Exactly one of *AccountStatus or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *AccountStatus.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountstatusesbyexternalselleridGetCall) Do(opts ...googleapi.CallOption) (*AccountStatus, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AccountStatus{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets status of the account with the specified external_seller_id belonging to the MCA with the specified merchant_id.",
+	//   "flatPath": "{merchantId}/accountstatusesbyexternalsellerid/{externalSellerId}",
+	//   "httpMethod": "GET",
+	//   "id": "content.accountstatusesbyexternalsellerid.get",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "externalSellerId"
+	//   ],
+	//   "parameters": {
+	//     "destinations": {
+	//       "description": "If set, only issues for the specified destinations are returned, otherwise only issues for the Shopping destination.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "externalSellerId": {
+	//       "description": "Required. The External Seller ID of the seller account to be retrieved.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "Required. The ID of the MCA containing the seller.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/accountstatusesbyexternalsellerid/{externalSellerId}",
+	//   "response": {
+	//     "$ref": "AccountStatus"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
 }
 
 // method id "content.accounttax.custombatch":
@@ -22657,8 +23026,8 @@ type BuyongoogleprogramsActivateCall struct {
 }
 
 // Activate: Reactivates the BoG program in your Merchant Center
-// account. Moves the program to the active state when allowed, e.g.
-// when paused. Important: This method is only whitelisted for selected
+// account. Moves the program to the active state when allowed, for
+// example, when paused. This method is only available to selected
 // merchants.
 //
 // - merchantId: The ID of the account.
@@ -22740,7 +23109,7 @@ func (c *BuyongoogleprogramsActivateCall) Do(opts ...googleapi.CallOption) error
 	}
 	return nil
 	// {
-	//   "description": "Reactivates the BoG program in your Merchant Center account. Moves the program to the active state when allowed, e.g. when paused. Important: This method is only whitelisted for selected merchants.",
+	//   "description": "Reactivates the BoG program in your Merchant Center account. Moves the program to the active state when allowed, for example, when paused. This method is only available to selected merchants.",
 	//   "flatPath": "{merchantId}/buyongoogleprograms/{regionCode}/activate",
 	//   "httpMethod": "POST",
 	//   "id": "content.buyongoogleprograms.activate",
@@ -23250,8 +23619,8 @@ type BuyongoogleprogramsPauseCall struct {
 	header_                        http.Header
 }
 
-// Pause: Pauses the BoG program in your Merchant Center account.
-// Important: This method is only whitelisted for selected merchants.
+// Pause: Pauses the BoG program in your Merchant Center account. This
+// method is only available to selected merchants.
 //
 // - merchantId: The ID of the account.
 // - regionCode: The program region code ISO 3166-1 alpha-2
@@ -23332,7 +23701,7 @@ func (c *BuyongoogleprogramsPauseCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Pauses the BoG program in your Merchant Center account. Important: This method is only whitelisted for selected merchants.",
+	//   "description": "Pauses the BoG program in your Merchant Center account. This method is only available to selected merchants.",
 	//   "flatPath": "{merchantId}/buyongoogleprograms/{regionCode}/pause",
 	//   "httpMethod": "POST",
 	//   "id": "content.buyongoogleprograms.pause",
@@ -23380,8 +23749,8 @@ type BuyongoogleprogramsRequestreviewCall struct {
 
 // Requestreview: Requests review and then activates the BoG program in
 // your Merchant Center account for the first time. Moves the program to
-// the REVIEW_PENDING state. Important: This method is only whitelisted
-// for selected merchants.
+// the REVIEW_PENDING state. This method is only available to selected
+// merchants.
 //
 // - merchantId: The ID of the account.
 // - regionCode: The program region code ISO 3166-1 alpha-2
@@ -23462,7 +23831,7 @@ func (c *BuyongoogleprogramsRequestreviewCall) Do(opts ...googleapi.CallOption) 
 	}
 	return nil
 	// {
-	//   "description": "Requests review and then activates the BoG program in your Merchant Center account for the first time. Moves the program to the REVIEW_PENDING state. Important: This method is only whitelisted for selected merchants.",
+	//   "description": "Requests review and then activates the BoG program in your Merchant Center account for the first time. Moves the program to the REVIEW_PENDING state. This method is only available to selected merchants.",
 	//   "flatPath": "{merchantId}/buyongoogleprograms/{regionCode}/requestreview",
 	//   "httpMethod": "POST",
 	//   "id": "content.buyongoogleprograms.requestreview",
@@ -26698,9 +27067,8 @@ type FreelistingsprogramRequestreviewCall struct {
 	header_                          http.Header
 }
 
-// Requestreview: Requests a review for Free Listings program in the
-// provided region. Important: This method is only whitelisted for
-// selected merchants.
+// Requestreview: Requests a review of free listings in a specific
+// region. This method is only available to selected merchants.
 //
 // - merchantId: The ID of the account.
 func (r *FreelistingsprogramService) Requestreview(merchantId int64, requestreviewfreelistingsrequest *RequestReviewFreeListingsRequest) *FreelistingsprogramRequestreviewCall {
@@ -26776,7 +27144,7 @@ func (c *FreelistingsprogramRequestreviewCall) Do(opts ...googleapi.CallOption) 
 	}
 	return nil
 	// {
-	//   "description": "Requests a review for Free Listings program in the provided region. Important: This method is only whitelisted for selected merchants.",
+	//   "description": "Requests a review of free listings in a specific region. This method is only available to selected merchants.",
 	//   "flatPath": "{merchantId}/freelistingsprogram/requestreview",
 	//   "httpMethod": "POST",
 	//   "id": "content.freelistingsprogram.requestreview",
@@ -44035,8 +44403,8 @@ type ShoppingadsprogramRequestreviewCall struct {
 	header_                         http.Header
 }
 
-// Requestreview: Requests a review for Shopping Ads program in the
-// provided country.
+// Requestreview: Requests a review of Shopping ads in a specific
+// region. This method is only available to selected merchants.
 //
 // - merchantId: The ID of the account.
 func (r *ShoppingadsprogramService) Requestreview(merchantId int64, requestreviewshoppingadsrequest *RequestReviewShoppingAdsRequest) *ShoppingadsprogramRequestreviewCall {
@@ -44112,7 +44480,7 @@ func (c *ShoppingadsprogramRequestreviewCall) Do(opts ...googleapi.CallOption) e
 	}
 	return nil
 	// {
-	//   "description": "Requests a review for Shopping Ads program in the provided country.",
+	//   "description": "Requests a review of Shopping ads in a specific region. This method is only available to selected merchants.",
 	//   "flatPath": "{merchantId}/shoppingadsprogram/requestreview",
 	//   "httpMethod": "POST",
 	//   "id": "content.shoppingadsprogram.requestreview",

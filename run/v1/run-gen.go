@@ -87,7 +87,7 @@ const (
 
 // NewService creates a new APIService.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -547,8 +547,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -1482,13 +1482,12 @@ func (s *ExecutionReference) MarshalJSON() ([]byte, error) {
 // ExecutionSpec: ExecutionSpec describes how the execution will look.
 type ExecutionSpec struct {
 	// Parallelism: Optional. Specifies the maximum desired number of tasks
-	// the execution should run at any given time. Must be <= task_count.
-	// The actual number of tasks running in steady state will be less than
-	// this number when ((.spec.task_count - .status.successful) <
-	// .spec.parallelism), i.e. when the work left to do is less than max
-	// parallelism. More info:
-	// https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
-	// +optional
+	// the execution should run at given time. Must be <= task_count. When
+	// the job is run, if this field is 0 or unset, the maximum possible
+	// value will be used for that execution. The actual number of tasks
+	// running in steady state will be less than this number when there are
+	// fewer tasks waiting to be completed remaining, i.e. when the work
+	// left to do is less than max parallelism. +optional
 	Parallelism int64 `json:"parallelism,omitempty"`
 
 	// TaskCount: Optional. Specifies the desired number of tasks the
@@ -2963,13 +2962,16 @@ type Probe struct {
 	HttpGet *HTTPGetAction `json:"httpGet,omitempty"`
 
 	// InitialDelaySeconds: (Optional) Number of seconds after the container
-	// has started before liveness probes are initiated. More info:
+	// has started before liveness probes are initiated. Defaults to 0
+	// seconds. Minimum value is 0. Max value for liveness probe is 3600.
+	// Max value for startup probe is 240. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
 
 	// PeriodSeconds: (Optional) How often (in seconds) to perform the
-	// probe. Default to 10 seconds. Minimum value is 1. Maximum value is
-	// 3600. Must be greater or equal than timeout_seconds.
+	// probe. Default to 10 seconds. Minimum value is 1. Max value for
+	// liveness probe is 3600. Max value for startup probe is 240. Must be
+	// greater or equal than timeout_seconds.
 	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
 
 	// SuccessThreshold: (Optional) Minimum consecutive successes for the
@@ -3843,7 +3845,7 @@ func (s *ServiceStatus) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -4328,7 +4330,7 @@ func (s *TaskTemplateSpec) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -5119,8 +5121,9 @@ type NamespacesDomainmappingsCreateCall struct {
 // Create: Create a new domain mapping.
 //
 // - parent: The namespace in which the domain mapping should be
-//   created. For Cloud Run (fully managed), replace {namespace_id} with
-//   the project ID or number.
+//   created. For Cloud Run (fully managed), replace {namespace} with
+//   the project ID or number. It takes the form namespaces/{namespace}.
+//   For example: namespaces/PROJECT_ID.
 func (r *NamespacesDomainmappingsService) Create(parent string, domainmapping *DomainMapping) *NamespacesDomainmappingsCreateCall {
 	c := &NamespacesDomainmappingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5241,7 +5244,7 @@ func (c *NamespacesDomainmappingsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace in which the domain mapping should be created. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The namespace in which the domain mapping should be created. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -5275,8 +5278,9 @@ type NamespacesDomainmappingsDeleteCall struct {
 // Delete: Delete a domain mapping.
 //
 // - name: The name of the domain mapping to delete. For Cloud Run
-//   (fully managed), replace {namespace_id} with the project ID or
-//   number.
+//   (fully managed), replace {namespace} with the project ID or number.
+//   It takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *NamespacesDomainmappingsService) Delete(name string) *NamespacesDomainmappingsDeleteCall {
 	c := &NamespacesDomainmappingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5425,7 +5429,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the domain mapping to delete. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the domain mapping to delete. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -5462,8 +5466,9 @@ type NamespacesDomainmappingsGetCall struct {
 // Get: Get information about a domain mapping.
 //
 // - name: The name of the domain mapping to retrieve. For Cloud Run
-//   (fully managed), replace {namespace_id} with the project ID or
-//   number.
+//   (fully managed), replace {namespace} with the project ID or number.
+//   It takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *NamespacesDomainmappingsService) Get(name string) *NamespacesDomainmappingsGetCall {
 	c := &NamespacesDomainmappingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5578,7 +5583,7 @@ func (c *NamespacesDomainmappingsGetCall) Do(opts ...googleapi.CallOption) (*Dom
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the domain mapping to retrieve. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the domain mapping to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -5610,8 +5615,9 @@ type NamespacesDomainmappingsListCall struct {
 // List: List domain mappings.
 //
 // - parent: The namespace from which the domain mappings should be
-//   listed. For Cloud Run (fully managed), replace {namespace_id} with
-//   the project ID or number.
+//   listed. For Cloud Run (fully managed), replace {namespace} with the
+//   project ID or number. It takes the form namespaces/{namespace}. For
+//   example: namespaces/PROJECT_ID.
 func (r *NamespacesDomainmappingsService) List(parent string) *NamespacesDomainmappingsListCall {
 	c := &NamespacesDomainmappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5806,7 +5812,7 @@ func (c *NamespacesDomainmappingsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace from which the domain mappings should be listed. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The namespace from which the domain mappings should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -5846,8 +5852,9 @@ type NamespacesExecutionsDeleteCall struct {
 
 // Delete: Delete an execution.
 //
-// - name: The name of the execution to delete. Replace {namespace_id}
-//   with the project ID or number.
+// - name: The name of the execution to delete. Replace {namespace} with
+//   the project ID or number. It takes the form namespaces/{namespace}.
+//   For example: namespaces/PROJECT_ID.
 func (r *NamespacesExecutionsService) Delete(name string) *NamespacesExecutionsDeleteCall {
 	c := &NamespacesExecutionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5983,7 +5990,7 @@ func (c *NamespacesExecutionsDeleteCall) Do(opts ...googleapi.CallOption) (*Stat
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the execution to delete. Replace {namespace_id} with the project ID or number.",
+	//       "description": "Required. The name of the execution to delete. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/executions/[^/]+$",
 	//       "required": true,
@@ -6019,8 +6026,9 @@ type NamespacesExecutionsGetCall struct {
 
 // Get: Get information about an execution.
 //
-// - name: The name of the execution to retrieve. Replace {namespace_id}
-//   with the project ID or number.
+// - name: The name of the execution to retrieve. Replace {namespace}
+//   with the project ID or number. It takes the form
+//   namespaces/{namespace}. For example: namespaces/PROJECT_ID.
 func (r *NamespacesExecutionsService) Get(name string) *NamespacesExecutionsGetCall {
 	c := &NamespacesExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6135,7 +6143,7 @@ func (c *NamespacesExecutionsGetCall) Do(opts ...googleapi.CallOption) (*Executi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the execution to retrieve. Replace {namespace_id} with the project ID or number.",
+	//       "description": "Required. The name of the execution to retrieve. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/executions/[^/]+$",
 	//       "required": true,
@@ -6167,7 +6175,8 @@ type NamespacesExecutionsListCall struct {
 // List: List executions.
 //
 // - parent: The namespace from which the executions should be listed.
-//   Replace {namespace_id} with the project ID or number.
+//   Replace {namespace} with the project ID or number. It takes the
+//   form namespaces/{namespace}. For example: namespaces/PROJECT_ID.
 func (r *NamespacesExecutionsService) List(parent string) *NamespacesExecutionsListCall {
 	c := &NamespacesExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6362,7 +6371,7 @@ func (c *NamespacesExecutionsListCall) Do(opts ...googleapi.CallOption) (*ListEx
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The namespace from which the executions should be listed. Replace {namespace_id} with the project ID or number.",
+	//       "description": "Required. The namespace from which the executions should be listed. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -6404,7 +6413,8 @@ type NamespacesJobsCreateCall struct {
 // Create: Create a job.
 //
 // - parent: The namespace in which the job should be created. Replace
-//   {namespace_id} with the project ID or number.
+//   {namespace} with the project ID or number. It takes the form
+//   namespaces/{namespace}. For example: namespaces/PROJECT_ID.
 func (r *NamespacesJobsService) Create(parent string, job *Job) *NamespacesJobsCreateCall {
 	c := &NamespacesJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6512,7 +6522,7 @@ func (c *NamespacesJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The namespace in which the job should be created. Replace {namespace_id} with the project ID or number.",
+	//       "description": "Required. The namespace in which the job should be created. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -6545,8 +6555,9 @@ type NamespacesJobsDeleteCall struct {
 
 // Delete: Delete a job.
 //
-// - name: The name of the job to delete. Replace {namespace_id} with
-//   the project ID or number.
+// - name: The name of the job to delete. Replace {namespace} with the
+//   project ID or number. It takes the form namespaces/{namespace}. For
+//   example: namespaces/PROJECT_ID.
 func (r *NamespacesJobsService) Delete(name string) *NamespacesJobsDeleteCall {
 	c := &NamespacesJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6682,7 +6693,7 @@ func (c *NamespacesJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Status, er
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the job to delete. Replace {namespace_id} with the project ID or number.",
+	//       "description": "Required. The name of the job to delete. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -6718,8 +6729,9 @@ type NamespacesJobsGetCall struct {
 
 // Get: Get information about a job.
 //
-// - name: The name of the job to retrieve. Replace {namespace_id} with
-//   the project ID or number.
+// - name: The name of the job to retrieve. Replace {namespace} with the
+//   project ID or number. It takes the form namespaces/{namespace}. For
+//   example: namespaces/PROJECT_ID.
 func (r *NamespacesJobsService) Get(name string) *NamespacesJobsGetCall {
 	c := &NamespacesJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6834,7 +6846,7 @@ func (c *NamespacesJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the job to retrieve. Replace {namespace_id} with the project ID or number.",
+	//       "description": "Required. The name of the job to retrieve. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -6866,7 +6878,8 @@ type NamespacesJobsListCall struct {
 // List: List jobs.
 //
 // - parent: The namespace from which the jobs should be listed. Replace
-//   {namespace_id} with the project ID or number.
+//   {namespace} with the project ID or number. It takes the form
+//   namespaces/{namespace}. For example: namespaces/PROJECT_ID.
 func (r *NamespacesJobsService) List(parent string) *NamespacesJobsListCall {
 	c := &NamespacesJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7061,7 +7074,7 @@ func (c *NamespacesJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsResp
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The namespace from which the jobs should be listed. Replace {namespace_id} with the project ID or number.",
+	//       "description": "Required. The namespace from which the jobs should be listed. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -7106,8 +7119,9 @@ type NamespacesJobsReplaceJobCall struct {
 // metadata.resourceVersion to enforce update from last read for
 // optimistic concurrency control.
 //
-// - name: The name of the service being replaced. Replace
-//   {namespace_id} with the project ID or number.
+// - name: The name of the service being replaced. Replace {namespace}
+//   with the project ID or number. It takes the form
+//   namespaces/{namespace}. For example: namespaces/PROJECT_ID.
 func (r *NamespacesJobsService) ReplaceJob(name string, job *Job) *NamespacesJobsReplaceJobCall {
 	c := &NamespacesJobsReplaceJobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7215,7 +7229,7 @@ func (c *NamespacesJobsReplaceJobCall) Do(opts ...googleapi.CallOption) (*Job, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the service being replaced. Replace {namespace_id} with the project ID or number.",
+	//       "description": "Required. The name of the service being replaced. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -7249,8 +7263,9 @@ type NamespacesJobsRunCall struct {
 
 // Run: Trigger creation of a new execution of this job.
 //
-// - name: The name of the job to run. Replace {namespace_id} with the
-//   project ID or number.
+// - name: The name of the job to run. Replace {namespace} with the
+//   project ID or number. It takes the form namespaces/{namespace}. For
+//   example: namespaces/PROJECT_ID.
 func (r *NamespacesJobsService) Run(name string, runjobrequest *RunJobRequest) *NamespacesJobsRunCall {
 	c := &NamespacesJobsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7358,7 +7373,7 @@ func (c *NamespacesJobsRunCall) Do(opts ...googleapi.CallOption) (*Execution, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the job to run. Replace {namespace_id} with the project ID or number.",
+	//       "description": "Required. The name of the job to run. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -7392,7 +7407,9 @@ type NamespacesRevisionsDeleteCall struct {
 // Delete: Delete a revision.
 //
 // - name: The name of the revision to delete. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+//   managed), replace {namespace} with the project ID or number. It
+//   takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *NamespacesRevisionsService) Delete(name string) *NamespacesRevisionsDeleteCall {
 	c := &NamespacesRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7541,7 +7558,7 @@ func (c *NamespacesRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*Statu
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the revision to delete. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the revision to delete. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/revisions/[^/]+$",
 	//       "required": true,
@@ -7578,7 +7595,9 @@ type NamespacesRevisionsGetCall struct {
 // Get: Get information about a revision.
 //
 // - name: The name of the revision to retrieve. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+//   managed), replace {namespace} with the project ID or number. It
+//   takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *NamespacesRevisionsService) Get(name string) *NamespacesRevisionsGetCall {
 	c := &NamespacesRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7693,7 +7712,7 @@ func (c *NamespacesRevisionsGetCall) Do(opts ...googleapi.CallOption) (*Revision
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the revision to retrieve. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the revision to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/revisions/[^/]+$",
 	//       "required": true,
@@ -7725,8 +7744,9 @@ type NamespacesRevisionsListCall struct {
 // List: List revisions.
 //
 // - parent: The namespace from which the revisions should be listed.
-//   For Cloud Run (fully managed), replace {namespace_id} with the
-//   project ID or number.
+//   For Cloud Run (fully managed), replace {namespace} with the project
+//   ID or number. It takes the form namespaces/{namespace}. For
+//   example: namespaces/PROJECT_ID.
 func (r *NamespacesRevisionsService) List(parent string) *NamespacesRevisionsListCall {
 	c := &NamespacesRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7921,7 +7941,7 @@ func (c *NamespacesRevisionsListCall) Do(opts ...googleapi.CallOption) (*ListRev
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace from which the revisions should be listed. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The namespace from which the revisions should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -7963,7 +7983,9 @@ type NamespacesRoutesGetCall struct {
 // Get: Get information about a route.
 //
 // - name: The name of the route to retrieve. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+//   managed), replace {namespace} with the project ID or number. It
+//   takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *NamespacesRoutesService) Get(name string) *NamespacesRoutesGetCall {
 	c := &NamespacesRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8078,7 +8100,7 @@ func (c *NamespacesRoutesGetCall) Do(opts ...googleapi.CallOption) (*Route, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the route to retrieve. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the route to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/routes/[^/]+$",
 	//       "required": true,
@@ -8110,8 +8132,9 @@ type NamespacesRoutesListCall struct {
 // List: List routes.
 //
 // - parent: The namespace from which the routes should be listed. For
-//   Cloud Run (fully managed), replace {namespace_id} with the project
-//   ID or number.
+//   Cloud Run (fully managed), replace {namespace} with the project ID
+//   or number. It takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *NamespacesRoutesService) List(parent string) *NamespacesRoutesListCall {
 	c := &NamespacesRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8306,7 +8329,7 @@ func (c *NamespacesRoutesListCall) Do(opts ...googleapi.CallOption) (*ListRoutes
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace from which the routes should be listed. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The namespace from which the routes should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -8347,9 +8370,10 @@ type NamespacesServicesCreateCall struct {
 
 // Create: Create a service.
 //
-// - parent: The namespace in which the service should be created. For
-//   Cloud Run (fully managed), replace {namespace_id} with the project
-//   ID or number.
+// - parent: LINT.IfChange() The namespace in which the service should
+//   be created. For Cloud Run (fully managed), replace {namespace} with
+//   the project ID or number. It takes the form namespaces/{namespace}.
+//   For example: namespaces/PROJECT_ID.
 func (r *NamespacesServicesService) Create(parent string, service *Service) *NamespacesServicesCreateCall {
 	c := &NamespacesServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8360,6 +8384,8 @@ func (r *NamespacesServicesService) Create(parent string, service *Service) *Nam
 // DryRun sets the optional parameter "dryRun": Indicates that the
 // server should validate the request and populate default values
 // without persisting the request. Supported values: `all`
+// LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_se
+// rvice.proto:create_internal_service_request)
 func (c *NamespacesServicesCreateCall) DryRun(dryRun string) *NamespacesServicesCreateCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -8465,12 +8491,12 @@ func (c *NamespacesServicesCreateCall) Do(opts ...googleapi.CallOption) (*Servic
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_service.proto:create_internal_service_request)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace in which the service should be created. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "LINT.IfChange() The namespace in which the service should be created. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -8506,7 +8532,9 @@ type NamespacesServicesDeleteCall struct {
 // Configurations and Revisions.
 //
 // - name: The name of the service to delete. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+//   managed), replace {namespace} with the project ID or number. It
+//   takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *NamespacesServicesService) Delete(name string) *NamespacesServicesDeleteCall {
 	c := &NamespacesServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8655,7 +8683,7 @@ func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Status
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the service to delete. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the service to delete. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -8692,7 +8720,9 @@ type NamespacesServicesGetCall struct {
 // Get: Get information about a service.
 //
 // - name: The name of the service to retrieve. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+//   managed), replace {namespace} with the project ID or number. It
+//   takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *NamespacesServicesService) Get(name string) *NamespacesServicesGetCall {
 	c := &NamespacesServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8807,7 +8837,7 @@ func (c *NamespacesServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the service to retrieve. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the service to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -8839,8 +8869,9 @@ type NamespacesServicesListCall struct {
 // List: List services.
 //
 // - parent: The namespace from which the services should be listed. For
-//   Cloud Run (fully managed), replace {namespace_id} with the project
-//   ID or number.
+//   Cloud Run (fully managed), replace {namespace} with the project ID
+//   or number. It takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *NamespacesServicesService) List(parent string) *NamespacesServicesListCall {
 	c := &NamespacesServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9035,7 +9066,7 @@ func (c *NamespacesServicesListCall) Do(opts ...googleapi.CallOption) (*ListServ
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace from which the services should be listed. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The namespace from which the services should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -9080,8 +9111,10 @@ type NamespacesServicesReplaceServiceCall struct {
 // provide metadata.resourceVersion to enforce update from last read for
 // optimistic concurrency control.
 //
-// - name: The name of the service being replaced. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+// - name: LINT.IfChange() The name of the service being replaced. For
+//   Cloud Run (fully managed), replace {namespace} with the project ID
+//   or number. It takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *NamespacesServicesService) ReplaceService(name string, service *Service) *NamespacesServicesReplaceServiceCall {
 	c := &NamespacesServicesReplaceServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9092,6 +9125,8 @@ func (r *NamespacesServicesService) ReplaceService(name string, service *Service
 // DryRun sets the optional parameter "dryRun": Indicates that the
 // server should validate the request and populate default values
 // without persisting the request. Supported values: `all`
+// LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_se
+// rvice.proto:replace_internal_service_request)
 func (c *NamespacesServicesReplaceServiceCall) DryRun(dryRun string) *NamespacesServicesReplaceServiceCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -9197,12 +9232,12 @@ func (c *NamespacesServicesReplaceServiceCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_service.proto:replace_internal_service_request)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the service being replaced. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "LINT.IfChange() The name of the service being replaced. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -9236,8 +9271,9 @@ type NamespacesTasksGetCall struct {
 
 // Get: Get information about a task.
 //
-// - name: The name of the task to retrieve. Replace {namespace_id} with
-//   the project ID or number.
+// - name: The name of the task to retrieve. Replace {namespace} with
+//   the project ID or number. It takes the form namespaces/{namespace}.
+//   For example: namespaces/PROJECT_ID.
 func (r *NamespacesTasksService) Get(name string) *NamespacesTasksGetCall {
 	c := &NamespacesTasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9352,7 +9388,7 @@ func (c *NamespacesTasksGetCall) Do(opts ...googleapi.CallOption) (*Task, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the task to retrieve. Replace {namespace_id} with the project ID or number.",
+	//       "description": "Required. The name of the task to retrieve. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/tasks/[^/]+$",
 	//       "required": true,
@@ -9384,7 +9420,8 @@ type NamespacesTasksListCall struct {
 // List: List tasks.
 //
 // - parent: The namespace from which the tasks should be listed.
-//   Replace {namespace_id} with the project ID or number.
+//   Replace {namespace} with the project ID or number. It takes the
+//   form namespaces/{namespace}. For example: namespaces/PROJECT_ID.
 func (r *NamespacesTasksService) List(parent string) *NamespacesTasksListCall {
 	c := &NamespacesTasksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9579,7 +9616,7 @@ func (c *NamespacesTasksListCall) Do(opts ...googleapi.CallOption) (*ListTasksRe
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The namespace from which the tasks should be listed. Replace {namespace_id} with the project ID or number.",
+	//       "description": "Required. The namespace from which the tasks should be listed. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -9824,8 +9861,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -9954,7 +9991,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10602,8 +10639,9 @@ type ProjectsLocationsDomainmappingsCreateCall struct {
 // Create: Create a new domain mapping.
 //
 // - parent: The namespace in which the domain mapping should be
-//   created. For Cloud Run (fully managed), replace {namespace_id} with
-//   the project ID or number.
+//   created. For Cloud Run (fully managed), replace {namespace} with
+//   the project ID or number. It takes the form namespaces/{namespace}.
+//   For example: namespaces/PROJECT_ID.
 func (r *ProjectsLocationsDomainmappingsService) Create(parent string, domainmapping *DomainMapping) *ProjectsLocationsDomainmappingsCreateCall {
 	c := &ProjectsLocationsDomainmappingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10724,7 +10762,7 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace in which the domain mapping should be created. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The namespace in which the domain mapping should be created. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -10758,8 +10796,9 @@ type ProjectsLocationsDomainmappingsDeleteCall struct {
 // Delete: Delete a domain mapping.
 //
 // - name: The name of the domain mapping to delete. For Cloud Run
-//   (fully managed), replace {namespace_id} with the project ID or
-//   number.
+//   (fully managed), replace {namespace} with the project ID or number.
+//   It takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *ProjectsLocationsDomainmappingsService) Delete(name string) *ProjectsLocationsDomainmappingsDeleteCall {
 	c := &ProjectsLocationsDomainmappingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10908,7 +10947,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the domain mapping to delete. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the domain mapping to delete. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -10945,8 +10984,9 @@ type ProjectsLocationsDomainmappingsGetCall struct {
 // Get: Get information about a domain mapping.
 //
 // - name: The name of the domain mapping to retrieve. For Cloud Run
-//   (fully managed), replace {namespace_id} with the project ID or
-//   number.
+//   (fully managed), replace {namespace} with the project ID or number.
+//   It takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *ProjectsLocationsDomainmappingsService) Get(name string) *ProjectsLocationsDomainmappingsGetCall {
 	c := &ProjectsLocationsDomainmappingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11061,7 +11101,7 @@ func (c *ProjectsLocationsDomainmappingsGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the domain mapping to retrieve. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the domain mapping to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -11093,8 +11133,9 @@ type ProjectsLocationsDomainmappingsListCall struct {
 // List: List domain mappings.
 //
 // - parent: The namespace from which the domain mappings should be
-//   listed. For Cloud Run (fully managed), replace {namespace_id} with
-//   the project ID or number.
+//   listed. For Cloud Run (fully managed), replace {namespace} with the
+//   project ID or number. It takes the form namespaces/{namespace}. For
+//   example: namespaces/PROJECT_ID.
 func (r *ProjectsLocationsDomainmappingsService) List(parent string) *ProjectsLocationsDomainmappingsListCall {
 	c := &ProjectsLocationsDomainmappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11289,7 +11330,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace from which the domain mappings should be listed. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The namespace from which the domain mappings should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -11795,7 +11836,9 @@ type ProjectsLocationsRevisionsDeleteCall struct {
 // Delete: Delete a revision.
 //
 // - name: The name of the revision to delete. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+//   managed), replace {namespace} with the project ID or number. It
+//   takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *ProjectsLocationsRevisionsService) Delete(name string) *ProjectsLocationsRevisionsDeleteCall {
 	c := &ProjectsLocationsRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11944,7 +11987,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the revision to delete. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the revision to delete. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/revisions/[^/]+$",
 	//       "required": true,
@@ -11981,7 +12024,9 @@ type ProjectsLocationsRevisionsGetCall struct {
 // Get: Get information about a revision.
 //
 // - name: The name of the revision to retrieve. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+//   managed), replace {namespace} with the project ID or number. It
+//   takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *ProjectsLocationsRevisionsService) Get(name string) *ProjectsLocationsRevisionsGetCall {
 	c := &ProjectsLocationsRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12096,7 +12141,7 @@ func (c *ProjectsLocationsRevisionsGetCall) Do(opts ...googleapi.CallOption) (*R
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the revision to retrieve. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the revision to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/revisions/[^/]+$",
 	//       "required": true,
@@ -12128,8 +12173,9 @@ type ProjectsLocationsRevisionsListCall struct {
 // List: List revisions.
 //
 // - parent: The namespace from which the revisions should be listed.
-//   For Cloud Run (fully managed), replace {namespace_id} with the
-//   project ID or number.
+//   For Cloud Run (fully managed), replace {namespace} with the project
+//   ID or number. It takes the form namespaces/{namespace}. For
+//   example: namespaces/PROJECT_ID.
 func (r *ProjectsLocationsRevisionsService) List(parent string) *ProjectsLocationsRevisionsListCall {
 	c := &ProjectsLocationsRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12324,7 +12370,7 @@ func (c *ProjectsLocationsRevisionsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace from which the revisions should be listed. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The namespace from which the revisions should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -12366,7 +12412,9 @@ type ProjectsLocationsRoutesGetCall struct {
 // Get: Get information about a route.
 //
 // - name: The name of the route to retrieve. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+//   managed), replace {namespace} with the project ID or number. It
+//   takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *ProjectsLocationsRoutesService) Get(name string) *ProjectsLocationsRoutesGetCall {
 	c := &ProjectsLocationsRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12481,7 +12529,7 @@ func (c *ProjectsLocationsRoutesGetCall) Do(opts ...googleapi.CallOption) (*Rout
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the route to retrieve. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the route to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/routes/[^/]+$",
 	//       "required": true,
@@ -12513,8 +12561,9 @@ type ProjectsLocationsRoutesListCall struct {
 // List: List routes.
 //
 // - parent: The namespace from which the routes should be listed. For
-//   Cloud Run (fully managed), replace {namespace_id} with the project
-//   ID or number.
+//   Cloud Run (fully managed), replace {namespace} with the project ID
+//   or number. It takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *ProjectsLocationsRoutesService) List(parent string) *ProjectsLocationsRoutesListCall {
 	c := &ProjectsLocationsRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12709,7 +12758,7 @@ func (c *ProjectsLocationsRoutesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace from which the routes should be listed. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The namespace from which the routes should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -12750,9 +12799,10 @@ type ProjectsLocationsServicesCreateCall struct {
 
 // Create: Create a service.
 //
-// - parent: The namespace in which the service should be created. For
-//   Cloud Run (fully managed), replace {namespace_id} with the project
-//   ID or number.
+// - parent: LINT.IfChange() The namespace in which the service should
+//   be created. For Cloud Run (fully managed), replace {namespace} with
+//   the project ID or number. It takes the form namespaces/{namespace}.
+//   For example: namespaces/PROJECT_ID.
 func (r *ProjectsLocationsServicesService) Create(parent string, service *Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12763,6 +12813,8 @@ func (r *ProjectsLocationsServicesService) Create(parent string, service *Servic
 // DryRun sets the optional parameter "dryRun": Indicates that the
 // server should validate the request and populate default values
 // without persisting the request. Supported values: `all`
+// LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_se
+// rvice.proto:create_internal_service_request)
 func (c *ProjectsLocationsServicesCreateCall) DryRun(dryRun string) *ProjectsLocationsServicesCreateCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -12868,12 +12920,12 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_service.proto:create_internal_service_request)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace in which the service should be created. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "LINT.IfChange() The namespace in which the service should be created. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -12909,7 +12961,9 @@ type ProjectsLocationsServicesDeleteCall struct {
 // Configurations and Revisions.
 //
 // - name: The name of the service to delete. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+//   managed), replace {namespace} with the project ID or number. It
+//   takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *ProjectsLocationsServicesService) Delete(name string) *ProjectsLocationsServicesDeleteCall {
 	c := &ProjectsLocationsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13058,7 +13112,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the service to delete. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the service to delete. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -13095,7 +13149,9 @@ type ProjectsLocationsServicesGetCall struct {
 // Get: Get information about a service.
 //
 // - name: The name of the service to retrieve. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+//   managed), replace {namespace} with the project ID or number. It
+//   takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *ProjectsLocationsServicesService) Get(name string) *ProjectsLocationsServicesGetCall {
 	c := &ProjectsLocationsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13210,7 +13266,7 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Se
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the service to retrieve. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The name of the service to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -13416,8 +13472,9 @@ type ProjectsLocationsServicesListCall struct {
 // List: List services.
 //
 // - parent: The namespace from which the services should be listed. For
-//   Cloud Run (fully managed), replace {namespace_id} with the project
-//   ID or number.
+//   Cloud Run (fully managed), replace {namespace} with the project ID
+//   or number. It takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13612,7 +13669,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace from which the services should be listed. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "The namespace from which the services should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -13657,8 +13714,10 @@ type ProjectsLocationsServicesReplaceServiceCall struct {
 // provide metadata.resourceVersion to enforce update from last read for
 // optimistic concurrency control.
 //
-// - name: The name of the service being replaced. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+// - name: LINT.IfChange() The name of the service being replaced. For
+//   Cloud Run (fully managed), replace {namespace} with the project ID
+//   or number. It takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *ProjectsLocationsServicesService) ReplaceService(name string, service *Service) *ProjectsLocationsServicesReplaceServiceCall {
 	c := &ProjectsLocationsServicesReplaceServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13669,6 +13728,8 @@ func (r *ProjectsLocationsServicesService) ReplaceService(name string, service *
 // DryRun sets the optional parameter "dryRun": Indicates that the
 // server should validate the request and populate default values
 // without persisting the request. Supported values: `all`
+// LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_se
+// rvice.proto:replace_internal_service_request)
 func (c *ProjectsLocationsServicesReplaceServiceCall) DryRun(dryRun string) *ProjectsLocationsServicesReplaceServiceCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -13774,12 +13835,12 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_service.proto:replace_internal_service_request)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the service being replaced. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
+	//       "description": "LINT.IfChange() The name of the service being replaced. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,

@@ -210,8 +210,7 @@ type ThreatMatchesService struct {
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
 // method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); } The JSON representation for
-// `Empty` is empty JSON object `{}`.
+// returns (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -385,6 +384,8 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest 
 	// safe URL expressions.
 	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
 	// in Chrome. See go/sb-accuracytips.
+	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
+	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Constraints") to
@@ -601,6 +602,8 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateRespons
 	// safe URL expressions.
 	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
 	// in Chrome. See go/sb-accuracytips.
+	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
+	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Additions") to
@@ -1130,6 +1133,8 @@ type GoogleSecuritySafebrowsingV4ThreatHit struct {
 	// safe URL expressions.
 	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
 	// in Chrome. See go/sb-accuracytips.
+	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
+	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// UserInfo: Details about the user that encountered the threat.
@@ -1305,6 +1310,8 @@ type GoogleSecuritySafebrowsingV4ThreatInfo struct {
 	// safe URL expressions.
 	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
 	// in Chrome. See go/sb-accuracytips.
+	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
+	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformTypes") to
@@ -1392,6 +1399,8 @@ type GoogleSecuritySafebrowsingV4ThreatListDescriptor struct {
 	// safe URL expressions.
 	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
 	// in Chrome. See go/sb-accuracytips.
+	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
+	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformType") to
@@ -1488,6 +1497,8 @@ type GoogleSecuritySafebrowsingV4ThreatMatch struct {
 	// safe URL expressions.
 	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
 	// in Chrome. See go/sb-accuracytips.
+	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
+	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CacheDuration") to

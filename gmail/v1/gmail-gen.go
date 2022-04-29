@@ -131,7 +131,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://mail.google.com/",
 		"https://www.googleapis.com/auth/gmail.addons.current.action.compose",
 		"https://www.googleapis.com/auth/gmail.addons.current.message.action",
@@ -9527,7 +9527,7 @@ type UsersSettingsFiltersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a filter.
+// Delete: Immediately and permanently deletes the specified filter.
 //
 // - id: The ID of the filter to be deleted.
 // - userId: User's email address. The special value "me" can be used to
@@ -9601,7 +9601,7 @@ func (c *UsersSettingsFiltersDeleteCall) Do(opts ...googleapi.CallOption) error 
 	}
 	return nil
 	// {
-	//   "description": "Deletes a filter.",
+	//   "description": "Immediately and permanently deletes the specified filter.",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/filters/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "gmail.users.settings.filters.delete",

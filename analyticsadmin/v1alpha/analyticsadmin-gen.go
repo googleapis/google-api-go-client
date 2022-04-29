@@ -99,7 +99,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/analytics.edit",
 		"https://www.googleapis.com/auth/analytics.manage.users",
 		"https://www.googleapis.com/auth/analytics.manage.users.readonly",
@@ -2530,8 +2530,8 @@ type GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret struct {
 
 	// Name: Output only. Resource name of this secret. This secret may be a
 	// child of any type of stream. Format:
-	// properties/{property}/webDataStreams/{webDataStream}/measurementProtoc
-	// olSecrets/{measurementProtocolSecret}
+	// properties/{property}/dataStreams/{dataStream}/measurementProtocolSecr
+	// ets/{measurementProtocolSecret}
 	Name string `json:"name,omitempty"`
 
 	// SecretValue: Output only. The measurement protocol secret value. Pass
@@ -2634,8 +2634,22 @@ type GoogleAnalyticsAdminV1alphaProperty struct {
 
 	// Parent: Immutable. Resource name of this property's logical parent.
 	// Note: The Property-Moving UI can be used to change the parent.
-	// Format: accounts/{account} Example: "accounts/100"
+	// Format: accounts/{account}, properties/{property} Example:
+	// "accounts/100", "properties/101"
 	Parent string `json:"parent,omitempty"`
+
+	// PropertyType: Immutable. The property type for this Property
+	// resource. When creating a property, if the type is
+	// "PROPERTY_TYPE_UNSPECIFIED", then "ORDINARY_PROPERTY" will be
+	// implied. "SUBPROPERTY" and "ROLLUP_PROPERTY" types cannot yet be
+	// created via Google Analytics Admin API.
+	//
+	// Possible values:
+	//   "PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property type
+	//   "PROPERTY_TYPE_ORDINARY" - Ordinary GA4 property
+	//   "PROPERTY_TYPE_SUBPROPERTY" - GA4 subproperty
+	//   "PROPERTY_TYPE_ROLLUP" - GA4 rollup property
+	PropertyType string `json:"propertyType,omitempty"`
 
 	// ServiceLevel: Output only. The Google Analytics service level that
 	// applies to this property.
@@ -2695,9 +2709,24 @@ type GoogleAnalyticsAdminV1alphaPropertySummary struct {
 	// property summary.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// Parent: Resource name of this property's logical parent. Note: The
+	// Property-Moving UI can be used to change the parent. Format:
+	// accounts/{account}, properties/{property} Example: "accounts/100",
+	// "properties/200"
+	Parent string `json:"parent,omitempty"`
+
 	// Property: Resource name of property referred to by this property
 	// summary Format: properties/{property_id} Example: "properties/1000"
 	Property string `json:"property,omitempty"`
+
+	// PropertyType: The property's property type.
+	//
+	// Possible values:
+	//   "PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property type
+	//   "PROPERTY_TYPE_ORDINARY" - Ordinary GA4 property
+	//   "PROPERTY_TYPE_SUBPROPERTY" - GA4 subproperty
+	//   "PROPERTY_TYPE_ROLLUP" - GA4 rollup property
+	PropertyType string `json:"propertyType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
@@ -2996,8 +3025,7 @@ func (s *GoogleAnalyticsAdminV1alphaUserLink) MarshalJSON() ([]byte, error) {
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
 // method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); } The JSON representation for
-// `Empty` is empty JSON object `{}`.
+// returns (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -11247,8 +11275,8 @@ type PropertiesDataStreamsMeasurementProtocolSecretsPatchCall struct {
 //
 // - name: Output only. Resource name of this secret. This secret may be
 //   a child of any type of stream. Format:
-//   properties/{property}/webDataStreams/{webDataStream}/measurementProt
-//   ocolSecrets/{measurementProtocolSecret}.
+//   properties/{property}/dataStreams/{dataStream}/measurementProtocolSe
+//   crets/{measurementProtocolSecret}.
 func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Patch(name string, googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
 	c := &PropertiesDataStreamsMeasurementProtocolSecretsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11365,7 +11393,7 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of this secret. This secret may be a child of any type of stream. Format: properties/{property}/webDataStreams/{webDataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
+	//       "description": "Output only. Resource name of this secret. This secret may be a child of any type of stream. Format: properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
 	//       "location": "path",
 	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
 	//       "required": true,

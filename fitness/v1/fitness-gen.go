@@ -167,7 +167,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/fitness.activity.read",
 		"https://www.googleapis.com/auth/fitness.activity.write",
 		"https://www.googleapis.com/auth/fitness.blood_glucose.read",

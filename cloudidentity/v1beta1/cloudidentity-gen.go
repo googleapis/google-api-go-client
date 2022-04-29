@@ -110,7 +110,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-identity.devices",
 		"https://www.googleapis.com/auth/cloud-identity.devices.lookup",
 		"https://www.googleapis.com/auth/cloud-identity.devices.readonly",
@@ -824,6 +824,9 @@ type Device struct {
 	// CreateTime: Output only. When the Company-Owned device was imported.
 	// This field is empty for BYOD devices.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// DeviceId: Unique identifier for the device.
+	DeviceId string `json:"deviceId,omitempty"`
 
 	// DeviceType: Output only. Type of device.
 	//

@@ -102,7 +102,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/display-video",
 		"https://www.googleapis.com/auth/display-video-mediaplanning",
 		"https://www.googleapis.com/auth/display-video-user-management",
@@ -1177,7 +1177,7 @@ type AgeRangeAssignedTargetingOptionDetails struct {
 	// in this field can be 1) targeted solely, or, 2) part of a larger
 	// continuous age range. The reach of a continuous age range targeting
 	// can be expanded by also targeting an audience of an unknown age.
-	// Output only in v1. Required in v2.
+	// Output only in v1.
 	//
 	// Possible values:
 	//   "AGE_RANGE_UNSPECIFIED" - Default value when age range is not
@@ -1710,6 +1710,15 @@ type AssignedTargetingOption struct {
 	// the targeting_type is `TARGETING_TYPE_CHANNEL`.
 	ChannelDetails *ChannelAssignedTargetingOptionDetails `json:"channelDetails,omitempty"`
 
+	// ContentDurationDetails: Content duration details. This field will be
+	// populated when the targeting_type is
+	// `TARGETING_TYPE_CONTENT_DURATION`.
+	ContentDurationDetails *ContentDurationAssignedTargetingOptionDetails `json:"contentDurationDetails,omitempty"`
+
+	// ContentGenreDetails: Content genre details. This field will be
+	// populated when the targeting_type is `TARGETING_TYPE_CONTENT_GENRE`.
+	ContentGenreDetails *ContentGenreAssignedTargetingOptionDetails `json:"contentGenreDetails,omitempty"`
+
 	// ContentInstreamPositionDetails: Content instream position details.
 	// This field will be populated when the targeting_type is
 	// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
@@ -1719,6 +1728,11 @@ type AssignedTargetingOption struct {
 	// This field will be populated when the targeting_type is
 	// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
 	ContentOutstreamPositionDetails *ContentOutstreamPositionAssignedTargetingOptionDetails `json:"contentOutstreamPositionDetails,omitempty"`
+
+	// ContentStreamTypeDetails: Content duration details. This field will
+	// be populated when the TargetingType is
+	// `TARGETING_TYPE_CONTENT_STREAM_TYPE`.
+	ContentStreamTypeDetails *ContentStreamTypeAssignedTargetingOptionDetails `json:"contentStreamTypeDetails,omitempty"`
 
 	// DayAndTimeDetails: Day and time details. This field will be populated
 	// when the targeting_type is `TARGETING_TYPE_DAY_AND_TIME`.
@@ -1950,12 +1964,18 @@ type AssignedTargetingOption struct {
 	// latitude/longitude coordinates.
 	//   "TARGETING_TYPE_BUSINESS_CHAIN" - Target ads around locations of a
 	// business chain within a specific geo region.
+	//   "TARGETING_TYPE_CONTENT_DURATION" - Target ads to a specific video
+	// content duration.
+	//   "TARGETING_TYPE_CONTENT_STREAM_TYPE" - Target ads to a specific
+	// video content stream type.
 	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
 	// native content position.
 	//   "TARGETING_TYPE_OMID" - Target ads in an Open Measurement enabled
 	// inventory.
 	//   "TARGETING_TYPE_AUDIO_CONTENT_TYPE" - Target ads to a specific
 	// audio content type.
+	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
+	// genre.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ThirdPartyVerifierDetails: Third party verification details. This
@@ -2174,8 +2194,7 @@ func (s *AudienceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, err
 // is not supported. Remove all audio content type targeting options to
 // achieve this effect.
 type AudioContentTypeAssignedTargetingOptionDetails struct {
-	// AudioContentType: The audio content type. Output only in v1. Required
-	// in v2.
+	// AudioContentType: The audio content type. Output only in v1.
 	//
 	// Possible values:
 	//   "AUDIO_CONTENT_TYPE_UNSPECIFIED" - Audio content type is not
@@ -4378,6 +4397,170 @@ func (s *ContactInfoList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ContentDurationAssignedTargetingOptionDetails: Details for content
+// duration assigned targeting option. This will be populated in the
+// content_duration_details field when targeting_type is
+// `TARGETING_TYPE_CONTENT_DURATION`. Explicitly targeting all options
+// is not supported. Remove all content duration targeting options to
+// achieve this effect.
+type ContentDurationAssignedTargetingOptionDetails struct {
+	// ContentDuration: Output only. The content duration.
+	//
+	// Possible values:
+	//   "CONTENT_DURATION_UNSPECIFIED" - Content duration is not specified
+	// in this version. This enum is a place holder for a default value and
+	// does not represent a real content duration.
+	//   "CONTENT_DURATION_UNKNOWN" - The content duration is unknown.
+	//   "CONTENT_DURATION_0_TO_1_MIN" - Content is 0-1 minute long.
+	//   "CONTENT_DURATION_1_TO_5_MIN" - Content is 1-5 minutes long.
+	//   "CONTENT_DURATION_5_TO_15_MIN" - Content is 5-15 minutes long.
+	//   "CONTENT_DURATION_15_TO_30_MIN" - Content is 15-30 minutes long.
+	//   "CONTENT_DURATION_30_TO_60_MIN" - Content is 30-60 minutes long.
+	//   "CONTENT_DURATION_OVER_60_MIN" - Content is over 60 minutes long.
+	ContentDuration string `json:"contentDuration,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_CONTENT_DURATION`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentDuration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentDurationAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentDurationAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentDurationTargetingOptionDetails: Represents a targetable
+// content duration. This will be populated in the
+// content_duration_details field when targeting_type is
+// `TARGETING_TYPE_CONTENT_DURATION`.
+type ContentDurationTargetingOptionDetails struct {
+	// ContentDuration: Output only. The content duration.
+	//
+	// Possible values:
+	//   "CONTENT_DURATION_UNSPECIFIED" - Content duration is not specified
+	// in this version. This enum is a place holder for a default value and
+	// does not represent a real content duration.
+	//   "CONTENT_DURATION_UNKNOWN" - The content duration is unknown.
+	//   "CONTENT_DURATION_0_TO_1_MIN" - Content is 0-1 minute long.
+	//   "CONTENT_DURATION_1_TO_5_MIN" - Content is 1-5 minutes long.
+	//   "CONTENT_DURATION_5_TO_15_MIN" - Content is 5-15 minutes long.
+	//   "CONTENT_DURATION_15_TO_30_MIN" - Content is 15-30 minutes long.
+	//   "CONTENT_DURATION_30_TO_60_MIN" - Content is 30-60 minutes long.
+	//   "CONTENT_DURATION_OVER_60_MIN" - Content is over 60 minutes long.
+	ContentDuration string `json:"contentDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentDuration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentDurationTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentDurationTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentGenreAssignedTargetingOptionDetails: Details for content genre
+// assigned targeting option. This will be populated in the
+// content_genre_details field when targeting_type is
+// `TARGETING_TYPE_CONTENT_GENRE`. Explicitly targeting all options is
+// not supported. Remove all content genre targeting options to achieve
+// this effect.
+type ContentGenreAssignedTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the content genre.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_CONTENT_GENRE`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentGenreAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentGenreAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentGenreTargetingOptionDetails: Represents a targetable content
+// genre. This will be populated in the content_genre_details field when
+// targeting_type is `TARGETING_TYPE_CONTENT_GENRE`.
+type ContentGenreTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the content genre
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentGenreTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentGenreTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ContentInstreamPositionAssignedTargetingOptionDetails: Assigned
 // content instream position targeting option details. This will be
 // populated in the content_instream_position_details field when
@@ -4402,7 +4585,7 @@ type ContentInstreamPositionAssignedTargetingOptionDetails struct {
 	AdType string `json:"adType,omitempty"`
 
 	// ContentInstreamPosition: The content instream position for video or
-	// audio ads. Output only in v1. Required in v2.
+	// audio ads. Output only in v1.
 	//
 	// Possible values:
 	//   "CONTENT_INSTREAM_POSITION_UNSPECIFIED" - Content instream position
@@ -4516,7 +4699,7 @@ type ContentOutstreamPositionAssignedTargetingOptionDetails struct {
 	AdType string `json:"adType,omitempty"`
 
 	// ContentOutstreamPosition: The content outstream position. Output only
-	// in v1. Required in v2.
+	// in v1.
 	//
 	// Possible values:
 	//   "CONTENT_OUTSTREAM_POSITION_UNSPECIFIED" - Content outstream
@@ -4613,6 +4796,90 @@ type ContentOutstreamPositionTargetingOptionDetails struct {
 
 func (s *ContentOutstreamPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentOutstreamPositionTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentStreamTypeAssignedTargetingOptionDetails: Details for content
+// stream type assigned targeting option. This will be populated in the
+// content_stream_type_details field when targeting_type is
+// `TARGETING_TYPE_CONTENT_STREAM_TYPE`. Explicitly targeting all
+// options is not supported. Remove all content stream type targeting
+// options to achieve this effect.
+type ContentStreamTypeAssignedTargetingOptionDetails struct {
+	// ContentStreamType: Output only. The content stream type.
+	//
+	// Possible values:
+	//   "CONTENT_STREAM_TYPE_UNSPECIFIED" - Content stream type is not
+	// specified in this version. This enum is a place holder for a default
+	// value and does not represent a real content stream type.
+	//   "CONTENT_LIVE_STREAM" - The content is being live-streamed.
+	//   "CONTENT_ON_DEMAND" - The content is viewed on-demand.
+	ContentStreamType string `json:"contentStreamType,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_CONTENT_STREAM_TYPE`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentStreamType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentStreamType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentStreamTypeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentStreamTypeAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentStreamTypeTargetingOptionDetails: Represents a targetable
+// content stream type. This will be populated in the
+// content_stream_type_details field when targeting_type is
+// `TARGETING_TYPE_CONTENT_STREAM_TYPE`.
+type ContentStreamTypeTargetingOptionDetails struct {
+	// ContentStreamType: Output only. The content stream type.
+	//
+	// Possible values:
+	//   "CONTENT_STREAM_TYPE_UNSPECIFIED" - Content stream type is not
+	// specified in this version. This enum is a place holder for a default
+	// value and does not represent a real content stream type.
+	//   "CONTENT_LIVE_STREAM" - The content is being live-streamed.
+	//   "CONTENT_ON_DEMAND" - The content is viewed on-demand.
+	ContentStreamType string `json:"contentStreamType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentStreamType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentStreamType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentStreamTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentStreamTypeTargetingOptionDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4849,12 +5116,18 @@ type CreateAssignedTargetingOptionsRequest struct {
 	// latitude/longitude coordinates.
 	//   "TARGETING_TYPE_BUSINESS_CHAIN" - Target ads around locations of a
 	// business chain within a specific geo region.
+	//   "TARGETING_TYPE_CONTENT_DURATION" - Target ads to a specific video
+	// content duration.
+	//   "TARGETING_TYPE_CONTENT_STREAM_TYPE" - Target ads to a specific
+	// video content stream type.
 	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
 	// native content position.
 	//   "TARGETING_TYPE_OMID" - Target ads in an Open Measurement enabled
 	// inventory.
 	//   "TARGETING_TYPE_AUDIO_CONTENT_TYPE" - Target ads to a specific
 	// audio content type.
+	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
+	// genre.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6049,12 +6322,18 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	// latitude/longitude coordinates.
 	//   "TARGETING_TYPE_BUSINESS_CHAIN" - Target ads around locations of a
 	// business chain within a specific geo region.
+	//   "TARGETING_TYPE_CONTENT_DURATION" - Target ads to a specific video
+	// content duration.
+	//   "TARGETING_TYPE_CONTENT_STREAM_TYPE" - Target ads to a specific
+	// video content stream type.
 	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
 	// native content position.
 	//   "TARGETING_TYPE_OMID" - Target ads in an Open Measurement enabled
 	// inventory.
 	//   "TARGETING_TYPE_AUDIO_CONTENT_TYPE" - Target ads to a specific
 	// audio content type.
+	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
+	// genre.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6159,7 +6438,6 @@ func (s *DeviceMakeModelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_DEVICE_TYPE`.
 type DeviceTypeAssignedTargetingOptionDetails struct {
 	// DeviceType: The display name of the device type. Output only in v1.
-	// Required in v2.
 	//
 	// Possible values:
 	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
@@ -6834,8 +7112,7 @@ func (s *EditCustomerMatchMembersResponse) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -6847,8 +7124,7 @@ type Empty struct {
 // of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_ENVIRONMENT`.
 type EnvironmentAssignedTargetingOptionDetails struct {
-	// Environment: The serving environment. Output only in v1. Required in
-	// v2.
+	// Environment: The serving environment. Output only in v1.
 	//
 	// Possible values:
 	//   "ENVIRONMENT_UNSPECIFIED" - Default value when environment is not
@@ -7765,7 +8041,7 @@ func (s *FloodlightGroup) MarshalJSON() ([]byte, error) {
 type FrequencyCap struct {
 	// MaxImpressions: The maximum number of times a user may be shown the
 	// same ad during this period. Must be greater than 0. Required when
-	// unlimited is `false` and max_views is not set.
+	// unlimited is `false`.
 	MaxImpressions int64 `json:"maxImpressions,omitempty"`
 
 	// TimeUnit: The time unit in which the frequency cap will be applied.
@@ -7831,8 +8107,7 @@ func (s *FrequencyCap) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARTGETING_TYPE_GENDER`.
 type GenderAssignedTargetingOptionDetails struct {
-	// Gender: The gender of the audience. Output only in v1. Required in
-	// v2.
+	// Gender: The gender of the audience. Output only in v1.
 	//
 	// Possible values:
 	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified
@@ -8487,6 +8762,17 @@ type InsertionOrder struct {
 	// BidStrategy: The bidding strategy of the insertion order. By default,
 	// fixed_bid is set.
 	BidStrategy *BiddingStrategy `json:"bidStrategy,omitempty"`
+
+	// BillableOutcome: Immutable. The billable outcome of the insertion
+	// order.
+	//
+	// Possible values:
+	//   "BILLABLE_OUTCOME_UNSPECIFIED" - Unspecified billable outcome.
+	//   "BILLABLE_OUTCOME_PAY_PER_IMPRESSION" - Pay per impressions.
+	//   "BILLABLE_OUTCOME_PAY_PER_CLICK" - Pay per click.
+	//   "BILLABLE_OUTCOME_PAY_PER_VIEWABLE_IMPRESSION" - Pay per active
+	// view.
+	BillableOutcome string `json:"billableOutcome,omitempty"`
 
 	// Budget: Required. The budget allocation settings of the insertion
 	// order.
@@ -11365,8 +11651,8 @@ type MaximizeSpendBidStrategy struct {
 	// impressions.
 	PerformanceGoalType string `json:"performanceGoalType,omitempty"`
 
-	// RaiseBidForDeals: Controls whether the strategy takes deal floor
-	// prices into account.
+	// RaiseBidForDeals: Whether the strategy takes deal floor prices into
+	// account.
 	RaiseBidForDeals bool `json:"raiseBidForDeals,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -11552,8 +11838,7 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // Explicitly targeting all options is not supported. Remove all native
 // content position targeting options to achieve this effect.
 type NativeContentPositionAssignedTargetingOptionDetails struct {
-	// ContentPosition: The content position. Output only in v1. Required in
-	// v2.
+	// ContentPosition: The content position. Output only in v1.
 	//
 	// Possible values:
 	//   "NATIVE_CONTENT_POSITION_UNSPECIFIED" - Native content position is
@@ -11852,7 +12137,7 @@ func (s *ObaIcon) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_OMID`.
 type OmidAssignedTargetingOptionDetails struct {
 	// Omid: The type of Open Measurement enabled inventory. Output only in
-	// v1. Required in v2.
+	// v1.
 	//
 	// Possible values:
 	//   "OMID_UNSPECIFIED" - Default value when omid targeting is not
@@ -13851,7 +14136,7 @@ type SensitiveCategoryAssignedTargetingOptionDetails struct {
 	ExcludedTargetingOptionId string `json:"excludedTargetingOptionId,omitempty"`
 
 	// SensitiveCategory: An enum for the DV360 Sensitive category content
-	// classifier. Output only in v1. Required in v2.
+	// classifier. Output only in v1.
 	//
 	// Possible values:
 	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - This enum is only a placeholder
@@ -14244,11 +14529,20 @@ type TargetingOption struct {
 	// CategoryDetails: Category resource details.
 	CategoryDetails *CategoryTargetingOptionDetails `json:"categoryDetails,omitempty"`
 
+	// ContentDurationDetails: Content duration resource details.
+	ContentDurationDetails *ContentDurationTargetingOptionDetails `json:"contentDurationDetails,omitempty"`
+
+	// ContentGenreDetails: Content genre resource details.
+	ContentGenreDetails *ContentGenreTargetingOptionDetails `json:"contentGenreDetails,omitempty"`
+
 	// ContentInstreamPositionDetails: Content instream position details.
 	ContentInstreamPositionDetails *ContentInstreamPositionTargetingOptionDetails `json:"contentInstreamPositionDetails,omitempty"`
 
 	// ContentOutstreamPositionDetails: Content outstream position details.
 	ContentOutstreamPositionDetails *ContentOutstreamPositionTargetingOptionDetails `json:"contentOutstreamPositionDetails,omitempty"`
+
+	// ContentStreamTypeDetails: Content stream type resource details.
+	ContentStreamTypeDetails *ContentStreamTypeTargetingOptionDetails `json:"contentStreamTypeDetails,omitempty"`
 
 	// DeviceMakeModelDetails: Device make and model resource details.
 	DeviceMakeModelDetails *DeviceMakeModelTargetingOptionDetails `json:"deviceMakeModelDetails,omitempty"`
@@ -14397,12 +14691,18 @@ type TargetingOption struct {
 	// latitude/longitude coordinates.
 	//   "TARGETING_TYPE_BUSINESS_CHAIN" - Target ads around locations of a
 	// business chain within a specific geo region.
+	//   "TARGETING_TYPE_CONTENT_DURATION" - Target ads to a specific video
+	// content duration.
+	//   "TARGETING_TYPE_CONTENT_STREAM_TYPE" - Target ads to a specific
+	// video content stream type.
 	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
 	// native content position.
 	//   "TARGETING_TYPE_OMID" - Target ads in an Open Measurement enabled
 	// inventory.
 	//   "TARGETING_TYPE_AUDIO_CONTENT_TYPE" - Target ads to a specific
 	// audio content type.
+	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
+	// genre.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// UserRewardedContentDetails: User rewarded content details.
@@ -14989,8 +15289,7 @@ type VideoPlayerSizeAssignedTargetingOptionDetails struct {
 	// targeting_type is `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
-	// VideoPlayerSize: The video player size. Output only in v1. Required
-	// in v2.
+	// VideoPlayerSize: The video player size. Output only in v1.
 	//
 	// Possible values:
 	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not
@@ -15091,7 +15390,6 @@ type ViewabilityAssignedTargetingOptionDetails struct {
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// Viewability: The predicted viewability percentage. Output only in v1.
-	// Required in v2.
 	//
 	// Possible values:
 	//   "VIEWABILITY_UNSPECIFIED" - Default value when viewability is not
@@ -18134,9 +18432,12 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -18179,9 +18480,12 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -18483,9 +18787,12 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -18528,9 +18835,12 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -22483,9 +22793,12 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -22528,9 +22841,12 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -22817,9 +23133,12 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -22862,9 +23181,12 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -24396,8 +24718,8 @@ func (c *AdvertisersLineItemsListCall) Filter(filter string) *AdvertisersLineIte
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list. Acceptable values are: * "displayName" (default) *
-// "entityStatus" * “flight.dateRange.endDate” * "updateTime" The
+// the list. Acceptable values are: * `displayName` (default) *
+// `entityStatus` * `flight.dateRange.endDate` * `updateTime` The
 // default sorting order is ascending. To specify descending order for a
 // field, a suffix "desc" should be added to the field name. Example:
 // `displayName desc`.
@@ -24546,7 +24868,7 @@ func (c *AdvertisersLineItemsListCall) Do(opts ...googleapi.CallOption) (*ListLi
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list. Acceptable values are: * \"displayName\" (default) * \"entityStatus\" * “flight.dateRange.endDate” * \"updateTime\" The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) * `entityStatus` * `flight.dateRange.endDate` * `updateTime` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24966,9 +25288,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25011,9 +25336,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -25237,9 +25565,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25282,9 +25613,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -25515,9 +25849,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25560,9 +25897,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -25848,9 +26188,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25893,9 +26236,12 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -30283,9 +30629,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -30328,9 +30677,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -30538,9 +30890,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -30583,9 +30938,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -30805,9 +31163,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -30850,9 +31211,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -31124,9 +31488,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -31169,9 +31536,12 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -39983,9 +40353,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -40028,9 +40401,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -40235,9 +40611,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -40280,9 +40659,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -40499,9 +40881,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -40544,9 +40929,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -40815,9 +41203,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -40860,9 +41251,12 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -41399,9 +41793,12 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -41444,9 +41841,12 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -41738,9 +42138,12 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -41783,9 +42186,12 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -41991,9 +42397,12 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//         "TARGETING_TYPE_SUB_EXCHANGE",
 	//         "TARGETING_TYPE_POI",
 	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
-	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE"
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -42036,9 +42445,12 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//         "Purchase impressions from specific sub-exchanges.",
 	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
 	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
-	//         "Target ads to a specific audio content type."
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",

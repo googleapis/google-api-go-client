@@ -95,7 +95,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
 	)
@@ -580,6 +580,15 @@ type AndroidRoboTest struct {
 	// AppPackageId: The java package for the application under test. The
 	// default value is determined by examining the application's manifest.
 	AppPackageId string `json:"appPackageId,omitempty"`
+
+	// MaxDepth: The max depth of the traversal stack Robo can explore.
+	// Needs to be at least 2 to make Robo explore the app beyond the first
+	// activity. Default is 50.
+	MaxDepth int64 `json:"maxDepth,omitempty"`
+
+	// MaxSteps: The max number of steps Robo can execute. Default is no
+	// limit.
+	MaxSteps int64 `json:"maxSteps,omitempty"`
 
 	// RoboDirectives: A set of directives Robo should apply during the
 	// crawl. This allows users to customize the crawl. For example, the
@@ -2984,7 +2993,7 @@ type TestTargetsForShard struct {
 	// run for each shard. The targets need to be specified in
 	// AndroidJUnitRunner argument format. For example, "package
 	// com.my.packages" "class com.my.package.MyClass". The number of
-	// shard_test_targets must be greater than 0.
+	// test_targets must be greater than 0.
 	TestTargets []string `json:"testTargets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestTargets") to

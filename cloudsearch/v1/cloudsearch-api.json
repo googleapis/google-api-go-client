@@ -136,7 +136,7 @@
             "items": {
               "methods": {
                 "checkAccess": {
-                  "description": "Checks whether an item is accessible by specified principal. **Note:** This API requires an admin account to execute.",
+                  "description": "Checks whether an item is accessible by specified principal. Principal must be a user; groups and domain values aren't supported. **Note:** This API requires an admin account to execute.",
                   "flatPath": "v1/debug/datasources/{datasourcesId}/items/{itemsId}:checkAccess",
                   "httpMethod": "POST",
                   "id": "cloudsearch.debug.datasources.items.checkAccess",
@@ -1994,7 +1994,7 @@
       }
     }
   },
-  "revision": "20220301",
+  "revision": "20220411",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "AclInfo": {
@@ -2064,11 +2064,10 @@
             "SHEETS_APP",
             "SLIDES_APP",
             "MEET_APP",
-            "FILE_SUGGESTION_APP",
+            "ASSISTIVE_SUGGESTION_APP",
             "CONTACTS_APP",
             "ACTIVITY_FEED_APP",
-            "DRIVE_APP",
-            "ASSISTIVE_SUGGESTION_APP"
+            "DRIVE_APP"
           ],
           "enumDescriptions": [
             "",
@@ -2081,8 +2080,7 @@
             "Powered by Bullseye",
             "",
             "",
-            "",
-            "TODO (b/220205747): replace the above FILE_SUGGESTION_APP in the future."
+            ""
           ],
           "type": "string"
         },
@@ -2729,6 +2727,18 @@
       "description": "This is the proto for holding space level scoring information. This data is used for logging in query-api server and for testing purposes.",
       "id": "DynamiteSpacesScoringInfo",
       "properties": {
+        "affinityScore": {
+          "format": "double",
+          "type": "number"
+        },
+        "commonContactCountAffinityScore": {
+          "format": "double",
+          "type": "number"
+        },
+        "contactsIntersectionCount": {
+          "format": "double",
+          "type": "number"
+        },
         "finalScore": {
           "format": "double",
           "type": "number"
@@ -2737,13 +2747,41 @@
           "format": "double",
           "type": "number"
         },
+        "joinedSpacesAffinityScore": {
+          "format": "double",
+          "type": "number"
+        },
+        "lastMessagePostedTimestampMicros": {
+          "format": "int64",
+          "type": "string"
+        },
+        "memberMetadataCount": {
+          "format": "double",
+          "type": "number"
+        },
         "messageScore": {
+          "format": "double",
+          "type": "number"
+        },
+        "numAucContacts": {
+          "format": "int64",
+          "type": "string"
+        },
+        "smallContactListAffinityScore": {
+          "format": "double",
+          "type": "number"
+        },
+        "smallUnjoinedSpacesAffinityScore": {
           "format": "double",
           "type": "number"
         },
         "spaceAgeInDays": {
           "format": "double",
           "type": "number"
+        },
+        "spaceCreationTimestampMicros": {
+          "format": "int64",
+          "type": "string"
         },
         "topicalityScore": {
           "format": "double",
@@ -4775,15 +4813,14 @@
       "id": "RestrictItem",
       "properties": {
         "driveFollowUpRestrict": {
-          "$ref": "DriveFollowUpRestrict",
-          "description": "LINT.ThenChange(//depot/google3/java/com/google/apps/search/quality/itemsuggest/utils/SubtypeRerankingUtils.java)"
+          "$ref": "DriveFollowUpRestrict"
         },
         "driveLocationRestrict": {
           "$ref": "DriveLocationRestrict"
         },
         "driveMimeTypeRestrict": {
           "$ref": "DriveMimeTypeRestrict",
-          "description": "LINT.IfChange Drive Types."
+          "description": "Drive Types."
         },
         "driveTimeSpanRestrict": {
           "$ref": "DriveTimeSpanRestrict"
@@ -5464,8 +5501,12 @@
         "groupId": {
           "$ref": "GroupId"
         },
+        "inviterEmail": {
+          "description": "The email address of the user that invited the calling user to the room, if available. This field will only be populated for direct invites, it will be empty if the user was indirectly invited to the group.",
+          "type": "string"
+        },
         "isExternal": {
-          "description": "Whether this is an external space outside of user's organization",
+          "description": "Whether this is a space that enables guest access",
           "type": "boolean"
         },
         "name": {
@@ -5825,6 +5866,10 @@
       "description": "Primary key for User resource.",
       "id": "UserId",
       "properties": {
+        "actingUserId": {
+          "description": "Optional. Opaque, server-assigned ID of the user profile associated with App/user acting on behalf of the human user. This is currently only set when a 3P application is acting on the user's behalf.",
+          "type": "string"
+        },
         "id": {
           "description": "Opaque, server-assigned ID of the User.",
           "type": "string"

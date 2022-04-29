@@ -87,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -151,6 +151,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Jobs = NewProjectsLocationsJobsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Services = NewProjectsLocationsServicesService(s)
 	return rs
@@ -159,9 +160,44 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	Jobs *ProjectsLocationsJobsService
+
 	Operations *ProjectsLocationsOperationsService
 
 	Services *ProjectsLocationsServicesService
+}
+
+func NewProjectsLocationsJobsService(s *Service) *ProjectsLocationsJobsService {
+	rs := &ProjectsLocationsJobsService{s: s}
+	rs.Executions = NewProjectsLocationsJobsExecutionsService(s)
+	return rs
+}
+
+type ProjectsLocationsJobsService struct {
+	s *Service
+
+	Executions *ProjectsLocationsJobsExecutionsService
+}
+
+func NewProjectsLocationsJobsExecutionsService(s *Service) *ProjectsLocationsJobsExecutionsService {
+	rs := &ProjectsLocationsJobsExecutionsService{s: s}
+	rs.Tasks = NewProjectsLocationsJobsExecutionsTasksService(s)
+	return rs
+}
+
+type ProjectsLocationsJobsExecutionsService struct {
+	s *Service
+
+	Tasks *ProjectsLocationsJobsExecutionsTasksService
+}
+
+func NewProjectsLocationsJobsExecutionsTasksService(s *Service) *ProjectsLocationsJobsExecutionsTasksService {
+	rs := &ProjectsLocationsJobsExecutionsTasksService{s: s}
+	return rs
+}
+
+type ProjectsLocationsJobsExecutionsTasksService struct {
+	s *Service
 }
 
 func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
@@ -203,6 +239,10 @@ type GoogleCloudRunV2BinaryAuthorization struct {
 	// https://cloud.google.com/binary-authorization/docs/using-breakglass
 	BreakglassJustification string `json:"breakglassJustification,omitempty"`
 
+	// Policy: The path to a binary authorization policy. Format:
+	// projects/{project}/platforms/cloudRun/{policy-name}
+	Policy string `json:"policy,omitempty"`
+
 	// UseDefault: If True, indicates to use the default project's binary
 	// authorization policy. If False, binary authorization will be
 	// disabled.
@@ -236,14 +276,14 @@ func (s *GoogleCloudRunV2BinaryAuthorization) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2CloudSqlInstance: Represents a specific Cloud SQL
 // instance.
 type GoogleCloudRunV2CloudSqlInstance struct {
-	// Connections: The Cloud SQL instance connection names, as can be found
+	// Instances: The Cloud SQL instance connection names, as can be found
 	// in https://console.cloud.google.com/sql/instances. Visit
 	// https://cloud.google.com/sql/docs/mysql/connect-run for more
 	// information on how to connect Cloud SQL and Cloud Run. Format:
 	// {project}:{location}:{instance}
-	Connections []string `json:"connections,omitempty"`
+	Instances []string `json:"instances,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Connections") to
+	// ForceSendFields is a list of field names (e.g. "Instances") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -251,10 +291,10 @@ type GoogleCloudRunV2CloudSqlInstance struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Connections") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Instances") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -307,8 +347,8 @@ type GoogleCloudRunV2Condition struct {
 	// settings; this is a transient reason.
 	//   "REVISION_ORG_POLICY_VIOLATION" - The revision can't be created
 	// because it violates an org policy setting.
-	//   "ENABLING_GCFV2_URI_SUPPORT" - Enabling GCFv2 URI support; this is
-	// a transient reason.
+	//   "UPDATING_GCFV2_URI_DATA" - Updating GCFv2 URI data; this is a
+	// transient reason.
 	InternalReason string `json:"internalReason,omitempty"`
 
 	// LastTransitionTime: Last time the condition transitioned from one
@@ -538,6 +578,40 @@ func (s *GoogleCloudRunV2ContainerPort) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2ContainerStatus: ContainerStatus holds the
+// information of container name and image digest value.
+type GoogleCloudRunV2ContainerStatus struct {
+	// ImageDigest: ImageDigest holds the resolved digest for the image
+	// specified, regardless of whether a tag or digest was originally
+	// specified in the Container object.
+	ImageDigest string `json:"imageDigest,omitempty"`
+
+	// Name: The name of the container, if specified.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageDigest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageDigest") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2ContainerStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ContainerStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2EnvVar: EnvVar represents an environment variable
 // present in a Container.
 type GoogleCloudRunV2EnvVar struct {
@@ -606,6 +680,536 @@ type GoogleCloudRunV2EnvVarSource struct {
 
 func (s *GoogleCloudRunV2EnvVarSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2EnvVarSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2Execution: Execution represents the configuration of
+// a single execution. A execution an immutable resource that references
+// a container image which is run to completion.
+type GoogleCloudRunV2Execution struct {
+	// Annotations: KRM-style annotations for the resource.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// CompletionTime: Output only. Represents time when the execution was
+	// completed. It is not guaranteed to be set in happens-before order
+	// across separate operations.
+	CompletionTime string `json:"completionTime,omitempty"`
+
+	// Conditions: Output only. The Condition of this Execution, containing
+	// its readiness status, and detailed error information in case it did
+	// not reach the desired state.
+	Conditions []*GoogleCloudRunV2Condition `json:"conditions,omitempty"`
+
+	// CreateTime: Output only. Represents time when the execution was
+	// acknowledged by the execution controller. It is not guaranteed to be
+	// set in happens-before order across separate operations.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeleteTime: Output only. For a deleted resource, the deletion time.
+	// It is only populated as a response to a Delete request.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// Etag: Output only. A system-generated fingerprint for this version of
+	// the resource. May be used to detect modification conflict during
+	// updates.
+	Etag string `json:"etag,omitempty"`
+
+	// ExpireTime: Output only. For a deleted resource, the time after which
+	// it will be permamently deleted. It is only populated as a response to
+	// a Delete request.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// FailedCount: Output only. The number of tasks which reached phase
+	// Failed.
+	FailedCount int64 `json:"failedCount,omitempty"`
+
+	// Generation: Output only. A number that monotonically increases every
+	// time the user modifies the desired state.
+	Generation int64 `json:"generation,omitempty,string"`
+
+	// Job: Output only. The name of the parent Job.
+	Job string `json:"job,omitempty"`
+
+	// Labels: KRM-style labels for the resource. User-provided labels are
+	// shared with Google's billing system, so they can be used to filter,
+	// or break down billing charges by team, component, environment, state,
+	// etc. For more information, visit
+	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
+	// or https://cloud.google.com/run/docs/configuring/labels Cloud Run
+	// will populate some labels with 'run.googleapis.com' or
+	// 'serving.knative.dev' namespaces. Those labels are read-only, and
+	// user changes will not be preserved.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// LaunchStage: Set the launch stage to a preview stage on write to
+	// allow use of preview features in that stage. On read, describes
+	// whether the resource uses preview features. Launch Stages are defined
+	// at Google Cloud Platform Launch Stages
+	// (https://cloud.google.com/terms/launch-stages).
+	//
+	// Possible values:
+	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
+	//   "UNIMPLEMENTED" - The feature is not yet implemented. Users can not
+	// use it.
+	//   "PRELAUNCH" - Prelaunch features are hidden from users and are only
+	// visible internally.
+	//   "EARLY_ACCESS" - Early Access features are limited to a closed
+	// group of testers. To use these features, you must sign up in advance
+	// and sign a Trusted Tester agreement (which includes confidentiality
+	// provisions). These features may be unstable, changed in
+	// backward-incompatible ways, and are not guaranteed to be released.
+	//   "ALPHA" - Alpha is a limited availability test for releases before
+	// they are cleared for widespread use. By Alpha, all significant design
+	// issues are resolved and we are in the process of verifying
+	// functionality. Alpha customers need to apply for access, agree to
+	// applicable terms, and have their projects allowlisted. Alpha releases
+	// don't have to be feature complete, no SLAs are provided, and there
+	// are no technical support obligations, but they will be far enough
+	// along that customers can actually use them in test environments or
+	// for limited-use tests -- just like they would in normal production
+	// cases.
+	//   "BETA" - Beta is the point at which we are ready to open a release
+	// for any customer to use. There are no SLA or technical support
+	// obligations in a Beta release. Products will be complete from a
+	// feature perspective, but may have some open outstanding issues. Beta
+	// releases are suitable for limited production use cases.
+	//   "GA" - GA features are open to all developers and are considered
+	// stable and fully qualified for production use.
+	//   "DEPRECATED" - Deprecated features are scheduled to be shut down
+	// and removed. For more information, see the "Deprecation Policy"
+	// section of our [Terms of Service](https://cloud.google.com/terms/)
+	// and the [Google Cloud Platform Subject to the Deprecation
+	// Policy](https://cloud.google.com/terms/deprecation) documentation.
+	LaunchStage string `json:"launchStage,omitempty"`
+
+	// Name: Output only. The unique name of this Execution.
+	Name string `json:"name,omitempty"`
+
+	// ObservedGeneration: Output only. The generation of this Execution.
+	// See comments in `reconciling` for additional information on
+	// reconciliation process in Cloud Run.
+	ObservedGeneration int64 `json:"observedGeneration,omitempty,string"`
+
+	// Parallelism: Output only. Specifies the maximum desired number of
+	// tasks the execution should run at any given time. Must be <=
+	// task_count. The actual number of tasks running in steady state will
+	// be less than this number when ((.spec.task_count -
+	// .status.successful) < .spec.parallelism), i.e. when the work left to
+	// do is less than max parallelism. More info:
+	// https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
+	Parallelism int64 `json:"parallelism,omitempty"`
+
+	// Reconciling: Output only. Indicates whether the resource's
+	// reconciliation is still in progress. See comments in
+	// `Job.reconciling` for additional information on reconciliation
+	// process in Cloud Run.
+	Reconciling bool `json:"reconciling,omitempty"`
+
+	// RunningCount: Output only. The number of actively running tasks.
+	RunningCount int64 `json:"runningCount,omitempty"`
+
+	// StartTime: Output only. Represents time when the execution started to
+	// run. It is not guaranteed to be set in happens-before order across
+	// separate operations.
+	StartTime string `json:"startTime,omitempty"`
+
+	// SucceededCount: Output only. The number of tasks which reached phase
+	// Succeeded.
+	SucceededCount int64 `json:"succeededCount,omitempty"`
+
+	// TaskCount: Output only. Specifies the desired number of tasks the
+	// execution should run. Setting to 1 means that parallelism is limited
+	// to 1 and the success of that task signals the success of the
+	// execution. More info:
+	// https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
+	TaskCount int64 `json:"taskCount,omitempty"`
+
+	// Template: Output only. Describes the task(s) that will be created
+	// when executing an execution.
+	Template *GoogleCloudRunV2TaskTemplate `json:"template,omitempty"`
+
+	// Uid: Output only. Server assigned unique identifier for the
+	// Execution. The value is a UUID4 string and guaranteed to remain
+	// unchanged until the resource is deleted.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. The last-modified time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2Execution) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2Execution
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2ExecutionReference: Reference to an Execution. Use
+// /Executions.GetExecution with the given name to get full execution
+// including the latest status.
+type GoogleCloudRunV2ExecutionReference struct {
+	// CreateTime: Creation timestamp of the execution.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Name: Name of the execution.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2ExecutionReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ExecutionReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2ExecutionTemplate: ExecutionTemplate describes the
+// data an execution should have when created from a template.
+type GoogleCloudRunV2ExecutionTemplate struct {
+	// Annotations: KRM-style annotations for the resource.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// Labels: KRM-style labels for the resource.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Parallelism: Specifies the maximum desired number of tasks the
+	// execution should run at given time. Must be <= task_count. When the
+	// job is run, if this field is 0 or unset, the maximum possible value
+	// will be used for that execution. The actual number of tasks running
+	// in steady state will be less than this number when there are fewer
+	// tasks waiting to be completed remaining, i.e. when the work left to
+	// do is less than max parallelism.
+	Parallelism int64 `json:"parallelism,omitempty"`
+
+	// TaskCount: Specifies the desired number of tasks the execution should
+	// run. Setting to 1 means that parallelism is limited to 1 and the
+	// success of that task signals the success of the execution. More info:
+	// https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
+	TaskCount int64 `json:"taskCount,omitempty"`
+
+	// Template: Required. Describes the task(s) that will be created when
+	// executing an execution.
+	Template *GoogleCloudRunV2TaskTemplate `json:"template,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2ExecutionTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ExecutionTemplate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2Job: Job represents the configuration of a single
+// job. A job an immutable resource that references a container image
+// which is run to completion.
+type GoogleCloudRunV2Job struct {
+	// Annotations: KRM-style annotations for the resource. Unstructured key
+	// value map that may be set by external tools to store and arbitrary
+	// metadata. They are not queryable and should be preserved when
+	// modifying objects. Cloud Run will populate some annotations using
+	// 'run.googleapis.com' or 'serving.knative.dev' namespaces. This field
+	// follows Kubernetes annotations' namespacing, limits, and rules. More
+	// info: https://kubernetes.io/docs/user-guide/annotations
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// BinaryAuthorization: Settings for the Binary Authorization feature.
+	BinaryAuthorization *GoogleCloudRunV2BinaryAuthorization `json:"binaryAuthorization,omitempty"`
+
+	// Client: Arbitrary identifier for the API client.
+	Client string `json:"client,omitempty"`
+
+	// ClientVersion: Arbitrary version identifier for the API client.
+	ClientVersion string `json:"clientVersion,omitempty"`
+
+	// Conditions: Output only. The Conditions of all other associated
+	// sub-resources. They contain additional diagnostics information in
+	// case the Job does not reach its desired state. See comments in
+	// `reconciling` for additional information on reconciliation process in
+	// Cloud Run.
+	Conditions []*GoogleCloudRunV2Condition `json:"conditions,omitempty"`
+
+	// ContainerStatuses: Output only. Status information for each of the
+	// containers specified.
+	ContainerStatuses []*GoogleCloudRunV2ContainerStatus `json:"containerStatuses,omitempty"`
+
+	// CreateTime: Output only. The creation time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Creator: Output only. Email address of the authenticated creator.
+	Creator string `json:"creator,omitempty"`
+
+	// DeleteTime: Output only. The deletion time.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// Etag: Output only. A system-generated fingerprint for this version of
+	// the resource. May be used to detect modification conflict during
+	// updates.
+	Etag string `json:"etag,omitempty"`
+
+	// ExecutionCount: Output only. Number of executions created for this
+	// job.
+	ExecutionCount int64 `json:"executionCount,omitempty"`
+
+	// ExpireTime: Output only. For a deleted resource, the time after which
+	// it will be permamently deleted.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Generation: Output only. A number that monotonically increases every
+	// time the user modifies the desired state.
+	Generation int64 `json:"generation,omitempty,string"`
+
+	// Labels: KRM-style labels for the resource. User-provided labels are
+	// shared with Google's billing system, so they can be used to filter,
+	// or break down billing charges by team, component, environment, state,
+	// etc. For more information, visit
+	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
+	// or https://cloud.google.com/run/docs/configuring/labels Cloud Run
+	// will populate some labels with 'run.googleapis.com' or
+	// 'serving.knative.dev' namespaces. Those labels are read-only, and
+	// user changes will not be preserved.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// LastModifier: Output only. Email address of the last authenticated
+	// modifier.
+	LastModifier string `json:"lastModifier,omitempty"`
+
+	// LatestCreatedExecution: Output only. Name of the last created
+	// execution.
+	LatestCreatedExecution *GoogleCloudRunV2ExecutionReference `json:"latestCreatedExecution,omitempty"`
+
+	// LaunchStage: The launch stage as defined by Google Cloud Platform
+	// Launch Stages (https://cloud.google.com/terms/launch-stages). Cloud
+	// Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA
+	// is assumed.
+	//
+	// Possible values:
+	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
+	//   "UNIMPLEMENTED" - The feature is not yet implemented. Users can not
+	// use it.
+	//   "PRELAUNCH" - Prelaunch features are hidden from users and are only
+	// visible internally.
+	//   "EARLY_ACCESS" - Early Access features are limited to a closed
+	// group of testers. To use these features, you must sign up in advance
+	// and sign a Trusted Tester agreement (which includes confidentiality
+	// provisions). These features may be unstable, changed in
+	// backward-incompatible ways, and are not guaranteed to be released.
+	//   "ALPHA" - Alpha is a limited availability test for releases before
+	// they are cleared for widespread use. By Alpha, all significant design
+	// issues are resolved and we are in the process of verifying
+	// functionality. Alpha customers need to apply for access, agree to
+	// applicable terms, and have their projects allowlisted. Alpha releases
+	// don't have to be feature complete, no SLAs are provided, and there
+	// are no technical support obligations, but they will be far enough
+	// along that customers can actually use them in test environments or
+	// for limited-use tests -- just like they would in normal production
+	// cases.
+	//   "BETA" - Beta is the point at which we are ready to open a release
+	// for any customer to use. There are no SLA or technical support
+	// obligations in a Beta release. Products will be complete from a
+	// feature perspective, but may have some open outstanding issues. Beta
+	// releases are suitable for limited production use cases.
+	//   "GA" - GA features are open to all developers and are considered
+	// stable and fully qualified for production use.
+	//   "DEPRECATED" - Deprecated features are scheduled to be shut down
+	// and removed. For more information, see the "Deprecation Policy"
+	// section of our [Terms of Service](https://cloud.google.com/terms/)
+	// and the [Google Cloud Platform Subject to the Deprecation
+	// Policy](https://cloud.google.com/terms/deprecation) documentation.
+	LaunchStage string `json:"launchStage,omitempty"`
+
+	// Name: The fully qualified name of this Job. Format:
+	// projects/{project}/locations/{location}/jobs/{job}
+	Name string `json:"name,omitempty"`
+
+	// ObservedGeneration: Output only. The generation of this Job. See
+	// comments in `reconciling` for additional information on
+	// reconciliation process in Cloud Run.
+	ObservedGeneration int64 `json:"observedGeneration,omitempty,string"`
+
+	// Reconciling: Output only. Returns true if the Job is currently being
+	// acted upon by the system to bring it into the desired state. When a
+	// new Job is created, or an existing one is updated, Cloud Run will
+	// asynchronously perform all necessary steps to bring the Job to the
+	// desired state. This process is called reconciliation. While
+	// reconciliation is in process, `observed_generation` and
+	// `latest_succeeded_execution`, will have transient values that might
+	// mismatch the intended state: Once reconciliation is over (and this
+	// field is false), there are two possible outcomes: reconciliation
+	// succeeded and the state matches the Job, or there was an error, and
+	// reconciliation failed. This state can be found in
+	// `terminal_condition.state`. If reconciliation succeeded, the
+	// following fields will match: `observed_generation` and `generation`,
+	// `latest_succeeded_execution` and `latest_created_execution`. If
+	// reconciliation failed, `observed_generation` and
+	// `latest_succeeded_execution` will have the state of the last
+	// succeeded execution or empty for newly created Job. Additional
+	// information on the failure can be found in `terminal_condition` and
+	// `conditions`.
+	Reconciling bool `json:"reconciling,omitempty"`
+
+	// Template: Required. The template used to create executions for this
+	// Job.
+	Template *GoogleCloudRunV2ExecutionTemplate `json:"template,omitempty"`
+
+	// TerminalCondition: Output only. The Condition of this Job, containing
+	// its readiness status, and detailed error information in case it did
+	// not reach the desired state.
+	TerminalCondition *GoogleCloudRunV2Condition `json:"terminalCondition,omitempty"`
+
+	// Uid: Output only. Server assigned unique identifier for the
+	// Execution. The value is a UUID4 string and guaranteed to remain
+	// unchanged until the resource is deleted.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. The last-modified time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2Job) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2Job
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2ListExecutionsResponse: Response message containing a
+// list of Executions.
+type GoogleCloudRunV2ListExecutionsResponse struct {
+	// Executions: The resulting list of Executions.
+	Executions []*GoogleCloudRunV2Execution `json:"executions,omitempty"`
+
+	// NextPageToken: A token indicating there are more items than
+	// page_size. Use it in the next ListExecutions request to continue.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Executions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Executions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2ListExecutionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ListExecutionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2ListJobsResponse: Response message containing a list
+// of Jobs.
+type GoogleCloudRunV2ListJobsResponse struct {
+	// Jobs: The resulting list of Jobs.
+	Jobs []*GoogleCloudRunV2Job `json:"jobs,omitempty"`
+
+	// NextPageToken: A token indicating there are more items than
+	// page_size. Use it in the next ListJobs request to continue.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Jobs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Jobs") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2ListJobsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ListJobsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -680,6 +1284,43 @@ type GoogleCloudRunV2ListServicesResponse struct {
 
 func (s *GoogleCloudRunV2ListServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2ListServicesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2ListTasksResponse: Response message containing a list
+// of Tasks.
+type GoogleCloudRunV2ListTasksResponse struct {
+	// NextPageToken: A token indicating there are more items than
+	// page_size. Use it in the next ListTasks request to continue.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Tasks: The resulting list of Tasks.
+	Tasks []*GoogleCloudRunV2Task `json:"tasks,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2ListTasksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ListTasksResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -767,7 +1408,7 @@ type GoogleCloudRunV2Revision struct {
 	//
 	// Possible values:
 	//   "EXECUTION_ENVIRONMENT_UNSPECIFIED" - Unspecified
-	//   "EXECUTION_ENVIRONMENT_DEFAULT" - Uses the Google-default
+	//   "EXECUTION_ENVIRONMENT_GEN1" - Uses the First Generation
 	// environment.
 	//   "EXECUTION_ENVIRONMENT_GEN2" - Uses Second Generation environment.
 	ExecutionEnvironment string `json:"executionEnvironment,omitempty"`
@@ -971,7 +1612,7 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	//
 	// Possible values:
 	//   "EXECUTION_ENVIRONMENT_UNSPECIFIED" - Unspecified
-	//   "EXECUTION_ENVIRONMENT_DEFAULT" - Uses the Google-default
+	//   "EXECUTION_ENVIRONMENT_GEN1" - Uses the First Generation
 	// environment.
 	//   "EXECUTION_ENVIRONMENT_GEN2" - Uses Second Generation environment.
 	ExecutionEnvironment string `json:"executionEnvironment,omitempty"`
@@ -1023,6 +1664,40 @@ type GoogleCloudRunV2RevisionTemplate struct {
 
 func (s *GoogleCloudRunV2RevisionTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2RevisionTemplate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2RunJobRequest: Request message to create a new
+// Execution of a Job.
+type GoogleCloudRunV2RunJobRequest struct {
+	// Etag: A system-generated fingerprint for this version of the
+	// resource. May be used to detect modification conflict during updates.
+	Etag string `json:"etag,omitempty"`
+
+	// ValidateOnly: Indicates that the request should be validated without
+	// actually deleting any resources.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2RunJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2RunJobRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1342,6 +2017,318 @@ type GoogleCloudRunV2Service struct {
 
 func (s *GoogleCloudRunV2Service) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2Service
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2Task: Task represents a single run of a container to
+// completion.
+type GoogleCloudRunV2Task struct {
+	// Annotations: KRM-style annotations for the resource.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// CompletionTime: Output only. Represents time when the Task was
+	// completed. It is not guaranteed to be set in happens-before order
+	// across separate operations.
+	CompletionTime string `json:"completionTime,omitempty"`
+
+	// Conditions: Output only. The Condition of this Task, containing its
+	// readiness status, and detailed error information in case it did not
+	// reach the desired state.
+	Conditions []*GoogleCloudRunV2Condition `json:"conditions,omitempty"`
+
+	// Containers: Holds the single container that defines the unit of
+	// execution for this task.
+	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
+
+	// CreateTime: Output only. Represents time when the task was created by
+	// the job controller. It is not guaranteed to be set in happens-before
+	// order across separate operations.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeleteTime: Output only. For a deleted resource, the deletion time.
+	// It is only populated as a response to a Delete request.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// EncryptionKey: Output only. A reference to a customer managed
+	// encryption key (CMEK) to use to encrypt this container image. For
+	// more information, go to
+	// https://cloud.google.com/run/docs/securing/using-cmek
+	EncryptionKey string `json:"encryptionKey,omitempty"`
+
+	// Etag: Output only. A system-generated fingerprint for this version of
+	// the resource. May be used to detect modification conflict during
+	// updates.
+	Etag string `json:"etag,omitempty"`
+
+	// Execution: Output only. The name of the parent Execution.
+	Execution string `json:"execution,omitempty"`
+
+	// ExecutionEnvironment: The execution environment being used to host
+	// this Task.
+	//
+	// Possible values:
+	//   "EXECUTION_ENVIRONMENT_UNSPECIFIED" - Unspecified
+	//   "EXECUTION_ENVIRONMENT_GEN1" - Uses the First Generation
+	// environment.
+	//   "EXECUTION_ENVIRONMENT_GEN2" - Uses Second Generation environment.
+	ExecutionEnvironment string `json:"executionEnvironment,omitempty"`
+
+	// ExpireTime: Output only. For a deleted resource, the time after which
+	// it will be permamently deleted. It is only populated as a response to
+	// a Delete request.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Generation: Output only. A number that monotonically increases every
+	// time the user modifies the desired state.
+	Generation int64 `json:"generation,omitempty,string"`
+
+	// Index: Output only. Index of the Task, unique per execution, and
+	// beginning at 0.
+	Index int64 `json:"index,omitempty"`
+
+	// Job: Output only. The name of the parent Job.
+	Job string `json:"job,omitempty"`
+
+	// Labels: KRM-style labels for the resource. User-provided labels are
+	// shared with Google's billing system, so they can be used to filter,
+	// or break down billing charges by team, component, environment, state,
+	// etc. For more information, visit
+	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
+	// or https://cloud.google.com/run/docs/configuring/labels Cloud Run
+	// will populate some labels with 'run.googleapis.com' or
+	// 'serving.knative.dev' namespaces. Those labels are read-only, and
+	// user changes will not be preserved.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// LastAttemptResult: Output only. Result of the last attempt of this
+	// Task.
+	LastAttemptResult *GoogleCloudRunV2TaskAttemptResult `json:"lastAttemptResult,omitempty"`
+
+	// LaunchStage: Set the launch stage to a preview stage on write to
+	// allow use of preview features in that stage. On read, describes
+	// whether the resource uses preview features. Launch Stages are defined
+	// at Google Cloud Platform Launch Stages
+	// (https://cloud.google.com/terms/launch-stages).
+	//
+	// Possible values:
+	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
+	//   "UNIMPLEMENTED" - The feature is not yet implemented. Users can not
+	// use it.
+	//   "PRELAUNCH" - Prelaunch features are hidden from users and are only
+	// visible internally.
+	//   "EARLY_ACCESS" - Early Access features are limited to a closed
+	// group of testers. To use these features, you must sign up in advance
+	// and sign a Trusted Tester agreement (which includes confidentiality
+	// provisions). These features may be unstable, changed in
+	// backward-incompatible ways, and are not guaranteed to be released.
+	//   "ALPHA" - Alpha is a limited availability test for releases before
+	// they are cleared for widespread use. By Alpha, all significant design
+	// issues are resolved and we are in the process of verifying
+	// functionality. Alpha customers need to apply for access, agree to
+	// applicable terms, and have their projects allowlisted. Alpha releases
+	// don't have to be feature complete, no SLAs are provided, and there
+	// are no technical support obligations, but they will be far enough
+	// along that customers can actually use them in test environments or
+	// for limited-use tests -- just like they would in normal production
+	// cases.
+	//   "BETA" - Beta is the point at which we are ready to open a release
+	// for any customer to use. There are no SLA or technical support
+	// obligations in a Beta release. Products will be complete from a
+	// feature perspective, but may have some open outstanding issues. Beta
+	// releases are suitable for limited production use cases.
+	//   "GA" - GA features are open to all developers and are considered
+	// stable and fully qualified for production use.
+	//   "DEPRECATED" - Deprecated features are scheduled to be shut down
+	// and removed. For more information, see the "Deprecation Policy"
+	// section of our [Terms of Service](https://cloud.google.com/terms/)
+	// and the [Google Cloud Platform Subject to the Deprecation
+	// Policy](https://cloud.google.com/terms/deprecation) documentation.
+	LaunchStage string `json:"launchStage,omitempty"`
+
+	// MaxRetries: Number of retries allowed per Task, before marking this
+	// Task failed.
+	MaxRetries int64 `json:"maxRetries,omitempty"`
+
+	// Name: Output only. The unique name of this Task.
+	Name string `json:"name,omitempty"`
+
+	// ObservedGeneration: Output only. The generation of this Task. See
+	// comments in `Job.reconciling` for additional information on
+	// reconciliation process in Cloud Run.
+	ObservedGeneration int64 `json:"observedGeneration,omitempty,string"`
+
+	// Reconciling: Output only. Indicates whether the resource's
+	// reconciliation is still in progress. See comments in
+	// `Job.reconciling` for additional information on reconciliation
+	// process in Cloud Run.
+	Reconciling bool `json:"reconciling,omitempty"`
+
+	// Retried: Output only. The number of times this Task was retried.
+	// Tasks are retried when they fail up to the maxRetries limit.
+	Retried int64 `json:"retried,omitempty"`
+
+	// ServiceAccount: Email address of the IAM service account associated
+	// with the Task of a Job. The service account represents the identity
+	// of the running task, and determines what permissions the task has. If
+	// not provided, the task will use the project's default service
+	// account.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// StartTime: Output only. Represents time when the task started to run.
+	// It is not guaranteed to be set in happens-before order across
+	// separate operations.
+	StartTime string `json:"startTime,omitempty"`
+
+	// Timeout: Max allowed time duration the Task may be active before the
+	// system will actively try to mark it failed and kill associated
+	// containers. This applies per attempt of a task, meaning each retry
+	// can run for the full timeout.
+	Timeout string `json:"timeout,omitempty"`
+
+	// Uid: Output only. Server assigned unique identifier for the Task. The
+	// value is a UUID4 string and guaranteed to remain unchanged until the
+	// resource is deleted.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. The last-modified time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Volumes: A list of Volumes to make available to containers.
+	Volumes []*GoogleCloudRunV2Volume `json:"volumes,omitempty"`
+
+	// VpcAccess: Output only. VPC Access configuration to use for this
+	// Task. For more information, visit
+	// https://cloud.google.com/run/docs/configuring/connecting-vpc.
+	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2Task) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2Task
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2TaskAttemptResult: Result of a task attempt.
+type GoogleCloudRunV2TaskAttemptResult struct {
+	// ExitCode: Output only. The exit code of this attempt. This may be
+	// unset if the container was unable to exit cleanly with a code due to
+	// some other failure. See status field for possible failure details.
+	ExitCode int64 `json:"exitCode,omitempty"`
+
+	// Status: Output only. The status of this attempt. If the status code
+	// is OK, then the attempt succeeded.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExitCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExitCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2TaskAttemptResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2TaskAttemptResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2TaskTemplate: TaskTemplate describes the data a task
+// should have when created from a template.
+type GoogleCloudRunV2TaskTemplate struct {
+	// Containers: Holds the single container that defines the unit of
+	// execution for this task.
+	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
+
+	// EncryptionKey: A reference to a customer managed encryption key
+	// (CMEK) to use to encrypt this container image. For more information,
+	// go to https://cloud.google.com/run/docs/securing/using-cmek
+	EncryptionKey string `json:"encryptionKey,omitempty"`
+
+	// ExecutionEnvironment: The execution environment being used to host
+	// this Task.
+	//
+	// Possible values:
+	//   "EXECUTION_ENVIRONMENT_UNSPECIFIED" - Unspecified
+	//   "EXECUTION_ENVIRONMENT_GEN1" - Uses the First Generation
+	// environment.
+	//   "EXECUTION_ENVIRONMENT_GEN2" - Uses Second Generation environment.
+	ExecutionEnvironment string `json:"executionEnvironment,omitempty"`
+
+	// MaxRetries: Number of retries allowed per Task, before marking this
+	// Task failed.
+	MaxRetries int64 `json:"maxRetries,omitempty"`
+
+	// ServiceAccount: Email address of the IAM service account associated
+	// with the Task of a Job. The service account represents the identity
+	// of the running task, and determines what permissions the task has. If
+	// not provided, the task will use the project's default service
+	// account.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// Timeout: Max allowed time duration the Task may be active before the
+	// system will actively try to mark it failed and kill associated
+	// containers. This applies per attempt of a task, meaning each retry
+	// can run for the full timeout.
+	Timeout string `json:"timeout,omitempty"`
+
+	// Volumes: A list of Volumes to make available to containers.
+	Volumes []*GoogleCloudRunV2Volume `json:"volumes,omitempty"`
+
+	// VpcAccess: VPC Access configuration to use for this Task. For more
+	// information, visit
+	// https://cloud.google.com/run/docs/configuring/connecting-vpc.
+	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Containers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Containers") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2TaskTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2TaskTemplate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1724,8 +2711,8 @@ type GoogleIamV1Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *GoogleTypeExpr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -1900,7 +2887,7 @@ func (s *GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 type GoogleIamV1SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *GoogleIamV1Policy `json:"policy,omitempty"`
 
@@ -1937,7 +2924,7 @@ func (s *GoogleIamV1SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // `TestIamPermissions` method.
 type GoogleIamV1TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -2102,8 +3089,7 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
 // method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); } The JSON representation for
-// `Empty` is empty JSON object `{}`.
+// returns (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2212,6 +3198,2369 @@ func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "run.projects.locations.jobs.create":
+
+type ProjectsLocationsJobsCreateCall struct {
+	s                   *Service
+	parent              string
+	googlecloudrunv2job *GoogleCloudRunV2Job
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Create: Create a Job.
+//
+// - parent: The location and project in which this Job should be
+//   created. Format: projects/{projectnumber}/locations/{location}.
+func (r *ProjectsLocationsJobsService) Create(parent string, googlecloudrunv2job *GoogleCloudRunV2Job) *ProjectsLocationsJobsCreateCall {
+	c := &ProjectsLocationsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudrunv2job = googlecloudrunv2job
+	return c
+}
+
+// JobId sets the optional parameter "jobId": Required. The unique
+// identifier for the Job. The name of the job becomes
+// {parent}/jobs/{job_id}.
+func (c *ProjectsLocationsJobsCreateCall) JobId(jobId string) *ProjectsLocationsJobsCreateCall {
+	c.urlParams_.Set("jobId", jobId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Indicates
+// that the request should be validated and default values populated,
+// without persisting the request or creating any resources.
+func (c *ProjectsLocationsJobsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsJobsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsCreateCall) Context(ctx context.Context) *ProjectsLocationsJobsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrunv2job)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/jobs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a Job.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs",
+	//   "httpMethod": "POST",
+	//   "id": "run.projects.locations.jobs.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "Required. The unique identifier for the Job. The name of the job becomes {parent}/jobs/{job_id}.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The location and project in which this Job should be created. Format: projects/{projectnumber}/locations/{location}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Indicates that the request should be validated and default values populated, without persisting the request or creating any resources.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/jobs",
+	//   "request": {
+	//     "$ref": "GoogleCloudRunV2Job"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.jobs.delete":
+
+type ProjectsLocationsJobsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Job.
+//
+// - name: The full name of the Job. Format:
+//   projects/{projectnumber}/locations/{location}/jobs/{job}.
+func (r *ProjectsLocationsJobsService) Delete(name string) *ProjectsLocationsJobsDeleteCall {
+	c := &ProjectsLocationsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": A system-generated
+// fingerprint for this version of the resource. May be used to detect
+// modification conflict during updates.
+func (c *ProjectsLocationsJobsDeleteCall) Etag(etag string) *ProjectsLocationsJobsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Force sets the optional parameter "force": If set to true, the Job
+// and its Executions will be deleted no matter whether any Executions
+// are still running or not. If set to false or unset, the Job and its
+// Executions can only be deleted if there are no running Executions.
+// Any running Execution will fail the deletion.
+func (c *ProjectsLocationsJobsDeleteCall) Force(force bool) *ProjectsLocationsJobsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Indicates
+// that the request should be validated without actually deleting any
+// resources.
+func (c *ProjectsLocationsJobsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsJobsDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsDeleteCall) Context(ctx context.Context) *ProjectsLocationsJobsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a Job.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "run.projects.locations.jobs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "etag": {
+	//       "description": "A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "force": {
+	//       "description": "If set to true, the Job and its Executions will be deleted no matter whether any Executions are still running or not. If set to false or unset, the Job and its Executions can only be deleted if there are no running Executions. Any running Execution will fail the deletion.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Required. The full name of the Job. Format: projects/{projectnumber}/locations/{location}/jobs/{job}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Indicates that the request should be validated without actually deleting any resources.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.jobs.get":
+
+type ProjectsLocationsJobsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a Job.
+//
+// - name: The full name of the Job. Format:
+//   projects/{projectnumber}/locations/{location}/jobs/{job}.
+func (r *ProjectsLocationsJobsService) Get(name string) *ProjectsLocationsJobsGetCall {
+	c := &ProjectsLocationsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsJobsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsGetCall) Context(ctx context.Context) *ProjectsLocationsJobsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.get" call.
+// Exactly one of *GoogleCloudRunV2Job or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRunV2Job.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2Job, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRunV2Job{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a Job.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}",
+	//   "httpMethod": "GET",
+	//   "id": "run.projects.locations.jobs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full name of the Job. Format: projects/{projectnumber}/locations/{location}/jobs/{job}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudRunV2Job"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.jobs.getIamPolicy":
+
+type ProjectsLocationsJobsGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Get the IAM Access Control policy currently in effect
+// for the given Job. This result does not include any inherited
+// policies.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
+func (r *ProjectsLocationsJobsService) GetIamPolicy(resource string) *ProjectsLocationsJobsGetIamPolicyCall {
+	c := &ProjectsLocationsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsJobsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsJobsGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsJobsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsJobsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.getIamPolicy" call.
+// Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the IAM Access Control policy currently in effect for the given Job. This result does not include any inherited policies.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}:getIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "run.projects.locations.jobs.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "options.requestedPolicyVersion": {
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "GoogleIamV1Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.jobs.list":
+
+type ProjectsLocationsJobsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List Jobs.
+//
+// - parent: The location and project to list resources on. Format:
+//   projects/{projectnumber}/locations/{location}.
+func (r *ProjectsLocationsJobsService) List(parent string) *ProjectsLocationsJobsListCall {
+	c := &ProjectsLocationsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// Jobs to return in this call.
+func (c *ProjectsLocationsJobsListCall) PageSize(pageSize int64) *ProjectsLocationsJobsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token
+// received from a previous call to ListJobs. All other parameters must
+// match.
+func (c *ProjectsLocationsJobsListCall) PageToken(pageToken string) *ProjectsLocationsJobsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": If true,
+// returns deleted (but unexpired) resources along with active ones.
+func (c *ProjectsLocationsJobsListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsJobsListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsJobsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsListCall) Context(ctx context.Context) *ProjectsLocationsJobsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/jobs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.list" call.
+// Exactly one of *GoogleCloudRunV2ListJobsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudRunV2ListJobsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2ListJobsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRunV2ListJobsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List Jobs.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs",
+	//   "httpMethod": "GET",
+	//   "id": "run.projects.locations.jobs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Maximum number of Jobs to return in this call.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token received from a previous call to ListJobs. All other parameters must match.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The location and project to list resources on. Format: projects/{projectnumber}/locations/{location}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "If true, returns deleted (but unexpired) resources along with active ones.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/jobs",
+	//   "response": {
+	//     "$ref": "GoogleCloudRunV2ListJobsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsJobsListCall) Pages(ctx context.Context, f func(*GoogleCloudRunV2ListJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "run.projects.locations.jobs.patch":
+
+type ProjectsLocationsJobsPatchCall struct {
+	s                   *Service
+	name                string
+	googlecloudrunv2job *GoogleCloudRunV2Job
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Patch: Updates a Job.
+//
+// - name: The fully qualified name of this Job. Format:
+//   projects/{project}/locations/{location}/jobs/{job}.
+func (r *ProjectsLocationsJobsService) Patch(name string, googlecloudrunv2job *GoogleCloudRunV2Job) *ProjectsLocationsJobsPatchCall {
+	c := &ProjectsLocationsJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrunv2job = googlecloudrunv2job
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, and if the Job does not exist, it will create a new one. Caller
+// must have both create and update permissions for this call if this is
+// set to true.
+func (c *ProjectsLocationsJobsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsJobsPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *ProjectsLocationsJobsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsJobsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Indicates
+// that the request should be validated and default values populated,
+// without persisting the request or updating any resources.
+func (c *ProjectsLocationsJobsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsJobsPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsPatchCall) Context(ctx context.Context) *ProjectsLocationsJobsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrunv2job)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.patch" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Job.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "run.projects.locations.jobs.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If set to true, and if the Job does not exist, it will create a new one. Caller must have both create and update permissions for this call if this is set to true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "The fully qualified name of this Job. Format: projects/{project}/locations/{location}/jobs/{job}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Indicates that the request should be validated and default values populated, without persisting the request or updating any resources.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudRunV2Job"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.jobs.run":
+
+type ProjectsLocationsJobsRunCall struct {
+	s                             *Service
+	name                          string
+	googlecloudrunv2runjobrequest *GoogleCloudRunV2RunJobRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Run: Triggers creation of a new Execution of this Job.
+//
+// - name: The full name of the Job. Format:
+//   projects/{projectnumber}/locations/{location}/jobs/{job}.
+func (r *ProjectsLocationsJobsService) Run(name string, googlecloudrunv2runjobrequest *GoogleCloudRunV2RunJobRequest) *ProjectsLocationsJobsRunCall {
+	c := &ProjectsLocationsJobsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrunv2runjobrequest = googlecloudrunv2runjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsRunCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsRunCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsRunCall) Context(ctx context.Context) *ProjectsLocationsJobsRunCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsRunCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsRunCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrunv2runjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:run")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.run" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsRunCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Triggers creation of a new Execution of this Job.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}:run",
+	//   "httpMethod": "POST",
+	//   "id": "run.projects.locations.jobs.run",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full name of the Job. Format: projects/{projectnumber}/locations/{location}/jobs/{job}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:run",
+	//   "request": {
+	//     "$ref": "GoogleCloudRunV2RunJobRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.jobs.setIamPolicy":
+
+type ProjectsLocationsJobsSetIamPolicyCall struct {
+	s                              *Service
+	resource                       string
+	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// SetIamPolicy: Sets the IAM Access control policy for the specified
+// Job. Overwrites any existing policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
+func (r *ProjectsLocationsJobsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsJobsSetIamPolicyCall {
+	c := &ProjectsLocationsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsJobsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.setIamPolicy" call.
+// Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the IAM Access control policy for the specified Job. Overwrites any existing policy.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "run.projects.locations.jobs.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "GoogleIamV1SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleIamV1Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.jobs.testIamPermissions":
+
+type ProjectsLocationsJobsTestIamPermissionsCall struct {
+	s                                    *Service
+	resource                             string
+	googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified Project. There are no permissions required for making this
+// API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsJobsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsJobsTestIamPermissionsCall {
+	c := &ProjectsLocationsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1testiampermissionsrequest = googleiamv1testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsJobsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.testIamPermissions" call.
+// Exactly one of *GoogleIamV1TestIamPermissionsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleIamV1TestIamPermissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleIamV1TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified Project. There are no permissions required for making this API call.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "run.projects.locations.jobs.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "GoogleIamV1TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleIamV1TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.jobs.executions.delete":
+
+type ProjectsLocationsJobsExecutionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete an Execution.
+//
+// - name: The name of the Execution to delete. Format:
+//   projects/{project}/locations/{location}/jobs/{job}/executions/{execu
+//   tion}.
+func (r *ProjectsLocationsJobsExecutionsService) Delete(name string) *ProjectsLocationsJobsExecutionsDeleteCall {
+	c := &ProjectsLocationsJobsExecutionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": A system-generated
+// fingerprint for this version of the resource. This may be used to
+// detect modification conflict during updates.
+func (c *ProjectsLocationsJobsExecutionsDeleteCall) Etag(etag string) *ProjectsLocationsJobsExecutionsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Indicates
+// that the request should be validated without actually deleting any
+// resources.
+func (c *ProjectsLocationsJobsExecutionsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsJobsExecutionsDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsExecutionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsExecutionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsExecutionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsJobsExecutionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsExecutionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsExecutionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.executions.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsExecutionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete an Execution.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions/{executionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "run.projects.locations.jobs.executions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "etag": {
+	//       "description": "A system-generated fingerprint for this version of the resource. This may be used to detect modification conflict during updates.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the Execution to delete. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Indicates that the request should be validated without actually deleting any resources.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.jobs.executions.get":
+
+type ProjectsLocationsJobsExecutionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a Execution.
+//
+// - name: The full name of the Execution. Format:
+//   projects/{project}/locations/{location}/jobs/{job}/executions/{execu
+//   tion}.
+func (r *ProjectsLocationsJobsExecutionsService) Get(name string) *ProjectsLocationsJobsExecutionsGetCall {
+	c := &ProjectsLocationsJobsExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsExecutionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsExecutionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsJobsExecutionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsExecutionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsExecutionsGetCall) Context(ctx context.Context) *ProjectsLocationsJobsExecutionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsExecutionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.executions.get" call.
+// Exactly one of *GoogleCloudRunV2Execution or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRunV2Execution.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsExecutionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2Execution, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRunV2Execution{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a Execution.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions/{executionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "run.projects.locations.jobs.executions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full name of the Execution. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudRunV2Execution"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.jobs.executions.list":
+
+type ProjectsLocationsJobsExecutionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List Executions from a Job.
+//
+// - parent: The Execution from which the Executions should be listed.
+//   To list all Executions across Jobs, use "-" instead of Job name.
+//   Format: projects/{project}/locations/{location}/jobs/{job}.
+func (r *ProjectsLocationsJobsExecutionsService) List(parent string) *ProjectsLocationsJobsExecutionsListCall {
+	c := &ProjectsLocationsJobsExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// Executions to return in this call.
+func (c *ProjectsLocationsJobsExecutionsListCall) PageSize(pageSize int64) *ProjectsLocationsJobsExecutionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token
+// received from a previous call to ListExecutions. All other parameters
+// must match.
+func (c *ProjectsLocationsJobsExecutionsListCall) PageToken(pageToken string) *ProjectsLocationsJobsExecutionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": If true,
+// returns deleted (but unexpired) resources along with active ones.
+func (c *ProjectsLocationsJobsExecutionsListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsJobsExecutionsListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsExecutionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsExecutionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsJobsExecutionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsExecutionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsExecutionsListCall) Context(ctx context.Context) *ProjectsLocationsJobsExecutionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsExecutionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsExecutionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/executions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.executions.list" call.
+// Exactly one of *GoogleCloudRunV2ListExecutionsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudRunV2ListExecutionsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsExecutionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2ListExecutionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRunV2ListExecutionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List Executions from a Job.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions",
+	//   "httpMethod": "GET",
+	//   "id": "run.projects.locations.jobs.executions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Maximum number of Executions to return in this call.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token received from a previous call to ListExecutions. All other parameters must match.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The Execution from which the Executions should be listed. To list all Executions across Jobs, use \"-\" instead of Job name. Format: projects/{project}/locations/{location}/jobs/{job}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "If true, returns deleted (but unexpired) resources along with active ones.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/executions",
+	//   "response": {
+	//     "$ref": "GoogleCloudRunV2ListExecutionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsJobsExecutionsListCall) Pages(ctx context.Context, f func(*GoogleCloudRunV2ListExecutionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "run.projects.locations.jobs.executions.tasks.get":
+
+type ProjectsLocationsJobsExecutionsTasksGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a Task.
+//
+// - name: The full name of the Task. Format:
+//   projects/{project}/locations/{location}/jobs/{job}/executions/{execu
+//   tion}/tasks/{task}.
+func (r *ProjectsLocationsJobsExecutionsTasksService) Get(name string) *ProjectsLocationsJobsExecutionsTasksGetCall {
+	c := &ProjectsLocationsJobsExecutionsTasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsExecutionsTasksGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsExecutionsTasksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsJobsExecutionsTasksGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsExecutionsTasksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsExecutionsTasksGetCall) Context(ctx context.Context) *ProjectsLocationsJobsExecutionsTasksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsExecutionsTasksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsExecutionsTasksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.executions.tasks.get" call.
+// Exactly one of *GoogleCloudRunV2Task or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRunV2Task.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsExecutionsTasksGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2Task, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRunV2Task{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a Task.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions/{executionsId}/tasks/{tasksId}",
+	//   "httpMethod": "GET",
+	//   "id": "run.projects.locations.jobs.executions.tasks.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full name of the Task. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}/tasks/{task}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+/tasks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudRunV2Task"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.jobs.executions.tasks.list":
+
+type ProjectsLocationsJobsExecutionsTasksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List Tasks from an Execution of a Job.
+//
+// - parent: The Execution from which the Tasks should be listed. To
+//   list all Tasks across Executions of a Job, use "-" instead of
+//   Execution name. To list all Tasks across Jobs, use "-" instead of
+//   Job name. Format:
+//   projects/{project}/locations/{location}/jobs/{job}/executions/{execu
+//   tion}.
+func (r *ProjectsLocationsJobsExecutionsTasksService) List(parent string) *ProjectsLocationsJobsExecutionsTasksListCall {
+	c := &ProjectsLocationsJobsExecutionsTasksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// Tasks to return in this call.
+func (c *ProjectsLocationsJobsExecutionsTasksListCall) PageSize(pageSize int64) *ProjectsLocationsJobsExecutionsTasksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token
+// received from a previous call to ListTasks. All other parameters must
+// match.
+func (c *ProjectsLocationsJobsExecutionsTasksListCall) PageToken(pageToken string) *ProjectsLocationsJobsExecutionsTasksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": If true,
+// returns deleted (but unexpired) resources along with active ones.
+func (c *ProjectsLocationsJobsExecutionsTasksListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsJobsExecutionsTasksListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsExecutionsTasksListCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsExecutionsTasksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsJobsExecutionsTasksListCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsExecutionsTasksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsExecutionsTasksListCall) Context(ctx context.Context) *ProjectsLocationsJobsExecutionsTasksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsExecutionsTasksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsExecutionsTasksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/tasks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.executions.tasks.list" call.
+// Exactly one of *GoogleCloudRunV2ListTasksResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudRunV2ListTasksResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsJobsExecutionsTasksListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2ListTasksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRunV2ListTasksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List Tasks from an Execution of a Job.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions/{executionsId}/tasks",
+	//   "httpMethod": "GET",
+	//   "id": "run.projects.locations.jobs.executions.tasks.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Maximum number of Tasks to return in this call.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token received from a previous call to ListTasks. All other parameters must match.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The Execution from which the Tasks should be listed. To list all Tasks across Executions of a Job, use \"-\" instead of Execution name. To list all Tasks across Jobs, use \"-\" instead of Job name. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "If true, returns deleted (but unexpired) resources along with active ones.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/tasks",
+	//   "response": {
+	//     "$ref": "GoogleCloudRunV2ListTasksResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsJobsExecutionsTasksListCall) Pages(ctx context.Context, f func(*GoogleCloudRunV2ListTasksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "run.projects.locations.operations.delete":

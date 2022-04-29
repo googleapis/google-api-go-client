@@ -25,7 +25,7 @@
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   formsService, err := forms.NewService(ctx, option.WithScopes(forms.DriveReadonlyScope))
+//   formsService, err := forms.NewService(ctx, option.WithScopes(forms.FormsResponsesReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
@@ -93,14 +93,26 @@ const (
 
 	// See and download all your Google Drive files
 	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
+
+	// See, edit, create, and delete all your Google Forms forms
+	FormsBodyScope = "https://www.googleapis.com/auth/forms.body"
+
+	// See all your Google Forms forms
+	FormsBodyReadonlyScope = "https://www.googleapis.com/auth/forms.body.readonly"
+
+	// See all responses to your Google Forms forms
+	FormsResponsesReadonlyScope = "https://www.googleapis.com/auth/forms.responses.readonly"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/drive",
 		"https://www.googleapis.com/auth/drive.file",
 		"https://www.googleapis.com/auth/drive.readonly",
+		"https://www.googleapis.com/auth/forms.body",
+		"https://www.googleapis.com/auth/forms.body.readonly",
+		"https://www.googleapis.com/auth/forms.responses.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -607,8 +619,7 @@ func (s *DeleteItemRequest) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2473,7 +2484,8 @@ func (c *FormsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUpdateFor
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
-	//     "https://www.googleapis.com/auth/drive.file"
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/forms.body"
 	//   ]
 	// }
 
@@ -2605,7 +2617,8 @@ func (c *FormsCreateCall) Do(opts ...googleapi.CallOption) (*Form, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
-	//     "https://www.googleapis.com/auth/drive.file"
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/forms.body"
 	//   ]
 	// }
 
@@ -2752,7 +2765,9 @@ func (c *FormsGetCall) Do(opts ...googleapi.CallOption) (*Form, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file",
-	//     "https://www.googleapis.com/auth/drive.readonly"
+	//     "https://www.googleapis.com/auth/drive.readonly",
+	//     "https://www.googleapis.com/auth/forms.body",
+	//     "https://www.googleapis.com/auth/forms.body.readonly"
 	//   ]
 	// }
 
@@ -2909,7 +2924,8 @@ func (c *FormsResponsesGetCall) Do(opts ...googleapi.CallOption) (*FormResponse,
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
-	//     "https://www.googleapis.com/auth/drive.file"
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/forms.responses.readonly"
 	//   ]
 	// }
 
@@ -3101,7 +3117,8 @@ func (c *FormsResponsesListCall) Do(opts ...googleapi.CallOption) (*ListFormResp
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
-	//     "https://www.googleapis.com/auth/drive.file"
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/forms.responses.readonly"
 	//   ]
 	// }
 
@@ -3268,7 +3285,10 @@ func (c *FormsWatchesCreateCall) Do(opts ...googleapi.CallOption) (*Watch, error
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file",
-	//     "https://www.googleapis.com/auth/drive.readonly"
+	//     "https://www.googleapis.com/auth/drive.readonly",
+	//     "https://www.googleapis.com/auth/forms.body",
+	//     "https://www.googleapis.com/auth/forms.body.readonly",
+	//     "https://www.googleapis.com/auth/forms.responses.readonly"
 	//   ]
 	// }
 
@@ -3412,7 +3432,10 @@ func (c *FormsWatchesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file",
-	//     "https://www.googleapis.com/auth/drive.readonly"
+	//     "https://www.googleapis.com/auth/drive.readonly",
+	//     "https://www.googleapis.com/auth/forms.body",
+	//     "https://www.googleapis.com/auth/forms.body.readonly",
+	//     "https://www.googleapis.com/auth/forms.responses.readonly"
 	//   ]
 	// }
 
@@ -3561,7 +3584,10 @@ func (c *FormsWatchesListCall) Do(opts ...googleapi.CallOption) (*ListWatchesRes
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file",
-	//     "https://www.googleapis.com/auth/drive.readonly"
+	//     "https://www.googleapis.com/auth/drive.readonly",
+	//     "https://www.googleapis.com/auth/forms.body",
+	//     "https://www.googleapis.com/auth/forms.body.readonly",
+	//     "https://www.googleapis.com/auth/forms.responses.readonly"
 	//   ]
 	// }
 
@@ -3719,7 +3745,10 @@ func (c *FormsWatchesRenewCall) Do(opts ...googleapi.CallOption) (*Watch, error)
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file",
-	//     "https://www.googleapis.com/auth/drive.readonly"
+	//     "https://www.googleapis.com/auth/drive.readonly",
+	//     "https://www.googleapis.com/auth/forms.body",
+	//     "https://www.googleapis.com/auth/forms.body.readonly",
+	//     "https://www.googleapis.com/auth/forms.responses.readonly"
 	//   ]
 	// }
 

@@ -101,7 +101,7 @@ const (
 
 // NewService creates a new APIService.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
 		"https://www.googleapis.com/auth/service.management",
@@ -457,11 +457,13 @@ type AuthProvider struct {
 	// https://www.googleapis.com/oauth2/v1/certs
 	JwksUri string `json:"jwksUri,omitempty"`
 
-	// JwtLocations: Defines the locations to extract the JWT. JWT locations
-	// can be either from HTTP headers or URL query parameters. The rule is
-	// that the first match wins. The checking order is: checking all
-	// headers first, then URL query parameters. If not specified, default
-	// to use following 3 locations: 1) Authorization: Bearer 2)
+	// JwtLocations: Defines the locations to extract the JWT. For now it is
+	// only used by the Cloud Endpoints to store the OpenAPI extension
+	// [x-google-jwt-locations]
+	// (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+	// JWT locations can be one of HTTP headers, URL query parameters or
+	// cookies. The rule is that the first match wins. If not specified,
+	// default to use following 3 locations: 1) Authorization: Bearer 2)
 	// x-goog-iap-jwt-assertion 3) access_token query parameter Default
 	// locations can be specified as followings: jwt_locations: - header:
 	// Authorization value_prefix: "Bearer " - header:
@@ -868,8 +870,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -2292,6 +2294,9 @@ func (s *HttpRule) MarshalJSON() ([]byte, error) {
 
 // JwtLocation: Specifies a location to extract JWT from an API request.
 type JwtLocation struct {
+	// Cookie: Specifies cookie name to extract JWT token.
+	Cookie string `json:"cookie,omitempty"`
+
 	// Header: Specifies HTTP header name to extract JWT token.
 	Header string `json:"header,omitempty"`
 
@@ -2307,7 +2312,7 @@ type JwtLocation struct {
 	// value_prefix="Bearer " with a space at the end.
 	ValuePrefix string `json:"valuePrefix,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Header") to
+	// ForceSendFields is a list of field names (e.g. "Cookie") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2315,7 +2320,7 @@ type JwtLocation struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Header") to include in API
+	// NullFields is a list of field names (e.g. "Cookie") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -2657,7 +2662,8 @@ type ManagedService struct {
 	ProducerProjectId string `json:"producerProjectId,omitempty"`
 
 	// ServiceName: The name of the service. See the overview
-	// (/service-management/overview) for naming requirements.
+	// (https://cloud.google.com/service-management/overview) for naming
+	// requirements.
 	ServiceName string `json:"serviceName,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4133,7 +4139,7 @@ func (s *Service) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -4498,7 +4504,7 @@ func (s *SystemParameters) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -5293,8 +5299,8 @@ type ServicesDeleteCall struct {
 // After 30 days, the service will be permanently deleted. Operation
 //
 // - serviceName: The name of the service. See the overview
-//   (/service-management/overview) for naming requirements. For
-//   example: `example.googleapis.com`.
+//   (https://cloud.google.com/service-management/overview) for naming
+//   requirements. For example: `example.googleapis.com`.
 func (r *ServicesService) Delete(serviceName string) *ServicesDeleteCall {
 	c := &ServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -5396,7 +5402,7 @@ func (c *ServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//   ],
 	//   "parameters": {
 	//     "serviceName": {
-	//       "description": "Required. The name of the service. See the [overview](/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
+	//       "description": "Required. The name of the service. See the [overview](https://cloud.google.com/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5715,8 +5721,8 @@ type ServicesGetConfigCall struct {
 // service.
 //
 // - serviceName: The name of the service. See the overview
-//   (/service-management/overview) for naming requirements. For
-//   example: `example.googleapis.com`.
+//   (https://cloud.google.com/service-management/overview) for naming
+//   requirements. For example: `example.googleapis.com`.
 func (r *ServicesService) GetConfig(serviceName string) *ServicesGetConfigCall {
 	c := &ServicesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -5858,7 +5864,7 @@ func (c *ServicesGetConfigCall) Do(opts ...googleapi.CallOption) (*Service, erro
 	//       "type": "string"
 	//     },
 	//     "serviceName": {
-	//       "description": "Required. The name of the service. See the [overview](/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
+	//       "description": "Required. The name of the service. See the [overview](https://cloud.google.com/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6562,8 +6568,8 @@ type ServicesUndeleteCall struct {
 // within the last 30 days. Operation
 //
 // - serviceName: The name of the service. See the overview
-//   (/service-management/overview) for naming requirements. For
-//   example: `example.googleapis.com`.
+//   (https://cloud.google.com/service-management/overview) for naming
+//   requirements. For example: `example.googleapis.com`.
 func (r *ServicesService) Undelete(serviceName string) *ServicesUndeleteCall {
 	c := &ServicesUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -6665,7 +6671,7 @@ func (c *ServicesUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//   ],
 	//   "parameters": {
 	//     "serviceName": {
-	//       "description": "Required. The name of the service. See the [overview](/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
+	//       "description": "Required. The name of the service. See the [overview](https://cloud.google.com/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6702,8 +6708,8 @@ type ServicesConfigsCreateCall struct {
 // The rest will be deleted eventually.
 //
 // - serviceName: The name of the service. See the overview
-//   (/service-management/overview) for naming requirements. For
-//   example: `example.googleapis.com`.
+//   (https://cloud.google.com/service-management/overview) for naming
+//   requirements. For example: `example.googleapis.com`.
 func (r *ServicesConfigsService) Create(serviceName string, service *Service) *ServicesConfigsCreateCall {
 	c := &ServicesConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -6811,7 +6817,7 @@ func (c *ServicesConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Service, 
 	//   ],
 	//   "parameters": {
 	//     "serviceName": {
-	//       "description": "Required. The name of the service. See the [overview](/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
+	//       "description": "Required. The name of the service. See the [overview](https://cloud.google.com/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6850,8 +6856,8 @@ type ServicesConfigsGetCall struct {
 //   must be specified for the server to return all fields, including
 //   `SourceInfo`.
 // - serviceName: The name of the service. See the overview
-//   (/service-management/overview) for naming requirements. For
-//   example: `example.googleapis.com`.
+//   (https://cloud.google.com/service-management/overview) for naming
+//   requirements. For example: `example.googleapis.com`.
 func (r *ServicesConfigsService) Get(serviceName string, configId string) *ServicesConfigsGetCall {
 	c := &ServicesConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -6989,7 +6995,7 @@ func (c *ServicesConfigsGetCall) Do(opts ...googleapi.CallOption) (*Service, err
 	//       "type": "string"
 	//     },
 	//     "serviceName": {
-	//       "description": "Required. The name of the service. See the [overview](/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
+	//       "description": "Required. The name of the service. See the [overview](https://cloud.google.com/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7037,8 +7043,8 @@ type ServicesConfigsListCall struct {
 // service, from the newest to the oldest.
 //
 // - serviceName: The name of the service. See the overview
-//   (/service-management/overview) for naming requirements. For
-//   example: `example.googleapis.com`.
+//   (https://cloud.google.com/service-management/overview) for naming
+//   requirements. For example: `example.googleapis.com`.
 func (r *ServicesConfigsService) List(serviceName string) *ServicesConfigsListCall {
 	c := &ServicesConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -7179,7 +7185,7 @@ func (c *ServicesConfigsListCall) Do(opts ...googleapi.CallOption) (*ListService
 	//       "type": "string"
 	//     },
 	//     "serviceName": {
-	//       "description": "Required. The name of the service. See the [overview](/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
+	//       "description": "Required. The name of the service. See the [overview](https://cloud.google.com/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7241,8 +7247,8 @@ type ServicesConfigsSubmitCall struct {
 // each service. The rest will be deleted eventually. Operation
 //
 // - serviceName: The name of the service. See the overview
-//   (/service-management/overview) for naming requirements. For
-//   example: `example.googleapis.com`.
+//   (https://cloud.google.com/service-management/overview) for naming
+//   requirements. For example: `example.googleapis.com`.
 func (r *ServicesConfigsService) Submit(serviceName string, submitconfigsourcerequest *SubmitConfigSourceRequest) *ServicesConfigsSubmitCall {
 	c := &ServicesConfigsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -7350,7 +7356,7 @@ func (c *ServicesConfigsSubmitCall) Do(opts ...googleapi.CallOption) (*Operation
 	//   ],
 	//   "parameters": {
 	//     "serviceName": {
-	//       "description": "Required. The name of the service. See the [overview](/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
+	//       "description": "Required. The name of the service. See the [overview](https://cloud.google.com/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7842,8 +7848,8 @@ type ServicesRolloutsCreateCall struct {
 // will be deleted eventually. Operation
 //
 // - serviceName: The name of the service. See the overview
-//   (/service-management/overview) for naming requirements. For
-//   example: `example.googleapis.com`.
+//   (https://cloud.google.com/service-management/overview) for naming
+//   requirements. For example: `example.googleapis.com`.
 func (r *ServicesRolloutsService) Create(serviceName string, rollout *Rollout) *ServicesRolloutsCreateCall {
 	c := &ServicesRolloutsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -7951,7 +7957,7 @@ func (c *ServicesRolloutsCreateCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//   ],
 	//   "parameters": {
 	//     "serviceName": {
-	//       "description": "Required. The name of the service. See the [overview](/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
+	//       "description": "Required. The name of the service. See the [overview](https://cloud.google.com/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7988,8 +7994,8 @@ type ServicesRolloutsGetCall struct {
 //
 // - rolloutId: The id of the rollout resource.
 // - serviceName: The name of the service. See the overview
-//   (/service-management/overview) for naming requirements. For
-//   example: `example.googleapis.com`.
+//   (https://cloud.google.com/service-management/overview) for naming
+//   requirements. For example: `example.googleapis.com`.
 func (r *ServicesRolloutsService) Get(serviceName string, rolloutId string) *ServicesRolloutsGetCall {
 	c := &ServicesRolloutsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -8113,7 +8119,7 @@ func (c *ServicesRolloutsGetCall) Do(opts ...googleapi.CallOption) (*Rollout, er
 	//       "type": "string"
 	//     },
 	//     "serviceName": {
-	//       "description": "Required. The name of the service. See the [overview](/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
+	//       "description": "Required. The name of the service. See the [overview](https://cloud.google.com/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8148,8 +8154,8 @@ type ServicesRolloutsListCall struct {
 // managed service, from the newest to the oldest.
 //
 // - serviceName: The name of the service. See the overview
-//   (/service-management/overview) for naming requirements. For
-//   example: `example.googleapis.com`.
+//   (https://cloud.google.com/service-management/overview) for naming
+//   requirements. For example: `example.googleapis.com`.
 func (r *ServicesRolloutsService) List(serviceName string) *ServicesRolloutsListCall {
 	c := &ServicesRolloutsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -8158,11 +8164,8 @@ func (r *ServicesRolloutsService) List(serviceName string) *ServicesRolloutsList
 
 // Filter sets the optional parameter "filter": Required. Use `filter`
 // to return subset of rollouts. The following filters are supported: --
-// To limit the results to only those in status
-// (google.api.servicemanagement.v1.RolloutStatus) 'SUCCESS', use
-// filter='status=SUCCESS' -- To limit the results to those in status
-// (google.api.servicemanagement.v1.RolloutStatus) 'CANCELLED' or
-// 'FAILED', use filter='status=CANCELLED OR status=FAILED'
+// By status. For example, `filter='status=SUCCESS'` -- By strategy. For
+// example, `filter='strategy=TrafficPercentStrategy'`
 func (c *ServicesRolloutsListCall) Filter(filter string) *ServicesRolloutsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8291,7 +8294,7 @@ func (c *ServicesRolloutsListCall) Do(opts ...googleapi.CallOption) (*ListServic
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required. Use `filter` to return subset of rollouts. The following filters are supported: -- To limit the results to only those in [status](google.api.servicemanagement.v1.RolloutStatus) 'SUCCESS', use filter='status=SUCCESS' -- To limit the results to those in [status](google.api.servicemanagement.v1.RolloutStatus) 'CANCELLED' or 'FAILED', use filter='status=CANCELLED OR status=FAILED'",
+	//       "description": "Required. Use `filter` to return subset of rollouts. The following filters are supported: -- By status. For example, `filter='status=SUCCESS'` -- By strategy. For example, `filter='strategy=TrafficPercentStrategy'`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8307,7 +8310,7 @@ func (c *ServicesRolloutsListCall) Do(opts ...googleapi.CallOption) (*ListServic
 	//       "type": "string"
 	//     },
 	//     "serviceName": {
-	//       "description": "Required. The name of the service. See the [overview](/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
+	//       "description": "Required. The name of the service. See the [overview](https://cloud.google.com/service-management/overview) for naming requirements. For example: `example.googleapis.com`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

@@ -143,7 +143,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
                   "location": "query",
                   "type": "string"
                 },
@@ -176,6 +176,35 @@
             }
           },
           "resources": {
+            "instanceProvisioningSettings": {
+              "methods": {
+                "fetch": {
+                  "description": "Get instance provisioning settings for a given project. This is hidden method used by UI only.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instanceProvisioningSettings:fetch",
+                  "httpMethod": "GET",
+                  "id": "baremetalsolution.projects.locations.instanceProvisioningSettings.fetch",
+                  "parameterOrder": [
+                    "location"
+                  ],
+                  "parameters": {
+                    "location": {
+                      "description": "Required. The parent project and location containing the ProvisioningSettings.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+location}/instanceProvisioningSettings:fetch",
+                  "response": {
+                    "$ref": "FetchInstanceProvisioningSettingsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "instances": {
               "methods": {
                 "get": {
@@ -261,7 +290,7 @@
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "The list of fields to update. The only currently supported fields are: `labels`",
+                      "description": "The list of fields to update. The only currently supported fields are: `labels` `hyperthreading_enabled`",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -326,6 +355,34 @@
                   "path": "v2/{+name}:start",
                   "request": {
                     "$ref": "StartInstanceRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "stop": {
+                  "description": "Stop a running server.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:stop",
+                  "httpMethod": "POST",
+                  "id": "baremetalsolution.projects.locations.instances.stop",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the resource.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}:stop",
+                  "request": {
+                    "$ref": "StopInstanceRequest"
                   },
                   "response": {
                     "$ref": "Operation"
@@ -465,8 +522,209 @@
                 }
               }
             },
+            "nfsShares": {
+              "methods": {
+                "get": {
+                  "description": "Get details of a single NFS share.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/nfsShares/{nfsSharesId}",
+                  "httpMethod": "GET",
+                  "id": "baremetalsolution.projects.locations.nfsShares.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the resource.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/nfsShares/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "response": {
+                    "$ref": "NfsShare"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "List NFS shares.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/nfsShares",
+                  "httpMethod": "GET",
+                  "id": "baremetalsolution.projects.locations.nfsShares.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "List filter.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "Requested page size. The server might return fewer items than requested. If unspecified, server will pick an appropriate default.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A token identifying a page of results from the server.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Parent value for ListNfsSharesRequest.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/nfsShares",
+                  "response": {
+                    "$ref": "ListNfsSharesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Update details of a single NFS share.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/nfsShares/{nfsSharesId}",
+                  "httpMethod": "PATCH",
+                  "id": "baremetalsolution.projects.locations.nfsShares.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Output only. The name of the NFS share.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/nfsShares/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The list of fields to update. The only currently supported fields are: `labels`",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "request": {
+                    "$ref": "NfsShare"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "provisioningConfigs": {
               "methods": {
+                "create": {
+                  "description": "Create new ProvisioningConfig.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/provisioningConfigs",
+                  "httpMethod": "POST",
+                  "id": "baremetalsolution.projects.locations.provisioningConfigs.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "email": {
+                      "description": "Optional. Email provided to send a confirmation with provisioning config to.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent project and location containing the ProvisioningConfig.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/provisioningConfigs",
+                  "request": {
+                    "$ref": "ProvisioningConfig"
+                  },
+                  "response": {
+                    "$ref": "ProvisioningConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Get ProvisioningConfig by name.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/provisioningConfigs/{provisioningConfigsId}",
+                  "httpMethod": "GET",
+                  "id": "baremetalsolution.projects.locations.provisioningConfigs.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the ProvisioningConfig.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/provisioningConfigs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "response": {
+                    "$ref": "ProvisioningConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Update existing ProvisioningConfig.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/provisioningConfigs/{provisioningConfigsId}",
+                  "httpMethod": "PATCH",
+                  "id": "baremetalsolution.projects.locations.provisioningConfigs.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "email": {
+                      "description": "Optional. Email provided to send a confirmation with provisioning config to.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Output only. The name of the provisioning config.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/provisioningConfigs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. The list of fields to update.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "request": {
+                    "$ref": "ProvisioningConfig"
+                  },
+                  "response": {
+                    "$ref": "ProvisioningConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "submit": {
                   "description": "Submit a provisiong configuration for a given project.",
                   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/provisioningConfigs:submit",
@@ -1021,13 +1279,72 @@
       }
     }
   },
-  "revision": "20220214",
+  "revision": "20220418",
   "rootUrl": "https://baremetalsolution.googleapis.com/",
   "schemas": {
+    "AllowedClient": {
+      "description": "Represents an 'access point' for the share.",
+      "id": "AllowedClient",
+      "properties": {
+        "allowDev": {
+          "description": "Allow dev flag. Which controls whether to allow creation of devices.",
+          "type": "boolean"
+        },
+        "allowSuid": {
+          "description": "Allow the setuid flag.",
+          "type": "boolean"
+        },
+        "allowedClientsCidr": {
+          "description": "The subnet of IP addresses permitted to access the share.",
+          "type": "string"
+        },
+        "mountPermissions": {
+          "description": "Mount permissions.",
+          "enum": [
+            "MOUNT_PERMISSIONS_UNSPECIFIED",
+            "READ",
+            "READ_WRITE"
+          ],
+          "enumDescriptions": [
+            "Permissions were not specified.",
+            "NFS share can be mount with read-only permissions.",
+            "NFS share can be mount with read-write permissions."
+          ],
+          "type": "string"
+        },
+        "network": {
+          "description": "The network the access point sits on.",
+          "type": "string"
+        },
+        "noRootSquash": {
+          "description": "Disable root squashing, which is a feature of NFS. Root squash is a special mapping of the remote superuser (root) identity when using identity authentication.",
+          "type": "boolean"
+        },
+        "shareIp": {
+          "description": "The IP address of the share on this network.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
+      "type": "object"
+    },
+    "FetchInstanceProvisioningSettingsResponse": {
+      "description": "Response with all provisioning settings.",
+      "id": "FetchInstanceProvisioningSettingsResponse",
+      "properties": {
+        "images": {
+          "description": "The OS images available.",
+          "items": {
+            "$ref": "OSImage"
+          },
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "Instance": {
@@ -1082,6 +1399,10 @@
           },
           "type": "array"
         },
+        "osImage": {
+          "description": "The OS image currently installed on the server.",
+          "type": "string"
+        },
         "state": {
           "description": "The state of the server.",
           "enum": [
@@ -1111,6 +1432,10 @@
       "description": "Configuration parameters for a new instance.",
       "id": "InstanceConfig",
       "properties": {
+        "accountNetworksEnabled": {
+          "description": "If true networks can be from different projects of the same vendor account.",
+          "type": "boolean"
+        },
         "clientNetwork": {
           "$ref": "NetworkAddress",
           "description": "Client network address."
@@ -1294,6 +1619,31 @@
       },
       "type": "object"
     },
+    "ListNfsSharesResponse": {
+      "description": "Response message containing the list of NFS shares.",
+      "id": "ListNfsSharesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token identifying a page of results from the server.",
+          "type": "string"
+        },
+        "nfsShares": {
+          "description": "The list of NFS shares.",
+          "items": {
+            "$ref": "NfsShare"
+          },
+          "type": "array"
+        },
+        "unreachable": {
+          "description": "Locations that could not be reached.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ListProvisioningQuotasResponse": {
       "description": "Response message for the list of provisioning quotas.",
       "id": "ListProvisioningQuotasResponse",
@@ -1409,6 +1759,35 @@
         },
         "name": {
           "description": "Resource name for the location, which may vary between implementations. For example: `\"projects/example-project/locations/us-east1\"`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LogicalInterface": {
+      "description": "Logical interface.",
+      "id": "LogicalInterface",
+      "properties": {
+        "name": {
+          "description": "Interface name. This is not a globally unique identifier. Name is unique only inside the ServerNetworkTemplate.",
+          "type": "string"
+        },
+        "required": {
+          "description": "If true, interface must have network connected.",
+          "type": "boolean"
+        },
+        "type": {
+          "description": "Interface type.",
+          "enum": [
+            "INTERFACE_TYPE_UNSPECIFIED",
+            "BOND",
+            "NIC"
+          ],
+          "enumDescriptions": [
+            "Unspecified value.",
+            "Bond interface type.",
+            "NIC interface ytpe."
+          ],
           "type": "string"
         }
       },
@@ -1690,6 +2069,10 @@
             "$ref": "IntakeVlanAttachment"
           },
           "type": "array"
+        },
+        "vlanSameProject": {
+          "description": "Whether the VLAN attachment pair is located in the same project.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -1757,6 +2140,87 @@
       },
       "type": "object"
     },
+    "NfsShare": {
+      "description": "An NFS share.",
+      "id": "NfsShare",
+      "properties": {
+        "allowedClients": {
+          "description": "List of allowed access points.",
+          "items": {
+            "$ref": "AllowedClient"
+          },
+          "type": "array"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels as key value pairs.",
+          "type": "object"
+        },
+        "name": {
+          "description": "Output only. The name of the NFS share.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "nfsShareId": {
+          "description": "Output only. An identifier for the NFS share, generated by the backend.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "state": {
+          "description": "The state of the NFS share.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PROVISIONED"
+          ],
+          "enumDescriptions": [
+            "The share is in an unknown state.",
+            "The share has been provisioned."
+          ],
+          "type": "string"
+        },
+        "volume": {
+          "description": "The volume containing the share.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OSImage": {
+      "description": "Operation System image.",
+      "id": "OSImage",
+      "properties": {
+        "applicableInstanceTypes": {
+          "description": "Instance types this image is applicable to. [Available types](https://cloud.google.com/bare-metal/docs/bms-planning#server_configurations)",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "code": {
+          "description": "OS Image code.",
+          "type": "string"
+        },
+        "description": {
+          "description": "OS Image description.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. OS Image's unique name.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "supportedNetworkTemplates": {
+          "description": "Network templates that can be used with this OS Image.",
+          "items": {
+            "$ref": "ServerNetworkTemplate"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Operation": {
       "description": "This resource represents a long-running operation that is the result of a network API call.",
       "id": "Operation",
@@ -1796,6 +2260,15 @@
       "description": "A provisioning configuration.",
       "id": "ProvisioningConfig",
       "properties": {
+        "cloudConsoleUri": {
+          "description": "Output only. URI to Cloud Console UI view of this provisioning config.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "email": {
+          "description": "Email provided to send a confirmation with provisioning config to. Deprecated in favour of email field in request messages.",
+          "type": "string"
+        },
         "handoverServiceAccount": {
           "description": "A service account to enable customers to access instance credentials upon handover.",
           "type": "string"
@@ -1806,6 +2279,10 @@
             "$ref": "InstanceConfig"
           },
           "type": "array"
+        },
+        "location": {
+          "description": "Optional. Location name of this ProvisioningConfig. It is optional only for Intake UI transition period.",
+          "type": "string"
         },
         "name": {
           "description": "Output only. The name of the provisioning config.",
@@ -1819,8 +2296,37 @@
           },
           "type": "array"
         },
+        "state": {
+          "description": "Output only. State of ProvisioningConfig.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "DRAFT",
+            "SUBMITTED",
+            "PROVISIONING",
+            "PROVISIONED",
+            "VALIDATED",
+            "CANCELLED"
+          ],
+          "enumDescriptions": [
+            "State wasn't specified.",
+            "ProvisioningConfig is a draft and can be freely modified.",
+            "ProvisioningConfig was already submitted and cannot be modified.",
+            "ProvisioningConfig was in the provisioning state. Initially this state comes from the work order table in big query when SNOW is used. Later this field can be set by the work order API.",
+            "ProvisioningConfig was provisioned, meaning the resources exist.",
+            "ProvisioningConfig was validated. A validation tool will be run to set this state.",
+            "ProvisioningConfig was canceled."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
         "ticketId": {
           "description": "A generated buganizer id to track provisioning request.",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. Last update timestamp.",
+          "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "volumes": {
@@ -1874,6 +2380,21 @@
           "description": "Output only. The name of the provisioning quota.",
           "readOnly": true,
           "type": "string"
+        },
+        "networkBandwidth": {
+          "description": "Network bandwidth, Gbps",
+          "format": "int64",
+          "type": "string"
+        },
+        "serverCount": {
+          "description": "Server count.",
+          "format": "int64",
+          "type": "string"
+        },
+        "storageGib": {
+          "description": "Storage size (GB).",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1918,6 +2439,32 @@
           "description": "The maximum number of snapshots to retain in this schedule.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "ServerNetworkTemplate": {
+      "description": "Network template.",
+      "id": "ServerNetworkTemplate",
+      "properties": {
+        "applicableInstanceTypes": {
+          "description": "Instance types this template is applicable to.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "logicalInterfaces": {
+          "description": "Logical interfaces.",
+          "items": {
+            "$ref": "LogicalInterface"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Output only. Template's unique name.",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -2028,6 +2575,12 @@
       },
       "type": "object"
     },
+    "StopInstanceRequest": {
+      "description": "Message requesting to stop a server.",
+      "id": "StopInstanceRequest",
+      "properties": {},
+      "type": "object"
+    },
     "SubmitProvisioningConfigRequest": {
       "description": "Request for SubmitProvisioningConfig.",
       "id": "SubmitProvisioningConfigRequest",
@@ -2121,6 +2674,11 @@
         },
         "currentSizeGib": {
           "description": "The current size of this storage volume, in GiB, including space reserved for snapshots. This size might be different than the requested size if the storage volume has been configured with auto grow or auto shrink.",
+          "format": "int64",
+          "type": "string"
+        },
+        "emergencySizeGib": {
+          "description": "Additional emergency size that was requested for this Volume, in GiB. current_size_gib includes this value.",
           "format": "int64",
           "type": "string"
         },

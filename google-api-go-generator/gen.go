@@ -124,8 +124,7 @@ func (e *compileError) Error() string {
 
 // skipAPIGeneration is a set of APIs to not generate when generating all clients.
 var skipAPIGeneration = map[string]bool{
-	"sql:v1beta4":      true,
-	"playintegrity:v1": true,
+	"sql:v1beta4": true,
 }
 
 func main() {
@@ -752,7 +751,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("// NewService creates a new %s.", service)
 	pn("func NewService(ctx context.Context, opts ...option.ClientOption) (*%s, error) {", service)
 	if len(a.doc.Auth.OAuth2Scopes) != 0 {
-		pn("scopesOption := option.WithScopes(")
+		pn("scopesOption := internaloption.WithDefaultScopes(")
 		for _, scope := range a.doc.Auth.OAuth2Scopes {
 			pn("%q,", scope.ID)
 		}

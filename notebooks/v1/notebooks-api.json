@@ -144,7 +144,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
                   "location": "query",
                   "type": "string"
                 },
@@ -1245,6 +1245,11 @@
                       "required": true,
                       "type": "string"
                     },
+                    "requestId": {
+                      "description": "Idempotent request UUID.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "runtimeId": {
                       "description": "Required. User-defined unique ID of this Runtime.",
                       "location": "query",
@@ -1276,6 +1281,11 @@
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
                       "required": true,
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "description": "Idempotent request UUID.",
+                      "location": "query",
                       "type": "string"
                     }
                   },
@@ -1374,6 +1384,34 @@
                   "path": "v1/{+parent}/runtimes",
                   "response": {
                     "$ref": "ListRuntimesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "refreshRuntimeTokenInternal": {
+                  "description": "Gets an access token for the consumer service account that the customer attached to the runtime. Only accessible from the tenant instance.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}:refreshRuntimeTokenInternal",
+                  "httpMethod": "POST",
+                  "id": "notebooks.projects.locations.runtimes.refreshRuntimeTokenInternal",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Format: `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:refreshRuntimeTokenInternal",
+                  "request": {
+                    "$ref": "RefreshRuntimeTokenInternalRequest"
+                  },
+                  "response": {
+                    "$ref": "RefreshRuntimeTokenInternalResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -1743,7 +1781,7 @@
       }
     }
   },
-  "revision": "20220224",
+  "revision": "20220415",
   "rootUrl": "https://notebooks.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -1799,7 +1837,7 @@
           "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
         },
         "members": {
-          "description": "Specifies the principals requesting access for a Cloud Platform resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
+          "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
           "items": {
             "type": "string"
           },
@@ -1914,7 +1952,7 @@
       "type": "object"
     },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
       "type": "object"
@@ -2265,13 +2303,15 @@
             "DISK_TYPE_UNSPECIFIED",
             "PD_STANDARD",
             "PD_SSD",
-            "PD_BALANCED"
+            "PD_BALANCED",
+            "PD_EXTREME"
           ],
           "enumDescriptions": [
             "Disk type not set.",
             "Standard persistent disk type.",
             "SSD persistent disk type.",
-            "Balanced persistent disk type."
+            "Balanced persistent disk type.",
+            "Extreme persistent disk type."
           ],
           "type": "string"
         },
@@ -2309,13 +2349,15 @@
             "DISK_TYPE_UNSPECIFIED",
             "PD_STANDARD",
             "PD_SSD",
-            "PD_BALANCED"
+            "PD_BALANCED",
+            "PD_EXTREME"
           ],
           "enumDescriptions": [
             "Disk type not set.",
             "Standard persistent disk type.",
             "SSD persistent disk type.",
-            "Balanced persistent disk type."
+            "Balanced persistent disk type.",
+            "Extreme persistent disk type."
           ],
           "type": "string"
         },
@@ -2792,13 +2834,15 @@
             "DISK_TYPE_UNSPECIFIED",
             "PD_STANDARD",
             "PD_SSD",
-            "PD_BALANCED"
+            "PD_BALANCED",
+            "PD_EXTREME"
           ],
           "enumDescriptions": [
             "Disk type not set.",
             "Standard persistent disk type.",
             "SSD persistent disk type.",
-            "Balanced persistent disk type."
+            "Balanced persistent disk type.",
+            "Extreme persistent disk type."
           ],
           "type": "string"
         },
@@ -2946,6 +2990,34 @@
       },
       "type": "object"
     },
+    "RefreshRuntimeTokenInternalRequest": {
+      "description": "Request for getting a new access token.",
+      "id": "RefreshRuntimeTokenInternalRequest",
+      "properties": {
+        "vmId": {
+          "description": "Required. The VM hardware token for authenticating the VM. https://cloud.google.com/compute/docs/instances/verifying-instance-identity",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RefreshRuntimeTokenInternalResponse": {
+      "description": "Response with a new access token.",
+      "id": "RefreshRuntimeTokenInternalResponse",
+      "properties": {
+        "accessToken": {
+          "description": "The OAuth 2.0 access token.",
+          "type": "string"
+        },
+        "expireTime": {
+          "description": "Output only. Token expiration time.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "RegisterInstanceRequest": {
       "description": "Request for registering a notebook instance.",
       "id": "RegisterInstanceRequest",
@@ -3033,7 +3105,12 @@
     "ResetRuntimeRequest": {
       "description": "Request for resetting a Managed Notebook Runtime.",
       "id": "ResetRuntimeRequest",
-      "properties": {},
+      "properties": {
+        "requestId": {
+          "description": "Idempotent request UUID.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "RollbackInstanceRequest": {
@@ -3419,7 +3496,7 @@
       "properties": {
         "policy": {
           "$ref": "Policy",
-          "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of the policy is limited to a few 10s of KB. An empty policy is a valid policy but certain Cloud Platform services (such as Projects) might reject them."
+          "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of the policy is limited to a few 10s of KB. An empty policy is a valid policy but certain Google Cloud services (such as Projects) might reject them."
         }
       },
       "type": "object"
@@ -3521,7 +3598,12 @@
     "StartRuntimeRequest": {
       "description": "Request for starting a Managed Notebook Runtime.",
       "id": "StartRuntimeRequest",
-      "properties": {},
+      "properties": {
+        "requestId": {
+          "description": "Idempotent request UUID.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "Status": {
@@ -3560,7 +3642,12 @@
     "StopRuntimeRequest": {
       "description": "Request for stopping a Managed Notebook Runtime.",
       "id": "StopRuntimeRequest",
-      "properties": {},
+      "properties": {
+        "requestId": {
+          "description": "Idempotent request UUID.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "SwitchRuntimeRequest": {
@@ -3574,6 +3661,10 @@
         "machineType": {
           "description": "machine type.",
           "type": "string"
+        },
+        "requestId": {
+          "description": "Idempotent request UUID.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3583,7 +3674,7 @@
       "id": "TestIamPermissionsRequest",
       "properties": {
         "permissions": {
-          "description": "The set of permissions to check for the `resource`. Permissions with wildcards (such as '*' or 'storage.*') are not allowed. For more information see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
+          "description": "The set of permissions to check for the `resource`. Permissions with wildcards (such as `*` or `storage.*`) are not allowed. For more information see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
           "items": {
             "type": "string"
           },

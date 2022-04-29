@@ -96,7 +96,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/dialogflow",
 	)
@@ -543,6 +543,11 @@ type GoogleCloudDialogflowCxV3Agent struct {
 	// EnableStackdriverLogging: Indicates if stackdriver logging is enabled
 	// for the agent. Please use agent.advanced_settings instead.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
+
+	// Locked: Indiciates whether the agent is locked for changes. If the
+	// agent is locked, modifications to the agent will be rejected except
+	// for RestoreAgent.
+	Locked bool `json:"locked,omitempty"`
 
 	// Name: The unique identifier of the agent. Required for the
 	// Agents.UpdateAgent method. Agents.CreateAgent populates the name
@@ -2315,8 +2320,20 @@ type GoogleCloudDialogflowCxV3ExportAgentRequest struct {
 	// AgentUri: Optional. The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to export the agent to.
 	// The format of this URI must be `gs:///`. If left unspecified, the
-	// serialized agent is returned inline.
+	// serialized agent is returned inline. Dialogflow performs a write
+	// operation for the Cloud Storage object on the caller's behalf, so
+	// your request authentication must have write permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	AgentUri string `json:"agentUri,omitempty"`
+
+	// DataFormat: Optional. The data format of the exported agent. If not
+	// specified, `BLOB` is assumed.
+	//
+	// Possible values:
+	//   "DATA_FORMAT_UNSPECIFIED" - Unspecified format.
+	//   "BLOB" - Agent content will be exported as raw bytes.
+	DataFormat string `json:"dataFormat,omitempty"`
 
 	// Environment: Optional. Environment name. If not set, draft
 	// environment is assumed. Format:
@@ -2385,7 +2402,11 @@ type GoogleCloudDialogflowCxV3ExportFlowRequest struct {
 	// FlowUri: Optional. The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to export the flow to.
 	// The format of this URI must be `gs:///`. If left unspecified, the
-	// serialized flow is returned inline.
+	// serialized flow is returned inline. Dialogflow performs a write
+	// operation for the Cloud Storage object on the caller's behalf, so
+	// your request authentication must have write permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	FlowUri string `json:"flowUri,omitempty"`
 
 	// IncludeReferencedFlows: Optional. Whether to export flows referenced
@@ -2476,7 +2497,11 @@ type GoogleCloudDialogflowCxV3ExportTestCasesRequest struct {
 	// GcsUri: The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to export the test cases
 	// to. The format of this URI must be `gs:///`. If unspecified, the
-	// serialized test cases is returned inline.
+	// serialized test cases is returned inline. Dialogflow performs a write
+	// operation for the Cloud Storage object on the caller's behalf, so
+	// your request authentication must have write permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	GcsUri string `json:"gcsUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataFormat") to
@@ -2590,7 +2615,7 @@ type GoogleCloudDialogflowCxV3Flow struct {
 	// current page. Transition routes defined in the page have higher
 	// priority than those defined in the flow. TransitionRoutes are
 	// evalauted in the following order: * TransitionRoutes with intent
-	// specified.. * TransitionRoutes with only condition specified.
+	// specified. * TransitionRoutes with only condition specified.
 	// TransitionRoutes with intent specified are inherited by pages in the
 	// flow.
 	TransitionRoutes []*GoogleCloudDialogflowCxV3TransitionRoute `json:"transitionRoutes,omitempty"`
@@ -2933,8 +2958,11 @@ type GoogleCloudDialogflowCxV3Fulfillment struct {
 	// webhook.
 	SetParameterActions []*GoogleCloudDialogflowCxV3FulfillmentSetParameterAction `json:"setParameterActions,omitempty"`
 
-	// Tag: The tag used by the webhook to identify which fulfillment is
-	// being called. This field is required if `webhook` is specified.
+	// Tag: The value of this field will be populated in the WebhookRequest
+	// `fulfillmentInfo.tag` field by Dialogflow when the associated webhook
+	// is called. The tag is typically used by the webhook service to
+	// identify which fulfillment is being called, but it could be used for
+	// other purposes. This field is required if `webhook` is specified.
 	Tag string `json:"tag,omitempty"`
 
 	// Webhook: The webhook to call. Format:
@@ -3201,7 +3229,11 @@ type GoogleCloudDialogflowCxV3ImportFlowRequest struct {
 
 	// FlowUri: The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to import flow from. The
-	// format of this URI must be `gs:///`.
+	// format of this URI must be `gs:///`. Dialogflow performs a read
+	// operation for the Cloud Storage object on the caller's behalf, so
+	// your request authentication must have read permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	FlowUri string `json:"flowUri,omitempty"`
 
 	// ImportOption: Flow import mode. If not specified, `KEEP` is assumed.
@@ -3306,7 +3338,11 @@ type GoogleCloudDialogflowCxV3ImportTestCasesRequest struct {
 
 	// GcsUri: The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to import test cases
-	// from. The format of this URI must be `gs:///`.
+	// from. The format of this URI must be `gs:///`. Dialogflow performs a
+	// read operation for the Cloud Storage object on the caller's behalf,
+	// so your request authentication must have read permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	GcsUri string `json:"gcsUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -4577,13 +4613,13 @@ type GoogleCloudDialogflowCxV3Match struct {
 	// Parameters: The collection of parameters extracted from the query.
 	// Depending on your protocol or client library language, this is a map,
 	// associative array, symbol table, dictionary, or JSON object composed
-	// of a collection of (MapKey, MapValue) pairs: - MapKey type: string -
-	// MapKey value: parameter name - MapValue type: - If parameter's entity
-	// type is a composite entity: map - Else: depending on parameter value
-	// type, could be one of string, number, boolean, null, list or map -
-	// MapValue value: - If parameter's entity type is a composite entity:
-	// map from composite entity property names to property values - Else:
-	// parameter value
+	// of a collection of (MapKey, MapValue) pairs: * MapKey type: string *
+	// MapKey value: parameter name * MapValue type: If parameter's entity
+	// type is a composite entity then use map, otherwise, depending on the
+	// parameter value type, it could be one of string, number, boolean,
+	// null, list or map. * MapValue value: If parameter's entity type is a
+	// composite entity then use map from composite entity property names to
+	// property values, otherwise, use parameter value.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ResolvedInput: Final text input which was matched during MatchIntent.
@@ -4859,7 +4895,7 @@ func (s *GoogleCloudDialogflowCxV3OutputAudioConfig) MarshalJSON() ([]byte, erro
 // (https://cloud.google.com/dialogflow/cx/docs/concept/page).
 type GoogleCloudDialogflowCxV3Page struct {
 	// DisplayName: Required. The human-readable name of the page, unique
-	// within the agent.
+	// within the flow.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// EntryFulfillment: The fulfillment to call when the session is
@@ -5151,13 +5187,13 @@ type GoogleCloudDialogflowCxV3QueryParameters struct {
 	// in the agent with the following format: $session.params.parameter-id.
 	// Depending on your protocol or client library language, this is a map,
 	// associative array, symbol table, dictionary, or JSON object composed
-	// of a collection of (MapKey, MapValue) pairs: - MapKey type: string -
-	// MapKey value: parameter name - MapValue type: - If parameter's entity
-	// type is a composite entity: map - Else: depending on parameter value
-	// type, could be one of string, number, boolean, null, list or map -
-	// MapValue value: - If parameter's entity type is a composite entity:
-	// map from composite entity property names to property values - Else:
-	// parameter value
+	// of a collection of (MapKey, MapValue) pairs: * MapKey type: string *
+	// MapKey value: parameter name * MapValue type: If parameter's entity
+	// type is a composite entity then use map, otherwise, depending on the
+	// parameter value type, it could be one of string, number, boolean,
+	// null, list or map. * MapValue value: If parameter's entity type is a
+	// composite entity then use map from composite entity property names to
+	// property values, otherwise, use parameter value.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// Payload: This field can be used to pass custom data into the webhook
@@ -5258,13 +5294,13 @@ type GoogleCloudDialogflowCxV3QueryResult struct {
 	// Parameters: The collected session parameters. Depending on your
 	// protocol or client library language, this is a map, associative
 	// array, symbol table, dictionary, or JSON object composed of a
-	// collection of (MapKey, MapValue) pairs: - MapKey type: string -
-	// MapKey value: parameter name - MapValue type: - If parameter's entity
-	// type is a composite entity: map - Else: depending on parameter value
-	// type, could be one of string, number, boolean, null, list or map -
-	// MapValue value: - If parameter's entity type is a composite entity:
-	// map from composite entity property names to property values - Else:
-	// parameter value
+	// collection of (MapKey, MapValue) pairs: * MapKey type: string *
+	// MapKey value: parameter name * MapValue type: If parameter's entity
+	// type is a composite entity then use map, otherwise, depending on the
+	// parameter value type, it could be one of string, number, boolean,
+	// null, list or map. * MapValue value: If parameter's entity type is a
+	// composite entity then use map from composite entity property names to
+	// property values, otherwise, use parameter value.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ResponseMessages: The list of rich messages returned to the client.
@@ -5794,7 +5830,11 @@ type GoogleCloudDialogflowCxV3RestoreAgentRequest struct {
 
 	// AgentUri: The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to restore agent from.
-	// The format of this URI must be `gs:///`.
+	// The format of this URI must be `gs:///`. Dialogflow performs a read
+	// operation for the Cloud Storage object on the caller's behalf, so
+	// your request authentication must have read permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	AgentUri string `json:"agentUri,omitempty"`
 
 	// RestoreOption: Agent restore mode. If not specified, `KEEP` is
@@ -6662,9 +6702,20 @@ func (s *GoogleCloudDialogflowCxV3TestCaseResult) MarshalJSON() ([]byte, error) 
 // GoogleCloudDialogflowCxV3TestConfig: Represents configurations for a
 // test case.
 type GoogleCloudDialogflowCxV3TestConfig struct {
-	// Flow: Flow name. If not set, default start flow is assumed. Format:
-	// `projects//locations//agents//flows/`.
+	// Flow: Flow name to start the test case with. Format:
+	// `projects//locations//agents//flows/`. Only one of `flow` and `page`
+	// should be set to indicate the starting point of the test case. If
+	// both are set, `page` takes precedence over `flow`. If neither is set,
+	// the test case will start with start page on the default start flow.
 	Flow string `json:"flow,omitempty"`
+
+	// Page: The page to start the test case with. Format:
+	// `projects//locations//agents//flows//pages/`. Only one of `flow` and
+	// `page` should be set to indicate the starting point of the test case.
+	// If both are set, `page` takes precedence over `flow`. If neither is
+	// set, the test case will start with start page on the default start
+	// flow.
+	Page string `json:"page,omitempty"`
 
 	// TrackingParameters: Session parameters to be compared when
 	// calculating differences.
@@ -7002,7 +7053,7 @@ func (s *GoogleCloudDialogflowCxV3TransitionRoute) MarshalJSON() ([]byte, error)
 // used by a Page.
 type GoogleCloudDialogflowCxV3TransitionRouteGroup struct {
 	// DisplayName: Required. The human-readable name of the transition
-	// route group, unique within the Agent. The display name can be no
+	// route group, unique within the flow. The display name can be no
 	// longer than 30 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -7620,9 +7671,10 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 	// Dialogflow will use Google's default trust store to verify
 	// certificates. N.B. Make sure the HTTPS server certificates are signed
 	// with "subject alt name". For instance a certificate can be
-	// self-signed using the following command, openssl x509 -req -days 200
-	// -in example.com.csr \ -signkey example.com.key \ -out example.com.crt
-	// \ -extfile <(printf "\nsubjectAltName='DNS:www.example.com'")
+	// self-signed using the following command, ``` openssl x509 -req -days
+	// 200 -in example.com.csr \ -signkey example.com.key \ -out
+	// example.com.crt \ -extfile <(printf
+	// "\nsubjectAltName='DNS:www.example.com'") ```
 	AllowedCaCerts []string `json:"allowedCaCerts,omitempty"`
 
 	// Password: The password for HTTP Basic authentication.
@@ -7745,8 +7797,11 @@ func (s *GoogleCloudDialogflowCxV3WebhookRequest) MarshalJSON() ([]byte, error) 
 // GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo: Represents
 // fulfillment information communicated to the webhook.
 type GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo struct {
-	// Tag: Always present. The tag used to identify which fulfillment is
-	// being called.
+	// Tag: Always present. The value of the Fulfillment.tag field will be
+	// populated in this field by Dialogflow when the associated webhook is
+	// called. The tag is typically used by the webhook service to identify
+	// which fulfillment is being called, but it could be used for other
+	// purposes.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to
@@ -9004,8 +9059,11 @@ type GoogleCloudDialogflowCxV3beta1Fulfillment struct {
 	// webhook.
 	SetParameterActions []*GoogleCloudDialogflowCxV3beta1FulfillmentSetParameterAction `json:"setParameterActions,omitempty"`
 
-	// Tag: The tag used by the webhook to identify which fulfillment is
-	// being called. This field is required if `webhook` is specified.
+	// Tag: The value of this field will be populated in the WebhookRequest
+	// `fulfillmentInfo.tag` field by Dialogflow when the associated webhook
+	// is called. The tag is typically used by the webhook service to
+	// identify which fulfillment is being called, but it could be used for
+	// other purposes. This field is required if `webhook` is specified.
 	Tag string `json:"tag,omitempty"`
 
 	// Webhook: The webhook to call. Format:
@@ -9738,7 +9796,7 @@ func (s *GoogleCloudDialogflowCxV3beta1IntentTrainingPhrasePart) MarshalJSON() (
 // (https://cloud.google.com/dialogflow/cx/docs/concept/page).
 type GoogleCloudDialogflowCxV3beta1Page struct {
 	// DisplayName: Required. The human-readable name of the page, unique
-	// within the agent.
+	// within the flow.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// EntryFulfillment: The fulfillment to call when the session is
@@ -10684,9 +10742,20 @@ func (s *GoogleCloudDialogflowCxV3beta1TestCaseResult) MarshalJSON() ([]byte, er
 // GoogleCloudDialogflowCxV3beta1TestConfig: Represents configurations
 // for a test case.
 type GoogleCloudDialogflowCxV3beta1TestConfig struct {
-	// Flow: Flow name. If not set, default start flow is assumed. Format:
-	// `projects//locations//agents//flows/`.
+	// Flow: Flow name to start the test case with. Format:
+	// `projects//locations//agents//flows/`. Only one of `flow` and `page`
+	// should be set to indicate the starting point of the test case. If
+	// both are set, `page` takes precedence over `flow`. If neither is set,
+	// the test case will start with start page on the default start flow.
 	Flow string `json:"flow,omitempty"`
+
+	// Page: The page to start the test case with. Format:
+	// `projects//locations//agents//flows//pages/`. Only one of `flow` and
+	// `page` should be set to indicate the starting point of the test case.
+	// If both are set, `page` takes precedence over `flow`. If neither is
+	// set, the test case will start with start page on the default start
+	// flow.
+	Page string `json:"page,omitempty"`
 
 	// TrackingParameters: Session parameters to be compared when
 	// calculating differences.
@@ -10998,8 +11067,11 @@ func (s *GoogleCloudDialogflowCxV3beta1WebhookRequest) MarshalJSON() ([]byte, er
 // GoogleCloudDialogflowCxV3beta1WebhookRequestFulfillmentInfo:
 // Represents fulfillment information communicated to the webhook.
 type GoogleCloudDialogflowCxV3beta1WebhookRequestFulfillmentInfo struct {
-	// Tag: Always present. The tag used to identify which fulfillment is
-	// being called.
+	// Tag: Always present. The value of the Fulfillment.tag field will be
+	// populated in this field by Dialogflow when the associated webhook is
+	// called. The tag is typically used by the webhook service to identify
+	// which fulfillment is being called, but it could be used for other
+	// purposes.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to
@@ -12029,7 +12101,9 @@ type GoogleCloudDialogflowV2EventInput struct {
 	// Support (https://cloud.google.com/dialogflow/docs/reference/language)
 	// for a list of the currently supported language codes. Note that
 	// queries in the same session do not necessarily need to specify the
-	// same language.
+	// same language. This field is ignored when used in the context of a
+	// WebhookResponse.followup_event_input field, because the language was
+	// already defined in the originating detect intent request.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Name: Required. The unique identifier of the event.
@@ -15093,6 +15167,8 @@ type GoogleCloudDialogflowV2beta1ConversationEvent struct {
 	//   "CONVERSATION_FINISHED" - An existing conversation has closed. This
 	// is fired when a telephone call is terminated, or a conversation is
 	// closed via the API.
+	//   "HUMAN_INTERVENTION_NEEDED" - An existing conversation has received
+	// notification from Dialogflow that human intervention is required.
 	//   "NEW_MESSAGE" - An existing conversation has received a new
 	// message, either from API or telephony. It is configured in
 	// ConversationProfile.new_message_event_notification_config
@@ -15254,7 +15330,9 @@ type GoogleCloudDialogflowV2beta1EventInput struct {
 	// Support (https://cloud.google.com/dialogflow/docs/reference/language)
 	// for a list of the currently supported language codes. Note that
 	// queries in the same session do not necessarily need to specify the
-	// same language.
+	// same language. This field is ignored when used in the context of a
+	// WebhookResponse.followup_event_input field, because the language was
+	// already defined in the originating detect intent request.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Name: Required. The unique identifier of the event.
@@ -17425,10 +17503,11 @@ type GoogleCloudDialogflowV2beta1IntentTrainingPhrase struct {
 	//   "EXAMPLE" - Examples do not contain @-prefixed entity type names,
 	// but example parts can be annotated with entity types.
 	//   "TEMPLATE" - Templates are not annotated with entity types, but
-	// they can contain @-prefixed entity type names as substrings. Template
-	// mode has been deprecated. Example mode is the only supported way to
-	// create new training phrases. If you have existing training phrases
-	// that you've created in template mode, those will continue to work.
+	// they can contain @-prefixed entity type names as substrings. Note:
+	// Template mode has been deprecated. Example mode is the only supported
+	// way to create new training phrases. If you have existing training
+	// phrases in template mode, they will be removed during training and it
+	// can cause a drop in agent performance.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -18932,8 +19011,7 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
 // method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); } The JSON representation for
-// `Empty` is empty JSON object `{}`.
+// returns (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -19208,8 +19286,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -19340,7 +19418,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -33878,7 +33956,7 @@ type ProjectsLocationsAgentsTestCasesImportCall struct {
 }
 
 // Import: Imports the test cases from a Cloud Storage bucket or a local
-// file. It always creates new test cases and won't overwite any
+// file. It always creates new test cases and won't overwrite any
 // existing ones. The provided ID in the imported test case is
 // neglected. This method is a long-running operation
 // (https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation).
@@ -33986,7 +34064,7 @@ func (c *ProjectsLocationsAgentsTestCasesImportCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports the test cases from a Cloud Storage bucket or a local file. It always creates new test cases and won't overwite any existing ones. The provided ID in the imported test case is neglected. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ImportTestCasesMetadata - `response`: ImportTestCasesResponse",
+	//   "description": "Imports the test cases from a Cloud Storage bucket or a local file. It always creates new test cases and won't overwrite any existing ones. The provided ID in the imported test case is neglected. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ImportTestCasesMetadata - `response`: ImportTestCasesResponse",
 	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/testCases:import",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.locations.agents.testCases.import",

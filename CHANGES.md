@@ -1,5 +1,43 @@
 # Changes
 
+## [0.76.0](https://github.com/googleapis/google-api-go-client/compare/v0.75.0...v0.76.0) (2022-04-26)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1523](https://github.com/googleapis/google-api-go-client/issues/1523) [#1522](https://github.com/googleapis/google-api-go-client/issues/1522) [#1521](https://github.com/googleapis/google-api-go-client/issues/1521) [#1518](https://github.com/googleapis/google-api-go-client/issues/1518)
+
+## [0.75.0](https://github.com/googleapis/google-api-go-client/compare/v0.74.0...v0.75.0) (2022-04-20)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1516](https://github.com/googleapis/google-api-go-client/issues/1516) [#1514](https://github.com/googleapis/google-api-go-client/issues/1514) [#1513](https://github.com/googleapis/google-api-go-client/issues/1513) [#1511](https://github.com/googleapis/google-api-go-client/issues/1511) [#1510](https://github.com/googleapis/google-api-go-client/issues/1510) [#1509](https://github.com/googleapis/google-api-go-client/issues/1509) [#1504](https://github.com/googleapis/google-api-go-client/issues/1504) [#1503](https://github.com/googleapis/google-api-go-client/issues/1503) [#1500](https://github.com/googleapis/google-api-go-client/issues/1500) [#1498](https://github.com/googleapis/google-api-go-client/issues/1498) [#1496](https://github.com/googleapis/google-api-go-client/issues/1496)
+* **transport:** remove grpc version guard ([#1506](https://github.com/googleapis/google-api-go-client/issues/1506)) ([d349e85](https://github.com/googleapis/google-api-go-client/commit/d349e8569473af826a87ebbeff59c90455f8490f))
+
+## [0.74.0](https://github.com/googleapis/google-api-go-client/compare/v0.73.0...v0.74.0) (2022-03-30)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1495](https://github.com/googleapis/google-api-go-client/issues/1495) [#1492](https://github.com/googleapis/google-api-go-client/issues/1492) [#1490](https://github.com/googleapis/google-api-go-client/issues/1490) [#1489](https://github.com/googleapis/google-api-go-client/issues/1489) [#1488](https://github.com/googleapis/google-api-go-client/issues/1488) [#1486](https://github.com/googleapis/google-api-go-client/issues/1486) [#1483](https://github.com/googleapis/google-api-go-client/issues/1483) [#1480](https://github.com/googleapis/google-api-go-client/issues/1480)
+* re-enable playintegrity api generation ([#1482](https://github.com/googleapis/google-api-go-client/issues/1482)) ([d1de029](https://github.com/googleapis/google-api-go-client/commit/d1de029b37b7170628ca308874aad0c5b62bb6ff)), refs [#1479](https://github.com/googleapis/google-api-go-client/issues/1479)
+
+## [0.73.0](https://github.com/googleapis/google-api-go-client/compare/v0.72.0...v0.73.0) (2022-03-15)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1477](https://github.com/googleapis/google-api-go-client/issues/1477)
+* **all:** prefer using WithDefaultScope option internally ([#1476](https://github.com/googleapis/google-api-go-client/issues/1476)) ([0922a63](https://github.com/googleapis/google-api-go-client/commit/0922a63f2341bb10cb3c3085233fd4b6adaeac26))
+
+## [0.72.0](https://github.com/googleapis/google-api-go-client/compare/v0.71.0...v0.72.0) (2022-03-14)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1474](https://github.com/googleapis/google-api-go-client/issues/1474) [#1472](https://github.com/googleapis/google-api-go-client/issues/1472) [#1470](https://github.com/googleapis/google-api-go-client/issues/1470)
+
 ## [0.71.0](https://github.com/googleapis/google-api-go-client/compare/v0.70.0...v0.71.0) (2022-03-08)
 
 

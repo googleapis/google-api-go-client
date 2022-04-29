@@ -87,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -523,12 +523,15 @@ func (s *DiscoverConnectionProfileResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DropLargeObjects: Configuration to drop large object values.
+type DropLargeObjects struct {
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1390,7 +1393,7 @@ func (s *MysqlSslConfig) MarshalJSON() ([]byte, error) {
 // MysqlTable: MySQL table.
 type MysqlTable struct {
 	// MysqlColumns: MySQL columns in the database. When unspecified as part
-	// of include/exclude lists, includes/excludes everything.
+	// of include/exclude objects, includes/excludes everything.
 	MysqlColumns []*MysqlColumn `json:"mysqlColumns,omitempty"`
 
 	// Table: Table name.
@@ -1726,13 +1729,16 @@ func (s *OracleSchema) MarshalJSON() ([]byte, error) {
 
 // OracleSourceConfig: Oracle data source configuration
 type OracleSourceConfig struct {
+	// DropLargeObjects: Drop large object values.
+	DropLargeObjects *DropLargeObjects `json:"dropLargeObjects,omitempty"`
+
 	// ExcludeObjects: Oracle objects to exclude from the stream.
 	ExcludeObjects *OracleRdbms `json:"excludeObjects,omitempty"`
 
 	// IncludeObjects: Oracle objects to include in the stream.
 	IncludeObjects *OracleRdbms `json:"includeObjects,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// ForceSendFields is a list of field names (e.g. "DropLargeObjects") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1740,7 +1746,7 @@ type OracleSourceConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ExcludeObjects") to
+	// NullFields is a list of field names (e.g. "DropLargeObjects") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1759,7 +1765,7 @@ func (s *OracleSourceConfig) MarshalJSON() ([]byte, error) {
 // OracleTable: Oracle table.
 type OracleTable struct {
 	// OracleColumns: Oracle columns in the schema. When unspecified as part
-	// of inclue/exclude lists, includes/excludes everything.
+	// of include/exclude objects, includes/excludes everything.
 	OracleColumns []*OracleColumn `json:"oracleColumns,omitempty"`
 
 	// Table: Table name.
@@ -1939,10 +1945,10 @@ func (s *Route) MarshalJSON() ([]byte, error) {
 
 // SourceConfig: The configuration of the stream source.
 type SourceConfig struct {
-	// MysqlSourceConfig: MySQL data source configuration
+	// MysqlSourceConfig: MySQL data source configuration.
 	MysqlSourceConfig *MysqlSourceConfig `json:"mysqlSourceConfig,omitempty"`
 
-	// OracleSourceConfig: Oracle data source configuration
+	// OracleSourceConfig: Oracle data source configuration.
 	OracleSourceConfig *OracleSourceConfig `json:"oracleSourceConfig,omitempty"`
 
 	// SourceConnectionProfile: Required. Source connection profile
@@ -2782,8 +2788,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2912,7 +2918,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

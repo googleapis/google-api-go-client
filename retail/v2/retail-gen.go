@@ -87,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -173,6 +173,7 @@ func NewProjectsLocationsCatalogsService(s *Service) *ProjectsLocationsCatalogsS
 	rs.CompletionData = NewProjectsLocationsCatalogsCompletionDataService(s)
 	rs.Operations = NewProjectsLocationsCatalogsOperationsService(s)
 	rs.Placements = NewProjectsLocationsCatalogsPlacementsService(s)
+	rs.ServingConfigs = NewProjectsLocationsCatalogsServingConfigsService(s)
 	rs.UserEvents = NewProjectsLocationsCatalogsUserEventsService(s)
 	return rs
 }
@@ -187,6 +188,8 @@ type ProjectsLocationsCatalogsService struct {
 	Operations *ProjectsLocationsCatalogsOperationsService
 
 	Placements *ProjectsLocationsCatalogsPlacementsService
+
+	ServingConfigs *ProjectsLocationsCatalogsServingConfigsService
 
 	UserEvents *ProjectsLocationsCatalogsUserEventsService
 }
@@ -248,6 +251,15 @@ func NewProjectsLocationsCatalogsPlacementsService(s *Service) *ProjectsLocation
 }
 
 type ProjectsLocationsCatalogsPlacementsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCatalogsServingConfigsService(s *Service) *ProjectsLocationsCatalogsServingConfigsService {
+	rs := &ProjectsLocationsCatalogsServingConfigsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCatalogsServingConfigsService struct {
 	s *Service
 }
 
@@ -641,6 +653,72 @@ func (s *GoogleCloudRetailV2AddFulfillmentPlacesRequest) MarshalJSON() ([]byte, 
 type GoogleCloudRetailV2AddFulfillmentPlacesResponse struct {
 }
 
+// GoogleCloudRetailV2AddLocalInventoriesMetadata: Metadata related to
+// the progress of the AddLocalInventories operation. Currently empty
+// because there is no meaningful metadata populated from the
+// AddLocalInventories method.
+type GoogleCloudRetailV2AddLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2AddLocalInventoriesRequest: Request message for
+// AddLocalInventories method.
+type GoogleCloudRetailV2AddLocalInventoriesRequest struct {
+	// AddMask: Indicates which inventory fields in the provided list of
+	// LocalInventory to update. The field is updated to the provided value.
+	// If a field is set while the place does not have a previous local
+	// inventory, the local inventory at that store is created. If a field
+	// is set while the value of that field is not provided, the original
+	// field value, if it exists, is deleted. If the mask is not set or set
+	// with empty paths, all inventory fields will be updated. If an
+	// unsupported or unknown field is provided, an INVALID_ARGUMENT error
+	// is returned and the entire update will be ignored.
+	AddMask string `json:"addMask,omitempty"`
+
+	// AddTime: The time when the inventory updates are issued. Used to
+	// prevent out-of-order updates on local inventory fields. If not
+	// provided, the internal system time will be used.
+	AddTime string `json:"addTime,omitempty"`
+
+	// AllowMissing: If set to true, and the Product is not found, the local
+	// inventory will still be processed and retained for at most 1 day and
+	// processed once the Product is created. If set to false, a NOT_FOUND
+	// error is returned if the Product is not found.
+	AllowMissing bool `json:"allowMissing,omitempty"`
+
+	// LocalInventories: Required. A list of inventory information at
+	// difference places. Each place is identified by its place ID. At most
+	// 3000 inventories are allowed per request.
+	LocalInventories []*GoogleCloudRetailV2LocalInventory `json:"localInventories,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddMask") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AddMask") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2AddLocalInventoriesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2AddLocalInventoriesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2AddLocalInventoriesResponse: Response of the
+// AddLocalInventories API. Currently empty because there is no
+// meaningful response populated from the AddLocalInventories method.
+type GoogleCloudRetailV2AddLocalInventoriesResponse struct {
+}
+
 // GoogleCloudRetailV2Audience: An intended audience of the Product for
 // whom it's sold.
 type GoogleCloudRetailV2Audience struct {
@@ -705,7 +783,11 @@ type GoogleCloudRetailV2BigQuerySource struct {
 	// * `user_event_ga4`: This feature is in private preview. Please
 	// contact the support team for importing Google Analytics 4 events. The
 	// schema is available here:
-	// https://support.google.com/analytics/answer/7029846.
+	// https://support.google.com/analytics/answer/7029846. Supported values
+	// for auto-completion imports: * `suggestions` (default): One JSON
+	// completion suggestion per line. * `denylist`: One JSON deny
+	// suggestion per line. * `allowlist`: One JSON allow suggestion per
+	// line.
 	DataSchema string `json:"dataSchema,omitempty"`
 
 	// DatasetId: Required. The BigQuery data set to copy the data from with
@@ -848,8 +930,9 @@ func (s *GoogleCloudRetailV2ColorInfo) MarshalJSON() ([]byte, error) {
 // auto-complete query.
 type GoogleCloudRetailV2CompleteQueryResponse struct {
 	// AttributionToken: A unique complete token. This should be included in
-	// the SearchRequest resulting from this completion, which enables
-	// accurate attribution of complete model performance.
+	// the UserEvent.completion_detail for search events resulting from this
+	// completion, which enables accurate attribution of complete model
+	// performance.
 	AttributionToken string `json:"attributionToken,omitempty"`
 
 	// CompletionResults: Results of the matching suggestions. The result
@@ -900,7 +983,10 @@ func (s *GoogleCloudRetailV2CompleteQueryResponse) MarshalJSON() ([]byte, error)
 // GoogleCloudRetailV2CompleteQueryResponseCompletionResult: Resource
 // that represents completion results.
 type GoogleCloudRetailV2CompleteQueryResponseCompletionResult struct {
-	// Attributes: Additional custom attributes ingested through BigQuery.
+	// Attributes: Custom attributes for the suggestion term. * For
+	// "user-data", the attributes are additional custom attributes ingested
+	// through BigQuery. * For "cloud-retail", the attributes are product
+	// attributes generated by Cloud Retail.
 	Attributes map[string]GoogleCloudRetailV2CustomAttribute `json:"attributes,omitempty"`
 
 	// Suggestion: The suggestion for the query.
@@ -1224,7 +1310,10 @@ func (s *GoogleCloudRetailV2GetDefaultBranchResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2Image: Product thumbnail/detail image.
+// GoogleCloudRetailV2Image: Product image. Recommendations AI and
+// Retail Search do not use product images to improve prediction and
+// search results. However, product images can be returned in results,
+// and are shown in prediction or search previews in the console.
 type GoogleCloudRetailV2Image struct {
 	// Height: Height of the image in number of pixels. This field must be
 	// nonnegative. Otherwise, an INVALID_ARGUMENT error is returned.
@@ -1383,8 +1472,7 @@ type GoogleCloudRetailV2ImportMetadata struct {
 	// `projects/{project}/topics/{topic}`.
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
 
-	// RequestId: Id of the request / operation. This is parroting back the
-	// requestId that was passed in the request.
+	// RequestId: Deprecated. This field is never set.
 	RequestId string `json:"requestId,omitempty"`
 
 	// SuccessCount: Count of entries that were processed successfully.
@@ -1427,12 +1515,16 @@ type GoogleCloudRetailV2ImportProductsRequest struct {
 	// InputConfig: Required. The desired input location of the data.
 	InputConfig *GoogleCloudRetailV2ProductInputConfig `json:"inputConfig,omitempty"`
 
-	// NotificationPubsubTopic: Pub/Sub topic for receiving notification. If
-	// this field is set, when the import is finished, a notification will
-	// be sent to specified Pub/Sub topic. The message data will be JSON
-	// string of a Operation. Format of the Pub/Sub topic is
-	// `projects/{project}/topics/{topic}`. Only supported when
-	// ImportProductsRequest.reconciliation_mode is set to `FULL`.
+	// NotificationPubsubTopic: Full Pub/Sub topic name for receiving
+	// notification. If this field is set, when the import is finished, a
+	// notification will be sent to specified Pub/Sub topic. The message
+	// data will be JSON string of a Operation. Format of the Pub/Sub topic
+	// is `projects/{project}/topics/{topic}`. It has to be within the same
+	// project as ImportProductsRequest.parent. Make sure that both
+	// `cloud-retail-customer-data-access@system.gserviceaccount.com` and
+	// `service-@gcp-sa-retail.iam.gserviceaccount.com` have the
+	// `pubsub.topics.publish` IAM permission on the topic. Only supported
+	// when ImportProductsRequest.reconciliation_mode is set to `FULL`.
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
 
 	// ReconciliationMode: The mode of reconciliation between existing
@@ -1449,18 +1541,10 @@ type GoogleCloudRetailV2ImportProductsRequest struct {
 	// regions in United States)", otherwise a PERMISSION_DENIED error is
 	// thrown. Add the IAM permission "BigQuery Data Viewer" for
 	// cloud-retail-customer-data-access@system.gserviceaccount.com before
-	// using this feature otherwise an error is thrown. This feature is only
-	// available for users who have Retail Search enabled. Please submit a
-	// form [here](https://cloud.google.com/contact) to contact cloud sales
-	// if you are interested in using Retail Search.
+	// using this feature otherwise an error is thrown.
 	ReconciliationMode string `json:"reconciliationMode,omitempty"`
 
-	// RequestId: Unique identifier provided by client, within the ancestor
-	// dataset scope. Ensures idempotency and used for request
-	// deduplication. Server-generated if unspecified. Up to 128 characters
-	// long and must match the pattern: `[a-zA-Z0-9_]+`. This is returned as
-	// Operation.name in ImportMetadata. Only supported when
-	// ImportProductsRequest.reconciliation_mode is set to `FULL`.
+	// RequestId: Deprecated. This field has no effect.
 	RequestId string `json:"requestId,omitempty"`
 
 	// UpdateMask: Indicates which fields in the provided imported
@@ -1734,6 +1818,65 @@ func (s *GoogleCloudRetailV2ListProductsResponse) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2LocalInventory: The inventory information at a
+// place (e.g. a store) identified by a place ID.
+type GoogleCloudRetailV2LocalInventory struct {
+	// Attributes: Additional local inventory attributes, for example, store
+	// name, promotion tags, etc. This field needs to pass all below
+	// criteria, otherwise an INVALID_ARGUMENT error is returned: * At most
+	// 30 attributes are allowed. * The key must be a UTF-8 encoded string
+	// with a length limit of 32 characters. * The key must match the
+	// pattern: `a-zA-Z0-9*`. For example, key0LikeThis or KEY_1_LIKE_THIS.
+	// * The attribute values must be of the same type (text or number). *
+	// Only 1 value is allowed for each attribute. * For text values, the
+	// length limit is 256 UTF-8 characters. * The attribute does not
+	// support search. The `searchable` field should be unset or set to
+	// false. * The max summed total bytes of custom attribute keys and
+	// values per product is 5MiB.
+	Attributes map[string]GoogleCloudRetailV2CustomAttribute `json:"attributes,omitempty"`
+
+	// FulfillmentTypes: Input only. Supported fulfillment types. Valid
+	// fulfillment type values include commonly used types (such as pickup
+	// in store and same day delivery), and custom types. Customers have to
+	// map custom types to their display names before rendering UI.
+	// Supported values: * "pickup-in-store" * "ship-to-store" *
+	// "same-day-delivery" * "next-day-delivery" * "custom-type-1" *
+	// "custom-type-2" * "custom-type-3" * "custom-type-4" * "custom-type-5"
+	// If this field is set to an invalid value other than these, an
+	// INVALID_ARGUMENT error is returned. All the elements must be
+	// distinct. Otherwise, an INVALID_ARGUMENT error is returned.
+	FulfillmentTypes []string `json:"fulfillmentTypes,omitempty"`
+
+	// PlaceId: The place ID for the current set of inventory information.
+	PlaceId string `json:"placeId,omitempty"`
+
+	// PriceInfo: Product price and cost information. Google Merchant Center
+	// property price (https://support.google.com/merchants/answer/6324371).
+	PriceInfo *GoogleCloudRetailV2PriceInfo `json:"priceInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attributes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2LocalInventory) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2LocalInventory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2PredictRequest: Request message for Predict
 // method.
 type GoogleCloudRetailV2PredictRequest struct {
@@ -1751,9 +1894,11 @@ type GoogleCloudRetailV2PredictRequest struct {
 	// OUT_OF_STOCK. Examples: * tag=("Red" OR "Blue") tag="New-Arrival"
 	// tag=(NOT "promotional") * filterOutOfStockItems tag=(-"promotional")
 	// * filterOutOfStockItems If your filter blocks all prediction results,
-	// nothing will be returned. If you want generic (unfiltered) popular
-	// products to be returned instead, set `strictFiltering` to false in
-	// `PredictRequest.params`.
+	// the API will return generic (unfiltered) popular products. If you
+	// only want results strictly matching the filters, set
+	// `strictFiltering` to True in `PredictRequest.params` to receive empty
+	// results instead. Note that the API will never return items with
+	// storageStatus of "EXPIRED" or "DELETED" regardless of filter choices.
 	Filter string `json:"filter,omitempty"`
 
 	// Labels: The labels applied to a resource must meet the following
@@ -1805,7 +1950,12 @@ type GoogleCloudRetailV2PredictRequest struct {
 	// UserEvent: Required. Context about the user, what they are looking at
 	// and what action they took to trigger the predict request. Note that
 	// this user event detail won't be ingested to userEvent logs. Thus, a
-	// separate userEvent write request is required for event logging.
+	// separate userEvent write request is required for event logging. Don't
+	// set UserEvent.visitor_id or UserInfo.user_id to the same fixed ID for
+	// different users. If you are trying to receive non-personalized
+	// recommendations (not recommended; this can negatively impact model
+	// performance), instead set UserEvent.visitor_id to a random unique ID
+	// and leave UserInfo.user_id unset.
 	UserEvent *GoogleCloudRetailV2UserEvent `json:"userEvent,omitempty"`
 
 	// ValidateOnly: Use validate only mode for this prediction query. If
@@ -1938,7 +2088,9 @@ type GoogleCloudRetailV2PriceInfo struct {
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// OriginalPrice: Price of the product without any discount. If zero, by
-	// default set to be the price.
+	// default set to be the price. If set, original_price should be greater
+	// than or equal to price, otherwise an INVALID_ARGUMENT error is
+	// thrown.
 	OriginalPrice float64 `json:"originalPrice,omitempty"`
 
 	// Price: Price of the product. Google Merchant Center property price
@@ -2197,8 +2349,8 @@ type GoogleCloudRetailV2Product struct {
 	// Schema.org property Product.sku (https://schema.org/sku).
 	Id string `json:"id,omitempty"`
 
-	// Images: Product images for the product.Highly recommended to put the
-	// main image to the first. A maximum of 300 images are allowed.
+	// Images: Product images for the product. We highly recommend putting
+	// the main image first. A maximum of 300 images are allowed.
 	// Corresponding properties: Google Merchant Center property image_link
 	// (https://support.google.com/merchants/answer/6324350). Schema.org
 	// property Product.image (https://schema.org/image).
@@ -2508,15 +2660,15 @@ type GoogleCloudRetailV2ProductLevelConfig struct {
 	// IngestionProductType: The type of Products allowed to be ingested
 	// into the catalog. Acceptable values are: * `primary` (default): You
 	// can ingest Products of all types. When ingesting a Product, its type
-	// will default to Product.Type.PRIMARY if unset. * `variant`: You can
-	// only ingest Product.Type.VARIANT Products. This means
-	// Product.primary_product_id cannot be empty. If this field is set to
-	// an invalid value other than these, an INVALID_ARGUMENT error is
-	// returned. If this field is `variant` and
-	// merchant_center_product_id_field is `itemGroupId`, an
-	// INVALID_ARGUMENT error is returned. See Using product levels
-	// (https://cloud.google.com/retail/recommendations-ai/docs/catalog#product-levels)
-	// for more details.
+	// will default to Product.Type.PRIMARY if unset. * `variant`
+	// (incompatible with Retail Search): You can only ingest
+	// Product.Type.VARIANT Products. This means Product.primary_product_id
+	// cannot be empty. If this field is set to an invalid value other than
+	// these, an INVALID_ARGUMENT error is returned. If this field is
+	// `variant` and merchant_center_product_id_field is `itemGroupId`, an
+	// INVALID_ARGUMENT error is returned. See Product levels
+	// (https://cloud.google.com/retail/docs/catalog#product-levels) for
+	// more details.
 	IngestionProductType string `json:"ingestionProductType,omitempty"`
 
 	// MerchantCenterProductIdField: Which field of Merchant Center Product
@@ -2528,9 +2680,9 @@ type GoogleCloudRetailV2ProductLevelConfig struct {
 	// represent the item group. If this field is set to an invalid value
 	// other than these, an INVALID_ARGUMENT error is returned. If this
 	// field is `itemGroupId` and ingestion_product_type is `variant`, an
-	// INVALID_ARGUMENT error is returned. See Using product levels
-	// (https://cloud.google.com/retail/recommendations-ai/docs/catalog#product-levels)
-	// for more details.
+	// INVALID_ARGUMENT error is returned. See Product levels
+	// (https://cloud.google.com/retail/docs/catalog#product-levels) for
+	// more details.
 	MerchantCenterProductIdField string `json:"merchantCenterProductIdField,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2947,6 +3099,60 @@ func (s *GoogleCloudRetailV2RemoveFulfillmentPlacesRequest) MarshalJSON() ([]byt
 type GoogleCloudRetailV2RemoveFulfillmentPlacesResponse struct {
 }
 
+// GoogleCloudRetailV2RemoveLocalInventoriesMetadata: Metadata related
+// to the progress of the RemoveLocalInventories operation. Currently
+// empty because there is no meaningful metadata populated from the
+// RemoveLocalInventories method.
+type GoogleCloudRetailV2RemoveLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2RemoveLocalInventoriesRequest: Request message for
+// RemoveLocalInventories method.
+type GoogleCloudRetailV2RemoveLocalInventoriesRequest struct {
+	// AllowMissing: If set to true, and the Product is not found, the local
+	// inventory removal request will still be processed and retained for at
+	// most 1 day and processed once the Product is created. If set to
+	// false, a NOT_FOUND error is returned if the Product is not found.
+	AllowMissing bool `json:"allowMissing,omitempty"`
+
+	// PlaceIds: Required. A list of place IDs to have their inventory
+	// deleted. At most 3000 place IDs are allowed per request.
+	PlaceIds []string `json:"placeIds,omitempty"`
+
+	// RemoveTime: The time when the inventory deletions are issued. Used to
+	// prevent out-of-order updates and deletions on local inventory fields.
+	// If not provided, the internal system time will be used.
+	RemoveTime string `json:"removeTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowMissing") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2RemoveLocalInventoriesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2RemoveLocalInventoriesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2RemoveLocalInventoriesResponse: Response of the
+// RemoveLocalInventories API. Currently empty because there is no
+// meaningful response populated from the RemoveLocalInventories method.
+type GoogleCloudRetailV2RemoveLocalInventoriesResponse struct {
+}
+
 // GoogleCloudRetailV2SearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudRetailV2SearchRequest struct {
@@ -2966,19 +3172,22 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// search products under the default branch.
 	Branch string `json:"branch,omitempty"`
 
-	// CanonicalFilter: The filter applied to every search request when
-	// quality improvement such as query expansion is needed. For example,
-	// if a query does not have enough results, an expanded query with
+	// CanonicalFilter: The default filter that is applied when a user
+	// performs a search without checking any filters on the search page.
+	// The filter applied to every search request when quality improvement
+	// such as query expansion is needed. For example, if a query does not
+	// have enough results, an expanded query with
 	// SearchRequest.canonical_filter will be returned as a supplement of
 	// the original query. This field is strongly recommended to achieve
 	// high search quality. See SearchRequest.filter for more details about
 	// filter syntax.
 	CanonicalFilter string `json:"canonicalFilter,omitempty"`
 
-	// DynamicFacetSpec: The specification for dynamically generated facets.
-	// Notice that only textual facets can be dynamically generated. This
-	// feature requires additional allowlisting. Contact Retail Search
-	// support team if you are interested in using dynamic facet feature.
+	// DynamicFacetSpec: Deprecated. Refer to
+	// https://cloud.google.com/retail/docs/configs#dynamic to enable
+	// dynamic facets. Do not set this field. The specification for
+	// dynamically generated facets. Notice that only textual facets can be
+	// dynamically generated.
 	DynamicFacetSpec *GoogleCloudRetailV2SearchRequestDynamicFacetSpec `json:"dynamicFacetSpec,omitempty"`
 
 	// FacetSpecs: Facet specifications for faceted search. If empty, no
@@ -2993,6 +3202,21 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// (https://cloud.google.com/retail/docs/filter-and-order#filter). If
 	// this field is unrecognizable, an INVALID_ARGUMENT is returned.
 	Filter string `json:"filter,omitempty"`
+
+	// Labels: The labels applied to a resource must meet the following
+	// requirements: * Each resource can have multiple labels, up to a
+	// maximum of 64. * Each label must be a key-value pair. * Keys have a
+	// minimum length of 1 character and a maximum length of 63 characters,
+	// and cannot be empty. Values can be empty, and have a maximum length
+	// of 63 characters. * Keys and values can contain only lowercase
+	// letters, numeric characters, underscores, and dashes. All characters
+	// must use UTF-8 encoding, and international characters are allowed. *
+	// The key portion of a label must be unique. However, you can use the
+	// same key with multiple resources. * Keys must start with a lowercase
+	// letter or international character. See Google Cloud Document
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
+	// for more details.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Offset: A 0-indexed integer that specifies the current offset (that
 	// is, starting result location, amongst the Products deemed by the API
@@ -3036,7 +3260,9 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// PersonalizationSpec: The specification for personalization.
 	PersonalizationSpec *GoogleCloudRetailV2SearchRequestPersonalizationSpec `json:"personalizationSpec,omitempty"`
 
-	// Query: Raw search query.
+	// Query: Raw search query. If this field is empty, the request is
+	// considered a category browsing request and returned results are based
+	// on filter and page_categories.
 	Query string `json:"query,omitempty"`
 
 	// QueryExpansionSpec: The query expansion specification that specifies
@@ -3903,16 +4129,23 @@ type GoogleCloudRetailV2SetInventoryResponse struct {
 // with customers' website.
 type GoogleCloudRetailV2UserEvent struct {
 	// Attributes: Extra user event features to include in the
-	// recommendation model. This field needs to pass all below criteria,
-	// otherwise an INVALID_ARGUMENT error is returned: * The key must be a
-	// UTF-8 encoded string with a length limit of 5,000 characters. * For
-	// text attributes, at most 400 values are allowed. Empty values are not
-	// allowed. Each value must be a UTF-8 encoded string with a length
-	// limit of 256 characters. * For number attributes, at most 400 values
-	// are allowed. For product recommendation, an example of extra user
-	// information is traffic_channel, i.e. how user arrives at the site.
-	// Users can arrive at the site by coming to the site directly, or
-	// coming through Google search, and etc.
+	// recommendation model. If you provide custom attributes for ingested
+	// user events, also include them in the user events that you associate
+	// with prediction requests. Custom attribute formatting must be
+	// consistent between imported events and events provided with
+	// prediction requests. This lets the Retail API use those custom
+	// attributes when training models and serving predictions, which helps
+	// improve recommendation quality. This field needs to pass all below
+	// criteria, otherwise an INVALID_ARGUMENT error is returned: * The key
+	// must be a UTF-8 encoded string with a length limit of 5,000
+	// characters. * For text attributes, at most 400 values are allowed.
+	// Empty values are not allowed. Each value must be a UTF-8 encoded
+	// string with a length limit of 256 characters. * For number
+	// attributes, at most 400 values are allowed. For product
+	// recommendations, an example of extra user information is
+	// traffic_channel, which is how a user arrives at the site. Users can
+	// arrive at the site by coming to the site directly, coming through
+	// Google search, or in other ways.
 	Attributes map[string]GoogleCloudRetailV2CustomAttribute `json:"attributes,omitempty"`
 
 	// AttributionToken: Highly recommended for user events that are the
@@ -4057,10 +4290,12 @@ type GoogleCloudRetailV2UserEvent struct {
 	// example, this could be implemented with an HTTP cookie, which should
 	// be able to uniquely identify a visitor on a single device. This
 	// unique identifier should not change if the visitor log in/out of the
-	// website. The field must be a UTF-8 encoded string with a length limit
-	// of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.
-	// The field should not contain PII or user-data. We recommend to use
-	// Google Analystics Client ID
+	// website. Don't set the field to the same fixed ID for different
+	// users. This mixes the event history of those users together, which
+	// results in degraded model quality. The field must be a UTF-8 encoded
+	// string with a length limit of 128 characters. Otherwise, an
+	// INVALID_ARGUMENT error is returned. The field should not contain PII
+	// or user-data. We recommend to use Google Analystics Client ID
 	// (https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#clientId)
 	// for this field.
 	VisitorId string `json:"visitorId,omitempty"`
@@ -4207,14 +4442,13 @@ type GoogleCloudRetailV2UserInfo struct {
 	// UserEventService.CollectUserEvent.
 	DirectUserRequest bool `json:"directUserRequest,omitempty"`
 
-	// IpAddress: The end user's IP address. Required for getting
-	// SearchResponse.sponsored_results. This field is used to extract
+	// IpAddress: The end user's IP address. This field is used to extract
 	// location information for personalization. This field must be either
 	// an IPv4 address (e.g. "104.133.9.80") or an IPv6 address (e.g.
 	// "2001:0db8:85a3:0000:0000:8a2e:0370:7334"). Otherwise, an
-	// INVALID_ARGUMENT error is returned. This should not be set when using
-	// the JavaScript tag in UserEventService.CollectUserEvent or if
-	// direct_user_request is set.
+	// INVALID_ARGUMENT error is returned. This should not be set when: *
+	// setting SearchRequest.user_info. * using the JavaScript tag in
+	// UserEventService.CollectUserEvent or if direct_user_request is set.
 	IpAddress string `json:"ipAddress,omitempty"`
 
 	// UserAgent: User agent as included in the HTTP header. Required for
@@ -4226,9 +4460,12 @@ type GoogleCloudRetailV2UserInfo struct {
 	UserAgent string `json:"userAgent,omitempty"`
 
 	// UserId: Highly recommended for logged-in users. Unique identifier for
-	// logged-in user, such as a user name. The field must be a UTF-8
-	// encoded string with a length limit of 128 characters. Otherwise, an
-	// INVALID_ARGUMENT error is returned.
+	// logged-in user, such as a user name. Don't set for anonymous users.
+	// Always use a hashed value for this ID. Don't set the field to the
+	// same fixed ID for different users. This mixes the event history of
+	// those users together, which results in degraded model quality. The
+	// field must be a UTF-8 encoded string with a length limit of 128
+	// characters. Otherwise, an INVALID_ARGUMENT error is returned.
 	UserId string `json:"userId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DirectUserRequest")
@@ -4504,8 +4741,7 @@ type GoogleCloudRetailV2alphaImportMetadata struct {
 	// `projects/{project}/topics/{topic}`.
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
 
-	// RequestId: Id of the request / operation. This is parroting back the
-	// requestId that was passed in the request.
+	// RequestId: Deprecated. This field is never set.
 	RequestId string `json:"requestId,omitempty"`
 
 	// SuccessCount: Count of entries that were processed successfully.
@@ -4619,6 +4855,84 @@ func (s *GoogleCloudRetailV2alphaImportUserEventsResponse) MarshalJSON() ([]byte
 // progress of the Purge operation. This will be returned by the
 // google.longrunning.Operation.metadata field.
 type GoogleCloudRetailV2alphaPurgeMetadata struct {
+}
+
+// GoogleCloudRetailV2alphaPurgeProductsMetadata: Metadata related to
+// the progress of the PurgeProducts operation. This will be returned by
+// the google.longrunning.Operation.metadata field.
+type GoogleCloudRetailV2alphaPurgeProductsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FailureCount: Count of entries that encountered errors while
+	// processing.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+
+	// SuccessCount: Count of entries that were deleted successfully.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaPurgeProductsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaPurgeProductsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaPurgeProductsResponse: Response of the
+// PurgeProductsRequest. If the long running operation is successfully
+// done, then this message is returned by the
+// google.longrunning.Operations.response field.
+type GoogleCloudRetailV2alphaPurgeProductsResponse struct {
+	// PurgeCount: The total count of products purged as a result of the
+	// operation.
+	PurgeCount int64 `json:"purgeCount,omitempty,string"`
+
+	// PurgeSample: A sample of the product names that will be deleted. Only
+	// populated if `force` is set to false. A max of 100 names will be
+	// returned and the names are chosen at random.
+	PurgeSample []string `json:"purgeSample,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PurgeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PurgeCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaPurgeProductsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaPurgeProductsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaPurgeUserEventsResponse: Response of the
@@ -4777,6 +5091,19 @@ type GoogleCloudRetailV2betaAddFulfillmentPlacesMetadata struct {
 // AddFulfillmentPlacesRequest. Currently empty because there is no
 // meaningful response populated from the AddFulfillmentPlaces method.
 type GoogleCloudRetailV2betaAddFulfillmentPlacesResponse struct {
+}
+
+// GoogleCloudRetailV2betaAddLocalInventoriesMetadata: Metadata related
+// to the progress of the AddLocalInventories operation. Currently empty
+// because there is no meaningful metadata populated from the
+// AddLocalInventories method.
+type GoogleCloudRetailV2betaAddLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2betaAddLocalInventoriesResponse: Response of the
+// AddLocalInventories API. Currently empty because there is no
+// meaningful response populated from the AddLocalInventories method.
+type GoogleCloudRetailV2betaAddLocalInventoriesResponse struct {
 }
 
 // GoogleCloudRetailV2betaExportErrorsConfig: Configuration of
@@ -5002,8 +5329,7 @@ type GoogleCloudRetailV2betaImportMetadata struct {
 	// `projects/{project}/topics/{topic}`.
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
 
-	// RequestId: Id of the request / operation. This is parroting back the
-	// requestId that was passed in the request.
+	// RequestId: Deprecated. This field is never set.
 	RequestId string `json:"requestId,omitempty"`
 
 	// SuccessCount: Count of entries that were processed successfully.
@@ -5203,6 +5529,19 @@ type GoogleCloudRetailV2betaRemoveFulfillmentPlacesMetadata struct {
 type GoogleCloudRetailV2betaRemoveFulfillmentPlacesResponse struct {
 }
 
+// GoogleCloudRetailV2betaRemoveLocalInventoriesMetadata: Metadata
+// related to the progress of the RemoveLocalInventories operation.
+// Currently empty because there is no meaningful metadata populated
+// from the RemoveLocalInventories method.
+type GoogleCloudRetailV2betaRemoveLocalInventoriesMetadata struct {
+}
+
+// GoogleCloudRetailV2betaRemoveLocalInventoriesResponse: Response of
+// the RemoveLocalInventories API. Currently empty because there is no
+// meaningful response populated from the RemoveLocalInventories method.
+type GoogleCloudRetailV2betaRemoveLocalInventoriesResponse struct {
+}
+
 // GoogleCloudRetailV2betaSetInventoryMetadata: Metadata related to the
 // progress of the SetInventory operation. Currently empty because there
 // is no meaningful metadata populated from the SetInventory method.
@@ -5354,8 +5693,7 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
 // method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); } The JSON representation for
-// `Empty` is empty JSON object `{}`.
+// returns (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -5466,9 +5804,8 @@ type ProjectsLocationsCatalogsCompleteQueryCall struct {
 
 // CompleteQuery: Completes the specified prefix with keyword
 // suggestions. This feature is only available for users who have Retail
-// Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// Search enabled. Please enable Retail Search on Cloud Console before
+// using this feature.
 //
 // - catalog: Catalog for which the completion is performed. Full
 //   resource name of catalog, such as
@@ -5534,8 +5871,8 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Query(query string) *Projec
 	return c
 }
 
-// VisitorId sets the optional parameter "visitorId": A unique
-// identifier for tracking visitors. For example, this could be
+// VisitorId sets the optional parameter "visitorId": Required field. A
+// unique identifier for tracking visitors. For example, this could be
 // implemented with an HTTP cookie, which should be able to uniquely
 // identify a visitor on a single device. This unique identifier should
 // not change if the visitor logs in or out of the website. The field
@@ -5647,7 +5984,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}:completeQuery",
 	//   "httpMethod": "GET",
 	//   "id": "retail.projects.locations.catalogs.completeQuery",
@@ -5690,7 +6027,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "visitorId": {
-	//       "description": "A unique identifier for tracking visitors. For example, this could be implemented with an HTTP cookie, which should be able to uniquely identify a visitor on a single device. This unique identifier should not change if the visitor logs in or out of the website. The field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.",
+	//       "description": "Required field. A unique identifier for tracking visitors. For example, this could be implemented with an HTTP cookie, which should be able to uniquely identify a visitor on a single device. This unique identifier should not change if the visitor logs in or out of the website. The field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6544,9 +6881,8 @@ type ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall struct {
 // processed downstream. As a consequence, when a response is returned,
 // the added place IDs are not immediately manifested in the Product
 // queried by GetProduct or ListProducts. This feature is only available
-// for users who have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// for users who have Retail Search enabled. Please enable Retail Search
+// on Cloud Console before using this feature.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -6651,7 +6987,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Do(o
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.addFulfillmentPlaces",
@@ -6670,6 +7006,163 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Do(o
 	//   "path": "v2/{+product}:addFulfillmentPlaces",
 	//   "request": {
 	//     "$ref": "GoogleCloudRetailV2AddFulfillmentPlacesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.locations.catalogs.branches.products.addLocalInventories":
+
+type ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall struct {
+	s                                             *Service
+	product                                       string
+	googlecloudretailv2addlocalinventoriesrequest *GoogleCloudRetailV2AddLocalInventoriesRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// AddLocalInventories: Updates local inventory information for a
+// Product at a list of places, while respecting the last update
+// timestamps of each inventory field. This process is asynchronous and
+// does not require the Product to exist before updating inventory
+// information. If the request is valid, the update will be enqueued and
+// processed downstream. As a consequence, when a response is returned,
+// updates are not immediately manifested in the Product queried by
+// GetProduct or ListProducts. Local inventory information can only be
+// modified using this method. CreateProduct and UpdateProduct has no
+// effect on local inventories. This feature is only available for users
+// who have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
+//
+// - product: Full resource name of Product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/some_product_id`. If the caller does not have
+//   permission to access the Product, regardless of whether or not it
+//   exists, a PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsCatalogsBranchesProductsService) AddLocalInventories(product string, googlecloudretailv2addlocalinventoriesrequest *GoogleCloudRetailV2AddLocalInventoriesRequest) *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall {
+	c := &ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.product = product
+	c.googlecloudretailv2addlocalinventoriesrequest = googlecloudretailv2addlocalinventoriesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) Context(ctx context.Context) *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2addlocalinventoriesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+product}:addLocalInventories")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"product": c.product,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.branches.products.addLocalInventories" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates local inventory information for a Product at a list of places, while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating inventory information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. Local inventory information can only be modified using this method. CreateProduct and UpdateProduct has no effect on local inventories. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addLocalInventories",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.locations.catalogs.branches.products.addLocalInventories",
+	//   "parameterOrder": [
+	//     "product"
+	//   ],
+	//   "parameters": {
+	//     "product": {
+	//       "description": "Required. Full resource name of Product, such as `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`. If the caller does not have permission to access the Product, regardless of whether or not it exists, a PERMISSION_DENIED error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/branches/[^/]+/products/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+product}:addLocalInventories",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2AddLocalInventoriesRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
@@ -7565,7 +8058,10 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) AllowMissing(allowM
 // only fields are NOT supported. If not set, all supported fields (the
 // fields that are neither immutable nor output only) are updated. If an
 // unsupported or unknown field is provided, an INVALID_ARGUMENT error
-// is returned.
+// is returned. The attribute key can be updated by setting the mask
+// path as "attributes.${key_name}". If a key name is present in the
+// mask but not in the patching product from the request, this key will
+// be deleted after the update.
 func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCatalogsBranchesProductsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7683,7 +8179,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Indicates which fields in the provided Product to update. The immutable and output only fields are NOT supported. If not set, all supported fields (the fields that are neither immutable nor output only) are updated. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned.",
+	//       "description": "Indicates which fields in the provided Product to update. The immutable and output only fields are NOT supported. If not set, all supported fields (the fields that are neither immutable nor output only) are updated. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned. The attribute key can be updated by setting the mask path as \"attributes.${key_name}\". If a key name is present in the mask but not in the patching product from the request, this key will be deleted after the update.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7721,9 +8217,8 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall struct
 // processed downstream. As a consequence, when a response is returned,
 // the removed place IDs are not immediately manifested in the Product
 // queried by GetProduct or ListProducts. This feature is only available
-// for users who have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// for users who have Retail Search enabled. Please enable Retail Search
+// on Cloud Console before using this feature.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -7828,7 +8323,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.removeFulfillmentPlaces",
@@ -7847,6 +8342,161 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) D
 	//   "path": "v2/{+product}:removeFulfillmentPlaces",
 	//   "request": {
 	//     "$ref": "GoogleCloudRetailV2RemoveFulfillmentPlacesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.locations.catalogs.branches.products.removeLocalInventories":
+
+type ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall struct {
+	s                                                *Service
+	product                                          string
+	googlecloudretailv2removelocalinventoriesrequest *GoogleCloudRetailV2RemoveLocalInventoriesRequest
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// RemoveLocalInventories: Remove local inventory information for a
+// Product at a list of places at a removal timestamp. This process is
+// asynchronous. If the request is valid, the removal will be enqueued
+// and processed downstream. As a consequence, when a response is
+// returned, removals are not immediately manifested in the Product
+// queried by GetProduct or ListProducts. Local inventory information
+// can only be removed using this method. CreateProduct and
+// UpdateProduct has no effect on local inventories. This feature is
+// only available for users who have Retail Search enabled. Please
+// enable Retail Search on Cloud Console before using this feature.
+//
+// - product: Full resource name of Product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/some_product_id`. If the caller does not have
+//   permission to access the Product, regardless of whether or not it
+//   exists, a PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsCatalogsBranchesProductsService) RemoveLocalInventories(product string, googlecloudretailv2removelocalinventoriesrequest *GoogleCloudRetailV2RemoveLocalInventoriesRequest) *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall {
+	c := &ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.product = product
+	c.googlecloudretailv2removelocalinventoriesrequest = googlecloudretailv2removelocalinventoriesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) Context(ctx context.Context) *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2removelocalinventoriesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+product}:removeLocalInventories")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"product": c.product,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.branches.products.removeLocalInventories" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Remove local inventory information for a Product at a list of places at a removal timestamp. This process is asynchronous. If the request is valid, the removal will be enqueued and processed downstream. As a consequence, when a response is returned, removals are not immediately manifested in the Product queried by GetProduct or ListProducts. Local inventory information can only be removed using this method. CreateProduct and UpdateProduct has no effect on local inventories. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeLocalInventories",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.locations.catalogs.branches.products.removeLocalInventories",
+	//   "parameterOrder": [
+	//     "product"
+	//   ],
+	//   "parameters": {
+	//     "product": {
+	//       "description": "Required. Full resource name of Product, such as `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`. If the caller does not have permission to access the Product, regardless of whether or not it exists, a PERMISSION_DENIED error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/branches/[^/]+/products/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+product}:removeLocalInventories",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2RemoveLocalInventoriesRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
@@ -7888,8 +8538,7 @@ type ProjectsLocationsCatalogsBranchesProductsSetInventoryCall struct {
 // inventory information can only be updated with SetInventory,
 // AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is
 // only available for users who have Retail Search enabled. Please
-// submit a form here (https://cloud.google.com/contact) to contact
-// cloud sales if you are interested in using Retail Search.
+// enable Retail Search on Cloud Console before using this feature.
 //
 // - name: Immutable. Full resource name of the product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -7992,7 +8641,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:setInventory",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.setInventory",
@@ -8034,10 +8683,12 @@ type ProjectsLocationsCatalogsCompletionDataImportCall struct {
 }
 
 // Import: Bulk import of processed completion dataset. Request
-// processing may be synchronous. Partial updating is not supported.
-// This feature is only available for users who have Retail Search
-// enabled. Please submit a form here (https://cloud.google.com/contact)
-// to contact cloud sales if you are interested in using Retail Search.
+// processing is asynchronous. Partial updating is not supported. The
+// operation is successfully finished only after the imported
+// suggestions are indexed successfully and ready for serving. The
+// process takes hours. This feature is only available for users who
+// have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
 //
 // - parent: The catalog which the suggestions dataset belongs to.
 //   Format: `projects/1234/locations/global/catalogs/default_catalog`.
@@ -8139,7 +8790,7 @@ func (c *ProjectsLocationsCatalogsCompletionDataImportCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk import of processed completion dataset. Request processing may be synchronous. Partial updating is not supported. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Bulk import of processed completion dataset. Request processing is asynchronous. Partial updating is not supported. The operation is successfully finished only after the imported suggestions are indexed successfully and ready for serving. The process takes hours. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/completionData:import",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.completionData.import",
@@ -8545,13 +9196,18 @@ type ProjectsLocationsCatalogsPlacementsPredictCall struct {
 // Predict: Makes a recommendation prediction.
 //
 // - placement: Full resource name of the format:
+//   {name=projects/*/locations/global/catalogs/default_catalog/servingCo
+//   nfigs/*} or
 //   {name=projects/*/locations/global/catalogs/default_catalog/placement
-//   s/*} The ID of the Recommendations AI placement. Before you can
-//   request predictions from your model, you must create at least one
-//   placement for it. For more information, see Managing placements
-//   (https://cloud.google.com/retail/recommendations-ai/docs/manage-placements).
-//   The full list of available placements can be seen at
-//   https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements.
+//   s/*}. We recommend using the `servingConfigs` resource.
+//   `placements` is a legacy resource. The ID of the Recommendations AI
+//   serving config or placement. Before you can request predictions
+//   from your model, you must create at least one serving config or
+//   placement for it. For more information, see [Managing serving
+//   configurations]
+//   (https://cloud.google.com/retail/docs/manage-configs). The full
+//   list of available serving configs can be seen at
+//   https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
 func (r *ProjectsLocationsCatalogsPlacementsService) Predict(placement string, googlecloudretailv2predictrequest *GoogleCloudRetailV2PredictRequest) *ProjectsLocationsCatalogsPlacementsPredictCall {
 	c := &ProjectsLocationsCatalogsPlacementsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -8660,7 +9316,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/placements/*} The ID of the Recommendations AI placement. Before you can request predictions from your model, you must create at least one placement for it. For more information, see [Managing placements](https://cloud.google.com/retail/recommendations-ai/docs/manage-placements). The full list of available placements can be seen at https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements",
+	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*} or {name=projects/*/locations/global/catalogs/default_catalog/placements/*}. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Managing serving configurations] (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -8693,12 +9349,14 @@ type ProjectsLocationsCatalogsPlacementsSearchCall struct {
 }
 
 // Search: Performs a search. This feature is only available for users
-// who have Retail Search enabled. Please submit a form here
-// (https://cloud.google.com/contact) to contact cloud sales if you are
-// interested in using Retail Search.
+// who have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
 //
-// - placement: The resource name of the search engine placement, such
-//   as
+// - placement: The resource name of the Retail Search serving config,
+//   such as
+//   `projects/*/locations/global/catalogs/default_catalog/servingConfigs
+//   /default_serving_config` or the name of the legacy placement
+//   resource, such as
 //   `projects/*/locations/global/catalogs/default_catalog/placements/def
 //   ault_search`. This field is used to identify the serving
 //   configuration name and the set of models that will be used to make
@@ -8802,7 +9460,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
+	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/placements/{placementsId}:search",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.placements.search",
@@ -8811,7 +9469,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. The resource name of the search engine placement, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
+	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -8836,6 +9494,335 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Do(opts ...googleapi.Cal
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudRetailV2SearchResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googlecloudretailv2searchrequest.PageToken = pt }(c.googlecloudretailv2searchrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googlecloudretailv2searchrequest.PageToken = x.NextPageToken
+	}
+}
+
+// method id "retail.projects.locations.catalogs.servingConfigs.predict":
+
+type ProjectsLocationsCatalogsServingConfigsPredictCall struct {
+	s                                 *Service
+	placement                         string
+	googlecloudretailv2predictrequest *GoogleCloudRetailV2PredictRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Predict: Makes a recommendation prediction.
+//
+// - placement: Full resource name of the format:
+//   {name=projects/*/locations/global/catalogs/default_catalog/servingCo
+//   nfigs/*} or
+//   {name=projects/*/locations/global/catalogs/default_catalog/placement
+//   s/*}. We recommend using the `servingConfigs` resource.
+//   `placements` is a legacy resource. The ID of the Recommendations AI
+//   serving config or placement. Before you can request predictions
+//   from your model, you must create at least one serving config or
+//   placement for it. For more information, see [Managing serving
+//   configurations]
+//   (https://cloud.google.com/retail/docs/manage-configs). The full
+//   list of available serving configs can be seen at
+//   https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
+func (r *ProjectsLocationsCatalogsServingConfigsService) Predict(placement string, googlecloudretailv2predictrequest *GoogleCloudRetailV2PredictRequest) *ProjectsLocationsCatalogsServingConfigsPredictCall {
+	c := &ProjectsLocationsCatalogsServingConfigsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.placement = placement
+	c.googlecloudretailv2predictrequest = googlecloudretailv2predictrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsServingConfigsPredictCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) Context(ctx context.Context) *ProjectsLocationsCatalogsServingConfigsPredictCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2predictrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+placement}:predict")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"placement": c.placement,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.servingConfigs.predict" call.
+// Exactly one of *GoogleCloudRetailV2PredictResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudRetailV2PredictResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2PredictResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRetailV2PredictResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Makes a recommendation prediction.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/servingConfigs/{servingConfigsId}:predict",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.locations.catalogs.servingConfigs.predict",
+	//   "parameterOrder": [
+	//     "placement"
+	//   ],
+	//   "parameters": {
+	//     "placement": {
+	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*} or {name=projects/*/locations/global/catalogs/default_catalog/placements/*}. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Managing serving configurations] (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/servingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+placement}:predict",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2PredictRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRetailV2PredictResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.locations.catalogs.servingConfigs.search":
+
+type ProjectsLocationsCatalogsServingConfigsSearchCall struct {
+	s                                *Service
+	placement                        string
+	googlecloudretailv2searchrequest *GoogleCloudRetailV2SearchRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Search: Performs a search. This feature is only available for users
+// who have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
+//
+// - placement: The resource name of the Retail Search serving config,
+//   such as
+//   `projects/*/locations/global/catalogs/default_catalog/servingConfigs
+//   /default_serving_config` or the name of the legacy placement
+//   resource, such as
+//   `projects/*/locations/global/catalogs/default_catalog/placements/def
+//   ault_search`. This field is used to identify the serving
+//   configuration name and the set of models that will be used to make
+//   the search.
+func (r *ProjectsLocationsCatalogsServingConfigsService) Search(placement string, googlecloudretailv2searchrequest *GoogleCloudRetailV2SearchRequest) *ProjectsLocationsCatalogsServingConfigsSearchCall {
+	c := &ProjectsLocationsCatalogsServingConfigsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.placement = placement
+	c.googlecloudretailv2searchrequest = googlecloudretailv2searchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsServingConfigsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Context(ctx context.Context) *ProjectsLocationsCatalogsServingConfigsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2searchrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+placement}:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"placement": c.placement,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.servingConfigs.search" call.
+// Exactly one of *GoogleCloudRetailV2SearchResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudRetailV2SearchResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2SearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRetailV2SearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/servingConfigs/{servingConfigsId}:search",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.locations.catalogs.servingConfigs.search",
+	//   "parameterOrder": [
+	//     "placement"
+	//   ],
+	//   "parameters": {
+	//     "placement": {
+	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/servingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+placement}:search",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2SearchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRetailV2SearchResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudRetailV2SearchResponse) error) error {
 	c.ctx_ = ctx
 	defer func(pt string) { c.googlecloudretailv2searchrequest.PageToken = pt }(c.googlecloudretailv2searchrequest.PageToken) // reset paging to original point
 	for {
@@ -9348,14 +10335,15 @@ type ProjectsLocationsCatalogsUserEventsRejoinCall struct {
 	header_                                    http.Header
 }
 
-// Rejoin: Triggers a user event rejoin operation with latest product
+// Rejoin: Starts a user event rejoin operation with latest product
 // catalog. Events will not be annotated with detailed product
 // information if product is missing from the catalog at the time the
 // user event is ingested, and these events are stored as unjoined
-// events with a limited usage on training and serving. This API can be
-// used to trigger a 'join' operation on specified events with latest
+// events with a limited usage on training and serving. This method can
+// be used to start a join operation on specified events with latest
 // version of product catalog. It can also be used to correct events
-// joined with wrong product catalog.
+// joined with the wrong product catalog. A rejoin operation can take
+// hours or days to complete.
 //
 // - parent: The parent catalog resource name, such as
 //   `projects/1234/locations/global/catalogs/default_catalog`.
@@ -9457,7 +10445,7 @@ func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Triggers a user event rejoin operation with latest product catalog. Events will not be annotated with detailed product information if product is missing from the catalog at the time the user event is ingested, and these events are stored as unjoined events with a limited usage on training and serving. This API can be used to trigger a 'join' operation on specified events with latest version of product catalog. It can also be used to correct events joined with wrong product catalog.",
+	//   "description": "Starts a user event rejoin operation with latest product catalog. Events will not be annotated with detailed product information if product is missing from the catalog at the time the user event is ingested, and these events are stored as unjoined events with a limited usage on training and serving. This method can be used to start a join operation on specified events with latest version of product catalog. It can also be used to correct events joined with the wrong product catalog. A rejoin operation can take hours or days to complete.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/userEvents:rejoin",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.userEvents.rejoin",

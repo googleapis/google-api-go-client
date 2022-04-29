@@ -98,7 +98,7 @@ const (
 
 // NewService creates a new APIService.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/appengine.admin",
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
@@ -1220,8 +1220,7 @@ func (s *DomainMapping) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for Empty is empty
-// JSON object {}.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3466,6 +3465,10 @@ type Version struct {
 	// (https://cloud.google.com/appengine/docs/python/endpoints/).Only
 	// returned in GET requests if view=FULL is set.
 	ApiConfig *ApiConfigHandler `json:"apiConfig,omitempty"`
+
+	// AppEngineApis: app_engine_apis allows second generation runtimes to
+	// access the App Engine APIs.
+	AppEngineApis bool `json:"appEngineApis,omitempty"`
 
 	// AutomaticScaling: Automatic scaling is based on request rate,
 	// response latencies, and other application metrics. Instances are

@@ -97,7 +97,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloudkms",
 	)
@@ -608,8 +608,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -1386,10 +1386,10 @@ type EncryptRequest struct {
 	// AdditionalAuthenticatedData: Optional. Optional data that, if
 	// specified, must also be provided during decryption through
 	// DecryptRequest.additional_authenticated_data. The maximum size
-	// depends on the key version's protection_level. For SOFTWARE keys, the
-	// AAD must be no larger than 64KiB. For HSM keys, the combined length
-	// of the plaintext and additional_authenticated_data fields must be no
-	// larger than 8KiB.
+	// depends on the key version's protection_level. For SOFTWARE,
+	// EXTERNAL, and EXTERNAL_VPC keys the AAD must be no larger than 64KiB.
+	// For HSM keys, the combined length of the plaintext and
+	// additional_authenticated_data fields must be no larger than 8KiB.
 	AdditionalAuthenticatedData string `json:"additionalAuthenticatedData,omitempty"`
 
 	// AdditionalAuthenticatedDataCrc32c: Optional. An optional CRC32C
@@ -1411,9 +1411,10 @@ type EncryptRequest struct {
 
 	// Plaintext: Required. The data to encrypt. Must be no larger than
 	// 64KiB. The maximum size depends on the key version's
-	// protection_level. For SOFTWARE keys, the plaintext must be no larger
-	// than 64KiB. For HSM keys, the combined length of the plaintext and
-	// additional_authenticated_data fields must be no larger than 8KiB.
+	// protection_level. For SOFTWARE, EXTERNAL, and EXTERNAL_VPC keys, the
+	// plaintext must be no larger than 64KiB. For HSM keys, the combined
+	// length of the plaintext and additional_authenticated_data fields must
+	// be no larger than 8KiB.
 	Plaintext string `json:"plaintext,omitempty"`
 
 	// PlaintextCrc32c: Optional. An optional CRC32C checksum of the
@@ -2933,7 +2934,7 @@ func (s *ServiceResolver) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -2970,7 +2971,7 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -3414,8 +3415,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3544,7 +3545,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

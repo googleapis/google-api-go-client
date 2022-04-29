@@ -87,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -1753,6 +1753,15 @@ type DeidentifyDatasetRequest struct {
 	// supported.
 	DestinationDataset string `json:"destinationDataset,omitempty"`
 
+	// GcsConfigUri: Cloud Storage location to read the JSON
+	// cloud.healthcare.deidentify.DeidentifyConfig from, overriding the
+	// default config. Must be of the form
+	// `gs://{bucket_id}/path/to/object`. The Cloud Storage location must
+	// grant the Cloud IAM role `roles/storage.objectViewer` to the
+	// project's Cloud Healthcare Service Agent service account. Only one of
+	// `config` and `gcs_config_uri` can be specified.
+	GcsConfigUri string `json:"gcsConfigUri,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Config") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1796,6 +1805,15 @@ type DeidentifyDicomStoreRequest struct {
 	// FilterConfig: Filter configuration.
 	FilterConfig *DicomFilterConfig `json:"filterConfig,omitempty"`
 
+	// GcsConfigUri: Cloud Storage location to read the JSON
+	// cloud.healthcare.deidentify.DeidentifyConfig from, overriding the
+	// default config. Must be of the form
+	// `gs://{bucket_id}/path/to/object`. The Cloud Storage location must
+	// grant the Cloud IAM role `roles/storage.objectViewer` to the
+	// project's Cloud Healthcare Service Agent service account. Only one of
+	// `config` and `gcs_config_uri` can be specified.
+	GcsConfigUri string `json:"gcsConfigUri,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Config") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1835,6 +1853,15 @@ type DeidentifyFhirStoreRequest struct {
 	// have the healthcare.fhirResources.update permission to write to the
 	// destination FHIR store.
 	DestinationStore string `json:"destinationStore,omitempty"`
+
+	// GcsConfigUri: Cloud Storage location to read the JSON
+	// cloud.healthcare.deidentify.DeidentifyConfig from, overriding the
+	// default config. Must be of the form
+	// `gs://{bucket_id}/path/to/object`. The Cloud Storage location must
+	// grant the Cloud IAM role `roles/storage.objectViewer` to the
+	// project's Cloud Healthcare Service Agent service account. Only one of
+	// `config` and `gcs_config_uri` can be specified.
+	GcsConfigUri string `json:"gcsConfigUri,omitempty"`
 
 	// ResourceFilter: A filter specifying the resources to include in the
 	// output. If not specified, all resources are included in the output.
@@ -2085,8 +2112,7 @@ func (s *DicomStore) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -24926,11 +24952,17 @@ type ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall struct {
 // (https://hl7.org/implement/standards/fhir/R4/http.html#3.1.0.7.1)).
 // If multiple resources match, all matching resources are deleted.
 // Search terms are provided as query parameters following the same
-// pattern as the search method. Note: Unless resource versioning is
-// disabled by setting the disable_resource_versioning flag on the FHIR
-// store, the deleted resources are moved to a history repository that
-// can still be retrieved through vread and related methods, unless they
-// are removed by the purge method. This method requires
+// pattern as the search method. Not all FHIR resources that match the
+// search query might be deleted because, by default, a maximum of 100
+// FHIR resources can be deleted. The number of FHIR resources that can
+// be deleted depends on the page size of the returned resources, which
+// you can control using the `_count` query parameter. Even when using
+// `_count`, you can delete a maximum 1,000 FHIR resources per each call
+// of `conditionalDelete`. Note: Unless resource versioning is disabled
+// by setting the disable_resource_versioning flag on the FHIR store,
+// the deleted resources are moved to a history repository that can
+// still be retrieved through vread and related methods, unless they are
+// removed by the purge method. This method requires
 // the`healthcare.fhirStores.searchResources` and
 // `healthcare.fhirResources.delete` permissions on the parent FHIR
 // store. For samples that show how to call `conditionalDelete`, see
@@ -25041,7 +25073,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Do(opts .
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes FHIR resources that match a search query. Implements the FHIR standard conditional delete interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#2.1.0.12.1), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#2.21.0.13.1), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#3.1.0.7.1)). If multiple resources match, all matching resources are deleted. Search terms are provided as query parameters following the same pattern as the search method. Note: Unless resource versioning is disabled by setting the disable_resource_versioning flag on the FHIR store, the deleted resources are moved to a history repository that can still be retrieved through vread and related methods, unless they are removed by the purge method. This method requires the`healthcare.fhirStores.searchResources` and `healthcare.fhirResources.delete` permissions on the parent FHIR store. For samples that show how to call `conditionalDelete`, see [Conditionally deleting a FHIR resource](/healthcare/docs/how-tos/fhir-resources#conditionally_deleting_a_fhir_resource).",
+	//   "description": "Deletes FHIR resources that match a search query. Implements the FHIR standard conditional delete interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#2.1.0.12.1), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#2.21.0.13.1), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#3.1.0.7.1)). If multiple resources match, all matching resources are deleted. Search terms are provided as query parameters following the same pattern as the search method. Not all FHIR resources that match the search query might be deleted because, by default, a maximum of 100 FHIR resources can be deleted. The number of FHIR resources that can be deleted depends on the page size of the returned resources, which you can control using the `_count` query parameter. Even when using `_count`, you can delete a maximum 1,000 FHIR resources per each call of `conditionalDelete`. Note: Unless resource versioning is disabled by setting the disable_resource_versioning flag on the FHIR store, the deleted resources are moved to a history repository that can still be retrieved through vread and related methods, unless they are removed by the purge method. This method requires the`healthcare.fhirStores.searchResources` and `healthcare.fhirResources.delete` permissions on the parent FHIR store. For samples that show how to call `conditionalDelete`, see [Conditionally deleting a FHIR resource](/healthcare/docs/how-tos/fhir-resources#conditionally_deleting_a_fhir_resource).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalDelete",

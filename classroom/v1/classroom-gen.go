@@ -160,7 +160,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/classroom.announcements",
 		"https://www.googleapis.com/auth/classroom.announcements.readonly",
 		"https://www.googleapis.com/auth/classroom.courses",
@@ -1369,8 +1369,7 @@ func (s *DriveFolder) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3939,7 +3938,7 @@ type CoursesPatchCall struct {
 // errors. * `NOT_FOUND` if no course exists with the requested ID. *
 // `INVALID_ARGUMENT` if invalid fields are specified in the update mask
 // or if no update mask is supplied. * `FAILED_PRECONDITION` for the
-// following request errors: * CourseNotModifiable
+// following request errors: * CourseNotModifiable * InactiveCourseOwner
 //
 // - id: Identifier of the course to update. This identifier can be
 //   either the Classroom-assigned identifier or an alias.
@@ -4055,7 +4054,7 @@ func (c *CoursesPatchCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates one or more fields in a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID. * `INVALID_ARGUMENT` if invalid fields are specified in the update mask or if no update mask is supplied. * `FAILED_PRECONDITION` for the following request errors: * CourseNotModifiable",
+	//   "description": "Updates one or more fields in a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID. * `INVALID_ARGUMENT` if invalid fields are specified in the update mask or if no update mask is supplied. * `FAILED_PRECONDITION` for the following request errors: * CourseNotModifiable * InactiveCourseOwner",
 	//   "flatPath": "v1/courses/{id}",
 	//   "httpMethod": "PATCH",
 	//   "id": "classroom.courses.patch",
@@ -9209,8 +9208,9 @@ type CoursesStudentsCreateCall struct {
 // requested course ID does not exist. * `FAILED_PRECONDITION` if the
 // requested user's account is disabled, for the following request
 // errors: * CourseMemberLimitReached * CourseNotModifiable *
-// UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is
-// already a student or teacher in the course.
+// UserGroupsMembershipLimitReached * InactiveCourseOwner *
+// `ALREADY_EXISTS` if the user is already a student or teacher in the
+// course.
 //
 // - courseId: Identifier of the course to create the student in. This
 //   identifier can be either the Classroom-assigned identifier or an
@@ -9323,7 +9323,7 @@ func (c *CoursesStudentsCreateCall) Do(opts ...googleapi.CallOption) (*Student, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a user as a student of a course. Domain administrators are permitted to [directly add](https://developers.google.com/classroom/guides/manage-users) users within their domain as students to courses within their domain. Students are permitted to add themselves to a course using an enrollment code. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create students in this course or for access errors. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is already a student or teacher in the course.",
+	//   "description": "Adds a user as a student of a course. Domain administrators are permitted to [directly add](https://developers.google.com/classroom/guides/manage-users) users within their domain as students to courses within their domain. Students are permitted to add themselves to a course using an enrollment code. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create students in this course or for access errors. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * UserGroupsMembershipLimitReached * InactiveCourseOwner * `ALREADY_EXISTS` if the user is already a student or teacher in the course.",
 	//   "flatPath": "v1/courses/{courseId}/students",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.students.create",
@@ -9900,8 +9900,8 @@ type CoursesTeachersCreateCall struct {
 // disabled, for the following request errors: *
 // CourseMemberLimitReached * CourseNotModifiable *
 // CourseTeacherLimitReached * UserGroupsMembershipLimitReached *
-// `ALREADY_EXISTS` if the user is already a teacher or student in the
-// course.
+// InactiveCourseOwner * `ALREADY_EXISTS` if the user is already a
+// teacher or student in the course.
 //
 // - courseId: Identifier of the course. This identifier can be either
 //   the Classroom-assigned identifier or an alias.
@@ -10003,7 +10003,7 @@ func (c *CoursesTeachersCreateCall) Do(opts ...googleapi.CallOption) (*Teacher, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a teacher of a course. Domain administrators are permitted to [directly add](https://developers.google.com/classroom/guides/manage-users) users within their domain as teachers to courses within their domain. Non-admin users should send an Invitation instead. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create teachers in this course or for access errors. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is already a teacher or student in the course.",
+	//   "description": "Creates a teacher of a course. Domain administrators are permitted to [directly add](https://developers.google.com/classroom/guides/manage-users) users within their domain as teachers to courses within their domain. Non-admin users should send an Invitation instead. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create teachers in this course or for access errors. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached * UserGroupsMembershipLimitReached * InactiveCourseOwner * `ALREADY_EXISTS` if the user is already a teacher or student in the course.",
 	//   "flatPath": "v1/courses/{courseId}/teachers",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.teachers.create",

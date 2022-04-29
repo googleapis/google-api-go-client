@@ -15,7 +15,7 @@
   "baseUrl": "https://keep.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Keep",
-  "description": "This API is an enterprise-only API used to create and manage the Keep notes within your domain, including resolving issues identified by CASB software.",
+  "description": "The Google Keep API is used in an enterprise environment to manage Google Keep content and resolve issues identified by cloud security software.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/keep/api",
   "fullyEncodeReservedExpansion": true,
@@ -314,7 +314,7 @@
       }
     }
   },
-  "revision": "20210629",
+  "revision": "20220322",
   "rootUrl": "https://keep.googleapis.com/",
   "schemas": {
     "Attachment": {
@@ -393,7 +393,7 @@
       "type": "object"
     },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
       "type": "object"

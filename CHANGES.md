@@ -1,5 +1,12 @@
 # Changes
 
+## [0.77.0](https://github.com/googleapis/google-api-go-client/compare/v0.76.0...v0.77.0) (2022-04-29)
+
+
+### Features
+
+* regen cloudcommerceprocurement v1 ([#1525](https://github.com/googleapis/google-api-go-client/issues/1525)) ([138823b](https://github.com/googleapis/google-api-go-client/commit/138823b86344b32485c692ef3fa4adff7d661825))
+
 ## [0.76.0](https://github.com/googleapis/google-api-go-client/compare/v0.75.0...v0.76.0) (2022-04-26)
 
 

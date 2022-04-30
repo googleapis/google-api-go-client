@@ -2703,7 +2703,7 @@ type ListFleetsResponse struct {
 
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve
 	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// pages. The token is only valid for 1h.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4499,6 +4499,15 @@ func (r *OrganizationsLocationsFleetsService) List(parent string) *Organizations
 	return c
 }
 
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of fleets to return. The service may return fewer than this value. If
+// unspecified, at most 200 fleets will be returned. The maximum value
+// is 1000; values above 1000 will be coerced to 1000.
+func (c *OrganizationsLocationsFleetsListCall) PageSize(pageSize int64) *OrganizationsLocationsFleetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": A page token,
 // received from a previous `ListFleets` call. Provide this to retrieve
 // the subsequent page. When paginating, all other parameters provided
@@ -4615,8 +4624,14 @@ func (c *OrganizationsLocationsFleetsListCall) Do(opts ...googleapi.CallOption) 
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of fleets to return. The service may return fewer than this value. If unspecified, at most 200 fleets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListFleets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListFleets` must match the call that provided the page token.",
+	//       "description": "Optional. A page token, received from a previous `ListFleets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListFleets` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6827,6 +6842,15 @@ func (r *ProjectsLocationsFleetsService) List(parent string) *ProjectsLocationsF
 	return c
 }
 
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of fleets to return. The service may return fewer than this value. If
+// unspecified, at most 200 fleets will be returned. The maximum value
+// is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsFleetsListCall) PageSize(pageSize int64) *ProjectsLocationsFleetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": A page token,
 // received from a previous `ListFleets` call. Provide this to retrieve
 // the subsequent page. When paginating, all other parameters provided
@@ -6943,8 +6967,14 @@ func (c *ProjectsLocationsFleetsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of fleets to return. The service may return fewer than this value. If unspecified, at most 200 fleets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListFleets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListFleets` must match the call that provided the page token.",
+	//       "description": "Optional. A page token, received from a previous `ListFleets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListFleets` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -4989,7 +4989,7 @@ type ResourceSearchResult struct {
 
 	// TagKeys: TagKey namespaced names, in the format of
 	// {ORG_ID}/{TAG_KEY_SHORT_NAME}. To search against the `tagKeys`: * use
-	// a field query. Example: - `tagKeys:"123456789/e*" -
+	// a field query. Example: - `tagKeys:"123456789/env*" -
 	// `tagKeys="123456789/env" - `tagKeys:"env" * use a free text query.
 	// Example: - `env`
 	TagKeys []string `json:"tagKeys,omitempty"`
@@ -5004,8 +5004,8 @@ type ResourceSearchResult struct {
 	// {ORG_ID}/{TAG_KEY_SHORT_NAME}/{TAG_VALUE_SHORT_NAME}. To search
 	// against the `tagValues`: * use a field query. Example: -
 	// `tagValues:"env" - `tagValues:"env/prod" -
-	// `tagValues:"123456789/env/pr*" - `tagValues="123456789/env/prod" *
-	// use a free text query. Example: - `prod`
+	// `tagValues:"123456789/env/prod*" - `tagValues="123456789/env/prod"
+	// * use a free text query. Example: - `prod`
 	TagValues []string `json:"tagValues,omitempty"`
 
 	// UpdateTime: The last update timestamp of this resource, at which the

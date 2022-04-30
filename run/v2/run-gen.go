@@ -239,10 +239,6 @@ type GoogleCloudRunV2BinaryAuthorization struct {
 	// https://cloud.google.com/binary-authorization/docs/using-breakglass
 	BreakglassJustification string `json:"breakglassJustification,omitempty"`
 
-	// Policy: The path to a binary authorization policy. Format:
-	// projects/{project}/platforms/cloudRun/{policy-name}
-	Policy string `json:"policy,omitempty"`
-
 	// UseDefault: If True, indicates to use the default project's binary
 	// authorization policy. If False, binary authorization will be
 	// disabled.
@@ -4101,13 +4097,6 @@ func (c *ProjectsLocationsJobsPatchCall) AllowMissing(allowMissing bool) *Projec
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to be updated.
-func (c *ProjectsLocationsJobsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsJobsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
 // ValidateOnly sets the optional parameter "validateOnly": Indicates
 // that the request should be validated and default values populated,
 // without persisting the request or updating any resources.
@@ -4225,12 +4214,6 @@ func (c *ProjectsLocationsJobsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
@@ -6958,13 +6941,6 @@ func (c *ProjectsLocationsServicesPatchCall) AllowMissing(allowMissing bool) *Pr
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to be updated.
-func (c *ProjectsLocationsServicesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsServicesPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
 // ValidateOnly sets the optional parameter "validateOnly": Indicates
 // that the request should be validated and default values populated,
 // without persisting the request or updating any resources.
@@ -7082,12 +7058,6 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {

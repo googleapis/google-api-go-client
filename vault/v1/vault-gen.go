@@ -2086,6 +2086,10 @@ type Query struct {
 	//   "ROOM" - Search messages in the Chat spaces specified in
 	// [HangoutsChatInfo](https://developers.google.com/vault/reference/rest/
 	// v1/Query#hangoutschatinfo).
+	//   "SITES_URL" - Search for sites by the published site URLs specified
+	// in
+	// [SitesUrlInfo](https://developers.google.com/vault/reference/rest/v1/Q
+	// uery#sitesurlinfo).
 	//   "SHARED_DRIVE" - Search the files in the shared drives specified in
 	// [SharedDriveInfo](https://developers.google.com/vault/reference/rest/v
 	// 1/Query#shareddriveinfo).
@@ -2114,6 +2118,10 @@ type Query struct {
 	//   "ROOM" - Search messages in the Chat spaces specified in
 	// [HangoutsChatInfo](https://developers.google.com/vault/reference/rest/
 	// v1/Query#hangoutschatinfo).
+	//   "SITES_URL" - Search for sites by the published site URLs specified
+	// in
+	// [SitesUrlInfo](https://developers.google.com/vault/reference/rest/v1/Q
+	// uery#sitesurlinfo).
 	//   "SHARED_DRIVE" - Search the files in the shared drives specified in
 	// [SharedDriveInfo](https://developers.google.com/vault/reference/rest/v
 	// 1/Query#shareddriveinfo).
@@ -2121,6 +2129,9 @@ type Query struct {
 
 	// SharedDriveInfo: Required when **SearchMethod** is **SHARED_DRIVE**.
 	SharedDriveInfo *SharedDriveInfo `json:"sharedDriveInfo,omitempty"`
+
+	// SitesUrlInfo: Required when **SearchMethod** is **SITES_URL**.
+	SitesUrlInfo *SitesUrlInfo `json:"sitesUrlInfo,omitempty"`
 
 	// StartTime: The start time for the search query. Specify in GMT. The
 	// value is rounded to 12 AM on the specified date.
@@ -2371,6 +2382,34 @@ type SharedDriveInfo struct {
 
 func (s *SharedDriveInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SharedDriveInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SitesUrlInfo: The published site URLs of new Google Sites to search
+type SitesUrlInfo struct {
+	// Urls: A list of published site URLs.
+	Urls []string `json:"urls,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Urls") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Urls") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SitesUrlInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SitesUrlInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

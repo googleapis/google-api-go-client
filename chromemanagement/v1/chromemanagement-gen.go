@@ -651,7 +651,7 @@ type GoogleChromeManagementV1BrowserVersion struct {
 	//   "SYSTEM_OTHER" - Other operating system.
 	//   "SYSTEM_ANDROID" - Android operating system.
 	//   "SYSTEM_IOS" - Apple iOS operating system.
-	//   "SYSTEM_CROS" - Chrome OS operating system.
+	//   "SYSTEM_CROS" - ChromeOS operating system.
 	//   "SYSTEM_WINDOWS" - Microsoft Windows operating system.
 	//   "SYSTEM_MAC" - Apple macOS operating system.
 	//   "SYSTEM_LINUX" - Linux operating system.
@@ -696,14 +696,14 @@ type GoogleChromeManagementV1ChromeAppInfo struct {
 	IsCwsHosted bool `json:"isCwsHosted,omitempty"`
 
 	// IsKioskOnly: Output only. Whether the app is only for Kiosk mode on
-	// Chrome OS devices
+	// ChromeOS devices
 	IsKioskOnly bool `json:"isKioskOnly,omitempty"`
 
 	// IsTheme: Output only. Whether the app or extension is a theme.
 	IsTheme bool `json:"isTheme,omitempty"`
 
 	// KioskEnabled: Output only. Whether this app is enabled for Kiosk mode
-	// on Chrome OS devices
+	// on ChromeOS devices
 	KioskEnabled bool `json:"kioskEnabled,omitempty"`
 
 	// MinUserCount: Output only. The minimum number of users using this
@@ -1816,7 +1816,7 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 
 	// DeviceId: Output only. The unique Directory API ID of the device.
 	// This value is the same as the Admin Console's Directory API ID in the
-	// Chrome OS Devices tab
+	// ChromeOS Devices tab
 	DeviceId string `json:"deviceId,omitempty"`
 
 	// GraphicsInfo: Output only. Contains information regarding Graphic
@@ -1850,7 +1850,7 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	OsUpdateStatus []*GoogleChromeManagementV1OsUpdateStatus `json:"osUpdateStatus,omitempty"`
 
 	// SerialNumber: Output only. Device serial number. This value is the
-	// same as the Admin Console's Serial Number in the Chrome OS Devices
+	// same as the Admin Console's Serial Number in the ChromeOS Devices
 	// tab.
 	SerialNumber string `json:"serialNumber,omitempty"`
 

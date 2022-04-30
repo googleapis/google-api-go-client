@@ -137,6 +137,7 @@ func New(client *http.Client) (*APIService, error) {
 	s.Orders = NewOrdersService(s)
 	s.Ordertrackingsignals = NewOrdertrackingsignalsService(s)
 	s.Pos = NewPosService(s)
+	s.Productdeliverytime = NewProductdeliverytimeService(s)
 	s.Products = NewProductsService(s)
 	s.Productstatuses = NewProductstatusesService(s)
 	s.Promotions = NewPromotionsService(s)
@@ -199,6 +200,8 @@ type APIService struct {
 	Ordertrackingsignals *OrdertrackingsignalsService
 
 	Pos *PosService
+
+	Productdeliverytime *ProductdeliverytimeService
 
 	Products *ProductsService
 
@@ -463,6 +466,15 @@ func NewPosService(s *APIService) *PosService {
 }
 
 type PosService struct {
+	s *APIService
+}
+
+func NewProductdeliverytimeService(s *APIService) *ProductdeliverytimeService {
+	rs := &ProductdeliverytimeService{s: s}
+	return rs
+}
+
+type ProductdeliverytimeService struct {
 	s *APIService
 }
 
@@ -4322,6 +4334,94 @@ func (s *DateTime) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeliveryArea: A delivery area for the product. Only one of
+// administrativeAreaCode or postalCodeRange must be set.
+type DeliveryArea struct {
+	// CountryCode: Required. The country that the product can be delivered
+	// to. Submit an unicode CLDR region
+	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml)
+	// such as US or CH.
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// PostalCodeRange: A postal code, postal code range or postal code
+	// prefix that defines this area. Limited to US and AUS.
+	PostalCodeRange *DeliveryAreaPostalCodeRange `json:"postalCodeRange,omitempty"`
+
+	// RegionCode: A state, territory, or prefecture. This is supported for
+	// the United States, Australia, and Japan. Provide a subdivision code
+	// from the ISO 3166-2 code tables (US
+	// (https://en.wikipedia.org/wiki/ISO_3166-2:US), AU
+	// (https://en.wikipedia.org/wiki/ISO_3166-2:AU), or JP
+	// (https://en.wikipedia.org/wiki/ISO_3166-2:JP)) without country prefix
+	// (for example, NY, NSW, 03).
+	RegionCode string `json:"regionCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CountryCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CountryCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeliveryArea) MarshalJSON() ([]byte, error) {
+	type NoMethod DeliveryArea
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeliveryAreaPostalCodeRange: A range of postal codes that defines the
+// delivery area. Only set firstPostalCode when specifying a single
+// postal code.
+type DeliveryAreaPostalCodeRange struct {
+	// FirstPostalCode: Required. A postal code or a pattern of the form
+	// prefix* denoting the inclusive lower bound of the range defining the
+	// area. Examples values: "94108", "9410*", "9*".
+	FirstPostalCode string `json:"firstPostalCode,omitempty"`
+
+	// LastPostalCode: A postal code or a pattern of the form prefix*
+	// denoting the inclusive upper bound of the range defining the area
+	// (for example [070* - 078*] results in the range [07000 - 07899]). It
+	// must have the same length as firstPostalCode: if firstPostalCode is a
+	// postal code then lastPostalCode must be a postal code too; if
+	// firstPostalCode is a pattern then lastPostalCode must be a pattern
+	// with the same prefix length. Ignored if not set, then the area is
+	// defined as being all the postal codes matching firstPostalCode.
+	LastPostalCode string `json:"lastPostalCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FirstPostalCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FirstPostalCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeliveryAreaPostalCodeRange) MarshalJSON() ([]byte, error) {
+	type NoMethod DeliveryAreaPostalCodeRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type DeliveryTime struct {
 	// CutoffTime: Business days cutoff time definition. If not configured
 	// the cutoff time will be defaulted to 8AM PST.
@@ -6620,6 +6720,29 @@ type Metrics struct {
 	// Clicks: Number of clicks.
 	Clicks int64 `json:"clicks,omitempty,string"`
 
+	// ConversionRate: Number of conversions divided by the number of
+	// clicks, reported on the impression date. The metric is currently
+	// available only for the FREE_PRODUCT_LISTING program.
+	ConversionRate float64 `json:"conversionRate,omitempty"`
+
+	// ConversionValueMicros: Value of conversions in micros attributed to
+	// the product, reported on the conversion date. The metric is currently
+	// available only for the FREE_PRODUCT_LISTING program. The currency of
+	// the returned value is stored in the currency_code segment. If this
+	// metric is selected, 'segments.currency_code' is automatically added
+	// to the SELECT clause in the search query (unless it is explicitly
+	// selected by the user) and the currency_code segment is populated in
+	// the response.
+	ConversionValueMicros int64 `json:"conversionValueMicros,omitempty,string"`
+
+	// Conversions: Number of conversions attributed to the product,
+	// reported on the conversion date. Depending on the attribution model,
+	// a conversion might be distributed across multiple clicks, where each
+	// click gets its own credit assigned. This metric is a sum of all such
+	// credits. The metric is currently available only for the
+	// FREE_PRODUCT_LISTING program.
+	Conversions float64 `json:"conversions,omitempty"`
+
 	// Ctr: Click-through rate - the number of clicks merchant's products
 	// receive (clicks) divided by the number of times the products are
 	// shown (impressions).
@@ -6745,6 +6868,8 @@ func (s *Metrics) UnmarshalJSON(data []byte) error {
 	var s1 struct {
 		Aos             gensupport.JSONFloat64 `json:"aos"`
 		AovMicros       gensupport.JSONFloat64 `json:"aovMicros"`
+		ConversionRate  gensupport.JSONFloat64 `json:"conversionRate"`
+		Conversions     gensupport.JSONFloat64 `json:"conversions"`
 		Ctr             gensupport.JSONFloat64 `json:"ctr"`
 		DaysToShip      gensupport.JSONFloat64 `json:"daysToShip"`
 		ItemDaysToShip  gensupport.JSONFloat64 `json:"itemDaysToShip"`
@@ -6760,6 +6885,8 @@ func (s *Metrics) UnmarshalJSON(data []byte) error {
 	}
 	s.Aos = float64(s1.Aos)
 	s.AovMicros = float64(s1.AovMicros)
+	s.ConversionRate = float64(s1.ConversionRate)
+	s.Conversions = float64(s1.Conversions)
 	s.Ctr = float64(s1.Ctr)
 	s.DaysToShip = float64(s1.DaysToShip)
 	s.ItemDaysToShip = float64(s1.ItemDaysToShip)
@@ -12239,6 +12366,129 @@ func (s *ProductAmount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProductDeliveryTime: The estimated days to deliver for this product.
+// These methods are intended for authorized partners working with a
+// merchant. Merchants should use the product API
+// (https://developers.google.com/shopping-content/reference/rest/v2.1/products#productshipping)
+// instead. To obtain authorization from a merchant refer to
+type ProductDeliveryTime struct {
+	// AreaDeliveryTimes: Required. A set of associations between
+	// DeliveryAreas and DeliveryTimes. The total number of
+	// areaDeliveryTimes can be at most 100.
+	AreaDeliveryTimes []*ProductDeliveryTimeAreaDeliveryTime `json:"areaDeliveryTimes,omitempty"`
+
+	// ProductId: Required. The id of the product.
+	ProductId *ProductId `json:"productId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AreaDeliveryTimes")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AreaDeliveryTimes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductDeliveryTime) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductDeliveryTime
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductDeliveryTimeAreaDeliveryTime: A pairing of DeliveryArea
+// associated with a DeliveryTime for this product.
+type ProductDeliveryTimeAreaDeliveryTime struct {
+	// DeliveryArea: Required. The delivery area associated with
+	// deliveryTime for this product.
+	DeliveryArea *DeliveryArea `json:"deliveryArea,omitempty"`
+
+	// DeliveryTime: Required. The delivery time associated with
+	// deliveryArea for this product.
+	DeliveryTime *ProductDeliveryTimeAreaDeliveryTimeDeliveryTime `json:"deliveryTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeliveryArea") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeliveryArea") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductDeliveryTimeAreaDeliveryTime) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductDeliveryTimeAreaDeliveryTime
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductDeliveryTimeAreaDeliveryTimeDeliveryTime: A delivery time for
+// this product.
+type ProductDeliveryTimeAreaDeliveryTimeDeliveryTime struct {
+	// MaxHandlingTimeDays: Required. The maximum number of business days
+	// (inclusive) between when an order is placed and when the product
+	// ships. If a product ships in the same day, set this value to 0.
+	MaxHandlingTimeDays int64 `json:"maxHandlingTimeDays,omitempty"`
+
+	// MaxTransitTimeDays: Required. The maximum number of business days
+	// (inclusive) between when the product ships and when the product is
+	// delivered.
+	MaxTransitTimeDays int64 `json:"maxTransitTimeDays,omitempty"`
+
+	// MinHandlingTimeDays: Required. The minimum number of business days
+	// (inclusive) between when an order is placed and when the product
+	// ships. If a product ships in the same day, set this value to 0.
+	MinHandlingTimeDays int64 `json:"minHandlingTimeDays,omitempty"`
+
+	// MinTransitTimeDays: Required. The minimum number of business days
+	// (inclusive) between when the product ships and when the product is
+	// delivered.
+	MinTransitTimeDays int64 `json:"minTransitTimeDays,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxHandlingTimeDays")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxHandlingTimeDays") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductDeliveryTimeAreaDeliveryTimeDeliveryTime) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductDeliveryTimeAreaDeliveryTimeDeliveryTime
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ProductDimension struct {
 	// Unit: Required. The length units. Acceptable values are: - "in" -
 	// "cm"
@@ -12283,6 +12533,35 @@ func (s *ProductDimension) UnmarshalJSON(data []byte) error {
 	}
 	s.Value = float64(s1.Value)
 	return nil
+}
+
+// ProductId: The Content API ID of the product.
+type ProductId struct {
+	// ProductId: The Content API ID of the product, in the form
+	// channel:contentLanguage:targetCountry:offerId.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProductId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProductId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductId) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type ProductProductDetail struct {
@@ -13253,11 +13532,10 @@ func (s *ProductstatusesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Promotion:  The Promotions feature is currently in alpha and is not
-// yet publicly available in Content API for Shopping. This
-// documentation is provided for reference only may be subject to
-// change. Represents a promotion. See the following articles for more
-// details. * Promotions feed specification
+// Promotion:  The Promotions feature is publicly available for the US
+// and CA locale (en language only) in Content API for Shopping.
+// Represents a promotion. See the following articles for more details.
+// * Promotions feed specification
 // (https://support.google.com/merchants/answer/2906014) * Local
 // promotions feed specification
 // (https://support.google.com/merchants/answer/10146130) * Promotions
@@ -13348,7 +13626,7 @@ type Promotion struct {
 	// LimitValue: Maximum purchase value for the promotion.
 	LimitValue *PriceAmount `json:"limitValue,omitempty"`
 
-	// LongTitle: Long title for the promotion.
+	// LongTitle: Required. Long title for the promotion.
 	LongTitle string `json:"longTitle,omitempty"`
 
 	// MinimumPurchaseAmount: Minimum purchase amount for the promotion.
@@ -35806,6 +36084,425 @@ func (c *PosSaleCall) Do(opts ...googleapi.CallOption) (*PosSaleResponse, error)
 	//   },
 	//   "response": {
 	//     "$ref": "PosSaleResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.productdeliverytime.create":
+
+type ProductdeliverytimeCreateCall struct {
+	s                   *APIService
+	merchantId          int64
+	productdeliverytime *ProductDeliveryTime
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Create: Creates or updates the delivery time of a product.
+//
+// - merchantId: The Google merchant ID of the account that contains the
+//   product. This account cannot be a multi-client account.
+func (r *ProductdeliverytimeService) Create(merchantId int64, productdeliverytime *ProductDeliveryTime) *ProductdeliverytimeCreateCall {
+	c := &ProductdeliverytimeCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.productdeliverytime = productdeliverytime
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProductdeliverytimeCreateCall) Fields(s ...googleapi.Field) *ProductdeliverytimeCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProductdeliverytimeCreateCall) Context(ctx context.Context) *ProductdeliverytimeCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductdeliverytimeCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProductdeliverytimeCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productdeliverytime)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/productdeliverytime")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.productdeliverytime.create" call.
+// Exactly one of *ProductDeliveryTime or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ProductDeliveryTime.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProductdeliverytimeCreateCall) Do(opts ...googleapi.CallOption) (*ProductDeliveryTime, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ProductDeliveryTime{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates or updates the delivery time of a product.",
+	//   "flatPath": "{merchantId}/productdeliverytime",
+	//   "httpMethod": "POST",
+	//   "id": "content.productdeliverytime.create",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "The Google merchant ID of the account that contains the product. This account cannot be a multi-client account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/productdeliverytime",
+	//   "request": {
+	//     "$ref": "ProductDeliveryTime"
+	//   },
+	//   "response": {
+	//     "$ref": "ProductDeliveryTime"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.productdeliverytime.delete":
+
+type ProductdeliverytimeDeleteCall struct {
+	s          *APIService
+	merchantId int64
+	productId  string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the delivery time of a product.
+//
+// - merchantId: The Google merchant ID of the account that contains the
+//   product. This account cannot be a multi-client account.
+// - productId: The Content API ID of the product, in the form
+//   channel:contentLanguage:targetCountry:offerId.
+func (r *ProductdeliverytimeService) Delete(merchantId int64, productId string) *ProductdeliverytimeDeleteCall {
+	c := &ProductdeliverytimeDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.productId = productId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProductdeliverytimeDeleteCall) Fields(s ...googleapi.Field) *ProductdeliverytimeDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProductdeliverytimeDeleteCall) Context(ctx context.Context) *ProductdeliverytimeDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductdeliverytimeDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProductdeliverytimeDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/productdeliverytime/{productId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+		"productId":  c.productId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.productdeliverytime.delete" call.
+func (c *ProductdeliverytimeDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes the delivery time of a product.",
+	//   "flatPath": "{merchantId}/productdeliverytime/{productId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "content.productdeliverytime.delete",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "productId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The Google merchant ID of the account that contains the product. This account cannot be a multi-client account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "Required. The Content API ID of the product, in the form channel:contentLanguage:targetCountry:offerId.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/productdeliverytime/{productId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.productdeliverytime.get":
+
+type ProductdeliverytimeGetCall struct {
+	s            *APIService
+	merchantId   int64
+	productId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets productDeliveryTime by productId
+//
+// - merchantId: The Google merchant ID of the account that contains the
+//   product. This account cannot be a multi-client account.
+// - productId: The Content API ID of the product, in the form
+//   channel:contentLanguage:targetCountry:offerId.
+func (r *ProductdeliverytimeService) Get(merchantId int64, productId string) *ProductdeliverytimeGetCall {
+	c := &ProductdeliverytimeGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.productId = productId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProductdeliverytimeGetCall) Fields(s ...googleapi.Field) *ProductdeliverytimeGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProductdeliverytimeGetCall) IfNoneMatch(entityTag string) *ProductdeliverytimeGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProductdeliverytimeGetCall) Context(ctx context.Context) *ProductdeliverytimeGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProductdeliverytimeGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProductdeliverytimeGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/productdeliverytime/{productId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+		"productId":  c.productId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.productdeliverytime.get" call.
+// Exactly one of *ProductDeliveryTime or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ProductDeliveryTime.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProductdeliverytimeGetCall) Do(opts ...googleapi.CallOption) (*ProductDeliveryTime, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ProductDeliveryTime{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets productDeliveryTime by productId",
+	//   "flatPath": "{merchantId}/productdeliverytime/{productId}",
+	//   "httpMethod": "GET",
+	//   "id": "content.productdeliverytime.get",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "productId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The Google merchant ID of the account that contains the product. This account cannot be a multi-client account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "Required. The Content API ID of the product, in the form channel:contentLanguage:targetCountry:offerId.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/productdeliverytime/{productId}",
+	//   "response": {
+	//     "$ref": "ProductDeliveryTime"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/content"

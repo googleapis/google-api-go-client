@@ -1746,7 +1746,7 @@ type GoogleCloudApigeeV1ApiProxy struct {
 	// an archive.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
-	// Revision: Output only. List of revisons defined for the API proxy.
+	// Revision: Output only. List of revisions defined for the API proxy.
 	Revision []string `json:"revision,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

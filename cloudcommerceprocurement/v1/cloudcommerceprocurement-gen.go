@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -79,13 +80,14 @@ const mtlsBasePath = "https://cloudcommerceprocurement.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -221,10 +223,10 @@ type Account struct {
 
 	// ForceSendFields is a list of field names (e.g. "Approvals") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Approvals") to include in
@@ -268,10 +270,10 @@ type Approval struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -309,10 +311,10 @@ type ApproveAccountRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApprovalName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApprovalName") to include
@@ -339,10 +341,10 @@ type ApproveEntitlementPlanChangeRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "PendingPlanName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PendingPlanName") to
@@ -364,24 +366,32 @@ func (s *ApproveEntitlementPlanChangeRequest) MarshalJSON() ([]byte, error) {
 // ApproveEntitlementRequest: Request message for
 // [PartnerProcurementService.ApproveEntitlement[].
 type ApproveEntitlementRequest struct {
+	// EntitlementMigrated: Optional. The resource name of the entitlement
+	// that was migrated. Format:
+	// providers/{provider_id}/entitlements/{entitlement_id}. Should only be
+	// sent when resources have been migrated from entitlement_migrated to
+	// the new entitlement. Optional.
+	EntitlementMigrated string `json:"entitlementMigrated,omitempty"`
+
 	// Properties: Set of properties that should be associated with the
 	// entitlement. Optional.
 	Properties map[string]string `json:"properties,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Properties") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EntitlementMigrated")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Properties") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EntitlementMigrated") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -398,10 +408,10 @@ type Consumer struct {
 
 	// ForceSendFields is a list of field names (e.g. "Project") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Project") to include in
@@ -423,15 +433,14 @@ func (s *Consumer) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Entitlement: Represents a procured product of a customer. Next Id: 24
+// Entitlement: Represents a procured product of a customer.
 type Entitlement struct {
 	// Account: Output only. The resource name of the account that this
 	// entitlement is based on, if any.
@@ -470,6 +479,12 @@ type Entitlement struct {
 	// depending on whether the offer is private or public.
 	NewPendingOffer string `json:"newPendingOffer,omitempty"`
 
+	// NewPendingOfferDuration: Output only. The offer duration of the new
+	// offer in ISO 8601 duration format. Field is empty if the pending plan
+	// change is not moving to an offer since the entitlement is not
+	// pending, only the plan change is pending.
+	NewPendingOfferDuration string `json:"newPendingOfferDuration,omitempty"`
+
 	// NewPendingPlan: Output only. The identifier of the pending new plan.
 	// Required if the product has plans and the entitlement has a pending
 	// plan change.
@@ -482,6 +497,11 @@ type Entitlement struct {
 	// depending on whether the offer is private or public.
 	Offer string `json:"offer,omitempty"`
 
+	// OfferDuration: Output only. The offer duration of the current offer
+	// in ISO 8601 duration format. Field is empty if entitlement was not
+	// made using an offer.
+	OfferDuration string `json:"offerDuration,omitempty"`
+
 	// OfferEndTime: Output only. End time for the Offer association
 	// corresponding to this entitlement. The field is only populated if the
 	// entitlement is currently associated with an Offer.
@@ -492,7 +512,10 @@ type Entitlement struct {
 	Plan string `json:"plan,omitempty"`
 
 	// Product: Output only. The identifier of the entity that was
-	// purchased. This may actually represent a product, quote, or offer.
+	// purchased. This may actually represent a product, quote, or offer. It
+	// is highly recommended to use the more explicit fields
+	// productExternalName, quoteExternalName, or offer listed below based
+	// on your needs.
 	Product string `json:"product,omitempty"`
 
 	// ProductExternalName: Output only. The identifier of the product that
@@ -524,18 +547,22 @@ type Entitlement struct {
 	// the entitlement is cancelled and re-created with a new plan name.
 	//   "ENTITLEMENT_ACTIVE" - Indicates that the entitlement is active.
 	// The procured item is now usable and any associated billing events
-	// will start occurring. In this state, the customer can decide to
-	// cancel the entitlement, which would change the state to
+	// will start occurring. Entitlements in this state WILL renew. The
+	// analogous state for an unexpired but non-renewing entitlement is
+	// ENTITLEMENT_PENDING_CANCELLATION. In this state, the customer can
+	// decide to cancel the entitlement, which would change the state to
 	// EntitlementState.ENTITLEMENT_PENDING_CANCELLATION, and then
 	// EntitlementState.ENTITLEMENT_CANCELLED. The user can also request a
 	// change of plan, which will transition the state to
 	// EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE, and then back to
 	// EntitlementState.ENTITLEMENT_ACTIVE.
 	//   "ENTITLEMENT_PENDING_CANCELLATION" - Indicates that the entitlement
-	// was cancelled by the customer. The entitlement typically stays in
-	// this state if the entitlement/plan allows use of the underlying
-	// resource until the end of the current billing cycle. Once the billing
-	// cycle completes, the resource will transition to
+	// will expire at the end of its term. This could mean the customer has
+	// elected not to renew this entitlement or the customer elected to
+	// cancel an entitlement that only expires at term end. The entitlement
+	// typically stays in this state if the entitlement/plan allows use of
+	// the underlying resource until the end of the current billing cycle.
+	// Once the billing cycle completes, the resource will transition to
 	// EntitlementState.ENTITLEMENT_CANCELLED state. The resource cannot be
 	// modified during this state.
 	//   "ENTITLEMENT_CANCELLED" - Indicates that the entitlement was
@@ -586,10 +613,10 @@ type Entitlement struct {
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Account") to include in
@@ -622,10 +649,10 @@ type ListAccountsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Accounts") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Accounts") to include in
@@ -658,10 +685,10 @@ type ListEntitlementsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Entitlements") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Entitlements") to include
@@ -694,10 +721,10 @@ type RejectAccountRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApprovalName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApprovalName") to include
@@ -728,10 +755,10 @@ type RejectEntitlementPlanChangeRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "PendingPlanName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PendingPlanName") to
@@ -759,10 +786,10 @@ type RejectEntitlementRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Reason") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Reason") to include in API
@@ -795,10 +822,10 @@ type SuspendEntitlementRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Reason") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Reason") to include in API
@@ -864,7 +891,7 @@ func (c *ProvidersAccountsApproveCall) Header() http.Header {
 
 func (c *ProvidersAccountsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1015,7 +1042,7 @@ func (c *ProvidersAccountsGetCall) Header() http.Header {
 
 func (c *ProvidersAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1125,7 +1152,8 @@ func (r *ProvidersAccountsService) List(parent string) *ProvidersAccountsListCal
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested. Default size is 200.
+// of entries that are requested The default page size is 25 and the
+// maximum page size is 200.
 func (c *ProvidersAccountsListCall) PageSize(pageSize int64) *ProvidersAccountsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1175,7 +1203,7 @@ func (c *ProvidersAccountsListCall) Header() http.Header {
 
 func (c *ProvidersAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1246,7 +1274,7 @@ func (c *ProvidersAccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccou
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested. Default size is 200.",
+	//       "description": "The maximum number of entries that are requested The default page size is 25 and the maximum page size is 200.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1344,7 +1372,7 @@ func (c *ProvidersAccountsRejectCall) Header() http.Header {
 
 func (c *ProvidersAccountsRejectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1488,7 +1516,7 @@ func (c *ProvidersAccountsResetCall) Header() http.Header {
 
 func (c *ProvidersAccountsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1633,7 +1661,7 @@ func (c *ProvidersEntitlementsApproveCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1778,7 +1806,7 @@ func (c *ProvidersEntitlementsApprovePlanChangeCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsApprovePlanChangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1929,7 +1957,7 @@ func (c *ProvidersEntitlementsGetCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2071,7 +2099,7 @@ func (c *ProvidersEntitlementsListCall) Filter(filter string) *ProvidersEntitlem
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested.
+// of entries that are requested. The default page size is 200.
 func (c *ProvidersEntitlementsListCall) PageSize(pageSize int64) *ProvidersEntitlementsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2121,7 +2149,7 @@ func (c *ProvidersEntitlementsListCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2197,7 +2225,7 @@ func (c *ProvidersEntitlementsListCall) Do(opts ...googleapi.CallOption) (*ListE
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested.",
+	//       "description": "The maximum number of entries that are requested. The default page size is 200.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2304,7 +2332,7 @@ func (c *ProvidersEntitlementsPatchCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2455,7 +2483,7 @@ func (c *ProvidersEntitlementsRejectCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsRejectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2600,7 +2628,7 @@ func (c *ProvidersEntitlementsRejectPlanChangeCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsRejectPlanChangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2743,7 +2771,7 @@ func (c *ProvidersEntitlementsSuspendCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

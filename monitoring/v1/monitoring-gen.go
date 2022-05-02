@@ -2520,7 +2520,7 @@ type TimeSeriesQuery struct {
 	// series filters.
 	TimeSeriesFilterRatio *TimeSeriesFilterRatio `json:"timeSeriesFilterRatio,omitempty"`
 
-	// TimeSeriesQueryLanguage: A query used to fetch time series.
+	// TimeSeriesQueryLanguage: A query used to fetch time series with MQL.
 	TimeSeriesQueryLanguage string `json:"timeSeriesQueryLanguage,omitempty"`
 
 	// UnitOverride: The unit of data contained in fetched time series. If

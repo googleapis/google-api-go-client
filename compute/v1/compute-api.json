@@ -31075,7 +31075,7 @@
       }
     }
   },
-  "revision": "20220405",
+  "revision": "20220420",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -32246,7 +32246,7 @@
       "type": "object"
     },
     "AttachedDiskInitializeParams": {
-      "description": "[Input Only] Specifies the parameters for a new disk that will be created alongside the new instance. Use initialization parameters to create boot disks or local SSDs attached to the new instance. This property is mutually exclusive with the source property; you can only define one or the other, but not both.",
+      "description": "[Input Only] Specifies the parameters for a new disk that will be created alongside the new instance. Use initialization parameters to create boot disks or local SSDs attached to the new instance. This field is persisted and returned for instanceTemplate and not returned in the context of instance. This property is mutually exclusive with the source property; you can only define one or the other, but not both.",
       "id": "AttachedDiskInitializeParams",
       "properties": {
         "description": {
@@ -33315,7 +33315,7 @@
           "type": "array"
         },
         "queryStringWhitelist": {
-          "description": "Names of query string parameters to include in cache keys. All other parameters will be excluded. '\u0026' and '=' will be percent encoded and not treated as delimiters.",
+          "description": "Names of query string parameters to include in cache keys. Default parameters are always included. '\u0026' and '=' will be percent encoded and not treated as delimiters.",
           "items": {
             "type": "string"
           },
@@ -46709,7 +46709,7 @@
           "type": "string"
         },
         "pscTargetService": {
-          "description": "The target service url used to set up private service connection to a Google API. An example value is: \"asia-northeast3-cloudkms.googleapis.com\"",
+          "description": "The target service url used to set up private service connection to a Google API or a PSC Producer Service Attachment. An example value is: \"asia-northeast3-cloudkms.googleapis.com\"",
           "type": "string"
         },
         "region": {

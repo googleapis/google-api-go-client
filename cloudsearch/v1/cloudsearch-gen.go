@@ -6702,6 +6702,12 @@ type SpaceInfo struct {
 
 	GroupId *GroupId `json:"groupId,omitempty"`
 
+	// InviterEmail: The email address of the user that invited the calling
+	// user to the room, if available. This field will only be populated for
+	// direct invites, it will be empty if the user was indirectly invited
+	// to the group.
+	InviterEmail string `json:"inviterEmail,omitempty"`
+
 	// IsExternal: Whether this is a space that enables guest access
 	IsExternal bool `json:"isExternal,omitempty"`
 

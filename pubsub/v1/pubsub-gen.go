@@ -869,6 +869,11 @@ func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 // OidcToken: Contains information needed for generating an OpenID
 // Connect token
 // (https://developers.google.com/identity/protocols/OpenIDConnect).
+// Service account email
+// (https://cloud.google.com/iam/docs/service-accounts) used for
+// generating the OIDC token. For more information on setting up
+// authentication, see Push subscriptions
+// (https://cloud.google.com/pubsub/docs/push).
 type OidcToken struct {
 	// Audience: Audience to be used when generating OIDC token. The
 	// audience claim identifies the recipients that the JWT is intended
@@ -879,11 +884,6 @@ type OidcToken struct {
 	// specified, the Push endpoint URL will be used.
 	Audience string `json:"audience,omitempty"`
 
-	// ServiceAccountEmail: Service account email
-	// (https://cloud.google.com/iam/docs/service-accounts) to be used for
-	// generating the OIDC token. See Setting up push authentication
-	// (/pubsub/docs/push#setting_up_for_push_authentication) for more
-	// details.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audience") to
@@ -1109,7 +1109,8 @@ type PubsubMessage struct {
 	// same non-empty `ordering_key` value will be delivered to subscribers
 	// in the order in which they are received by the Pub/Sub system. All
 	// `PubsubMessage`s published in a given `PublishRequest` must specify
-	// the same `ordering_key` value.
+	// the same `ordering_key` value. For more information, see ordering
+	// messages (https://cloud.google.com/pubsub/docs/ordering).
 	OrderingKey string `json:"orderingKey,omitempty"`
 
 	// PublishTime: The time at which the message was published, populated
@@ -3856,9 +3857,10 @@ type ProjectsSnapshotsGetCall struct {
 }
 
 // Get: Gets the configuration details of a snapshot. Snapshots are used
-// in Seek operations, which allow you to manage message acknowledgments
-// in bulk. That is, you can set the acknowledgment state of messages in
-// an existing subscription to the state captured by a snapshot.
+// in Seek (https://cloud.google.com/pubsub/docs/replay-overview)
+// operations, which allow you to manage message acknowledgments in
+// bulk. That is, you can set the acknowledgment state of messages in an
+// existing subscription to the state captured by a snapshot.
 //
 // - snapshot: The name of the snapshot to get. Format is
 //   `projects/{project}/snapshots/{snap}`.
@@ -3967,7 +3969,7 @@ func (c *ProjectsSnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the configuration details of a snapshot. Snapshots are used in Seek operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
+	//   "description": "Gets the configuration details of a snapshot. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.snapshots.get",
@@ -4382,9 +4384,10 @@ type ProjectsSnapshotsPatchCall struct {
 }
 
 // Patch: Updates an existing snapshot. Snapshots are used in Seek
-// operations, which allow you to manage message acknowledgments in
-// bulk. That is, you can set the acknowledgment state of messages in an
-// existing subscription to the state captured by a snapshot.
+// (https://cloud.google.com/pubsub/docs/replay-overview) operations,
+// which allow you to manage message acknowledgments in bulk. That is,
+// you can set the acknowledgment state of messages in an existing
+// subscription to the state captured by a snapshot.
 //
 // - name: The name of the snapshot.
 func (r *ProjectsSnapshotsService) Patch(name string, updatesnapshotrequest *UpdateSnapshotRequest) *ProjectsSnapshotsPatchCall {
@@ -4485,7 +4488,7 @@ func (c *ProjectsSnapshotsPatchCall) Do(opts ...googleapi.CallOption) (*Snapshot
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing snapshot. Snapshots are used in Seek operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
+	//   "description": "Updates an existing snapshot. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "pubsub.projects.snapshots.patch",

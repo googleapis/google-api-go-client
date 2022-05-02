@@ -3016,11 +3016,15 @@ type Membership struct {
 	// the time at which the member joined the space, if applicable.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Member: Output only. A user in Google Chat. Represents a person
+	// Member: A Google Chat user or app. Format: `users/{person}` or
+	// `users/app` When `users/{person}`, represents a person
 	// (https://developers.google.com/people/api/rest/v1/people) in the
 	// People API or a user
 	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
-	// in the Admin SDK Directory API. Format: `users/{user}`
+	// in the Admin SDK Directory API. Format: `users/{user}` When
+	// `users/app`, represents a Chat app creating membership for itself.
+	// Creating membership is available as a developer preview
+	// (https://developers.google.com/workspace/preview).
 	Member *User `json:"member,omitempty"`
 
 	Name string `json:"name,omitempty"`

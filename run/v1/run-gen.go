@@ -8384,8 +8384,8 @@ func (r *NamespacesServicesService) Create(parent string, service *Service) *Nam
 // DryRun sets the optional parameter "dryRun": Indicates that the
 // server should validate the request and populate default values
 // without persisting the request. Supported values: `all`
-// LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_se
-// rvice.proto:create_internal_service_request)
+// LINT.ThenChange(//depot/google3/google/cloud/serverless/internal/inter
+// nal_service.proto:create_internal_service_request)
 func (c *NamespacesServicesCreateCall) DryRun(dryRun string) *NamespacesServicesCreateCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -8491,7 +8491,7 @@ func (c *NamespacesServicesCreateCall) Do(opts ...googleapi.CallOption) (*Servic
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_service.proto:create_internal_service_request)",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/internal/internal_service.proto:create_internal_service_request)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9125,8 +9125,8 @@ func (r *NamespacesServicesService) ReplaceService(name string, service *Service
 // DryRun sets the optional parameter "dryRun": Indicates that the
 // server should validate the request and populate default values
 // without persisting the request. Supported values: `all`
-// LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_se
-// rvice.proto:replace_internal_service_request)
+// LINT.ThenChange(//depot/google3/google/cloud/serverless/internal/inter
+// nal_service.proto:replace_internal_service_request)
 func (c *NamespacesServicesReplaceServiceCall) DryRun(dryRun string) *NamespacesServicesReplaceServiceCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -9232,7 +9232,7 @@ func (c *NamespacesServicesReplaceServiceCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_service.proto:replace_internal_service_request)",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/internal/internal_service.proto:replace_internal_service_request)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12813,8 +12813,8 @@ func (r *ProjectsLocationsServicesService) Create(parent string, service *Servic
 // DryRun sets the optional parameter "dryRun": Indicates that the
 // server should validate the request and populate default values
 // without persisting the request. Supported values: `all`
-// LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_se
-// rvice.proto:create_internal_service_request)
+// LINT.ThenChange(//depot/google3/google/cloud/serverless/internal/inter
+// nal_service.proto:create_internal_service_request)
 func (c *ProjectsLocationsServicesCreateCall) DryRun(dryRun string) *ProjectsLocationsServicesCreateCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -12920,7 +12920,7 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_service.proto:create_internal_service_request)",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/internal/internal_service.proto:create_internal_service_request)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13728,8 +13728,8 @@ func (r *ProjectsLocationsServicesService) ReplaceService(name string, service *
 // DryRun sets the optional parameter "dryRun": Indicates that the
 // server should validate the request and populate default values
 // without persisting the request. Supported values: `all`
-// LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_se
-// rvice.proto:replace_internal_service_request)
+// LINT.ThenChange(//depot/google3/google/cloud/serverless/internal/inter
+// nal_service.proto:replace_internal_service_request)
 func (c *ProjectsLocationsServicesReplaceServiceCall) DryRun(dryRun string) *ProjectsLocationsServicesReplaceServiceCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -13835,7 +13835,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_service.proto:replace_internal_service_request)",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/internal/internal_service.proto:replace_internal_service_request)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

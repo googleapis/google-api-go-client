@@ -536,8 +536,7 @@ type AndroidModel struct {
 	// "deprecated".
 	Tags []string `json:"tags,omitempty"`
 
-	// ThumbnailUrl: URL of a thumbnail image (photo) of the device. e.g.
-	// https://lh3.googleusercontent.com/90WcauuJiCYABEl8U0lcZeuS5STUbf2yW...
+	// ThumbnailUrl: URL of a thumbnail image (photo) of the device.
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Brand") to
@@ -2352,7 +2351,8 @@ type Shard struct {
 	// ShardIndex: Output only. The index of the shard among all the shards.
 	ShardIndex int64 `json:"shardIndex,omitempty"`
 
-	// TestTargetsForShard: Output only. Test targets for each shard.
+	// TestTargetsForShard: Output only. Test targets for each shard. Only
+	// set for manual sharding.
 	TestTargetsForShard *TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NumShards") to

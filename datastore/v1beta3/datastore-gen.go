@@ -2310,7 +2310,8 @@ type RollbackResponse struct {
 
 // RunQueryRequest: The request for Datastore.RunQuery.
 type RunQueryRequest struct {
-	// GqlQuery: The GQL query to run.
+	// GqlQuery: The GQL query to run. This query must be a non-aggregation
+	// query.
 	GqlQuery *GqlQuery `json:"gqlQuery,omitempty"`
 
 	// PartitionId: Entities are partitioned into subsets, identified by a

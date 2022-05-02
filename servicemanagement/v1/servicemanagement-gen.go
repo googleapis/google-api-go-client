@@ -2662,8 +2662,8 @@ type ManagedService struct {
 	ProducerProjectId string `json:"producerProjectId,omitempty"`
 
 	// ServiceName: The name of the service. See the overview
-	// (https://cloud.google.com/service-management/overview) for naming
-	// requirements.
+	// (https://cloud.google.com/service-infrastructure/docs/overview) for
+	// naming requirements.
 	ServiceName string `json:"serviceName,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

@@ -1196,6 +1196,36 @@ func (s *FileHashes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FileLocation: Indicates the location at which a package was found.
+type FileLocation struct {
+	// FilePath: For jars that are contained inside .war files, this
+	// filepath can indicate the path to war file combined with the path to
+	// jar file.
+	FilePath string `json:"filePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilePath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilePath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FileLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod FileLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Fingerprint: A set of properties that uniquely identify a given
 // Docker image.
 type Fingerprint struct {
@@ -1959,6 +1989,14 @@ type PackageData struct {
 	// jar.
 	CpeUri string `json:"cpeUri,omitempty"`
 
+	// FileLocation: The path to the jar file / go binary file.
+	FileLocation []*FileLocation `json:"fileLocation,omitempty"`
+
+	// HashDigest: HashDigest stores the SHA512 hash digest of the jar file
+	// if the package is of type Maven. This field will be unset for non
+	// Maven packages.
+	HashDigest string `json:"hashDigest,omitempty"`
+
 	// Os: The OS affected by a vulnerability This field is deprecated and
 	// the information is in cpe_uri
 	Os string `json:"os,omitempty"`
@@ -1979,10 +2017,6 @@ type PackageData struct {
 	//   "GO" - Go third-party packages.
 	//   "GO_STDLIB" - Go toolchain + standard library packages.
 	PackageType string `json:"packageType,omitempty"`
-
-	// PathToFile: The path to the jar file / go binary file. The same jar
-	// file can be in multiple locations - all of them will be listed.
-	PathToFile []string `json:"pathToFile,omitempty"`
 
 	Unused string `json:"unused,omitempty"`
 

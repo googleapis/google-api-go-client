@@ -952,6 +952,10 @@ type ConsumerConfig struct {
 	// private service access connection.
 	ReservedRanges []*GoogleCloudServicenetworkingV1ConsumerConfigReservedRange `json:"reservedRanges,omitempty"`
 
+	// UsedIpRanges: Output only. The IP ranges already in use by consumer
+	// or producer
+	UsedIpRanges []string `json:"usedIpRanges,omitempty"`
+
 	// VpcScReferenceArchitectureEnabled: Output only. Indicates whether the
 	// VPC Service Controls reference architecture is configured for the
 	// producer VPC host network.

@@ -383,8 +383,7 @@ func (s *DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -533,11 +532,12 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// InstanceType: Optional. The instance_type of this instance of format:
-	// projects/{project_id}/locations/{location_id}/instanceTypes/{instance_
-	// type_id}. Instance Type represents a high-level tier or SKU of the
-	// service that this instance belong to. When enabled(eg: Maintenance
-	// Rollout), Rollout uses 'instance_type' along with 'software_versions'
-	// to determine whether instance needs an update or not.
+	// projects/{project_number}/locations/{location_id}/instanceTypes/{insta
+	// nce_type_id}. Instance Type represents a high-level tier or SKU of
+	// the service that this instance belong to. When enabled(eg:
+	// Maintenance Rollout), Rollout uses 'instance_type' along with
+	// 'software_versions' to determine whether instance needs an update or
+	// not.
 	InstanceType string `json:"instanceType,omitempty"`
 
 	// Labels: Optional. Resource labels to represent user provided
@@ -562,9 +562,11 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	MaintenanceSettings *GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings `json:"maintenanceSettings,omitempty"`
 
 	// Name: Unique name of the resource. It uses the form:
-	// `projects/{project_id|project_number}/locations/{location_id}/instance
-	// s/{instance_id}` Note: Either project_id or project_number can be
-	// used, but keep it consistent with other APIs (e.g. RescheduleUpdate)
+	// `projects/{project_number}/locations/{location_id}/instances/{instance
+	// _id}` Note: This name is passed, stored and logged across the rollout
+	// system. So use of consumer project_id or any other consumer PII in
+	// the name is strongly discouraged for wipeout (go/wipeout) compliance.
+	// See go/elysium/project_ids#storage-guidance for more details.
 	Name string `json:"name,omitempty"`
 
 	// NotificationParameters: Optional. notification_parameter are
@@ -1704,6 +1706,50 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RescheduleMaintenanceRequest: Request for RescheduleMaintenance.
+type RescheduleMaintenanceRequest struct {
+	// RescheduleType: Required. If reschedule type is SPECIFIC_TIME, must
+	// set up schedule_time as well.
+	//
+	// Possible values:
+	//   "RESCHEDULE_TYPE_UNSPECIFIED" - Not set.
+	//   "IMMEDIATE" - If the user wants to schedule the maintenance to
+	// happen now.
+	//   "NEXT_AVAILABLE_WINDOW" - If the user wants to use the existing
+	// maintenance policy to find the next available window.
+	//   "SPECIFIC_TIME" - If the user wants to reschedule the maintenance
+	// to a specific time.
+	RescheduleType string `json:"rescheduleType,omitempty"`
+
+	// ScheduleTime: Timestamp when the maintenance shall be rescheduled to
+	// if reschedule_type=SPECIFIC_TIME, in RFC 3339 format, for example
+	// `2012-11-15T16:19:00.094Z`.
+	ScheduleTime string `json:"scheduleTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RescheduleType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RescheduleType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RescheduleMaintenanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RescheduleMaintenanceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Schedule: Configure the schedule.
 type Schedule struct {
 	// Day: Allows to define schedule that runs specified day of the week.
@@ -2158,8 +2204,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2288,7 +2334,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3450,6 +3496,151 @@ func (c *ProjectsLocationsInstancesPatchCall) Do(opts ...googleapi.CallOption) (
 	//   "path": "v1beta2/{+name}",
 	//   "request": {
 	//     "$ref": "Instance"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "memcache.projects.locations.instances.rescheduleMaintenance":
+
+type ProjectsLocationsInstancesRescheduleMaintenanceCall struct {
+	s                            *Service
+	instance                     string
+	reschedulemaintenancerequest *RescheduleMaintenanceRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// RescheduleMaintenance: Performs the apply phase of the
+// RescheduleMaintenance verb.
+//
+// - instance: Memcache instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
+func (r *ProjectsLocationsInstancesService) RescheduleMaintenance(instance string, reschedulemaintenancerequest *RescheduleMaintenanceRequest) *ProjectsLocationsInstancesRescheduleMaintenanceCall {
+	c := &ProjectsLocationsInstancesRescheduleMaintenanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.instance = instance
+	c.reschedulemaintenancerequest = reschedulemaintenancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesRescheduleMaintenanceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Context(ctx context.Context) *ProjectsLocationsInstancesRescheduleMaintenanceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reschedulemaintenancerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+instance}:rescheduleMaintenance")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "memcache.projects.locations.instances.rescheduleMaintenance" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Performs the apply phase of the RescheduleMaintenance verb.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:rescheduleMaintenance",
+	//   "httpMethod": "POST",
+	//   "id": "memcache.projects.locations.instances.rescheduleMaintenance",
+	//   "parameterOrder": [
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Required. Memcache instance resource name using the form: `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id` refers to a GCP region.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+instance}:rescheduleMaintenance",
+	//   "request": {
+	//     "$ref": "RescheduleMaintenanceRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

@@ -2524,6 +2524,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://firebase.google.com/docs/app-check",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "firebaseappcheck:v1",
+      "name": "firebaseappcheck",
+      "version": "v1",
+      "title": "Firebase App Check API",
+      "description": "Firebase App Check works alongside other Firebase services to help protect your backend resources from abuse, such as billing fraud or phishing.",
+      "discoveryRestUrl": "https://firebaseappcheck.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://firebase.google.com/docs/app-check",
       "preferred": true
     },
     {
@@ -5325,6 +5340,21 @@
       "title": "Chrome Verified Access API",
       "description": "API for Verified Access chrome extension to provide credential verification for chrome devices connecting to an enterprise network",
       "discoveryRestUrl": "https://verifiedaccess.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/chrome/verified-access",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "verifiedaccess:v2",
+      "name": "verifiedaccess",
+      "version": "v2",
+      "title": "Chrome Verified Access API",
+      "description": "API for Verified Access chrome extension to provide credential verification for chrome devices connecting to an enterprise network",
+      "discoveryRestUrl": "https://verifiedaccess.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

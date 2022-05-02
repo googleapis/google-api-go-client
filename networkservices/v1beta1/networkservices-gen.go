@@ -3002,12 +3002,6 @@ type TcpRoute struct {
 	// length 1024 characters.
 	Description string `json:"description,omitempty"`
 
-	// Gateways: Optional. Gateways defines a list of gateways this TcpRoute
-	// is attached to, as one of the routing rules to route the requests
-	// served by the gateway. Each gateway reference should match the
-	// pattern: `projects/*/locations/global/gateways/`
-	Gateways []string `json:"gateways,omitempty"`
-
 	// Labels: Optional. Set of label tags associated with the TcpRoute
 	// resource.
 	Labels map[string]string `json:"labels,omitempty"`

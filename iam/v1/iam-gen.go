@@ -1990,6 +1990,49 @@ func (s *Role) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Saml: Represents an SAML 2.0 identity provider.
+type Saml struct {
+	// IdpMetadataXml: Required. SAML Identity provider configuration
+	// metadata xml doc. The xml document should comply with SAML 2.0
+	// specification
+	// (https://www.oasis-open.org/committees/download.php/56785/sstc-saml-metadata-errata-2.0-wd-05.pdf).
+	// The max size of the acceptable xml document will be bounded to 128k
+	// characters. The metadata xml document should satisfy the following
+	// constraints: 1) Must contain an Identity Provider Entity ID. 2) Must
+	// contain at least one non-expired signing key certificate. 3) For each
+	// signing key: a) Valid from should be no more than 7 days from now. b)
+	// Valid to should be no more than 10 years in the future. 4) Upto 3 IdP
+	// signing keys are allowed in the metadata xml. When updating the
+	// provider's metadata xml, at lease one non-expired signing key must
+	// overlap with the existing metadata. This requirement is skipped if
+	// there are no non-expired signing keys present in the existing
+	// metadata
+	IdpMetadataXml string `json:"idpMetadataXml,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IdpMetadataXml") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IdpMetadataXml") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Saml) MarshalJSON() ([]byte, error) {
+	type NoMethod Saml
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ServiceAccount: An IAM service account. A service account is an
 // account for an application or a virtual machine (VM) instance, not a
 // person. You can use a service account to call Google APIs. To learn
@@ -2744,6 +2787,9 @@ type WorkloadIdentityPoolProvider struct {
 
 	// Oidc: An OpenId Connect 1.0 identity provider.
 	Oidc *Oidc `json:"oidc,omitempty"`
+
+	// Saml: An SAML 2.0 identity provider.
+	Saml *Saml `json:"saml,omitempty"`
 
 	// State: Output only. The state of the provider.
 	//

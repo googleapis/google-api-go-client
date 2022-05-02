@@ -1889,6 +1889,186 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IdentityServiceAuthMethod: Configuration of an auth method for a
+// member/cluster. Only one authentication method (e.g., OIDC and LDAP)
+// can be set per AuthMethod.
+type IdentityServiceAuthMethod struct {
+	// Name: Identifier for auth config.
+	Name string `json:"name,omitempty"`
+
+	// OidcConfig: OIDC specific configuration.
+	OidcConfig *IdentityServiceOidcConfig `json:"oidcConfig,omitempty"`
+
+	// Proxy: Proxy server address to use for auth method.
+	Proxy string `json:"proxy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceAuthMethod) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceAuthMethod
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceMembershipSpec: **Anthos Identity Service**:
+// Configuration for a single Membership.
+type IdentityServiceMembershipSpec struct {
+	// AuthMethods: A member may support multiple auth methods.
+	AuthMethods []*IdentityServiceAuthMethod `json:"authMethods,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthMethods") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthMethods") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceMembershipSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceMembershipSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceMembershipState: **Anthos Identity Service**: State
+// for a single Membership.
+type IdentityServiceMembershipState struct {
+	// FailureReason: The reason of the failure.
+	FailureReason string `json:"failureReason,omitempty"`
+
+	// InstalledVersion: Installed AIS version. This is the AIS version
+	// installed on this member. The values makes sense iff state is OK.
+	InstalledVersion string `json:"installedVersion,omitempty"`
+
+	// MemberConfig: Last reconciled membership configuration
+	MemberConfig *IdentityServiceMembershipSpec `json:"memberConfig,omitempty"`
+
+	// State: Deployment state on this member
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Unspecified state
+	//   "OK" - deployment succeeds
+	//   "ERROR" - Failure with error.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FailureReason") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailureReason") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceMembershipState) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceMembershipState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceOidcConfig: Configuration for OIDC Auth flow.
+type IdentityServiceOidcConfig struct {
+	// CertificateAuthorityData: PEM-encoded CA for OIDC provider.
+	CertificateAuthorityData string `json:"certificateAuthorityData,omitempty"`
+
+	// ClientId: ID for OIDC client application.
+	ClientId string `json:"clientId,omitempty"`
+
+	// ClientSecret: Input only. Unencrypted OIDC client secret will be
+	// passed to the GKE Hub CLH.
+	ClientSecret string `json:"clientSecret,omitempty"`
+
+	// DeployCloudConsoleProxy: Flag to denote if reverse proxy is used to
+	// connect to auth provider. This flag should be set to true when
+	// provider is not reachable by Google Cloud Console.
+	DeployCloudConsoleProxy bool `json:"deployCloudConsoleProxy,omitempty"`
+
+	// EncryptedClientSecret: Output only. Encrypted OIDC Client secret
+	EncryptedClientSecret string `json:"encryptedClientSecret,omitempty"`
+
+	// ExtraParams: Comma-separated list of key-value pairs.
+	ExtraParams string `json:"extraParams,omitempty"`
+
+	// GroupPrefix: Prefix to prepend to group name.
+	GroupPrefix string `json:"groupPrefix,omitempty"`
+
+	// GroupsClaim: Claim in OIDC ID token that holds group information.
+	GroupsClaim string `json:"groupsClaim,omitempty"`
+
+	// IssuerUri: URI for the OIDC provider. This should point to the level
+	// below .well-known/openid-configuration.
+	IssuerUri string `json:"issuerUri,omitempty"`
+
+	// KubectlRedirectUri: Registered redirect uri to redirect users going
+	// through OAuth flow using kubectl plugin.
+	KubectlRedirectUri string `json:"kubectlRedirectUri,omitempty"`
+
+	// Scopes: Comma-separated list of identifiers.
+	Scopes string `json:"scopes,omitempty"`
+
+	// UserClaim: Claim in OIDC ID token that holds username.
+	UserClaim string `json:"userClaim,omitempty"`
+
+	// UserPrefix: Prefix to prepend to user name.
+	UserPrefix string `json:"userPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificateAuthorityData") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertificateAuthorityData")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceOidcConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceOidcConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // KubernetesMetadata: KubernetesMetadata provides informational
 // metadata for Memberships representing Kubernetes clusters.
 type KubernetesMetadata struct {
@@ -2357,6 +2537,9 @@ type MembershipFeatureSpec struct {
 	// Configmanagement: Config Management-specific spec.
 	Configmanagement *ConfigManagementMembershipSpec `json:"configmanagement,omitempty"`
 
+	// Identityservice: Identity Service-specific spec.
+	Identityservice *IdentityServiceMembershipSpec `json:"identityservice,omitempty"`
+
 	// Mesh: Anthos Service Mesh-specific spec
 	Mesh *ServiceMeshMembershipSpec `json:"mesh,omitempty"`
 
@@ -2392,6 +2575,9 @@ type MembershipFeatureState struct {
 
 	// Configmanagement: Config Management-specific state.
 	Configmanagement *ConfigManagementMembershipState `json:"configmanagement,omitempty"`
+
+	// Identityservice: Identity Service-specific state.
+	Identityservice *IdentityServiceMembershipState `json:"identityservice,omitempty"`
 
 	// Servicemesh: Service Mesh-specific state.
 	Servicemesh *ServiceMeshMembershipState `json:"servicemesh,omitempty"`

@@ -6127,6 +6127,18 @@ func (s *GoogleCloudDialogflowCxV3RunTestCaseResponse) MarshalJSON() ([]byte, er
 // retention. It may take hours for updates on the settings to propagate
 // to all the related components and take effect.
 type GoogleCloudDialogflowCxV3SecuritySettings struct {
+	// AudioExportSettings: Controls audio export settings for
+	// post-conversation analytics when ingesting audio to conversations via
+	// Participants.AnalyzeContent or Participants.StreamingAnalyzeContent.
+	// If retention_strategy is set to REMOVE_AFTER_CONVERSATION or
+	// audio_export_settings.gcs_bucket is empty, audio export is disabled.
+	// If audio export is enabled, audio is recorded and saved to
+	// audio_export_settings.gcs_bucket, subject to retention policy of
+	// audio_export_settings.gcs_bucket. This setting won't effect audio
+	// input for implicit sessions via Sessions.DetectIntent or
+	// Sessions.StreamingDetectIntent.
+	AudioExportSettings *GoogleCloudDialogflowCxV3SecuritySettingsAudioExportSettings `json:"audioExportSettings,omitempty"`
+
 	// DeidentifyTemplate: DLP (https://cloud.google.com/dlp/docs)
 	// deidentify template name. Use this template to define
 	// de-identification configuration for the content. The `DLP De-identify
@@ -6212,7 +6224,7 @@ type GoogleCloudDialogflowCxV3SecuritySettings struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DeidentifyTemplate")
+	// ForceSendFields is a list of field names (e.g. "AudioExportSettings")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6220,7 +6232,7 @@ type GoogleCloudDialogflowCxV3SecuritySettings struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DeidentifyTemplate") to
+	// NullFields is a list of field names (e.g. "AudioExportSettings") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -6232,6 +6244,54 @@ type GoogleCloudDialogflowCxV3SecuritySettings struct {
 
 func (s *GoogleCloudDialogflowCxV3SecuritySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3SecuritySettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3SecuritySettingsAudioExportSettings:
+// Settings for exporting audio.
+type GoogleCloudDialogflowCxV3SecuritySettingsAudioExportSettings struct {
+	// AudioExportPattern: Filename pattern for exported audio.
+	AudioExportPattern string `json:"audioExportPattern,omitempty"`
+
+	// AudioFormat: File format for exported audio file. Currently only in
+	// telephony recordings.
+	//
+	// Possible values:
+	//   "AUDIO_FORMAT_UNSPECIFIED" - Unspecified. Do not use.
+	//   "MULAW" - G.711 mu-law PCM with 8kHz sample rate.
+	//   "MP3" - MP3 file format.
+	//   "OGG" - OGG Vorbis.
+	AudioFormat string `json:"audioFormat,omitempty"`
+
+	// EnableAudioRedaction: Enable audio redaction if it is true.
+	EnableAudioRedaction bool `json:"enableAudioRedaction,omitempty"`
+
+	// GcsBucket: Cloud Storage bucket to export audio record to. You need
+	// to grant `service-@gcp-sa-dialogflow.iam.gserviceaccount.com` the
+	// `Storage Object Admin` role in this bucket.
+	GcsBucket string `json:"gcsBucket,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AudioExportPattern")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AudioExportPattern") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3SecuritySettingsAudioExportSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3SecuritySettingsAudioExportSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

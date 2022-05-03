@@ -241,8 +241,8 @@ type ActivatePretargetingConfigRequest struct {
 type AdTechnologyProviders struct {
 	// DetectedGvlIds: The detected IAB Global Vendor List (GVL) IDs for
 	// this creative. See the IAB Global Vendor List at
-	// https://vendorlist.consensu.org/v2/vendor-list.json for details about
-	// the vendors.
+	// https://vendor-list.consensu.org/v2/vendor-list.json for details
+	// about the vendors.
 	DetectedGvlIds googleapi.Int64s `json:"detectedGvlIds,omitempty"`
 
 	// DetectedProviderIds: The detected Google Ad Tech Providers (ATP)

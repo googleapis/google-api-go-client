@@ -4335,12 +4335,12 @@ func (s *DateTime) MarshalJSON() ([]byte, error) {
 }
 
 // DeliveryArea: A delivery area for the product. Only one of
-// administrativeAreaCode or postalCodeRange must be set.
+// `countryCode` or `postalCodeRange` must be set.
 type DeliveryArea struct {
 	// CountryCode: Required. The country that the product can be delivered
-	// to. Submit an unicode CLDR region
+	// to. Submit a unicode CLDR region
 	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml)
-	// such as US or CH.
+	// such as `US` or `CH`.
 	CountryCode string `json:"countryCode,omitempty"`
 
 	// PostalCodeRange: A postal code, postal code range or postal code
@@ -4353,7 +4353,7 @@ type DeliveryArea struct {
 	// (https://en.wikipedia.org/wiki/ISO_3166-2:US), AU
 	// (https://en.wikipedia.org/wiki/ISO_3166-2:AU), or JP
 	// (https://en.wikipedia.org/wiki/ISO_3166-2:JP)) without country prefix
-	// (for example, NY, NSW, 03).
+	// (for example, "NY", "NSW", "03").
 	RegionCode string `json:"regionCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CountryCode") to
@@ -4380,7 +4380,7 @@ func (s *DeliveryArea) MarshalJSON() ([]byte, error) {
 }
 
 // DeliveryAreaPostalCodeRange: A range of postal codes that defines the
-// delivery area. Only set firstPostalCode when specifying a single
+// delivery area. Only set `firstPostalCode` when specifying a single
 // postal code.
 type DeliveryAreaPostalCodeRange struct {
 	// FirstPostalCode: Required. A postal code or a pattern of the form
@@ -4391,11 +4391,11 @@ type DeliveryAreaPostalCodeRange struct {
 	// LastPostalCode: A postal code or a pattern of the form prefix*
 	// denoting the inclusive upper bound of the range defining the area
 	// (for example [070* - 078*] results in the range [07000 - 07899]). It
-	// must have the same length as firstPostalCode: if firstPostalCode is a
-	// postal code then lastPostalCode must be a postal code too; if
-	// firstPostalCode is a pattern then lastPostalCode must be a pattern
+	// must have the same length as `firstPostalCode`: if `firstPostalCode`
+	// is a postal code then `lastPostalCode` must be a postal code too; if
+	// firstPostalCode is a pattern then `lastPostalCode` must be a pattern
 	// with the same prefix length. Ignored if not set, then the area is
-	// defined as being all the postal codes matching firstPostalCode.
+	// defined as being all the postal codes matching `firstPostalCode`.
 	LastPostalCode string `json:"lastPostalCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FirstPostalCode") to
@@ -12165,6 +12165,10 @@ type Product struct {
 	// Pattern: The item's pattern (for example, polka dots).
 	Pattern string `json:"pattern,omitempty"`
 
+	// Pause: Publication of this item should be temporarily paused.
+	// Acceptable values are: - "ads"
+	Pause string `json:"pause,omitempty"`
+
 	// PickupMethod: The pick up option for the item. Acceptable values are:
 	// - "buy" - "reserve" - "ship to store" - "not supported"
 	PickupMethod string `json:"pickupMethod,omitempty"`
@@ -12366,18 +12370,19 @@ func (s *ProductAmount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ProductDeliveryTime: The estimated days to deliver for this product.
-// These methods are intended for authorized partners working with a
-// merchant. Merchants should use the product API
+// ProductDeliveryTime: The estimated days to deliver a product after an
+// order is placed. Only authorized shipping signals partners working
+// with a merchant can use this resource. Merchants should use the
+// `products`
 // (https://developers.google.com/shopping-content/reference/rest/v2.1/products#productshipping)
-// instead. To obtain authorization from a merchant refer to
+// resource instead.
 type ProductDeliveryTime struct {
 	// AreaDeliveryTimes: Required. A set of associations between
-	// DeliveryAreas and DeliveryTimes. The total number of
-	// areaDeliveryTimes can be at most 100.
+	// `DeliveryArea` and `DeliveryTime` entries. The total number of
+	// `areaDeliveryTimes` can be at most 100.
 	AreaDeliveryTimes []*ProductDeliveryTimeAreaDeliveryTime `json:"areaDeliveryTimes,omitempty"`
 
-	// ProductId: Required. The id of the product.
+	// ProductId: Required. The `id` of the product.
 	ProductId *ProductId `json:"productId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -12408,15 +12413,15 @@ func (s *ProductDeliveryTime) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ProductDeliveryTimeAreaDeliveryTime: A pairing of DeliveryArea
-// associated with a DeliveryTime for this product.
+// ProductDeliveryTimeAreaDeliveryTime: A pairing of `DeliveryArea`
+// associated with a `DeliveryTime` for this product.
 type ProductDeliveryTimeAreaDeliveryTime struct {
 	// DeliveryArea: Required. The delivery area associated with
-	// deliveryTime for this product.
+	// `deliveryTime` for this product.
 	DeliveryArea *DeliveryArea `json:"deliveryArea,omitempty"`
 
 	// DeliveryTime: Required. The delivery time associated with
-	// deliveryArea for this product.
+	// `deliveryArea` for this product.
 	DeliveryTime *ProductDeliveryTimeAreaDeliveryTimeDeliveryTime `json:"deliveryTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeliveryArea") to
@@ -12538,7 +12543,7 @@ func (s *ProductDimension) UnmarshalJSON(data []byte) error {
 // ProductId: The Content API ID of the product.
 type ProductId struct {
 	// ProductId: The Content API ID of the product, in the form
-	// channel:contentLanguage:targetCountry:offerId.
+	// `channel:contentLanguage:targetCountry:offerId`.
 	ProductId string `json:"productId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProductId") to
@@ -13601,7 +13606,7 @@ type Promotion struct {
 	// Id: Required. Output only. The REST promotion id to uniquely identify
 	// the promotion. Content API methods that operate on promotions take
 	// this as their promotionId parameter. The REST ID for a promotion is
-	// of the form channel:contentLanguage:targetCountry:promotionId The
+	// of the form [channel]:contentLanguage:targetCountry:promotionId The
 	// channel field will have a value of "online", "in_store", or
 	// "online_in_store".
 	Id string `json:"id,omitempty"`
@@ -36251,7 +36256,7 @@ type ProductdeliverytimeDeleteCall struct {
 // - merchantId: The Google merchant ID of the account that contains the
 //   product. This account cannot be a multi-client account.
 // - productId: The Content API ID of the product, in the form
-//   channel:contentLanguage:targetCountry:offerId.
+//   `channel:contentLanguage:targetCountry:offerId`.
 func (r *ProductdeliverytimeService) Delete(merchantId int64, productId string) *ProductdeliverytimeDeleteCall {
 	c := &ProductdeliverytimeDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36338,7 +36343,7 @@ func (c *ProductdeliverytimeDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "Required. The Content API ID of the product, in the form channel:contentLanguage:targetCountry:offerId.",
+	//       "description": "Required. The Content API ID of the product, in the form `channel:contentLanguage:targetCountry:offerId`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -36364,12 +36369,12 @@ type ProductdeliverytimeGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets productDeliveryTime by productId
+// Get: Gets `productDeliveryTime` by `productId`.
 //
 // - merchantId: The Google merchant ID of the account that contains the
 //   product. This account cannot be a multi-client account.
 // - productId: The Content API ID of the product, in the form
-//   channel:contentLanguage:targetCountry:offerId.
+//   `channel:contentLanguage:targetCountry:offerId`.
 func (r *ProductdeliverytimeService) Get(merchantId int64, productId string) *ProductdeliverytimeGetCall {
 	c := &ProductdeliverytimeGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36477,7 +36482,7 @@ func (c *ProductdeliverytimeGetCall) Do(opts ...googleapi.CallOption) (*ProductD
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets productDeliveryTime by productId",
+	//   "description": "Gets `productDeliveryTime` by `productId`.",
 	//   "flatPath": "{merchantId}/productdeliverytime/{productId}",
 	//   "httpMethod": "GET",
 	//   "id": "content.productdeliverytime.get",
@@ -36494,7 +36499,7 @@ func (c *ProductdeliverytimeGetCall) Do(opts ...googleapi.CallOption) (*ProductD
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "Required. The Content API ID of the product, in the form channel:contentLanguage:targetCountry:offerId.",
+	//       "description": "Required. The Content API ID of the product, in the form `channel:contentLanguage:targetCountry:offerId`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

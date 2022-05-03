@@ -446,6 +446,90 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Extension) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest struct {
+	// Filter: Optional. Specifies the filters for the promotion results.
+	// The syntax defined in the EBNF grammar:
+	// https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will
+	// be thrown if any specified parameter is not supported. Currently, it
+	// can only be used by Youtube partners. Allowed parameters are: -
+	// regionCodes - zipCode - eligibilityId - applicableProducts Multiple
+	// parameters can be specified, for example: "regionCodes=US
+	// zipCode=94043 eligibilityId=2022H1Campaign", or
+	// "applicableProducts=partners/p1/products/product2"
+	Filter string `json:"filter,omitempty"`
+
+	// PageSize: Optional. The maximum number of promotions to return. The
+	// service may return fewer than this value. If unspecified, at most 50
+	// products will be returned. The maximum value is 1000; values above
+	// 1000 will be coerced to 1000.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Optional. A page token, received from a previous
+	// `ListPromotions` call. Provide this to retrieve the subsequent page.
+	// When paginating, all other parameters provided to `ListPromotions`
+	// must match the call that provided the page token.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRespons
+// e: Response containing the found promotions for the current user.
+type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Promotions: The promotions for the current user.
+	Promotions []*GoogleCloudPaymentsResellerSubscriptionV1Promotion `json:"promotions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve
 	// the next page. If this field is empty, there are no subsequent pages.
@@ -1034,15 +1118,27 @@ type PartnersProductsListCall struct {
 	header_      http.Header
 }
 
-// List: Used by partners to list products that can be resold to their
-// customers. It should be called directly by the partner using service
-// accounts.
+// List: To retrieve the products that can be resold by the partner. It
+// should be autenticated with a service account.
 //
 // - parent: The parent, the partner that can resell. Format:
 //   partners/{partner}.
 func (r *PartnersProductsService) List(parent string) *PartnersProductsListCall {
 	c := &PartnersProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Specifies the filters
+// for the products results. The syntax defined in the EBNF grammar:
+// https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will
+// be thrown if any specified parameter is not supported. Currently, it
+// can only be used by Youtube partners. Allowed parameters are: -
+// regionCodes - zipCode - eligibilityId Multiple parameters can be
+// specified, for example: "regionCodes=US zipCode=94043
+// eligibilityId=2022H1Campaign"
+func (c *PartnersProductsListCall) Filter(filter string) *PartnersProductsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -1167,7 +1263,7 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	}
 	return ret, nil
 	// {
-	//   "description": "Used by partners to list products that can be resold to their customers. It should be called directly by the partner using service accounts.",
+	//   "description": "To retrieve the products that can be resold by the partner. It should be autenticated with a service account.",
 	//   "flatPath": "v1/partners/{partnersId}/products",
 	//   "httpMethod": "GET",
 	//   "id": "paymentsresellersubscription.partners.products.list",
@@ -1175,6 +1271,11 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Specifies the filters for the products results. The syntax defined in the EBNF grammar: https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will be thrown if any specified parameter is not supported. Currently, it can only be used by Youtube partners. Allowed parameters are: - regionCodes - zipCode - eligibilityId Multiple parameters can be specified, for example: \"regionCodes=US zipCode=94043 eligibilityId=2022H1Campaign\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The maximum number of products to return. The service may return fewer than this value. If unspecified, at most 50 products will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
 	//       "format": "int32",
@@ -1223,6 +1324,174 @@ func (c *PartnersProductsListCall) Pages(ctx context.Context, f func(*GoogleClou
 	}
 }
 
+// method id "paymentsresellersubscription.partners.promotions.findEligible":
+
+type PartnersPromotionsFindEligibleCall struct {
+	s                                                                      *Service
+	parent                                                                 string
+	googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
+	urlParams_                                                             gensupport.URLParams
+	ctx_                                                                   context.Context
+	header_                                                                http.Header
+}
+
+// FindEligible: To find eligible promotions for the current user. The
+// API requires user authorization via OAuth. The user is inferred from
+// the authenticated OAuth credential.
+//
+// - parent: The parent, the partner that can resell. Format:
+//   partners/{partner}.
+func (r *PartnersPromotionsService) FindEligible(parent string, googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest) *PartnersPromotionsFindEligibleCall {
+	c := &PartnersPromotionsFindEligibleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest = googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersPromotionsFindEligibleCall) Fields(s ...googleapi.Field) *PartnersPromotionsFindEligibleCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersPromotionsFindEligibleCall) Context(ctx context.Context) *PartnersPromotionsFindEligibleCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersPromotionsFindEligibleCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersPromotionsFindEligibleCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/promotions:findEligible")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "paymentsresellersubscription.partners.promotions.findEligible" call.
+// Exactly one of
+// *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRespon
+// se or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRespon
+// se.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "To find eligible promotions for the current user. The API requires user authorization via OAuth. The user is inferred from the authenticated OAuth credential.",
+	//   "flatPath": "v1/partners/{partnersId}/promotions:findEligible",
+	//   "httpMethod": "POST",
+	//   "id": "paymentsresellersubscription.partners.promotions.findEligible",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent, the partner that can resell. Format: partners/{partner}",
+	//       "location": "path",
+	//       "pattern": "^partners/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/promotions:findEligible",
+	//   "request": {
+	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PartnersPromotionsFindEligibleCall) Pages(ctx context.Context, f func(*GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) {
+		c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest.PageToken = pt
+	}(c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "paymentsresellersubscription.partners.promotions.list":
 
 type PartnersPromotionsListCall struct {
@@ -1234,9 +1503,9 @@ type PartnersPromotionsListCall struct {
 	header_      http.Header
 }
 
-// List: Used by partners to list promotions, such as free trial, that
-// can be applied on subscriptions. It should be called directly by the
-// partner using service accounts.
+// List: To retrieve the promotions, such as free trial, that can be
+// used by the partner. It should be autenticated with a service
+// account.
 //
 // - parent: The parent, the partner that can resell. Format:
 //   partners/{partner}.
@@ -1248,9 +1517,12 @@ func (r *PartnersPromotionsService) List(parent string) *PartnersPromotionsListC
 
 // Filter sets the optional parameter "filter": Specifies the filters
 // for the promotion results. The syntax defined in the EBNF grammar:
-// https://google.aip.dev/assets/misc/ebnf-filtering.txt. Examples: -
-// applicable_products: "sku1" - region_codes: "US" -
-// applicable_products: "sku1" AND region_codes: "US"
+// https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will
+// be thrown if the specified parameter(s) is not supported. Currently,
+// it can only be used by Youtube partners. Allowed parameters are: -
+// region_codes: "US" - zip_code: "94043" - eligibility_id:
+// "2022H1Campaign" Multiple parameters can be specified, for example:
+// "region_codes=US zip_code=94043 eligibility_id=2022H1Campaign"
 func (c *PartnersPromotionsListCall) Filter(filter string) *PartnersPromotionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1377,7 +1649,7 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	}
 	return ret, nil
 	// {
-	//   "description": "Used by partners to list promotions, such as free trial, that can be applied on subscriptions. It should be called directly by the partner using service accounts.",
+	//   "description": "To retrieve the promotions, such as free trial, that can be used by the partner. It should be autenticated with a service account.",
 	//   "flatPath": "v1/partners/{partnersId}/promotions",
 	//   "httpMethod": "GET",
 	//   "id": "paymentsresellersubscription.partners.promotions.list",
@@ -1386,7 +1658,7 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the filters for the promotion results. The syntax defined in the EBNF grammar: https://google.aip.dev/assets/misc/ebnf-filtering.txt. Examples: - applicable_products: \"sku1\" - region_codes: \"US\" - applicable_products: \"sku1\" AND region_codes: \"US\"",
+	//       "description": "Optional. Specifies the filters for the promotion results. The syntax defined in the EBNF grammar: https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will be thrown if the specified parameter(s) is not supported. Currently, it can only be used by Youtube partners. Allowed parameters are: - region_codes: \"US\" - zip_code: \"94043\" - eligibility_id: \"2022H1Campaign\" Multiple parameters can be specified, for example: \"region_codes=US zip_code=94043 eligibility_id=2022H1Campaign\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -2256,9 +2256,9 @@ type Step struct {
 	// Abort: Display information of the final state "abort" and reason.
 	Abort *AbortInfo `json:"abort,omitempty"`
 
-	// AppEngineVersionInfo: Display information of an App Engine service
+	// AppEngineVersion: Display information of an App Engine service
 	// version.
-	AppEngineVersionInfo *AppEngineVersionInfo `json:"appEngineVersionInfo,omitempty"`
+	AppEngineVersion *AppEngineVersionInfo `json:"appEngineVersion,omitempty"`
 
 	// CausesDrop: This is a step that leads to the final state Drop.
 	CausesDrop bool `json:"causesDrop,omitempty"`

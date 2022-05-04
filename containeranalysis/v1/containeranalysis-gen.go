@@ -729,10 +729,8 @@ func (s *BuilderConfig) MarshalJSON() ([]byte, error) {
 
 // CVSS: Common Vulnerability Scoring System. For details, see
 // https://www.first.org/cvss/specification-document This is a message
-// we will try to use for storing multiple versions of CVSS. The
-// intention is that as new versions of CVSS scores get added, we will
-// be able to modify this message rather than adding new protos for each
-// new version of the score.
+// we will try to use for storing various versions of CVSS rather than
+// making a separate proto for storing a specific version.
 type CVSS struct {
 	// Possible values:
 	//   "ATTACK_COMPLEXITY_UNSPECIFIED"
@@ -3508,6 +3506,37 @@ func (s *GoogleDevtoolsContaineranalysisV1alpha1OperationMetadata) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GrafeasV1FileLocation: Indicates the location at which a package was
+// found.
+type GrafeasV1FileLocation struct {
+	// FilePath: For jars that are contained inside .war files, this
+	// filepath can indicate the path to war file combined with the path to
+	// jar file.
+	FilePath string `json:"filePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilePath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilePath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GrafeasV1FileLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GrafeasV1FileLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Hash: Container message for hash values.
 type Hash struct {
 	// Type: Required. The type of hash that was performed, e.g. "SHA-256".
@@ -4371,6 +4400,9 @@ type PackageIssue struct {
 	//   "HIGH" - High severity.
 	//   "CRITICAL" - Critical severity.
 	EffectiveSeverity string `json:"effectiveSeverity,omitempty"`
+
+	// FileLocation: The location at which this package was found.
+	FileLocation []*GrafeasV1FileLocation `json:"fileLocation,omitempty"`
 
 	// FixAvailable: Output only. Whether a fix is available for this
 	// package.

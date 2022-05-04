@@ -2667,7 +2667,7 @@ type ProductPurchase struct {
 	// product.
 	OrderId string `json:"orderId,omitempty"`
 
-	// ProductId: The inapp product SKU.
+	// ProductId: The inapp product SKU. May not be present.
 	ProductId string `json:"productId,omitempty"`
 
 	// PurchaseState: The purchase state of the order. Possible values are:
@@ -2679,7 +2679,7 @@ type ProductPurchase struct {
 	PurchaseTimeMillis int64 `json:"purchaseTimeMillis,omitempty,string"`
 
 	// PurchaseToken: The purchase token generated to identify this
-	// purchase.
+	// purchase. May not be present.
 	PurchaseToken string `json:"purchaseToken,omitempty"`
 
 	// PurchaseType: The type of purchase of the inapp product. This field
@@ -2690,7 +2690,7 @@ type ProductPurchase struct {
 	PurchaseType *int64 `json:"purchaseType,omitempty"`
 
 	// Quantity: The quantity associated with the purchase of the inapp
-	// product.
+	// product. If not present, the quantity is 1.
 	Quantity int64 `json:"quantity,omitempty"`
 
 	// RegionCode: ISO 3166-1 alpha-2 billing region code of the user at the

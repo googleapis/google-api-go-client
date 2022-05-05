@@ -488,7 +488,7 @@
       }
     }
   },
-  "revision": "20220428",
+  "revision": "20220503",
   "rootUrl": "https://chromemanagement.googleapis.com/",
   "schemas": {
     "GoogleChromeManagementV1AndroidAppInfo": {
@@ -1713,7 +1713,7 @@
       "id": "GoogleChromeManagementV1StorageStatusReport",
       "properties": {
         "disk": {
-          "description": "Output only. Reports on disk",
+          "description": "Output only. Reports on disk.",
           "items": {
             "$ref": "GoogleChromeManagementV1DiskInfo"
           },

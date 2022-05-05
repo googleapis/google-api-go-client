@@ -1758,7 +1758,7 @@ func (s *GoogleChromeManagementV1StorageInfoDiskVolume) MarshalJSON() ([]byte, e
 
 // GoogleChromeManagementV1StorageStatusReport: Status data for storage.
 type GoogleChromeManagementV1StorageStatusReport struct {
-	// Disk: Output only. Reports on disk
+	// Disk: Output only. Reports on disk.
 	Disk []*GoogleChromeManagementV1DiskInfo `json:"disk,omitempty"`
 
 	// ReportTime: Output only. Timestamp of when the sample was collected

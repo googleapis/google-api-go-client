@@ -838,6 +838,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// the same as createTime if no free trial promotion is specified.
 	FreeTrialEndTime string `json:"freeTrialEndTime,omitempty"`
 
+	// LineItems: Required. The line items of the subscription.
+	LineItems []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem `json:"lineItems,omitempty"`
+
 	// Name: Output only. Response only. Resource name of the subscription.
 	// It will have the format of
 	// "partners/{partner_id}/subscriptions/{subscription_id}"
@@ -861,15 +864,23 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	//   "PROCESSING_STATE_RECURRING" - The subscription is recurring.
 	ProcessingState string `json:"processingState,omitempty"`
 
-	// Products: Required. Required. Resource name that identifies the
-	// purchased products. The format will be
+	// Products: Required. Deprecated: consider using `line_items` as the
+	// input. Required. Resource name that identifies the purchased
+	// products. The format will be
 	// 'partners/{partner_id}/products/{product_id}'.
 	Products []string `json:"products,omitempty"`
 
-	// Promotions: Optional. Optional. Resource name that identifies one or
-	// more promotions that can be applied on the product. A typical
-	// promotion for a subscription is Free trial. The format will be
-	// 'partners/{partner_id}/promotions/{promotion_id}'.
+	// PromotionSpecs: Optional. Subscription-level promotions. Only free
+	// trial is supported on this level. It determines the first renewal
+	// time of the subscription to be the end of the free trial period.
+	// Specify the promotion resource name only when used as input.
+	PromotionSpecs []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec `json:"promotionSpecs,omitempty"`
+
+	// Promotions: Optional. Deprecated: consider using the top-level
+	// `promotion_specs` as the input. Optional. Resource name that
+	// identifies one or more promotions that can be applied on the product.
+	// A typical promotion for a subscription is Free trial. The format will
+	// be 'partners/{partner_id}/promotions/{promotion_id}'.
 	Promotions []string `json:"promotions,omitempty"`
 
 	// RedirectUri: Output only. The place where partners should redirect
@@ -984,6 +995,118 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails st
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem:
+// Individual line item definition of a subscription. Next id: 5
+type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
+	// LineItemFreeTrialEndTime: Output only. It is set only if the line
+	// item has its own free trial applied. End time of the line item free
+	// trial period, in ISO 8061 format. For example,
+	// "2019-08-31T17:28:54.564Z". It will be set the same as createTime if
+	// no free trial promotion is specified.
+	LineItemFreeTrialEndTime string `json:"lineItemFreeTrialEndTime,omitempty"`
+
+	// LineItemPromotionSpecs: Optional. The promotions applied on the line
+	// item. It can be: - a free trial promotion, which overrides the
+	// subscription-level free trial promotion. - an introductory pricing
+	// promotion. When used as input in Create or Provision API, specify its
+	// resource name only.
+	LineItemPromotionSpecs []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec `json:"lineItemPromotionSpecs,omitempty"`
+
+	// Product: Required. Product resource name that identifies one the line
+	// item The format is 'partners/{partner_id}/products/{product_id}'.
+	Product string `json:"product,omitempty"`
+
+	// State: Output only. The state of the line item.
+	//
+	// Possible values:
+	//   "LINE_ITEM_STATE_UNSPECIFIED" - Unspecified state.
+	//   "LINE_ITEM_STATE_ACTIVE" - The line item is in ACTIVE state.
+	//   "LINE_ITEM_STATE_INACTIVE" - The line item is in INACTIVE state.
+	//   "LINE_ITEM_STATE_NEW" - The line item is new, and is not activated
+	// or charged yet.
+	//   "LINE_ITEM_STATE_ACTIVATING" - The line item is being activated in
+	// order to be charged. If a free trial applies to the line item, the
+	// line item is pending a prorated charge at the end of the free trial
+	// period, as indicated by `line_item_free_trial_end_time`.
+	//   "LINE_ITEM_STATE_DEACTIVATING" - The line item is being
+	// deactivated.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LineItemFreeTrialEndTime") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LineItemFreeTrialEndTime")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec:
+// Describes the spec for one promotion.
+type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec struct {
+	// FreeTrialDuration: Output only. The duration of the free trial if the
+	// promotion is of type FREE_TRIAL.
+	FreeTrialDuration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"freeTrialDuration,omitempty"`
+
+	// IntroductoryPricingDetails: Output only. The details of the
+	// introductory pricing spec if the promotion is of type
+	// INTRODUCTORY_PRICING.
+	IntroductoryPricingDetails *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails `json:"introductoryPricingDetails,omitempty"`
+
+	// Promotion: Required. Promotion resource name that identifies a
+	// promotion. The format is
+	// 'partners/{partner_id}/promotions/{promotion_id}'.
+	Promotion string `json:"promotion,omitempty"`
+
+	// Type: Output only. The type of the promotion for the spec.
+	//
+	// Possible values:
+	//   "PROMOTION_TYPE_UNSPECIFIED" - The promotion type is unspecified.
+	//   "PROMOTION_TYPE_FREE_TRIAL" - The promotion is a free trial.
+	//   "PROMOTION_TYPE_INTRODUCTORY_PRICING" - The promotion is a reduced
+	// introductory pricing.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FreeTrialDuration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FreeTrialDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -633,6 +633,42 @@ func (s *ExecAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GRPCAction: Not supported by Cloud Run GRPCAction describes an action
+// involving a GRPC port.
+type GRPCAction struct {
+	// Port: Port number of the gRPC service. Number must be in the range 1
+	// to 65535.
+	Port int64 `json:"port,omitempty"`
+
+	// Service: Service is the name of the service to place in the gRPC
+	// HealthCheckRequest (see
+	// https://github.com/grpc/grpc/blob/master/doc/health-checking.md). If
+	// this is not specified, the default behavior is defined by gRPC.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Port") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Port") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GRPCAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GRPCAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
 // APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -1614,6 +1650,10 @@ type Probe struct {
 	// probe to be considered failed after having succeeded. Defaults to 3.
 	// Minimum value is 1.
 	FailureThreshold int64 `json:"failureThreshold,omitempty"`
+
+	// Grpc: (Optional) GRPCAction specifies an action involving a GRPC
+	// port. A field inlined from the Handler message.
+	Grpc *GRPCAction `json:"grpc,omitempty"`
 
 	// HttpGet: (Optional) HTTPGet specifies the http request to perform. A
 	// field inlined from the Handler message.

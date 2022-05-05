@@ -7517,6 +7517,12 @@ type GoogleCloudDialogflowV2AnalyzeContentRequest struct {
 	// AssistQueryParams: Parameters for a human assist query.
 	AssistQueryParams *GoogleCloudDialogflowV2AssistQueryParameters `json:"assistQueryParams,omitempty"`
 
+	// CxParameters: Additional parameters to be put into Dialogflow CX
+	// session parameters. To remove a parameter from the session, clients
+	// should explicitly set the parameter value to null. Note: this field
+	// should only be used if you are connecting to a Dialogflow CX agent.
+	CxParameters googleapi.RawMessage `json:"cxParameters,omitempty"`
+
 	// EventInput: An input event to send to Dialogflow.
 	EventInput *GoogleCloudDialogflowV2EventInput `json:"eventInput,omitempty"`
 

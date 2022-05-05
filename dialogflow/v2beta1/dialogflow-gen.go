@@ -11018,6 +11018,12 @@ type GoogleCloudDialogflowV2beta1AnalyzeContentRequest struct {
 	// AssistQueryParams: Parameters for a human assist query.
 	AssistQueryParams *GoogleCloudDialogflowV2beta1AssistQueryParameters `json:"assistQueryParams,omitempty"`
 
+	// CxParameters: Additional parameters to be put into Dialogflow CX
+	// session parameters. To remove a parameter from the session, clients
+	// should explicitly set the parameter value to null. Note: this field
+	// should only be used if you are connecting to a Dialogflow CX agent.
+	CxParameters googleapi.RawMessage `json:"cxParameters,omitempty"`
+
 	// EventInput: An input event to send to Dialogflow.
 	EventInput *GoogleCloudDialogflowV2beta1EventInput `json:"eventInput,omitempty"`
 
@@ -17991,6 +17997,11 @@ type GoogleCloudDialogflowV2beta1ResponseMessage struct {
 	// LiveAgentHandoff: Hands off conversation to a live agent.
 	LiveAgentHandoff *GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff `json:"liveAgentHandoff,omitempty"`
 
+	// MixedAudio: An audio response message composed of both the
+	// synthesized Dialogflow agent responses and the audios hosted in
+	// places known to the client.
+	MixedAudio *GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio `json:"mixedAudio,omitempty"`
+
 	// Payload: Returns a response containing a custom, platform-specific
 	// payload.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
@@ -18064,6 +18075,78 @@ type GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff struct {
 
 func (s *GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio: Represents an
+// audio message that is composed of both segments synthesized from the
+// Dialogflow agent prompts and ones hosted externally at the specified
+// URIs.
+type GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio struct {
+	// Segments: Segments this audio response is composed of.
+	Segments []*GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment `json:"segments,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Segments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Segments") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment:
+// Represents one segment of audio.
+type GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment struct {
+	// AllowPlaybackInterruption: Whether the playback of this segment can
+	// be interrupted by the end user's speech and the client should then
+	// start the next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+
+	// Audio: Raw audio synthesized from the Dialogflow agent's response
+	// using the output config specified in the request.
+	Audio string `json:"audio,omitempty"`
+
+	// Uri: Client-specific URI that points to an audio clip accessible to
+	// the client.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

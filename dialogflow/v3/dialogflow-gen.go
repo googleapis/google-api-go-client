@@ -5259,8 +5259,18 @@ type GoogleCloudDialogflowCxV3QueryResult struct {
 	CurrentPage *GoogleCloudDialogflowCxV3Page `json:"currentPage,omitempty"`
 
 	// DiagnosticInfo: The free-form diagnostic info. For example, this
-	// field could contain webhook call latency. The string keys of the
-	// Struct's fields map can change without notice.
+	// field could contain webhook call latency. The fields of this data can
+	// change without notice, so you should not write code that depends on
+	// its structure. One of the fields is called "Alternative Matched
+	// Intents", which may aid with debugging. The following describes these
+	// intent results: - The list is empty if no intent was matched to
+	// end-user input. - Only intents that are referenced in the currently
+	// active flow are included. - The matched intent is included. - Other
+	// intents that could have matched end-user input, but did not match
+	// because they are referenced by intent routes that are out of scope
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/handler#scope),
+	// are included. - Other intents referenced by intent routes in scope
+	// that matched end-user input, but had a lower confidence score.
 	DiagnosticInfo googleapi.RawMessage `json:"diagnosticInfo,omitempty"`
 
 	// Dtmf: If a DTMF was provided as input, this field will contain a copy

@@ -1710,9 +1710,6 @@ type Operation struct {
 	// used in ServiceController.Check.
 	EndTime string `json:"endTime,omitempty"`
 
-	// Extensions: Unimplemented.
-	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
-
 	// Importance: DO NOT USE. This is an experimental field.
 	//
 	// Possible values:

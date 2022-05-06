@@ -332,7 +332,7 @@ func (s *AptArtifact) MarshalJSON() ([]byte, error) {
 // multiple versions.
 type BatchDeleteVersionsMetadata struct {
 	// FailedVersions: The versions the operation failed to delete.
-	FailedVersions []*Version `json:"failedVersions,omitempty"`
+	FailedVersions []string `json:"failedVersions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FailedVersions") to
 	// unconditionally include in API requests. By default, fields with

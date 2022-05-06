@@ -385,8 +385,8 @@ func (s *ApiOperation) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -2703,8 +2703,9 @@ type AccessPoliciesGetIamPolicyCall struct {
 // Manager access policy.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *AccessPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *AccessPoliciesGetIamPolicyCall {
 	c := &AccessPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2812,7 +2813,7 @@ func (c *AccessPoliciesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -3199,8 +3200,9 @@ type AccessPoliciesSetIamPolicyCall struct {
 // policy.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *AccessPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *AccessPoliciesSetIamPolicyCall {
 	c := &AccessPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3308,7 +3310,7 @@ func (c *AccessPoliciesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -3346,7 +3348,8 @@ type AccessPoliciesTestIamPermissionsCall struct {
 // not support other resources.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *AccessPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *AccessPoliciesTestIamPermissionsCall {
 	c := &AccessPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3455,7 +3458,7 @@ func (c *AccessPoliciesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -4497,7 +4500,8 @@ type AccessPoliciesAccessLevelsTestIamPermissionsCall struct {
 // not support other resources.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *AccessPoliciesAccessLevelsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *AccessPoliciesAccessLevelsTestIamPermissionsCall {
 	c := &AccessPoliciesAccessLevelsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4606,7 +4610,7 @@ func (c *AccessPoliciesAccessLevelsTestIamPermissionsCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+/accessLevels/[^/]+$",
 	//       "required": true,
@@ -5738,7 +5742,8 @@ type AccessPoliciesServicePerimetersTestIamPermissionsCall struct {
 // not support other resources.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *AccessPoliciesServicePerimetersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *AccessPoliciesServicePerimetersTestIamPermissionsCall {
 	c := &AccessPoliciesServicePerimetersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5847,7 +5852,7 @@ func (c *AccessPoliciesServicePerimetersTestIamPermissionsCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+/servicePerimeters/[^/]+$",
 	//       "required": true,

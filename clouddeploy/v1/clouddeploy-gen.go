@@ -300,8 +300,8 @@ type ApproveRolloutResponse struct {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -765,6 +765,11 @@ type ExecutionConfig struct {
 
 	// DefaultPool: Optional. Use default Cloud Build pool.
 	DefaultPool *DefaultPool `json:"defaultPool,omitempty"`
+
+	// ExecutionTimeout: Optional. Execution timeout for a Cloud Build
+	// Execution. This must be between 10m and 24h in seconds format. If
+	// unspecified, a default timeout of 1h is used.
+	ExecutionTimeout string `json:"executionTimeout,omitempty"`
 
 	// PrivatePool: Optional. Use private Cloud Build pool.
 	PrivatePool *PrivatePool `json:"privatePool,omitempty"`

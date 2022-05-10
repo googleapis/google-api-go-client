@@ -434,6 +434,31 @@
           "resources": {
             "devices": {
               "methods": {
+                "get": {
+                  "description": "Get telemetry device.",
+                  "flatPath": "v1/customers/{customersId}/telemetry/devices/{devicesId}",
+                  "httpMethod": "GET",
+                  "id": "chromemanagement.customers.telemetry.devices.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the `TelemetryDevice` to return.",
+                      "location": "path",
+                      "pattern": "^customers/[^/]+/telemetry/devices/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GoogleChromeManagementV1TelemetryDevice"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/chrome.management.telemetry.readonly"
+                  ]
+                },
                 "list": {
                   "description": "List all telemetry devices.",
                   "flatPath": "v1/customers/{customersId}/telemetry/devices",
@@ -488,7 +513,7 @@
       }
     }
   },
-  "revision": "20220503",
+  "revision": "20220506",
   "rootUrl": "https://chromemanagement.googleapis.com/",
   "schemas": {
     "GoogleChromeManagementV1AndroidAppInfo": {

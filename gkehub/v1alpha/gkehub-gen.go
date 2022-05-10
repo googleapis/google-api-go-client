@@ -365,8 +365,8 @@ func (s *AppDevExperienceFeatureState) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -2441,6 +2441,9 @@ type IdentityServiceOidcConfig struct {
 	// connect to auth provider. This flag should be set to true when
 	// provider is not reachable by Google Cloud Console.
 	DeployCloudConsoleProxy bool `json:"deployCloudConsoleProxy,omitempty"`
+
+	// EnableAccessToken: Enable access token.
+	EnableAccessToken bool `json:"enableAccessToken,omitempty"`
 
 	// EncryptedClientSecret: Output only. Encrypted OIDC Client secret
 	EncryptedClientSecret string `json:"encryptedClientSecret,omitempty"`

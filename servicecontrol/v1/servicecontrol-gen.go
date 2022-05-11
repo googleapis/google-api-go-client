@@ -2125,8 +2125,6 @@ type QuotaOperation struct {
 	//   "CHECK_ONLY" - For AllocateQuota request, only checks if there is
 	// enough quota available and does not change the available quota. No
 	// lock is placed on the available quota either.
-	//   "QUERY_ONLY" - Deprecated. Please use QueryLimits API to query
-	// quota limits.
 	//   "ADJUST_ONLY" - The operation allocates quota for the amount
 	// specified in the service configuration or specified using the quota
 	// metrics. If the requested amount is higher than the available quota,

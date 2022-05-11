@@ -10576,14 +10576,35 @@ type OrganizationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete an Apigee organization. Only supported for
-// SubscriptionType TRIAL.
+// Delete: Delete an Apigee organization. For organizations with
+// BillingType EVALUATION, an immediate deletion is performed. For paid
+// organizations, a soft-deletion is performed. The organization can be
+// restored within the soft-deletion period - which can be controlled
+// using the retention field in the request.
 //
 // - name: Name of the organization. Use the following structure in your
 //   request: `organizations/{org}`.
 func (r *OrganizationsService) Delete(name string) *OrganizationsDeleteCall {
 	c := &OrganizationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Retention sets the optional parameter "retention": This setting is
+// only applicable for organizations that are soft-deleted (i.e.
+// BillingType is not EVALUATION). It controls how long Organization
+// data will be retained after the initial delete operation completes.
+// During this period, the Organization may be restored to its last
+// known state. After this period, the Organization will no longer be
+// able to be restored.
+//
+// Possible values:
+//   "DELETION_RETENTION_UNSPECIFIED" - Default data retention settings
+// will be applied.
+//   "MINIMUM" - Organization data will be retained for the minimum
+// period of 24 hours.
+func (c *OrganizationsDeleteCall) Retention(retention string) *OrganizationsDeleteCall {
+	c.urlParams_.Set("retention", retention)
 	return c
 }
 
@@ -10673,7 +10694,7 @@ func (c *OrganizationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete an Apigee organization. Only supported for SubscriptionType TRIAL.",
+	//   "description": "Delete an Apigee organization. For organizations with BillingType EVALUATION, an immediate deletion is performed. For paid organizations, a soft-deletion is performed. The organization can be restored within the soft-deletion period - which can be controlled using the retention field in the request.",
 	//   "flatPath": "v1/organizations/{organizationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.delete",
@@ -10686,6 +10707,19 @@ func (c *OrganizationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "retention": {
+	//       "description": "Optional. This setting is only applicable for organizations that are soft-deleted (i.e. BillingType is not EVALUATION). It controls how long Organization data will be retained after the initial delete operation completes. During this period, the Organization may be restored to its last known state. After this period, the Organization will no longer be able to be restored.",
+	//       "enum": [
+	//         "DELETION_RETENTION_UNSPECIFIED",
+	//         "MINIMUM"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default data retention settings will be applied.",
+	//         "Organization data will be retained for the minimum period of 24 hours."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -11772,154 +11806,6 @@ func (c *OrganizationsSetSyncAuthorizationCall) Do(opts ...googleapi.CallOption)
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1SyncAuthorization"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.testIamPermissions":
-
-type OrganizationsTestIamPermissionsCall struct {
-	s                                    *Service
-	resource                             string
-	googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest
-	urlParams_                           gensupport.URLParams
-	ctx_                                 context.Context
-	header_                              http.Header
-}
-
-// TestIamPermissions: Tests the permissions of a user on an
-// organization, and returns a subset of permissions that the user has
-// on the organization. If the organization does not exist, an empty
-// permission set is returned (a NOT_FOUND error is not returned).
-//
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
-//   appropriate value for this field.
-func (r *OrganizationsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *OrganizationsTestIamPermissionsCall {
-	c := &OrganizationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.googleiamv1testiampermissionsrequest = googleiamv1testiampermissionsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsTestIamPermissionsCall) Fields(s ...googleapi.Field) *OrganizationsTestIamPermissionsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsTestIamPermissionsCall) Context(ctx context.Context) *OrganizationsTestIamPermissionsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsTestIamPermissionsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1testiampermissionsrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.testIamPermissions" call.
-// Exactly one of *GoogleIamV1TestIamPermissionsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleIamV1TestIamPermissionsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleIamV1TestIamPermissionsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Tests the permissions of a user on an organization, and returns a subset of permissions that the user has on the organization. If the organization does not exist, an empty permission set is returned (a NOT_FOUND error is not returned).",
-	//   "flatPath": "v1/organizations/{organizationsId}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "apigee.organizations.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^organizations/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "GoogleIamV1TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleIamV1TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -27386,8 +27272,9 @@ type OrganizationsEnvironmentsGetIamPolicyCall struct {
 // call this API.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsEnvironmentsService) GetIamPolicy(resource string) *OrganizationsEnvironmentsGetIamPolicyCall {
 	c := &OrganizationsEnvironmentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -27526,7 +27413,7 @@ func (c *OrganizationsEnvironmentsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -27711,8 +27598,9 @@ type OrganizationsEnvironmentsSetIamPolicyCall struct {
 // call this API.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsEnvironmentsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *OrganizationsEnvironmentsSetIamPolicyCall {
 	c := &OrganizationsEnvironmentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -27820,7 +27708,7 @@ func (c *OrganizationsEnvironmentsSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -27993,7 +27881,8 @@ type OrganizationsEnvironmentsTestIamPermissionsCall struct {
 // permission set is returned (a NOT_FOUND error is not returned).
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *OrganizationsEnvironmentsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *OrganizationsEnvironmentsTestIamPermissionsCall {
 	c := &OrganizationsEnvironmentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -28103,7 +27992,7 @@ func (c *OrganizationsEnvironmentsTestIamPermissionsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,

@@ -569,8 +569,9 @@ type V1beta1GetIamPolicyCall struct {
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *V1beta1Service) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *V1beta1GetIamPolicyCall {
 	c := &V1beta1GetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -678,7 +679,7 @@ func (c *V1beta1GetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,
@@ -716,8 +717,9 @@ type V1beta1SetIamPolicyCall struct {
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *V1beta1Service) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *V1beta1SetIamPolicyCall {
 	c := &V1beta1SetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -825,7 +827,7 @@ func (c *V1beta1SetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,
@@ -865,7 +867,8 @@ type V1beta1TestIamPermissionsCall struct {
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *V1beta1Service) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *V1beta1TestIamPermissionsCall {
 	c := &V1beta1TestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -974,7 +977,7 @@ func (c *V1beta1TestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestI
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,

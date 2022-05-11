@@ -2198,8 +2198,8 @@ type GoogleCloudDocumentaiV1DocumentPage struct {
 	// Tokens: A list of visually detected tokens on the page.
 	Tokens []*GoogleCloudDocumentaiV1DocumentPageToken `json:"tokens,omitempty"`
 
-	// Transforms: Transformation matrices that were applied to the original
-	// document image to produce Page.image.
+	// Transforms: Transformation matrices (both already applied and not) to
+	// the original document image to produce Page.image.
 	Transforms []*GoogleCloudDocumentaiV1DocumentPageMatrix `json:"transforms,omitempty"`
 
 	// VisualElements: A list of detected non-text visual elements e.g.
@@ -2671,6 +2671,12 @@ func (s *GoogleCloudDocumentaiV1DocumentPageLine) MarshalJSON() ([]byte, error) 
 // transformation matrix, intended to be compatible and used with OpenCV
 // format for image manipulation.
 type GoogleCloudDocumentaiV1DocumentPageMatrix struct {
+	// Applied: Has the transformation already been applied to the current
+	// Document? Needed to disambiguate pre-processing transformations
+	// already applied vs transformations added at annotation time by HITL
+	// operators.
+	Applied bool `json:"applied,omitempty"`
+
 	// Cols: Number of columns in the matrix.
 	Cols int64 `json:"cols,omitempty"`
 
@@ -2686,7 +2692,7 @@ type GoogleCloudDocumentaiV1DocumentPageMatrix struct {
 	// https://docs.opencv.org/4.3.0/d1/d1b/group__core__hal__interface.html
 	Type int64 `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Cols") to
+	// ForceSendFields is a list of field names (e.g. "Applied") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2694,8 +2700,8 @@ type GoogleCloudDocumentaiV1DocumentPageMatrix struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Cols") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Applied") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -4898,8 +4904,8 @@ type GoogleCloudDocumentaiV1beta1DocumentPage struct {
 	// Tokens: A list of visually detected tokens on the page.
 	Tokens []*GoogleCloudDocumentaiV1beta1DocumentPageToken `json:"tokens,omitempty"`
 
-	// Transforms: Transformation matrices that were applied to the original
-	// document image to produce Page.image.
+	// Transforms: Transformation matrices (both already applied and not) to
+	// the original document image to produce Page.image.
 	Transforms []*GoogleCloudDocumentaiV1beta1DocumentPageMatrix `json:"transforms,omitempty"`
 
 	// VisualElements: A list of detected non-text visual elements e.g.
@@ -5372,6 +5378,12 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageLine) MarshalJSON() ([]byte, er
 // transformation matrix, intended to be compatible and used with OpenCV
 // format for image manipulation.
 type GoogleCloudDocumentaiV1beta1DocumentPageMatrix struct {
+	// Applied: Has the transformation already been applied to the current
+	// Document? Needed to disambiguate pre-processing transformations
+	// already applied vs transformations added at annotation time by HITL
+	// operators.
+	Applied bool `json:"applied,omitempty"`
+
 	// Cols: Number of columns in the matrix.
 	Cols int64 `json:"cols,omitempty"`
 
@@ -5387,7 +5399,7 @@ type GoogleCloudDocumentaiV1beta1DocumentPageMatrix struct {
 	// https://docs.opencv.org/4.3.0/d1/d1b/group__core__hal__interface.html
 	Type int64 `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Cols") to
+	// ForceSendFields is a list of field names (e.g. "Applied") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5395,8 +5407,8 @@ type GoogleCloudDocumentaiV1beta1DocumentPageMatrix struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Cols") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Applied") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -6877,8 +6889,8 @@ type GoogleCloudDocumentaiV1beta2DocumentPage struct {
 	// Tokens: A list of visually detected tokens on the page.
 	Tokens []*GoogleCloudDocumentaiV1beta2DocumentPageToken `json:"tokens,omitempty"`
 
-	// Transforms: Transformation matrices that were applied to the original
-	// document image to produce Page.image.
+	// Transforms: Transformation matrices (both already applied and not) to
+	// the original document image to produce Page.image.
 	Transforms []*GoogleCloudDocumentaiV1beta2DocumentPageMatrix `json:"transforms,omitempty"`
 
 	// VisualElements: A list of detected non-text visual elements e.g.
@@ -7351,6 +7363,12 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageLine) MarshalJSON() ([]byte, er
 // transformation matrix, intended to be compatible and used with OpenCV
 // format for image manipulation.
 type GoogleCloudDocumentaiV1beta2DocumentPageMatrix struct {
+	// Applied: Has the transformation already been applied to the current
+	// Document? Needed to disambiguate pre-processing transformations
+	// already applied vs transformations added at annotation time by HITL
+	// operators.
+	Applied bool `json:"applied,omitempty"`
+
 	// Cols: Number of columns in the matrix.
 	Cols int64 `json:"cols,omitempty"`
 
@@ -7366,7 +7384,7 @@ type GoogleCloudDocumentaiV1beta2DocumentPageMatrix struct {
 	// https://docs.opencv.org/4.3.0/d1/d1b/group__core__hal__interface.html
 	Type int64 `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Cols") to
+	// ForceSendFields is a list of field names (e.g. "Applied") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -7374,8 +7392,8 @@ type GoogleCloudDocumentaiV1beta2DocumentPageMatrix struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Cols") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Applied") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

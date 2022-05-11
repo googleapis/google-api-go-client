@@ -857,12 +857,16 @@ func (s *ContextAttribute) MarshalJSON() ([]byte, error) {
 // CustomEmoji: Proto representation of a custom emoji. May be used in
 // both APIs and in Spanner, but certain fields should be restricted to
 // one or the other. See the per-field documentation for details.
-// NEXT_TAG: 11
+// NEXT_TAG: 13
 type CustomEmoji struct {
 	// BlobId: ID for the underlying image data in Blobstore. This field
 	// should *only* be present in Spanner or within the server, but should
 	// not be exposed in public APIs.
 	BlobId string `json:"blobId,omitempty"`
+
+	// ContentType: Content type of the file used to upload the emoji. Used
+	// for takeout. Written to Spanner when the emoji is created.
+	ContentType string `json:"contentType,omitempty"`
 
 	// CreateTimeMicros: Time when the Emoji was created, in microseconds.
 	// This field may be present in Spanner, within the server, or in public
@@ -871,6 +875,11 @@ type CustomEmoji struct {
 
 	// CreatorUserId: This field should *never* be persisted to Spanner.
 	CreatorUserId *UserId `json:"creatorUserId,omitempty"`
+
+	// EphemeralUrl: Output only. A short-lived URL clients can use for
+	// directly accessing a custom emoji image. This field is intended for
+	// API consumption, and should *never* be persisted to Spanner.
+	EphemeralUrl string `json:"ephemeralUrl,omitempty"`
 
 	// OwnerCustomerId: This field should *never* be persisted to Spanner.
 	OwnerCustomerId *CustomerId `json:"ownerCustomerId,omitempty"`
@@ -1858,7 +1867,9 @@ type DynamiteSpacesScoringInfo struct {
 
 	JoinedSpacesAffinityScore float64 `json:"joinedSpacesAffinityScore,omitempty"`
 
-	LastMessagePostedTimestampMicros int64 `json:"lastMessagePostedTimestampMicros,omitempty,string"`
+	LastMessagePostedTimestampSecs int64 `json:"lastMessagePostedTimestampSecs,omitempty,string"`
+
+	LastReadTimestampSecs int64 `json:"lastReadTimestampSecs,omitempty,string"`
 
 	MemberMetadataCount float64 `json:"memberMetadataCount,omitempty"`
 
@@ -1872,7 +1883,7 @@ type DynamiteSpacesScoringInfo struct {
 
 	SpaceAgeInDays float64 `json:"spaceAgeInDays,omitempty"`
 
-	SpaceCreationTimestampMicros int64 `json:"spaceCreationTimestampMicros,omitempty,string"`
+	SpaceCreationTimestampSecs int64 `json:"spaceCreationTimestampSecs,omitempty,string"`
 
 	TopicalityScore float64 `json:"topicalityScore,omitempty"`
 

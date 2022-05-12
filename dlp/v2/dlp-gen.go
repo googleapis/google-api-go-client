@@ -4333,23 +4333,28 @@ func (s *GooglePrivacyDlpV2InfoTypeStats) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2InfoTypeSummary: The infoType details for this
 // column.
 type GooglePrivacyDlpV2InfoTypeSummary struct {
+	// EstimatedPrevalence: Approximate percentage of non-null rows that
+	// contained data detected by this infotype.
+	EstimatedPrevalence int64 `json:"estimatedPrevalence,omitempty"`
+
 	// InfoType: The infoType.
 	InfoType *GooglePrivacyDlpV2InfoType `json:"infoType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InfoType") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "EstimatedPrevalence")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InfoType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EstimatedPrevalence") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -6007,23 +6012,28 @@ func (s *GooglePrivacyDlpV2NumericalStatsResult) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2OtherInfoTypeSummary: Infotype details for other
 // infoTypes found within a column.
 type GooglePrivacyDlpV2OtherInfoTypeSummary struct {
+	// EstimatedPrevalence: Approximate percentage of non-null rows that
+	// contained data detected by this infotype.
+	EstimatedPrevalence int64 `json:"estimatedPrevalence,omitempty"`
+
 	// InfoType: The other infoType.
 	InfoType *GooglePrivacyDlpV2InfoType `json:"infoType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InfoType") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "EstimatedPrevalence")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InfoType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EstimatedPrevalence") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

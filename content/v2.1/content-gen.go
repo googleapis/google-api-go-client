@@ -753,7 +753,8 @@ type AccountAddress struct {
 	// ("QC").
 	Region string `json:"region,omitempty"`
 
-	// StreetAddress: Street-level part of the address.
+	// StreetAddress: Street-level part of the address. Use `\n` to add a
+	// second line.
 	StreetAddress string `json:"streetAddress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Country") to
@@ -880,7 +881,8 @@ func (s *AccountAutomaticImprovements) MarshalJSON() ([]byte, error) {
 }
 
 type AccountBusinessInformation struct {
-	// Address: The address of the business.
+	// Address: The address of the business. Use `\n` to add a second
+	// address line.
 	Address *AccountAddress `json:"address,omitempty"`
 
 	// CustomerService: The customer service information of the business.
@@ -1744,6 +1746,9 @@ type AccountUser struct {
 
 	// PaymentsManager: Whether user can manage payment settings.
 	PaymentsManager bool `json:"paymentsManager,omitempty"`
+
+	// ReportingManager: Whether user is a reporting manager.
+	ReportingManager bool `json:"reportingManager,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Admin") to
 	// unconditionally include in API requests. By default, fields with
@@ -2690,7 +2695,8 @@ type Address struct {
 	// PostalCode: Required. Postal code or ZIP (for example, "94043").
 	PostalCode string `json:"postalCode,omitempty"`
 
-	// StreetAddress: Street-level part of the address.
+	// StreetAddress: Street-level part of the address. Use `\n` to add a
+	// second line.
 	StreetAddress string `json:"streetAddress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdministrativeArea")
@@ -7180,7 +7186,8 @@ type OrderAddress struct {
 	// ("QC").
 	Region string `json:"region,omitempty"`
 
-	// StreetAddress: Street-level part of the address.
+	// StreetAddress: Street-level part of the address. Use `\n` to add a
+	// second line.
 	StreetAddress []string `json:"streetAddress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Country") to
@@ -17550,7 +17557,8 @@ type TestOrderAddress struct {
 	// ("QC").
 	Region string `json:"region,omitempty"`
 
-	// StreetAddress: Street-level part of the address.
+	// StreetAddress: Street-level part of the address. Use `\n` to add a
+	// second line.
 	StreetAddress []string `json:"streetAddress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Country") to

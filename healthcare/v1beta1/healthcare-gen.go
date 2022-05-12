@@ -837,8 +837,8 @@ func (s *AttributeDefinition) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -24704,8 +24704,13 @@ func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ResourceValidate(parent
 	return c
 }
 
-// Profile sets the optional parameter "profile": A profile that this
-// resource should be validated against.
+// Profile sets the optional parameter "profile": The canonical URL of a
+// profile that this resource should be validated against. For example,
+// to validate a Patient resource against the US Core Patient profile
+// this parameter would be
+// `http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient`. A
+// StructureDefinition with this canonical URL must exist in the FHIR
+// store.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) Profile(profile string) *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall {
 	c.urlParams_.Set("profile", profile)
 	return c
@@ -24781,7 +24786,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "profile": {
-	//       "description": "A profile that this resource should be validated against.",
+	//       "description": "The canonical URL of a profile that this resource should be validated against. For example, to validate a Patient resource against the US Core Patient profile this parameter would be `http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient`. A StructureDefinition with this canonical URL must exist in the FHIR store.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

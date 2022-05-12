@@ -5986,7 +5986,7 @@
       }
     }
   },
-  "revision": "20220428",
+  "revision": "20220510",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6100,7 +6100,7 @@
           "type": "string"
         },
         "streetAddress": {
-          "description": "Street-level part of the address.",
+          "description": "Street-level part of the address. Use `\\n` to add a second line.",
           "type": "string"
         }
       },
@@ -6145,7 +6145,7 @@
       "properties": {
         "address": {
           "$ref": "AccountAddress",
-          "description": "The address of the business."
+          "description": "The address of the business. Use `\\n` to add a second address line."
         },
         "customerService": {
           "$ref": "AccountCustomerService",
@@ -6653,6 +6653,10 @@
         },
         "paymentsManager": {
           "description": "Whether user can manage payment settings.",
+          "type": "boolean"
+        },
+        "reportingManager": {
+          "description": "Whether user is a reporting manager.",
           "type": "boolean"
         }
       },
@@ -7173,7 +7177,7 @@
           "type": "string"
         },
         "streetAddress": {
-          "description": "Street-level part of the address.",
+          "description": "Street-level part of the address. Use `\\n` to add a second line.",
           "type": "string"
         }
       },
@@ -9848,7 +9852,7 @@
           "type": "string"
         },
         "streetAddress": {
-          "description": "Street-level part of the address.",
+          "description": "Street-level part of the address. Use `\\n` to add a second line.",
           "items": {
             "type": "string"
           },
@@ -16111,7 +16115,7 @@
           "type": "string"
         },
         "streetAddress": {
-          "description": "Street-level part of the address.",
+          "description": "Street-level part of the address. Use `\\n` to add a second line.",
           "items": {
             "type": "string"
           },

@@ -609,26 +609,28 @@ func (s *GoogleCloudRetailLoggingSourceLocation) MarshalJSON() ([]byte, error) {
 // GoogleCloudRetailV2AddFulfillmentPlacesMetadata: Metadata related to
 // the progress of the AddFulfillmentPlaces operation. Currently empty
 // because there is no meaningful metadata populated from the
-// AddFulfillmentPlaces method.
+// ProductService.AddFulfillmentPlaces method.
 type GoogleCloudRetailV2AddFulfillmentPlacesMetadata struct {
 }
 
 // GoogleCloudRetailV2AddFulfillmentPlacesResponse: Response of the
 // AddFulfillmentPlacesRequest. Currently empty because there is no
-// meaningful response populated from the AddFulfillmentPlaces method.
+// meaningful response populated from the
+// ProductService.AddFulfillmentPlaces method.
 type GoogleCloudRetailV2AddFulfillmentPlacesResponse struct {
 }
 
 // GoogleCloudRetailV2AddLocalInventoriesMetadata: Metadata related to
 // the progress of the AddLocalInventories operation. Currently empty
 // because there is no meaningful metadata populated from the
-// AddLocalInventories method.
+// ProductService.AddLocalInventories method.
 type GoogleCloudRetailV2AddLocalInventoriesMetadata struct {
 }
 
 // GoogleCloudRetailV2AddLocalInventoriesResponse: Response of the
-// AddLocalInventories API. Currently empty because there is no
-// meaningful response populated from the AddLocalInventories method.
+// ProductService.AddLocalInventories API. Currently empty because there
+// is no meaningful response populated from the
+// ProductService.AddLocalInventories method.
 type GoogleCloudRetailV2AddLocalInventoriesResponse struct {
 }
 
@@ -1040,12 +1042,12 @@ func (s *GoogleCloudRetailV2alphaAddControlRequest) MarshalJSON() ([]byte, error
 // GoogleCloudRetailV2alphaAddFulfillmentPlacesMetadata: Metadata
 // related to the progress of the AddFulfillmentPlaces operation.
 // Currently empty because there is no meaningful metadata populated
-// from the AddFulfillmentPlaces method.
+// from the ProductService.AddFulfillmentPlaces method.
 type GoogleCloudRetailV2alphaAddFulfillmentPlacesMetadata struct {
 }
 
 // GoogleCloudRetailV2alphaAddFulfillmentPlacesRequest: Request message
-// for AddFulfillmentPlaces method.
+// for ProductService.AddFulfillmentPlaces method.
 type GoogleCloudRetailV2alphaAddFulfillmentPlacesRequest struct {
 	// AddTime: The time when the fulfillment updates are issued, used to
 	// prevent out-of-order updates on fulfillment information. If not
@@ -1104,19 +1106,20 @@ func (s *GoogleCloudRetailV2alphaAddFulfillmentPlacesRequest) MarshalJSON() ([]b
 
 // GoogleCloudRetailV2alphaAddFulfillmentPlacesResponse: Response of the
 // AddFulfillmentPlacesRequest. Currently empty because there is no
-// meaningful response populated from the AddFulfillmentPlaces method.
+// meaningful response populated from the
+// ProductService.AddFulfillmentPlaces method.
 type GoogleCloudRetailV2alphaAddFulfillmentPlacesResponse struct {
 }
 
 // GoogleCloudRetailV2alphaAddLocalInventoriesMetadata: Metadata related
 // to the progress of the AddLocalInventories operation. Currently empty
 // because there is no meaningful metadata populated from the
-// AddLocalInventories method.
+// ProductService.AddLocalInventories method.
 type GoogleCloudRetailV2alphaAddLocalInventoriesMetadata struct {
 }
 
 // GoogleCloudRetailV2alphaAddLocalInventoriesRequest: Request message
-// for AddLocalInventories method.
+// for ProductService.AddLocalInventories method.
 type GoogleCloudRetailV2alphaAddLocalInventoriesRequest struct {
 	// AddMask: Indicates which inventory fields in the provided list of
 	// LocalInventory to update. The field is updated to the provided value.
@@ -1169,8 +1172,9 @@ func (s *GoogleCloudRetailV2alphaAddLocalInventoriesRequest) MarshalJSON() ([]by
 }
 
 // GoogleCloudRetailV2alphaAddLocalInventoriesResponse: Response of the
-// AddLocalInventories API. Currently empty because there is no
-// meaningful response populated from the AddLocalInventories method.
+// ProductService.AddLocalInventories API. Currently empty because there
+// is no meaningful response populated from the
+// ProductService.AddLocalInventories method.
 type GoogleCloudRetailV2alphaAddLocalInventoriesResponse struct {
 }
 
@@ -1419,14 +1423,15 @@ type GoogleCloudRetailV2alphaCatalogAttribute struct {
 	// InUse: Output only. Indicates whether this attribute has been used by
 	// any products. `True` if at least one Product is using this attribute
 	// in Product.attributes. Otherwise, this field is `False`.
-	// CatalogAttribute can be pre-loaded by using AddCatalogAttribute,
-	// ImportCatalogAttributes, or UpdateAttributesConfig APIs. This field
-	// is `False` for pre-loaded CatalogAttributes. Only CatalogAttributes
-	// that are not in use by products can be deleted. CatalogAttributes
-	// that are in use by products cannot be deleted; however, their
-	// configuration properties will reset to default values upon removal
-	// request. After catalog changes, it takes about 10 minutes for this
-	// field to update.
+	// CatalogAttribute can be pre-loaded by using
+	// CatalogService.AddCatalogAttribute,
+	// CatalogService.ImportCatalogAttributes, or
+	// CatalogService.UpdateAttributesConfig APIs. This field is `False` for
+	// pre-loaded CatalogAttributes. Only CatalogAttributes that are not in
+	// use by products can be deleted. CatalogAttributes that are in use by
+	// products cannot be deleted; however, their configuration properties
+	// will reset to default values upon removal request. After catalog
+	// changes, it takes about 10 minutes for this field to update.
 	InUse bool `json:"inUse,omitempty"`
 
 	// IndexableOption: When AttributesConfig.attribute_config_level is
@@ -2013,10 +2018,10 @@ func (s *GoogleCloudRetailV2alphaControl) MarshalJSON() ([]byte, error) {
 type GoogleCloudRetailV2alphaCustomAttribute struct {
 	// Indexable: This field is normally ignored unless
 	// AttributesConfig.attribute_config_level of the Catalog is set to the
-	// deprecated 'PRODUCT_LEVEL_ATTRIBUTE_CONFIG' mode. You may learn more
-	// on [configuration mode]
+	// deprecated 'PRODUCT_LEVEL_ATTRIBUTE_CONFIG' mode. For information
+	// about product-level attribute configuration, see Configuration modes
 	// (https://cloud.google.com/retail/docs/attribute-config#config-modes).
-	// if true, custom attribute values are indexed, so that it can be
+	// If true, custom attribute values are indexed, so that they can be
 	// filtered, faceted or boosted in SearchService.Search. This field is
 	// ignored in a UserEvent. See SearchRequest.filter,
 	// SearchRequest.facet_specs and SearchRequest.boost_spec for more
@@ -2031,8 +2036,8 @@ type GoogleCloudRetailV2alphaCustomAttribute struct {
 
 	// Searchable: This field is normally ignored unless
 	// AttributesConfig.attribute_config_level of the Catalog is set to the
-	// deprecated 'PRODUCT_LEVEL_ATTRIBUTE_CONFIG' mode. You may learn more
-	// on [configuration mode]
+	// deprecated 'PRODUCT_LEVEL_ATTRIBUTE_CONFIG' mode. For information
+	// about product-level attribute configuration, see Configuration modes
 	// (https://cloud.google.com/retail/docs/attribute-config#config-modes).
 	// If true, custom attribute values are searchable by text queries in
 	// SearchService.Search. This field is ignored in a UserEvent. Only set
@@ -2145,8 +2150,7 @@ type GoogleCloudRetailV2alphaExportProductsResponse struct {
 	// request.
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
 
-	// ErrorsConfig: Echoes the destination for the complete errors in the
-	// request if set.
+	// ErrorsConfig: This field is never set.
 	ErrorsConfig *GoogleCloudRetailV2alphaExportErrorsConfig `json:"errorsConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
@@ -2182,8 +2186,7 @@ type GoogleCloudRetailV2alphaExportUserEventsResponse struct {
 	// request.
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
 
-	// ErrorsConfig: Echoes the destination for the complete errors if this
-	// field was set in the request.
+	// ErrorsConfig: This field is never set.
 	ErrorsConfig *GoogleCloudRetailV2alphaExportErrorsConfig `json:"errorsConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
@@ -3122,14 +3125,14 @@ type GoogleCloudRetailV2alphaPredictRequest struct {
 	// Labels: The labels applied to a resource must meet the following
 	// requirements: * Each resource can have multiple labels, up to a
 	// maximum of 64. * Each label must be a key-value pair. * Keys have a
-	// minimum length of 1 character and a maximum length of 63 characters,
-	// and cannot be empty. Values can be empty, and have a maximum length
-	// of 63 characters. * Keys and values can contain only lowercase
-	// letters, numeric characters, underscores, and dashes. All characters
-	// must use UTF-8 encoding, and international characters are allowed. *
-	// The key portion of a label must be unique. However, you can use the
-	// same key with multiple resources. * Keys must start with a lowercase
-	// letter or international character. See Google Cloud Document
+	// minimum length of 1 character and a maximum length of 63 characters
+	// and cannot be empty. Values can be empty and have a maximum length of
+	// 63 characters. * Keys and values can contain only lowercase letters,
+	// numeric characters, underscores, and dashes. All characters must use
+	// UTF-8 encoding, and international characters are allowed. * The key
+	// portion of a label must be unique. However, you can use the same key
+	// with multiple resources. * Keys must start with a lowercase letter or
+	// international character. See Google Cloud Document
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
 	// for more details.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -3260,10 +3263,10 @@ type GoogleCloudRetailV2alphaPredictResponsePredictionResult struct {
 	Id string `json:"id,omitempty"`
 
 	// Metadata: Additional product metadata / annotations. Possible values:
-	// * `product`: JSON representation of the product. Will be set if
+	// * `product`: JSON representation of the product. Is set if
 	// `returnProduct` is set to true in `PredictRequest.params`. * `score`:
-	// Prediction score in double value. Will be set if `returnScore` is set
-	// to true in `PredictRequest.params`.
+	// Prediction score in double value. Is set if `returnScore` is set to
+	// true in `PredictRequest.params`.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -3652,9 +3655,9 @@ type GoogleCloudRetailV2alphaProduct struct {
 	// Type.PRIMARY and Type.COLLECTION, the following fields are always
 	// returned in SearchResponse by default: * name For Type.VARIANT, the
 	// following fields are always returned in by default: * name *
-	// color_info Maximum number of paths is 30. Otherwise, an
+	// color_info The maximum number of paths is 30. Otherwise, an
 	// INVALID_ARGUMENT error is returned. Note: Returning more fields in
-	// SearchResponse may increase response payload size and serving
+	// SearchResponse can increase response payload size and serving
 	// latency.
 	RetrievableFields string `json:"retrievableFields,omitempty"`
 
@@ -4977,8 +4980,8 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// BoostSpec: Boost specification to boost certain products. See more
 	// details at this user guide
 	// (https://cloud.google.com/retail/docs/boosting). Notice that if both
-	// ServingConfig.boost_control_ids and [SearchRequest.boost_spec] are
-	// set, the boost conditions from both places are evaluated. If a search
+	// ServingConfig.boost_control_ids and SearchRequest.boost_spec are set,
+	// the boost conditions from both places are evaluated. If a search
 	// request matches multiple boost conditions, the final boost score is
 	// equal to the sum of the boost scores from all matched boost
 	// conditions.
@@ -5024,14 +5027,14 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// Labels: The labels applied to a resource must meet the following
 	// requirements: * Each resource can have multiple labels, up to a
 	// maximum of 64. * Each label must be a key-value pair. * Keys have a
-	// minimum length of 1 character and a maximum length of 63 characters,
-	// and cannot be empty. Values can be empty, and have a maximum length
-	// of 63 characters. * Keys and values can contain only lowercase
-	// letters, numeric characters, underscores, and dashes. All characters
-	// must use UTF-8 encoding, and international characters are allowed. *
-	// The key portion of a label must be unique. However, you can use the
-	// same key with multiple resources. * Keys must start with a lowercase
-	// letter or international character. See Google Cloud Document
+	// minimum length of 1 character and a maximum length of 63 characters
+	// and cannot be empty. Values can be empty and have a maximum length of
+	// 63 characters. * Keys and values can contain only lowercase letters,
+	// numeric characters, underscores, and dashes. All characters must use
+	// UTF-8 encoding, and international characters are allowed. * The key
+	// portion of a label must be unique. However, you can use the same key
+	// with multiple resources. * Keys must start with a lowercase letter or
+	// international character. See Google Cloud Document
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
 	// for more details.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -5120,11 +5123,15 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// set.
 	//   "FACETED_SEARCH_ONLY" - Only faceted search will be performed. The
 	// product search will be disabled. When in this mode, one or both of
-	// SearchRequest.facet_spec and SearchRequest.dynamic_facet_spec should
+	// SearchRequest.facet_specs and SearchRequest.dynamic_facet_spec should
 	// be set. Otherwise, an INVALID_ARGUMENT error is returned. Only
 	// [SearchResponse.Facet] will be returned.
 	// [SearchResponse.SearchResult] will not be returned.
 	SearchMode string `json:"searchMode,omitempty"`
+
+	// SpellCorrectionSpec: The spell correction specification that
+	// specifies the mode under which spell correction will take effect.
+	SpellCorrectionSpec *GoogleCloudRetailV2alphaSearchRequestSpellCorrectionSpec `json:"spellCorrectionSpec,omitempty"`
 
 	// UserInfo: User information.
 	UserInfo *GoogleCloudRetailV2alphaUserInfo `json:"userInfo,omitempty"`
@@ -5141,9 +5148,9 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// colorFamilies * price * originalPrice * discount * variantId *
 	// inventory(place_id,price) * inventory(place_id,original_price) *
 	// inventory(place_id,attributes.key), where key is any key in the
-	// Product.inventories.attributes map. * attributes.key, where key is
-	// any key in the Product.attributes map. * pickupInStore.id, where id
-	// is any FulfillmentInfo.place_ids for FulfillmentInfo.type
+	// Product.local_inventories.attributes map. * attributes.key, where key
+	// is any key in the Product.attributes map. * pickupInStore.id, where
+	// id is any FulfillmentInfo.place_ids for FulfillmentInfo.type
 	// "pickup-in-store". * shipToStore.id, where id is any
 	// FulfillmentInfo.place_ids for FulfillmentInfo.type "ship-to-store". *
 	// sameDayDelivery.id, where id is any FulfillmentInfo.place_ids for
@@ -5576,6 +5583,46 @@ func (s *GoogleCloudRetailV2alphaSearchRequestQueryExpansionSpec) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2alphaSearchRequestSpellCorrectionSpec: The
+// specification for query spell correction.
+type GoogleCloudRetailV2alphaSearchRequestSpellCorrectionSpec struct {
+	// Mode: The mode under which spell correction should take effect to
+	// replace the original search query. Default to Mode.AUTO.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Unspecified spell correction mode. This
+	// defaults to Mode.AUTO.
+	//   "SUGGESTION_ONLY" - Google Retail Search will try to find a spell
+	// suggestion if there is any and put in the
+	// SearchResponse.corrected_query. The spell suggestion will not be used
+	// as the search query.
+	//   "AUTO" - Automatic spell correction built by Google Retail Search.
+	// Search will be based on the corrected query if found.
+	Mode string `json:"mode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Mode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Mode") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaSearchRequestSpellCorrectionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaSearchRequestSpellCorrectionSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaSearchResponse: Response message for
 // SearchService.Search method.
 type GoogleCloudRetailV2alphaSearchResponse struct {
@@ -5590,9 +5637,9 @@ type GoogleCloudRetailV2alphaSearchResponse struct {
 	AttributionToken string `json:"attributionToken,omitempty"`
 
 	// CorrectedQuery: Contains the spell corrected query, if found. If the
-	// spell correction type is AUTOMATIC, then the search results will be
-	// based on corrected_query, otherwise the original query will be used
-	// for search.
+	// spell correction type is AUTOMATIC, then the search results are based
+	// on corrected_query. Otherwise the original query will be used for
+	// search.
 	CorrectedQuery string `json:"correctedQuery,omitempty"`
 
 	// Facets: Results of facets requested by user.
@@ -5613,8 +5660,8 @@ type GoogleCloudRetailV2alphaSearchResponse struct {
 	QueryExpansionInfo *GoogleCloudRetailV2alphaSearchResponseQueryExpansionInfo `json:"queryExpansionInfo,omitempty"`
 
 	// RedirectUri: The URI of a customer-defined redirect page. If redirect
-	// action is triggered, no search will be performed, and only
-	// redirect_uri and attribution_token will be set in the response.
+	// action is triggered, no search is performed, and only redirect_uri
+	// and attribution_token are set in the response.
 	RedirectUri string `json:"redirectUri,omitempty"`
 
 	// Results: A list of matched items. The order represents the ranking.
@@ -5839,8 +5886,8 @@ type GoogleCloudRetailV2alphaServingConfig struct {
 	// multiple conditions in the specifications, boost scores from these
 	// specifications are all applied and combined in a non-linear way.
 	// Maximum number of specifications is 100. Notice that if both
-	// ServingConfig.boost_control_ids and [SearchRequest.boost_spec] are
-	// set, the boost conditions from both places are evaluated. If a search
+	// ServingConfig.boost_control_ids and SearchRequest.boost_spec are set,
+	// the boost conditions from both places are evaluated. If a search
 	// request matches multiple boost conditions, the final boost score is
 	// equal to the sum of the boost scores from all matched boost
 	// conditions. Can only be set if solution_types is
@@ -6497,26 +6544,28 @@ func (s *GoogleCloudRetailV2alphaUserInfo) MarshalJSON() ([]byte, error) {
 // GoogleCloudRetailV2betaAddFulfillmentPlacesMetadata: Metadata related
 // to the progress of the AddFulfillmentPlaces operation. Currently
 // empty because there is no meaningful metadata populated from the
-// AddFulfillmentPlaces method.
+// ProductService.AddFulfillmentPlaces method.
 type GoogleCloudRetailV2betaAddFulfillmentPlacesMetadata struct {
 }
 
 // GoogleCloudRetailV2betaAddFulfillmentPlacesResponse: Response of the
 // AddFulfillmentPlacesRequest. Currently empty because there is no
-// meaningful response populated from the AddFulfillmentPlaces method.
+// meaningful response populated from the
+// ProductService.AddFulfillmentPlaces method.
 type GoogleCloudRetailV2betaAddFulfillmentPlacesResponse struct {
 }
 
 // GoogleCloudRetailV2betaAddLocalInventoriesMetadata: Metadata related
 // to the progress of the AddLocalInventories operation. Currently empty
 // because there is no meaningful metadata populated from the
-// AddLocalInventories method.
+// ProductService.AddLocalInventories method.
 type GoogleCloudRetailV2betaAddLocalInventoriesMetadata struct {
 }
 
 // GoogleCloudRetailV2betaAddLocalInventoriesResponse: Response of the
-// AddLocalInventories API. Currently empty because there is no
-// meaningful response populated from the AddLocalInventories method.
+// ProductService.AddLocalInventories API. Currently empty because there
+// is no meaningful response populated from the
+// ProductService.AddLocalInventories method.
 type GoogleCloudRetailV2betaAddLocalInventoriesResponse struct {
 }
 
@@ -6596,8 +6645,7 @@ type GoogleCloudRetailV2betaExportProductsResponse struct {
 	// request.
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
 
-	// ErrorsConfig: Echoes the destination for the complete errors in the
-	// request if set.
+	// ErrorsConfig: This field is never set.
 	ErrorsConfig *GoogleCloudRetailV2betaExportErrorsConfig `json:"errorsConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
@@ -6633,8 +6681,7 @@ type GoogleCloudRetailV2betaExportUserEventsResponse struct {
 	// request.
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
 
-	// ErrorsConfig: Echoes the destination for the complete errors if this
-	// field was set in the request.
+	// ErrorsConfig: This field is never set.
 	ErrorsConfig *GoogleCloudRetailV2betaExportErrorsConfig `json:"errorsConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
@@ -11193,9 +11240,10 @@ type ProjectsLocationsCatalogsBranchesProductsSetInventoryCall struct {
 // no inventory fields are set in SetInventoryRequest.set_mask, then any
 // existing inventory information will be preserved. Pre-existing
 // inventory information can only be updated with SetInventory,
-// AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is
-// only available for users who have Retail Search enabled. Please
-// enable Retail Search on Cloud Console before using this feature.
+// ProductService.AddFulfillmentPlaces, and RemoveFulfillmentPlaces.
+// This feature is only available for users who have Retail Search
+// enabled. Please enable Retail Search on Cloud Console before using
+// this feature.
 //
 // - name: Immutable. Full resource name of the product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -11298,7 +11346,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
+	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, ProductService.AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:setInventory",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.setInventory",

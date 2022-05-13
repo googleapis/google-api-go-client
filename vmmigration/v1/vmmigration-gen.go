@@ -566,6 +566,9 @@ type ComputeEngineTargetDefaults struct {
 	// persistent disks that balance performance and cost.
 	DiskType string `json:"diskType,omitempty"`
 
+	// Hostname: The hostname to assign to the VM.
+	Hostname string `json:"hostname,omitempty"`
+
 	// Labels: A map of labels to associate with the VM.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -671,6 +674,9 @@ type ComputeEngineTargetDetails struct {
 	//   "COMPUTE_ENGINE_DISK_TYPE_BALANCED" - An alternative to SSD
 	// persistent disks that balance performance and cost.
 	DiskType string `json:"diskType,omitempty"`
+
+	// Hostname: The hostname to assign to the VM.
+	Hostname string `json:"hostname,omitempty"`
 
 	// Labels: A map of labels to associate with the VM.
 	Labels map[string]string `json:"labels,omitempty"`

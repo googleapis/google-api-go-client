@@ -3449,11 +3449,13 @@ func (s *GoogleCloudDataplexV1TaskInfrastructureSpec) MarshalJSON() ([]byte, err
 // GoogleCloudDataplexV1TaskInfrastructureSpecBatchComputeResources:
 // Batch compute resources associated with the task.
 type GoogleCloudDataplexV1TaskInfrastructureSpecBatchComputeResources struct {
-	// ExecutorsCount: Optional. Total number of job executors.
+	// ExecutorsCount: Optional. Total number of job executors. Executor
+	// Count should be between 2 and 100. Default=2
 	ExecutorsCount int64 `json:"executorsCount,omitempty"`
 
 	// MaxExecutorsCount: Optional. Max configurable executors. If
 	// max_executors_count > executors_count, then auto-scaling is enabled.
+	// Max Executor Count should be between 2 and 1000. Default=1000
 	MaxExecutorsCount int64 `json:"maxExecutorsCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExecutorsCount") to
@@ -9179,6 +9181,19 @@ func (r *ProjectsLocationsLakesEnvironmentsSessionsService) List(parent string) 
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filter request. The
+// following mode filter is supported to return only the sessions
+// belonging to the requester when the mode is USER and return sessions
+// of all the users when the mode is ADMIN. When no filter is sent
+// default to USER mode. NOTE: When the mode is ADMIN, the requester
+// should have dataplex.environments.listAllSessions permission to list
+// all sessions, in absence of the permission, the request fails.mode =
+// ADMIN | USER
+func (c *ProjectsLocationsLakesEnvironmentsSessionsListCall) Filter(filter string) *ProjectsLocationsLakesEnvironmentsSessionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // sessions to return. The service may return fewer than this value. If
 // unspecified, at most 10 sessions will be returned. The maximum value
@@ -9306,6 +9321,11 @@ func (c *ProjectsLocationsLakesEnvironmentsSessionsListCall) Do(opts ...googleap
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter request. The following mode filter is supported to return only the sessions belonging to the requester when the mode is USER and return sessions of all the users when the mode is ADMIN. When no filter is sent default to USER mode. NOTE: When the mode is ADMIN, the requester should have dataplex.environments.listAllSessions permission to list all sessions, in absence of the permission, the request fails.mode = ADMIN | USER",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. Maximum number of sessions to return. The service may return fewer than this value. If unspecified, at most 10 sessions will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
 	//       "format": "int32",

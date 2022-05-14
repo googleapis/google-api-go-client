@@ -333,13 +333,12 @@ func (s *CheckUpgradeResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CidrBlock: CidrBlock contains an optional name and one CIDR block.
+// CidrBlock: CIDR block with an optional name.
 type CidrBlock struct {
-	// CidrBlock: cidr_block must be specified in CIDR notation.
+	// CidrBlock: CIDR block that must be specified in CIDR notation.
 	CidrBlock string `json:"cidrBlock,omitempty"`
 
-	// DisplayName: display_name is a field for users to identify CIDR
-	// blocks.
+	// DisplayName: User-defined name that identifies the CIDR block.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CidrBlock") to
@@ -615,7 +614,7 @@ type EnvironmentConfig struct {
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
 
 	// MasterAuthorizedNetworksConfig: Optional. The configuration options
-	// for GKE clusters master authorized networks. By default master
+	// for GKE cluster master authorized networks. By default master
 	// authorized networks feature is: - in case of private environment:
 	// enabled with no external networks allowlisted. - in case of public
 	// environment: disabled.
@@ -1005,11 +1004,12 @@ func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 // HTTPS except traffic from the given CIDR blocks, Google Compute
 // Engine Public IPs and Google Prod IPs.
 type MasterAuthorizedNetworksConfig struct {
-	// CidrBlocks: cidr_blocks define up to 50 external networks that could
-	// access Kubernetes master through HTTPS.
+	// CidrBlocks: Up to 50 external networks that could access Kubernetes
+	// master through HTTPS.
 	CidrBlocks []*CidrBlock `json:"cidrBlocks,omitempty"`
 
-	// Enabled: Whether or not master authorized networks is enabled.
+	// Enabled: Whether or not master authorized networks feature is
+	// enabled.
 	Enabled bool `json:"enabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CidrBlocks") to

@@ -13544,10 +13544,10 @@ func (s *ProductstatusesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Promotion:  The Promotions feature is publicly available for the US
-// and CA locale (en language only) in Content API for Shopping.
-// Represents a promotion. See the following articles for more details.
-// * Promotions feed specification
+// Promotion:  The Promotions feature is publicly available for the US,
+// CA, IN, UK, AU target countries (en language only) in Content API for
+// Shopping. Represents a promotion. See the following articles for more
+// details. * Promotions feed specification
 // (https://support.google.com/merchants/answer/2906014) * Local
 // promotions feed specification
 // (https://support.google.com/merchants/answer/10146130) * Promotions

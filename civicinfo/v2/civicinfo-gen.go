@@ -632,6 +632,12 @@ type Election struct {
 	// election the entire US (i.e. ocd-division/country:us).
 	OcdDivisionId string `json:"ocdDivisionId,omitempty"`
 
+	// Possible values:
+	//   "shapeLookupDefault"
+	//   "shapeLookupDisabled"
+	//   "shapeLookupEnabled"
+	ShapeLookupBehavior string `json:"shapeLookupBehavior,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ElectionDay") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

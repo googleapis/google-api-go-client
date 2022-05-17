@@ -471,7 +471,8 @@ type CaseClassification struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Id: The unique ID for a classification. Must be specified for case
-	// creation.
+	// creation. To retrieve valid classification IDs for case creation, use
+	// `caseClassifications.search`.
 	Id string `json:"id,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to

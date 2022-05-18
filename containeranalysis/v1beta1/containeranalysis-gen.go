@@ -829,79 +829,106 @@ func (s *ByProducts) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CVSS: Common Vulnerability Scoring System. For details, see
-// https://www.first.org/cvss/specification-document
+// CVSS: Common Vulnerability Scoring System. This message is compatible
+// with CVSS v2 and v3. For CVSS v2 details, see
+// https://www.first.org/cvss/v2/guide CVSS v2 calculator:
+// https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator For CVSS v3
+// details, see https://www.first.org/cvss/specification-document CVSS
+// v3 calculator: https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator
 type CVSS struct {
+	// AttackComplexity: Defined in CVSS v3, CVSS v2
+	//
 	// Possible values:
-	//   "ATTACK_COMPLEXITY_UNSPECIFIED"
-	//   "ATTACK_COMPLEXITY_LOW"
-	//   "ATTACK_COMPLEXITY_HIGH"
+	//   "ATTACK_COMPLEXITY_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_COMPLEXITY_LOW" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_COMPLEXITY_HIGH" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_COMPLEXITY_MEDIUM" - Defined in CVSS v2
 	AttackComplexity string `json:"attackComplexity,omitempty"`
 
 	// AttackVector: Base Metrics Represents the intrinsic characteristics
 	// of a vulnerability that are constant over time and across user
-	// environments.
+	// environments. Defined in CVSS v3, CVSS v2
 	//
 	// Possible values:
-	//   "ATTACK_VECTOR_UNSPECIFIED"
-	//   "ATTACK_VECTOR_NETWORK"
-	//   "ATTACK_VECTOR_ADJACENT"
-	//   "ATTACK_VECTOR_LOCAL"
-	//   "ATTACK_VECTOR_PHYSICAL"
+	//   "ATTACK_VECTOR_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_VECTOR_NETWORK" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_VECTOR_ADJACENT" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_VECTOR_LOCAL" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_VECTOR_PHYSICAL" - Defined in CVSS v3
 	AttackVector string `json:"attackVector,omitempty"`
 
+	// Authentication: Defined in CVSS v2
+	//
 	// Possible values:
-	//   "AUTHENTICATION_UNSPECIFIED"
-	//   "AUTHENTICATION_MULTIPLE"
-	//   "AUTHENTICATION_SINGLE"
-	//   "AUTHENTICATION_NONE"
+	//   "AUTHENTICATION_UNSPECIFIED" - Defined in CVSS v2
+	//   "AUTHENTICATION_MULTIPLE" - Defined in CVSS v2
+	//   "AUTHENTICATION_SINGLE" - Defined in CVSS v2
+	//   "AUTHENTICATION_NONE" - Defined in CVSS v2
 	Authentication string `json:"authentication,omitempty"`
 
+	// AvailabilityImpact: Defined in CVSS v3, CVSS v2
+	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED"
-	//   "IMPACT_HIGH"
-	//   "IMPACT_LOW"
-	//   "IMPACT_NONE"
+	//   "IMPACT_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
+	//   "IMPACT_HIGH" - Defined in CVSS v3
+	//   "IMPACT_LOW" - Defined in CVSS v3
+	//   "IMPACT_NONE" - Defined in CVSS v3, CVSS v2
+	//   "IMPACT_PARTIAL" - Defined in CVSS v2
+	//   "IMPACT_COMPLETE" - Defined in CVSS v2
 	AvailabilityImpact string `json:"availabilityImpact,omitempty"`
 
 	// BaseScore: The base score is a function of the base metric scores.
 	BaseScore float64 `json:"baseScore,omitempty"`
 
+	// ConfidentialityImpact: Defined in CVSS v3, CVSS v2
+	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED"
-	//   "IMPACT_HIGH"
-	//   "IMPACT_LOW"
-	//   "IMPACT_NONE"
+	//   "IMPACT_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
+	//   "IMPACT_HIGH" - Defined in CVSS v3
+	//   "IMPACT_LOW" - Defined in CVSS v3
+	//   "IMPACT_NONE" - Defined in CVSS v3, CVSS v2
+	//   "IMPACT_PARTIAL" - Defined in CVSS v2
+	//   "IMPACT_COMPLETE" - Defined in CVSS v2
 	ConfidentialityImpact string `json:"confidentialityImpact,omitempty"`
 
 	ExploitabilityScore float64 `json:"exploitabilityScore,omitempty"`
 
 	ImpactScore float64 `json:"impactScore,omitempty"`
 
+	// IntegrityImpact: Defined in CVSS v3, CVSS v2
+	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED"
-	//   "IMPACT_HIGH"
-	//   "IMPACT_LOW"
-	//   "IMPACT_NONE"
+	//   "IMPACT_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
+	//   "IMPACT_HIGH" - Defined in CVSS v3
+	//   "IMPACT_LOW" - Defined in CVSS v3
+	//   "IMPACT_NONE" - Defined in CVSS v3, CVSS v2
+	//   "IMPACT_PARTIAL" - Defined in CVSS v2
+	//   "IMPACT_COMPLETE" - Defined in CVSS v2
 	IntegrityImpact string `json:"integrityImpact,omitempty"`
 
+	// PrivilegesRequired: Defined in CVSS v3
+	//
 	// Possible values:
-	//   "PRIVILEGES_REQUIRED_UNSPECIFIED"
-	//   "PRIVILEGES_REQUIRED_NONE"
-	//   "PRIVILEGES_REQUIRED_LOW"
-	//   "PRIVILEGES_REQUIRED_HIGH"
+	//   "PRIVILEGES_REQUIRED_UNSPECIFIED" - Defined in CVSS v3
+	//   "PRIVILEGES_REQUIRED_NONE" - Defined in CVSS v3
+	//   "PRIVILEGES_REQUIRED_LOW" - Defined in CVSS v3
+	//   "PRIVILEGES_REQUIRED_HIGH" - Defined in CVSS v3
 	PrivilegesRequired string `json:"privilegesRequired,omitempty"`
 
+	// Scope: Defined in CVSS v3
+	//
 	// Possible values:
-	//   "SCOPE_UNSPECIFIED"
-	//   "SCOPE_UNCHANGED"
-	//   "SCOPE_CHANGED"
+	//   "SCOPE_UNSPECIFIED" - Defined in CVSS v3
+	//   "SCOPE_UNCHANGED" - Defined in CVSS v3
+	//   "SCOPE_CHANGED" - Defined in CVSS v3
 	Scope string `json:"scope,omitempty"`
 
+	// UserInteraction: Defined in CVSS v3
+	//
 	// Possible values:
-	//   "USER_INTERACTION_UNSPECIFIED"
-	//   "USER_INTERACTION_NONE"
-	//   "USER_INTERACTION_REQUIRED"
+	//   "USER_INTERACTION_UNSPECIFIED" - Defined in CVSS v3
+	//   "USER_INTERACTION_NONE" - Defined in CVSS v3
+	//   "USER_INTERACTION_REQUIRED" - Defined in CVSS v3
 	UserInteraction string `json:"userInteraction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AttackComplexity") to

@@ -8293,6 +8293,10 @@ type GoogleCloudDocumentaiV1beta3ProcessRequest struct {
 	// must be set.
 	Document *GoogleCloudDocumentaiV1beta3Document `json:"document,omitempty"`
 
+	// FieldMask: Specifies which fields to include in ProcessResponse's
+	// document.
+	FieldMask string `json:"fieldMask,omitempty"`
+
 	// InlineDocument: An inline document proto.
 	InlineDocument *GoogleCloudDocumentaiV1beta3Document `json:"inlineDocument,omitempty"`
 

@@ -3102,8 +3102,8 @@ type Message struct {
 	FallbackText string `json:"fallbackText,omitempty"`
 
 	// LastUpdateTime: Output only. The time at which the message was last
-	// updated in Google Chat server. If the message was never updated, this
-	// field will be same as create_time.
+	// updated. If the message was never updated, this field matches
+	// `create_time`.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 
 	// MatchedUrl: Output only. A URL in `spaces.messages.text` that matches

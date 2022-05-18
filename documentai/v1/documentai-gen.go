@@ -3768,6 +3768,10 @@ func (s *GoogleCloudDocumentaiV1NormalizedVertex) UnmarshalJSON(data []byte) err
 // GoogleCloudDocumentaiV1ProcessRequest: Request message for the
 // process document method.
 type GoogleCloudDocumentaiV1ProcessRequest struct {
+	// FieldMask: Specifies which fields to include in ProcessResponse's
+	// document.
+	FieldMask string `json:"fieldMask,omitempty"`
+
 	// InlineDocument: An inline document proto.
 	InlineDocument *GoogleCloudDocumentaiV1Document `json:"inlineDocument,omitempty"`
 
@@ -3778,7 +3782,7 @@ type GoogleCloudDocumentaiV1ProcessRequest struct {
 	// this request. Default to false.
 	SkipHumanReview bool `json:"skipHumanReview,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InlineDocument") to
+	// ForceSendFields is a list of field names (e.g. "FieldMask") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3786,13 +3790,12 @@ type GoogleCloudDocumentaiV1ProcessRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InlineDocument") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FieldMask") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

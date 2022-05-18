@@ -336,11 +336,10 @@ func (s *GoogleFirebaseAppcheckV1betaAppAttestConfig) MarshalJSON() ([]byte, err
 // token*, which are used to access Firebase services protected by App
 // Check.
 type GoogleFirebaseAppcheckV1betaAppCheckToken struct {
-	// AttestationToken: This field has been renamed to `token`. An App
-	// Check token. App Check tokens are signed JWTs
-	// (https://tools.ietf.org/html/rfc7519) containing claims that identify
-	// the attested app and Firebase project. This token is used to access
-	// Firebase services protected by App Check.
+	// AttestationToken: An App Check token. App Check tokens are signed
+	// JWTs (https://tools.ietf.org/html/rfc7519) containing claims that
+	// identify the attested app and Firebase project. This token is used to
+	// access Firebase services protected by App Check.
 	AttestationToken string `json:"attestationToken,omitempty"`
 
 	// Token: An App Check token. App Check tokens are signed JWTs
@@ -925,8 +924,7 @@ type GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationResponse struct {
 	// ExchangeAppAttestAssertion.
 	Artifact string `json:"artifact,omitempty"`
 
-	// AttestationToken: This field has been renamed to `app_check_token`.
-	// Encapsulates an App Check token.
+	// AttestationToken: Encapsulates an App Check token.
 	AttestationToken *GoogleFirebaseAppcheckV1betaAttestationTokenResponse `json:"attestationToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1520,8 +1518,7 @@ func (s *GoogleFirebaseAppcheckV1betaPublicJwkSet) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1betaRecaptchaConfig: This REST resource has
-// been renamed to RecaptchaV3Config. An app's reCAPTCHA v3
+// GoogleFirebaseAppcheckV1betaRecaptchaConfig: An app's reCAPTCHA v3
 // configuration object. This configuration is used by
 // ExchangeRecaptchaToken to validate reCAPTCHA tokens issued to apps by
 // reCAPTCHA v3. It also controls certain properties of the returned
@@ -3082,8 +3079,7 @@ type ProjectsAppsExchangeRecaptchaTokenCall struct {
 	header_                                                   http.Header
 }
 
-// ExchangeRecaptchaToken: This method has been renamed to
-// ExchangeRecaptchaV3Token. Validates a reCAPTCHA v3 response token
+// ExchangeRecaptchaToken: Validates a reCAPTCHA v3 response token
 // (https://developers.google.com/recaptcha/docs/v3). If valid, returns
 // an AppCheckToken.
 //
@@ -3192,7 +3188,7 @@ func (c *ProjectsAppsExchangeRecaptchaTokenCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "This method has been renamed to ExchangeRecaptchaV3Token. Validates a [reCAPTCHA v3 response token](https://developers.google.com/recaptcha/docs/v3). If valid, returns an AppCheckToken.",
+	//   "description": "Validates a [reCAPTCHA v3 response token](https://developers.google.com/recaptcha/docs/v3). If valid, returns an AppCheckToken.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeRecaptchaToken",
 	//   "httpMethod": "POST",
 	//   "id": "firebaseappcheck.projects.apps.exchangeRecaptchaToken",
@@ -6105,11 +6101,9 @@ type ProjectsAppsRecaptchaConfigBatchGetCall struct {
 	header_      http.Header
 }
 
-// BatchGet: The RecaptchaConfig REST resource has been renamed to
-// RecaptchaV3Config. Please use BatchGetRecaptchaV3Configs instead.
-// Atomically gets the RecaptchaConfigs for the specified list of apps.
-// For security reasons, the `site_secret` field is never populated in
-// the response.
+// BatchGet: Atomically gets the RecaptchaConfigs for the specified list
+// of apps. For security reasons, the `site_secret` field is never
+// populated in the response.
 //
 // - parent: The parent project name shared by all RecaptchaConfigs
 //   being retrieved, in the format ``` projects/{project_number} ```
@@ -6232,7 +6226,7 @@ func (c *ProjectsAppsRecaptchaConfigBatchGetCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "The RecaptchaConfig REST resource has been renamed to RecaptchaV3Config. Please use BatchGetRecaptchaV3Configs instead. Atomically gets the RecaptchaConfigs for the specified list of apps. For security reasons, the `site_secret` field is never populated in the response.",
+	//   "description": "Atomically gets the RecaptchaConfigs for the specified list of apps. For security reasons, the `site_secret` field is never populated in the response.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/-/recaptchaConfig:batchGet",
 	//   "httpMethod": "GET",
 	//   "id": "firebaseappcheck.projects.apps.recaptchaConfig.batchGet",
@@ -6277,10 +6271,8 @@ type ProjectsAppsRecaptchaConfigGetCall struct {
 	header_      http.Header
 }
 
-// Get: The RecaptchaConfig REST resource has been renamed to
-// RecaptchaV3Config. Please use GetRecaptchaV3Config instead. Gets the
-// RecaptchaConfig for the specified app. For security reasons, the
-// `site_secret` field is never populated in the response.
+// Get: Gets the RecaptchaConfig for the specified app. For security
+// reasons, the `site_secret` field is never populated in the response.
 //
 // - name: The relative resource name of the RecaptchaConfig, in the
 //   format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig
@@ -6392,7 +6384,7 @@ func (c *ProjectsAppsRecaptchaConfigGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "The RecaptchaConfig REST resource has been renamed to RecaptchaV3Config. Please use GetRecaptchaV3Config instead. Gets the RecaptchaConfig for the specified app. For security reasons, the `site_secret` field is never populated in the response.",
+	//   "description": "Gets the RecaptchaConfig for the specified app. For security reasons, the `site_secret` field is never populated in the response.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaConfig",
 	//   "httpMethod": "GET",
 	//   "id": "firebaseappcheck.projects.apps.recaptchaConfig.get",
@@ -6431,9 +6423,7 @@ type ProjectsAppsRecaptchaConfigPatchCall struct {
 	header_                                     http.Header
 }
 
-// Patch: The RecaptchaConfig REST resource has been renamed to
-// RecaptchaV3Config. Please use UpdateRecaptchaV3Config instead.
-// Updates the RecaptchaConfig for the specified app. While this
+// Patch: Updates the RecaptchaConfig for the specified app. While this
 // configuration is incomplete or invalid, the app will be unable to
 // exchange reCAPTCHA tokens for App Check tokens. For security reasons,
 // the `site_secret` field is never populated in the response.
@@ -6549,7 +6539,7 @@ func (c *ProjectsAppsRecaptchaConfigPatchCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "The RecaptchaConfig REST resource has been renamed to RecaptchaV3Config. Please use UpdateRecaptchaV3Config instead. Updates the RecaptchaConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.",
+	//   "description": "Updates the RecaptchaConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaConfig",
 	//   "httpMethod": "PATCH",
 	//   "id": "firebaseappcheck.projects.apps.recaptchaConfig.patch",

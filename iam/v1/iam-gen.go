@@ -1416,7 +1416,7 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PatchServiceAccountRequest: The request for PatchServiceAccount. You
+// PatchServiceAccountRequest: The service account patch request. You
 // can patch only the `display_name` and `description` fields. You must
 // use the `update_mask` field to specify which of these fields you want
 // to patch. Only the fields specified in the request are guaranteed to
@@ -10882,7 +10882,7 @@ type ProjectsServiceAccountsKeysDisableCall struct {
 }
 
 // Disable: Disable a ServiceAccountKey. A disabled service account key
-// can be enabled through EnableServiceAccountKey.
+// can be re-enabled with EnableServiceAccountKey.
 //
 // - name: The resource name of the service account key in the following
 //   format:
@@ -10988,7 +10988,7 @@ func (c *ProjectsServiceAccountsKeysDisableCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Disable a ServiceAccountKey. A disabled service account key can be enabled through EnableServiceAccountKey.",
+	//   "description": "Disable a ServiceAccountKey. A disabled service account key can be re-enabled with EnableServiceAccountKey.",
 	//   "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}/keys/{keysId}:disable",
 	//   "httpMethod": "POST",
 	//   "id": "iam.projects.serviceAccounts.keys.disable",

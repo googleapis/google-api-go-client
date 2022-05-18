@@ -2209,6 +2209,10 @@ type SecurityCenterSettings struct {
 	// projects/{project}/securityCenterSettings
 	Name string `json:"name,omitempty"`
 
+	// OnboardingTime: Timestamp of when the customer organization was
+	// onboarded to SCC.
+	OnboardingTime string `json:"onboardingTime,omitempty"`
+
 	// OrgServiceAccount: The organization level service account to be used
 	// for security center components.
 	OrgServiceAccount string `json:"orgServiceAccount,omitempty"`

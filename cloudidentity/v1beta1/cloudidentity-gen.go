@@ -1766,6 +1766,9 @@ type GoogleAppsCloudidentityDevicesV1Device struct {
 	// This field is empty for BYOD devices.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// DeviceId: Unique identifier for the device.
+	DeviceId string `json:"deviceId,omitempty"`
+
 	// DeviceType: Output only. Type of device.
 	//
 	// Possible values:

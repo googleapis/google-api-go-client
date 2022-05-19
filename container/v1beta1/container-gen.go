@@ -1158,6 +1158,9 @@ type Cluster struct {
 	// PrivateClusterConfig: Configuration for private cluster.
 	PrivateClusterConfig *PrivateClusterConfig `json:"privateClusterConfig,omitempty"`
 
+	// ProtectConfig: Enable/Disable Protect API features for the cluster.
+	ProtectConfig *ProtectConfig `json:"protectConfig,omitempty"`
+
 	// ReleaseChannel: Release channel configuration.
 	ReleaseChannel *ReleaseChannel `json:"releaseChannel,omitempty"`
 
@@ -1536,6 +1539,10 @@ type ClusterUpdate struct {
 	//   "PRIVATE_IPV6_GOOGLE_ACCESS_BIDIRECTIONAL" - Enables priate IPv6
 	// access to and from Google Services
 	DesiredPrivateIpv6GoogleAccess string `json:"desiredPrivateIpv6GoogleAccess,omitempty"`
+
+	// DesiredProtectConfig: Enable/Disable Protect API features for the
+	// cluster.
+	DesiredProtectConfig *ProtectConfig `json:"desiredProtectConfig,omitempty"`
 
 	// DesiredReleaseChannel: The desired release channel configuration.
 	DesiredReleaseChannel *ReleaseChannel `json:"desiredReleaseChannel,omitempty"`
@@ -2522,6 +2529,18 @@ type IPAllocationPolicy struct {
 	// `use_ip_aliases` is true.
 	CreateSubnetwork bool `json:"createSubnetwork,omitempty"`
 
+	// Ipv6AccessType: The ipv6 access type (internal or external) when
+	// create_subnetwork is true
+	//
+	// Possible values:
+	//   "IPV6_ACCESS_TYPE_UNSPECIFIED" - Default value, will be defaulted
+	// as type external.
+	//   "INTERNAL" - Access type internal (all v6 addresses are internal
+	// IPs)
+	//   "EXTERNAL" - Access type external (all v6 addresses are external
+	// IPs)
+	Ipv6AccessType string `json:"ipv6AccessType,omitempty"`
+
 	// NodeIpv4Cidr: This field is deprecated, use node_ipv4_cidr_block.
 	NodeIpv4Cidr string `json:"nodeIpv4Cidr,omitempty"`
 
@@ -2558,6 +2577,15 @@ type IPAllocationPolicy struct {
 	// associated with the cluster subnetwork. This field is only applicable
 	// with use_ip_aliases and create_subnetwork is false.
 	ServicesSecondaryRangeName string `json:"servicesSecondaryRangeName,omitempty"`
+
+	// StackType: IP stack type
+	//
+	// Possible values:
+	//   "STACK_TYPE_UNSPECIFIED" - By default, the clusters will be IPV4
+	// only
+	//   "IPV4" - The value used if the cluster is a IPV4 only
+	//   "IPV4_IPV6" - The value used if the cluster is a dual stack cluster
+	StackType string `json:"stackType,omitempty"`
 
 	// SubnetworkName: A custom subnetwork name to be used if
 	// `create_subnetwork` is true. If this field is empty, then an
@@ -4908,6 +4936,37 @@ func (s *PrivateClusterMasterGlobalAccessConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProtectConfig: ProtectConfig defines the flags needed to
+// enable/disable features for the Protect API.
+type ProtectConfig struct {
+	// WorkloadConfig: WorkloadConfig defines which actions are enabled for
+	// a cluster's workload configurations.
+	WorkloadConfig *WorkloadConfig `json:"workloadConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WorkloadConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "WorkloadConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProtectConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ProtectConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PubSub: Pub/Sub specific notification config.
 type PubSub struct {
 	// Enabled: Enable notifications for Pub/Sub.
@@ -7132,6 +7191,48 @@ type WorkloadCertificates struct {
 
 func (s *WorkloadCertificates) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadCertificates
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadConfig: WorkloadConfig defines the flags to enable or disable
+// the workload configurations for the cluster.
+type WorkloadConfig struct {
+	// AuditMode: Sets which mode of auditing should be used for the
+	// cluster's workloads.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value meaning that no mode has been
+	// specified.
+	//   "DISABLED" - This disables Workload Configuration auditing on the
+	// cluster, meaning that nothing is surfaced.
+	//   "BASIC" - Applies the default set of policy auditing to a cluster's
+	// workloads.
+	//   "BASELINE" - Surfaces configurations that are not in line with the
+	// Pod Security Standard Baseline policy.
+	//   "RESTRICTED" - Surfaces configurations that are not in line with
+	// the Pod Security Standard Restricted policy.
+	AuditMode string `json:"auditMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuditMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuditMode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkloadConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

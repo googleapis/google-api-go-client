@@ -190,8 +190,8 @@ type ProjectsReposService struct {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -1798,8 +1798,9 @@ type ProjectsReposGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsReposService) GetIamPolicy(resource string) *ProjectsReposGetIamPolicyCall {
 	c := &ProjectsReposGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1938,7 +1939,7 @@ func (c *ProjectsReposGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/repos/.*$",
 	//       "required": true,
@@ -2318,8 +2319,9 @@ type ProjectsReposSetIamPolicyCall struct {
 // resource. Replaces any existing policy.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsReposService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsReposSetIamPolicyCall {
 	c := &ProjectsReposSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2427,7 +2429,7 @@ func (c *ProjectsReposSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/repos/.*$",
 	//       "required": true,
@@ -2609,7 +2611,8 @@ type ProjectsReposTestIamPermissionsCall struct {
 // an empty set of permissions, not a NOT_FOUND error.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsReposService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsReposTestIamPermissionsCall {
 	c := &ProjectsReposTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2718,7 +2721,7 @@ func (c *ProjectsReposTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/repos/.*$",
 	//       "required": true,

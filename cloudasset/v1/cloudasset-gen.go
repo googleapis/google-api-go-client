@@ -465,10 +465,6 @@ type Asset struct {
 	// for more information.
 	OsInventory *Inventory `json:"osInventory,omitempty"`
 
-	// RelatedAssets: The related assets of the asset of one relationship
-	// type. One asset only represents one type of relationship.
-	RelatedAssets *RelatedAssets `json:"relatedAssets,omitempty"`
-
 	// Resource: A representation of the resource.
 	Resource *Resource `json:"resource,omitempty"`
 
@@ -559,8 +555,8 @@ func (s *AttachedResource) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -4558,93 +4554,6 @@ func (s *QueryContent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RelatedAsset: An asset identifier in Google Cloud which contains its
-// name, type and ancestors. An asset can be any resource in the Google
-// Cloud resource hierarchy
-// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
-// a resource outside the Google Cloud resource hierarchy (such as
-// Google Kubernetes Engine clusters and objects), or a policy (e.g.
-// Cloud IAM policy). See Supported asset types
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
-// for more information.
-type RelatedAsset struct {
-	// Ancestors: The ancestors of an asset in Google Cloud resource
-	// hierarchy
-	// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
-	// represented as a list of relative resource names. An ancestry path
-	// starts with the closest ancestor in the hierarchy and ends at root.
-	// Example: `["projects/123456789", "folders/5432",
-	// "organizations/1234"]`
-	Ancestors []string `json:"ancestors,omitempty"`
-
-	// Asset: The full name of the asset. Example:
-	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
-	// s/instance1` See Resource names
-	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
-	// for more information.
-	Asset string `json:"asset,omitempty"`
-
-	// AssetType: The type of the asset. Example:
-	// `compute.googleapis.com/Disk` See Supported asset types
-	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
-	// for more information.
-	AssetType string `json:"assetType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Ancestors") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Ancestors") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RelatedAsset) MarshalJSON() ([]byte, error) {
-	type NoMethod RelatedAsset
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// RelatedAssets: The detailed related assets with the
-// `relationship_type`.
-type RelatedAssets struct {
-	// Assets: The peer resources of the relationship.
-	Assets []*RelatedAsset `json:"assets,omitempty"`
-
-	// RelationshipAttributes: The detailed relationship attributes.
-	RelationshipAttributes *RelationshipAttributes `json:"relationshipAttributes,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Assets") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Assets") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RelatedAssets) MarshalJSON() ([]byte, error) {
-	type NoMethod RelatedAssets
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // RelatedResource: The detailed related resource.
 type RelatedResource struct {
 	// AssetType: The type of the asset. Example:
@@ -4706,47 +4615,6 @@ type RelatedResources struct {
 
 func (s *RelatedResources) MarshalJSON() ([]byte, error) {
 	type NoMethod RelatedResources
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// RelationshipAttributes: The relationship attributes which include
-// `type`, `source_resource_type`, `target_resource_type` and `action`.
-type RelationshipAttributes struct {
-	// Action: The detail of the relationship, e.g. `contains`, `attaches`
-	Action string `json:"action,omitempty"`
-
-	// SourceResourceType: The source asset type. Example:
-	// `compute.googleapis.com/Instance`
-	SourceResourceType string `json:"sourceResourceType,omitempty"`
-
-	// TargetResourceType: The target asset type. Example:
-	// `compute.googleapis.com/Disk`
-	TargetResourceType string `json:"targetResourceType,omitempty"`
-
-	// Type: The unique identifier of the relationship type. Example:
-	// `INSTANCE_TO_INSTANCEGROUP`
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Action") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Action") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RelationshipAttributes) MarshalJSON() ([]byte, error) {
-	type NoMethod RelationshipAttributes
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4989,7 +4857,7 @@ type ResourceSearchResult struct {
 
 	// TagKeys: TagKey namespaced names, in the format of
 	// {ORG_ID}/{TAG_KEY_SHORT_NAME}. To search against the `tagKeys`: * use
-	// a field query. Example: - `tagKeys:"123456789/e*" -
+	// a field query. Example: - `tagKeys:"123456789/env*" -
 	// `tagKeys="123456789/env" - `tagKeys:"env" * use a free text query.
 	// Example: - `env`
 	TagKeys []string `json:"tagKeys,omitempty"`
@@ -5004,8 +4872,8 @@ type ResourceSearchResult struct {
 	// {ORG_ID}/{TAG_KEY_SHORT_NAME}/{TAG_VALUE_SHORT_NAME}. To search
 	// against the `tagValues`: * use a field query. Example: -
 	// `tagValues:"env" - `tagValues:"env/prod" -
-	// `tagValues:"123456789/env/pr*" - `tagValues="123456789/env/prod" *
-	// use a free text query. Example: - `prod`
+	// `tagValues:"123456789/env/prod*" - `tagValues="123456789/env/prod"
+	// * use a free text query. Example: - `prod`
 	TagValues []string `json:"tagValues,omitempty"`
 
 	// UpdateTime: The last update timestamp of this resource, at which the

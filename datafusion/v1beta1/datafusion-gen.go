@@ -270,8 +270,8 @@ func (s *Accelerator) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -363,8 +363,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -513,8 +513,7 @@ func (s *DnsPeering) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1372,7 +1371,7 @@ type RestartInstanceRequest struct {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -1453,7 +1452,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -1738,8 +1737,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1876,7 +1875,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2532,8 +2531,9 @@ type ProjectsLocationsInstancesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsInstancesService) GetIamPolicy(resource string) *ProjectsLocationsInstancesGetIamPolicyCall {
 	c := &ProjectsLocationsInstancesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2672,7 +2672,7 @@ func (c *ProjectsLocationsInstancesGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -3233,8 +3233,9 @@ type ProjectsLocationsInstancesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsInstancesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsInstancesSetIamPolicyCall {
 	c := &ProjectsLocationsInstancesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3342,7 +3343,7 @@ func (c *ProjectsLocationsInstancesSetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -3382,7 +3383,8 @@ type ProjectsLocationsInstancesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsInstancesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsInstancesTestIamPermissionsCall {
 	c := &ProjectsLocationsInstancesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3491,7 +3493,7 @@ func (c *ProjectsLocationsInstancesTestIamPermissionsCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -3670,13 +3672,20 @@ type ProjectsLocationsInstancesDnsPeeringsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Add DNS peering on the given resource.
+// Create: Creates DNS peering on the given resource.
 //
 // - parent: The resource on which DNS peering will be created.
 func (r *ProjectsLocationsInstancesDnsPeeringsService) Create(parent string, dnspeering *DnsPeering) *ProjectsLocationsInstancesDnsPeeringsCreateCall {
 	c := &ProjectsLocationsInstancesDnsPeeringsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.dnspeering = dnspeering
+	return c
+}
+
+// DnsPeeringId sets the optional parameter "dnsPeeringId": Required.
+// The name of the peering to create.
+func (c *ProjectsLocationsInstancesDnsPeeringsCreateCall) DnsPeeringId(dnsPeeringId string) *ProjectsLocationsInstancesDnsPeeringsCreateCall {
+	c.urlParams_.Set("dnsPeeringId", dnsPeeringId)
 	return c
 }
 
@@ -3771,7 +3780,7 @@ func (c *ProjectsLocationsInstancesDnsPeeringsCreateCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Add DNS peering on the given resource.",
+	//   "description": "Creates DNS peering on the given resource.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/dnsPeerings",
 	//   "httpMethod": "POST",
 	//   "id": "datafusion.projects.locations.instances.dnsPeerings.create",
@@ -3779,6 +3788,11 @@ func (c *ProjectsLocationsInstancesDnsPeeringsCreateCall) Do(opts ...googleapi.C
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "dnsPeeringId": {
+	//       "description": "Required. The name of the peering to create.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. The resource on which DNS peering will be created.",
 	//       "location": "path",
@@ -3811,7 +3825,7 @@ type ProjectsLocationsInstancesDnsPeeringsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Remove DNS peering on the given resource.
+// Delete: Deletes DNS peering on the given resource.
 //
 // - name: The name of the DNS peering zone to delete. Format:
 //   projects/{project}/locations/{location}/instances/{instance}/dnsPeer
@@ -3908,7 +3922,7 @@ func (c *ProjectsLocationsInstancesDnsPeeringsDeleteCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Remove DNS peering on the given resource.",
+	//   "description": "Deletes DNS peering on the given resource.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/dnsPeerings/{dnsPeeringsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datafusion.projects.locations.instances.dnsPeerings.delete",
@@ -3946,7 +3960,7 @@ type ProjectsLocationsInstancesDnsPeeringsListCall struct {
 	header_      http.Header
 }
 
-// List: List DNS peering for a given resource.
+// List: Lists DNS peerings for a given resource.
 //
 // - parent: The parent, which owns this collection of dns peerings.
 //   Format:
@@ -3959,8 +3973,8 @@ func (r *ProjectsLocationsInstancesDnsPeeringsService) List(parent string) *Proj
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of dns peerings to return. The service may return fewer than this
-// value. If unspecified, at most 10 dns peerings will be returned. The
-// maximum value is 50; values above 50 will be coerced to 50.
+// value. If unspecified, at most 50 dns peerings will be returned. The
+// maximum value is 200; values above 200 will be coerced to 200.
 func (c *ProjectsLocationsInstancesDnsPeeringsListCall) PageSize(pageSize int64) *ProjectsLocationsInstancesDnsPeeringsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4075,7 +4089,7 @@ func (c *ProjectsLocationsInstancesDnsPeeringsListCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "List DNS peering for a given resource.",
+	//   "description": "Lists DNS peerings for a given resource.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/dnsPeerings",
 	//   "httpMethod": "GET",
 	//   "id": "datafusion.projects.locations.instances.dnsPeerings.list",
@@ -4084,7 +4098,7 @@ func (c *ProjectsLocationsInstancesDnsPeeringsListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of dns peerings to return. The service may return fewer than this value. If unspecified, at most 10 dns peerings will be returned. The maximum value is 50; values above 50 will be coerced to 50.",
+	//       "description": "The maximum number of dns peerings to return. The service may return fewer than this value. If unspecified, at most 50 dns peerings will be returned. The maximum value is 200; values above 200 will be coerced to 200.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4150,8 +4164,9 @@ type ProjectsLocationsInstancesNamespacesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsInstancesNamespacesService) GetIamPolicy(resource string) *ProjectsLocationsInstancesNamespacesGetIamPolicyCall {
 	c := &ProjectsLocationsInstancesNamespacesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4290,7 +4305,7 @@ func (c *ProjectsLocationsInstancesNamespacesGetIamPolicyCall) Do(opts ...google
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+/namespaces/[^/]+$",
 	//       "required": true,
@@ -4548,8 +4563,9 @@ type ProjectsLocationsInstancesNamespacesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsInstancesNamespacesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsInstancesNamespacesSetIamPolicyCall {
 	c := &ProjectsLocationsInstancesNamespacesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4657,7 +4673,7 @@ func (c *ProjectsLocationsInstancesNamespacesSetIamPolicyCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+/namespaces/[^/]+$",
 	//       "required": true,
@@ -4697,7 +4713,8 @@ type ProjectsLocationsInstancesNamespacesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsInstancesNamespacesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsInstancesNamespacesTestIamPermissionsCall {
 	c := &ProjectsLocationsInstancesNamespacesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4806,7 +4823,7 @@ func (c *ProjectsLocationsInstancesNamespacesTestIamPermissionsCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+/namespaces/[^/]+$",
 	//       "required": true,

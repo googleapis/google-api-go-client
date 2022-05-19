@@ -239,10 +239,6 @@ type GoogleCloudRunV2BinaryAuthorization struct {
 	// https://cloud.google.com/binary-authorization/docs/using-breakglass
 	BreakglassJustification string `json:"breakglassJustification,omitempty"`
 
-	// Policy: The path to a binary authorization policy. Format:
-	// projects/{project}/platforms/cloudRun/{policy-name}
-	Policy string `json:"policy,omitempty"`
-
 	// UseDefault: If True, indicates to use the default project's binary
 	// authorization policy. If False, binary authorization will be
 	// disabled.
@@ -308,18 +304,6 @@ func (s *GoogleCloudRunV2CloudSqlInstance) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudRunV2Condition: Defines a status condition for a resource.
 type GoogleCloudRunV2Condition struct {
-	// DomainMappingReason: A reason for the domain mapping condition.
-	//
-	// Possible values:
-	//   "DOMAIN_MAPPING_REASON_UNDEFINED" - Default value.
-	//   "ROUTE_NOT_READY" - Internal route is not yet ready.
-	//   "PERMISSION_DENIED" - Insufficient permissions.
-	//   "CERTIFICATE_ALREADY_EXISTS" - Certificate already exists.
-	//   "MAPPING_ALREADY_EXISTS" - Mapping already exists.
-	//   "CERTIFICATE_PENDING" - Certificate issuance pending.
-	//   "CERTIFICATE_FAILED" - Certificate issuance failed.
-	DomainMappingReason string `json:"domainMappingReason,omitempty"`
-
 	// ExecutionReason: A reason for the execution condition.
 	//
 	// Possible values:
@@ -330,26 +314,6 @@ type GoogleCloudRunV2Condition struct {
 	// attempt failed due to the user container exiting with a non-zero exit
 	// code.
 	ExecutionReason string `json:"executionReason,omitempty"`
-
-	// InternalReason: A reason for the internal condition.
-	//
-	// Possible values:
-	//   "INTERNAL_REASON_UNDEFINED" - Default value.
-	//   "CONFLICTING_REVISION_NAME" - The revision name provided conflicts
-	// with an existing one.
-	//   "REVISION_MISSING" - Revision is missing; this is usually a
-	// transient reason.
-	//   "CONFIGURATION_MISSING" - Internal configuration is missing; this
-	// is usually a transient reason.
-	//   "ASSIGNING_TRAFFIC" - Assigning traffic; this is a transient
-	// reason.
-	//   "UPDATING_INGRESS_TRAFFIC_ALLOWED" - Updating ingress traffic
-	// settings; this is a transient reason.
-	//   "REVISION_ORG_POLICY_VIOLATION" - The revision can't be created
-	// because it violates an org policy setting.
-	//   "UPDATING_GCFV2_URI_DATA" - Updating GCFv2 URI data; this is a
-	// transient reason.
-	InternalReason string `json:"internalReason,omitempty"`
 
 	// LastTransitionTime: Last time the condition transitioned from one
 	// status to another.
@@ -364,10 +328,8 @@ type GoogleCloudRunV2Condition struct {
 	// Possible values:
 	//   "COMMON_REASON_UNDEFINED" - Default value.
 	//   "UNKNOWN" - Reason unknown. Further details will be in message.
-	//   "ROUTE_MISSING" - The internal route is missing.
 	//   "REVISION_FAILED" - Revision creation process failed.
 	//   "PROGRESS_DEADLINE_EXCEEDED" - Timed out waiting for completion.
-	//   "BUILD_STEP_FAILED" - There was a build error.
 	//   "CONTAINER_MISSING" - The container image path is incorrect.
 	//   "CONTAINER_PERMISSION_DENIED" - Insufficient permissions on the
 	// container image.
@@ -385,6 +347,8 @@ type GoogleCloudRunV2Condition struct {
 	//   "IMMEDIATE_RETRY" - System will retry immediately.
 	//   "POSTPONED_RETRY" - System will retry later; current attempt
 	// failed.
+	//   "INTERNAL" - An internal error occurred. Further information may be
+	// in the message.
 	Reason string `json:"reason,omitempty"`
 
 	// RevisionReason: A reason for the revision condition.
@@ -445,15 +409,15 @@ type GoogleCloudRunV2Condition struct {
 	// Resource is ready.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DomainMappingReason")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ExecutionReason") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DomainMappingReason") to
+	// NullFields is a list of field names (e.g. "ExecutionReason") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -499,7 +463,7 @@ type GoogleCloudRunV2Container struct {
 	Env []*GoogleCloudRunV2EnvVar `json:"env,omitempty"`
 
 	// Image: Required. URL of the Container image in Google Container
-	// Registry or Docker More info:
+	// Registry or Google Artifact Registry. More info:
 	// https://kubernetes.io/docs/concepts/containers/images
 	Image string `json:"image,omitempty"`
 
@@ -574,40 +538,6 @@ type GoogleCloudRunV2ContainerPort struct {
 
 func (s *GoogleCloudRunV2ContainerPort) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2ContainerPort
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRunV2ContainerStatus: ContainerStatus holds the
-// information of container name and image digest value.
-type GoogleCloudRunV2ContainerStatus struct {
-	// ImageDigest: ImageDigest holds the resolved digest for the image
-	// specified, regardless of whether a tag or digest was originally
-	// specified in the Container object.
-	ImageDigest string `json:"imageDigest,omitempty"`
-
-	// Name: The name of the container, if specified.
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ImageDigest") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageDigest") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRunV2ContainerStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunV2ContainerStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -976,10 +906,6 @@ type GoogleCloudRunV2Job struct {
 	// `reconciling` for additional information on reconciliation process in
 	// Cloud Run.
 	Conditions []*GoogleCloudRunV2Condition `json:"conditions,omitempty"`
-
-	// ContainerStatuses: Output only. Status information for each of the
-	// containers specified.
-	ContainerStatuses []*GoogleCloudRunV2ContainerStatus `json:"containerStatuses,omitempty"`
 
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1374,14 +1300,6 @@ type GoogleCloudRunV2Revision struct {
 	// not reach a serving state.
 	Conditions []*GoogleCloudRunV2Condition `json:"conditions,omitempty"`
 
-	// Confidential: Indicates whether Confidential Cloud Run is enabled in
-	// this Revision.
-	Confidential bool `json:"confidential,omitempty"`
-
-	// ContainerConcurrency: Sets the maximum number of requests that each
-	// serving instance can receive.
-	ContainerConcurrency int64 `json:"containerConcurrency,omitempty"`
-
 	// Containers: Holds the single container that defines the unit of
 	// execution for this Revision.
 	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
@@ -1477,6 +1395,10 @@ type GoogleCloudRunV2Revision struct {
 	// LogUri: Output only. The Google Console URI to obtain logs for the
 	// Revision.
 	LogUri string `json:"logUri,omitempty"`
+
+	// MaxInstanceRequestConcurrency: Sets the maximum number of requests
+	// that each serving instance can receive.
+	MaxInstanceRequestConcurrency int64 `json:"maxInstanceRequestConcurrency,omitempty"`
 
 	// Name: Output only. The unique name of this Revision.
 	Name string `json:"name,omitempty"`
@@ -1591,14 +1513,6 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// Annotations: KRM-style annotations for the resource.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// Confidential: Enables Confidential Cloud Run in Revisions created
-	// using this template.
-	Confidential bool `json:"confidential,omitempty"`
-
-	// ContainerConcurrency: Sets the maximum number of requests that each
-	// serving instance can receive.
-	ContainerConcurrency int64 `json:"containerConcurrency,omitempty"`
-
 	// Containers: Holds the single container that defines the unit of
 	// execution for this Revision.
 	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
@@ -1619,6 +1533,10 @@ type GoogleCloudRunV2RevisionTemplate struct {
 
 	// Labels: KRM-style labels for the resource.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// MaxInstanceRequestConcurrency: Sets the maximum number of requests
+	// that each serving instance can receive.
+	MaxInstanceRequestConcurrency int64 `json:"maxInstanceRequestConcurrency,omitempty"`
 
 	// Revision: The unique name for the revision. If this field is omitted,
 	// it will be automatically generated based on the Service name.
@@ -1849,7 +1767,9 @@ type GoogleCloudRunV2Service struct {
 	ExpireTime string `json:"expireTime,omitempty"`
 
 	// Generation: Output only. A number that monotonically increases every
-	// time the user modifies the desired state.
+	// time the user modifies the desired state. Please note that unlike v1,
+	// this is an int64 value. As with most Google APIs, its JSON
+	// representation will be a `string` instead of an `integer`.
 	Generation int64 `json:"generation,omitempty,string"`
 
 	// Ingress: Provides the ingress settings for this Service. On output,
@@ -1938,7 +1858,10 @@ type GoogleCloudRunV2Service struct {
 
 	// ObservedGeneration: Output only. The generation of this Service
 	// currently serving traffic. See comments in `reconciling` for
-	// additional information on reconciliation process in Cloud Run.
+	// additional information on reconciliation process in Cloud Run. Please
+	// note that unlike v1, this is an int64 value. As with most Google
+	// APIs, its JSON representation will be a `string` instead of an
+	// `integer`.
 	ObservedGeneration int64 `json:"observedGeneration,omitempty,string"`
 
 	// Reconciling: Output only. Returns true if the Service is currently
@@ -2617,8 +2540,8 @@ func (s *GoogleCloudRunV2VpcAccess) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type GoogleIamV1AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -3706,8 +3629,9 @@ type ProjectsLocationsJobsGetIamPolicyCall struct {
 // policies.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsJobsService) GetIamPolicy(resource string) *ProjectsLocationsJobsGetIamPolicyCall {
 	c := &ProjectsLocationsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3846,7 +3770,7 @@ func (c *ProjectsLocationsJobsGetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -4101,13 +4025,6 @@ func (c *ProjectsLocationsJobsPatchCall) AllowMissing(allowMissing bool) *Projec
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to be updated.
-func (c *ProjectsLocationsJobsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsJobsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
 // ValidateOnly sets the optional parameter "validateOnly": Indicates
 // that the request should be validated and default values populated,
 // without persisting the request or updating any resources.
@@ -4225,12 +4142,6 @@ func (c *ProjectsLocationsJobsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
@@ -4411,8 +4322,9 @@ type ProjectsLocationsJobsSetIamPolicyCall struct {
 // Job. Overwrites any existing policy.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsJobsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsJobsSetIamPolicyCall {
 	c := &ProjectsLocationsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4520,7 +4432,7 @@ func (c *ProjectsLocationsJobsSetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -4557,7 +4469,8 @@ type ProjectsLocationsJobsTestIamPermissionsCall struct {
 // API call.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsJobsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsJobsTestIamPermissionsCall {
 	c := &ProjectsLocationsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4667,7 +4580,7 @@ func (c *ProjectsLocationsJobsTestIamPermissionsCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -6558,8 +6471,9 @@ type ProjectsLocationsServicesGetIamPolicyCall struct {
 // inherited policies.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) GetIamPolicy(resource string) *ProjectsLocationsServicesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6698,7 +6612,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -6958,13 +6872,6 @@ func (c *ProjectsLocationsServicesPatchCall) AllowMissing(allowMissing bool) *Pr
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to be updated.
-func (c *ProjectsLocationsServicesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsServicesPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
 // ValidateOnly sets the optional parameter "validateOnly": Indicates
 // that the request should be validated and default values populated,
 // without persisting the request or updating any resources.
@@ -7084,12 +6991,6 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "validateOnly": {
 	//       "description": "Indicates that the request should be validated and default values populated, without persisting the request or updating any resources.",
 	//       "location": "query",
@@ -7125,8 +7026,9 @@ type ProjectsLocationsServicesSetIamPolicyCall struct {
 // Service. Overwrites any existing policy.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsServicesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7234,7 +7136,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -7271,7 +7173,8 @@ type ProjectsLocationsServicesTestIamPermissionsCall struct {
 // API call.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7381,7 +7284,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,

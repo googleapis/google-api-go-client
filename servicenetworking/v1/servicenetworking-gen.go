@@ -1202,6 +1202,10 @@ type ConsumerConfig struct {
 	// private service access connection.
 	ReservedRanges []*GoogleCloudServicenetworkingV1ConsumerConfigReservedRange `json:"reservedRanges,omitempty"`
 
+	// UsedIpRanges: Output only. The IP ranges already in use by consumer
+	// or producer
+	UsedIpRanges []string `json:"usedIpRanges,omitempty"`
+
 	// VpcScReferenceArchitectureEnabled: Output only. Indicates whether the
 	// VPC Service Controls reference architecture is configured for the
 	// producer VPC host network.
@@ -3097,6 +3101,14 @@ func (s *MetricDescriptorMetadata) MarshalJSON() ([]byte, error) {
 // causes that metric's configured quota behaviors to apply to the
 // method call.
 type MetricRule struct {
+	// DynamicMetricCosts: Metrics to update when the selected methods are
+	// called. The key of the map is the metric name, the value is the
+	// DynamicCostType to specify how to calculate the cost from the
+	// request. The cost amount will be increased for the metric against
+	// which the quota limits are defined. It is only implemented in
+	// CloudESF(go/cloudesf)
+	DynamicMetricCosts map[string]string `json:"dynamicMetricCosts,omitempty"`
+
 	// MetricCosts: Metrics to update when the selected methods are called,
 	// and the associated cost applied to each metric. The key of the map is
 	// the metric name, and the values are the amount increased for the
@@ -3108,20 +3120,21 @@ type MetricRule struct {
 	// selector for syntax details.
 	Selector string `json:"selector,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MetricCosts") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "DynamicMetricCosts")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MetricCosts") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DynamicMetricCosts") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -7782,6 +7795,17 @@ func (r *ServicesProjectsGlobalNetworksService) Get(name string) *ServicesProjec
 	return c
 }
 
+// IncludeUsedIpRanges sets the optional parameter
+// "includeUsedIpRanges": When true, include the used IP ranges as part
+// of the GetConsumerConfig output. This includes routes created inside
+// the service networking network, consumer network, peers of the
+// consumer network, and reserved ranges inside the service networking
+// network. By default, this is false
+func (c *ServicesProjectsGlobalNetworksGetCall) IncludeUsedIpRanges(includeUsedIpRanges bool) *ServicesProjectsGlobalNetworksGetCall {
+	c.urlParams_.Set("includeUsedIpRanges", fmt.Sprint(includeUsedIpRanges))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7889,6 +7913,11 @@ func (c *ServicesProjectsGlobalNetworksGetCall) Do(opts ...googleapi.CallOption)
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "includeUsedIpRanges": {
+	//       "description": "Optional. When true, include the used IP ranges as part of the GetConsumerConfig output. This includes routes created inside the service networking network, consumer network, peers of the consumer network, and reserved ranges inside the service networking network. By default, this is false",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. Name of the consumer config to retrieve in the format: `services/{service}/projects/{project}/global/networks/{network}`. {service} is the peering service that is managing connectivity for the service producer's organization. For Google services that support this functionality, this value is `servicenetworking.googleapis.com`. {project} is a project number e.g. `12345` that contains the service consumer's VPC network. {network} is the name of the service consumer's VPC network.",
 	//       "location": "path",

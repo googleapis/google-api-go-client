@@ -6859,6 +6859,11 @@ type GoogleCloudApigeeV1Organization struct {
 	// (https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).
 	AnalyticsRegion string `json:"analyticsRegion,omitempty"`
 
+	// ApigeeProjectId: Output only. Apigee Project ID associated with the
+	// organization. Use this project to allowlist Apigee in the Service
+	// Attachment when using private service connect with Apigee.
+	ApigeeProjectId string `json:"apigeeProjectId,omitempty"`
+
 	// Attributes: Not used by Apigee.
 	Attributes []string `json:"attributes,omitempty"`
 
@@ -9571,8 +9576,8 @@ func (s *GoogleCloudApigeeV1UpdateError) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type GoogleIamV1AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -10571,14 +10576,35 @@ type OrganizationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete an Apigee organization. Only supported for
-// SubscriptionType TRIAL.
+// Delete: Delete an Apigee organization. For organizations with
+// BillingType EVALUATION, an immediate deletion is performed. For paid
+// organizations, a soft-deletion is performed. The organization can be
+// restored within the soft-deletion period - which can be controlled
+// using the retention field in the request.
 //
 // - name: Name of the organization. Use the following structure in your
 //   request: `organizations/{org}`.
 func (r *OrganizationsService) Delete(name string) *OrganizationsDeleteCall {
 	c := &OrganizationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Retention sets the optional parameter "retention": This setting is
+// only applicable for organizations that are soft-deleted (i.e.
+// BillingType is not EVALUATION). It controls how long Organization
+// data will be retained after the initial delete operation completes.
+// During this period, the Organization may be restored to its last
+// known state. After this period, the Organization will no longer be
+// able to be restored.
+//
+// Possible values:
+//   "DELETION_RETENTION_UNSPECIFIED" - Default data retention settings
+// will be applied.
+//   "MINIMUM" - Organization data will be retained for the minimum
+// period of 24 hours.
+func (c *OrganizationsDeleteCall) Retention(retention string) *OrganizationsDeleteCall {
+	c.urlParams_.Set("retention", retention)
 	return c
 }
 
@@ -10668,7 +10694,7 @@ func (c *OrganizationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete an Apigee organization. Only supported for SubscriptionType TRIAL.",
+	//   "description": "Delete an Apigee organization. For organizations with BillingType EVALUATION, an immediate deletion is performed. For paid organizations, a soft-deletion is performed. The organization can be restored within the soft-deletion period - which can be controlled using the retention field in the request.",
 	//   "flatPath": "v1/organizations/{organizationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.delete",
@@ -10681,6 +10707,19 @@ func (c *OrganizationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "retention": {
+	//       "description": "Optional. This setting is only applicable for organizations that are soft-deleted (i.e. BillingType is not EVALUATION). It controls how long Organization data will be retained after the initial delete operation completes. During this period, the Organization may be restored to its last known state. After this period, the Organization will no longer be able to be restored.",
+	//       "enum": [
+	//         "DELETION_RETENTION_UNSPECIFIED",
+	//         "MINIMUM"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default data retention settings will be applied.",
+	//         "Organization data will be retained for the minimum period of 24 hours."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -27233,8 +27272,9 @@ type OrganizationsEnvironmentsGetIamPolicyCall struct {
 // call this API.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsEnvironmentsService) GetIamPolicy(resource string) *OrganizationsEnvironmentsGetIamPolicyCall {
 	c := &OrganizationsEnvironmentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -27373,7 +27413,7 @@ func (c *OrganizationsEnvironmentsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -27558,8 +27598,9 @@ type OrganizationsEnvironmentsSetIamPolicyCall struct {
 // call this API.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsEnvironmentsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *OrganizationsEnvironmentsSetIamPolicyCall {
 	c := &OrganizationsEnvironmentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -27667,7 +27708,7 @@ func (c *OrganizationsEnvironmentsSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -27840,7 +27881,8 @@ type OrganizationsEnvironmentsTestIamPermissionsCall struct {
 // permission set is returned (a NOT_FOUND error is not returned).
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *OrganizationsEnvironmentsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *OrganizationsEnvironmentsTestIamPermissionsCall {
 	c := &OrganizationsEnvironmentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -27950,7 +27992,7 @@ func (c *OrganizationsEnvironmentsTestIamPermissionsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,

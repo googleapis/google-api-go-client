@@ -602,8 +602,9 @@ type GoogleChromePolicyV1PolicySchemaFieldDescription struct {
 	// description.
 	Field string `json:"field,omitempty"`
 
-	// FieldDependencies: Output only. Provides a list of fields and the
-	// values they must have for this field to be allowed to be set.
+	// FieldDependencies: Output only. Provides a list of fields and values.
+	// At least one of the fields must have the corresponding value in order
+	// for this field to be allowed to be set.
 	FieldDependencies []*GoogleChromePolicyV1PolicySchemaFieldDependencies `json:"fieldDependencies,omitempty"`
 
 	// InputConstraint: Output only. Any input constraints associated on the

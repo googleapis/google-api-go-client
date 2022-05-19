@@ -693,6 +693,19 @@ type BinaryAuthorization struct {
 	// all container images will be validated by Binary Authorization.
 	Enabled bool `json:"enabled,omitempty"`
 
+	// EvaluationMode: Mode of operation for binauthz policy evaluation.
+	// Currently the only options are equivalent to enable/disable. If
+	// unspecified, defaults to DISABLED.
+	//
+	// Possible values:
+	//   "EVALUATION_MODE_UNSPECIFIED" - Default value, equivalent to
+	// DISABLED.
+	//   "DISABLED" - Disable BinaryAuthorization
+	//   "PROJECT_SINGLETON_POLICY_ENFORCE" - If enabled, enforce Kubernetes
+	// admission requests with BinAuthz using the project's singleton
+	// policy. Equivalent to bool enabled=true.
+	EvaluationMode string `json:"evaluationMode,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Enabled") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -731,8 +744,8 @@ type CancelOperationRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -1594,8 +1607,8 @@ type CompleteIPRotationRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://developers.google.com/console/help/new/#projectnumber). This
-	// field has been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -1729,8 +1742,8 @@ type CreateClusterRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the parent field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the parent field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -1779,8 +1792,8 @@ type CreateNodePoolRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://developers.google.com/console/help/new/#projectnumber). This
-	// field has been deprecated and replaced by the parent field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the parent field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -3696,6 +3709,50 @@ func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NetworkPerformanceConfig: Configuration of all network bandwidth
+// tiers
+type NetworkPerformanceConfig struct {
+	// ExternalIpEgressBandwidthTier: Specifies the network bandwidth tier
+	// for the NodePool for traffic to external/public IP addresses.
+	//
+	// Possible values:
+	//   "TIER_UNSPECIFIED" - Default value
+	//   "TIER_1" - Higher bandwidth, actual values based on VM size.
+	ExternalIpEgressBandwidthTier string `json:"externalIpEgressBandwidthTier,omitempty"`
+
+	// TotalEgressBandwidthTier: Specifies the total network bandwidth tier
+	// for the NodePool.
+	//
+	// Possible values:
+	//   "TIER_UNSPECIFIED" - Default value
+	//   "TIER_1" - Higher bandwidth, actual values based on VM size.
+	TotalEgressBandwidthTier string `json:"totalEgressBandwidthTier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ExternalIpEgressBandwidthTier") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ExternalIpEgressBandwidthTier") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NetworkPerformanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkPerformanceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NetworkPolicy: Configuration options for the NetworkPolicy feature.
 // https://kubernetes.io/docs/concepts/services-networking/networkpolicies/
 type NetworkPolicy struct {
@@ -4141,6 +4198,9 @@ type NodeNetworkConfig struct {
 	// Only applicable if `ip_allocation_policy.use_ip_aliases` is true.
 	// This field cannot be changed after the node pool has been created.
 	CreatePodRange bool `json:"createPodRange,omitempty"`
+
+	// NetworkPerformanceConfig: Network bandwidth tier configuration.
+	NetworkPerformanceConfig *NetworkPerformanceConfig `json:"networkPerformanceConfig,omitempty"`
 
 	// PodIpv4CidrBlock: The IP address range for pod IPs in this node pool.
 	// Only applicable if `create_pod_range` is true. Set to blank to have a
@@ -5178,8 +5238,8 @@ type RollbackNodePoolUpgradeRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -5421,8 +5481,8 @@ type SetAddonsConfigRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -5477,8 +5537,8 @@ type SetLabelsRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://developers.google.com/console/help/new/#projectnumber). This
-	// field has been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ResourceLabels: Required. The labels to set for that cluster.
@@ -5531,8 +5591,8 @@ type SetLegacyAbacRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -5586,8 +5646,8 @@ type SetLocationsRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -5642,8 +5702,8 @@ type SetLoggingServiceRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -5691,7 +5751,8 @@ type SetMaintenancePolicyRequest struct {
 	Name string `json:"name,omitempty"`
 
 	// ProjectId: Required. The Google Developers Console project ID or
-	// project number (https://support.google.com/cloud/answer/6158840).
+	// project number
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. The name of the Google Compute Engine zone
@@ -5748,8 +5809,8 @@ type SetMasterAuthRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Update: Required. A description of the update.
@@ -5809,8 +5870,8 @@ type SetMonitoringServiceRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -5860,8 +5921,8 @@ type SetNetworkPolicyRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://developers.google.com/console/help/new/#projectnumber). This
-	// field has been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -5915,8 +5976,8 @@ type SetNodePoolAutoscalingRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -5970,8 +6031,8 @@ type SetNodePoolManagementRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -6025,8 +6086,8 @@ type SetNodePoolSizeRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -6142,8 +6203,8 @@ type StartIPRotationRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://developers.google.com/console/help/new/#projectnumber). This
-	// field has been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// RotateCredentials: Whether to rotate credentials during IP rotation.
@@ -6444,8 +6505,8 @@ type UpdateClusterRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Update: Required. A description of the update.
@@ -6503,8 +6564,8 @@ type UpdateMasterRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Zone: Required. Deprecated. The name of the Google Compute Engine
@@ -6598,8 +6659,8 @@ type UpdateNodePoolRequest struct {
 
 	// ProjectId: Required. Deprecated. The Google Developers Console
 	// project ID or project number
-	// (https://support.google.com/cloud/answer/6158840). This field has
-	// been deprecated and replaced by the name field.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Tags: The desired network tags to be applied to all nodes in the node
@@ -7410,8 +7471,9 @@ func (r *ProjectsLocationsService) GetServerConfig(name string) *ProjectsLocatio
 
 // ProjectId sets the optional parameter "projectId": Required.
 // Deprecated. The Google Developers Console project ID or project
-// number (https://support.google.com/cloud/answer/6158840). This field
-// has been deprecated and replaced by the name field.
+// number
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+// This field has been deprecated and replaced by the name field.
 func (c *ProjectsLocationsGetServerConfigCall) ProjectId(projectId string) *ProjectsLocationsGetServerConfigCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
@@ -7542,7 +7604,7 @@ func (c *ProjectsLocationsGetServerConfigCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8041,8 +8103,9 @@ func (c *ProjectsLocationsClustersDeleteCall) ClusterId(clusterId string) *Proje
 
 // ProjectId sets the optional parameter "projectId": Required.
 // Deprecated. The Google Developers Console project ID or project
-// number (https://support.google.com/cloud/answer/6158840). This field
-// has been deprecated and replaced by the name field.
+// number
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+// This field has been deprecated and replaced by the name field.
 func (c *ProjectsLocationsClustersDeleteCall) ProjectId(projectId string) *ProjectsLocationsClustersDeleteCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
@@ -8165,7 +8228,7 @@ func (c *ProjectsLocationsClustersDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8218,8 +8281,9 @@ func (c *ProjectsLocationsClustersGetCall) ClusterId(clusterId string) *Projects
 
 // ProjectId sets the optional parameter "projectId": Required.
 // Deprecated. The Google Developers Console project ID or project
-// number (https://support.google.com/cloud/answer/6158840). This field
-// has been deprecated and replaced by the name field.
+// number
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+// This field has been deprecated and replaced by the name field.
 func (c *ProjectsLocationsClustersGetCall) ProjectId(projectId string) *ProjectsLocationsClustersGetCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
@@ -8355,7 +8419,7 @@ func (c *ProjectsLocationsClustersGetCall) Do(opts ...googleapi.CallOption) (*Cl
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8547,8 +8611,9 @@ func (r *ProjectsLocationsClustersService) List(parent string) *ProjectsLocation
 
 // ProjectId sets the optional parameter "projectId": Required.
 // Deprecated. The Google Developers Console project ID or project
-// number (https://support.google.com/cloud/answer/6158840). This field
-// has been deprecated and replaced by the parent field.
+// number
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+// This field has been deprecated and replaced by the parent field.
 func (c *ProjectsLocationsClustersListCall) ProjectId(projectId string) *ProjectsLocationsClustersListCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
@@ -8679,7 +8744,7 @@ func (c *ProjectsLocationsClustersListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the parent field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10617,8 +10682,8 @@ func (c *ProjectsLocationsClustersNodePoolsDeleteCall) NodePoolId(nodePoolId str
 // ProjectId sets the optional parameter "projectId": Required.
 // Deprecated. The Google Developers Console project ID or project
 // number
-// (https://developers.google.com/console/help/new/#projectnumber). This
-// field has been deprecated and replaced by the name field.
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+// This field has been deprecated and replaced by the name field.
 func (c *ProjectsLocationsClustersNodePoolsDeleteCall) ProjectId(projectId string) *ProjectsLocationsClustersNodePoolsDeleteCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
@@ -10746,7 +10811,7 @@ func (c *ProjectsLocationsClustersNodePoolsDeleteCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10808,8 +10873,8 @@ func (c *ProjectsLocationsClustersNodePoolsGetCall) NodePoolId(nodePoolId string
 // ProjectId sets the optional parameter "projectId": Required.
 // Deprecated. The Google Developers Console project ID or project
 // number
-// (https://developers.google.com/console/help/new/#projectnumber). This
-// field has been deprecated and replaced by the name field.
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+// This field has been deprecated and replaced by the name field.
 func (c *ProjectsLocationsClustersNodePoolsGetCall) ProjectId(projectId string) *ProjectsLocationsClustersNodePoolsGetCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
@@ -10950,7 +11015,7 @@ func (c *ProjectsLocationsClustersNodePoolsGetCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11004,8 +11069,8 @@ func (c *ProjectsLocationsClustersNodePoolsListCall) ClusterId(clusterId string)
 // ProjectId sets the optional parameter "projectId": Required.
 // Deprecated. The Google Developers Console project ID or project
 // number
-// (https://developers.google.com/console/help/new/#projectnumber). This
-// field has been deprecated and replaced by the parent field.
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+// This field has been deprecated and replaced by the parent field.
 func (c *ProjectsLocationsClustersNodePoolsListCall) ProjectId(projectId string) *ProjectsLocationsClustersNodePoolsListCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
@@ -11141,7 +11206,7 @@ func (c *ProjectsLocationsClustersNodePoolsListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the parent field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12212,8 +12277,9 @@ func (c *ProjectsLocationsOperationsGetCall) OperationId(operationId string) *Pr
 
 // ProjectId sets the optional parameter "projectId": Required.
 // Deprecated. The Google Developers Console project ID or project
-// number (https://support.google.com/cloud/answer/6158840). This field
-// has been deprecated and replaced by the name field.
+// number
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+// This field has been deprecated and replaced by the name field.
 func (c *ProjectsLocationsOperationsGetCall) ProjectId(projectId string) *ProjectsLocationsOperationsGetCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
@@ -12349,7 +12415,7 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12395,8 +12461,9 @@ func (r *ProjectsLocationsOperationsService) List(parent string) *ProjectsLocati
 
 // ProjectId sets the optional parameter "projectId": Required.
 // Deprecated. The Google Developers Console project ID or project
-// number (https://support.google.com/cloud/answer/6158840). This field
-// has been deprecated and replaced by the parent field.
+// number
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+// This field has been deprecated and replaced by the parent field.
 func (c *ProjectsLocationsOperationsListCall) ProjectId(projectId string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
@@ -12527,7 +12594,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the parent field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12564,7 +12631,8 @@ type ProjectsZonesGetServerconfigCall struct {
 // Kubernetes Engine service.
 //
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) to return
@@ -12700,7 +12768,7 @@ func (c *ProjectsZonesGetServerconfigCall) Do(opts ...googleapi.CallOption) (*Se
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12741,7 +12809,8 @@ type ProjectsZonesClustersAddonsCall struct {
 // - clusterId: Deprecated. The name of the cluster to upgrade. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -12866,7 +12935,7 @@ func (c *ProjectsZonesClustersAddonsCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12911,7 +12980,7 @@ type ProjectsZonesClustersCompleteIpRotationCall struct {
 //   deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
 //   project number
-//   (https://developers.google.com/console/help/new/#projectnumber).
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -13036,7 +13105,7 @@ func (c *ProjectsZonesClustersCompleteIpRotationCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13085,7 +13154,8 @@ type ProjectsZonesClustersCreateCall struct {
 // CIDR range the cluster is using.
 //
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the parent field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -13201,7 +13271,7 @@ func (c *ProjectsZonesClustersCreateCall) Do(opts ...googleapi.CallOption) (*Ope
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the parent field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13249,7 +13319,8 @@ type ProjectsZonesClustersDeleteCall struct {
 // - clusterId: Deprecated. The name of the cluster to delete. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -13381,7 +13452,7 @@ func (c *ProjectsZonesClustersDeleteCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13422,7 +13493,8 @@ type ProjectsZonesClustersGetCall struct {
 // - clusterId: Deprecated. The name of the cluster to retrieve. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -13567,7 +13639,7 @@ func (c *ProjectsZonesClustersGetCall) Do(opts ...googleapi.CallOption) (*Cluste
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13609,7 +13681,8 @@ type ProjectsZonesClustersLegacyAbacCall struct {
 // - clusterId: Deprecated. The name of the cluster to update. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -13734,7 +13807,7 @@ func (c *ProjectsZonesClustersLegacyAbacCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13776,7 +13849,8 @@ type ProjectsZonesClustersListCall struct {
 // zone or all zones.
 //
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the parent field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -13913,7 +13987,7 @@ func (c *ProjectsZonesClustersListCall) Do(opts ...googleapi.CallOption) (*ListC
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the parent field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13957,7 +14031,8 @@ type ProjectsZonesClustersLocationsCall struct {
 // - clusterId: Deprecated. The name of the cluster to upgrade. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -14082,7 +14157,7 @@ func (c *ProjectsZonesClustersLocationsCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14126,7 +14201,8 @@ type ProjectsZonesClustersLoggingCall struct {
 // - clusterId: Deprecated. The name of the cluster to upgrade. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -14251,7 +14327,7 @@ func (c *ProjectsZonesClustersLoggingCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14295,7 +14371,8 @@ type ProjectsZonesClustersMasterCall struct {
 // - clusterId: Deprecated. The name of the cluster to upgrade. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -14420,7 +14497,7 @@ func (c *ProjectsZonesClustersMasterCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14464,7 +14541,8 @@ type ProjectsZonesClustersMonitoringCall struct {
 // - clusterId: Deprecated. The name of the cluster to upgrade. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -14589,7 +14667,7 @@ func (c *ProjectsZonesClustersMonitoringCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14634,7 +14712,7 @@ type ProjectsZonesClustersResourceLabelsCall struct {
 //   deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
 //   project number
-//   (https://developers.google.com/console/help/new/#projectnumber).
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -14759,7 +14837,7 @@ func (c *ProjectsZonesClustersResourceLabelsCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14802,7 +14880,8 @@ type ProjectsZonesClustersSetMaintenancePolicyCall struct {
 //
 // - clusterId: The name of the cluster to update.
 // - projectId: The Google Developers Console project ID or project
-//   number (https://support.google.com/cloud/answer/6158840).
+//   number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 // - zone: The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
 //   the cluster resides.
@@ -14925,7 +15004,7 @@ func (c *ProjectsZonesClustersSetMaintenancePolicyCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840).",
+	//       "description": "Required. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14971,7 +15050,8 @@ type ProjectsZonesClustersSetMasterAuthCall struct {
 // - clusterId: Deprecated. The name of the cluster to upgrade. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -15096,7 +15176,7 @@ func (c *ProjectsZonesClustersSetMasterAuthCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -15141,7 +15221,7 @@ type ProjectsZonesClustersSetNetworkPolicyCall struct {
 //   deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
 //   project number
-//   (https://developers.google.com/console/help/new/#projectnumber).
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -15266,7 +15346,7 @@ func (c *ProjectsZonesClustersSetNetworkPolicyCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -15311,7 +15391,7 @@ type ProjectsZonesClustersStartIpRotationCall struct {
 //   deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
 //   project number
-//   (https://developers.google.com/console/help/new/#projectnumber).
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -15436,7 +15516,7 @@ func (c *ProjectsZonesClustersStartIpRotationCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -15480,7 +15560,8 @@ type ProjectsZonesClustersUpdateCall struct {
 // - clusterId: Deprecated. The name of the cluster to upgrade. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -15605,7 +15686,7 @@ func (c *ProjectsZonesClustersUpdateCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -15652,7 +15733,8 @@ type ProjectsZonesClustersNodePoolsAutoscalingCall struct {
 // - nodePoolId: Deprecated. The name of the node pool to upgrade. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -15786,7 +15868,7 @@ func (c *ProjectsZonesClustersNodePoolsAutoscalingCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -15831,7 +15913,7 @@ type ProjectsZonesClustersNodePoolsCreateCall struct {
 //   deprecated and replaced by the parent field.
 // - projectId: Deprecated. The Google Developers Console project ID or
 //   project number
-//   (https://developers.google.com/console/help/new/#projectnumber).
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the parent field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -15956,7 +16038,7 @@ func (c *ProjectsZonesClustersNodePoolsCreateCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the parent field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -16003,7 +16085,7 @@ type ProjectsZonesClustersNodePoolsDeleteCall struct {
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
 //   project number
-//   (https://developers.google.com/console/help/new/#projectnumber).
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -16144,7 +16226,7 @@ func (c *ProjectsZonesClustersNodePoolsDeleteCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -16189,7 +16271,7 @@ type ProjectsZonesClustersNodePoolsGetCall struct {
 //   been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
 //   project number
-//   (https://developers.google.com/console/help/new/#projectnumber).
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -16343,7 +16425,7 @@ func (c *ProjectsZonesClustersNodePoolsGetCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -16385,7 +16467,7 @@ type ProjectsZonesClustersNodePoolsListCall struct {
 //   deprecated and replaced by the parent field.
 // - projectId: Deprecated. The Google Developers Console project ID or
 //   project number
-//   (https://developers.google.com/console/help/new/#projectnumber).
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the parent field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -16530,7 +16612,7 @@ func (c *ProjectsZonesClustersNodePoolsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the parent field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -16575,7 +16657,8 @@ type ProjectsZonesClustersNodePoolsRollbackCall struct {
 // - nodePoolId: Deprecated. The name of the node pool to rollback. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -16709,7 +16792,7 @@ func (c *ProjectsZonesClustersNodePoolsRollbackCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -16756,7 +16839,8 @@ type ProjectsZonesClustersNodePoolsSetManagementCall struct {
 // - nodePoolId: Deprecated. The name of the node pool to update. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -16890,7 +16974,7 @@ func (c *ProjectsZonesClustersNodePoolsSetManagementCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -16939,7 +17023,8 @@ type ProjectsZonesClustersNodePoolsSetSizeCall struct {
 // - nodePoolId: Deprecated. The name of the node pool to update. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -17073,7 +17158,7 @@ func (c *ProjectsZonesClustersNodePoolsSetSizeCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -17121,7 +17206,8 @@ type ProjectsZonesClustersNodePoolsUpdateCall struct {
 // - nodePoolId: Deprecated. The name of the node pool to upgrade. This
 //   field has been deprecated and replaced by the name field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -17255,7 +17341,7 @@ func (c *ProjectsZonesClustersNodePoolsUpdateCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -17300,7 +17386,8 @@ type ProjectsZonesOperationsCancelCall struct {
 //   operation. This field has been deprecated and replaced by the name
 //   field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -17425,7 +17512,7 @@ func (c *ProjectsZonesOperationsCancelCall) Do(opts ...googleapi.CallOption) (*E
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -17470,7 +17557,8 @@ type ProjectsZonesOperationsGetCall struct {
 //   operation. This field has been deprecated and replaced by the name
 //   field.
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the name field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) in which
@@ -17615,7 +17703,7 @@ func (c *ProjectsZonesOperationsGetCall) Do(opts ...googleapi.CallOption) (*Oper
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -17654,7 +17742,8 @@ type ProjectsZonesOperationsListCall struct {
 // zones.
 //
 // - projectId: Deprecated. The Google Developers Console project ID or
-//   project number (https://support.google.com/cloud/answer/6158840).
+//   project number
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   This field has been deprecated and replaced by the parent field.
 // - zone: Deprecated. The name of the Google Compute Engine zone
 //   (https://cloud.google.com/compute/docs/zones#available) to return
@@ -17791,7 +17880,7 @@ func (c *ProjectsZonesOperationsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the parent field.",
+	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

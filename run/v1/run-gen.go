@@ -417,8 +417,8 @@ func (s *Addressable) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -1057,40 +1057,6 @@ func (s *ContainerPort) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ContainerStatus: ContainerStatus holds the information of container
-// name and image digest value.
-type ContainerStatus struct {
-	// ImageDigest: ImageDigest holds the resolved digest for the image
-	// specified, regardless of whether a tag or digest was originally
-	// specified in the Container object.
-	ImageDigest string `json:"imageDigest,omitempty"`
-
-	// Name: The name of the container, if specified.
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ImageDigest") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageDigest") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ContainerStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod ContainerStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // DomainMapping: Resource to hold the state and status of a user's
 // domain mapping. NOTE: This resource is currently in Beta.
 type DomainMapping struct {
@@ -1702,6 +1668,42 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GRPCAction: Not supported by Cloud Run GRPCAction describes an action
+// involving a GRPC port.
+type GRPCAction struct {
+	// Port: Port number of the gRPC service. Number must be in the range 1
+	// to 65535.
+	Port int64 `json:"port,omitempty"`
+
+	// Service: Service is the name of the service to place in the gRPC
+	// HealthCheckRequest (see
+	// https://github.com/grpc/grpc/blob/master/doc/health-checking.md). If
+	// this is not specified, the default behavior is defined by gRPC.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Port") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Port") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GRPCAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GRPCAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV1Condition: Condition defines a generic condition for
 // a Resource.
 type GoogleCloudRunV1Condition struct {
@@ -1970,11 +1972,6 @@ type JobStatus struct {
 	// state. More info:
 	// https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
 	Conditions []*GoogleCloudRunV1Condition `json:"conditions,omitempty"`
-
-	// ContainerStatuses: Status information for each of the specified
-	// containers. The status includes the resolved digest for specified
-	// images, which occurs during creation of the job.
-	ContainerStatuses []*ContainerStatus `json:"containerStatuses,omitempty"`
 
 	// ExecutionCount: Number of executions created for this job.
 	ExecutionCount int64 `json:"executionCount,omitempty"`
@@ -2956,6 +2953,10 @@ type Probe struct {
 	// probe to be considered failed after having succeeded. Defaults to 3.
 	// Minimum value is 1.
 	FailureThreshold int64 `json:"failureThreshold,omitempty"`
+
+	// Grpc: (Optional) GRPCAction specifies an action involving a GRPC
+	// port. A field inlined from the Handler message.
+	Grpc *GRPCAction `json:"grpc,omitempty"`
 
 	// HttpGet: (Optional) HTTPGet specifies the http request to perform. A
 	// field inlined from the Handler message.
@@ -8370,10 +8371,10 @@ type NamespacesServicesCreateCall struct {
 
 // Create: Create a service.
 //
-// - parent: LINT.IfChange() The namespace in which the service should
-//   be created. For Cloud Run (fully managed), replace {namespace} with
-//   the project ID or number. It takes the form namespaces/{namespace}.
-//   For example: namespaces/PROJECT_ID.
+// - parent: The namespace in which the service should be created. For
+//   Cloud Run (fully managed), replace {namespace} with the project ID
+//   or number. It takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *NamespacesServicesService) Create(parent string, service *Service) *NamespacesServicesCreateCall {
 	c := &NamespacesServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8384,8 +8385,6 @@ func (r *NamespacesServicesService) Create(parent string, service *Service) *Nam
 // DryRun sets the optional parameter "dryRun": Indicates that the
 // server should validate the request and populate default values
 // without persisting the request. Supported values: `all`
-// LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_se
-// rvice.proto:create_internal_service_request)
 func (c *NamespacesServicesCreateCall) DryRun(dryRun string) *NamespacesServicesCreateCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -8491,12 +8490,12 @@ func (c *NamespacesServicesCreateCall) Do(opts ...googleapi.CallOption) (*Servic
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_service.proto:create_internal_service_request)",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "LINT.IfChange() The namespace in which the service should be created. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "description": "The namespace in which the service should be created. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -9111,9 +9110,9 @@ type NamespacesServicesReplaceServiceCall struct {
 // provide metadata.resourceVersion to enforce update from last read for
 // optimistic concurrency control.
 //
-// - name: LINT.IfChange() The name of the service being replaced. For
-//   Cloud Run (fully managed), replace {namespace} with the project ID
-//   or number. It takes the form namespaces/{namespace}. For example:
+// - name: The name of the service being replaced. For Cloud Run (fully
+//   managed), replace {namespace} with the project ID or number. It
+//   takes the form namespaces/{namespace}. For example:
 //   namespaces/PROJECT_ID.
 func (r *NamespacesServicesService) ReplaceService(name string, service *Service) *NamespacesServicesReplaceServiceCall {
 	c := &NamespacesServicesReplaceServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9125,8 +9124,6 @@ func (r *NamespacesServicesService) ReplaceService(name string, service *Service
 // DryRun sets the optional parameter "dryRun": Indicates that the
 // server should validate the request and populate default values
 // without persisting the request. Supported values: `all`
-// LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_se
-// rvice.proto:replace_internal_service_request)
 func (c *NamespacesServicesReplaceServiceCall) DryRun(dryRun string) *NamespacesServicesReplaceServiceCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -9232,12 +9229,12 @@ func (c *NamespacesServicesReplaceServiceCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_service.proto:replace_internal_service_request)",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "LINT.IfChange() The name of the service being replaced. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "description": "The name of the service being replaced. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -11374,8 +11371,9 @@ type ProjectsLocationsJobsGetIamPolicyCall struct {
 // policies.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsJobsService) GetIamPolicy(resource string) *ProjectsLocationsJobsGetIamPolicyCall {
 	c := &ProjectsLocationsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11514,7 +11512,7 @@ func (c *ProjectsLocationsJobsGetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -11547,8 +11545,9 @@ type ProjectsLocationsJobsSetIamPolicyCall struct {
 // job. Overwrites any existing policy.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsJobsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsJobsSetIamPolicyCall {
 	c := &ProjectsLocationsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11656,7 +11655,7 @@ func (c *ProjectsLocationsJobsSetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -11693,7 +11692,8 @@ type ProjectsLocationsJobsTestIamPermissionsCall struct {
 // call.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsJobsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsJobsTestIamPermissionsCall {
 	c := &ProjectsLocationsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -11802,7 +11802,7 @@ func (c *ProjectsLocationsJobsTestIamPermissionsCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -12799,10 +12799,10 @@ type ProjectsLocationsServicesCreateCall struct {
 
 // Create: Create a service.
 //
-// - parent: LINT.IfChange() The namespace in which the service should
-//   be created. For Cloud Run (fully managed), replace {namespace} with
-//   the project ID or number. It takes the form namespaces/{namespace}.
-//   For example: namespaces/PROJECT_ID.
+// - parent: The namespace in which the service should be created. For
+//   Cloud Run (fully managed), replace {namespace} with the project ID
+//   or number. It takes the form namespaces/{namespace}. For example:
+//   namespaces/PROJECT_ID.
 func (r *ProjectsLocationsServicesService) Create(parent string, service *Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12813,8 +12813,6 @@ func (r *ProjectsLocationsServicesService) Create(parent string, service *Servic
 // DryRun sets the optional parameter "dryRun": Indicates that the
 // server should validate the request and populate default values
 // without persisting the request. Supported values: `all`
-// LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_se
-// rvice.proto:create_internal_service_request)
 func (c *ProjectsLocationsServicesCreateCall) DryRun(dryRun string) *ProjectsLocationsServicesCreateCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -12920,12 +12918,12 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_service.proto:create_internal_service_request)",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "LINT.IfChange() The namespace in which the service should be created. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "description": "The namespace in which the service should be created. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -13300,8 +13298,9 @@ type ProjectsLocationsServicesGetIamPolicyCall struct {
 // inherited policies.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) GetIamPolicy(resource string) *ProjectsLocationsServicesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13440,7 +13439,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -13714,9 +13713,9 @@ type ProjectsLocationsServicesReplaceServiceCall struct {
 // provide metadata.resourceVersion to enforce update from last read for
 // optimistic concurrency control.
 //
-// - name: LINT.IfChange() The name of the service being replaced. For
-//   Cloud Run (fully managed), replace {namespace} with the project ID
-//   or number. It takes the form namespaces/{namespace}. For example:
+// - name: The name of the service being replaced. For Cloud Run (fully
+//   managed), replace {namespace} with the project ID or number. It
+//   takes the form namespaces/{namespace}. For example:
 //   namespaces/PROJECT_ID.
 func (r *ProjectsLocationsServicesService) ReplaceService(name string, service *Service) *ProjectsLocationsServicesReplaceServiceCall {
 	c := &ProjectsLocationsServicesReplaceServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13728,8 +13727,6 @@ func (r *ProjectsLocationsServicesService) ReplaceService(name string, service *
 // DryRun sets the optional parameter "dryRun": Indicates that the
 // server should validate the request and populate default values
 // without persisting the request. Supported values: `all`
-// LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_se
-// rvice.proto:replace_internal_service_request)
 func (c *ProjectsLocationsServicesReplaceServiceCall) DryRun(dryRun string) *ProjectsLocationsServicesReplaceServiceCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -13835,12 +13832,12 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all` LINT.ThenChange(//depot/google3/google/cloud/serverless/v1/internal_service.proto:replace_internal_service_request)",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "LINT.IfChange() The name of the service being replaced. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "description": "The name of the service being replaced. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -13876,8 +13873,9 @@ type ProjectsLocationsServicesSetIamPolicyCall struct {
 // Service. Overwrites any existing policy.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13985,7 +13983,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -14022,7 +14020,8 @@ type ProjectsLocationsServicesTestIamPermissionsCall struct {
 // API call.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14131,7 +14130,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,

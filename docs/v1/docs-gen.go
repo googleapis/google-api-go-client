@@ -3951,6 +3951,11 @@ type ParagraphStyle struct {
 	//   "HEADING_6" - Heading 6.
 	NamedStyleType string `json:"namedStyleType,omitempty"`
 
+	// PageBreakBefore: Whether the current paragraph should always start at
+	// the beginning of a page. If unset, the value is inherited from the
+	// parent.
+	PageBreakBefore bool `json:"pageBreakBefore,omitempty"`
+
 	// Shading: The shading of the paragraph. If unset, the value is
 	// inherited from the parent.
 	Shading *Shading `json:"shading,omitempty"`
@@ -4082,6 +4087,10 @@ type ParagraphStyleSuggestionState struct {
 	// NamedStyleTypeSuggested: Indicates if there was a suggested change to
 	// named_style_type.
 	NamedStyleTypeSuggested bool `json:"namedStyleTypeSuggested,omitempty"`
+
+	// PageBreakBeforeSuggested: Indicates if there was a suggested change
+	// to page_break_before.
+	PageBreakBeforeSuggested bool `json:"pageBreakBeforeSuggested,omitempty"`
 
 	// ShadingSuggestionState: A mask that indicates which of the fields in
 	// shading have been changed in this suggestion.

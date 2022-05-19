@@ -817,8 +817,8 @@ func (s *ArimaSingleModelForecastingMetrics) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -1331,8 +1331,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -2131,8 +2131,8 @@ type Dataset struct {
 	// travel for all tables in the dataset.
 	MaxTimeTravelHours int64 `json:"maxTimeTravelHours,omitempty,string"`
 
-	// SatisfiesPZS: [Output-only] Reserved for future use.
-	SatisfiesPZS bool `json:"satisfiesPZS,omitempty"`
+	// SatisfiesPzs: [Output-only] Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// SelfLink: [Output-only] A URL that can be used to access the resource
 	// again. You can use this URL in Get or Update requests to the
@@ -5519,6 +5519,11 @@ type MaterializedViewDefinition struct {
 	// materialized view was last modified, in milliseconds since the epoch.
 	LastRefreshTime int64 `json:"lastRefreshTime,omitempty,string"`
 
+	// MaxStaleness: [Optional] Max staleness of data that could be returned
+	// when materizlized view is queried (formatted as Google SQL Interval
+	// type).
+	MaxStaleness string `json:"maxStaleness,omitempty"`
+
 	// Query: [Required] A query whose result is persisted.
 	Query string `json:"query,omitempty"`
 
@@ -6790,6 +6795,52 @@ func (s *RegressionMetrics) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// RemoteFunctionOptions: Options for a remote user-defined function.
+type RemoteFunctionOptions struct {
+	// Connection: Fully qualified name of the user-provided connection
+	// object which holds the authentication information to send requests to
+	// the remote service.
+	// projects/{project_id}/locations/{location_id}/connections/{connection_
+	// id}
+	Connection string `json:"connection,omitempty"`
+
+	// Endpoint: Endpoint of the user-provided remote service (e.g. a
+	// function url in Google Cloud Functions).
+	Endpoint string `json:"endpoint,omitempty"`
+
+	// MaxBatchingRows: Max number of rows in each batch sent to the remote
+	// service. If absent or if 0, it means no limit.
+	MaxBatchingRows int64 `json:"maxBatchingRows,omitempty,string"`
+
+	// UserDefinedContext: User-defined context as a set of key/value pairs,
+	// which will be sent as function invocation context together with
+	// batched arguments in the requests to the remote service. The total
+	// number of bytes of keys and values must be less than 8KB.
+	UserDefinedContext map[string]string `json:"userDefinedContext,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Connection") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Connection") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoteFunctionOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteFunctionOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Routine: A user-defined function or a stored procedure.
 type Routine struct {
 	// Arguments: Optional.
@@ -6845,6 +6896,9 @@ type Routine struct {
 	// LastModifiedTime: Output only. The time when this routine was last
 	// modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
+
+	// RemoteFunctionOptions: Optional. Remote function specific options.
+	RemoteFunctionOptions *RemoteFunctionOptions `json:"remoteFunctionOptions,omitempty"`
 
 	// ReturnTableType: Optional. Can be set only if routine_type =
 	// "TABLE_VALUED_FUNCTION". If absent, the return table type is inferred
@@ -7215,7 +7269,7 @@ func (s *SessionInfo) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -7937,9 +7991,20 @@ type TableFieldSchema struct {
 	// for field-level access control.
 	Categories *TableFieldSchemaCategories `json:"categories,omitempty"`
 
-	// CollationSpec: Optional. Collation specification of the field. It
-	// only can be set on string type field.
-	CollationSpec string `json:"collationSpec,omitempty"`
+	// Collation: Optional. Collation specification of the field. It only
+	// can be set on string type field.
+	Collation string `json:"collation,omitempty"`
+
+	// DefaultValueExpression: Optional. A SQL expression to specify the
+	// default value for this field. It can only be set for top level fields
+	// (columns). You can use struct or array expression to specify default
+	// value for the entire struct or array. The valid SQL expressions are:
+	// - Literals for all data types, including STRUCT and ARRAY. -
+	// Following functions: - CURRENT_TIMESTAMP - CURRENT_TIME -
+	// CURRENT_DATE - CURRENT_DATETIME - GENERATE_UUID - RAND - SESSION_USER
+	// - ST_GEOGPOINT - Struct or array composed with the above allowed
+	// functions, for example, [CURRENT_DATE(), DATE '2020-01-01']
+	DefaultValueExpression string `json:"defaultValueExpression,omitempty"`
 
 	// Description: [Optional] The field description. The maximum length is
 	// 1,024 characters.
@@ -8318,7 +8383,7 @@ func (s *TableSchema) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -13328,8 +13393,9 @@ type RowAccessPoliciesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *RowAccessPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *RowAccessPoliciesGetIamPolicyCall {
 	c := &RowAccessPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13437,7 +13503,7 @@ func (c *RowAccessPoliciesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+/rowAccessPolicies/[^/]+$",
 	//       "required": true,
@@ -13695,8 +13761,9 @@ type RowAccessPoliciesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *RowAccessPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *RowAccessPoliciesSetIamPolicyCall {
 	c := &RowAccessPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13804,7 +13871,7 @@ func (c *RowAccessPoliciesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+/rowAccessPolicies/[^/]+$",
 	//       "required": true,
@@ -13845,7 +13912,8 @@ type RowAccessPoliciesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *RowAccessPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *RowAccessPoliciesTestIamPermissionsCall {
 	c := &RowAccessPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13954,7 +14022,7 @@ func (c *RowAccessPoliciesTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+/rowAccessPolicies/[^/]+$",
 	//       "required": true,
@@ -14708,8 +14776,9 @@ type TablesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *TablesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TablesGetIamPolicyCall {
 	c := &TablesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14817,7 +14886,7 @@ func (c *TablesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, erro
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -15390,8 +15459,9 @@ type TablesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *TablesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TablesSetIamPolicyCall {
 	c := &TablesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15499,7 +15569,7 @@ func (c *TablesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, erro
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -15540,7 +15610,8 @@ type TablesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *TablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TablesTestIamPermissionsCall {
 	c := &TablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15649,7 +15720,7 @@ func (c *TablesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIa
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+$",
 	//       "required": true,

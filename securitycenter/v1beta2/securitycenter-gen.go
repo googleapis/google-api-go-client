@@ -2016,6 +2016,7 @@ type MitreAttack struct {
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "DATA_DESTRUCTION" - T1485
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
+	//   "IMPAIR_DEFENSES" - T1562
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
@@ -2079,6 +2080,7 @@ type MitreAttack struct {
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "DATA_DESTRUCTION" - T1485
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
+	//   "IMPAIR_DEFENSES" - T1562
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 
 	// Version: The MITRE ATT&CK version referenced by the above fields.
@@ -2202,8 +2204,14 @@ type SecurityCenterSettings struct {
 	LogSinkProject string `json:"logSinkProject,omitempty"`
 
 	// Name: The resource name of the SecurityCenterSettings. Format:
-	// organizations/{organization}/securityCenterSettings
+	// organizations/{organization}/securityCenterSettings Format:
+	// folders/{folder}/securityCenterSettings Format:
+	// projects/{project}/securityCenterSettings
 	Name string `json:"name,omitempty"`
+
+	// OnboardingTime: Timestamp of when the customer organization was
+	// onboarded to SCC.
+	OnboardingTime string `json:"onboardingTime,omitempty"`
 
 	// OrgServiceAccount: The organization level service account to be used
 	// for security center components.
@@ -2994,6 +3002,155 @@ func (c *FoldersGetOnboardingStateCall) Do(opts ...googleapi.CallOption) (*Onboa
 	//   "path": "v1beta2/{+name}",
 	//   "response": {
 	//     "$ref": "OnboardingState"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.getSecurityCenterSettings":
+
+type FoldersGetSecurityCenterSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSecurityCenterSettings: Get the SecurityCenterSettings resource.
+//
+// - name: The name of the SecurityCenterSettings to retrieve. Format:
+//   organizations/{organization}/securityCenterSettings Format:
+//   folders/{folder}/securityCenterSettings Format:
+//   projects/{project}/securityCenterSettings.
+func (r *FoldersService) GetSecurityCenterSettings(name string) *FoldersGetSecurityCenterSettingsCall {
+	c := &FoldersGetSecurityCenterSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersGetSecurityCenterSettingsCall) Fields(s ...googleapi.Field) *FoldersGetSecurityCenterSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersGetSecurityCenterSettingsCall) IfNoneMatch(entityTag string) *FoldersGetSecurityCenterSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersGetSecurityCenterSettingsCall) Context(ctx context.Context) *FoldersGetSecurityCenterSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersGetSecurityCenterSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersGetSecurityCenterSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.getSecurityCenterSettings" call.
+// Exactly one of *SecurityCenterSettings or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SecurityCenterSettings.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersGetSecurityCenterSettingsCall) Do(opts ...googleapi.CallOption) (*SecurityCenterSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SecurityCenterSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the SecurityCenterSettings resource.",
+	//   "flatPath": "v1beta2/folders/{foldersId}/securityCenterSettings",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.getSecurityCenterSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the SecurityCenterSettings to retrieve. Format: organizations/{organization}/securityCenterSettings Format: folders/{folder}/securityCenterSettings Format: projects/{project}/securityCenterSettings",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityCenterSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "SecurityCenterSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -5482,7 +5639,9 @@ type OrganizationsGetSecurityCenterSettingsCall struct {
 // GetSecurityCenterSettings: Get the SecurityCenterSettings resource.
 //
 // - name: The name of the SecurityCenterSettings to retrieve. Format:
-//   organizations/{organization}/securityCenterSettings.
+//   organizations/{organization}/securityCenterSettings Format:
+//   folders/{folder}/securityCenterSettings Format:
+//   projects/{project}/securityCenterSettings.
 func (r *OrganizationsService) GetSecurityCenterSettings(name string) *OrganizationsGetSecurityCenterSettingsCall {
 	c := &OrganizationsGetSecurityCenterSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5597,7 +5756,7 @@ func (c *OrganizationsGetSecurityCenterSettingsCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the SecurityCenterSettings to retrieve. Format: organizations/{organization}/securityCenterSettings",
+	//       "description": "Required. The name of the SecurityCenterSettings to retrieve. Format: organizations/{organization}/securityCenterSettings Format: folders/{folder}/securityCenterSettings Format: projects/{project}/securityCenterSettings",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/securityCenterSettings$",
 	//       "required": true,
@@ -8220,6 +8379,155 @@ func (c *ProjectsGetOnboardingStateCall) Do(opts ...googleapi.CallOption) (*Onbo
 	//   "path": "v1beta2/{+name}",
 	//   "response": {
 	//     "$ref": "OnboardingState"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.getSecurityCenterSettings":
+
+type ProjectsGetSecurityCenterSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSecurityCenterSettings: Get the SecurityCenterSettings resource.
+//
+// - name: The name of the SecurityCenterSettings to retrieve. Format:
+//   organizations/{organization}/securityCenterSettings Format:
+//   folders/{folder}/securityCenterSettings Format:
+//   projects/{project}/securityCenterSettings.
+func (r *ProjectsService) GetSecurityCenterSettings(name string) *ProjectsGetSecurityCenterSettingsCall {
+	c := &ProjectsGetSecurityCenterSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetSecurityCenterSettingsCall) Fields(s ...googleapi.Field) *ProjectsGetSecurityCenterSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetSecurityCenterSettingsCall) IfNoneMatch(entityTag string) *ProjectsGetSecurityCenterSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetSecurityCenterSettingsCall) Context(ctx context.Context) *ProjectsGetSecurityCenterSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetSecurityCenterSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetSecurityCenterSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.getSecurityCenterSettings" call.
+// Exactly one of *SecurityCenterSettings or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SecurityCenterSettings.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetSecurityCenterSettingsCall) Do(opts ...googleapi.CallOption) (*SecurityCenterSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SecurityCenterSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the SecurityCenterSettings resource.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/securityCenterSettings",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.getSecurityCenterSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the SecurityCenterSettings to retrieve. Format: organizations/{organization}/securityCenterSettings Format: folders/{folder}/securityCenterSettings Format: projects/{project}/securityCenterSettings",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityCenterSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "SecurityCenterSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

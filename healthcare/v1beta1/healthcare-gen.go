@@ -837,8 +837,8 @@ func (s *AttributeDefinition) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -964,8 +964,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -1743,7 +1743,8 @@ func (s *DeidentifyConfig) MarshalJSON() ([]byte, error) {
 // DeidentifyDatasetRequest: Redacts identifying information from the
 // specified dataset.
 type DeidentifyDatasetRequest struct {
-	// Config: Deidentify configuration.
+	// Config: Deidentify configuration. Only one of `config` and
+	// `gcs_config_uri` can be specified.
 	Config *DeidentifyConfig `json:"config,omitempty"`
 
 	// DestinationDataset: The name of the dataset resource to create and
@@ -1788,7 +1789,8 @@ func (s *DeidentifyDatasetRequest) MarshalJSON() ([]byte, error) {
 // DeidentifyDicomStoreRequest: Creates a new DICOM store with sensitive
 // information de-identified.
 type DeidentifyDicomStoreRequest struct {
-	// Config: Deidentify configuration.
+	// Config: Deidentify configuration. Only one of `config` and
+	// `gcs_config_uri` can be specified.
 	Config *DeidentifyConfig `json:"config,omitempty"`
 
 	// DestinationStore: The name of the DICOM store to create and write the
@@ -1840,7 +1842,8 @@ func (s *DeidentifyDicomStoreRequest) MarshalJSON() ([]byte, error) {
 // DeidentifyFhirStoreRequest: Creates a new FHIR store with sensitive
 // information de-identified.
 type DeidentifyFhirStoreRequest struct {
-	// Config: Deidentify configuration.
+	// Config: Deidentify configuration. Only one of `config` and
+	// `gcs_config_uri` can be specified.
 	Config *DeidentifyConfig `json:"config,omitempty"`
 
 	// DestinationStore: The name of the FHIR store to create and write the
@@ -6458,7 +6461,7 @@ func (s *SensitiveTextAnnotation) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -6676,7 +6679,7 @@ func (s *TagFilterList) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -7225,8 +7228,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7355,7 +7358,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24701,8 +24704,13 @@ func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ResourceValidate(parent
 	return c
 }
 
-// Profile sets the optional parameter "profile": A profile that this
-// resource should be validated against.
+// Profile sets the optional parameter "profile": The canonical URL of a
+// profile that this resource should be validated against. For example,
+// to validate a Patient resource against the US Core Patient profile
+// this parameter would be
+// `http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient`. A
+// StructureDefinition with this canonical URL must exist in the FHIR
+// store.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) Profile(profile string) *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall {
 	c.urlParams_.Set("profile", profile)
 	return c
@@ -24778,7 +24786,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "profile": {
-	//       "description": "A profile that this resource should be validated against.",
+	//       "description": "The canonical URL of a profile that this resource should be validated against. For example, to validate a Patient resource against the US Core Patient profile this parameter would be `http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient`. A StructureDefinition with this canonical URL must exist in the FHIR store.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

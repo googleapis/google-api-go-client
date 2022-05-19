@@ -819,7 +819,8 @@ type PubsubMessage struct {
 	// same non-empty `ordering_key` value will be delivered to subscribers
 	// in the order in which they are received by the Pub/Sub system. All
 	// `PubsubMessage`s published in a given `PublishRequest` must specify
-	// the same `ordering_key` value.
+	// the same `ordering_key` value. For more information, see ordering
+	// messages (https://cloud.google.com/pubsub/docs/ordering).
 	OrderingKey string `json:"orderingKey,omitempty"`
 
 	// PublishTime: The time at which the message was published, populated
@@ -1216,8 +1217,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1346,7 +1347,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -632,6 +632,12 @@ type Election struct {
 	// election the entire US (i.e. ocd-division/country:us).
 	OcdDivisionId string `json:"ocdDivisionId,omitempty"`
 
+	// Possible values:
+	//   "shapeLookupDefault"
+	//   "shapeLookupDisabled"
+	//   "shapeLookupEnabled"
+	ShapeLookupBehavior string `json:"shapeLookupBehavior,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ElectionDay") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1070,7 +1076,7 @@ type GeocodingSummary struct {
 	// third nibble so we can add an abstract parent above it later if need
 	// be at 0x2E1 (and rename TYPE_STATISTICAL_AREA as
 	// TYPE_STATISTICAL_AREA1).
-	//   "typeConstituencyFuture" - RESERVED
+	//   "typeConstituencyFuture" - DEPRECATED
 	//   "typePark" - DEPRECATED
 	//   "typeGolfCourse" - DEPRECATED
 	//   "typeLocalPark" - DEPRECATED
@@ -1430,15 +1436,21 @@ type GeocodingSummary struct {
 	// by TYPE_COMPOUND_BUILDING. For further details, see
 	// go/oyster-compounds
 	//   "typeEstablishmentBuilding" - DEPRECATED
-	//   "typeEstablishmentPoi" - Establishment POIs can be referenced by
-	// TYPE_COMPOUND features using the RELATION_PRIMARILY_OCCUPIED_BY. This
-	// is the reciprocal relation of the RELATION_OCCUPIES.
-	//   "typeEstablishmentService" - Represents service-only establishments
-	// (those without a storefront location). NOTE(tcain): Using value
-	// 0xD441, since we could find ourselves with a need to differentiate
-	// service areas from online-only at this level in the future, but still
-	// benefit from being able to group those under a common parent,
-	// disjoint from TYPE_ESTABLISHMENT_POI.
+	//   "typeEstablishmentPoi" - An establishment which has a address
+	// (a.k.a. location or storefront). Note that it *may* also have a
+	// service area (e.g. a restaurant that offers both dine-in and
+	// delivery). This type of business is also known as a "hybrid" Service
+	// Area Business. Establishment POIs can be referenced by TYPE_COMPOUND
+	// features using the RELATION_PRIMARILY_OCCUPIED_BY. This is the
+	// reciprocal relation of the RELATION_OCCUPIES.
+	//   "typeEstablishmentService" - A business without a storefront, e.g.
+	// a plumber. It would normally not have a place that a customer could
+	// visit to receive service, but it would have an area served by the
+	// business. Also known as a "pure" Service Area Business. NOTE(tcain):
+	// Using value 0xD441, since we could find ourselves with a need to
+	// differentiate service areas from online-only at this level in the
+	// future, but still benefit from being able to group those under a
+	// common parent, disjoint from TYPE_ESTABLISHMENT_POI.
 	//   "typeCelestial" - The root of types of features that are in the
 	// sky, rather than on the earth. There will eventually be a hierarchy
 	// of types here.

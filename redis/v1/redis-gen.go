@@ -537,6 +537,10 @@ type Instance struct {
 	// maintenance events which have been scheduled.
 	MaintenanceSchedule *MaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
 
+	// MaintenanceVersion: Optional. The self service update maintenance
+	// version. The version is date based such as "20210712_00_00".
+	MaintenanceVersion string `json:"maintenanceVersion,omitempty"`
+
 	// MemorySizeGb: Required. Redis memory size in GiB.
 	MemorySizeGb int64 `json:"memorySizeGb,omitempty"`
 

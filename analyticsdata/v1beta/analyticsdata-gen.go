@@ -3483,11 +3483,13 @@ type PropertiesRunRealtimeReportCall struct {
 	header_                  http.Header
 }
 
-// RunRealtimeReport: The Google Analytics Realtime API returns a
-// customized report of realtime event data for your property. These
-// reports show events and usage from the last 30 minutes. For a guide
-// to constructing realtime requests & understanding responses, see
-// Creating a Realtime Report
+// RunRealtimeReport: Returns a customized report of realtime event data
+// for your property. Events appear in realtime reports seconds after
+// they have been sent to the Google Analytics. Realtime reports show
+// events and usage data for the periods of time ranging from the
+// present moment to 30 minutes ago (up to 60 minutes for Google
+// Analytics 360 properties). For a guide to constructing realtime
+// requests & understanding responses, see Creating a Realtime Report
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics).
 //
 // - property: A Google Analytics GA4 property identifier whose events
@@ -3593,7 +3595,7 @@ func (c *PropertiesRunRealtimeReportCall) Do(opts ...googleapi.CallOption) (*Run
 	}
 	return ret, nil
 	// {
-	//   "description": "The Google Analytics Realtime API returns a customized report of realtime event data for your property. These reports show events and usage from the last 30 minutes. For a guide to constructing realtime requests \u0026 understanding responses, see [Creating a Realtime Report](https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics).",
+	//   "description": "Returns a customized report of realtime event data for your property. Events appear in realtime reports seconds after they have been sent to the Google Analytics. Realtime reports show events and usage data for the periods of time ranging from the present moment to 30 minutes ago (up to 60 minutes for Google Analytics 360 properties). For a guide to constructing realtime requests \u0026 understanding responses, see [Creating a Realtime Report](https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics).",
 	//   "flatPath": "v1beta/properties/{propertiesId}:runRealtimeReport",
 	//   "httpMethod": "POST",
 	//   "id": "analyticsdata.properties.runRealtimeReport",

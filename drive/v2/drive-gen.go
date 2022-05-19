@@ -1813,6 +1813,10 @@ type DriveCapabilities struct {
 	// drive.
 	CanRenameDrive bool `json:"canRenameDrive,omitempty"`
 
+	// CanResetDriveRestrictions: Whether the current user can reset the
+	// shared drive restrictions to defaults.
+	CanResetDriveRestrictions bool `json:"canResetDriveRestrictions,omitempty"`
+
 	// CanShare: Whether the current user can share files or folders in this
 	// shared drive.
 	CanShare bool `json:"canShare,omitempty"`
@@ -3840,6 +3844,10 @@ type TeamDriveCapabilities struct {
 	// CanRenameTeamDrive: Whether the current user can rename this Team
 	// Drive.
 	CanRenameTeamDrive bool `json:"canRenameTeamDrive,omitempty"`
+
+	// CanResetTeamDriveRestrictions: Whether the current user can reset the
+	// Team Drive restrictions to defaults.
+	CanResetTeamDriveRestrictions bool `json:"canResetTeamDriveRestrictions,omitempty"`
 
 	// CanShare: Whether the current user can share files or folders in this
 	// Team Drive.

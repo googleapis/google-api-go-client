@@ -3466,8 +3466,8 @@ type Version struct {
 	// returned in GET requests if view=FULL is set.
 	ApiConfig *ApiConfigHandler `json:"apiConfig,omitempty"`
 
-	// AppEngineApis: app_engine_apis allows second generation runtimes to
-	// access the App Engine APIs.
+	// AppEngineApis: Allows App Engine second generation runtimes to access
+	// the legacy bundled services.
 	AppEngineApis bool `json:"appEngineApis,omitempty"`
 
 	// AutomaticScaling: Automatic scaling is based on request rate,

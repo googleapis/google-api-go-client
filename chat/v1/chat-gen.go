@@ -741,7 +741,7 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 // API is enabled, these error messages are logged to Google Cloud
 // Logging (https://cloud.google.com/logging/docs).
 type ChatAppLogEntry struct {
-	// Deployment: The deployment that caused the error. For Chat bots built
+	// Deployment: The deployment that caused the error. For Chat apps built
 	// in Apps Script, this is the deployment ID defined by Apps Script.
 	Deployment string `json:"deployment,omitempty"`
 
@@ -2948,9 +2948,9 @@ func (s *ListSpacesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MatchedUrl: A matched url in a Chat message. Chat apps can unfurl
-// matched URLs. For more information, refer to Unfurl links
-// (https://developers.google.com/chat/how-tos/link-unfurling).
+// MatchedUrl: A matched url in a Chat message. Chat apps can preview
+// matched URLs. For more information, refer to Preview links
+// (https://developers.google.com/chat/how-tos/preview-links).
 type MatchedUrl struct {
 	// Url: Output only. The url that was matched.
 	Url string `json:"url,omitempty"`
@@ -3010,19 +3010,25 @@ func (s *Media) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Membership: Represents a membership relation in Google Chat.
+// Membership: Represents a membership relation in Google Chat, such as
+// whether a user or Chat app is invited to, part of, or absent from a
+// space.
 type Membership struct {
-	// CreateTime: Output only. The creation time of the membership a.k.a.
-	// the time at which the member joined the space, if applicable.
+	// CreateTime: Output only. The creation time of the membership, such as
+	// when a member joined or was invited to join a space.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Member: Output only. A user in Google Chat. Represents a person
+	// Member: A Google Chat user or app. Format: `users/{user}` or
+	// `users/app` When `users/{user}`, represents a person
 	// (https://developers.google.com/people/api/rest/v1/people) in the
 	// People API or a user
 	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
-	// in the Admin SDK Directory API. Format: `users/{user}`
+	// in the Admin SDK Directory API. When `users/app`, represents a Chat
+	// app creating membership for itself.
 	Member *User `json:"member,omitempty"`
 
+	// Name: Resource name of the membership. Format:
+	// spaces/{space}/members/{member}
 	Name string `json:"name,omitempty"`
 
 	// State: Output only. State of the membership.
@@ -3096,13 +3102,13 @@ type Message struct {
 	FallbackText string `json:"fallbackText,omitempty"`
 
 	// LastUpdateTime: Output only. The time at which the message was last
-	// updated in Google Chat server. If the message was never updated, this
-	// field will be same as create_time.
+	// updated. If the message was never updated, this field matches
+	// `create_time`.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 
 	// MatchedUrl: Output only. A URL in `spaces.messages.text` that matches
-	// a link unfurling pattern. For more information, refer to Unfurl links
-	// (https://developers.google.com/chat/how-tos/link-unfurling).
+	// a link preview pattern. For more information, refer to Preview links
+	// (https://developers.google.com/chat/how-tos/preview-links).
 	MatchedUrl *MatchedUrl `json:"matchedUrl,omitempty"`
 
 	// Name: Resource name in the form `spaces/*/messages/*`. Example:
@@ -3328,20 +3334,18 @@ type Space struct {
 	// humans, this field might be empty.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Resource name of the space, in the form "spaces/*". Example:
-	// spaces/AAAAAAAAAAAA
+	// Name: Resource name of the space. Format: spaces/{space}
 	Name string `json:"name,omitempty"`
 
 	// SingleUserBotDm: Output only. Whether the space is a DM between a
 	// Chat app and a single human.
 	SingleUserBotDm bool `json:"singleUserBotDm,omitempty"`
 
-	// Threaded: Output only. Output only. Whether the messages are threaded
-	// in this space.
+	// Threaded: Output only. Whether messages are threaded in this space.
 	Threaded bool `json:"threaded,omitempty"`
 
-	// Type: Output only. Deprecated: Use `single_user_bot_dm` instead.
-	// Output only. The type of a space.
+	// Type: Output only. Deprecated: Use `single_user_bot_dm` or
+	// `space_type` (developer preview) instead. The type of a space.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED"
@@ -4926,8 +4930,8 @@ type SpacesGetCall struct {
 // Get: Returns a space. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: Resource name of the space, in the form "spaces/*". Example:
-//   spaces/AAAAAAAAAAAA.
+// - name: Resource name of the space, in the form "spaces/*". Format:
+//   spaces/{space}.
 func (r *SpacesService) Get(name string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5042,7 +5046,7 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
+	//       "description": "Required. Resource name of the space, in the form \"spaces/*\". Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -5417,9 +5421,8 @@ type SpacesMembersGetCall struct {
 // Get: Returns a membership. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: Resource name of the membership to be retrieved, in the form
-//   "spaces/*/members/*". Example:
-//   spaces/AAAAAAAAAAAA/members/111111111111111111111.
+// - name: Resource name of the membership to retrieve. Format:
+//   spaces/{space}/members/{member}.
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	c := &SpacesMembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5534,7 +5537,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the membership to be retrieved, in the form \"spaces/*/members/*\". Example: spaces/AAAAAAAAAAAA/members/111111111111111111111",
+	//       "description": "Required. Resource name of the membership to retrieve. Format: spaces/{space}/members/{member}",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/members/[^/]+$",
 	//       "required": true,
@@ -5564,8 +5567,8 @@ type SpacesMembersListCall struct {
 // authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - parent: The resource name of the space for which membership list is
-//   to be fetched, in the form "spaces/*". Example: spaces/AAAAAAAAAAAA.
+// - parent: The resource name of the space for which to fetch a
+//   membership list. Format: spaces/{space}.
 func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 	c := &SpacesMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5706,7 +5709,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the space for which membership list is to be fetched, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
+	//       "description": "Required. The resource name of the space for which to fetch a membership list. Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,

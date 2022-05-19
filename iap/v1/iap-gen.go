@@ -856,7 +856,7 @@ func (s *ListIdentityAwareProxyClientsResponse) MarshalJSON() ([]byte, error) {
 
 // ListTunnelDestGroupsResponse: The response from ListTunnelDestGroups.
 type ListTunnelDestGroupsResponse struct {
-	// NextPageToken: A token, which can be send as `page_token` to retrieve
+	// NextPageToken: A token that you can send as `page_token` to retrieve
 	// the next page. If this field is omitted, there are no subsequent
 	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -1131,12 +1131,12 @@ type ReauthSettings struct {
 	//
 	// Possible values:
 	//   "METHOD_UNSPECIFIED" - Reauthentication disabled.
-	//   "LOGIN" - Mimicks the behavior as if the user had logged out and
-	// tried to log in again. Users with 2SV (step verification) enabled
-	// will see their 2SV challenges if they did not opt to have their
-	// second factor responses saved. Apps Core (GSuites) admins can
-	// configure settings to disable 2SV cookies and require 2-step
-	// verification for all Apps Core users in their domains.
+	//   "LOGIN" - Mimics the behavior as if the user had logged out and
+	// tried to log in again. Users with 2SV (2-step verification) enabled
+	// see their 2SV challenges if they did not opt to have their second
+	// factor responses saved. Apps Core (GSuites) admins can configure
+	// settings to disable 2SV cookies and require 2SV for all Apps Core
+	// users in their domains.
 	//   "PASSWORD" - User must type their password.
 	//   "SECURE_KEY" - User must use their secure key 2nd factor device.
 	Method string `json:"method,omitempty"`
@@ -1146,8 +1146,7 @@ type ReauthSettings struct {
 	// hierarchy to lower in the hierarchy.
 	//
 	// Possible values:
-	//   "POLICY_TYPE_UNSPECIFIED" - Default value. This value is
-	// unused/invalid.
+	//   "POLICY_TYPE_UNSPECIFIED" - Default value. This value is unused.
 	//   "MINIMUM" - This policy acts as a minimum to other policies, lower
 	// in the hierarchy. Effective policy may only be the same or stricter.
 	//   "DEFAULT" - This policy acts as a default if no other reauth policy
@@ -2622,9 +2621,9 @@ type ProjectsIapTunnelLocationsDestGroupsCreateCall struct {
 
 // Create: Creates a new TunnelDestGroup.
 //
-// - parent: GCP Project number/id and location. In the following
+// - parent: Google Cloud Project ID and location. In the following
 //   format:
-//   projects/{project_number/id}/iap_tunnel/locations/{location}.
+//   `projects/{project_number/id}/iap_tunnel/locations/{location}`.
 func (r *ProjectsIapTunnelLocationsDestGroupsService) Create(parent string, tunneldestgroup *TunnelDestGroup) *ProjectsIapTunnelLocationsDestGroupsCreateCall {
 	c := &ProjectsIapTunnelLocationsDestGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2633,9 +2632,9 @@ func (r *ProjectsIapTunnelLocationsDestGroupsService) Create(parent string, tunn
 }
 
 // TunnelDestGroupId sets the optional parameter "tunnelDestGroupId":
-// Required. The ID to use for the TunnelDestGroup, which will become
-// the final component of the resource name. This value should be 4-63
-// characters, and valid characters are /a-z-/.
+// Required. The ID to use for the TunnelDestGroup, which becomes the
+// final component of the resource name. This value must be 4-63
+// characters, and valid characters are `a-z-`.
 func (c *ProjectsIapTunnelLocationsDestGroupsCreateCall) TunnelDestGroupId(tunnelDestGroupId string) *ProjectsIapTunnelLocationsDestGroupsCreateCall {
 	c.urlParams_.Set("tunnelDestGroupId", tunnelDestGroupId)
 	return c
@@ -2741,14 +2740,14 @@ func (c *ProjectsIapTunnelLocationsDestGroupsCreateCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. GCP Project number/id and location. In the following format: projects/{project_number/id}/iap_tunnel/locations/{location}.",
+	//       "description": "Required. Google Cloud Project ID and location. In the following format: `projects/{project_number/id}/iap_tunnel/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/iap_tunnel/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "tunnelDestGroupId": {
-	//       "description": "Required. The ID to use for the TunnelDestGroup, which will become the final component of the resource name. This value should be 4-63 characters, and valid characters are /a-z-/.",
+	//       "description": "Required. The ID to use for the TunnelDestGroup, which becomes the final component of the resource name. This value must be 4-63 characters, and valid characters are `a-z-`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2779,10 +2778,10 @@ type ProjectsIapTunnelLocationsDestGroupsDeleteCall struct {
 
 // Delete: Deletes a TunnelDestGroup.
 //
-// - name: Name of the TunnelDestGroup to be deleted. In the following
+// - name: Name of the TunnelDestGroup to delete. In the following
 //   format:
-//   projects/{project_number/id}/iap_tunnel/locations/{location}/destGro
-//   ups/{dest_group}.
+//   `projects/{project_number/id}/iap_tunnel/locations/{location}/destGr
+//   oups/{dest_group}`.
 func (r *ProjectsIapTunnelLocationsDestGroupsService) Delete(name string) *ProjectsIapTunnelLocationsDestGroupsDeleteCall {
 	c := &ProjectsIapTunnelLocationsDestGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2884,7 +2883,7 @@ func (c *ProjectsIapTunnelLocationsDestGroupsDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the TunnelDestGroup to be deleted. In the following format: projects/{project_number/id}/iap_tunnel/locations/{location}/destGroups/{dest_group}.",
+	//       "description": "Required. Name of the TunnelDestGroup to delete. In the following format: `projects/{project_number/id}/iap_tunnel/locations/{location}/destGroups/{dest_group}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/iap_tunnel/locations/[^/]+/destGroups/[^/]+$",
 	//       "required": true,
@@ -2917,8 +2916,8 @@ type ProjectsIapTunnelLocationsDestGroupsGetCall struct {
 //
 // - name: Name of the TunnelDestGroup to be fetched. In the following
 //   format:
-//   projects/{project_number/id}/iap_tunnel/locations/{location}/destGro
-//   ups/{dest_group}.
+//   `projects/{project_number/id}/iap_tunnel/locations/{location}/destGr
+//   oups/{dest_group}`.
 func (r *ProjectsIapTunnelLocationsDestGroupsService) Get(name string) *ProjectsIapTunnelLocationsDestGroupsGetCall {
 	c := &ProjectsIapTunnelLocationsDestGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3033,7 +3032,7 @@ func (c *ProjectsIapTunnelLocationsDestGroupsGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the TunnelDestGroup to be fetched. In the following format: projects/{project_number/id}/iap_tunnel/locations/{location}/destGroups/{dest_group}.",
+	//       "description": "Required. Name of the TunnelDestGroup to be fetched. In the following format: `projects/{project_number/id}/iap_tunnel/locations/{location}/destGroups/{dest_group}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/iap_tunnel/locations/[^/]+/destGroups/[^/]+$",
 	//       "required": true,
@@ -3064,12 +3063,12 @@ type ProjectsIapTunnelLocationsDestGroupsListCall struct {
 
 // List: Lists the existing TunnelDestGroups. To group across all
 // locations, use a `-` as the location ID. For example:
-// /v1/projects/123/iap_tunnel/locations/-/destGroups
+// `/v1/projects/123/iap_tunnel/locations/-/destGroups`
 //
-// - parent: GCP Project number/id and location. In the following
+// - parent: Google Cloud Project ID and location. In the following
 //   format:
-//   projects/{project_number/id}/iap_tunnel/locations/{location}. A `-`
-//   can be used for the location to group across all locations.
+//   `projects/{project_number/id}/iap_tunnel/locations/{location}`. A
+//   `-` can be used for the location to group across all locations.
 func (r *ProjectsIapTunnelLocationsDestGroupsService) List(parent string) *ProjectsIapTunnelLocationsDestGroupsListCall {
 	c := &ProjectsIapTunnelLocationsDestGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3077,9 +3076,9 @@ func (r *ProjectsIapTunnelLocationsDestGroupsService) List(parent string) *Proje
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of groups to return. The service may return fewer than this value. If
-// unspecified, at most 100 groups will be returned. The maximum value
-// is 1000; values above 1000 will be coerced to 1000.
+// of groups to return. The service might return fewer than this value.
+// If unspecified, at most 100 groups are returned. The maximum value is
+// 1000; values above 1000 are coerced to 1000.
 func (c *ProjectsIapTunnelLocationsDestGroupsListCall) PageSize(pageSize int64) *ProjectsIapTunnelLocationsDestGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3194,7 +3193,7 @@ func (c *ProjectsIapTunnelLocationsDestGroupsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the existing TunnelDestGroups. To group across all locations, use a `-` as the location ID. For example: /v1/projects/123/iap_tunnel/locations/-/destGroups",
+	//   "description": "Lists the existing TunnelDestGroups. To group across all locations, use a `-` as the location ID. For example: `/v1/projects/123/iap_tunnel/locations/-/destGroups`",
 	//   "flatPath": "v1/projects/{projectsId}/iap_tunnel/locations/{locationsId}/destGroups",
 	//   "httpMethod": "GET",
 	//   "id": "iap.projects.iap_tunnel.locations.destGroups.list",
@@ -3203,7 +3202,7 @@ func (c *ProjectsIapTunnelLocationsDestGroupsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of groups to return. The service may return fewer than this value. If unspecified, at most 100 groups will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "The maximum number of groups to return. The service might return fewer than this value. If unspecified, at most 100 groups are returned. The maximum value is 1000; values above 1000 are coerced to 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3214,7 +3213,7 @@ func (c *ProjectsIapTunnelLocationsDestGroupsListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. GCP Project number/id and location. In the following format: projects/{project_number/id}/iap_tunnel/locations/{location}. A `-` can be used for the location to group across all locations.",
+	//       "description": "Required. Google Cloud Project ID and location. In the following format: `projects/{project_number/id}/iap_tunnel/locations/{location}`. A `-` can be used for the location to group across all locations.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/iap_tunnel/locations/[^/]+$",
 	//       "required": true,
@@ -3275,9 +3274,9 @@ func (r *ProjectsIapTunnelLocationsDestGroupsService) Patch(name string, tunneld
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The field mask
-// specifying which IAP settings should be updated. If omitted, then all
-// of the settings are updated. See
+// UpdateMask sets the optional parameter "updateMask": A field mask
+// that specifies which IAP settings to update. If omitted, then all of
+// the settings are updated. See
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsIapTunnelLocationsDestGroupsPatchCall) UpdateMask(updateMask string) *ProjectsIapTunnelLocationsDestGroupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -3391,7 +3390,7 @@ func (c *ProjectsIapTunnelLocationsDestGroupsPatchCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The field mask specifying which IAP settings should be updated. If omitted, then all of the settings are updated. See https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "A field mask that specifies which IAP settings to update. If omitted, then all of the settings are updated. See https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3428,8 +3427,9 @@ type V1GetIamPolicyCall struct {
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *V1Service) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *V1GetIamPolicyCall {
 	c := &V1GetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3537,7 +3537,7 @@ func (c *V1GetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,
@@ -3724,8 +3724,9 @@ type V1SetIamPolicyCall struct {
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *V1Service) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *V1SetIamPolicyCall {
 	c := &V1SetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3833,7 +3834,7 @@ func (c *V1SetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,
@@ -3871,7 +3872,8 @@ type V1TestIamPermissionsCall struct {
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *V1Service) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *V1TestIamPermissionsCall {
 	c := &V1TestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3980,7 +3982,7 @@ func (c *V1TestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPer
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,

@@ -127,6 +127,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.EffectiveTags = NewEffectiveTagsService(s)
 	s.Folders = NewFoldersService(s)
 	s.Liens = NewLiensService(s)
 	s.Operations = NewOperationsService(s)
@@ -142,6 +143,8 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
+
+	EffectiveTags *EffectiveTagsService
 
 	Folders *FoldersService
 
@@ -165,6 +168,15 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewEffectiveTagsService(s *Service) *EffectiveTagsService {
+	rs := &EffectiveTagsService{s: s}
+	return rs
+}
+
+type EffectiveTagsService struct {
+	s *Service
 }
 
 func NewFoldersService(s *Service) *FoldersService {
@@ -267,8 +279,8 @@ type TagValuesTagHoldsService struct {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -628,6 +640,58 @@ type DeleteTagKeyMetadata struct {
 // DeleteTagValueMetadata: Runtime operation information for deleting a
 // TagValue.
 type DeleteTagValueMetadata struct {
+}
+
+// EffectiveTag: An EffectiveTag represents a tag that applies to a
+// resource during policy evaluation. Tags can be either directly bound
+// to a resource or inherited from its ancestor. EffectiveTag contains
+// the name and namespaced_name of the tag value and tag key, with
+// additional fields of `inherited` to indicate the inheritance status
+// of the effective tag.
+type EffectiveTag struct {
+	// Inherited: Indicates the inheritance status of a tag value attached
+	// to the given resource. If the tag value is inherited from one of the
+	// resource's ancestors, inherited will be true. If false, then the tag
+	// value is directly attached to the resource, inherited will be false.
+	Inherited bool `json:"inherited,omitempty"`
+
+	// NamespacedTagKey: The namespaced_name of the TagKey, in the format of
+	// `{organization_id}/{tag_key_short_name}`
+	NamespacedTagKey string `json:"namespacedTagKey,omitempty"`
+
+	// NamespacedTagValue: Namespaced name of the TagValue. Must be in the
+	// format
+	// `{organization_id}/{tag_key_short_name}/{tag_value_short_name}`.
+	NamespacedTagValue string `json:"namespacedTagValue,omitempty"`
+
+	// TagKey: The name of the TagKey, in the format `tagKeys/{id}`, such as
+	// `tagKeys/123`.
+	TagKey string `json:"tagKey,omitempty"`
+
+	// TagValue: Resource name for TagValue in the format `tagValues/456`.
+	TagValue string `json:"tagValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Inherited") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Inherited") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EffectiveTag) MarshalJSON() ([]byte, error) {
+	type NoMethod EffectiveTag
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -995,6 +1059,48 @@ type Lien struct {
 
 func (s *Lien) MarshalJSON() ([]byte, error) {
 	type NoMethod Lien
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListEffectiveTagsResponse: The response of ListEffectiveTags.
+type ListEffectiveTagsResponse struct {
+	// EffectiveTags: A possibly paginated list of effective tags for the
+	// specified resource.
+	EffectiveTags []*EffectiveTag `json:"effectiveTags,omitempty"`
+
+	// NextPageToken: Pagination token. If the result set is too large to
+	// fit in a single response, this token is returned. It encodes the
+	// position of the current result cursor. Feeding this value into a new
+	// list request with the `page_token` parameter gives the next page of
+	// the results. When `next_page_token` is not filled in, there is no
+	// next page and the list returned is the last page in the result set.
+	// Pagination tokens have a limited lifetime.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EffectiveTags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EffectiveTags") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEffectiveTagsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEffectiveTagsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2299,6 +2405,200 @@ type UpdateTagKeyMetadata struct {
 type UpdateTagValueMetadata struct {
 }
 
+// method id "cloudresourcemanager.effectiveTags.list":
+
+type EffectiveTagsListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Return a list of effective tags for the given cloud resource,
+// as specified in `parent`.
+func (r *EffectiveTagsService) List() *EffectiveTagsListCall {
+	c := &EffectiveTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of effective tags to return in the response. The server allows a
+// maximum of 300 effective tags to return in a single page. If
+// unspecified, the server will use 100 as the default.
+func (c *EffectiveTagsListCall) PageSize(pageSize int64) *EffectiveTagsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call to `ListEffectiveTags` that indicates
+// from where this listing should continue.
+func (c *EffectiveTagsListCall) PageToken(pageToken string) *EffectiveTagsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Parent sets the optional parameter "parent": Required. The full
+// resource name of a resource for which you want to list the effective
+// tags. E.g. "//cloudresourcemanager.googleapis.com/projects/123"
+func (c *EffectiveTagsListCall) Parent(parent string) *EffectiveTagsListCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EffectiveTagsListCall) Fields(s ...googleapi.Field) *EffectiveTagsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *EffectiveTagsListCall) IfNoneMatch(entityTag string) *EffectiveTagsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EffectiveTagsListCall) Context(ctx context.Context) *EffectiveTagsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EffectiveTagsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EffectiveTagsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/effectiveTags")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.effectiveTags.list" call.
+// Exactly one of *ListEffectiveTagsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListEffectiveTagsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EffectiveTagsListCall) Do(opts ...googleapi.CallOption) (*ListEffectiveTagsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListEffectiveTagsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return a list of effective tags for the given cloud resource, as specified in `parent`.",
+	//   "flatPath": "v3/effectiveTags",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.effectiveTags.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of effective tags to return in the response. The server allows a maximum of 300 effective tags to return in a single page. If unspecified, the server will use 100 as the default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A pagination token returned from a previous call to `ListEffectiveTags` that indicates from where this listing should continue.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The full resource name of a resource for which you want to list the effective tags. E.g. \"//cloudresourcemanager.googleapis.com/projects/123\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/effectiveTags",
+	//   "response": {
+	//     "$ref": "ListEffectiveTagsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *EffectiveTagsListCall) Pages(ctx context.Context, f func(*ListEffectiveTagsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "cloudresourcemanager.folders.create":
 
 type FoldersCreateCall struct {
@@ -2752,8 +3052,9 @@ type FoldersGetIamPolicyCall struct {
 // folder.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *FoldersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *FoldersGetIamPolicyCall {
 	c := &FoldersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2861,7 +3162,7 @@ func (c *FoldersGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -3654,8 +3955,9 @@ type FoldersSetIamPolicyCall struct {
 // folder.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *FoldersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *FoldersSetIamPolicyCall {
 	c := &FoldersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3763,7 +4065,7 @@ func (c *FoldersSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -3801,7 +4103,8 @@ type FoldersTestIamPermissionsCall struct {
 // required for making this API call.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *FoldersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *FoldersTestIamPermissionsCall {
 	c := &FoldersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3910,7 +4213,7 @@ func (c *FoldersTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestI
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -5015,8 +5318,9 @@ type OrganizationsGetIamPolicyCall struct {
 // specified organization.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsGetIamPolicyCall {
 	c := &OrganizationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5124,7 +5428,7 @@ func (c *OrganizationsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -5372,8 +5676,9 @@ type OrganizationsSetIamPolicyCall struct {
 // organization.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSetIamPolicyCall {
 	c := &OrganizationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5481,7 +5786,7 @@ func (c *OrganizationsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -5519,7 +5824,8 @@ type OrganizationsTestIamPermissionsCall struct {
 // are no permissions required for making this API call.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *OrganizationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsTestIamPermissionsCall {
 	c := &OrganizationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5628,7 +5934,7 @@ func (c *OrganizationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -6092,8 +6398,9 @@ type ProjectsGetIamPolicyCall struct {
 // not exist.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsGetIamPolicyCall {
 	c := &ProjectsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6201,7 +6508,7 @@ func (c *ProjectsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -7012,8 +7319,9 @@ type ProjectsSetIamPolicyCall struct {
 // the App Engine Admin API.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSetIamPolicyCall {
 	c := &ProjectsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7121,7 +7429,7 @@ func (c *ProjectsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -7158,7 +7466,8 @@ type ProjectsTestIamPermissionsCall struct {
 // projects/123..
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTestIamPermissionsCall {
 	c := &ProjectsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7267,7 +7576,7 @@ func (c *ProjectsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Test
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -8382,8 +8691,9 @@ type TagKeysGetIamPolicyCall struct {
 // on the specified TagKey.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *TagKeysService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TagKeysGetIamPolicyCall {
 	c := &TagKeysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8491,7 +8801,7 @@ func (c *TagKeysGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^tagKeys/[^/]+$",
 	//       "required": true,
@@ -8896,8 +9206,9 @@ type TagKeysSetIamPolicyCall struct {
 // tagValue.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *TagKeysService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TagKeysSetIamPolicyCall {
 	c := &TagKeysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9005,7 +9316,7 @@ func (c *TagKeysSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^tagKeys/[^/]+$",
 	//       "required": true,
@@ -9043,7 +9354,8 @@ type TagKeysTestIamPermissionsCall struct {
 // required for making this API call.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *TagKeysService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TagKeysTestIamPermissionsCall {
 	c := &TagKeysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9152,7 +9464,7 @@ func (c *TagKeysTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestI
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^tagKeys/[^/]+$",
 	//       "required": true,
@@ -9645,8 +9957,9 @@ type TagValuesGetIamPolicyCall struct {
 // policy.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *TagValuesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TagValuesGetIamPolicyCall {
 	c := &TagValuesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9754,7 +10067,7 @@ func (c *TagValuesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, e
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^tagValues/[^/]+$",
 	//       "required": true,
@@ -10156,8 +10469,9 @@ type TagValuesSetIamPolicyCall struct {
 // tagValue.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *TagValuesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TagValuesSetIamPolicyCall {
 	c := &TagValuesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10265,7 +10579,7 @@ func (c *TagValuesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, e
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^tagValues/[^/]+$",
 	//       "required": true,
@@ -10303,7 +10617,8 @@ type TagValuesTestIamPermissionsCall struct {
 // permissions required for making this API call.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *TagValuesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TagValuesTestIamPermissionsCall {
 	c := &TagValuesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10412,7 +10727,7 @@ func (c *TagValuesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Tes
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^tagValues/[^/]+$",
 	//       "required": true,

@@ -624,8 +624,8 @@ func (s *AssetDiscoveryConfig) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -3092,6 +3092,7 @@ type MitreAttack struct {
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "DATA_DESTRUCTION" - T1485
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
+	//   "IMPAIR_DEFENSES" - T1562
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
@@ -3155,6 +3156,7 @@ type MitreAttack struct {
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "DATA_DESTRUCTION" - T1485
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
+	//   "IMPAIR_DEFENSES" - T1562
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 
 	// Version: The MITRE ATT&CK version referenced by the above fields.
@@ -12589,8 +12591,9 @@ type OrganizationsSourcesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy on the specified Source.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsSourcesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsSourcesGetIamPolicyCall {
 	c := &OrganizationsSourcesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12698,7 +12701,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -13088,8 +13091,9 @@ type OrganizationsSourcesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified Source.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsSourcesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSourcesSetIamPolicyCall {
 	c := &OrganizationsSourcesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13197,7 +13201,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -13233,7 +13237,8 @@ type OrganizationsSourcesTestIamPermissionsCall struct {
 // specified source.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *OrganizationsSourcesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsSourcesTestIamPermissionsCall {
 	c := &OrganizationsSourcesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13342,7 +13347,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,

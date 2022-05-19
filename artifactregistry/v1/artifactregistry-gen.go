@@ -328,6 +328,36 @@ func (s *AptArtifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchDeleteVersionsMetadata: The metadata of an LRO from deleting
+// multiple versions.
+type BatchDeleteVersionsMetadata struct {
+	// FailedVersions: The versions the operation failed to delete.
+	FailedVersions []string `json:"failedVersions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FailedVersions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailedVersions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeleteVersionsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeleteVersionsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -340,8 +370,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -1588,7 +1618,7 @@ func (s *Repository) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -1706,7 +1736,7 @@ func (s *Tag) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -1800,6 +1830,11 @@ func (s *UploadAptArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UploadAptArtifactMetadata: The operation metadata for uploading
+// artifacts.
+type UploadAptArtifactMetadata struct {
+}
+
 // UploadAptArtifactRequest: The request to upload an artifact.
 type UploadAptArtifactRequest struct {
 }
@@ -1864,6 +1899,11 @@ func (s *UploadYumArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadYumArtifactMediaResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UploadYumArtifactMetadata: The operation metadata for uploading
+// artifacts.
+type UploadYumArtifactMetadata struct {
 }
 
 // UploadYumArtifactRequest: The request to upload an artifact.
@@ -3264,8 +3304,9 @@ type ProjectsLocationsRepositoriesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the IAM policy for a given resource.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsRepositoriesService) GetIamPolicy(resource string) *ProjectsLocationsRepositoriesGetIamPolicyCall {
 	c := &ProjectsLocationsRepositoriesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3404,7 +3445,7 @@ func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) Do(opts ...googleapi.Cal
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -3788,8 +3829,9 @@ type ProjectsLocationsRepositoriesSetIamPolicyCall struct {
 // SetIamPolicy: Updates the IAM policy for a given resource.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsRepositoriesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRepositoriesSetIamPolicyCall {
 	c := &ProjectsLocationsRepositoriesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3897,7 +3939,7 @@ func (c *ProjectsLocationsRepositoriesSetIamPolicyCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -3933,7 +3975,8 @@ type ProjectsLocationsRepositoriesTestIamPermissionsCall struct {
 // a resource.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsRepositoriesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRepositoriesTestIamPermissionsCall {
 	c := &ProjectsLocationsRepositoriesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4042,7 +4085,7 @@ func (c *ProjectsLocationsRepositoriesTestIamPermissionsCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,

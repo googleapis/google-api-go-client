@@ -3367,8 +3367,9 @@ type ProjectsLocationsEntryGroupsGetIamPolicyCall struct {
 // get policies on entry groups.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsEntryGroupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsEntryGroupsGetIamPolicyCall {
 	c := &ProjectsLocationsEntryGroupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3476,7 +3477,7 @@ func (c *ProjectsLocationsEntryGroupsGetIamPolicyCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -3884,8 +3885,9 @@ type ProjectsLocationsEntryGroupsSetIamPolicyCall struct {
 // set policies on entry groups.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsEntryGroupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsEntryGroupsSetIamPolicyCall {
 	c := &ProjectsLocationsEntryGroupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3993,7 +3995,7 @@ func (c *ProjectsLocationsEntryGroupsSetIamPolicyCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -4035,7 +4037,8 @@ type ProjectsLocationsEntryGroupsTestIamPermissionsCall struct {
 // request.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsEntryGroupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsEntryGroupsTestIamPermissionsCall {
 	c := &ProjectsLocationsEntryGroupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4144,7 +4147,7 @@ func (c *ProjectsLocationsEntryGroupsTestIamPermissionsCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -4641,8 +4644,9 @@ type ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall struct {
 // get policies on entry groups.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsEntryGroupsEntriesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall {
 	c := &ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4750,7 +4754,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -5179,7 +5183,8 @@ type ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall struct {
 // request.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsEntryGroupsEntriesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5288,7 +5293,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -7097,8 +7102,9 @@ type ProjectsLocationsTagTemplatesGetIamPolicyCall struct {
 // get policies on entry groups.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTagTemplatesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsTagTemplatesGetIamPolicyCall {
 	c := &ProjectsLocationsTagTemplatesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7206,7 +7212,7 @@ func (c *ProjectsLocationsTagTemplatesGetIamPolicyCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
 	//       "required": true,
@@ -7421,8 +7427,9 @@ type ProjectsLocationsTagTemplatesSetIamPolicyCall struct {
 // set policies on entry groups.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTagTemplatesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTagTemplatesSetIamPolicyCall {
 	c := &ProjectsLocationsTagTemplatesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7530,7 +7537,7 @@ func (c *ProjectsLocationsTagTemplatesSetIamPolicyCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
 	//       "required": true,
@@ -7572,7 +7579,8 @@ type ProjectsLocationsTagTemplatesTestIamPermissionsCall struct {
 // request.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsTagTemplatesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTagTemplatesTestIamPermissionsCall {
 	c := &ProjectsLocationsTagTemplatesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7681,7 +7689,7 @@ func (c *ProjectsLocationsTagTemplatesTestIamPermissionsCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
 	//       "required": true,
@@ -9110,8 +9118,9 @@ type ProjectsLocationsTaxonomiesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the IAM policy for a taxonomy or a policy tag.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsTaxonomiesGetIamPolicyCall {
 	c := &ProjectsLocationsTaxonomiesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9219,7 +9228,7 @@ func (c *ProjectsLocationsTaxonomiesGetIamPolicyCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
 	//       "required": true,
@@ -9757,8 +9766,9 @@ type ProjectsLocationsTaxonomiesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the IAM policy for a taxonomy or a policy tag.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTaxonomiesSetIamPolicyCall {
 	c := &ProjectsLocationsTaxonomiesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9866,7 +9876,7 @@ func (c *ProjectsLocationsTaxonomiesSetIamPolicyCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
 	//       "required": true,
@@ -9902,7 +9912,8 @@ type ProjectsLocationsTaxonomiesTestIamPermissionsCall struct {
 // specified taxonomy or policy tag.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTaxonomiesTestIamPermissionsCall {
 	c := &ProjectsLocationsTaxonomiesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10011,7 +10022,7 @@ func (c *ProjectsLocationsTaxonomiesTestIamPermissionsCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
 	//       "required": true,
@@ -10471,8 +10482,9 @@ type ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the IAM policy for a taxonomy or a policy tag.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10580,7 +10592,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
 	//       "required": true,
@@ -10976,8 +10988,9 @@ type ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the IAM policy for a taxonomy or a policy tag.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11085,7 +11098,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
 	//       "required": true,
@@ -11121,7 +11134,8 @@ type ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall struct {
 // specified taxonomy or policy tag.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -11230,7 +11244,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
 	//       "required": true,

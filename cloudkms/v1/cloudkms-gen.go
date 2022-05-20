@@ -1340,9 +1340,9 @@ type EkmConnection struct {
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Etag: This checksum is computed by the server based on the value of
-	// other fields, and may be sent on update requests to ensure the client
-	// has an up-to-date value before proceeding.
+	// Etag: Optional. This checksum is computed by the server based on the
+	// value of other fields, and may be sent on update requests to ensure
+	// the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
 	// Name: Output only. The resource name for the EkmConnection in the

@@ -1161,42 +1161,6 @@ func (s *CreateGitHubEnterpriseConfigOperationMetadata) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateGitLabConfigOperationMetadata: Metadata for
-// `CreateGitLabConfig` operation.
-type CreateGitLabConfigOperationMetadata struct {
-	// CompleteTime: Time the operation was completed.
-	CompleteTime string `json:"completeTime,omitempty"`
-
-	// CreateTime: Time the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// GitlabConfig: The resource name of the GitLabConfig to be created.
-	// Format: `projects/{project}/locations/{location}/gitlabConfigs/{id}`.
-	GitlabConfig string `json:"gitlabConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CompleteTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompleteTime") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CreateGitLabConfigOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod CreateGitLabConfigOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // CreateWorkerPoolOperationMetadata: Metadata for the
 // `CreateWorkerPool` operation.
 type CreateWorkerPoolOperationMetadata struct {
@@ -1306,42 +1270,6 @@ type DeleteGitHubEnterpriseConfigOperationMetadata struct {
 
 func (s *DeleteGitHubEnterpriseConfigOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteGitHubEnterpriseConfigOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DeleteGitLabConfigOperationMetadata: Metadata for
-// `DeleteGitLabConfig` operation.
-type DeleteGitLabConfigOperationMetadata struct {
-	// CompleteTime: Time the operation was completed.
-	CompleteTime string `json:"completeTime,omitempty"`
-
-	// CreateTime: Time the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// GitlabConfig: The resource name of the GitLabConfig to be created.
-	// Format: `projects/{project}/locations/{location}/gitlabConfigs/{id}`.
-	GitlabConfig string `json:"gitlabConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CompleteTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompleteTime") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DeleteGitLabConfigOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod DeleteGitLabConfigOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2761,42 +2689,6 @@ type UpdateGitHubEnterpriseConfigOperationMetadata struct {
 
 func (s *UpdateGitHubEnterpriseConfigOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateGitHubEnterpriseConfigOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UpdateGitLabConfigOperationMetadata: Metadata for
-// `UpdateGitLabConfig` operation.
-type UpdateGitLabConfigOperationMetadata struct {
-	// CompleteTime: Time the operation was completed.
-	CompleteTime string `json:"completeTime,omitempty"`
-
-	// CreateTime: Time the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// GitlabConfig: The resource name of the GitLabConfig to be created.
-	// Format: `projects/{project}/locations/{location}/gitlabConfigs/{id}`.
-	GitlabConfig string `json:"gitlabConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CompleteTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompleteTime") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UpdateGitLabConfigOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod UpdateGitLabConfigOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

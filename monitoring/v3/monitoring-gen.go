@@ -1353,6 +1353,10 @@ type ContentMatcher struct {
 	// performed.
 	Content string `json:"content,omitempty"`
 
+	// JsonPathMatcher: Matcher information for MATCHES_JSON_PATH and
+	// NOT_MATCHES_JSON_PATH
+	JsonPathMatcher *JsonPathMatcher `json:"jsonPathMatcher,omitempty"`
+
 	// Matcher: The type of content matcher that will be applied to the
 	// server output, compared to the content string when the check is run.
 	//
@@ -1374,6 +1378,13 @@ type ContentMatcher struct {
 	// matching. The match succeeds if the output does NOT match the regular
 	// expression specified in the content string. Regex matching is only
 	// supported for HTTP/HTTPS checks.
+	//   "MATCHES_JSON_PATH" - Selects JSONPath matching. See
+	// JsonPathMatcher for details on when the match succeeds. JSONPath
+	// matching is only supported for HTTP/HTTPS checks.
+	//   "NOT_MATCHES_JSON_PATH" - Selects JSONPath matching. See
+	// JsonPathMatcher for details on when the match succeeds. Succeeds when
+	// output does NOT match as specified. JSONPath is only supported for
+	// HTTP/HTTPS checks.
 	Matcher string `json:"matcher,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -2609,6 +2620,51 @@ type IstioCanonicalService struct {
 
 func (s *IstioCanonicalService) MarshalJSON() ([]byte, error) {
 	type NoMethod IstioCanonicalService
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// JsonPathMatcher: Information needed to perform a JSONPath content
+// match. Used for ContentMatcherOption::MATCHES_JSON_PATH and
+// ContentMatcherOption::NOT_MATCHES_JSON_PATH.
+type JsonPathMatcher struct {
+	// JsonMatcher: The type of JSONPath match that will be applied to the
+	// JSON output (ContentMatcher.content)
+	//
+	// Possible values:
+	//   "JSON_PATH_MATCHER_OPTION_UNSPECIFIED" - No JSONPath matcher type
+	// specified (not valid).
+	//   "EXACT_MATCH" - Selects 'exact string' matching. The match succeeds
+	// if the content at the json_path within the output is exactly the same
+	// as the content string.
+	//   "REGEX_MATCH" - Selects regular-expression matching. The match
+	// succeeds if the content at the json_path within the output matches
+	// the regular expression specified in the content string.
+	JsonMatcher string `json:"jsonMatcher,omitempty"`
+
+	// JsonPath: JSONPath within the response output pointing to the
+	// expected ContentMatcher::content to match against.
+	JsonPath string `json:"jsonPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JsonMatcher") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JsonMatcher") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JsonPathMatcher) MarshalJSON() ([]byte, error) {
+	type NoMethod JsonPathMatcher
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

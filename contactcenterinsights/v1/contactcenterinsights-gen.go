@@ -471,8 +471,8 @@ type GoogleCloudContactcenterinsightsV1ArticleSuggestionData struct {
 	// the document that it originates from.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// QueryRecord: Name of the query record. Format:
-	// projects/{project}/locations/{location}/queryRecords/{query_record}
+	// QueryRecord: The name of the answer record. Format:
+	// projects/{project}/locations/{location}/answerRecords/{answer_record}
 	QueryRecord string `json:"queryRecord,omitempty"`
 
 	// Source: The knowledge document that this answer was extracted from.
@@ -1893,8 +1893,8 @@ type GoogleCloudContactcenterinsightsV1FaqAnswerData struct {
 	// document that it originates from.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// QueryRecord: Name of the query record. Format:
-	// projects/{project}/locations/{location}/queryRecords/{query_record}.
+	// QueryRecord: The name of the answer record. Format:
+	// projects/{project}/locations/{location}/answerRecords/{answer_record}
 	QueryRecord string `json:"queryRecord,omitempty"`
 
 	// Question: The corresponding FAQ question.
@@ -3068,8 +3068,8 @@ type GoogleCloudContactcenterinsightsV1SmartComposeSuggestionData struct {
 	// suggestion and the document from which it originates.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// QueryRecord: Name of the query record. Format:
-	// projects/{project}/locations/{location}/queryRecords/{query_record}
+	// QueryRecord: The name of the answer record. Format:
+	// projects/{project}/locations/{location}/answerRecords/{answer_record}
 	QueryRecord string `json:"queryRecord,omitempty"`
 
 	// Suggestion: The content of the suggestion.
@@ -3125,8 +3125,8 @@ type GoogleCloudContactcenterinsightsV1SmartReplyData struct {
 	// document from which it originates.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// QueryRecord: Name of the query record. Format:
-	// projects/{project}/locations/{location}/queryRecords/{query_record}
+	// QueryRecord: The name of the answer record. Format:
+	// projects/{project}/locations/{location}/answerRecords/{answer_record}
 	QueryRecord string `json:"queryRecord,omitempty"`
 
 	// Reply: The content of the reply.

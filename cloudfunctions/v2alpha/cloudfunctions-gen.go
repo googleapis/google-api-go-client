@@ -1683,6 +1683,93 @@ func (s *SecretEnvVar) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SecretVersion: Configuration for a single version.
+type SecretVersion struct {
+	// Path: Relative path of the file under the mount path where the secret
+	// value for this version will be fetched and made available. For
+	// example, setting the mount_path as '/etc/secrets' and path as
+	// `secret_foo` would mount the secret value file at
+	// `/etc/secrets/secret_foo`.
+	Path string `json:"path,omitempty"`
+
+	// Version: Version of the secret (version number or the string
+	// 'latest'). It is preferable to use `latest` version with secret
+	// volumes as secret value changes are reflected immediately.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecretVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SecretVolume: Configuration for a secret volume. It has the
+// information necessary to fetch the secret value from secret manager
+// and make it available as files mounted at the requested paths within
+// the application container.
+type SecretVolume struct {
+	// MountPath: The path within the container to mount the secret volume.
+	// For example, setting the mount_path as `/etc/secrets` would mount the
+	// secret value files under the `/etc/secrets` directory. This directory
+	// will also be completely shadowed and unavailable to mount any other
+	// secrets. Recommended mount path: /etc/secrets
+	MountPath string `json:"mountPath,omitempty"`
+
+	// ProjectId: Project identifier (preferably project number but can also
+	// be the project ID) of the project that contains the secret. If not
+	// set, it is assumed that the secret is in the same project as the
+	// function.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// Secret: Name of the secret in secret manager (not the full resource
+	// name).
+	Secret string `json:"secret,omitempty"`
+
+	// Versions: List of secret versions to mount for this secret. If empty,
+	// the `latest` version of the secret will be made available in a file
+	// named after the secret under the mount point.
+	Versions []*SecretVersion `json:"versions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MountPath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MountPath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecretVolume) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretVolume
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ServiceConfig: Describes the Service being deployed. Currently
 // Supported : Cloud Run (fully managed).
 type ServiceConfig struct {
@@ -1743,6 +1830,9 @@ type ServiceConfig struct {
 	// SecretEnvironmentVariables: Secret environment variables
 	// configuration.
 	SecretEnvironmentVariables []*SecretEnvVar `json:"secretEnvironmentVariables,omitempty"`
+
+	// SecretVolumes: Secret volumes configuration.
+	SecretVolumes []*SecretVolume `json:"secretVolumes,omitempty"`
 
 	// Service: Output only. Name of the service associated with a Function.
 	// The format of this field is

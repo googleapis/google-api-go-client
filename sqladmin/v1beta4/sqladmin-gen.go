@@ -788,6 +788,8 @@ type ConnectSettings struct {
 	// minor version is 27.
 	//   "MYSQL_8_0_28" - The database major version is MySQL 8.0 and the
 	// minor version is 28.
+	//   "MYSQL_8_0_29" - The database major version is MySQL 8.0 and the
+	// minor version is 29.
 	//   "POSTGRES_13" - The database version is PostgreSQL 13.
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
@@ -1007,6 +1009,8 @@ type DatabaseInstance struct {
 	// minor version is 27.
 	//   "MYSQL_8_0_28" - The database major version is MySQL 8.0 and the
 	// minor version is 28.
+	//   "MYSQL_8_0_29" - The database major version is MySQL 8.0 and the
+	// minor version is 29.
 	//   "POSTGRES_13" - The database version is PostgreSQL 13.
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
@@ -1779,6 +1783,8 @@ type Flag struct {
 	// minor version is 27.
 	//   "MYSQL_8_0_28" - The database major version is MySQL 8.0 and the
 	// minor version is 28.
+	//   "MYSQL_8_0_29" - The database major version is MySQL 8.0 and the
+	// minor version is 29.
 	//   "POSTGRES_13" - The database version is PostgreSQL 13.
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
@@ -2990,6 +2996,7 @@ type Operation struct {
 	//   "RESCHEDULE_MAINTENANCE" - Reschedule maintenance to another time.
 	//   "START_EXTERNAL_SYNC" - Starts external sync of a Cloud SQL EM
 	// replica to an external primary instance.
+	//   "LOG_CLEANUP" - Recovers logs from an instance's old data disk.
 	OperationType string `json:"operationType,omitempty"`
 
 	// SelfLink: The URI of this resource.
@@ -3899,8 +3906,7 @@ func (s *SqlOutOfDiskReport) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SqlScheduledMaintenance: Any scheduled maintenancce for this
-// instance.
+// SqlScheduledMaintenance: Any scheduled maintenance for this instance.
 type SqlScheduledMaintenance struct {
 	CanDefer bool `json:"canDefer,omitempty"`
 

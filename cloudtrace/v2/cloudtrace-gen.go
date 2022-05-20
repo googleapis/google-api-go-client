@@ -510,7 +510,7 @@ type Span struct {
 
 	// DisplayName: Required. A description of the span's operation (up to
 	// 128 bytes). Cloud Trace displays the description in the Cloud
-	// Console. For example, the display name can be a qualified method name
+	// console. For example, the display name can be a qualified method name
 	// or a file name and a line number where the operation is called. A
 	// best practice is to use the same display name within an application
 	// and at the same call point. This makes it easier to correlate spans

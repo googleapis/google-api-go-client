@@ -4371,8 +4371,8 @@ func (s *ContactInfo) MarshalJSON() ([]byte, error) {
 // defining Customer Match audience members.
 type ContactInfoList struct {
 	// ContactInfos: A list of ContactInfo objects defining Customer Match
-	// audience members. The size of contact_infos mustn't be greater than
-	// 500,000.
+	// audience members. The size of members after splitting the
+	// contact_infos mustn't be greater than 500,000.
 	ContactInfos []*ContactInfo `json:"contactInfos,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContactInfos") to
@@ -5195,6 +5195,7 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_5_2" - SDF version 5.2
 	//   "SDF_VERSION_5_3" - SDF version 5.3
 	//   "SDF_VERSION_5_4" - SDF version 5.4
+	//   "SDF_VERSION_5_5" - SDF version 5.5
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
@@ -5834,6 +5835,16 @@ type CustomBiddingAlgorithm struct {
 	// for deletion.
 	EntityStatus string `json:"entityStatus,omitempty"`
 
+	// ModelReadiness: Output only. The custom bidding model readiness state
+	// for each advertiser who have access. This field may only include the
+	// state of the queried advertiser if the algorithm `owner`
+	// (/display-video/api/reference/rest/v1/customBiddingAlgorithms#CustomBi
+	// ddingAlgorithm.FIELDS.oneof_owner) is a partner and is being
+	// retrieved using an advertiser `accessor`
+	// (/display-video/api/reference/rest/v1/customBiddingAlgorithms/list#bod
+	// y.QUERY_PARAMETERS.oneof_accessor).
+	ModelReadiness []*CustomBiddingModelReadinessState `json:"modelReadiness,omitempty"`
+
 	// Name: Output only. The resource name of the custom bidding algorithm.
 	Name string `json:"name,omitempty"`
 
@@ -5874,6 +5885,53 @@ type CustomBiddingAlgorithm struct {
 
 func (s *CustomBiddingAlgorithm) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomBiddingAlgorithm
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomBiddingModelReadinessState: The custom bidding algorithm model
+// readiness state for a single shared advertiser.
+type CustomBiddingModelReadinessState struct {
+	// AdvertiserId: The unique ID of the advertiser with access to the
+	// custom bidding algorithm.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// ReadinessState: The readiness state of custom bidding model.
+	//
+	// Possible values:
+	//   "READINESS_STATE_UNSPECIFIED" - State is not specified or is
+	// unknown in this version.
+	//   "READINESS_STATE_ACTIVE" - The model is trained and ready for
+	// serving.
+	//   "READINESS_STATE_INSUFFICIENT_DATA" - There is not enough data to
+	// train the serving model.
+	//   "READINESS_STATE_TRAINING" - The model is training and not ready
+	// for serving.
+	//   "READINESS_STATE_NO_VALID_SCRIPT" - The model will not be trained
+	// until a valid custom bidding script linked. This state will only be
+	// applied to algorithms whose `custom_bidding_algorithm_type` is
+	// `SCRIPT_BASED`.
+	ReadinessState string `json:"readinessState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomBiddingModelReadinessState) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomBiddingModelReadinessState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8107,7 +8165,7 @@ func (s *FrequencyCap) MarshalJSON() ([]byte, error) {
 // GenderAssignedTargetingOptionDetails: Details for assigned gender
 // targeting option. This will be populated in the details field of an
 // AssignedTargetingOption when targeting_type is
-// `TARTGETING_TYPE_GENDER`.
+// `TARGETING_TYPE_GENDER`.
 type GenderAssignedTargetingOptionDetails struct {
 	// Gender: The gender of the audience. Output only in v1.
 	//
@@ -12601,7 +12659,7 @@ func (s *ParentEntityFilter) MarshalJSON() ([]byte, error) {
 // ParentalStatusAssignedTargetingOptionDetails: Details for assigned
 // parental status targeting option. This will be populated in the
 // details field of an AssignedTargetingOption when targeting_type is
-// `TARTGETING_TYPE_PARENTAL_STATUS`.
+// `TARGETING_TYPE_PARENTAL_STATUS`.
 type ParentalStatusAssignedTargetingOptionDetails struct {
 	// ParentalStatus: Output only. The parental status of the audience.
 	//
@@ -13930,6 +13988,7 @@ type SdfConfig struct {
 	//   "SDF_VERSION_5_2" - SDF version 5.2
 	//   "SDF_VERSION_5_3" - SDF version 5.3
 	//   "SDF_VERSION_5_4" - SDF version 5.4
+	//   "SDF_VERSION_5_5" - SDF version 5.5
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
@@ -14011,6 +14070,7 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_5_2" - SDF version 5.2
 	//   "SDF_VERSION_5_3" - SDF version 5.3
 	//   "SDF_VERSION_5_4" - SDF version 5.4
+	//   "SDF_VERSION_5_5" - SDF version 5.5
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to

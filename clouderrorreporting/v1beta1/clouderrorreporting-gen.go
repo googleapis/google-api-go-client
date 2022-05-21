@@ -1418,7 +1418,7 @@ type ProjectsGroupStatsListCall struct {
 // - projectName: The resource name of the Google Cloud Platform
 //   project. Written as `projects/{projectID}` or
 //   `projects/{projectNumber}`, where `{projectID}` and
-//   `{projectNumber}` can be found in the Google Cloud Console
+//   `{projectNumber}` can be found in the Google Cloud console
 //   (https://support.google.com/cloud/answer/6158840). Examples:
 //   `projects/my-project-123`, `projects/5551234`.
 func (r *ProjectsGroupStatsService) List(projectName string) *ProjectsGroupStatsListCall {
@@ -1720,7 +1720,7 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "Required. The resource name of the Google Cloud Platform project. Written as `projects/{projectID}` or `projects/{projectNumber}`, where `{projectID}` and `{projectNumber}` can be found in the [Google Cloud Console](https://support.google.com/cloud/answer/6158840). Examples: `projects/my-project-123`, `projects/5551234`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written as `projects/{projectID}` or `projects/{projectNumber}`, where `{projectID}` and `{projectNumber}` can be found in the [Google Cloud console](https://support.google.com/cloud/answer/6158840). Examples: `projects/my-project-123`, `projects/5551234`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,

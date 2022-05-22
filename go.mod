@@ -6,6 +6,7 @@ require (
 	cloud.google.com/go/compute v1.6.1
 	github.com/google/go-cmp v0.5.8
 	github.com/googleapis/gax-go/v2 v2.3.0
+	github.com/json-iterator/go v1.1.12 // indirect
 	go.opencensus.io v0.23.0
 	golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4
 	golang.org/x/oauth2 v0.0.0-20220411215720-9780585627b5

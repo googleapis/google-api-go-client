@@ -409,6 +409,11 @@ type Instance struct {
 	// OsImage: The OS image currently installed on the server.
 	OsImage string `json:"osImage,omitempty"`
 
+	// Pod: Immutable. Pod name. Pod is an independent part of
+	// infrastructure. Instance can be connected to the assets (networks,
+	// volumes) allocated in the same pod only.
+	Pod string `json:"pod,omitempty"`
+
 	// State: The state of the server.
 	//
 	// Possible values:
@@ -2056,6 +2061,9 @@ type Volume struct {
 	// `projects/{project}/locations/{location}/volumes/{volume}`
 	Name string `json:"name,omitempty"`
 
+	// Pod: Immutable. Pod name.
+	Pod string `json:"pod,omitempty"`
+
 	// RemainingSpaceGib: The space remaining in the storage volume for new
 	// LUNs, in GiB, excluding space reserved for snapshots.
 	RemainingSpaceGib int64 `json:"remainingSpaceGib,omitempty,string"`
@@ -3228,8 +3236,8 @@ func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instanc
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update. The only currently supported fields are: `labels`
-// `hyperthreading_enabled`
+// fields to update. The currently supported fields are: `labels`
+// `hyperthreading_enabled` `os_image`
 func (c *ProjectsLocationsInstancesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInstancesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3342,7 +3350,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The list of fields to update. The only currently supported fields are: `labels` `hyperthreading_enabled`",
+	//       "description": "The list of fields to update. The currently supported fields are: `labels` `hyperthreading_enabled` `os_image`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

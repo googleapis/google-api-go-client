@@ -2221,6 +2221,10 @@ type Quota struct {
 	// which a privately scoped zone can be attached.
 	GkeClustersPerManagedZone int64 `json:"gkeClustersPerManagedZone,omitempty"`
 
+	// GkeClustersPerPolicy: Maximum allowed number of GKE clusters per
+	// policy.
+	GkeClustersPerPolicy int64 `json:"gkeClustersPerPolicy,omitempty"`
+
 	// GkeClustersPerResponsePolicy: Maximum allowed number of GKE clusters
 	// per response policy.
 	GkeClustersPerResponsePolicy int64 `json:"gkeClustersPerResponsePolicy,omitempty"`
@@ -2249,6 +2253,10 @@ type Quota struct {
 	// NetworksPerPolicy: Maximum allowed number of networks per policy.
 	NetworksPerPolicy int64 `json:"networksPerPolicy,omitempty"`
 
+	// NetworksPerResponsePolicy: Maximum allowed number of networks per
+	// response policy.
+	NetworksPerResponsePolicy int64 `json:"networksPerResponsePolicy,omitempty"`
+
 	// PeeringZonesPerTargetNetwork: Maximum allowed number of consumer
 	// peering zones per target network owned by this producer project
 	PeeringZonesPerTargetNetwork int64 `json:"peeringZonesPerTargetNetwork,omitempty"`
@@ -2259,6 +2267,10 @@ type Quota struct {
 	// ResourceRecordsPerRrset: Maximum allowed number of ResourceRecords
 	// per ResourceRecordSet.
 	ResourceRecordsPerRrset int64 `json:"resourceRecordsPerRrset,omitempty"`
+
+	// ResponsePolicies: Maximum allowed number of response policies per
+	// project.
+	ResponsePolicies int64 `json:"responsePolicies,omitempty"`
 
 	// ResponsePolicyRulesPerResponsePolicy: Maximum allowed number of rules
 	// per response policy.

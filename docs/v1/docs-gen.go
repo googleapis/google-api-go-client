@@ -4219,6 +4219,42 @@ func (s *PersonProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PinTableHeaderRowsRequest: Updates the number of pinned table header
+// rows in a table.
+type PinTableHeaderRowsRequest struct {
+	// PinnedHeaderRowsCount: The number of table rows to pin, where 0
+	// implies that all rows are unpinned.
+	PinnedHeaderRowsCount int64 `json:"pinnedHeaderRowsCount,omitempty"`
+
+	// TableStartLocation: The location where the table starts in the
+	// document.
+	TableStartLocation *Location `json:"tableStartLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PinnedHeaderRowsCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PinnedHeaderRowsCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PinTableHeaderRowsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PinTableHeaderRowsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PositionedObject: An object that is tethered to a Paragraph and
 // positioned relative to the beginning of the paragraph. A
 // PositionedObject contains an EmbeddedObject such as an image.
@@ -4695,6 +4731,10 @@ type Request struct {
 
 	// MergeTableCells: Merges cells in a table.
 	MergeTableCells *MergeTableCellsRequest `json:"mergeTableCells,omitempty"`
+
+	// PinTableHeaderRows: Updates the number of pinned header rows in a
+	// table.
+	PinTableHeaderRows *PinTableHeaderRowsRequest `json:"pinTableHeaderRows,omitempty"`
 
 	// ReplaceAllText: Replaces all instances of the specified text.
 	ReplaceAllText *ReplaceAllTextRequest `json:"replaceAllText,omitempty"`
@@ -6399,6 +6439,13 @@ type TableRowStyle struct {
 	// in the Docs editor at a height equal to or greater than this value in
 	// order to show all the content in the row's cells.
 	MinRowHeight *Dimension `json:"minRowHeight,omitempty"`
+
+	// PreventOverflow: Whether the row cannot overflow across page or
+	// column boundaries.
+	PreventOverflow bool `json:"preventOverflow,omitempty"`
+
+	// TableHeader: Whether the row is a table header.
+	TableHeader bool `json:"tableHeader,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MinRowHeight") to
 	// unconditionally include in API requests. By default, fields with

@@ -2140,9 +2140,9 @@ func (r *AccountsAdUnitsService) List(parent string) *AccountsAdUnitsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of ad units to return. If unspecified or 0, at most 1000 ad units
-// will be returned. The maximum value is 10,000; values above 10,000
-// will be coerced to 10,000.
+// of ad units to return. If unspecified or 0, at most 10,000 ad units
+// will be returned. The maximum value is 20,000; values above 20,000
+// will be coerced to 20,000.
 func (c *AccountsAdUnitsListCall) PageSize(pageSize int64) *AccountsAdUnitsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2265,7 +2265,7 @@ func (c *AccountsAdUnitsListCall) Do(opts ...googleapi.CallOption) (*ListAdUnits
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of ad units to return. If unspecified or 0, at most 1000 ad units will be returned. The maximum value is 10,000; values above 10,000 will be coerced to 10,000.",
+	//       "description": "The maximum number of ad units to return. If unspecified or 0, at most 10,000 ad units will be returned. The maximum value is 20,000; values above 20,000 will be coerced to 20,000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2338,9 +2338,9 @@ func (r *AccountsAppsService) List(parent string) *AccountsAppsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of apps to return. If unspecified or 0, at most 1000 apps will be
-// returned. The maximum value is 10,000; values above 10,000 will be
-// coerced to 10,000.
+// of apps to return. If unspecified or 0, at most 10,000 apps will be
+// returned. The maximum value is 20,000; values above 20,000 will be
+// coerced to 20,000.
 func (c *AccountsAppsListCall) PageSize(pageSize int64) *AccountsAppsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2463,7 +2463,7 @@ func (c *AccountsAppsListCall) Do(opts ...googleapi.CallOption) (*ListAppsRespon
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of apps to return. If unspecified or 0, at most 1000 apps will be returned. The maximum value is 10,000; values above 10,000 will be coerced to 10,000.",
+	//       "description": "The maximum number of apps to return. If unspecified or 0, at most 10,000 apps will be returned. The maximum value is 20,000; values above 20,000 will be coerced to 20,000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

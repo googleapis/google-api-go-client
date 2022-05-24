@@ -438,7 +438,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The parent resource of the Gateway. Must be in the format `projects/*/locations/global`.",
+                      "description": "Required. The parent resource of the Gateway. Must be in the format `projects/*/locations/*`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -466,7 +466,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. A name of the Gateway to delete. Must be in the format `projects/*/locations/global/gateways/*`.",
+                      "description": "Required. A name of the Gateway to delete. Must be in the format `projects/*/locations/*/gateways/*`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/gateways/[^/]+$",
                       "required": true,
@@ -491,7 +491,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. A name of the Gateway to get. Must be in the format `projects/*/locations/global/gateways/*`.",
+                      "description": "Required. A name of the Gateway to get. Must be in the format `projects/*/locations/*/gateways/*`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/gateways/[^/]+$",
                       "required": true,
@@ -558,7 +558,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The project and location from which the Gateways should be listed, specified in the format `projects/*/locations/global`.",
+                      "description": "Required. The project and location from which the Gateways should be listed, specified in the format `projects/*/locations/*`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -583,7 +583,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Name of the Gateway resource. It matches pattern `projects/*/locations/global/gateways/`.",
+                      "description": "Required. Name of the Gateway resource. It matches pattern `projects/*/locations/*/gateways/`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/gateways/[^/]+$",
                       "required": true,
@@ -1875,7 +1875,7 @@
       }
     }
   },
-  "revision": "20220506",
+  "revision": "20220511",
   "rootUrl": "https://networkservices.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -2084,7 +2084,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Required. Name of the Gateway resource. It matches pattern `projects/*/locations/global/gateways/`.",
+          "description": "Required. Name of the Gateway resource. It matches pattern `projects/*/locations/*/gateways/`.",
           "type": "string"
         },
         "ports": {

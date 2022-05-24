@@ -539,6 +539,10 @@ type ApproveDecision struct {
 	// ExpireTime: The time at which the approval expires.
 	ExpireTime string `json:"expireTime,omitempty"`
 
+	// InvalidateTime: If set, denotes the timestamp at which the approval
+	// is invalidated.
+	InvalidateTime string `json:"invalidateTime,omitempty"`
+
 	// SignatureInfo: The signature for the ApprovalRequest and details on
 	// how it was signed.
 	SignatureInfo *SignatureInfo `json:"signatureInfo,omitempty"`
@@ -675,6 +679,11 @@ func (s *EnrolledService) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrolledService
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InvalidateApprovalRequestMessage: Request to invalidate an existing
+// approval.
+type InvalidateApprovalRequestMessage struct {
 }
 
 // ListApprovalRequestsResponse: Response to listing of ApprovalRequest
@@ -1818,6 +1827,152 @@ func (c *FoldersApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) (*Appr
 	//     }
 	//   },
 	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ApprovalRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "accessapproval.folders.approvalRequests.invalidate":
+
+type FoldersApprovalRequestsInvalidateCall struct {
+	s                                *Service
+	name                             string
+	invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Invalidate: Invalidates an existing ApprovalRequest. Returns the
+// updated ApprovalRequest. NOTE: This does not deny access to the
+// resource if another request has been made and approved. It only
+// invalidates a single approval. Returns FAILED_PRECONDITION if the
+// request exists but is not in an approved state.
+//
+// - name: Name of the ApprovalRequest to invalidate.
+func (r *FoldersApprovalRequestsService) Invalidate(name string, invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage) *FoldersApprovalRequestsInvalidateCall {
+	c := &FoldersApprovalRequestsInvalidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.invalidateapprovalrequestmessage = invalidateapprovalrequestmessage
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersApprovalRequestsInvalidateCall) Fields(s ...googleapi.Field) *FoldersApprovalRequestsInvalidateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersApprovalRequestsInvalidateCall) Context(ctx context.Context) *FoldersApprovalRequestsInvalidateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersApprovalRequestsInvalidateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersApprovalRequestsInvalidateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invalidateapprovalrequestmessage)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:invalidate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accessapproval.folders.approvalRequests.invalidate" call.
+// Exactly one of *ApprovalRequest or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ApprovalRequest.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersApprovalRequestsInvalidateCall) Do(opts ...googleapi.CallOption) (*ApprovalRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ApprovalRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This does not deny access to the resource if another request has been made and approved. It only invalidates a single approval. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.",
+	//   "flatPath": "v1/folders/{foldersId}/approvalRequests/{approvalRequestsId}:invalidate",
+	//   "httpMethod": "POST",
+	//   "id": "accessapproval.folders.approvalRequests.invalidate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the ApprovalRequest to invalidate.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/approvalRequests/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:invalidate",
+	//   "request": {
+	//     "$ref": "InvalidateApprovalRequestMessage"
+	//   },
 	//   "response": {
 	//     "$ref": "ApprovalRequest"
 	//   },
@@ -3083,6 +3238,152 @@ func (c *OrganizationsApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) 
 
 }
 
+// method id "accessapproval.organizations.approvalRequests.invalidate":
+
+type OrganizationsApprovalRequestsInvalidateCall struct {
+	s                                *Service
+	name                             string
+	invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Invalidate: Invalidates an existing ApprovalRequest. Returns the
+// updated ApprovalRequest. NOTE: This does not deny access to the
+// resource if another request has been made and approved. It only
+// invalidates a single approval. Returns FAILED_PRECONDITION if the
+// request exists but is not in an approved state.
+//
+// - name: Name of the ApprovalRequest to invalidate.
+func (r *OrganizationsApprovalRequestsService) Invalidate(name string, invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage) *OrganizationsApprovalRequestsInvalidateCall {
+	c := &OrganizationsApprovalRequestsInvalidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.invalidateapprovalrequestmessage = invalidateapprovalrequestmessage
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsApprovalRequestsInvalidateCall) Fields(s ...googleapi.Field) *OrganizationsApprovalRequestsInvalidateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsApprovalRequestsInvalidateCall) Context(ctx context.Context) *OrganizationsApprovalRequestsInvalidateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsApprovalRequestsInvalidateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApprovalRequestsInvalidateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invalidateapprovalrequestmessage)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:invalidate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accessapproval.organizations.approvalRequests.invalidate" call.
+// Exactly one of *ApprovalRequest or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ApprovalRequest.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsApprovalRequestsInvalidateCall) Do(opts ...googleapi.CallOption) (*ApprovalRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ApprovalRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This does not deny access to the resource if another request has been made and approved. It only invalidates a single approval. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.",
+	//   "flatPath": "v1/organizations/{organizationsId}/approvalRequests/{approvalRequestsId}:invalidate",
+	//   "httpMethod": "POST",
+	//   "id": "accessapproval.organizations.approvalRequests.invalidate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the ApprovalRequest to invalidate.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/approvalRequests/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:invalidate",
+	//   "request": {
+	//     "$ref": "InvalidateApprovalRequestMessage"
+	//   },
+	//   "response": {
+	//     "$ref": "ApprovalRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "accessapproval.organizations.approvalRequests.list":
 
 type OrganizationsApprovalRequestsListCall struct {
@@ -4328,6 +4629,152 @@ func (c *ProjectsApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) (*App
 	//     }
 	//   },
 	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ApprovalRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "accessapproval.projects.approvalRequests.invalidate":
+
+type ProjectsApprovalRequestsInvalidateCall struct {
+	s                                *Service
+	name                             string
+	invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Invalidate: Invalidates an existing ApprovalRequest. Returns the
+// updated ApprovalRequest. NOTE: This does not deny access to the
+// resource if another request has been made and approved. It only
+// invalidates a single approval. Returns FAILED_PRECONDITION if the
+// request exists but is not in an approved state.
+//
+// - name: Name of the ApprovalRequest to invalidate.
+func (r *ProjectsApprovalRequestsService) Invalidate(name string, invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage) *ProjectsApprovalRequestsInvalidateCall {
+	c := &ProjectsApprovalRequestsInvalidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.invalidateapprovalrequestmessage = invalidateapprovalrequestmessage
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsApprovalRequestsInvalidateCall) Fields(s ...googleapi.Field) *ProjectsApprovalRequestsInvalidateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsApprovalRequestsInvalidateCall) Context(ctx context.Context) *ProjectsApprovalRequestsInvalidateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsApprovalRequestsInvalidateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsApprovalRequestsInvalidateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invalidateapprovalrequestmessage)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:invalidate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accessapproval.projects.approvalRequests.invalidate" call.
+// Exactly one of *ApprovalRequest or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ApprovalRequest.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsApprovalRequestsInvalidateCall) Do(opts ...googleapi.CallOption) (*ApprovalRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ApprovalRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This does not deny access to the resource if another request has been made and approved. It only invalidates a single approval. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.",
+	//   "flatPath": "v1/projects/{projectsId}/approvalRequests/{approvalRequestsId}:invalidate",
+	//   "httpMethod": "POST",
+	//   "id": "accessapproval.projects.approvalRequests.invalidate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the ApprovalRequest to invalidate.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/approvalRequests/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:invalidate",
+	//   "request": {
+	//     "$ref": "InvalidateApprovalRequestMessage"
+	//   },
 	//   "response": {
 	//     "$ref": "ApprovalRequest"
 	//   },

@@ -494,6 +494,15 @@ type AutoscalingTargets struct {
 	// and 80, otherwise it will return INVALID_ARGUMENT error.
 	CpuUtilizationPercent int64 `json:"cpuUtilizationPercent,omitempty"`
 
+	// StorageUtilizationGibPerNode: The storage utilization that the
+	// Autoscaler should be trying to achieve. This number is limited
+	// between 2560 (2.5TiB) and 5120 (5TiB) for a SSD cluster and between
+	// 8192 (8TiB) and 16384 (16TiB) for an HDD cluster, otherwise it will
+	// return INVALID_ARGUMENT error. If this value is set to 0, it will be
+	// treated as if it were set to the default value: 2560 for SSD, 8192
+	// for HDD.
+	StorageUtilizationGibPerNode int64 `json:"storageUtilizationGibPerNode,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "CpuUtilizationPercent") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API

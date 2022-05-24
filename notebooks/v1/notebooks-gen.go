@@ -2658,6 +2658,17 @@ type RuntimeSoftwareConfig struct {
 	// Cloud Storage path (`gs://path-to-file/file-name`).
 	PostStartupScript string `json:"postStartupScript,omitempty"`
 
+	// PostStartupScriptBehavior: Behavior for the post startup script.
+	//
+	// Possible values:
+	//   "POST_STARTUP_SCRIPT_BEHAVIOR_UNSPECIFIED" - Unspecified post
+	// startup script behavior. Will run only once at creation.
+	//   "RUN_EVERY_START" - Runs the post startup script provided during
+	// creation at every start.
+	//   "DOWNLOAD_AND_RUN_EVERY_START" - Downloads and runs the provided
+	// post startup script at every start.
+	PostStartupScriptBehavior string `json:"postStartupScriptBehavior,omitempty"`
+
 	// Upgradeable: Output only. Bool indicating whether an newer image is
 	// available in an image family.
 	Upgradeable bool `json:"upgradeable,omitempty"`
@@ -3714,7 +3725,7 @@ type VmImage struct {
 	ImageName string `json:"imageName,omitempty"`
 
 	// Project: Required. The name of the Google Cloud project that this VM
-	// image belongs to. Format: `projects/{project_id}`
+	// image belongs to. Format: `{project_id}`
 	Project string `json:"project,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageFamily") to
@@ -5830,8 +5841,9 @@ type ProjectsLocationsInstancesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsInstancesService) GetIamPolicy(resource string) *ProjectsLocationsInstancesGetIamPolicyCall {
 	c := &ProjectsLocationsInstancesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5970,7 +5982,7 @@ func (c *ProjectsLocationsInstancesGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -7246,8 +7258,9 @@ type ProjectsLocationsInstancesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsInstancesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsInstancesSetIamPolicyCall {
 	c := &ProjectsLocationsInstancesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7355,7 +7368,7 @@ func (c *ProjectsLocationsInstancesSetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -7967,7 +7980,8 @@ type ProjectsLocationsInstancesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsInstancesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsInstancesTestIamPermissionsCall {
 	c := &ProjectsLocationsInstancesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8076,7 +8090,7 @@ func (c *ProjectsLocationsInstancesTestIamPermissionsCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -9937,8 +9951,9 @@ type ProjectsLocationsRuntimesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsRuntimesService) GetIamPolicy(resource string) *ProjectsLocationsRuntimesGetIamPolicyCall {
 	c := &ProjectsLocationsRuntimesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10077,7 +10092,7 @@ func (c *ProjectsLocationsRuntimesGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
 	//       "required": true,
@@ -10286,6 +10301,184 @@ func (c *ProjectsLocationsRuntimesListCall) Pages(ctx context.Context, f func(*L
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "notebooks.projects.locations.runtimes.patch":
+
+type ProjectsLocationsRuntimesPatchCall struct {
+	s          *Service
+	name       string
+	runtime    *Runtime
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Update Notebook Runtime configuration.
+//
+// - name: Output only. The resource name of the runtime. Format:
+//   `projects/{project}/locations/{location}/runtimes/{runtimeId}`.
+func (r *ProjectsLocationsRuntimesService) Patch(name string, runtime *Runtime) *ProjectsLocationsRuntimesPatchCall {
+	c := &ProjectsLocationsRuntimesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.runtime = runtime
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Idempotent request
+// UUID.
+func (c *ProjectsLocationsRuntimesPatchCall) RequestId(requestId string) *ProjectsLocationsRuntimesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required.
+// Specifies the path, relative to `Runtime`, of the field to update.
+// For example, to change the software configuration kernels, the
+// `update_mask` parameter would be specified as
+// `software_config.kernels`, and the `PATCH` request body would specify
+// the new value, as follows: { "software_config":{ "kernels": [{
+// 'repository': 'gcr.io/deeplearning-platform-release/pytorch-gpu',
+// 'tag': 'latest' }], } } Currently, only the following fields can be
+// updated: - software_config.kernels -
+// software_config.post_startup_script -
+// software_config.custom_gpu_driver_path -
+// software_config.idle_shutdown - software_config.idle_shutdown_timeout
+func (c *ProjectsLocationsRuntimesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRuntimesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRuntimesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsRuntimesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRuntimesPatchCall) Context(ctx context.Context) *ProjectsLocationsRuntimesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRuntimesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRuntimesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runtime)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.runtimes.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRuntimesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update Notebook Runtime configuration.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "notebooks.projects.locations.runtimes.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name of the runtime. Format: `projects/{project}/locations/{location}/runtimes/{runtimeId}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Idempotent request UUID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Specifies the path, relative to `Runtime`, of the field to update. For example, to change the software configuration kernels, the `update_mask` parameter would be specified as `software_config.kernels`, and the `PATCH` request body would specify the new value, as follows: { \"software_config\":{ \"kernels\": [{ 'repository': 'gcr.io/deeplearning-platform-release/pytorch-gpu', 'tag': 'latest' }], } } Currently, only the following fields can be updated: - software_config.kernels - software_config.post_startup_script - software_config.custom_gpu_driver_path - software_config.idle_shutdown - software_config.idle_shutdown_timeout",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "Runtime"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "notebooks.projects.locations.runtimes.refreshRuntimeTokenInternal":
@@ -10736,8 +10929,9 @@ type ProjectsLocationsRuntimesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsRuntimesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRuntimesSetIamPolicyCall {
 	c := &ProjectsLocationsRuntimesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10845,7 +11039,7 @@ func (c *ProjectsLocationsRuntimesSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
 	//       "required": true,
@@ -11320,7 +11514,8 @@ type ProjectsLocationsRuntimesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsRuntimesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRuntimesTestIamPermissionsCall {
 	c := &ProjectsLocationsRuntimesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -11429,7 +11624,7 @@ func (c *ProjectsLocationsRuntimesTestIamPermissionsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
 	//       "required": true,

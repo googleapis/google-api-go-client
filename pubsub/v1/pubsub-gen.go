@@ -282,7 +282,7 @@ type BigQueryConfig struct {
 	State string `json:"state,omitempty"`
 
 	// Table: The name of the table to which to write data, of the form
-	// {projectId}:{datasetId}.{tableId}
+	// {projectId}.{datasetId}.{tableId}
 	Table string `json:"table,omitempty"`
 
 	// UseTopicSchema: When true, use the topic's schema as the columns to

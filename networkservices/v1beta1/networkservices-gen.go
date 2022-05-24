@@ -659,7 +659,7 @@ type Gateway struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Required. Name of the Gateway resource. It matches pattern
-	// `projects/*/locations/global/gateways/`.
+	// `projects/*/locations/*/gateways/`.
 	Name string `json:"name,omitempty"`
 
 	// Ports: Required. One or more ports that the Gateway must receive
@@ -5152,7 +5152,7 @@ type ProjectsLocationsGatewaysCreateCall struct {
 // Create: Creates a new Gateway in a given project and location.
 //
 // - parent: The parent resource of the Gateway. Must be in the format
-//   `projects/*/locations/global`.
+//   `projects/*/locations/*`.
 func (r *ProjectsLocationsGatewaysService) Create(parent string, gateway *Gateway) *ProjectsLocationsGatewaysCreateCall {
 	c := &ProjectsLocationsGatewaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5272,7 +5272,7 @@ func (c *ProjectsLocationsGatewaysCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource of the Gateway. Must be in the format `projects/*/locations/global`.",
+	//       "description": "Required. The parent resource of the Gateway. Must be in the format `projects/*/locations/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -5306,7 +5306,7 @@ type ProjectsLocationsGatewaysDeleteCall struct {
 // Delete: Deletes a single Gateway.
 //
 // - name: A name of the Gateway to delete. Must be in the format
-//   `projects/*/locations/global/gateways/*`.
+//   `projects/*/locations/*/gateways/*`.
 func (r *ProjectsLocationsGatewaysService) Delete(name string) *ProjectsLocationsGatewaysDeleteCall {
 	c := &ProjectsLocationsGatewaysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5408,7 +5408,7 @@ func (c *ProjectsLocationsGatewaysDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. A name of the Gateway to delete. Must be in the format `projects/*/locations/global/gateways/*`.",
+	//       "description": "Required. A name of the Gateway to delete. Must be in the format `projects/*/locations/*/gateways/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gateways/[^/]+$",
 	//       "required": true,
@@ -5440,7 +5440,7 @@ type ProjectsLocationsGatewaysGetCall struct {
 // Get: Gets details of a single Gateway.
 //
 // - name: A name of the Gateway to get. Must be in the format
-//   `projects/*/locations/global/gateways/*`.
+//   `projects/*/locations/*/gateways/*`.
 func (r *ProjectsLocationsGatewaysService) Get(name string) *ProjectsLocationsGatewaysGetCall {
 	c := &ProjectsLocationsGatewaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5555,7 +5555,7 @@ func (c *ProjectsLocationsGatewaysGetCall) Do(opts ...googleapi.CallOption) (*Ga
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. A name of the Gateway to get. Must be in the format `projects/*/locations/global/gateways/*`.",
+	//       "description": "Required. A name of the Gateway to get. Must be in the format `projects/*/locations/*/gateways/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gateways/[^/]+$",
 	//       "required": true,
@@ -5762,7 +5762,7 @@ type ProjectsLocationsGatewaysListCall struct {
 // List: Lists Gateways in a given project and location.
 //
 // - parent: The project and location from which the Gateways should be
-//   listed, specified in the format `projects/*/locations/global`.
+//   listed, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsGatewaysService) List(parent string) *ProjectsLocationsGatewaysListCall {
 	c := &ProjectsLocationsGatewaysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5904,7 +5904,7 @@ func (c *ProjectsLocationsGatewaysListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project and location from which the Gateways should be listed, specified in the format `projects/*/locations/global`.",
+	//       "description": "Required. The project and location from which the Gateways should be listed, specified in the format `projects/*/locations/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -5957,7 +5957,7 @@ type ProjectsLocationsGatewaysPatchCall struct {
 // Patch: Updates the parameters of a single Gateway.
 //
 // - name: Name of the Gateway resource. It matches pattern
-//   `projects/*/locations/global/gateways/`.
+//   `projects/*/locations/*/gateways/`.
 func (r *ProjectsLocationsGatewaysService) Patch(name string, gateway *Gateway) *ProjectsLocationsGatewaysPatchCall {
 	c := &ProjectsLocationsGatewaysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6076,7 +6076,7 @@ func (c *ProjectsLocationsGatewaysPatchCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Gateway resource. It matches pattern `projects/*/locations/global/gateways/`.",
+	//       "description": "Required. Name of the Gateway resource. It matches pattern `projects/*/locations/*/gateways/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gateways/[^/]+$",
 	//       "required": true,

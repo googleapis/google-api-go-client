@@ -447,6 +447,14 @@ type GooglePlayDeveloperReportingV1alpha1DimensionValue struct {
 	// StringValue: Actual value, represented as a string.
 	StringValue string `json:"stringValue,omitempty"`
 
+	// ValueLabel: Optional. Human-friendly label for the value, always in
+	// English. For example, 'Spain' for the 'ES' country code. Whereas the
+	// dimension value is stable, this value label is subject to change. Do
+	// not assume that the (value, value_label) relationship is stable. For
+	// example, the ISO country code 'MK' changed its name recently to
+	// 'North Macedonia'.
+	ValueLabel string `json:"valueLabel,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

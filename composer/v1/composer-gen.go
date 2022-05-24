@@ -947,6 +947,13 @@ type NodeConfig struct {
 	// composer-1.*.*-airflow-*.*.*.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
 
+	// EnableIpMasqAgent: Optional. Deploys 'ip-masq-agent' daemon set in
+	// the GKE cluster and defines nonMasqueradeCIDRs equals to pod IP range
+	// so IP masquerading is used for all destination addresses, except
+	// between pods traffic. See:
+	// https://cloud.google.com/kubernetes-engine/docs/how-to/ip-masquerade-agent
+	EnableIpMasqAgent bool `json:"enableIpMasqAgent,omitempty"`
+
 	// IpAllocationPolicy: Optional. The configuration for controlling how
 	// IPs are allocated in the GKE cluster.
 	IpAllocationPolicy *IPAllocationPolicy `json:"ipAllocationPolicy,omitempty"`

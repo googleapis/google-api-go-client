@@ -1007,6 +1007,11 @@ type Empty struct {
 
 // FetchInventoryResponse: Response message for fetchInventory.
 type FetchInventoryResponse struct {
+	// NextPageToken: Output only. A token, which can be sent as
+	// `page_token` to retrieve the next page. If this field is omitted,
+	// there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	// UpdateTime: Output only. The timestamp when the source was last
 	// queried (if the result is from the cache).
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1018,7 +1023,7 @@ type FetchInventoryResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "UpdateTime") to
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1026,10 +1031,10 @@ type FetchInventoryResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UpdateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -5213,6 +5218,27 @@ func (c *ProjectsLocationsSourcesFetchInventoryCall) ForceRefresh(forceRefresh b
 	return c
 }
 
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of VMs to return. The service may return fewer than this value. For
+// AWS source: If unspecified, at most 500 VMs will be returned. The
+// maximum value is 1000; values above 1000 will be coerced to 1000. For
+// VMWare source: If unspecified, all VMs will be returned. There is no
+// limit for maximum value.
+func (c *ProjectsLocationsSourcesFetchInventoryCall) PageSize(pageSize int64) *ProjectsLocationsSourcesFetchInventoryCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `FetchInventory` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `FetchInventory` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsSourcesFetchInventoryCall) PageToken(pageToken string) *ProjectsLocationsSourcesFetchInventoryCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5325,6 +5351,17 @@ func (c *ProjectsLocationsSourcesFetchInventoryCall) Do(opts ...googleapi.CallOp
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of VMs to return. The service may return fewer than this value. For AWS source: If unspecified, at most 500 VMs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000. For VMWare source: If unspecified, all VMs will be returned. There is no limit for maximum value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `FetchInventory` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `FetchInventory` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "source": {
 	//       "description": "Required. The name of the Source.",
 	//       "location": "path",
@@ -5342,6 +5379,27 @@ func (c *ProjectsLocationsSourcesFetchInventoryCall) Do(opts ...googleapi.CallOp
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSourcesFetchInventoryCall) Pages(ctx context.Context, f func(*FetchInventoryResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "vmmigration.projects.locations.sources.get":

@@ -2192,6 +2192,27 @@ type TagKey struct {
 	// be of the form `organizations/{org_id}`.
 	Parent string `json:"parent,omitempty"`
 
+	// Purpose: Optional. A purpose denotes that this Tag is intended for
+	// use in policies of a specific policy engine, and will involve that
+	// policy engine in management operations involving this Tag. A purpose
+	// does not grant a policy engine exclusive rights to the Tag, and it
+	// may be referenced by other policy engines. A purpose cannot be
+	// changed once set.
+	//
+	// Possible values:
+	//   "PURPOSE_UNSPECIFIED" - Unspecified purpose.
+	//   "GCE_FIREWALL" - Purpose for Compute Engine firewalls. A
+	// corresponding purpose_data should be set for the network the tag is
+	// intended for. The key should be 'network' and the value should be in
+	// the format of the network url id string:
+	// http://compute.googleapis.com/v1/projects/{project_number}/global/networks/{network_id}
+	Purpose string `json:"purpose,omitempty"`
+
+	// PurposeData: Optional. Purpose data corresponds to the policy system
+	// that the tag is intended for. See documentation for `Purpose` for
+	// formatting of this field. Purpose data cannot be changed once set.
+	PurposeData map[string]string `json:"purposeData,omitempty"`
+
 	// ShortName: Required. Immutable. The user friendly name for a TagKey.
 	// The short name should be unique for TagKeys within the same tag
 	// namespace. The short name must be 1-63 characters, beginning and

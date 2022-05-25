@@ -26,7 +26,7 @@ import (
 type ClientOption = option.ClientOption
 
 // NewClient creates a HTTP Client that automatically adds an ID token to each
-// request via an Authorization header. The token will have have the audience
+// request via an Authorization header. The token will have the audience
 // provided and be configured with the supplied options. The parameter audience
 // may not be empty.
 func NewClient(ctx context.Context, audience string, opts ...ClientOption) (*http.Client, error) {

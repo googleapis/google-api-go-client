@@ -2427,7 +2427,8 @@ type GoogleCloudMlV1__Model struct {
 	// Labels: Optional. One or more labels that you can add, to organize
 	// your models. Each label is a key-value pair, where both the key and
 	// the value are arbitrary strings that you supply. For more
-	// information, see the documentation on using labels.
+	// information, see the documentation on using labels. Note that this
+	// field is not updatable for mls1* models.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Required. The name specified for the model when it was created.
@@ -3940,7 +3941,8 @@ type GoogleCloudMlV1__Version struct {
 	// Labels: Optional. One or more labels that you can add, to organize
 	// your model versions. Each label is a key-value pair, where both the
 	// key and the value are arbitrary strings that you supply. For more
-	// information, see the documentation on using labels.
+	// information, see the documentation on using labels. Note that this
+	// field is not updatable for mls1* models.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastMigrationModelId: Output only. The AI Platform (Unified) `Model`

@@ -859,6 +859,7 @@ type ScanConfig struct {
 	//   "APP_ENGINE" - Google App Engine service.
 	//   "COMPUTE" - Google Compute Engine service.
 	//   "CLOUD_RUN" - Google Cloud Run service.
+	//   "CLOUD_FUNCTIONS" - Google Cloud Function service.
 	TargetPlatforms []string `json:"targetPlatforms,omitempty"`
 
 	// UserAgent: The user agent used during scanning.

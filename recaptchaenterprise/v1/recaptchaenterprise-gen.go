@@ -396,6 +396,11 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// "projects/{project}/assessments/{assessment}".
 	Name string `json:"name,omitempty"`
 
+	// PrivatePasswordLeakVerification: The private password leak
+	// verification field contains the parameters used to check for leaks
+	// privately without sharing user credentials.
+	PrivatePasswordLeakVerification *GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification `json:"privatePasswordLeakVerification,omitempty"`
+
 	// RiskAnalysis: Output only. The risk analysis result for the event
 	// being assessed.
 	RiskAnalysis *GoogleCloudRecaptchaenterpriseV1RiskAnalysis `json:"riskAnalysis,omitempty"`
@@ -788,6 +793,56 @@ func (s *GoogleCloudRecaptchaenterpriseV1Metrics) MarshalJSON() ([]byte, error) 
 // GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest: The migrate key
 // request message.
 type GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest struct {
+}
+
+// GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification:
+// Private password leak verification info.
+type GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification struct {
+	// EncryptedLeakMatchPrefixes: Output only. List of prefixes of the
+	// encrypted potential password leaks that matched the given parameters.
+	// They should be compared with the client-side decryption prefix of
+	// `reencrypted_user_credentials_hash`
+	EncryptedLeakMatchPrefixes []string `json:"encryptedLeakMatchPrefixes,omitempty"`
+
+	// EncryptedUserCredentialsHash: Optional. Encrypted Scrypt hash of the
+	// canonicalized username+password. It is re-encrypted by the server and
+	// returned through `reencrypted_user_credentials_hash`.
+	EncryptedUserCredentialsHash string `json:"encryptedUserCredentialsHash,omitempty"`
+
+	// LookupHashPrefix: Optional. Exactly 26-bit prefix of the SHA-256 hash
+	// of the canonicalized username. It is used to look up password leaks
+	// associated with that hash prefix.
+	LookupHashPrefix string `json:"lookupHashPrefix,omitempty"`
+
+	// ReencryptedUserCredentialsHash: Output only. Corresponds to the
+	// re-encryption of the `encrypted_user_credentials_hash` field. Used to
+	// match potential password leaks within
+	// `encrypted_leak_match_prefixes`.
+	ReencryptedUserCredentialsHash string `json:"reencryptedUserCredentialsHash,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EncryptedLeakMatchPrefixes") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EncryptedLeakMatchPrefixes") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup: A group of

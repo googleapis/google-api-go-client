@@ -1286,39 +1286,6 @@ func (s *ExpiryDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FirstAdminInvitationInfo: Message containing first admin invitation
-// info for customers
-type FirstAdminInvitationInfo struct {
-	// IsFirstAdmin: Optional. To enable First Admin Invitation for Domained
-	// Customer
-	IsFirstAdmin bool `json:"isFirstAdmin,omitempty"`
-
-	// PrimaryDomain: Optional. Domain information of first admin invited
-	PrimaryDomain string `json:"primaryDomain,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IsFirstAdmin") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IsFirstAdmin") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FirstAdminInvitationInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod FirstAdminInvitationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GetMembershipGraphResponse: The response message for
 // MembershipsService.GetMembershipGraph.
 type GetMembershipGraphResponse struct {
@@ -3412,33 +3379,6 @@ func (s *SecuritySettings) MarshalJSON() ([]byte, error) {
 // SendUserInvitationRequest: A request to send email for inviting
 // target user corresponding to the UserInvitation.
 type SendUserInvitationRequest struct {
-	// FirstAdminInvitationInfo: Optional. First admin invitation info for
-	// customers
-	FirstAdminInvitationInfo *FirstAdminInvitationInfo `json:"firstAdminInvitationInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "FirstAdminInvitationInfo") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FirstAdminInvitationInfo")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SendUserInvitationRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod SendUserInvitationRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is

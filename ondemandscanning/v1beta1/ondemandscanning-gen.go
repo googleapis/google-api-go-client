@@ -1359,10 +1359,10 @@ func (s *GrafeasV1FileLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GrafeasV1SlsaProvenance02SlsaBuilder: Identifies the entity that
+// GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder: Identifies the entity that
 // executed the recipe, which is trusted to have correctly performed the
 // operation and populated this provenance.
-type GrafeasV1SlsaProvenance02SlsaBuilder struct {
+type GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder struct {
 	Id string `json:"id,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -1382,15 +1382,15 @@ type GrafeasV1SlsaProvenance02SlsaBuilder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1SlsaProvenance02SlsaBuilder) MarshalJSON() ([]byte, error) {
-	type NoMethod GrafeasV1SlsaProvenance02SlsaBuilder
+func (s *GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder) MarshalJSON() ([]byte, error) {
+	type NoMethod GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GrafeasV1SlsaProvenance02SlsaCompleteness: Indicates that the builder
-// claims certain fields in this message to be complete.
-type GrafeasV1SlsaProvenance02SlsaCompleteness struct {
+// GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness: Indicates that the
+// builder claims certain fields in this message to be complete.
+type GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness struct {
 	Environment bool `json:"environment,omitempty"`
 
 	Materials bool `json:"materials,omitempty"`
@@ -1414,16 +1414,16 @@ type GrafeasV1SlsaProvenance02SlsaCompleteness struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1SlsaProvenance02SlsaCompleteness) MarshalJSON() ([]byte, error) {
-	type NoMethod GrafeasV1SlsaProvenance02SlsaCompleteness
+func (s *GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness) MarshalJSON() ([]byte, error) {
+	type NoMethod GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GrafeasV1SlsaProvenance02SlsaConfigSource: Describes where the config
-// file that kicked off the build came from. This is effectively a
-// pointer to the source where buildConfig came from.
-type GrafeasV1SlsaProvenance02SlsaConfigSource struct {
+// GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource: Describes where the
+// config file that kicked off the build came from. This is effectively
+// a pointer to the source where buildConfig came from.
+type GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource struct {
 	Digest map[string]string `json:"digest,omitempty"`
 
 	EntryPoint string `json:"entryPoint,omitempty"`
@@ -1447,16 +1447,16 @@ type GrafeasV1SlsaProvenance02SlsaConfigSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1SlsaProvenance02SlsaConfigSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GrafeasV1SlsaProvenance02SlsaConfigSource
+func (s *GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GrafeasV1SlsaProvenance02SlsaInvocation: Identifies the event that
-// kicked off the build.
-type GrafeasV1SlsaProvenance02SlsaInvocation struct {
-	ConfigSource *GrafeasV1SlsaProvenance02SlsaConfigSource `json:"configSource,omitempty"`
+// GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation: Identifies the event
+// that kicked off the build.
+type GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation struct {
+	ConfigSource *GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource `json:"configSource,omitempty"`
 
 	Environment googleapi.RawMessage `json:"environment,omitempty"`
 
@@ -1479,16 +1479,16 @@ type GrafeasV1SlsaProvenance02SlsaInvocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1SlsaProvenance02SlsaInvocation) MarshalJSON() ([]byte, error) {
-	type NoMethod GrafeasV1SlsaProvenance02SlsaInvocation
+func (s *GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GrafeasV1SlsaProvenance02SlsaMaterial: The collection of artifacts
-// that influenced the build including sources, dependencies, build
-// tools, base images, and so on.
-type GrafeasV1SlsaProvenance02SlsaMaterial struct {
+// GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial: The collection of
+// artifacts that influenced the build including sources, dependencies,
+// build tools, base images, and so on.
+type GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial struct {
 	Digest map[string]string `json:"digest,omitempty"`
 
 	Uri string `json:"uri,omitempty"`
@@ -1510,21 +1510,22 @@ type GrafeasV1SlsaProvenance02SlsaMaterial struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1SlsaProvenance02SlsaMaterial) MarshalJSON() ([]byte, error) {
-	type NoMethod GrafeasV1SlsaProvenance02SlsaMaterial
+func (s *GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial) MarshalJSON() ([]byte, error) {
+	type NoMethod GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GrafeasV1SlsaProvenance02SlsaMetadata: Other properties of the build.
-type GrafeasV1SlsaProvenance02SlsaMetadata struct {
+// GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata: Other properties of the
+// build.
+type GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata struct {
 	BuildFinishedOn string `json:"buildFinishedOn,omitempty"`
 
 	BuildInvocationId string `json:"buildInvocationId,omitempty"`
 
 	BuildStartedOn string `json:"buildStartedOn,omitempty"`
 
-	Completeness *GrafeasV1SlsaProvenance02SlsaCompleteness `json:"completeness,omitempty"`
+	Completeness *GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness `json:"completeness,omitempty"`
 
 	Reproducible bool `json:"reproducible,omitempty"`
 
@@ -1546,8 +1547,8 @@ type GrafeasV1SlsaProvenance02SlsaMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrafeasV1SlsaProvenance02SlsaMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GrafeasV1SlsaProvenance02SlsaMetadata
+func (s *GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1715,7 +1716,7 @@ type InTotoStatement struct {
 
 	SlsaProvenance *SlsaProvenance `json:"slsaProvenance,omitempty"`
 
-	SlsaProvenance02 *SlsaProvenance02 `json:"slsaProvenance02,omitempty"`
+	SlsaProvenanceZeroTwo *SlsaProvenanceZeroTwo `json:"slsaProvenanceZeroTwo,omitempty"`
 
 	Subject []*Subject `json:"subject,omitempty"`
 
@@ -2811,20 +2812,20 @@ func (s *SlsaProvenance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SlsaProvenance02: See full explanation of fields at
+// SlsaProvenanceZeroTwo: See full explanation of fields at
 // slsa.dev/provenance/v0.2.
-type SlsaProvenance02 struct {
+type SlsaProvenanceZeroTwo struct {
 	BuildConfig googleapi.RawMessage `json:"buildConfig,omitempty"`
 
 	BuildType string `json:"buildType,omitempty"`
 
-	Builder *GrafeasV1SlsaProvenance02SlsaBuilder `json:"builder,omitempty"`
+	Builder *GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder `json:"builder,omitempty"`
 
-	Invocation *GrafeasV1SlsaProvenance02SlsaInvocation `json:"invocation,omitempty"`
+	Invocation *GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation `json:"invocation,omitempty"`
 
-	Materials []*GrafeasV1SlsaProvenance02SlsaMaterial `json:"materials,omitempty"`
+	Materials []*GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial `json:"materials,omitempty"`
 
-	Metadata *GrafeasV1SlsaProvenance02SlsaMetadata `json:"metadata,omitempty"`
+	Metadata *GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata `json:"metadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BuildConfig") to
 	// unconditionally include in API requests. By default, fields with
@@ -2843,8 +2844,8 @@ type SlsaProvenance02 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SlsaProvenance02) MarshalJSON() ([]byte, error) {
-	type NoMethod SlsaProvenance02
+func (s *SlsaProvenanceZeroTwo) MarshalJSON() ([]byte, error) {
+	type NoMethod SlsaProvenanceZeroTwo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

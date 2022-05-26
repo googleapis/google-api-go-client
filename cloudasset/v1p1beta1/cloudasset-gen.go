@@ -496,8 +496,8 @@ type GoogleCloudAssetV1p7beta1Asset struct {
 	// resource hierarchy. Therefore, the effectively policy is the union of
 	// both the policy set on this resource and each policy set on all of
 	// the resource's ancestry resource levels in the hierarchy. See this
-	// topic (https://cloud.google.com/iam/docs/policies#inheritance) for
-	// more information.
+	// topic (https://cloud.google.com/iam/help/allow-policies/inheritance)
+	// for more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:

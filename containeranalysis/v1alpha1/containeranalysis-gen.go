@@ -3915,6 +3915,231 @@ func (s *GoogleDevtoolsContaineranalysisV1alpha1RepoId) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilde
+// r: Identifies the entity that executed the recipe, which is trusted
+// to have correctly performed the operation and populated this
+// provenance.
+type GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilder struct {
+	// Id: URI indicating the builder’s identity.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilder) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilder
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaComple
+// teness: Indicates that the builder claims certain fields in this
+// message to be complete.
+type GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaCompleteness struct {
+	// Environment: If true, the builder claims that invocation.environment
+	// is complete.
+	Environment bool `json:"environment,omitempty"`
+
+	// Materials: If true, the builder claims that materials is complete.
+	Materials bool `json:"materials,omitempty"`
+
+	// Parameters: If true, the builder claims that invocation.parameters is
+	// complete.
+	Parameters bool `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Environment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Environment") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaCompleteness) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaCompleteness
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfig
+// Source: Describes where the config file that kicked off the build
+// came from. This is effectively a pointer to the source where
+// buildConfig came from.
+type GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfigSource struct {
+	// Digest: Collection of cryptographic digests for the contents of the
+	// artifact specified by invocation.configSource.uri.
+	Digest map[string]string `json:"digest,omitempty"`
+
+	// EntryPoint: String identifying the entry point into the build.
+	EntryPoint string `json:"entryPoint,omitempty"`
+
+	// Uri: URI indicating the identity of the source of the config.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Digest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Digest") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfigSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfigSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvoca
+// tion: Identifies the event that kicked off the build.
+type GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvocation struct {
+	// ConfigSource: Describes where the config file that kicked off the
+	// build came from.
+	ConfigSource *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfigSource `json:"configSource,omitempty"`
+
+	// Environment: Any other builder-controlled inputs necessary for
+	// correctly evaluating the build.
+	Environment googleapi.RawMessage `json:"environment,omitempty"`
+
+	// Parameters: Collection of all external inputs that influenced the
+	// build on top of invocation.configSource.
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConfigSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConfigSource") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMateri
+// al: The collection of artifacts that influenced the build including
+// sources, dependencies, build tools, base images, and so on.
+type GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMaterial struct {
+	// Digest: Collection of cryptographic digests for the contents of this
+	// artifact.
+	Digest map[string]string `json:"digest,omitempty"`
+
+	// Uri: The method by which this artifact was referenced during the
+	// build.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Digest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Digest") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMaterial) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMaterial
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetada
+// ta: Other properties of the build.
+type GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetadata struct {
+	// BuildFinishedOn: The timestamp of when the build completed.
+	BuildFinishedOn string `json:"buildFinishedOn,omitempty"`
+
+	// BuildInvocationId: Identifies this particular build invocation, which
+	// can be useful for finding associated logs or other ad-hoc analysis.
+	BuildInvocationId string `json:"buildInvocationId,omitempty"`
+
+	// BuildStartedOn: The timestamp of when the build started.
+	BuildStartedOn string `json:"buildStartedOn,omitempty"`
+
+	// Completeness: Indicates that the builder claims certain fields in
+	// this message to be complete.
+	Completeness *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaCompleteness `json:"completeness,omitempty"`
+
+	// Reproducible: If true, the builder claims that running invocation on
+	// materials will produce bit-for-bit identical output.
+	Reproducible bool `json:"reproducible,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildFinishedOn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildFinishedOn") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDevtoolsContaineranalysisV1alpha1SourceContext: A SourceContext
 // is a reference to a tree of files. A SourceContext together with a
 // path point to a unique revision of a single file or directory.
@@ -4044,11 +4269,14 @@ type InTotoStatement struct {
 	// PredicateType: "https://slsa.dev/provenance/v0.1" for SlsaProvenance.
 	PredicateType string `json:"predicateType,omitempty"`
 
-	// Provenance: provenance is a predicate of type intotoprovenance
+	// Provenance: Generic Grafeas provenance.
 	Provenance *InTotoProvenance `json:"provenance,omitempty"`
 
-	// SlsaProvenance: slsa_provenance is a predicate of type slsaProvenance
+	// SlsaProvenance: SLSA 0.1 provenance.
 	SlsaProvenance *SlsaProvenance `json:"slsaProvenance,omitempty"`
+
+	// SlsaProvenanceZeroTwo: SLSA 0.2 provenance.
+	SlsaProvenanceZeroTwo *SlsaProvenanceZeroTwo `json:"slsaProvenanceZeroTwo,omitempty"`
 
 	// Subject: subject is the subjects of the intoto statement
 	Subject []*Subject `json:"subject,omitempty"`
@@ -6009,6 +6237,54 @@ type SlsaProvenance struct {
 
 func (s *SlsaProvenance) MarshalJSON() ([]byte, error) {
 	type NoMethod SlsaProvenance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SlsaProvenanceZeroTwo: SlsaProvenanceZeroTwo is the slsa provenance
+// as defined by the slsa spec. See full explanation of fields at
+// slsa.dev/provenance/v0.2.
+type SlsaProvenanceZeroTwo struct {
+	// BuildConfig: Lists the steps in the build.
+	BuildConfig googleapi.RawMessage `json:"buildConfig,omitempty"`
+
+	// BuildType: URI indicating what type of build was performed.
+	BuildType string `json:"buildType,omitempty"`
+
+	// Builder: Identifies the entity that executed the recipe, which is
+	// trusted to have correctly performed the operation and populated this
+	// provenance.
+	Builder *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilder `json:"builder,omitempty"`
+
+	// Invocation: Identifies the event that kicked off the build.
+	Invocation *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvocation `json:"invocation,omitempty"`
+
+	// Materials: The collection of artifacts that influenced the build
+	// including sources, dependencies, build tools, base images, and so on.
+	Materials []*GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMaterial `json:"materials,omitempty"`
+
+	// Metadata: Other properties of the build.
+	Metadata *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetadata `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SlsaProvenanceZeroTwo) MarshalJSON() ([]byte, error) {
+	type NoMethod SlsaProvenanceZeroTwo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

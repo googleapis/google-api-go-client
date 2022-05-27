@@ -809,8 +809,8 @@ func (s *AlertStrategy) MarshalJSON() ([]byte, error) {
 type AppEngine struct {
 	// ModuleId: The ID of the App Engine module underlying this service.
 	// Corresponds to the module_id resource label in the gae_app monitored
-	// resource:
-	// https://cloud.google.com/monitoring/api/resources#tag_gae_app
+	// resource
+	// (https://cloud.google.com/monitoring/api/resources#tag_gae_app).
 	ModuleId string `json:"moduleId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ModuleId") to
@@ -990,8 +990,8 @@ func (s *BucketOptions) MarshalJSON() ([]byte, error) {
 type CloudEndpoints struct {
 	// Service: The name of the Cloud Endpoints service underlying this
 	// service. Corresponds to the service resource label in the api
-	// monitored resource:
-	// https://cloud.google.com/monitoring/api/resources#tag_api
+	// monitored resource
+	// (https://cloud.google.com/monitoring/api/resources#tag_api).
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Service") to
@@ -1021,14 +1021,14 @@ func (s *CloudEndpoints) MarshalJSON() ([]byte, error) {
 // https://cloud.google.com/run.
 type CloudRun struct {
 	// Location: The location the service is run. Corresponds to the
-	// location resource label in the cloud_run_revision monitored resource:
-	// https://cloud.google.com/monitoring/api/resources#tag_cloud_run_revision
+	// location resource label in the cloud_run_revision monitored resource
+	// (https://cloud.google.com/monitoring/api/resources#tag_cloud_run_revision).
 	Location string `json:"location,omitempty"`
 
 	// ServiceName: The name of the Cloud Run service. Corresponds to the
 	// service_name resource label in the cloud_run_revision monitored
-	// resource:
-	// https://cloud.google.com/monitoring/api/resources#tag_cloud_run_revision
+	// resource
+	// (https://cloud.google.com/monitoring/api/resources#tag_cloud_run_revision).
 	ServiceName string `json:"serviceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Location") to
@@ -2145,7 +2145,7 @@ func (s *GetNotificationChannelVerificationCodeResponse) MarshalJSON() ([]byte, 
 
 // GkeNamespace: GKE Namespace. The field names correspond to the
 // resource metadata labels on monitored resources that fall under a
-// namespace (e.g. k8s_container, k8s_pod).
+// namespace (for example, k8s_container or k8s_pod).
 type GkeNamespace struct {
 	// ClusterName: The name of the parent cluster.
 	ClusterName string `json:"clusterName,omitempty"`
@@ -2189,8 +2189,8 @@ func (s *GkeNamespace) MarshalJSON() ([]byte, error) {
 // service object
 // (https://kubernetes.io/docs/concepts/services-networking/service).
 // The field names correspond to the resource labels on k8s_service
-// monitored resources:
-// https://cloud.google.com/monitoring/api/resources#tag_k8s_service
+// monitored resources
+// (https://cloud.google.com/monitoring/api/resources#tag_k8s_service).
 type GkeService struct {
 	// ClusterName: The name of the parent cluster.
 	ClusterName string `json:"clusterName,omitempty"`
@@ -2235,7 +2235,7 @@ func (s *GkeService) MarshalJSON() ([]byte, error) {
 
 // GkeWorkload: A GKE Workload (Deployment, StatefulSet, etc). The field
 // names correspond to the metadata labels on monitored resources that
-// fall under a workload (e.g. k8s_container, k8s_pod).
+// fall under a workload (for example, k8s_container or k8s_pod).
 type GkeWorkload struct {
 	// ClusterName: The name of the parent cluster.
 	ClusterName string `json:"clusterName,omitempty"`
@@ -2255,8 +2255,8 @@ type GkeWorkload struct {
 	// TopLevelControllerName: The name of this workload.
 	TopLevelControllerName string `json:"topLevelControllerName,omitempty"`
 
-	// TopLevelControllerType: The type of this workload (e.g. "Deployment"
-	// or "DaemonSet")
+	// TopLevelControllerType: The type of this workload (for example,
+	// "Deployment" or "DaemonSet")
 	TopLevelControllerType string `json:"topLevelControllerType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClusterName") to

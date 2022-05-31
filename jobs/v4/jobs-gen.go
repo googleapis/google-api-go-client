@@ -1996,15 +1996,19 @@ type JobQuery struct {
 
 	// CompanyDisplayNames: This filter specifies the company
 	// Company.display_name of the jobs to search against. The company name
-	// must match the value exactly. Alternatively, if the value being
-	// searched for is wrapped in `SUBSTRING_MATCH([value])`, the company
-	// name must contain a case insensitive substring match of the value.
-	// Using this function may increase latency. Sample Value:
-	// `SUBSTRING_MATCH(google)` If a value isn't specified, jobs within the
-	// search results are associated with any company. If multiple values
-	// are specified, jobs within the search results may be associated with
-	// any of the specified companies. At most 20 company display name
-	// filters are allowed.
+	// must match the value exactly. Alternatively, the value being searched
+	// for can be wrapped in different match operators.
+	// `SUBSTRING_MATCH([value])` The company name must contain a case
+	// insensitive substring match of the value. Using this function may
+	// increase latency. Sample Value: `SUBSTRING_MATCH(google)`
+	// `MULTI_WORD_TOKEN_MATCH([value])` The value will be treated as a
+	// multi word token and the company name must contain a case insensitive
+	// match of the value. Using this function may increase latency. Sample
+	// Value: `MULTI_WORD_TOKEN_MATCH(google)` If a value isn't specified,
+	// jobs within the search results are associated with any company. If
+	// multiple values are specified, jobs within the search results may be
+	// associated with any of the specified companies. At most 20 company
+	// display name filters are allowed.
 	CompanyDisplayNames []string `json:"companyDisplayNames,omitempty"`
 
 	// CompensationFilter: This search filter is applied only to
@@ -2533,8 +2537,11 @@ type LocationFilter struct {
 	// Possible values:
 	//   "TELECOMMUTE_PREFERENCE_UNSPECIFIED" - Default value if the
 	// telecommute preference isn't specified.
-	//   "TELECOMMUTE_EXCLUDED" - Ignore telecommute status of jobs.
+	//   "TELECOMMUTE_EXCLUDED" - DEPRECATED. Ignore telecommute status of
+	// jobs. Use TELECOMMUTE_JOBS_EXCLUDED if want to exclude telecommute
+	// jobs.
 	//   "TELECOMMUTE_ALLOWED" - Allow telecommute jobs.
+	//   "TELECOMMUTE_JOBS_EXCLUDED" - Exclude telecommute jobs.
 	TelecommutePreference string `json:"telecommutePreference,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Address") to

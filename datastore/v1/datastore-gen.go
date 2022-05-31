@@ -2171,12 +2171,16 @@ type PathElement struct {
 
 	// Kind: The kind of the entity. A kind matching regex `__.*__` is
 	// reserved/read-only. A kind must not contain more than 1500 bytes when
-	// UTF-8 encoded. Cannot be "".
+	// UTF-8 encoded. Cannot be "". Must be valid UTF-8 bytes. Legacy
+	// values that are not valid UTF-8 are encoded as `__bytes__` where ``
+	// is the base-64 encoding of the bytes.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: The name of the entity. A name matching regex `__.*__` is
 	// reserved/read-only. A name must not be more than 1500 bytes when
-	// UTF-8 encoded. Cannot be "".
+	// UTF-8 encoded. Cannot be "". Must be valid UTF-8 bytes. Legacy
+	// values that are not valid UTF-8 are encoded as `__bytes__` where ``
+	// is the base-64 encoding of the bytes.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to

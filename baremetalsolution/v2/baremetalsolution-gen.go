@@ -370,6 +370,90 @@ func (s *FetchInstanceProvisioningSettingsResponse) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBaremetalsolutionV2LogicalInterface: Each logical
+// interface represents a logical abstraction of the underlying physical
+// interface (for eg. bond, nic) of the instance. Each logical interface
+// can effectively map to multiple network-IP pairs and still be mapped
+// to one underlying physical interface.
+type GoogleCloudBaremetalsolutionV2LogicalInterface struct {
+	// InterfaceIndex: The index of the logical interface mapping to the
+	// index of the hardware bond or nic on the chosen network template.
+	InterfaceIndex int64 `json:"interfaceIndex,omitempty"`
+
+	// LogicalNetworkInterfaces: List of logical network interfaces within a
+	// logical interface.
+	LogicalNetworkInterfaces []*LogicalNetworkInterface `json:"logicalNetworkInterfaces,omitempty"`
+
+	// Name: Interface name. This is of syntax or and forms part of the
+	// network template name.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InterfaceIndex") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InterfaceIndex") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBaremetalsolutionV2LogicalInterface) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBaremetalsolutionV2LogicalInterface
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBaremetalsolutionV2ServerNetworkTemplateLogicalInterface:
+// Logical interface.
+type GoogleCloudBaremetalsolutionV2ServerNetworkTemplateLogicalInterface struct {
+	// Name: Interface name. This is not a globally unique identifier. Name
+	// is unique only inside the ServerNetworkTemplate. This is of syntax or
+	// and forms part of the network template name.
+	Name string `json:"name,omitempty"`
+
+	// Required: If true, interface must have network connected.
+	Required bool `json:"required,omitempty"`
+
+	// Type: Interface type.
+	//
+	// Possible values:
+	//   "INTERFACE_TYPE_UNSPECIFIED" - Unspecified value.
+	//   "BOND" - Bond interface type.
+	//   "NIC" - NIC interface type.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBaremetalsolutionV2ServerNetworkTemplateLogicalInterface) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBaremetalsolutionV2ServerNetworkTemplateLogicalInterface
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Instance: A server.
 type Instance struct {
 	// CreateTime: Output only. Create a time stamp.
@@ -390,6 +474,16 @@ type Instance struct {
 	// Labels: Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 
+	// LogicalInterfaces: List of logical interfaces for the instance. The
+	// number of logical interfaces will be the same as number of hardware
+	// bond/nic on the chosen network template. For the non-multivlan
+	// configurations (for eg, existing servers) that use existing default
+	// network template (bondaa-bondaa), both the Instance.networks field
+	// and the Instance.logical_interfaces fields will be filled to ensure
+	// backward compatibility. For the others, only
+	// Instance.logical_interfaces will be filled.
+	LogicalInterfaces []*GoogleCloudBaremetalsolutionV2LogicalInterface `json:"logicalInterfaces,omitempty"`
+
 	// Luns: List of LUNs associated with this server.
 	Luns []*Lun `json:"luns,omitempty"`
 
@@ -402,6 +496,11 @@ type Instance struct {
 	// https://cloud.google.com/apis/design/resource_names. Format:
 	// `projects/{project}/locations/{location}/instances/{instance}`
 	Name string `json:"name,omitempty"`
+
+	// NetworkTemplate: Instance network template name. For eg,
+	// bondaa-bondaa, bondab-nic, etc. Generally, the template name follows
+	// the syntax of "bond" or "nic".
+	NetworkTemplate string `json:"networkTemplate,omitempty"`
 
 	// Networks: List of networks associated with this server.
 	Networks []*Network `json:"networks,omitempty"`
@@ -459,7 +558,8 @@ type InstanceConfig struct {
 	// projects of the same vendor account.
 	AccountNetworksEnabled bool `json:"accountNetworksEnabled,omitempty"`
 
-	// ClientNetwork: Client network address.
+	// ClientNetwork: Client network address. Filled if
+	// InstanceConfig.multivlan_config is false.
 	ClientNetwork *NetworkAddress `json:"clientNetwork,omitempty"`
 
 	// Hyperthreading: Whether the instance should be provisioned with
@@ -474,14 +574,36 @@ type InstanceConfig struct {
 	// (https://cloud.google.com/bare-metal/docs/bms-planning#server_configurations)
 	InstanceType string `json:"instanceType,omitempty"`
 
+	// LogicalInterfaces: List of logical interfaces for the instance. The
+	// number of logical interfaces will be the same as number of hardware
+	// bond/nic on the chosen network template. Filled if
+	// InstanceConfig.multivlan_config is true.
+	LogicalInterfaces []*GoogleCloudBaremetalsolutionV2LogicalInterface `json:"logicalInterfaces,omitempty"`
+
 	// Name: Output only. The name of the instance config.
 	Name string `json:"name,omitempty"`
+
+	// NetworkConfig: The type of network configuration on the instance.
+	//
+	// Possible values:
+	//   "NETWORKCONFIG_UNSPECIFIED" - The unspecified network
+	// configuration.
+	//   "SINGLE_VLAN" - Instance part of single client network and single
+	// private network.
+	//   "MULTI_VLAN" - Instance part of multiple (or single) client
+	// networks and private networks.
+	NetworkConfig string `json:"networkConfig,omitempty"`
+
+	// NetworkTemplate: Server network template name. Filled if
+	// InstanceConfig.multivlan_config is true.
+	NetworkTemplate string `json:"networkTemplate,omitempty"`
 
 	// OsImage: OS image to initialize the instance. Available images
 	// (https://cloud.google.com/bare-metal/docs/bms-planning#server_configurations)
 	OsImage string `json:"osImage,omitempty"`
 
-	// PrivateNetwork: Private network address, if any.
+	// PrivateNetwork: Private network address, if any. Filled if
+	// InstanceConfig.multivlan_config is false.
 	PrivateNetwork *NetworkAddress `json:"privateNetwork,omitempty"`
 
 	// UserNote: User note field, it can be used by customers to add
@@ -935,24 +1057,33 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LogicalInterface: Logical interface.
-type LogicalInterface struct {
-	// Name: Interface name. This is not a globally unique identifier. Name
-	// is unique only inside the ServerNetworkTemplate.
-	Name string `json:"name,omitempty"`
+// LogicalNetworkInterface: Each logical network interface is
+// effectively a network and IP pair.
+type LogicalNetworkInterface struct {
+	// DefaultGateway: Whether this interface is the default gateway for the
+	// instance. Only one interface can be the default gateway for the
+	// instance.
+	DefaultGateway bool `json:"defaultGateway,omitempty"`
 
-	// Required: If true, interface must have network connected.
-	Required bool `json:"required,omitempty"`
+	// Id: An identifier for the `Network`, generated by the backend.
+	Id string `json:"id,omitempty"`
 
-	// Type: Interface type.
+	// IpAddress: IP address in the network
+	IpAddress string `json:"ipAddress,omitempty"`
+
+	// Network: Name of the network
+	Network string `json:"network,omitempty"`
+
+	// NetworkType: Type of network.
 	//
 	// Possible values:
-	//   "INTERFACE_TYPE_UNSPECIFIED" - Unspecified value.
-	//   "BOND" - Bond interface type.
-	//   "NIC" - NIC interface ytpe.
-	Type string `json:"type,omitempty"`
+	//   "TYPE_UNSPECIFIED" - Unspecified value.
+	//   "CLIENT" - Client network, a network peered to a Google Cloud VPC.
+	//   "PRIVATE" - Private network, a network local to the Bare Metal
+	// Solution environment.
+	NetworkType string `json:"networkType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "DefaultGateway") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -960,17 +1091,18 @@ type LogicalInterface struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DefaultGateway") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *LogicalInterface) MarshalJSON() ([]byte, error) {
-	type NoMethod LogicalInterface
+func (s *LogicalNetworkInterface) MarshalJSON() ([]byte, error) {
+	type NoMethod LogicalNetworkInterface
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1288,7 +1420,7 @@ type NetworkConfig struct {
 	Type string `json:"type,omitempty"`
 
 	// UserNote: User note field, it can be used by customers to add
-	// additional information for the BMS Ops team (b/194021617).
+	// additional information for the BMS Ops team .
 	UserNote string `json:"userNote,omitempty"`
 
 	// VlanAttachments: List of VLAN attachments. As of now there are always
@@ -1611,7 +1743,7 @@ type ProvisioningConfig struct {
 	//   "CANCELLED" - ProvisioningConfig was canceled.
 	State string `json:"state,omitempty"`
 
-	// TicketId: A generated buganizer id to track provisioning request.
+	// TicketId: A generated ticket id to track provisioning request.
 	TicketId string `json:"ticketId,omitempty"`
 
 	// UpdateTime: Output only. Last update timestamp.
@@ -1759,9 +1891,13 @@ type ServerNetworkTemplate struct {
 	ApplicableInstanceTypes []string `json:"applicableInstanceTypes,omitempty"`
 
 	// LogicalInterfaces: Logical interfaces.
-	LogicalInterfaces []*LogicalInterface `json:"logicalInterfaces,omitempty"`
+	LogicalInterfaces []*GoogleCloudBaremetalsolutionV2ServerNetworkTemplateLogicalInterface `json:"logicalInterfaces,omitempty"`
 
-	// Name: Output only. Template's unique name.
+	// Name: Output only. Template's unique name. The full resource name
+	// follows the pattern:
+	// `projects/{project}/locations/{location}/serverNetworkTemplate/{server
+	// _network_template}` Generally, the {server_network_template} follows
+	// the syntax of "bond" or "nic".
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2188,7 +2324,7 @@ type VolumeConfig struct {
 	Type string `json:"type,omitempty"`
 
 	// UserNote: User note field, it can be used by customers to add
-	// additional information for the BMS Ops team (b/194021617).
+	// additional information for the BMS Ops team .
 	UserNote string `json:"userNote,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcpService") to
@@ -4319,7 +4455,8 @@ func (r *ProjectsLocationsNetworksService) Patch(name string, network *Network) 
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update. The only currently supported fields are: `labels`
+// fields to update. The only currently supported fields are: `labels`,
+// `reservations`
 func (c *ProjectsLocationsNetworksPatchCall) UpdateMask(updateMask string) *ProjectsLocationsNetworksPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4432,7 +4569,7 @@ func (c *ProjectsLocationsNetworksPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The list of fields to update. The only currently supported fields are: `labels`",
+	//       "description": "The list of fields to update. The only currently supported fields are: `labels`, `reservations`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

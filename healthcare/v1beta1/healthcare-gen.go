@@ -2841,6 +2841,62 @@ func (s *FhirFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FhirNotificationConfig: Contains the configuration for FHIR
+// notifications.
+type FhirNotificationConfig struct {
+	// PubsubTopic: The Pub/Sub (https://cloud.google.com/pubsub/docs/)
+	// topic that notifications of changes are published on. Supplied by the
+	// client. The notification is a `PubsubMessage` with the following
+	// fields: * `PubsubMessage.Data` contains the resource name. *
+	// `PubsubMessage.MessageId` is the ID of this notification. It is
+	// guaranteed to be unique within the topic. *
+	// `PubsubMessage.PublishTime` is the time when the message was
+	// published. Note that notifications are only sent if the topic is
+	// non-empty. Topic names
+	// (https://cloud.google.com/pubsub/docs/overview#names) must be scoped
+	// to a project. The Cloud Healthcare API service account,
+	// service-@gcp-sa-healthcare.iam.gserviceaccount.com, must have
+	// publisher permissions on the given Pub/Sub topic. Not having adequate
+	// permissions causes the calls that send notifications to fail. If a
+	// notification can't be published to Pub/Sub, errors are logged to
+	// Cloud Logging. For more information, see Viewing error logs in Cloud
+	// Logging
+	// (https://cloud.google.com/healthcare-api/docs/how-tos/logging).
+	PubsubTopic string `json:"pubsubTopic,omitempty"`
+
+	// SendFullResource: Whether to send full FHIR resource to this Pub/Sub
+	// topic for Create and Update operation. Note that setting this to true
+	// does not guarantee that all resources will be sent in the format of
+	// full FHIR resource. When a resource change is too large or during
+	// heavy traffic, only the resource name will be sent. Clients should
+	// always check the "payloadType" label from a Pub/Sub message to
+	// determine whether it needs to fetch the full resource as a separate
+	// operation.
+	SendFullResource bool `json:"sendFullResource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PubsubTopic") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PubsubTopic") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FhirNotificationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod FhirNotificationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FhirOutput: Details about the FHIR store to write the output to.
 type FhirOutput struct {
 	// FhirStore: Name of the output FHIR store, which must already exist.
@@ -2944,6 +3000,10 @@ type FhirStore struct {
 	// attributes contain a map with a string describing the action that has
 	// triggered the notification. For example, "action":"CreateResource".
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
+
+	// NotificationConfigs: Specifies where and whether to send
+	// notifications upon changes to a Fhir store.
+	NotificationConfigs []*FhirNotificationConfig `json:"notificationConfigs,omitempty"`
 
 	// SearchConfig: Configuration for how FHIR resources can be searched.
 	SearchConfig *SearchConfig `json:"searchConfig,omitempty"`

@@ -10,11 +10,11 @@ import (
 	"net/http"
 	"os"
 
-	drive "google.golang.org/api/drive/v2"
+	drive "google.golang.org/api/drive/v3"
 )
 
 func init() {
-	registerDemo("drive", drive.DriveScope, driveMain)
+	registerDemo("drive", drive.DriveFileScope, driveMain)
 }
 
 func driveMain(client *http.Client, argv []string) {
@@ -34,6 +34,6 @@ func driveMain(client *http.Client, argv []string) {
 	if err != nil {
 		log.Fatalf("error opening %q: %v", filename, err)
 	}
-	driveFile, err := service.Files.Insert(&drive.File{Title: filename}).Media(goFile).Do()
+	driveFile, err := service.Files.Create(&drive.File{Name: filename}).Media(goFile).Do()
 	log.Printf("Got drive.File, err: %#v, %v", driveFile, err)
 }

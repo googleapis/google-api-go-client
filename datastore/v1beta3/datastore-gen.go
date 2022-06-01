@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -56,6 +56,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -95,7 +96,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/datastore",
 	)
@@ -361,6 +362,10 @@ func (s *CommitRequest) MarshalJSON() ([]byte, error) {
 
 // CommitResponse: The response for Datastore.Commit.
 type CommitResponse struct {
+	// CommitTime: The transaction commit timestamp. Not set for
+	// non-transactional commits.
+	CommitTime string `json:"commitTime,omitempty"`
+
 	// IndexUpdates: The number of index entries updated during the commit,
 	// or zero if none were updated.
 	IndexUpdates int64 `json:"indexUpdates,omitempty"`
@@ -373,7 +378,7 @@ type CommitResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "IndexUpdates") to
+	// ForceSendFields is a list of field names (e.g. "CommitTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -381,10 +386,10 @@ type CommitResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IndexUpdates") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CommitTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -483,6 +488,11 @@ type EntityResult struct {
 
 	// Entity: The resulting entity.
 	Entity *Entity `json:"entity,omitempty"`
+
+	// UpdateTime: The time at which the entity was last changed. This field
+	// is set for `FULL` entity results. If this entity is missing, this
+	// field will not be set.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// Version: The version of the entity, a strictly positive number that
 	// monotonically increases with changes to the entity. This field is set
@@ -608,6 +618,65 @@ type GoogleDatastoreAdminV1CommonMetadata struct {
 
 func (s *GoogleDatastoreAdminV1CommonMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1CommonMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata: Metadata
+// for Datastore to Firestore migration operations. The
+// DatastoreFirestoreMigration operation is not started by the end-user
+// via an explicit "creation" method. This is an intentional deviation
+// from the LRO design pattern. This singleton resource can be accessed
+// at: "projects/{project_id}/operations/datastore-firestore-migration"
+type GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata struct {
+	// MigrationState: The current state of migration from Cloud Datastore
+	// to Cloud Firestore in Datastore mode.
+	//
+	// Possible values:
+	//   "MIGRATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "RUNNING" - The migration is running.
+	//   "PAUSED" - The migration is paused.
+	//   "COMPLETE" - The migration is complete.
+	MigrationState string `json:"migrationState,omitempty"`
+
+	// MigrationStep: The current step of migration from Cloud Datastore to
+	// Cloud Firestore in Datastore mode.
+	//
+	// Possible values:
+	//   "MIGRATION_STEP_UNSPECIFIED" - Unspecified.
+	//   "PREPARE" - Pre-migration: the database is prepared for migration.
+	//   "START" - Start of migration.
+	//   "APPLY_WRITES_SYNCHRONOUSLY" - Writes are applied synchronously to
+	// at least one replica.
+	//   "COPY_AND_VERIFY" - Data is copied to Cloud Firestore and then
+	// verified to match the data in Cloud Datastore.
+	//   "REDIRECT_EVENTUALLY_CONSISTENT_READS" - Eventually-consistent
+	// reads are redirected to Cloud Firestore.
+	//   "REDIRECT_STRONGLY_CONSISTENT_READS" - Strongly-consistent reads
+	// are redirected to Cloud Firestore.
+	//   "REDIRECT_WRITES" - Writes are redirected to Cloud Firestore.
+	MigrationStep string `json:"migrationStep,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MigrationState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MigrationState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -812,6 +881,135 @@ func (s *GoogleDatastoreAdminV1IndexOperationMetadata) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDatastoreAdminV1MigrationProgressEvent: An event signifying the
+// start of a new step in a migration from Cloud Datastore to Cloud
+// Firestore in Datastore mode
+// (https://cloud.google.com/datastore/docs/upgrade-to-firestore).
+type GoogleDatastoreAdminV1MigrationProgressEvent struct {
+	// PrepareStepDetails: Details for the `PREPARE` step.
+	PrepareStepDetails *GoogleDatastoreAdminV1PrepareStepDetails `json:"prepareStepDetails,omitempty"`
+
+	// RedirectWritesStepDetails: Details for the `REDIRECT_WRITES` step.
+	RedirectWritesStepDetails *GoogleDatastoreAdminV1RedirectWritesStepDetails `json:"redirectWritesStepDetails,omitempty"`
+
+	// Step: The step that is starting. An event with step set to `START`
+	// indicates that the migration has been reverted back to the initial
+	// pre-migration state.
+	//
+	// Possible values:
+	//   "MIGRATION_STEP_UNSPECIFIED" - Unspecified.
+	//   "PREPARE" - Pre-migration: the database is prepared for migration.
+	//   "START" - Start of migration.
+	//   "APPLY_WRITES_SYNCHRONOUSLY" - Writes are applied synchronously to
+	// at least one replica.
+	//   "COPY_AND_VERIFY" - Data is copied to Cloud Firestore and then
+	// verified to match the data in Cloud Datastore.
+	//   "REDIRECT_EVENTUALLY_CONSISTENT_READS" - Eventually-consistent
+	// reads are redirected to Cloud Firestore.
+	//   "REDIRECT_STRONGLY_CONSISTENT_READS" - Strongly-consistent reads
+	// are redirected to Cloud Firestore.
+	//   "REDIRECT_WRITES" - Writes are redirected to Cloud Firestore.
+	Step string `json:"step,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrepareStepDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrepareStepDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1MigrationProgressEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1MigrationProgressEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDatastoreAdminV1MigrationStateEvent: An event signifying a
+// change in state of a migration from Cloud Datastore to Cloud
+// Firestore in Datastore mode
+// (https://cloud.google.com/datastore/docs/upgrade-to-firestore).
+type GoogleDatastoreAdminV1MigrationStateEvent struct {
+	// State: The new state of the migration.
+	//
+	// Possible values:
+	//   "MIGRATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "RUNNING" - The migration is running.
+	//   "PAUSED" - The migration is paused.
+	//   "COMPLETE" - The migration is complete.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1MigrationStateEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1MigrationStateEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDatastoreAdminV1PrepareStepDetails: Details for the `PREPARE`
+// step.
+type GoogleDatastoreAdminV1PrepareStepDetails struct {
+	// ConcurrencyMode: The concurrency mode this database will use when it
+	// reaches the `REDIRECT_WRITES` step.
+	//
+	// Possible values:
+	//   "CONCURRENCY_MODE_UNSPECIFIED" - Unspecified.
+	//   "PESSIMISTIC" - Pessimistic concurrency.
+	//   "OPTIMISTIC" - Optimistic concurrency.
+	//   "OPTIMISTIC_WITH_ENTITY_GROUPS" - Optimistic concurrency with
+	// entity groups.
+	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConcurrencyMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConcurrencyMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1PrepareStepDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1PrepareStepDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDatastoreAdminV1Progress: Measures the progress of a particular
 // metric.
 type GoogleDatastoreAdminV1Progress struct {
@@ -842,6 +1040,43 @@ type GoogleDatastoreAdminV1Progress struct {
 
 func (s *GoogleDatastoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1Progress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDatastoreAdminV1RedirectWritesStepDetails: Details for the
+// `REDIRECT_WRITES` step.
+type GoogleDatastoreAdminV1RedirectWritesStepDetails struct {
+	// ConcurrencyMode: Ths concurrency mode for this database.
+	//
+	// Possible values:
+	//   "CONCURRENCY_MODE_UNSPECIFIED" - Unspecified.
+	//   "PESSIMISTIC" - Pessimistic concurrency.
+	//   "OPTIMISTIC" - Optimistic concurrency.
+	//   "OPTIMISTIC_WITH_ENTITY_GROUPS" - Optimistic concurrency with
+	// entity groups.
+	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConcurrencyMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConcurrencyMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1RedirectWritesStepDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1RedirectWritesStepDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1368,6 +1603,10 @@ type LookupResponse struct {
 	// the order of the keys in the input.
 	Missing []*EntityResult `json:"missing,omitempty"`
 
+	// ReadTime: The time at which these entities were read or found
+	// missing.
+	ReadTime string `json:"readTime,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1415,6 +1654,11 @@ type Mutation struct {
 	// have a complete key path.
 	Update *Entity `json:"update,omitempty"`
 
+	// UpdateTime: The update time of the entity that this mutation is being
+	// applied to. If this does not match the current update time on the
+	// server, the mutation conflicts.
+	UpdateTime string `json:"updateTime,omitempty"`
+
 	// Upsert: The entity to upsert. The entity may or may not already
 	// exist. The entity key's final path element may be incomplete.
 	Upsert *Entity `json:"upsert,omitempty"`
@@ -1452,6 +1696,12 @@ type MutationResult struct {
 	// Key: The automatically allocated key. Set only when the mutation
 	// allocated a key.
 	Key *Key `json:"key,omitempty"`
+
+	// UpdateTime: The update time of the entity on the server after
+	// processing the mutation. If the mutation doesn't change anything on
+	// the server, then the timestamp will be the update timestamp of the
+	// current entity. This field will not be set after a 'delete'.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// Version: The version of the entity on the server after processing the
 	// mutation. If the mutation doesn't change anything on the server, then
@@ -1538,12 +1788,16 @@ type PathElement struct {
 
 	// Kind: The kind of the entity. A kind matching regex `__.*__` is
 	// reserved/read-only. A kind must not contain more than 1500 bytes when
-	// UTF-8 encoded. Cannot be "".
+	// UTF-8 encoded. Cannot be "". Must be valid UTF-8 bytes. Legacy
+	// values that are not valid UTF-8 are encoded as `__bytes__` where ``
+	// is the base-64 encoding of the bytes.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: The name of the entity. A name matching regex `__.*__` is
 	// reserved/read-only. A name must not be more than 1500 bytes when
-	// UTF-8 encoded. Cannot be "".
+	// UTF-8 encoded. Cannot be "". Must be valid UTF-8 bytes. Legacy
+	// values that are not valid UTF-8 are encoded as `__bytes__` where ``
+	// is the base-64 encoding of the bytes.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -1614,8 +1868,19 @@ type PropertyFilter struct {
 	// equal to the given `value`. Requires: * That `property` comes first
 	// in `order_by`.
 	//   "EQUAL" - The given `property` is equal to the given `value`.
+	//   "IN" - The given `property` is equal to at least one value in the
+	// given array. Requires: * That `value` is a non-empty `ArrayValue`
+	// with at most 10 values. * No other `IN` or `NOT_IN` is in the same
+	// query.
+	//   "NOT_EQUAL" - The given `property` is not equal to the given
+	// `value`. Requires: * No other `NOT_EQUAL` or `NOT_IN` is in the same
+	// query. * That `property` comes first in the `order_by`.
 	//   "HAS_ANCESTOR" - Limit the result set to the given entity and its
 	// descendants. Requires: * That `value` is an entity key.
+	//   "NOT_IN" - The value of the `property` is not in the given array.
+	// Requires: * That `value` is a non-empty `ArrayValue` with at most 10
+	// values. * No other `IN`, `NOT_IN`, `NOT_EQUAL` is in the same query.
+	// * That `field` comes first in the `order_by`.
 	Op string `json:"op,omitempty"`
 
 	// Property: The property to filter by.
@@ -1814,6 +2079,16 @@ type QueryResultBatch struct {
 	// results.
 	MoreResults string `json:"moreResults,omitempty"`
 
+	// ReadTime: Read timestamp this batch was returned from. This applies
+	// to the range of results from the query's `start_cursor` (or the
+	// beginning of the query if no cursor was given) to this batch's
+	// `end_cursor` (not the query's `end_cursor`). In a single transaction,
+	// subsequent query result batches for the same query can have a greater
+	// timestamp. Each batch's read timestamp is valid for all preceding
+	// batches. This value will not be set for eventually consistent queries
+	// in Cloud Datastore.
+	ReadTime string `json:"readTime,omitempty"`
+
 	// SkippedCursor: A cursor that points to the position after the last
 	// skipped result. Will be set when `skipped_results` != 0.
 	SkippedCursor string `json:"skippedCursor,omitempty"`
@@ -1857,6 +2132,31 @@ func (s *QueryResultBatch) MarshalJSON() ([]byte, error) {
 
 // ReadOnly: Options specific to read-only transactions.
 type ReadOnly struct {
+	// ReadTime: Reads entities at the given time. This may not be older
+	// than 60 seconds.
+	ReadTime string `json:"readTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReadTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReadTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReadOnly) MarshalJSON() ([]byte, error) {
+	type NoMethod ReadOnly
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ReadOptions: The options shared by read requests.
@@ -1870,6 +2170,11 @@ type ReadOptions struct {
 	//   "STRONG" - Strong consistency.
 	//   "EVENTUAL" - Eventual consistency.
 	ReadConsistency string `json:"readConsistency,omitempty"`
+
+	// ReadTime: Reads entities as they were at the given time. This may not
+	// be older than 270 seconds. This value is only supported for Cloud
+	// Firestore in Datastore mode.
+	ReadTime string `json:"readTime,omitempty"`
 
 	// Transaction: The identifier of the transaction in which to read. A
 	// transaction identifier is returned by a call to
@@ -2009,7 +2314,8 @@ type RollbackResponse struct {
 
 // RunQueryRequest: The request for Datastore.RunQuery.
 type RunQueryRequest struct {
-	// GqlQuery: The GQL query to run.
+	// GqlQuery: The GQL query to run. This query must be a non-aggregation
+	// query.
 	GqlQuery *GqlQuery `json:"gqlQuery,omitempty"`
 
 	// PartitionId: Entities are partitioned into subsets, identified by a
@@ -2262,7 +2568,7 @@ func (c *ProjectsAllocateIdsCall) Header() http.Header {
 
 func (c *ProjectsAllocateIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2404,7 +2710,7 @@ func (c *ProjectsBeginTransactionCall) Header() http.Header {
 
 func (c *ProjectsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2547,7 +2853,7 @@ func (c *ProjectsCommitCall) Header() http.Header {
 
 func (c *ProjectsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2689,7 +2995,7 @@ func (c *ProjectsLookupCall) Header() http.Header {
 
 func (c *ProjectsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2832,7 +3138,7 @@ func (c *ProjectsReserveIdsCall) Header() http.Header {
 
 func (c *ProjectsReserveIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2974,7 +3280,7 @@ func (c *ProjectsRollbackCall) Header() http.Header {
 
 func (c *ProjectsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3116,7 +3422,7 @@ func (c *ProjectsRunQueryCall) Header() http.Header {
 
 func (c *ProjectsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

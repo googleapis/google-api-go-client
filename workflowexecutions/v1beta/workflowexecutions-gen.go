@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -86,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -187,7 +188,7 @@ type CancelExecutionRequest struct {
 
 // Error: Error describes why the execution was abnormally terminated.
 type Error struct {
-	// Context: Human readable stack trace string.
+	// Context: Human-readable stack trace string.
 	Context string `json:"context,omitempty"`
 
 	// Payload: Error message and data returned represented as a JSON
@@ -348,9 +349,8 @@ type Position struct {
 	// instruction was generated from.
 	Column int64 `json:"column,omitempty,string"`
 
-	// Length: The length in bytes of text in this character group, e.g.
-	// digits of a number, string length, or AST (abstract syntax tree)
-	// node.
+	// Length: The number of bytes of source code making up this stack trace
+	// element.
 	Length int64 `json:"length,omitempty,string"`
 
 	// Line: The source code line number the current instruction was
@@ -383,7 +383,7 @@ func (s *Position) MarshalJSON() ([]byte, error) {
 // StackTrace: A collection of stack elements (frames) where an error
 // occurred.
 type StackTrace struct {
-	// Elements: An array of Stack elements.
+	// Elements: An array of stack elements.
 	Elements []*StackTraceElement `json:"elements,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Elements") to
@@ -412,7 +412,7 @@ func (s *StackTrace) MarshalJSON() ([]byte, error) {
 // StackTraceElement: A single stack element (frame) where an error
 // occurred.
 type StackTraceElement struct {
-	// Position: The source position information of the stacktrace element.
+	// Position: The source position information of the stack trace element.
 	Position *Position `json:"position,omitempty"`
 
 	// Routine: The routine where the error occurred.
@@ -494,7 +494,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -640,7 +640,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -808,7 +808,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1010,7 +1010,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -85,7 +86,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/androidmanagement",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -240,9 +241,9 @@ type SignupUrlsService struct {
 	s *Service
 }
 
-// AdvancedSecurityOverrides: Security policies set to the most secure
-// values by default. To maintain the security posture of a device, we
-// don't recommend overriding any of the default values.
+// AdvancedSecurityOverrides: Security policies set to secure values by
+// default. To maintain the security posture of a device, we don't
+// recommend overriding any of the default values.
 type AdvancedSecurityOverrides struct {
 	// CommonCriteriaMode: Controls Common Criteria Mode—security
 	// standards defined in the Common Criteria for Information Technology
@@ -434,30 +435,25 @@ func (s *AppTrackInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Application: Information about an app.
-type Application struct {
-	// AppTracks: Application tracks visible to the enterprise.
-	AppTracks []*AppTrackInfo `json:"appTracks,omitempty"`
+// AppVersion: This represents a single version of the app.
+type AppVersion struct {
+	// Production: If the value is True, it indicates that this version is a
+	// production track.
+	Production bool `json:"production,omitempty"`
 
-	// ManagedProperties: The set of managed properties available to be
-	// pre-configured for the app.
-	ManagedProperties []*ManagedProperty `json:"managedProperties,omitempty"`
+	// TrackIds: Track identifiers that the app version is published in.
+	// This does not include the production track (see production instead).
+	TrackIds []string `json:"trackIds,omitempty"`
 
-	// Name: The name of the app in the form
-	// enterprises/{enterpriseId}/applications/{package_name}.
-	Name string `json:"name,omitempty"`
+	// VersionCode: Unique increasing identifier for the app version.
+	VersionCode int64 `json:"versionCode,omitempty"`
 
-	// Permissions: The permissions required by the app.
-	Permissions []*ApplicationPermission `json:"permissions,omitempty"`
+	// VersionString: The string used in the Play store by the app developer
+	// to identify the version. The string is not necessarily unique or
+	// localized (for example, the string could be "1.4").
+	VersionString string `json:"versionString,omitempty"`
 
-	// Title: The title of the app. Localized.
-	Title string `json:"title,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AppTracks") to
+	// ForceSendFields is a list of field names (e.g. "Production") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -465,7 +461,145 @@ type Application struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AppTracks") to include in
+	// NullFields is a list of field names (e.g. "Production") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod AppVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Application: Information about an app.
+type Application struct {
+	// AppPricing: Whether this app is free, free with in-app purchases, or
+	// paid. If the pricing is unspecified, this means the app is not
+	// generally available anymore (even though it might still be available
+	// to people who own it).
+	//
+	// Possible values:
+	//   "APP_PRICING_UNSPECIFIED" - Unknown pricing, used to denote an
+	// approved app that is not generally available.
+	//   "FREE" - The app is free.
+	//   "FREE_WITH_IN_APP_PURCHASE" - The app is free, but offers in-app
+	// purchases.
+	//   "PAID" - The app is paid.
+	AppPricing string `json:"appPricing,omitempty"`
+
+	// AppTracks: Application tracks visible to the enterprise.
+	AppTracks []*AppTrackInfo `json:"appTracks,omitempty"`
+
+	// AppVersions: Versions currently available for this app.
+	AppVersions []*AppVersion `json:"appVersions,omitempty"`
+
+	// Author: The name of the author of the apps (for example, the app
+	// developer).
+	Author string `json:"author,omitempty"`
+
+	// AvailableCountries: The countries which this app is available in as
+	// per ISO 3166-1 alpha-2.
+	AvailableCountries []string `json:"availableCountries,omitempty"`
+
+	// Category: The app category (e.g. RACING, SOCIAL, etc.)
+	Category string `json:"category,omitempty"`
+
+	// ContentRating: The content rating for this app.
+	//
+	// Possible values:
+	//   "CONTENT_RATING_UNSPECIFIED" - Unspecified.
+	//   "THREE_YEARS" - Content suitable for ages 3 and above only.
+	//   "SEVEN_YEARS" - Content suitable for ages 7 and above only.
+	//   "TWELVE_YEARS" - Content suitable for ages 12 and above only.
+	//   "SIXTEEN_YEARS" - Content suitable for ages 16 and above only.
+	//   "EIGHTEEN_YEARS" - Content suitable for ages 18 and above only.
+	ContentRating string `json:"contentRating,omitempty"`
+
+	// Description: The localized promotional description, if available.
+	Description string `json:"description,omitempty"`
+
+	// DistributionChannel: How and to whom the package is made available.
+	//
+	// Possible values:
+	//   "DISTRIBUTION_CHANNEL_UNSPECIFIED" - Unspecified.
+	//   "PUBLIC_GOOGLE_HOSTED" - Package is available through the Play
+	// store and not restricted to a specific enterprise.
+	//   "PRIVATE_GOOGLE_HOSTED" - Package is a private app (restricted to
+	// an enterprise) but hosted by Google.
+	//   "PRIVATE_SELF_HOSTED" - Private app (restricted to an enterprise)
+	// and is privately hosted.
+	DistributionChannel string `json:"distributionChannel,omitempty"`
+
+	// Features: Noteworthy features (if any) of this app.
+	//
+	// Possible values:
+	//   "APP_FEATURE_UNSPECIFIED" - Unspecified.
+	//   "VPN_APP" - The app is a VPN.
+	Features []string `json:"features,omitempty"`
+
+	// FullDescription: Full app description, if available.
+	FullDescription string `json:"fullDescription,omitempty"`
+
+	// IconUrl: A link to an image that can be used as an icon for the app.
+	// This image is suitable for use up to a pixel size of 512 x 512.
+	IconUrl string `json:"iconUrl,omitempty"`
+
+	// ManagedProperties: The set of managed properties available to be
+	// pre-configured for the app.
+	ManagedProperties []*ManagedProperty `json:"managedProperties,omitempty"`
+
+	// MinAndroidSdkVersion: The minimum Android SDK necessary to run the
+	// app.
+	MinAndroidSdkVersion int64 `json:"minAndroidSdkVersion,omitempty"`
+
+	// Name: The name of the app in the form
+	// enterprises/{enterprise}/applications/{package_name}.
+	Name string `json:"name,omitempty"`
+
+	// Permissions: The permissions required by the app.
+	Permissions []*ApplicationPermission `json:"permissions,omitempty"`
+
+	// PlayStoreUrl: A link to the (consumer) Google Play details page for
+	// the app.
+	PlayStoreUrl string `json:"playStoreUrl,omitempty"`
+
+	// RecentChanges: A localised description of the recent changes made to
+	// the app.
+	RecentChanges string `json:"recentChanges,omitempty"`
+
+	// ScreenshotUrls: A list of screenshot links representing the app.
+	ScreenshotUrls []string `json:"screenshotUrls,omitempty"`
+
+	// SmallIconUrl: A link to a smaller image that can be used as an icon
+	// for the app. This image is suitable for use up to a pixel size of 128
+	// x 128.
+	SmallIconUrl string `json:"smallIconUrl,omitempty"`
+
+	// Title: The title of the app. Localized.
+	Title string `json:"title,omitempty"`
+
+	// UpdateTime: Output only. The approximate time (within 7 days) the app
+	// was last published.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppPricing") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppPricing") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -569,6 +703,29 @@ type ApplicationPolicy struct {
 	// to the app’s production track. More details about each track are
 	// available in AppTrackInfo.
 	AccessibleTrackIds []string `json:"accessibleTrackIds,omitempty"`
+
+	// AlwaysOnVpnLockdownExemption: Specifies whether the app is allowed
+	// networking when the VPN is not connected and
+	// alwaysOnVpnPackage.lockdownEnabled is enabled. If set to
+	// VPN_LOCKDOWN_ENFORCED, the app is not allowed networking, and if set
+	// to VPN_LOCKDOWN_EXEMPTION, the app is allowed networking. Only
+	// supported on devices running Android 10 and above. If this is not
+	// supported by the device, the device will contain a
+	// NonComplianceDetail with non_compliance_reason set to API_LEVEL and a
+	// fieldPath. If this is not applicable to the app, the device will
+	// contain a NonComplianceDetail with non_compliance_reason set to
+	// UNSUPPORTED and a fieldPath. The fieldPath is set to
+	// applications[i].alwaysOnVpnLockdownExemption, where i is the index of
+	// the package in the applications policy.
+	//
+	// Possible values:
+	//   "ALWAYS_ON_VPN_LOCKDOWN_EXEMPTION_UNSPECIFIED" - Unspecified.
+	// Defaults to VPN_LOCKDOWN_ENFORCED.
+	//   "VPN_LOCKDOWN_ENFORCED" - The app respects the always-on VPN
+	// lockdown setting.
+	//   "VPN_LOCKDOWN_EXEMPTION" - The app is exempt from the always-on VPN
+	// lockdown setting.
+	AlwaysOnVpnLockdownExemption string `json:"alwaysOnVpnLockdownExemption,omitempty"`
 
 	// AutoUpdateMode: Controls the auto-update mode for the app.
 	//
@@ -1294,11 +1451,11 @@ func (s *CrossProfilePolicies) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: A full date, with
-// non-zero year, month, and day values A month and day value, with a
-// zero year, such as an anniversary A year on its own, with zero month
-// and day values A year and month value, with a zero day, such as a
-// credit card expiration dateRelated types are google.type.TimeOfDay
-// and google.protobuf.Timestamp.
+// non-zero year, month, and day values. A month and day, with a zero
+// year (for example, an anniversary). A year on its own, with a zero
+// month and a zero day. A year and month, with a zero day (for example,
+// a credit card expiration date).Related types: google.type.TimeOfDay
+// google.type.DateTime google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -1369,9 +1526,12 @@ type Device struct {
 	//   "DEVICE_STATE_UNSPECIFIED" - This value is disallowed.
 	//   "ACTIVE" - The device is active.
 	//   "DISABLED" - The device is disabled.
-	//   "DELETED" - The device was deleted. This state will never be
-	// returned by an API call, but is used in the final status report
-	// published to Cloud Pub/Sub when the device acknowledges the deletion.
+	//   "DELETED" - The device was deleted. This state is never returned by
+	// an API call, but is used in the final status report when the device
+	// acknowledges the deletion. If the device is deleted via the API call,
+	// this state is published to Pub/Sub. If the user deletes the work
+	// profile or resets the device, the device state will remain unknown to
+	// the server.
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
 	AppliedState string `json:"appliedState,omitempty"`
@@ -1509,9 +1669,12 @@ type Device struct {
 	//   "DEVICE_STATE_UNSPECIFIED" - This value is disallowed.
 	//   "ACTIVE" - The device is active.
 	//   "DISABLED" - The device is disabled.
-	//   "DELETED" - The device was deleted. This state will never be
-	// returned by an API call, but is used in the final status report
-	// published to Cloud Pub/Sub when the device acknowledges the deletion.
+	//   "DELETED" - The device was deleted. This state is never returned by
+	// an API call, but is used in the final status report when the device
+	// acknowledges the deletion. If the device is deleted via the API call,
+	// this state is published to Pub/Sub. If the user deletes the work
+	// profile or resets the device, the device state will remain unknown to
+	// the server.
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
 	State string `json:"state,omitempty"`
@@ -1679,8 +1842,7 @@ func (s *Display) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for Empty is empty
-// JSON object {}.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1808,6 +1970,8 @@ type Enterprise struct {
 	// report.
 	//   "COMMAND" - A notification sent when a device command has
 	// completed.
+	//   "USAGE_LOGS" - A notification sent when device sends
+	// BatchUsageLogEvents.
 	EnabledNotificationTypes []string `json:"enabledNotificationTypes,omitempty"`
 
 	// EnterpriseDisplayName: The name of the enterprise displayed to users.
@@ -1828,8 +1992,8 @@ type Enterprise struct {
 	// where the value of each component is between 0 and 255, inclusive.
 	PrimaryColor int64 `json:"primaryColor,omitempty"`
 
-	// PubsubTopic: The topic that Cloud Pub/Sub notifications are published
-	// to, in the form projects/{project}/topics/{topic}. This field is only
+	// PubsubTopic: The topic which Pub/Sub notifications are published to,
+	// in the form projects/{project}/topics/{topic}. This field is only
 	// required if Pub/Sub notifications are enabled.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
@@ -1879,7 +2043,7 @@ type ExtensionConfig struct {
 	// of any local command status updates.
 	NotificationReceiver string `json:"notificationReceiver,omitempty"`
 
-	// SigningKeyFingerprintsSha256: Hex-encoded SHA256 hash of the signing
+	// SigningKeyFingerprintsSha256: Hex-encoded SHA-256 hash of the signing
 	// certificate of the extension app. Only hexadecimal string
 	// representations of 64 characters are valid.If not specified, the
 	// signature for the corresponding package name is obtained from the
@@ -2028,6 +2192,14 @@ type HardwareInfo struct {
 	// DeviceBasebandVersion: Baseband version. For example,
 	// MDM9625_104662.22.05.34p.
 	DeviceBasebandVersion string `json:"deviceBasebandVersion,omitempty"`
+
+	// EnterpriseSpecificId: Output only. ID that uniquely identifies a
+	// personally-owned device in a particular organization. On the same
+	// physical device when enrolled with the same organization, this ID
+	// persists across setups and even factory resets. This ID is available
+	// on personally-owned devices with a work profile on devices running
+	// Android 12 and above.
+	EnterpriseSpecificId string `json:"enterpriseSpecificId,omitempty"`
 
 	// GpuShutdownTemperatures: GPU shutdown temperature thresholds in
 	// Celsius for each GPU on the device.
@@ -3203,6 +3375,23 @@ type PasswordRequirements struct {
 	//   "REQUIRE_EVERY_DAY" - The timeout period is set to 24 hours.
 	RequirePasswordUnlock string `json:"requirePasswordUnlock,omitempty"`
 
+	// UnifiedLockSettings: Controls whether a unified lock is allowed for
+	// the device and the work profile, on devices running Android 9 and
+	// above with a work profile. This can be set only if password_scope is
+	// set to SCOPE_PROFILE, the policy will be rejected otherwise. If user
+	// has not set a separate work lock and this field is set to
+	// REQUIRE_SEPARATE_WORK_LOCK, a NonComplianceDetail is reported with
+	// nonComplianceReason set to USER_ACTION.
+	//
+	// Possible values:
+	//   "UNIFIED_LOCK_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
+	// ALLOW_UNIFIED_WORK_AND_PERSONAL_LOCK.
+	//   "ALLOW_UNIFIED_WORK_AND_PERSONAL_LOCK" - A common lock for the
+	// device and the work profile is allowed.
+	//   "REQUIRE_SEPARATE_WORK_LOCK" - A separate lock for the work profile
+	// is required.
+	UnifiedLockSettings string `json:"unifiedLockSettings,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "MaximumFailedPasswordsForWipe") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -3432,9 +3621,9 @@ type Policy struct {
 	// disabled. Also mutes the device.
 	AdjustVolumeDisabled bool `json:"adjustVolumeDisabled,omitempty"`
 
-	// AdvancedSecurityOverrides: Security policies set to the most secure
-	// values by default. To maintain the security posture of a device, we
-	// don't recommend overriding any of the default values.
+	// AdvancedSecurityOverrides: Security policies set to secure values by
+	// default. To maintain the security posture of a device, we don't
+	// recommend overriding any of the default values.
 	AdvancedSecurityOverrides *AdvancedSecurityOverrides `json:"advancedSecurityOverrides,omitempty"`
 
 	// AlwaysOnVpnPackage: Configuration for an always-on VPN connection.
@@ -3508,7 +3697,40 @@ type Policy struct {
 	// be bypassed by the user.
 	BluetoothDisabled bool `json:"bluetoothDisabled,omitempty"`
 
-	// CameraDisabled: Whether all cameras on the device are disabled.
+	// CameraAccess: Controls the use of the camera and whether the user has
+	// access to the camera access toggle.
+	//
+	// Possible values:
+	//   "CAMERA_ACCESS_UNSPECIFIED" - If camera_disabled is true, this is
+	// equivalent to CAMERA_ACCESS_DISABLED. Otherwise, this is equivalent
+	// to CAMERA_ACCESS_USER_CHOICE.
+	//   "CAMERA_ACCESS_USER_CHOICE" - The field camera_disabled is ignored.
+	// This is the default device behaviour: all cameras on the device are
+	// available. On Android 12 and above, the user can use the camera
+	// access toggle.
+	//   "CAMERA_ACCESS_DISABLED" - The field camera_disabled is ignored.
+	// All cameras on the device are disabled (for fully managed devices,
+	// this applies device-wide and for work profiles this applies only to
+	// the work profile).There are no explicit restrictions placed on the
+	// camera access toggle on Android 12 and above: on fully managed
+	// devices, the camera access toggle has no effect as all cameras are
+	// disabled. On devices with a work profile, this toggle has no effect
+	// on apps in the work profile, but it affects apps outside the work
+	// profile.
+	//   "CAMERA_ACCESS_ENFORCED" - The field camera_disabled is ignored.
+	// All cameras on the device are available. On fully managed devices
+	// running Android 12 and above, the user is unable to use the camera
+	// access toggle. On devices which are not fully managed or which run
+	// Android 11 or below, this is equivalent to CAMERA_ACCESS_USER_CHOICE.
+	CameraAccess string `json:"cameraAccess,omitempty"`
+
+	// CameraDisabled: If camera_access is set to any value other than
+	// CAMERA_ACCESS_UNSPECIFIED, this has no effect. Otherwise this field
+	// controls whether cameras are disabled: If true, all cameras are
+	// disabled, otherwise they are available. For fully managed devices
+	// this field applies for all apps on the device. For work profiles,
+	// this field applies only to apps in the work profile, and the camera
+	// access of apps outside the work profile is unaffected.
 	CameraDisabled bool `json:"cameraDisabled,omitempty"`
 
 	// CellBroadcastsConfigDisabled: Whether configuring cell broadcast is
@@ -3613,8 +3835,9 @@ type Policy struct {
 	// screens.
 	//   "DISABLE_FINGERPRINT" - Disable fingerprint sensor on secure
 	// keyguard screens.
-	//   "DISABLE_REMOTE_INPUT" - Disable text entry into notifications on
-	// secure keyguard screens.
+	//   "DISABLE_REMOTE_INPUT" - On devices running Android 6 and below,
+	// disables text entry into notifications on secure keyguard screens.
+	// Has no effect on Android 7 and above.
 	//   "FACE" - Disable face authentication on secure keyguard screens.
 	//   "IRIS" - Disable iris authentication on secure keyguard screens.
 	//   "BIOMETRICS" - Disable all biometric authentication on secure
@@ -3664,6 +3887,29 @@ type Policy struct {
 	// MaximumTimeToLock: Maximum time in milliseconds for user activity
 	// until the device locks. A value of 0 means there is no restriction.
 	MaximumTimeToLock int64 `json:"maximumTimeToLock,omitempty,string"`
+
+	// MicrophoneAccess: Controls the use of the microphone and whether the
+	// user has access to the microphone access toggle. This applies only on
+	// fully managed devices.
+	//
+	// Possible values:
+	//   "MICROPHONE_ACCESS_UNSPECIFIED" - If unmute_microphone_disabled is
+	// true, this is equivalent to MICROPHONE_ACCESS_DISABLED. Otherwise,
+	// this is equivalent to MICROPHONE_ACCESS_USER_CHOICE.
+	//   "MICROPHONE_ACCESS_USER_CHOICE" - The field
+	// unmute_microphone_disabled is ignored. This is the default device
+	// behaviour: the microphone on the device is available. On Android 12
+	// and above, the user can use the microphone access toggle.
+	//   "MICROPHONE_ACCESS_DISABLED" - The field unmute_microphone_disabled
+	// is ignored. The microphone on the device is disabled (for fully
+	// managed devices, this applies device-wide).The microphone access
+	// toggle has no effect as the microphone is disabled.
+	//   "MICROPHONE_ACCESS_ENFORCED" - The field unmute_microphone_disabled
+	// is ignored. The microphone on the device is available. On devices
+	// running Android 12 and above, the user is unable to use the
+	// microphone access toggle. On devices which run Android 11 or below,
+	// this is equivalent to MICROPHONE_ACCESS_USER_CHOICE.
+	MicrophoneAccess string `json:"microphoneAccess,omitempty"`
 
 	// MinimumApiLevel: The minimum allowed Android API level.
 	MinimumApiLevel int64 `json:"minimumApiLevel,omitempty"`
@@ -3721,9 +3967,10 @@ type Policy struct {
 
 	// PasswordRequirements: Password requirements. The field
 	// password_requirements.require_password_unlock must not be set.
-	// DEPRECATED - Use password_policies.Note:Complexity-based values of
+	// DEPRECATED - Use passwordPolicies.Note:Complexity-based values of
 	// PasswordQuality, that is, COMPLEXITY_LOW, COMPLEXITY_MEDIUM, and
-	// COMPLEXITY_HIGH, cannot be used here.
+	// COMPLEXITY_HIGH, cannot be used here. unified_lock_settings cannot be
+	// used here.
 	PasswordRequirements *PasswordRequirements `json:"passwordRequirements,omitempty"`
 
 	// PermissionGrants: Explicit permission or group grants or denials for
@@ -3735,7 +3982,9 @@ type Policy struct {
 	// used. If the field is set, only the accessibility services in this
 	// list and the system's built-in accessibility service can be used. In
 	// particular, if the field is set to empty, only the system's built-in
-	// accessibility servicess can be used.
+	// accessibility servicess can be used. This can be set on fully managed
+	// devices and on work profiles. When applied to a work profile, this
+	// affects both the personal profile and the work profile.
 	PermittedAccessibilityServices *PackageNameList `json:"permittedAccessibilityServices,omitempty"`
 
 	// PermittedInputMethods: If present, only the input methods provided by
@@ -3768,6 +4017,23 @@ type Policy struct {
 	// particular policy can not be applied on device
 	PolicyEnforcementRules []*PolicyEnforcementRule `json:"policyEnforcementRules,omitempty"`
 
+	// PreferentialNetworkService: Controls whether preferential network
+	// service is enabled on the work profile. For example, an organization
+	// may have an agreement with a carrier that all of the work data from
+	// its employees' devices will be sent via a network service dedicated
+	// for enterprise use. An example of a supported preferential network
+	// service is the enterprise slice on 5G networks. This has no effect on
+	// fully managed devices.
+	//
+	// Possible values:
+	//   "PREFERENTIAL_NETWORK_SERVICE_UNSPECIFIED" - Unspecified. Defaults
+	// to PREFERENTIAL_NETWORK_SERVICES_DISABLED.
+	//   "PREFERENTIAL_NETWORK_SERVICE_DISABLED" - Preferential network
+	// service is disabled on the work profile.
+	//   "PREFERENTIAL_NETWORK_SERVICE_ENABLED" - Preferential network
+	// service is enabled on the work profile.
+	PreferentialNetworkService string `json:"preferentialNetworkService,omitempty"`
+
 	// PrivateKeySelectionEnabled: Allows showing UI on a device for a user
 	// to choose a private key alias if there are no matching rules in
 	// ChoosePrivateKeyRules. For devices below Android P, setting this may
@@ -3798,7 +4064,8 @@ type Policy struct {
 	// SetWallpaperDisabled: Whether changing the wallpaper is disabled.
 	SetWallpaperDisabled bool `json:"setWallpaperDisabled,omitempty"`
 
-	// SetupActions: Actions to take during the setup process.
+	// SetupActions: Action to take during the setup process. At most one
+	// action may be specified.
 	SetupActions []*SetupAction `json:"setupActions,omitempty"`
 
 	// ShareLocationDisabled: Whether location sharing is disabled.
@@ -3853,9 +4120,15 @@ type Policy struct {
 	// disabled.
 	UninstallAppsDisabled bool `json:"uninstallAppsDisabled,omitempty"`
 
-	// UnmuteMicrophoneDisabled: Whether the microphone is muted and
-	// adjusting microphone volume is disabled.
+	// UnmuteMicrophoneDisabled: If microphone_access is set to any value
+	// other than MICROPHONE_ACCESS_UNSPECIFIED, this has no effect.
+	// Otherwise this field controls whether microphones are disabled: If
+	// true, all microphones are disabled, otherwise they are available.
+	// This is available only on fully managed devices.
 	UnmuteMicrophoneDisabled bool `json:"unmuteMicrophoneDisabled,omitempty"`
+
+	// UsageLog: Configuration of device activity logging.
+	UsageLog *UsageLog `json:"usageLog,omitempty"`
 
 	// UsbFileTransferDisabled: Whether transferring files over USB is
 	// disabled.
@@ -3968,6 +4241,10 @@ type PostureDetail struct {
 	// unknown OS (basicIntegrity check succeeds but ctsProfileMatch fails).
 	//   "COMPROMISED_OS" - SafetyNet detects that the device is running a
 	// compromised OS (basicIntegrity check fails).
+	//   "HARDWARE_BACKED_EVALUATION_FAILED" - SafetyNet detects that the
+	// device does not have a strong guarantee of system integrity, such as
+	// a hardware-backed keystore
+	// (https://developer.android.com/training/articles/security-key-attestation).
 	SecurityRisk string `json:"securityRisk,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Advice") to
@@ -4140,7 +4417,11 @@ type SetupAction struct {
 	// Description: Description of this action.
 	Description *UserFacingMessage `json:"description,omitempty"`
 
-	// LaunchApp: An action to launch an app.
+	// LaunchApp: An action to launch an app. The app will be launched with
+	// an intent containing an extra with key
+	// com.google.android.apps.work.clouddpc.EXTRA_LAUNCHED_AS_SETUP_ACTION
+	// set to the boolean value true to indicate that this is a setup action
+	// flow.
 	LaunchApp *LaunchAppAction `json:"launchApp,omitempty"`
 
 	// Title: Title of this action.
@@ -4635,6 +4916,75 @@ func (s *TermsAndConditions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UsageLog: Controls types of device activity logs collected from the
+// device and reported via Pub/Sub notification
+// (https://developers.google.com/android/management/notifications).
+type UsageLog struct {
+	// EnabledLogTypes: Specifies which log types are enabled. Note that
+	// users will receive on-device messaging when usage logging is enabled.
+	//
+	// Possible values:
+	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
+	//   "SECURITY_LOGS" - Enable logging of on-device security events, like
+	// when the device password is incorrectly entered or removable storage
+	// is mounted. See event for a complete description of the logged
+	// security events. Supported for fully managed devices on Android 7.0
+	// and above. Supported for company-owned devices with a work profile on
+	// Android 12 and above, on which only security events from the work
+	// profile are logged.
+	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network
+	// events, like DNS lookups and TCP connections. See event for a
+	// complete description of the logged network events. Supported for
+	// fully managed devices on Android 8 and above. Supported for
+	// company-owned devices with a work profile on Android 12 and above, on
+	// which only network events from the work profile are logged.
+	EnabledLogTypes []string `json:"enabledLogTypes,omitempty"`
+
+	// UploadOnCellularAllowed: Specifies which of the enabled log types can
+	// be uploaded over mobile data. By default logs are queued for upload
+	// when the device connects to WiFi.
+	//
+	// Possible values:
+	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
+	//   "SECURITY_LOGS" - Enable logging of on-device security events, like
+	// when the device password is incorrectly entered or removable storage
+	// is mounted. See event for a complete description of the logged
+	// security events. Supported for fully managed devices on Android 7.0
+	// and above. Supported for company-owned devices with a work profile on
+	// Android 12 and above, on which only security events from the work
+	// profile are logged.
+	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network
+	// events, like DNS lookups and TCP connections. See event for a
+	// complete description of the logged network events. Supported for
+	// fully managed devices on Android 8 and above. Supported for
+	// company-owned devices with a work profile on Android 12 and above, on
+	// which only network events from the work profile are logged.
+	UploadOnCellularAllowed []string `json:"uploadOnCellularAllowed,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnabledLogTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnabledLogTypes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsageLog) MarshalJSON() ([]byte, error) {
+	type NoMethod UsageLog
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // User: A user belonging to an enterprise.
 type User struct {
 	// AccountIdentifier: A unique identifier you create for this user, such
@@ -4939,18 +5289,22 @@ func (r *EnterprisesService) Create(enterprise *Enterprise) *EnterprisesCreateCa
 
 // AgreementAccepted sets the optional parameter "agreementAccepted":
 // Whether the enterprise admin has seen and agreed to the managed
-// Google Play Agreement (https://www.android.com/enterprise/terms/).
-// Always set this to true when creating an EMM-managed enterprise. Do
-// not create the enterprise until the admin has viewed and accepted the
-// agreement.
+// Google Play Agreement (https://www.android.com/enterprise/terms/). Do
+// not set this field for any customer-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises).
+// Set this to field to true for all EMM-managed enterprises
+// (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).
 func (c *EnterprisesCreateCall) AgreementAccepted(agreementAccepted bool) *EnterprisesCreateCall {
 	c.urlParams_.Set("agreementAccepted", fmt.Sprint(agreementAccepted))
 	return c
 }
 
 // EnterpriseToken sets the optional parameter "enterpriseToken": The
-// enterprise token appended to the callback URL. Only set this when
-// creating a customer-managed enterprise.
+// enterprise token appended to the callback URL. Set this when creating
+// a customer-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises)
+// and not when creating a deprecated EMM-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).
 func (c *EnterprisesCreateCall) EnterpriseToken(enterpriseToken string) *EnterprisesCreateCall {
 	c.urlParams_.Set("enterpriseToken", enterpriseToken)
 	return c
@@ -4964,8 +5318,11 @@ func (c *EnterprisesCreateCall) ProjectId(projectId string) *EnterprisesCreateCa
 }
 
 // SignupUrlName sets the optional parameter "signupUrlName": The name
-// of the SignupUrl used to sign up for the enterprise. Only set this
-// when creating a customer-managed enterprise.
+// of the SignupUrl used to sign up for the enterprise. Set this when
+// creating a customer-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises)
+// and not when creating a deprecated EMM-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).
 func (c *EnterprisesCreateCall) SignupUrlName(signupUrlName string) *EnterprisesCreateCall {
 	c.urlParams_.Set("signupUrlName", signupUrlName)
 	return c
@@ -4998,7 +5355,7 @@ func (c *EnterprisesCreateCall) Header() http.Header {
 
 func (c *EnterprisesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5066,12 +5423,12 @@ func (c *EnterprisesCreateCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "agreementAccepted": {
-	//       "description": "Whether the enterprise admin has seen and agreed to the managed Google Play Agreement (https://www.android.com/enterprise/terms/). Always set this to true when creating an EMM-managed enterprise. Do not create the enterprise until the admin has viewed and accepted the agreement.",
+	//       "description": "Whether the enterprise admin has seen and agreed to the managed Google Play Agreement (https://www.android.com/enterprise/terms/). Do not set this field for any customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises). Set this to field to true for all EMM-managed enterprises (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "enterpriseToken": {
-	//       "description": "The enterprise token appended to the callback URL. Only set this when creating a customer-managed enterprise.",
+	//       "description": "The enterprise token appended to the callback URL. Set this when creating a customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises) and not when creating a deprecated EMM-managed enterprise (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5081,7 +5438,7 @@ func (c *EnterprisesCreateCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	//       "type": "string"
 	//     },
 	//     "signupUrlName": {
-	//       "description": "The name of the SignupUrl used to sign up for the enterprise. Only set this when creating a customer-managed enterprise.",
+	//       "description": "The name of the SignupUrl used to sign up for the enterprise. Set this when creating a customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises) and not when creating a deprecated EMM-managed enterprise (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5148,7 +5505,7 @@ func (c *EnterprisesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5292,7 +5649,7 @@ func (c *EnterprisesGetCall) Header() http.Header {
 
 func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5467,7 +5824,7 @@ func (c *EnterprisesListCall) Header() http.Header {
 
 func (c *EnterprisesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5651,7 +6008,7 @@ func (c *EnterprisesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5818,7 +6175,7 @@ func (c *EnterprisesApplicationsGetCall) Header() http.Header {
 
 func (c *EnterprisesApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5982,7 +6339,7 @@ func (c *EnterprisesDevicesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6147,7 +6504,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6287,7 +6644,7 @@ func (c *EnterprisesDevicesIssueCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesIssueCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6453,7 +6810,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6631,7 +6988,7 @@ func (c *EnterprisesDevicesPatchCall) Header() http.Header {
 
 func (c *EnterprisesDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6786,7 +7143,7 @@ func (c *EnterprisesDevicesOperationsCancelCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6921,7 +7278,7 @@ func (c *EnterprisesDevicesOperationsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7066,7 +7423,7 @@ func (c *EnterprisesDevicesOperationsGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7242,7 +7599,7 @@ func (c *EnterprisesDevicesOperationsListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7417,7 +7774,7 @@ func (c *EnterprisesEnrollmentTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7559,7 +7916,7 @@ func (c *EnterprisesEnrollmentTokensDeleteCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7693,7 +8050,7 @@ func (c *EnterprisesPoliciesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7837,7 +8194,7 @@ func (c *EnterprisesPoliciesGetCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7998,7 +8355,7 @@ func (c *EnterprisesPoliciesListCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8176,7 +8533,7 @@ func (c *EnterprisesPoliciesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8325,7 +8682,7 @@ func (c *EnterprisesWebAppsCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8466,7 +8823,7 @@ func (c *EnterprisesWebAppsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8610,7 +8967,7 @@ func (c *EnterprisesWebAppsGetCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8721,7 +9078,8 @@ func (r *EnterprisesWebAppsService) List(parent string) *EnterprisesWebAppsListC
 }
 
 // PageSize sets the optional parameter "pageSize": The requested page
-// size. The actual page size may be fixed to a min or max value.
+// size. This is a hint and the actual page size in the response may be
+// different.
 func (c *EnterprisesWebAppsListCall) PageSize(pageSize int64) *EnterprisesWebAppsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -8771,7 +9129,7 @@ func (c *EnterprisesWebAppsListCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8842,7 +9200,7 @@ func (c *EnterprisesWebAppsListCall) Do(opts ...googleapi.CallOption) (*ListWebA
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The requested page size. The actual page size may be fixed to a min or max value.",
+	//       "description": "The requested page size. This is a hint and the actual page size in the response may be different.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8949,7 +9307,7 @@ func (c *EnterprisesWebAppsPatchCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9099,7 +9457,7 @@ func (c *EnterprisesWebTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9254,7 +9612,7 @@ func (c *SignupUrlsCreateCall) Header() http.Header {
 
 func (c *SignupUrlsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

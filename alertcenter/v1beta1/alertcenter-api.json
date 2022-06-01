@@ -12,7 +12,7 @@
   "baseUrl": "https://alertcenter.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "AlertCenter",
-  "description": "Manages alerts on issues affecting your domain.",
+  "description": "Manages alerts on issues affecting your domain. Note: The current version of this API (v1beta1) is available to all Google Workspace customers. ",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/admin-sdk/alertcenter/",
   "fullyEncodeReservedExpansion": true,
@@ -423,7 +423,7 @@
       }
     }
   },
-  "revision": "20210803",
+  "revision": "20220516",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountSuspensionDetails": {
@@ -440,7 +440,8 @@
             "TRAFFIC_PUMPING",
             "FRAUD",
             "NUMBER_HARVESTING",
-            "PAYMENTS_FRAUD"
+            "PAYMENTS_FRAUD",
+            "UNWANTED_CONTENT"
           ],
           "enumDescriptions": [
             "Abuse reason is unspecified.",
@@ -450,12 +451,13 @@
             "This account is being suspended for artificially boosting traffic to a website.",
             "This account is being suspended for fraud.",
             "This account is being suspended for number harvesting.",
-            "This account is being suspended for payments fraud."
+            "This account is being suspended for payments fraud.",
+            "This account is being suspended for unwanted content."
           ],
           "type": "string"
         },
         "productName": {
-          "description": "The name of the product being abused. This is restricted to only the following values: \"Gmail\" \"Payments\" \"Voice\" \"Workspace\" \"Other\"",
+          "description": "The name of the product being abused. This is restricted to only the following values: \"Gmail\" \"Google Workspace\" \"Payments\" \"Voice\" \"YouTube\" \"Other\"",
           "type": "string"
         }
       },
@@ -711,7 +713,7 @@
           "type": "string"
         },
         "etag": {
-          "description": "Optional. `etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of an alert metadata from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform metatdata updates in order to avoid race conditions: An `etag` is returned in the response which contains alert metadata, and systems are expected to put that etag in the request to update alert metadata to ensure that their change will be applied to the same version of the alert metadata. If no `etag` is provided in the call to update alert metadata, then the existing alert metadata is overwritten blindly.",
+          "description": "Optional. `etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of an alert metadata from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform metadata updates in order to avoid race conditions: An `etag` is returned in the response which contains alert metadata, and systems are expected to put that etag in the request to update alert metadata to ensure that their change will be applied to the same version of the alert metadata. If no `etag` is provided in the call to update alert metadata, then the existing alert metadata is overwritten blindly.",
           "type": "string"
         },
         "severity": {
@@ -768,6 +770,14 @@
           "description": "Link to the outage event in Google Workspace Status Dashboard",
           "type": "string"
         },
+        "incidentTrackingId": {
+          "description": "Incident tracking ID.",
+          "type": "string"
+        },
+        "mergeInfo": {
+          "$ref": "MergeInfo",
+          "description": "Indicates new alert details under which the outage is communicated. Only populated when Status is MERGED."
+        },
         "nextUpdateTime": {
           "description": "Timestamp by which the next update is expected to arrive.",
           "format": "google-datetime",
@@ -791,13 +801,21 @@
             "STATUS_UNSPECIFIED",
             "NEW",
             "ONGOING",
-            "RESOLVED"
+            "RESOLVED",
+            "FALSE_POSITIVE",
+            "PARTIALLY_RESOLVED",
+            "MERGED",
+            "DOWNGRADED"
           ],
           "enumDescriptions": [
             "Status is unspecified.",
             "The incident has just been reported.",
             "The incident is ongoing.",
-            "The incident has been resolved."
+            "The incident has been resolved.",
+            "Further assessment indicated no customer impact.",
+            "The incident has been partially resolved.",
+            "The incident was merged into a parent.",
+            "The incident has lower impact than initially anticipated."
           ],
           "type": "string"
         }
@@ -1068,7 +1086,7 @@
       "type": "object"
     },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
       "type": "object"
@@ -1133,6 +1151,10 @@
         },
         "description": {
           "description": "A detailed, freeform incident description.",
+          "type": "string"
+        },
+        "domain": {
+          "description": "Customer domain for email template personalization.",
           "type": "string"
         },
         "header": {
@@ -1253,6 +1275,21 @@
       },
       "type": "object"
     },
+    "MandatoryServiceAnnouncement": {
+      "description": "Alert Created by the MSA team for communications necessary for continued use of Google Workspace Products.",
+      "id": "MandatoryServiceAnnouncement",
+      "properties": {
+        "description": {
+          "description": "Detailed, freeform text describing the announcement",
+          "type": "string"
+        },
+        "title": {
+          "description": "One line summary of the announcement",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "MatchInfo": {
       "description": "Proto that contains match information from the condition part of the rule.",
       "id": "MatchInfo",
@@ -1264,6 +1301,21 @@
         "userDefinedDetector": {
           "$ref": "UserDefinedDetectorInfo",
           "description": "For matched detector defined by administrators."
+        }
+      },
+      "type": "object"
+    },
+    "MergeInfo": {
+      "description": "New alert tracking numbers.",
+      "id": "MergeInfo",
+      "properties": {
+        "newAlertId": {
+          "description": "Optional. New alert ID. Reference the [google.apps.alertcenter.Alert] with this ID for the current state.",
+          "type": "string"
+        },
+        "newIncidentTrackingId": {
+          "description": "The new tracking ID from the parent incident.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1311,6 +1363,25 @@
       "properties": {
         "detectorName": {
           "description": "Name that uniquely identifies the detector.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PrimaryAdminChangedEvent": {
+      "description": "Event occurred when primary admin changed in customer's account. The event are being received from insight forwarder",
+      "id": "PrimaryAdminChangedEvent",
+      "properties": {
+        "domain": {
+          "description": "domain in which actioned occurred",
+          "type": "string"
+        },
+        "previousAdminEmail": {
+          "description": "Email of person who was the primary admin before the action",
+          "type": "string"
+        },
+        "updatedAdminEmail": {
+          "description": "Email of person who is the primary admin after the action",
           "type": "string"
         }
       },
@@ -1500,6 +1571,79 @@
       },
       "type": "object"
     },
+    "SSOProfileCreatedEvent": {
+      "description": "Event occurred when SSO Profile created in customer's account. The event are being received from insight forwarder",
+      "id": "SSOProfileCreatedEvent",
+      "properties": {
+        "inboundSsoProfileName": {
+          "description": "sso profile name which got created",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SSOProfileDeletedEvent": {
+      "description": "Event occurred when SSO Profile deleted in customer's account. The event are being received from insight forwarder",
+      "id": "SSOProfileDeletedEvent",
+      "properties": {
+        "inboundSsoProfileName": {
+          "description": "sso profile name which got deleted",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SSOProfileUpdatedEvent": {
+      "description": "Event occurred when SSO Profile updated in customer's account. The event are being received from insight forwarder",
+      "id": "SSOProfileUpdatedEvent",
+      "properties": {
+        "inboundSsoProfileChanges": {
+          "description": "changes made to sso profile",
+          "type": "string"
+        },
+        "inboundSsoProfileName": {
+          "description": "sso profile name which got updated",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SensitiveAdminAction": {
+      "description": "Alert that is triggered when Sensitive Admin Action occur in customer account.",
+      "id": "SensitiveAdminAction",
+      "properties": {
+        "actorEmail": {
+          "description": "Email of person who performed the action",
+          "type": "string"
+        },
+        "eventTime": {
+          "description": "The time at which event occurred",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "primaryAdminChangedEvent": {
+          "$ref": "PrimaryAdminChangedEvent",
+          "description": "Event occurred when primary admin changed in customer's account"
+        },
+        "ssoProfileCreatedEvent": {
+          "$ref": "SSOProfileCreatedEvent",
+          "description": "Event occurred when SSO Profile created in customer's account"
+        },
+        "ssoProfileDeletedEvent": {
+          "$ref": "SSOProfileDeletedEvent",
+          "description": "Event occurred when SSO Profile deleted in customer's account"
+        },
+        "ssoProfileUpdatedEvent": {
+          "$ref": "SSOProfileUpdatedEvent",
+          "description": "Event occurred when SSO Profile updated in customer's account"
+        },
+        "superAdminPasswordResetEvent": {
+          "$ref": "SuperAdminPasswordResetEvent",
+          "description": "Event occurred when password was reset for super admin in customer's account"
+        }
+      },
+      "type": "object"
+    },
     "Settings": {
       "description": "Customer-level settings.",
       "id": "Settings",
@@ -1547,6 +1691,17 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SuperAdminPasswordResetEvent": {
+      "description": "Event occurred when password was reset for super admin in customer's account. The event are being received from insight forwarder",
+      "id": "SuperAdminPasswordResetEvent",
+      "properties": {
+        "userEmail": {
+          "description": "email of person whose password was reset",
           "type": "string"
         }
       },

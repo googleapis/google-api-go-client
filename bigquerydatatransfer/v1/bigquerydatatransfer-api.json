@@ -114,7 +114,7 @@
     "projects": {
       "methods": {
         "enrollDataSources": {
-          "description": "Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the BigQuery UI 'https://bigquery.cloud.google.com' (and the documents can be found at https://cloud.google.com/bigquery/bigquery-web-ui and https://cloud.google.com/bigquery/docs/working-with-transfers).",
+          "description": "Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the [BigQuery UI](https://console.cloud.google.com/bigquery), and the documents can be found in the public guide for [BigQuery Web UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer Service](https://cloud.google.com/bigquery/docs/working-with-transfers).",
           "flatPath": "v1/projects/{projectsId}:enrollDataSources",
           "httpMethod": "POST",
           "id": "bigquerydatatransfer.projects.enrollDataSources",
@@ -147,7 +147,7 @@
         "dataSources": {
           "methods": {
             "checkValidCreds": {
-              "description": "Returns true if valid credentials exist for the given data source and requesting user. Some data sources doesn't support service account, so we need to talk to them on behalf of the end user. This API just checks whether we have OAuth token for the particular user, which is a pre-requisite before user can create a transfer config.",
+              "description": "Returns true if valid credentials exist for the given data source and requesting user.",
               "flatPath": "v1/projects/{projectsId}/dataSources/{dataSourcesId}:checkValidCreds",
               "httpMethod": "POST",
               "id": "bigquerydatatransfer.projects.dataSources.checkValidCreds",
@@ -177,7 +177,7 @@
               ]
             },
             "get": {
-              "description": "Retrieves a supported data source and returns its settings, which can be used for UI rendering.",
+              "description": "Retrieves a supported data source and returns its settings.",
               "flatPath": "v1/projects/{projectsId}/dataSources/{dataSourcesId}",
               "httpMethod": "GET",
               "id": "bigquerydatatransfer.projects.dataSources.get",
@@ -204,7 +204,7 @@
               ]
             },
             "list": {
-              "description": "Lists supported data sources and returns their settings, which can be used for UI rendering.",
+              "description": "Lists supported data sources and returns their settings.",
               "flatPath": "v1/projects/{projectsId}/dataSources",
               "httpMethod": "GET",
               "id": "bigquerydatatransfer.projects.dataSources.list",
@@ -224,7 +224,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}",
+                  "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -246,7 +246,7 @@
         "locations": {
           "methods": {
             "enrollDataSources": {
-              "description": "Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the BigQuery UI 'https://bigquery.cloud.google.com' (and the documents can be found at https://cloud.google.com/bigquery/bigquery-web-ui and https://cloud.google.com/bigquery/docs/working-with-transfers).",
+              "description": "Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the [BigQuery UI](https://console.cloud.google.com/bigquery), and the documents can be found in the public guide for [BigQuery Web UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer Service](https://cloud.google.com/bigquery/docs/working-with-transfers).",
               "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:enrollDataSources",
               "httpMethod": "POST",
               "id": "bigquerydatatransfer.projects.locations.enrollDataSources",
@@ -311,7 +311,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
                   "location": "query",
                   "type": "string"
                 },
@@ -349,7 +349,7 @@
             "dataSources": {
               "methods": {
                 "checkValidCreds": {
-                  "description": "Returns true if valid credentials exist for the given data source and requesting user. Some data sources doesn't support service account, so we need to talk to them on behalf of the end user. This API just checks whether we have OAuth token for the particular user, which is a pre-requisite before user can create a transfer config.",
+                  "description": "Returns true if valid credentials exist for the given data source and requesting user.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources/{dataSourcesId}:checkValidCreds",
                   "httpMethod": "POST",
                   "id": "bigquerydatatransfer.projects.locations.dataSources.checkValidCreds",
@@ -379,7 +379,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Retrieves a supported data source and returns its settings, which can be used for UI rendering.",
+                  "description": "Retrieves a supported data source and returns its settings.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources/{dataSourcesId}",
                   "httpMethod": "GET",
                   "id": "bigquerydatatransfer.projects.locations.dataSources.get",
@@ -406,7 +406,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists supported data sources and returns their settings, which can be used for UI rendering.",
+                  "description": "Lists supported data sources and returns their settings.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources",
                   "httpMethod": "GET",
                   "id": "bigquerydatatransfer.projects.locations.dataSources.list",
@@ -426,7 +426,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}",
+                      "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -457,7 +457,7 @@
                   ],
                   "parameters": {
                     "authorizationCode": {
-                      "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required if new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, please make a request to https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u0026scope=\u0026redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the application.",
+                      "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
                       "location": "query",
                       "type": "string"
                     },
@@ -469,12 +469,12 @@
                       "type": "string"
                     },
                     "serviceAccountName": {
-                      "description": "Optional service account name. If this field is set, transfer config will be created with this service account credentials. It requires that requesting user calling this API has permissions to act as this service account.",
+                      "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
                       "location": "query",
                       "type": "string"
                     },
                     "versionInfo": {
-                      "description": "Optional version info. If users want to find a very recent access token, that is, immediately after approving access, users have to set the version_info claim in the token request. To obtain the version_info, users must use the \"none+gsession\" response type. which be return a version_info back in the authorization response which be be put in a JWT claim in the token request.",
+                      "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
                       "location": "query",
                       "type": "string"
                     }
@@ -570,7 +570,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The BigQuery project id for which data sources should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
+                      "description": "Required. The BigQuery project id for which transfer configs should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -597,7 +597,7 @@
                   ],
                   "parameters": {
                     "authorizationCode": {
-                      "description": "Optional OAuth2 authorization code to use with this transfer configuration. If it is provided, the transfer configuration will be associated with the authorizing user. In order to obtain authorization_code, please make a request to https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u0026scope=\u0026redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the application.",
+                      "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
                       "location": "query",
                       "type": "string"
                     },
@@ -609,7 +609,7 @@
                       "type": "string"
                     },
                     "serviceAccountName": {
-                      "description": "Optional service account name. If this field is set and \"service_account_name\" is set in update_mask, transfer config will be updated to use this service account credentials. It requires that requesting user calling this API has permissions to act as this service account.",
+                      "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
                       "location": "query",
                       "type": "string"
                     },
@@ -620,7 +620,7 @@
                       "type": "string"
                     },
                     "versionInfo": {
-                      "description": "Optional version info. If users want to find a very recent access token, that is, immediately after approving access, users have to set the version_info claim in the token request. To obtain the version_info, users must use the \"none+gsession\" response type. which be return a version_info back in the authorization response which be be put in a JWT claim in the token request.",
+                      "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
                       "location": "query",
                       "type": "string"
                     }
@@ -752,7 +752,7 @@
                       ]
                     },
                     "list": {
-                      "description": "Returns information about running and completed jobs.",
+                      "description": "Returns information about running and completed transfer runs.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}/runs",
                       "httpMethod": "GET",
                       "id": "bigquerydatatransfer.projects.locations.transferConfigs.runs.list",
@@ -829,7 +829,7 @@
                     "transferLogs": {
                       "methods": {
                         "list": {
-                          "description": "Returns user facing log messages for the data transfer run.",
+                          "description": "Returns log messages for the transfer run.",
                           "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}/runs/{runsId}/transferLogs",
                           "httpMethod": "GET",
                           "id": "bigquerydatatransfer.projects.locations.transferConfigs.runs.transferLogs.list",
@@ -904,7 +904,7 @@
               ],
               "parameters": {
                 "authorizationCode": {
-                  "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required if new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, please make a request to https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u0026scope=\u0026redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the application.",
+                  "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
                   "location": "query",
                   "type": "string"
                 },
@@ -916,12 +916,12 @@
                   "type": "string"
                 },
                 "serviceAccountName": {
-                  "description": "Optional service account name. If this field is set, transfer config will be created with this service account credentials. It requires that requesting user calling this API has permissions to act as this service account.",
+                  "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
                   "location": "query",
                   "type": "string"
                 },
                 "versionInfo": {
-                  "description": "Optional version info. If users want to find a very recent access token, that is, immediately after approving access, users have to set the version_info claim in the token request. To obtain the version_info, users must use the \"none+gsession\" response type. which be return a version_info back in the authorization response which be be put in a JWT claim in the token request.",
+                  "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
                   "location": "query",
                   "type": "string"
                 }
@@ -1017,7 +1017,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The BigQuery project id for which data sources should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
+                  "description": "Required. The BigQuery project id for which transfer configs should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1044,7 +1044,7 @@
               ],
               "parameters": {
                 "authorizationCode": {
-                  "description": "Optional OAuth2 authorization code to use with this transfer configuration. If it is provided, the transfer configuration will be associated with the authorizing user. In order to obtain authorization_code, please make a request to https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u0026scope=\u0026redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the application.",
+                  "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1056,7 +1056,7 @@
                   "type": "string"
                 },
                 "serviceAccountName": {
-                  "description": "Optional service account name. If this field is set and \"service_account_name\" is set in update_mask, transfer config will be updated to use this service account credentials. It requires that requesting user calling this API has permissions to act as this service account.",
+                  "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
                   "location": "query",
                   "type": "string"
                 },
@@ -1067,7 +1067,7 @@
                   "type": "string"
                 },
                 "versionInfo": {
-                  "description": "Optional version info. If users want to find a very recent access token, that is, immediately after approving access, users have to set the version_info claim in the token request. To obtain the version_info, users must use the \"none+gsession\" response type. which be return a version_info back in the authorization response which be be put in a JWT claim in the token request.",
+                  "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
                   "location": "query",
                   "type": "string"
                 }
@@ -1199,7 +1199,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Returns information about running and completed jobs.",
+                  "description": "Returns information about running and completed transfer runs.",
                   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}/runs",
                   "httpMethod": "GET",
                   "id": "bigquerydatatransfer.projects.transferConfigs.runs.list",
@@ -1276,7 +1276,7 @@
                 "transferLogs": {
                   "methods": {
                     "list": {
-                      "description": "Returns user facing log messages for the data transfer run.",
+                      "description": "Returns log messages for the transfer run.",
                       "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}/runs/{runsId}/transferLogs",
                       "httpMethod": "GET",
                       "id": "bigquerydatatransfer.projects.transferConfigs.runs.transferLogs.list",
@@ -1340,7 +1340,7 @@
       }
     }
   },
-  "revision": "20210822",
+  "revision": "20220409",
   "rootUrl": "https://bigquerydatatransfer.googleapis.com/",
   "schemas": {
     "CheckValidCredsRequest": {
@@ -1361,7 +1361,7 @@
       "type": "object"
     },
     "DataSource": {
-      "description": "Represents data source metadata. Metadata is sufficient to render UI and request proper OAuth tokens.",
+      "description": "Defines the properties and custom parameters for a data source.",
       "id": "DataSource",
       "properties": {
         "authorizationType": {
@@ -1482,7 +1482,7 @@
       "type": "object"
     },
     "DataSourceParameter": {
-      "description": "Represents a data source parameter with validation rules, so that parameters can be rendered in the UI. These parameters are given to us by supported data sources, and include all needed information for rendering and validation. Thus, whoever uses this api can decide to generate either generic ui, or custom data source specific forms.",
+      "description": "A parameter used to define custom fields in a data source definition.",
       "id": "DataSourceParameter",
       "properties": {
         "allowedValues": {
@@ -1590,7 +1590,7 @@
       "type": "object"
     },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
       "type": "object"
@@ -1928,7 +1928,7 @@
           "type": "object"
         },
         "schedule": {
-          "description": "Data transfer schedule. If the data source does not support a custom schedule, this should be empty. If it is empty, the default value for the data source will be used. The specified times are in UTC. Examples of valid format: `1st,3rd monday of month 15:30`, `every wed,fri of jan,jun 13:15`, and `first sunday of quarter 00:00`. See more explanation about the format here: https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format NOTE: the granularity should be at least 8 hours, or less frequent.",
+          "description": "Data transfer schedule. If the data source does not support a custom schedule, this should be empty. If it is empty, the default value for the data source will be used. The specified times are in UTC. Examples of valid format: `1st,3rd monday of month 15:30`, `every wed,fri of jan,jun 13:15`, and `first sunday of quarter 00:00`. See more explanation about the format here: https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format NOTE: The minimum interval time between recurring transfers depends on the data source; refer to the documentation for your data source.",
           "type": "string"
         },
         "scheduleOptions": {

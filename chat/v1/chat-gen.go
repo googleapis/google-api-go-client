@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -264,27 +265,34 @@ func (s *ActionParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ActionResponse: Parameters that a bot can use to configure how it's
-// response is posted.
+// ActionResponse: Parameters that a Chat app can use to configure how
+// it's response is posted.
 type ActionResponse struct {
-	// DialogAction: This response is for Dialog related events and must be
-	// accompanied by ResponseType.Dialog
+	// DialogAction: Input only. A response to an event related to a dialog
+	// (https://developers.google.com/chat/how-tos/dialogs). Must be
+	// accompanied by `ResponseType.Dialog`.
 	DialogAction *DialogAction `json:"dialogAction,omitempty"`
 
-	// Type: The type of bot response.
+	// Type: Input only. The type of Chat app response.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default type; will be handled as NEW_MESSAGE.
 	//   "NEW_MESSAGE" - Post as a new message in the topic.
-	//   "UPDATE_MESSAGE" - Update the bot's message. This is only permitted
-	// on a CARD_CLICKED event where the message sender type is BOT.
-	//   "REQUEST_CONFIG" - Update a message, with cards only. (Only after a
-	// MESSAGE event with a matched url, or a CARD_CLICKED event on a human
-	// created message).
+	//   "UPDATE_MESSAGE" - Update the Chat app's message. This is only
+	// permitted on a CARD_CLICKED event where the message sender type is
+	// BOT.
+	//   "UPDATE_USER_MESSAGE_CARDS" - Update the cards on a user's message.
+	// This is only permitted as a response to a MESSAGE event with a
+	// matched url, or a CARD_CLICKED event where the message sender type is
+	// HUMAN. Text will be ignored.
+	//   "REQUEST_CONFIG" - Privately ask the user for additional auth or
+	// config.
+	//   "DIALOG" - Presents a
+	// [dialog](https://developers.google.com/chat/how-tos/dialogs).
 	Type string `json:"type,omitempty"`
 
-	// Url: URL for users to auth or config. (Only for REQUEST_CONFIG
-	// response types.)
+	// Url: Input only. URL for users to auth or config. (Only for
+	// REQUEST_CONFIG response types.)
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DialogAction") to
@@ -310,10 +318,8 @@ func (s *ActionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ActionStatus: ActionStatus represents status of a request from the
-// bot developer's side. In specific, for each request a bot gets, the
-// bot developer will set both fields below in relation to what the
-// response status and message related to status should be.
+// ActionStatus: Represents the status for a request to either invoke or
+// submit a dialog (https://developers.google.com/chat/how-tos/dialogs).
 type ActionStatus struct {
 	// StatusCode: The status code.
 	//
@@ -407,11 +413,9 @@ type ActionStatus struct {
 	// 500 Internal Server Error
 	StatusCode string `json:"statusCode,omitempty"`
 
-	// UserFacingMessage: This message will be the corresponding string to
-	// the above status_code. If unset, an appropriate generic message based
-	// on the status_code will be shown to the user. If this field is set
-	// then the message will be surfaced to the user for both successes and
-	// errors.
+	// UserFacingMessage: The message to send users about the status of
+	// their request. If unset, a generic message based on the `status_code`
+	// is sent.
 	UserFacingMessage string `json:"userFacingMessage,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "StatusCode") to
@@ -505,8 +509,8 @@ type Attachment struct {
 	ContentType string `json:"contentType,omitempty"`
 
 	// DownloadUri: Output only. The download URL which should be used to
-	// allow a human user to download the attachment. Bots should not use
-	// this URL to download attachment content.
+	// allow a human user to download the attachment. Chat apps should not
+	// use this URL to download attachment content.
 	DownloadUri string `json:"downloadUri,omitempty"`
 
 	// DriveDataRef: A reference to the drive attachment. This is used with
@@ -526,8 +530,8 @@ type Attachment struct {
 	Source string `json:"source,omitempty"`
 
 	// ThumbnailUri: Output only. The thumbnail URL which should be used to
-	// preview the attachment to a human user. Bots should not use this URL
-	// to download attachment content.
+	// preview the attachment to a human user. Chat apps should not use this
+	// URL to download attachment content.
 	ThumbnailUri string `json:"thumbnailUri,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -733,6 +737,44 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ChatAppLogEntry: JSON payload of error messages. If the Cloud Logging
+// API is enabled, these error messages are logged to Google Cloud
+// Logging (https://cloud.google.com/logging/docs).
+type ChatAppLogEntry struct {
+	// Deployment: The deployment that caused the error. For Chat apps built
+	// in Apps Script, this is the deployment ID defined by Apps Script.
+	Deployment string `json:"deployment,omitempty"`
+
+	// DeploymentFunction: The unencrypted `callback_method` name that was
+	// running when the error was encountered.
+	DeploymentFunction string `json:"deploymentFunction,omitempty"`
+
+	// Error: The error code and message.
+	Error *Status `json:"error,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Deployment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Deployment") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChatAppLogEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod ChatAppLogEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Color: Represents a color in the RGBA color space. This
 // representation is designed for simplicity of conversion to/from color
 // representations in various languages over compactness. For example,
@@ -854,39 +896,51 @@ func (s *Color) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// CommonEventObject: Next available ID = 8
+// CommonEventObject: Represents information about the user's client,
+// such as locale, host app, and platform. For Chat apps,
+// `CommonEventObject` includes data submitted by users interacting with
+// cards, like data entered in dialogs
+// (https://developers.google.com/chat/how-tos/dialogs).
 type CommonEventObject struct {
-	// FormInputs: The keys are the string IDs associated with the widget
-	// and the values are inputs with a widget in the card.
+	// FormInputs: A map containing the current values of the widgets in a
+	// card. The map keys are the string IDs assigned to each widget, and
+	// the values represent inputs to the widget. Depending on the input
+	// data type, a different object represents each input: For single-value
+	// widgets, `StringInput`. For multi-value widgets, an array of
+	// `StringInput` objects. For a date-time picker, a `DateTimeInput`. For
+	// a date-only picker, a `DateInput`. For a time-only picker, a
+	// `TimeInput`. Corresponds with the data entered by a user on a card in
+	// a dialog (https://developers.google.com/chat/how-tos/dialogs).
 	FormInputs map[string]Inputs `json:"formInputs,omitempty"`
 
 	// HostApp: The hostApp enum which indicates the app the add-on is
-	// invoked from
+	// invoked from. Always `CHAT` for Chat apps.
 	//
 	// Possible values:
-	//   "UNSPECIFIED_HOST_APP"
-	//   "GMAIL"
-	//   "CALENDAR"
-	//   "DRIVE"
-	//   "DEMO"
-	//   "DOCS"
-	//   "SHEETS"
-	//   "SLIDES"
-	//   "DRAWINGS"
-	//   "CHAT"
-	//   "ALL_HOST_APPS" - This is only used for aggregating logs on the
-	// server. Clients should never send these values directly.
+	//   "UNSPECIFIED_HOST_APP" - Google can't identify a host app.
+	//   "GMAIL" - The add-on launches from Gmail.
+	//   "CALENDAR" - The add-on launches from Google Calendar.
+	//   "DRIVE" - The add-on launches from Google Drive.
+	//   "DEMO" - Not used.
+	//   "DOCS" - The add-on launches from Google Docs.
+	//   "SHEETS" - The add-on launches from Google Sheets.
+	//   "SLIDES" - The add-on launches from Google Slides.
+	//   "DRAWINGS" - The add-on launches from Google Drawings.
+	//   "CHAT" - A Google Chat app. Not used for Google Workspace Add-ons.
 	HostApp string `json:"hostApp,omitempty"`
 
 	// InvokedFunction: Name of the invoked function associated with the
-	// widget. This field is currently only set for chat.
+	// widget. Only set for Chat apps.
 	InvokedFunction string `json:"invokedFunction,omitempty"`
 
-	// Parameters: Any additional parameters.
+	// Parameters: Custom parameters
+	// (/chat/api/reference/rest/v1/cards#ActionParameter) passed to the
+	// invoked function. Both keys and values must be strings.
 	Parameters map[string]string `json:"parameters,omitempty"`
 
 	// Platform: The platform enum which indicates the platform where the
-	// add-on is running.
+	// event originates (`WEB`, `IOS`, or `ANDROID`). Not supported by Chat
+	// apps.
 	//
 	// Possible values:
 	//   "UNKNOWN_PLATFORM"
@@ -895,10 +949,13 @@ type CommonEventObject struct {
 	//   "ANDROID"
 	Platform string `json:"platform,omitempty"`
 
+	// TimeZone: The timezone ID and offset from Coordinated Universal Time
+	// (UTC).
 	TimeZone *TimeZone `json:"timeZone,omitempty"`
 
-	// UserLocale: The full locale.displayName in the format of [ISO 639
-	// language code]-[ISO 3166 country/region code] such as "en-US"
+	// UserLocale: The full `locale.displayName` in the format of [ISO 639
+	// language code]-[ISO 3166 country/region code] such as "en-US". Not
+	// supported by Chat apps.
 	UserLocale string `json:"userLocale,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FormInputs") to
@@ -924,8 +981,9 @@ func (s *CommonEventObject) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DateInput: Input Parameter for Date Picker widget.
+// DateInput: Date input values. Not supported by Chat apps.
 type DateInput struct {
+	// MsSinceEpoch: Time since epoch time, in milliseconds.
 	MsSinceEpoch int64 `json:"msSinceEpoch,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "MsSinceEpoch") to
@@ -951,12 +1009,16 @@ func (s *DateInput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DateTimeInput: Input Parameter for Date and Time Picker widget.
+// DateTimeInput: Date and time input values. Not supported by Chat
+// apps.
 type DateTimeInput struct {
+	// HasDate: Whether the `datetime` input includes a calendar date.
 	HasDate bool `json:"hasDate,omitempty"`
 
+	// HasTime: Whether the `datetime` input includes a timestamp.
 	HasTime bool `json:"hasTime,omitempty"`
 
+	// MsSinceEpoch: Time since epoch time, in milliseconds.
 	MsSinceEpoch int64 `json:"msSinceEpoch,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "HasDate") to
@@ -990,33 +1052,39 @@ type DeprecatedEvent struct {
 	// information.
 	Action *FormAction `json:"action,omitempty"`
 
-	// Common: This will include form information for dialogs such as form
-	// inputs, action parameters.
+	// Common: Represents information about the user's client, such as
+	// locale, host app, and platform. For Chat apps, `CommonEventObject`
+	// includes information submitted by users interacting with dialogs
+	// (https://developers.google.com/chat/how-tos/dialogs), like data
+	// entered on a card.
 	Common *CommonEventObject `json:"common,omitempty"`
 
-	// ConfigCompleteRedirectUrl: The URL the bot should redirect the user
-	// to after they have completed an authorization or configuration flow
-	// outside of Google Chat. See the Authorizing access to 3p services
-	// guide (/chat/how-tos/auth-3p) for more information.
+	// ConfigCompleteRedirectUrl: The URL the Chat app should redirect the
+	// user to after they have completed an authorization or configuration
+	// flow outside of Google Chat. See the Authorizing access to 3p
+	// services guide (/chat/how-tos/auth-3p) for more information.
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 
-	// DialogEventType: The type of dialog event we have received.
+	// DialogEventType: The type of dialog
+	// (https://developers.google.com/chat/how-tos/dialogs) event received.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - This could be used when the corresponding
 	// event is not dialog related. For example an @mention.
-	//   "REQUEST_DIALOG" - For any user action that would result in a
-	// dialog opening.
-	//   "SUBMIT_DIALOG" - For card click events from any dialog.
-	//   "CANCEL_DIALOG" - For native cancellation button.
+	//   "REQUEST_DIALOG" - Any user action that opens a
+	// [dialog](https://developers.google.com/chat/how-tos/dialogs).
+	//   "SUBMIT_DIALOG" - A card click event from a
+	// [dialog](https://developers.google.com/chat/how-tos/dialogs).
+	//   "CANCEL_DIALOG" - The
+	// [dialog](https://developers.google.com/chat/how-tos/dialogs) was
+	// cancelled.
 	DialogEventType string `json:"dialogEventType,omitempty"`
 
-	// EventTime: The timestamp indicating when the event was dispatched.
+	// EventTime: The timestamp indicating when the event occurred.
 	EventTime string `json:"eventTime,omitempty"`
 
-	// IsDialogEvent: Whether or not this event is related to dialogs
-	// request, submit or cancel. This will be set to true when we want a
-	// request/submit/cancel event.
+	// IsDialogEvent: True when the event is related to dialogs
+	// (https://developers.google.com/chat/how-tos/dialogs).
 	IsDialogEvent bool `json:"isDialogEvent,omitempty"`
 
 	// Message: The message that triggered the event, if applicable.
@@ -1025,16 +1093,19 @@ type DeprecatedEvent struct {
 	// Space: The space in which the event occurred.
 	Space *Space `json:"space,omitempty"`
 
-	// ThreadKey: The bot-defined key for the thread related to the event.
-	// See the thread_key field of the `spaces.message.create` request for
-	// more information.
+	// ThreadKey: The Chat app-defined key for the thread related to the
+	// event. See the thread_key field of the `spaces.message.create`
+	// request for more information.
 	ThreadKey string `json:"threadKey,omitempty"`
 
-	// Token: A secret value that bots can use to verify if a request is
-	// from Google. The token is randomly generated by Google, remains
-	// static, and can be obtained from the Google Chat API configuration
-	// page in the Cloud Console. Developers can revoke/regenerate it if
-	// needed from the same page.
+	// Token: A secret value that legacy Chat apps can use to verify if a
+	// request is from Google. Google randomly generates the token, and its
+	// value remains static. You can obtain, revoke, or regenerate the token
+	// from the Chat API configuration page
+	// (https://console.cloud.google.com/apis/api/chat.googleapis.com/hangouts-chat)
+	// in the Google Cloud Console. Modern Chat apps don't use this field.
+	// It is absent from API responses and the Chat API configuration page
+	// (https://console.cloud.google.com/apis/api/chat.googleapis.com/hangouts-chat).
 	Token string `json:"token,omitempty"`
 
 	// Type: The type of the event.
@@ -1042,9 +1113,9 @@ type DeprecatedEvent struct {
 	// Possible values:
 	//   "UNSPECIFIED" - Default value for the enum. DO NOT USE.
 	//   "MESSAGE" - A message was sent in a space.
-	//   "ADDED_TO_SPACE" - The bot was added to a space.
-	//   "REMOVED_FROM_SPACE" - The bot was removed from a space.
-	//   "CARD_CLICKED" - The bot's interactive card was clicked.
+	//   "ADDED_TO_SPACE" - The Chat app was added to a space.
+	//   "REMOVED_FROM_SPACE" - The Chat app was removed from a space.
+	//   "CARD_CLICKED" - The Chat app's interactive card was clicked.
 	Type string `json:"type,omitempty"`
 
 	// User: The user that triggered the event.
@@ -1075,14 +1146,9 @@ func (s *DeprecatedEvent) MarshalJSON() ([]byte, error) {
 
 // Dialog: Wrapper around the card body of the dialog.
 type Dialog struct {
-	// Body: Body of the dialog, which will be rendered in a modal. NOTE:
-	// The following fields within the objects are not supported:
-	// google.apps.card.v1.Widget.date_time_picker
-	// google.apps.card.v1.DecoratedText.SwitchControl.on_change_action
-	// google.apps.card.v1.TextInput.on_change_action
-	// google.apps.card.v1.SelectionInput.on_change_action
-	// google.apps.card.v1.DateTimePicker.on_change_action Setting the
-	// fields above will have no effect on the dialog.
+	// Body: Input only. Body of the dialog, which is rendered in a modal.
+	// Google Chat apps do not support the following card entities:
+	// `DateTimePicker`, `OnChangeAction`.
 	Body *GoogleAppsCardV1Card `json:"body,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Body") to
@@ -1108,15 +1174,18 @@ func (s *Dialog) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DialogAction: Contains dialog if present as well as the ActionStatus
-// for the request sent from user.
+// DialogAction: Contains a dialog
+// (https://developers.google.com/chat/how-tos/dialogs) and request
+// status code.
 type DialogAction struct {
-	// ActionStatus: Status for either invoke dialog or submit dialog
-	// requests. This will be used to display a status and message to user
-	// if needed. For example in case of an error or success.
+	// ActionStatus: Input only. Status for a request to either invoke or
+	// submit a dialog (https://developers.google.com/chat/how-tos/dialogs).
+	// Displays a status and message to users, if necessary. For example, in
+	// case of an error or success.
 	ActionStatus *ActionStatus `json:"actionStatus,omitempty"`
 
-	// Dialog: Dialog for the request.
+	// Dialog: Input only. Dialog
+	// (https://developers.google.com/chat/how-tos/dialogs) for the request.
 	Dialog *Dialog `json:"dialog,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionStatus") to
@@ -1174,8 +1243,7 @@ func (s *DriveDataRef) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1188,9 +1256,9 @@ type Empty struct {
 type FormAction struct {
 	// ActionMethodName: The method name is used to identify which part of
 	// the form triggered the form submission. This information is echoed
-	// back to the bot as part of the card click event. The same method name
-	// can be used for several elements that trigger a common behavior if
-	// desired.
+	// back to the Chat app as part of the card click event. The same method
+	// name can be used for several elements that trigger a common behavior
+	// if desired.
 	ActionMethodName string `json:"actionMethodName,omitempty"`
 
 	// Parameters: List of action parameters.
@@ -1228,6 +1296,9 @@ type GoogleAppsCardV1Action struct {
 	// is clicked/activated.
 	Function string `json:"function,omitempty"`
 
+	// LoadIndicator: Specifies the loading indicator that the action
+	// displays while making the call to the action.
+	//
 	// Possible values:
 	//   "SPINNER" - Displays a spinner to indicate that content is loading.
 	//   "NONE" - Nothing is displayed.
@@ -1359,7 +1430,7 @@ type GoogleAppsCardV1Button struct {
 	// Color: If set, the button is filled with a solid background.
 	Color *Color `json:"color,omitempty"`
 
-	// Disabled: If true, the button is displayed in a disabled state and
+	// Disabled: If `true`, the button is displayed in a disabled state and
 	// doesn't respond to user actions.
 	Disabled bool `json:"disabled,omitempty"`
 
@@ -1397,6 +1468,7 @@ func (s *GoogleAppsCardV1Button) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1ButtonList: A list of buttons layed out horizontally.
 type GoogleAppsCardV1ButtonList struct {
+	// Buttons: An array of buttons.
 	Buttons []*GoogleAppsCardV1Button `json:"buttons,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Buttons") to
@@ -1427,15 +1499,15 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // For example, the following JSON creates a card that has a header with
 // the name, position, icons, and link for a contact, followed by a
 // section with contact information like email and phone number. ``` {
-// "header": { "title": "Heba Salam", "subtitle": "Software Engineer",
+// "header": { "title": "Sasha", "subtitle": "Software Engineer",
 // "imageStyle": "ImageStyle.AVATAR", "imageUrl":
-// "https://example.com/heba_salam.png", "imageAltText": "Avatar for
-// Heba Salam" }, "sections" : [ { "header": "Contact Info", "widgets":
-// [ { "decorated_text": { "icon": { "knownIcon": "EMAIL" }, "content":
-// "heba.salam@example.com" } }, { "decoratedText": { "icon": {
-// "knownIcon": "PERSON" }, "content": "Online" } }, { "decoratedText":
-// { "icon": { "knownIcon": "PHONE" }, "content": "+1 (555) 555-1234" }
-// }, { "buttons": [ { "textButton": { "text": "Share", }, "onClick": {
+// "https://example.com/sasha.png", "imageAltText": "Avatar for Sasha"
+// }, "sections" : [ { "header": "Contact Info", "widgets": [ {
+// "decorated_text": { "icon": { "knownIcon": "EMAIL" }, "content":
+// "sasha@example.com" } }, { "decoratedText": { "icon": { "knownIcon":
+// "PERSON" }, "content": "Online" } }, { "decoratedText": { "icon": {
+// "knownIcon": "PHONE" }, "content": "+1 (555) 555-1234" } }, {
+// "buttons": [ { "textButton": { "text": "Share", }, "onClick": {
 // "openLink": { "url": "https://example.com/share" } } }, {
 // "textButton": { "text": "Edit", }, "onClick": { "action": {
 // "function": "goToView", "parameters": [ { "key": "viewType", "value":
@@ -1445,20 +1517,20 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // "openLink": { "url": "https://example.com/feedback" } } } ], "name":
 // "contact-card-K3wB6arF2H9L" } ```
 type GoogleAppsCardV1Card struct {
-	// CardActions: The actions of this card. They are added to a card's
+	// CardActions: The card's actions. Actions are added to the card's
 	// generated toolbar menu. For example, the following JSON constructs a
 	// card action menu with Settings and Send Feedback options: ```
-	// "card_actions": [ { "actionLabel": "Setting", "onClick": { "action":
+	// "card_actions": [ { "actionLabel": "Settings", "onClick": { "action":
 	// { "functionName": "goToView", "parameters": [ { "key": "viewType",
 	// "value": "SETTING" } ], "loadIndicator": "LoadIndicator.SPINNER" } }
 	// }, { "actionLabel": "Send Feedback", "onClick": { "openLink": {
 	// "url": "https://example.com/feedback" } } } ] ```
 	CardActions []*GoogleAppsCardV1CardAction `json:"cardActions,omitempty"`
 
-	// DisplayStyle: The display style for peekCardHeader.
+	// DisplayStyle: The display style for `peekCardHeader`.
 	//
 	// Possible values:
-	//   "DISPLAY_STYLE_UNSPECIFIED"
+	//   "DISPLAY_STYLE_UNSPECIFIED" - Default value. Do not use.
 	//   "PEEK" - The header of the card appears at the bottom of the
 	// sidebar, partially covering the current top card of the stack.
 	// Clicking the header pops the card into the card stack. If the card
@@ -1474,8 +1546,7 @@ type GoogleAppsCardV1Card struct {
 	// an image.
 	Header *GoogleAppsCardV1CardHeader `json:"header,omitempty"`
 
-	// Name: Name of the card, which is used as a identifier for the card in
-	// card navigation.
+	// Name: Name of the card. Used as a card identifier in card navigation.
 	Name string `json:"name,omitempty"`
 
 	// PeekCardHeader: When displaying contextual content, the peek card
@@ -1517,7 +1588,7 @@ type GoogleAppsCardV1CardAction struct {
 	// ActionLabel: The label that displays as the action menu item.
 	ActionLabel string `json:"actionLabel,omitempty"`
 
-	// OnClick: The onclick action for this action item.
+	// OnClick: The `onClick` action for this action item.
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionLabel") to
@@ -1578,6 +1649,7 @@ func (s *GoogleAppsCardV1CardFixedFooter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1CardHeader: Represents a card header.
 type GoogleAppsCardV1CardHeader struct {
 	// ImageAltText: The alternative text of this image which is used for
 	// accessibility.
@@ -1596,10 +1668,9 @@ type GoogleAppsCardV1CardHeader struct {
 	// Subtitle: The subtitle of the card header.
 	Subtitle string `json:"subtitle,omitempty"`
 
-	// Title: The title of the card header. The title must be specified. The
-	// header has a fixed height: if both a title and subtitle are
-	// specified, each takes up one line. If only the title is specified, it
-	// takes up both lines.
+	// Title: Required. The title of the card header. The header has a fixed
+	// height: if both a title and subtitle are specified, each takes up one
+	// line. If only the title is specified, it takes up both lines.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageAltText") to
@@ -1626,12 +1697,12 @@ func (s *GoogleAppsCardV1CardHeader) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1DateTimePicker: The widget that lets users to specify
-// a date and time.
+// a date and time. Not supported by Google Chat apps.
 type GoogleAppsCardV1DateTimePicker struct {
 	// Label: The label for the field that displays to the user.
 	Label string `json:"label,omitempty"`
 
-	// Name: The name of the text input that's used in formInput, and
+	// Name: The name of the text input that's used in `formInput`, and
 	// uniquely identifies this input.
 	Name string `json:"name,omitempty"`
 
@@ -1872,7 +1943,7 @@ type GoogleAppsCardV1Icon struct {
 	ImageType string `json:"imageType,omitempty"`
 
 	// KnownIcon: The icon specified by the string name of a list of known
-	// icons
+	// icons.
 	KnownIcon string `json:"knownIcon,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltText") to
@@ -1899,7 +1970,7 @@ func (s *GoogleAppsCardV1Icon) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Image: An image that is specified by a URL and can
-// have an onClick action.
+// have an `onClick` action.
 type GoogleAppsCardV1Image struct {
 	// AltText: The alternative text of this image, used for accessibility.
 	AltText string `json:"altText,omitempty"`
@@ -1907,6 +1978,7 @@ type GoogleAppsCardV1Image struct {
 	// ImageUrl: An image URL.
 	ImageUrl string `json:"imageUrl,omitempty"`
 
+	// OnClick: The action triggered by an `onClick` event.
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltText") to
@@ -1932,6 +2004,7 @@ func (s *GoogleAppsCardV1Image) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1ImageComponent: Represents an image.
 type GoogleAppsCardV1ImageComponent struct {
 	// AltText: The accessibility label for the image.
 	AltText string `json:"altText,omitempty"`
@@ -2024,8 +2097,10 @@ func (s *GoogleAppsCardV1ImageCropStyle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleAppsCardV1OnClick: Represents the response to an `onClick`
+// event.
 type GoogleAppsCardV1OnClick struct {
-	// Action: If specified, an action is triggered by this onClick.
+	// Action: If specified, an action is triggered by this `onClick`.
 	Action *GoogleAppsCardV1Action `json:"action,omitempty"`
 
 	// Card: A new card is pushed to the card stack after clicking if
@@ -2033,13 +2108,13 @@ type GoogleAppsCardV1OnClick struct {
 	Card *GoogleAppsCardV1Card `json:"card,omitempty"`
 
 	// OpenDynamicLinkAction: An add-on triggers this action when the action
-	// needs to open a link. This differs from the open_link above in that
+	// needs to open a link. This differs from the `open_link` above in that
 	// this needs to talk to server to get the link. Thus some preparation
 	// work is required for web client to do before the open link action
 	// response comes back.
 	OpenDynamicLinkAction *GoogleAppsCardV1Action `json:"openDynamicLinkAction,omitempty"`
 
-	// OpenLink: If specified, this onClick triggers an open link action.
+	// OpenLink: If specified, this `onClick` triggers an open link action.
 	OpenLink *GoogleAppsCardV1OpenLink `json:"openLink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -2065,17 +2140,24 @@ func (s *GoogleAppsCardV1OnClick) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1OpenLink: Represents an `onClick` event that opens a
+// hyperlink.
 type GoogleAppsCardV1OpenLink struct {
+	// OnClose: Whether the client forgets about a link after opening it, or
+	// observes it until the window closes. Not supported by Chat apps.
+	//
 	// Possible values:
 	//   "NOTHING" - Doesn’t reload the card after the child window
-	// closes. Reloads the card after the child window closes. If used in
-	// conjunction with
+	// closes.
+	//   "RELOAD" - Reloads the card after the child window closes. If used
+	// in conjunction with
 	// [OpenAs.OVERLAY](/workspace/add-ons/reference/rpc/google.apps.card.v1#
 	// openas), the child window acts as a modal dialog and the main card is
 	// blocked until the child window closes.
-	//   "RELOAD"
 	OnClose string `json:"onClose,omitempty"`
 
+	// OpenAs: How to open a link. Not supported by Chat apps.
+	//
 	// Possible values:
 	//   "FULL_SIZE" - The link opens as a full size window (if that's the
 	// frame used by the client.
@@ -2122,10 +2204,10 @@ type GoogleAppsCardV1Section struct {
 
 	// UncollapsibleWidgetsCount: The number of uncollapsible widgets. For
 	// example, when a section contains five widgets and the
-	// `numUncollapsibleWidget` is set to `2`, the first two widgets are
+	// `uncollapsibleWidgetsCount` is set to `2`, the first two widgets are
 	// always shown and the last three are collapsed as default. The
-	// `numUncollapsibleWidget` is taken into account only when collapsible
-	// is set to `true`.
+	// `uncollapsibleWidgetsCount` is taken into account only when
+	// `collapsible` is `true`.
 	UncollapsibleWidgetsCount int64 `json:"uncollapsibleWidgetsCount,omitempty"`
 
 	// Widgets: A section must contain at least 1 widget.
@@ -2154,15 +2236,16 @@ func (s *GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1SelectionInput: A widget that creates a UI item (for
-// example, a drop-down list) with options for users to select.
+// GoogleAppsCardV1SelectionInput: A widget that creates a UI item with
+// options for users to select. For example, a dropdown menu.
 type GoogleAppsCardV1SelectionInput struct {
+	// Items: An array of the selected items.
 	Items []*GoogleAppsCardV1SelectionItem `json:"items,omitempty"`
 
 	// Label: The label displayed ahead of the switch control.
 	Label string `json:"label,omitempty"`
 
-	// Name: The name of the text input which is used in formInput.
+	// Name: The name of the text input which is used in `formInput`.
 	Name string `json:"name,omitempty"`
 
 	// OnChangeAction: If specified, the form is submitted when the
@@ -2170,11 +2253,13 @@ type GoogleAppsCardV1SelectionInput struct {
 	// button.
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
 
+	// Type: The type of the selection.
+	//
 	// Possible values:
-	//   "CHECK_BOX" - The selection type is a checkbox.
-	//   "RADIO_BUTTON" - The selection type is a radio button.
-	//   "SWITCH" - The selection type is a switch.
-	//   "DROPDOWN" - The selection type is a dropdown.
+	//   "CHECK_BOX" - A checkbox.
+	//   "RADIO_BUTTON" - A radio button.
+	//   "SWITCH" - A switch.
+	//   "DROPDOWN" - A dropdown menu.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
@@ -2200,8 +2285,8 @@ func (s *GoogleAppsCardV1SelectionInput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1SelectionItem: The item in the switch control. A
-// radio button, at most one of the items is selected.
+// GoogleAppsCardV1SelectionItem: A selectable item in the switch
+// control.
 type GoogleAppsCardV1SelectionItem struct {
 	// Selected: If more than one item is selected for `RADIO_BUTTON` and
 	// `DROPDOWN`, the first selected item is treated as selected and the
@@ -2238,9 +2323,9 @@ func (s *GoogleAppsCardV1SelectionItem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1SuggestionItem: A suggestion item. Only supports text
-// for now.
+// GoogleAppsCardV1SuggestionItem: A suggestion item.
 type GoogleAppsCardV1SuggestionItem struct {
+	// Text: The suggested autocomplete result.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Text") to
@@ -2269,8 +2354,7 @@ func (s *GoogleAppsCardV1SuggestionItem) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1Suggestions: A container wrapping elements necessary
 // for showing suggestion items used in text input autocomplete.
 type GoogleAppsCardV1Suggestions struct {
-	// Items: A list of suggestions items which will be used in are used in
-	// autocomplete.
+	// Items: A list of suggestions used for autocomplete recommendations.
 	Items []*GoogleAppsCardV1SuggestionItem `json:"items,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
@@ -2296,16 +2380,18 @@ func (s *GoogleAppsCardV1Suggestions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1SwitchControl: Either a toggle-style switch or a
+// checkbox.
 type GoogleAppsCardV1SwitchControl struct {
 	// ControlType: The control type, either switch or checkbox.
 	//
 	// Possible values:
-	//   "SWITCH"
+	//   "SWITCH" - A toggle-style switch.
 	//   "CHECKBOX" - Deprecated in favor of `CHECK_BOX`.
-	//   "CHECK_BOX"
+	//   "CHECK_BOX" - A checkbox.
 	ControlType string `json:"controlType,omitempty"`
 
-	// Name: The name of the switch widget that's used in formInput.
+	// Name: The name of the switch widget that's used in `formInput`.
 	Name string `json:"name,omitempty"`
 
 	// OnChangeAction: The action when the switch state is changed.
@@ -2360,7 +2446,7 @@ type GoogleAppsCardV1TextInput struct {
 	// Label: At least one of label and hintText must be specified.
 	Label string `json:"label,omitempty"`
 
-	// Name: The name of the text input which is used in formInput.
+	// Name: The name of the text input which is used in `formInput`.
 	Name string `json:"name,omitempty"`
 
 	// OnChangeAction: The onChange action, for example, invoke a function.
@@ -2454,9 +2540,9 @@ type GoogleAppsCardV1Widget struct {
 	// DecoratedText: Displays a decorated text item in this widget. For
 	// example, the following JSON creates a decorated text widget showing
 	// email address: ``` "decoratedText": { "icon": { "knownIcon": "EMAIL"
-	// }, "topLabel": "Email Address", "content": "heba.salam@example.com",
+	// }, "topLabel": "Email Address", "content": "sasha@example.com",
 	// "bottomLabel": "This is a new Email address!", "switchWidget": {
-	// "name": "has_send_welcome_email_to_heba_salam", "selected": false,
+	// "name": "has_send_welcome_email_to_sasha", "selected": false,
 	// "controlType": "ControlType.CHECKBOX" } } ```
 	DecoratedText *GoogleAppsCardV1DecoratedText `json:"decoratedText,omitempty"`
 
@@ -2485,8 +2571,8 @@ type GoogleAppsCardV1Widget struct {
 
 	// Image: Displays an image in this widget. For example, the following
 	// JSON creates an image with alternative text: ``` "image": {
-	// "imageUrl": "https://example.com/heba_salam.png" "altText": "Avatar
-	// for Heba Salam" } ```
+	// "imageUrl": "https://example.com/sasha.png" "altText": "Avatar for
+	// Sasha" } ```
 	Image *GoogleAppsCardV1Image `json:"image,omitempty"`
 
 	// SelectionInput: Displays a switch control in this widget. For
@@ -2663,14 +2749,22 @@ func (s *ImageButton) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Inputs: The inputs with widgets.
+// Inputs: Types of data inputs for widgets. Users enter data with these
+// inputs.
 type Inputs struct {
+	// DateInput: Date input values. Not supported by Chat apps.
 	DateInput *DateInput `json:"dateInput,omitempty"`
 
+	// DateTimeInput: Date and time input values. Not supported by Chat
+	// apps.
 	DateTimeInput *DateTimeInput `json:"dateTimeInput,omitempty"`
 
+	// StringInputs: Input parameter for regular widgets. For single-valued
+	// widgets, it is a single value list. For multi-valued widgets, such as
+	// checkbox, all the values are presented.
 	StringInputs *StringInputs `json:"stringInputs,omitempty"`
 
+	// TimeInput: Time input values. Not supported by Chat apps.
 	TimeInput *TimeInput `json:"timeInput,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DateInput") to
@@ -2854,6 +2948,36 @@ func (s *ListSpacesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MatchedUrl: A matched url in a Chat message. Chat apps can preview
+// matched URLs. For more information, refer to Preview links
+// (https://developers.google.com/chat/how-tos/preview-links).
+type MatchedUrl struct {
+	// Url: Output only. The url that was matched.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Url") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Url") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MatchedUrl) MarshalJSON() ([]byte, error) {
+	type NoMethod MatchedUrl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Media: Media resource.
 type Media struct {
 	// ResourceName: Name of the media resource.
@@ -2886,18 +3010,28 @@ func (s *Media) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Membership: Represents a membership relation in Google Chat.
+// Membership: Represents a membership relation in Google Chat, such as
+// whether a user or Chat app is invited to, part of, or absent from a
+// space.
 type Membership struct {
-	// CreateTime: The creation time of the membership a.k.a the time at
-	// which the member joined the space, if applicable.
+	// CreateTime: Output only. The creation time of the membership, such as
+	// when a member joined or was invited to join a space.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Member: A user in Google Chat.
+	// Member: A Google Chat user or app. Format: `users/{user}` or
+	// `users/app` When `users/{user}`, represents a person
+	// (https://developers.google.com/people/api/rest/v1/people) in the
+	// People API or a user
+	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
+	// in the Admin SDK Directory API. When `users/app`, represents a Chat
+	// app creating membership for itself.
 	Member *User `json:"member,omitempty"`
 
+	// Name: Resource name of the membership. Format:
+	// spaces/{space}/members/{member}
 	Name string `json:"name,omitempty"`
 
-	// State: State of the membership.
+	// State: Output only. State of the membership.
 	//
 	// Possible values:
 	//   "MEMBERSHIP_STATE_UNSPECIFIED" - Default, do not use.
@@ -2937,7 +3071,7 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 
 // Message: A message in Google Chat.
 type Message struct {
-	// ActionResponse: Input only. Parameters that a bot can use to
+	// ActionResponse: Input only. Parameters that a Chat app can use to
 	// configure how its response is posted.
 	ActionResponse *ActionResponse `json:"actionResponse,omitempty"`
 
@@ -2945,8 +3079,8 @@ type Message struct {
 	// this message.
 	Annotations []*Annotation `json:"annotations,omitempty"`
 
-	// ArgumentText: Plain-text body of the message with all bot mentions
-	// stripped out.
+	// ArgumentText: Plain-text body of the message with all Chat app
+	// mentions stripped out.
 	ArgumentText string `json:"argumentText,omitempty"`
 
 	// Attachment: User uploaded attachment.
@@ -2968,27 +3102,30 @@ type Message struct {
 	FallbackText string `json:"fallbackText,omitempty"`
 
 	// LastUpdateTime: Output only. The time at which the message was last
-	// updated in Google Chat server. If the message was never updated, this
-	// field will be same as create_time.
+	// updated. If the message was never updated, this field matches
+	// `create_time`.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 
+	// MatchedUrl: Output only. A URL in `spaces.messages.text` that matches
+	// a link preview pattern. For more information, refer to Preview links
+	// (https://developers.google.com/chat/how-tos/preview-links).
+	MatchedUrl *MatchedUrl `json:"matchedUrl,omitempty"`
+
+	// Name: Resource name in the form `spaces/*/messages/*`. Example:
+	// `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`
 	Name string `json:"name,omitempty"`
 
-	// PreviewText: Text for generating preview chips. This text will not be
-	// displayed to the user, but any links to images, web pages, videos,
-	// etc. included here will generate preview chips.
-	PreviewText string `json:"previewText,omitempty"`
-
-	// Sender: The user who created the message.
+	// Sender: Output only. The user who created the message.
 	Sender *User `json:"sender,omitempty"`
 
-	// SlashCommand: Slash command information, if applicable.
+	// SlashCommand: Output only. Slash command information, if applicable.
 	SlashCommand *SlashCommand `json:"slashCommand,omitempty"`
 
 	// Space: The space the message belongs to.
 	Space *Space `json:"space,omitempty"`
 
-	// Text: Plain-text body of the message.
+	// Text: Plain-text body of the message. The first link to an image,
+	// video, web page, or other preview-able item generates a preview chip.
 	Text string `json:"text,omitempty"`
 
 	// Thread: The thread the message belongs to.
@@ -3115,7 +3252,9 @@ func (s *Section) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SlashCommand: A Slash Command in Chat.
+// SlashCommand: A slash command
+// (https://developers.google.com/chat/how-tos/slash-commands) in Google
+// Chat.
 type SlashCommand struct {
 	// CommandId: The id of the slash command invoked.
 	CommandId int64 `json:"commandId,omitempty,string"`
@@ -3145,7 +3284,7 @@ func (s *SlashCommand) MarshalJSON() ([]byte, error) {
 
 // SlashCommandMetadata: Annotation metadata for slash commands (/).
 type SlashCommandMetadata struct {
-	// Bot: The bot whose command was invoked.
+	// Bot: The Chat app whose command was invoked.
 	Bot *User `json:"bot,omitempty"`
 
 	// CommandId: The command id of the invoked slash command.
@@ -3161,7 +3300,7 @@ type SlashCommandMetadata struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value for the enum. DO NOT USE.
-	//   "ADD" - Add bot to space.
+	//   "ADD" - Add Chat app to space.
 	//   "INVOKE" - Invoke slash command in space.
 	Type string `json:"type,omitempty"`
 
@@ -3189,32 +3328,31 @@ func (s *SlashCommandMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // Space: A space in Google Chat. Spaces are conversations between two
-// or more users or 1:1 messages between a user and a Chat bot.
+// or more users or 1:1 messages between a user and a Chat app.
 type Space struct {
-	// DisplayName: Output only. The display name (only if the space is of
-	// type `ROOM`). Please note that this field might not be populated in
-	// direct messages between humans.
+	// DisplayName: The space's display name. For direct messages between
+	// humans, this field might be empty.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Resource name of the space, in the form "spaces/*". Example:
-	// spaces/AAAAMpdlehYs
+	// Name: Resource name of the space. Format: spaces/{space}
 	Name string `json:"name,omitempty"`
 
-	// SingleUserBotDm: Whether the space is a DM between a bot and a single
-	// human.
+	// SingleUserBotDm: Output only. Whether the space is a DM between a
+	// Chat app and a single human.
 	SingleUserBotDm bool `json:"singleUserBotDm,omitempty"`
 
-	// Threaded: Whether the messages are threaded in this space.
+	// Threaded: Output only. Whether messages are threaded in this space.
 	Threaded bool `json:"threaded,omitempty"`
 
-	// Type: Output only. The type of a space. This is deprecated. Use
-	// `single_user_bot_dm` instead.
+	// Type: Output only. Deprecated: Use `single_user_bot_dm` or
+	// `space_type` (developer preview) instead. The type of a space.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED"
 	//   "ROOM" - Conversations between two or more humans.
-	//   "DM" - 1:1 Direct Message between a human and a Chat bot, where all
-	// messages are flat.
+	//   "DM" - 1:1 Direct Message between a human and a Chat app, where all
+	// messages are flat. Note that this does not include direct messages
+	// between two humans.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3244,10 +3382,55 @@ func (s *Space) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Status: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StringInputs: Input parameter for regular widgets. For single-valued
-// widgets, it will be a single value list; for multi-valued widgets,
-// such as checkbox, all the values are presented.
+// widgets, it is a single value list. For multi-valued widgets, such as
+// checkbox, all the values are presented.
 type StringInputs struct {
+	// Value: An array of strings entered by the user.
 	Value []string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Value") to
@@ -3334,7 +3517,7 @@ func (s *TextParagraph) MarshalJSON() ([]byte, error) {
 // Thread: A thread in Google Chat.
 type Thread struct {
 	// Name: Resource name, in the form "spaces/*/threads/*". Example:
-	// spaces/AAAAMpdlehY/threads/UMxbHmzDlr4
+	// spaces/AAAAAAAAAAA/threads/TTTTTTTTTTT
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -3360,10 +3543,13 @@ func (s *Thread) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimeInput: Input Parameter for Time Picker widget.
+// TimeInput: Time input values. Not supported by Chat apps.
 type TimeInput struct {
+	// Hours: The hour on a 24-hour clock.
 	Hours int64 `json:"hours,omitempty"`
 
+	// Minutes: The number of minutes past the hour. Valid values are 0 to
+	// 59.
 	Minutes int64 `json:"minutes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Hours") to
@@ -3389,12 +3575,15 @@ func (s *TimeInput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimeZone: The timezone id and offset. The id is the tz database time
-// zones such as "America/Toronto". The user timezone offset, in
-// milliseconds, from Coordinated Universal Time (UTC).
+// TimeZone: The timezone ID and offset from Coordinated Universal Time
+// (UTC). Not supported by Chat apps.
 type TimeZone struct {
+	// Id: The IANA TZ (https://www.iana.org/time-zones) time zone database
+	// code, such as "America/Toronto".
 	Id string `json:"id,omitempty"`
 
+	// Offset: The user timezone offset, in milliseconds, from Coordinated
+	// Universal Time (UTC).
 	Offset int64 `json:"offset,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -3422,17 +3611,21 @@ func (s *TimeZone) MarshalJSON() ([]byte, error) {
 
 // User: A user in Google Chat.
 type User struct {
-	// DisplayName: The user's display name.
+	// DisplayName: Output only. The user's display name.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// DomainId: Obfuscated domain information.
+	// DomainId: Unique identifier of the user's Google Workspace domain.
 	DomainId string `json:"domainId,omitempty"`
 
-	// IsAnonymous: True when the user is deleted or the user's profile is
-	// not visible.
+	// IsAnonymous: Output only. When `true`, the user is deleted or their
+	// profile is not visible.
 	IsAnonymous bool `json:"isAnonymous,omitempty"`
 
-	// Name: Resource name, in the format "users/*".
+	// Name: Resource name for a Google Chat user. Represents a person
+	// (https://developers.google.com/people/api/rest/v1/people#Person) in
+	// the People API or a user
+	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
+	// in the Admin SDK Directory API. Formatted as: `users/{user}`
 	Name string `json:"name,omitempty"`
 
 	// Type: User type.
@@ -3440,7 +3633,7 @@ type User struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value for the enum. DO NOT USE.
 	//   "HUMAN" - Human user.
-	//   "BOT" - Bot user.
+	//   "BOT" - Chat app user.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -3556,7 +3749,7 @@ type DmsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall {
 	c := &DmsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3564,15 +3757,20 @@ func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall 
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
+func (c *DmsMessagesCall) RequestId(requestId string) *DmsMessagesCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves bots and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *DmsMessagesCall) ThreadKey(threadKey string) *DmsMessagesCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -3605,7 +3803,7 @@ func (c *DmsMessagesCall) Header() http.Header {
 
 func (c *DmsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3678,14 +3876,19 @@ func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^dms/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3716,7 +3919,7 @@ type DmsWebhooksCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall {
 	c := &DmsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3724,15 +3927,20 @@ func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall 
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
+func (c *DmsWebhooksCall) RequestId(requestId string) *DmsWebhooksCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves bots and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *DmsWebhooksCall) ThreadKey(threadKey string) *DmsWebhooksCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -3765,7 +3973,7 @@ func (c *DmsWebhooksCall) Header() http.Header {
 
 func (c *DmsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3838,14 +4046,19 @@ func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^dms/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3876,7 +4089,7 @@ type DmsConversationsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *DmsConversationsService) Messages(parent string, message *Message) *DmsConversationsMessagesCall {
 	c := &DmsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3884,15 +4097,20 @@ func (r *DmsConversationsService) Messages(parent string, message *Message) *Dms
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
+func (c *DmsConversationsMessagesCall) RequestId(requestId string) *DmsConversationsMessagesCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves bots and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *DmsConversationsMessagesCall) ThreadKey(threadKey string) *DmsConversationsMessagesCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -3925,7 +4143,7 @@ func (c *DmsConversationsMessagesCall) Header() http.Header {
 
 func (c *DmsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3998,14 +4216,19 @@ func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Messag
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^dms/[^/]+/conversations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4080,7 +4303,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4198,7 +4421,7 @@ type RoomsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesCall {
 	c := &RoomsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4206,15 +4429,20 @@ func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesC
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
+func (c *RoomsMessagesCall) RequestId(requestId string) *RoomsMessagesCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves bots and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *RoomsMessagesCall) ThreadKey(threadKey string) *RoomsMessagesCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4247,7 +4475,7 @@ func (c *RoomsMessagesCall) Header() http.Header {
 
 func (c *RoomsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4320,14 +4548,19 @@ func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^rooms/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4358,7 +4591,7 @@ type RoomsWebhooksCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksCall {
 	c := &RoomsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4366,15 +4599,20 @@ func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksC
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
+func (c *RoomsWebhooksCall) RequestId(requestId string) *RoomsWebhooksCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves bots and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *RoomsWebhooksCall) ThreadKey(threadKey string) *RoomsWebhooksCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4407,7 +4645,7 @@ func (c *RoomsWebhooksCall) Header() http.Header {
 
 func (c *RoomsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4480,14 +4718,19 @@ func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^rooms/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4518,7 +4761,7 @@ type RoomsConversationsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *RoomsConversationsService) Messages(parent string, message *Message) *RoomsConversationsMessagesCall {
 	c := &RoomsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4526,15 +4769,20 @@ func (r *RoomsConversationsService) Messages(parent string, message *Message) *R
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
+func (c *RoomsConversationsMessagesCall) RequestId(requestId string) *RoomsConversationsMessagesCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves bots and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *RoomsConversationsMessagesCall) ThreadKey(threadKey string) *RoomsConversationsMessagesCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4567,7 +4815,7 @@ func (c *RoomsConversationsMessagesCall) Header() http.Header {
 
 func (c *RoomsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4640,14 +4888,19 @@ func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Mess
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^rooms/[^/]+/conversations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4674,10 +4927,11 @@ type SpacesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a space.
+// Get: Returns a space. Requires service account authentication
+// (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: Resource name of the space, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+// - name: Resource name of the space, in the form "spaces/*". Format:
+//   spaces/{space}.
 func (r *SpacesService) Get(name string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4721,7 +4975,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4783,7 +5037,7 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a space.",
+	//   "description": "Returns a space. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.get",
@@ -4792,7 +5046,7 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Resource name of the space, in the form \"spaces/*\". Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -4817,7 +5071,9 @@ type SpacesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists spaces the caller is a member of.
+// List: Lists spaces the caller is a member of. Requires service
+// account authentication
+// (https://developers.google.com/chat/api/guides/auth/service-accounts).
 func (r *SpacesService) List() *SpacesListCall {
 	c := &SpacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -4875,7 +5131,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4934,7 +5190,7 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists spaces the caller is a member of.",
+	//   "description": "Lists spaces the caller is a member of. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.list",
@@ -4996,7 +5252,7 @@ type SpacesWebhooksCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhooksCall {
 	c := &SpacesWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5004,15 +5260,20 @@ func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhook
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
+func (c *SpacesWebhooksCall) RequestId(requestId string) *SpacesWebhooksCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves bots and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *SpacesWebhooksCall) ThreadKey(threadKey string) *SpacesWebhooksCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -5045,7 +5306,7 @@ func (c *SpacesWebhooksCall) Header() http.Header {
 
 func (c *SpacesWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5118,14 +5379,19 @@ func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5152,11 +5418,11 @@ type SpacesMembersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a membership.
+// Get: Returns a membership. Requires service account authentication
+// (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: Resource name of the membership to be retrieved, in the form
-//   "spaces/*/members/*". Example:
-//   spaces/AAAAMpdlehY/members/105115627578887013105.
+// - name: Resource name of the membership to retrieve. Format:
+//   spaces/{space}/members/{member}.
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	c := &SpacesMembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5200,7 +5466,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5262,7 +5528,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a membership.",
+	//   "description": "Returns a membership. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}/members/{membersId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.get",
@@ -5271,7 +5537,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the membership to be retrieved, in the form \"spaces/*/members/*\". Example: spaces/AAAAMpdlehY/members/105115627578887013105",
+	//       "description": "Required. Resource name of the membership to retrieve. Format: spaces/{space}/members/{member}",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/members/[^/]+$",
 	//       "required": true,
@@ -5297,10 +5563,12 @@ type SpacesMembersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists human memberships in a space.
+// List: Lists human memberships in a space. Requires service account
+// authentication
+// (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - parent: The resource name of the space for which membership list is
-//   to be fetched, in the form "spaces/*". Example: spaces/AAAAMpdlehY.
+// - parent: The resource name of the space for which to fetch a
+//   membership list. Format: spaces/{space}.
 func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 	c := &SpacesMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5359,7 +5627,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5421,7 +5689,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists human memberships in a space.",
+	//   "description": "Lists human memberships in a space. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}/members",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.list",
@@ -5441,7 +5709,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the space for which membership list is to be fetched, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. The resource name of the space for which to fetch a membership list. Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -5488,10 +5756,11 @@ type SpacesMessagesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a message.
+// Create: Creates a message. Requires service account authentication
+// (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesMessagesCreateCall {
 	c := &SpacesMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5499,15 +5768,20 @@ func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesM
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. Specifying an existing request ID returns the
+// message created with that ID instead of creating a new message.
+func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages into a
-// single thread. If this is the first message with a given thread
-// identifier, a new thread is created. Subsequent messages with the
-// same thread identifier will be posted into the same thread. This
-// relieves bots and webhooks from having to store the Google Chat
-// thread ID of a thread (created earlier by them) to post further
-// updates to it. Has no effect if thread field, corresponding to an
-// existing thread, is set in message.
+// identifier. To start or add to a thread, create a message and specify
+// a `threadKey` instead of thread.name. (Setting thread.name has no
+// effect.) The first message with a given `threadKey` starts a new
+// thread. Subsequent messages with the same `threadKey` post into the
+// same thread.
 func (c *SpacesMessagesCreateCall) ThreadKey(threadKey string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -5540,7 +5814,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5604,7 +5878,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a message.",
+	//   "description": "Creates a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.messages.create",
@@ -5613,14 +5887,19 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. Specifying an existing request ID returns the message created with that ID instead of creating a new message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5646,11 +5925,12 @@ type SpacesMessagesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a message.
+// Delete: Deletes a message. Requires service account authentication
+// (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
 // - name: Resource name of the message to be deleted, in the form
 //   "spaces/*/messages/*" Example:
-//   spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4.
+//   spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
 func (r *SpacesMessagesService) Delete(name string) *SpacesMessagesDeleteCall {
 	c := &SpacesMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5684,7 +5964,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5743,7 +6023,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a message.",
+	//   "description": "Deletes a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "chat.spaces.messages.delete",
@@ -5752,7 +6032,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the message to be deleted, in the form \"spaces/*/messages/*\" Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+	//       "description": "Required. Resource name of the message to be deleted, in the form \"spaces/*/messages/*\" Example: spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -5778,11 +6058,12 @@ type SpacesMessagesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a message.
+// Get: Returns a message. Requires service account authentication
+// (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
 // - name: Resource name of the message to be retrieved, in the form
 //   "spaces/*/messages/*". Example:
-//   spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4.
+//   spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
 func (r *SpacesMessagesService) Get(name string) *SpacesMessagesGetCall {
 	c := &SpacesMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5826,7 +6107,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5888,7 +6169,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a message.",
+	//   "description": "Returns a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.get",
@@ -5897,7 +6178,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the message to be retrieved, in the form \"spaces/*/messages/*\". Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+	//       "description": "Required. Resource name of the message to be retrieved, in the form \"spaces/*/messages/*\". Example: spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -5923,9 +6204,11 @@ type SpacesMessagesUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a message.
+// Update: Updates a message. Requires service account authentication
+// (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: .
+// - name: Resource name in the form `spaces/*/messages/*`. Example:
+//   `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
 func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMessagesUpdateCall {
 	c := &SpacesMessagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5935,7 +6218,7 @@ func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMes
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
 // field paths to be updated, comma separated if there are multiple.
-// Currently supported field paths: * text * cards
+// Currently supported field paths: * text * cards * attachment
 func (c *SpacesMessagesUpdateCall) UpdateMask(updateMask string) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5968,7 +6251,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6032,7 +6315,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message.",
+	//   "description": "Updates a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PUT",
 	//   "id": "chat.spaces.messages.update",
@@ -6041,13 +6324,14 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
+	//       "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to be updated, comma separated if there are multiple. Currently supported field paths: * text * cards",
+	//       "description": "Required. The field paths to be updated, comma separated if there are multiple. Currently supported field paths: * text * cards * attachment",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6076,7 +6360,9 @@ type SpacesMessagesAttachmentsGetCall struct {
 }
 
 // Get: Gets the metadata of a message attachment. The attachment data
-// is fetched using the media API.
+// is fetched using the media API. Requires service account
+// authentication
+// (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
 // - name: Resource name of the attachment, in the form
 //   "spaces/*/messages/*/attachments/*".
@@ -6123,7 +6409,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6185,7 +6471,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*At
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the metadata of a message attachment. The attachment data is fetched using the media API.",
+	//   "description": "Gets the metadata of a message attachment. The attachment data is fetched using the media API. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}/attachments/{attachmentsId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.attachments.get",
@@ -6194,7 +6480,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*At
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the attachment, in the form \"spaces/*/messages/*/attachments/*\".",
+	//       "description": "Required. Resource name of the attachment, in the form \"spaces/*/messages/*/attachments/*\".",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+/attachments/[^/]+$",
 	//       "required": true,

@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -353,7 +354,8 @@ type QueryRequest struct {
 	// are specified then any metrics found will be returned. Allowed
 	// values: ["first_contentful_paint", "first_input_delay",
 	// "largest_contentful_paint", "cumulative_layout_shift",
-	// "experimental_uncapped_cumulative_layout_shift"]
+	// "experimental_time_to_first_byte",
+	// "experimental_interaction_to_next_paint"]
 	Metrics []string `json:"metrics,omitempty"`
 
 	// Origin: The url pattern "origin" refers to a url pattern that is the
@@ -553,7 +555,7 @@ func (c *RecordsQueryRecordCall) Header() http.Header {
 
 func (c *RecordsQueryRecordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

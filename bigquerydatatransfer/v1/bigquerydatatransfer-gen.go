@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -98,7 +99,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/bigquery",
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
@@ -309,8 +310,8 @@ func (s *CheckValidCredsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSource: Represents data source metadata. Metadata is sufficient
-// to render UI and request proper OAuth tokens.
+// DataSource: Defines the properties and custom parameters for a data
+// source.
 type DataSource struct {
 	// AuthorizationType: Indicates the type of authorization.
 	//
@@ -435,12 +436,8 @@ func (s *DataSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceParameter: Represents a data source parameter with
-// validation rules, so that parameters can be rendered in the UI. These
-// parameters are given to us by supported data sources, and include all
-// needed information for rendering and validation. Thus, whoever uses
-// this api can decide to generate either generic ui, or custom data
-// source specific forms.
+// DataSourceParameter: A parameter used to define custom fields in a
+// data source definition.
 type DataSourceParameter struct {
 	// AllowedValues: All possible values for the parameter.
 	AllowedValues []string `json:"allowedValues,omitempty"`
@@ -581,8 +578,7 @@ func (s *EmailPreferences) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1203,7 +1199,8 @@ type TransferConfig struct {
 	// `every wed,fri of jan,jun 13:15`, and `first sunday of quarter
 	// 00:00`. See more explanation about the format here:
 	// https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format
-	// NOTE: the granularity should be at least 8 hours, or less frequent.
+	// NOTE: The minimum interval time between recurring transfers depends
+	// on the data source; refer to the documentation for your data source.
 	Schedule string `json:"schedule,omitempty"`
 
 	// ScheduleOptions: Options customizing the data transfer schedule.
@@ -1445,10 +1442,11 @@ type ProjectsEnrollDataSourcesCall struct {
 // EnrollDataSources: Enroll data sources in a user project. This allows
 // users to create transfer configurations for these data sources. They
 // will also appear in the ListDataSources RPC and as such, will appear
-// in the BigQuery UI 'https://bigquery.cloud.google.com' (and the
-// documents can be found at
-// https://cloud.google.com/bigquery/bigquery-web-ui and
-// https://cloud.google.com/bigquery/docs/working-with-transfers).
+// in the BigQuery UI (https://console.cloud.google.com/bigquery), and
+// the documents can be found in the public guide for BigQuery Web UI
+// (https://cloud.google.com/bigquery/bigquery-web-ui) and Data Transfer
+// Service
+// (https://cloud.google.com/bigquery/docs/working-with-transfers).
 //
 // - name: The name of the project resource in the form:
 //   `projects/{project_id}`.
@@ -1486,7 +1484,7 @@ func (c *ProjectsEnrollDataSourcesCall) Header() http.Header {
 
 func (c *ProjectsEnrollDataSourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1550,7 +1548,7 @@ func (c *ProjectsEnrollDataSourcesCall) Do(opts ...googleapi.CallOption) (*Empty
 	}
 	return ret, nil
 	// {
-	//   "description": "Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the BigQuery UI 'https://bigquery.cloud.google.com' (and the documents can be found at https://cloud.google.com/bigquery/bigquery-web-ui and https://cloud.google.com/bigquery/docs/working-with-transfers).",
+	//   "description": "Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the [BigQuery UI](https://console.cloud.google.com/bigquery), and the documents can be found in the public guide for [BigQuery Web UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer Service](https://cloud.google.com/bigquery/docs/working-with-transfers).",
 	//   "flatPath": "v1/projects/{projectsId}:enrollDataSources",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.enrollDataSources",
@@ -1593,11 +1591,7 @@ type ProjectsDataSourcesCheckValidCredsCall struct {
 }
 
 // CheckValidCreds: Returns true if valid credentials exist for the
-// given data source and requesting user. Some data sources doesn't
-// support service account, so we need to talk to them on behalf of the
-// end user. This API just checks whether we have OAuth token for the
-// particular user, which is a pre-requisite before user can create a
-// transfer config.
+// given data source and requesting user.
 //
 // - name: The data source in the form:
 //   `projects/{project_id}/dataSources/{data_source_id}` or
@@ -1637,7 +1631,7 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1701,7 +1695,7 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns true if valid credentials exist for the given data source and requesting user. Some data sources doesn't support service account, so we need to talk to them on behalf of the end user. This API just checks whether we have OAuth token for the particular user, which is a pre-requisite before user can create a transfer config.",
+	//   "description": "Returns true if valid credentials exist for the given data source and requesting user.",
 	//   "flatPath": "v1/projects/{projectsId}/dataSources/{dataSourcesId}:checkValidCreds",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.dataSources.checkValidCreds",
@@ -1744,8 +1738,7 @@ type ProjectsDataSourcesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a supported data source and returns its settings,
-// which can be used for UI rendering.
+// Get: Retrieves a supported data source and returns its settings.
 //
 // - name: The field will contain name of the resource requested, for
 //   example: `projects/{project_id}/dataSources/{data_source_id}` or
@@ -1794,7 +1787,7 @@ func (c *ProjectsDataSourcesGetCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1856,7 +1849,7 @@ func (c *ProjectsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSour
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a supported data source and returns its settings, which can be used for UI rendering.",
+	//   "description": "Retrieves a supported data source and returns its settings.",
 	//   "flatPath": "v1/projects/{projectsId}/dataSources/{dataSourcesId}",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.dataSources.get",
@@ -1896,12 +1889,11 @@ type ProjectsDataSourcesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists supported data sources and returns their settings, which
-// can be used for UI rendering.
+// List: Lists supported data sources and returns their settings.
 //
 // - parent: The BigQuery project id for which data sources should be
 //   returned. Must be in the form: `projects/{project_id}` or
-//   `projects/{project_id}/locations/{location_id}.
+//   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsDataSourcesService) List(parent string) *ProjectsDataSourcesListCall {
 	c := &ProjectsDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1963,7 +1955,7 @@ func (c *ProjectsDataSourcesListCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2025,7 +2017,7 @@ func (c *ProjectsDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists supported data sources and returns their settings, which can be used for UI rendering.",
+	//   "description": "Lists supported data sources and returns their settings.",
 	//   "flatPath": "v1/projects/{projectsId}/dataSources",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.dataSources.list",
@@ -2045,7 +2037,7 @@ func (c *ProjectsDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}",
+	//       "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2100,10 +2092,11 @@ type ProjectsLocationsEnrollDataSourcesCall struct {
 // EnrollDataSources: Enroll data sources in a user project. This allows
 // users to create transfer configurations for these data sources. They
 // will also appear in the ListDataSources RPC and as such, will appear
-// in the BigQuery UI 'https://bigquery.cloud.google.com' (and the
-// documents can be found at
-// https://cloud.google.com/bigquery/bigquery-web-ui and
-// https://cloud.google.com/bigquery/docs/working-with-transfers).
+// in the BigQuery UI (https://console.cloud.google.com/bigquery), and
+// the documents can be found in the public guide for BigQuery Web UI
+// (https://cloud.google.com/bigquery/bigquery-web-ui) and Data Transfer
+// Service
+// (https://cloud.google.com/bigquery/docs/working-with-transfers).
 //
 // - name: The name of the project resource in the form:
 //   `projects/{project_id}`.
@@ -2141,7 +2134,7 @@ func (c *ProjectsLocationsEnrollDataSourcesCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnrollDataSourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2205,7 +2198,7 @@ func (c *ProjectsLocationsEnrollDataSourcesCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the BigQuery UI 'https://bigquery.cloud.google.com' (and the documents can be found at https://cloud.google.com/bigquery/bigquery-web-ui and https://cloud.google.com/bigquery/docs/working-with-transfers).",
+	//   "description": "Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the [BigQuery UI](https://console.cloud.google.com/bigquery), and the documents can be found in the public guide for [BigQuery Web UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer Service](https://cloud.google.com/bigquery/docs/working-with-transfers).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:enrollDataSources",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.locations.enrollDataSources",
@@ -2293,7 +2286,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2408,8 +2401,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2467,7 +2460,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2538,7 +2531,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2607,11 +2600,7 @@ type ProjectsLocationsDataSourcesCheckValidCredsCall struct {
 }
 
 // CheckValidCreds: Returns true if valid credentials exist for the
-// given data source and requesting user. Some data sources doesn't
-// support service account, so we need to talk to them on behalf of the
-// end user. This API just checks whether we have OAuth token for the
-// particular user, which is a pre-requisite before user can create a
-// transfer config.
+// given data source and requesting user.
 //
 // - name: The data source in the form:
 //   `projects/{project_id}/dataSources/{data_source_id}` or
@@ -2651,7 +2640,7 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2715,7 +2704,7 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns true if valid credentials exist for the given data source and requesting user. Some data sources doesn't support service account, so we need to talk to them on behalf of the end user. This API just checks whether we have OAuth token for the particular user, which is a pre-requisite before user can create a transfer config.",
+	//   "description": "Returns true if valid credentials exist for the given data source and requesting user.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources/{dataSourcesId}:checkValidCreds",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.locations.dataSources.checkValidCreds",
@@ -2758,8 +2747,7 @@ type ProjectsLocationsDataSourcesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a supported data source and returns its settings,
-// which can be used for UI rendering.
+// Get: Retrieves a supported data source and returns its settings.
 //
 // - name: The field will contain name of the resource requested, for
 //   example: `projects/{project_id}/dataSources/{data_source_id}` or
@@ -2808,7 +2796,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2870,7 +2858,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a supported data source and returns its settings, which can be used for UI rendering.",
+	//   "description": "Retrieves a supported data source and returns its settings.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources/{dataSourcesId}",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.locations.dataSources.get",
@@ -2910,12 +2898,11 @@ type ProjectsLocationsDataSourcesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists supported data sources and returns their settings, which
-// can be used for UI rendering.
+// List: Lists supported data sources and returns their settings.
 //
 // - parent: The BigQuery project id for which data sources should be
 //   returned. Must be in the form: `projects/{project_id}` or
-//   `projects/{project_id}/locations/{location_id}.
+//   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsDataSourcesService) List(parent string) *ProjectsLocationsDataSourcesListCall {
 	c := &ProjectsLocationsDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2977,7 +2964,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3039,7 +3026,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists supported data sources and returns their settings, which can be used for UI rendering.",
+	//   "description": "Lists supported data sources and returns their settings.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.locations.dataSources.list",
@@ -3059,7 +3046,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}",
+	//       "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3127,42 +3114,48 @@ func (r *ProjectsLocationsTransferConfigsService) Create(parent string, transfer
 
 // AuthorizationCode sets the optional parameter "authorizationCode":
 // Optional OAuth2 authorization code to use with this transfer
-// configuration. This is required if new credentials are needed, as
-// indicated by `CheckValidCreds`. In order to obtain
-// authorization_code, please make a request to
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri=
-// * client_id should be OAuth client_id of BigQuery DTS API for the
-// given data source returned by ListDataSources method. *
-// data_source_scopes are the scopes returned by ListDataSources method.
-// * redirect_uri is an optional parameter. If not specified, then
-// authorization code is posted to the opener of authorization flow
-// window. Otherwise it will be sent to the redirect uri. A special
-// value of urn:ietf:wg:oauth:2.0:oob means that authorization code
-// should be returned in the title bar of the browser, with the page
-// text prompting the user to copy the code and paste it in the
-// application.
+// configuration. This is required only if `transferConfig.dataSourceId`
+// is 'youtube_channel' and new credentials are needed, as indicated by
+// `CheckValidCreds`. In order to obtain authorization_code, make a
+// request to the following URL:
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
+// client_id=client_id&scope=data_source_scopes
+// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_co
+// de * The client_id is the OAuth client_id of the a data source as
+// returned by ListDataSources method. * data_source_scopes are the
+// scopes returned by ListDataSources method. Note that this should not
+// be set when `service_account_name` is used to create the transfer
+// config.
 func (c *ProjectsLocationsTransferConfigsCreateCall) AuthorizationCode(authorizationCode string) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
 	return c
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set, transfer config
-// will be created with this service account credentials. It requires
-// that requesting user calling this API has permissions to act as this
-// service account.
+// Optional service account name. If this field is set, the transfer
+// config will be created with this service account's credentials. It
+// requires that the requesting user calling this API has permissions to
+// act as this service account. Note that not all data sources support
+// service account credentials when creating a transfer config. For the
+// latest list of data sources, read about using service accounts
+// (https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).
 func (c *ProjectsLocationsTransferConfigsCreateCall) ServiceAccountName(serviceAccountName string) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("serviceAccountName", serviceAccountName)
 	return c
 }
 
 // VersionInfo sets the optional parameter "versionInfo": Optional
-// version info. If users want to find a very recent access token, that
-// is, immediately after approving access, users have to set the
-// version_info claim in the token request. To obtain the version_info,
-// users must use the "none+gsession" response type. which be return a
-// version_info back in the authorization response which be be put in a
-// JWT claim in the token request.
+// version info. This is required only if `transferConfig.dataSourceId`
+// is not 'youtube_channel' and new credentials are needed, as indicated
+// by `CheckValidCreds`. In order to obtain version info, make a request
+// to the following URL:
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
+// client_id=client_id&scope=data_source_scopes
+// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info *
+// The client_id is the OAuth client_id of the a data source as returned
+// by ListDataSources method. * data_source_scopes are the scopes
+// returned by ListDataSources method. Note that this should not be set
+// when `service_account_name` is used to create the transfer config.
 func (c *ProjectsLocationsTransferConfigsCreateCall) VersionInfo(versionInfo string) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -3195,7 +3188,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3268,7 +3261,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required if new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, please make a request to https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u0026scope=\u0026redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the application.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3280,12 +3273,12 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set, transfer config will be created with this service account credentials. It requires that requesting user calling this API has permissions to act as this service account.",
+	//       "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. If users want to find a very recent access token, that is, immediately after approving access, users have to set the version_info claim in the token request. To obtain the version_info, users must use the \"none+gsession\" response type. which be return a version_info back in the authorization response which be be put in a JWT claim in the token request.",
+	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3354,7 +3347,7 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3501,7 +3494,7 @@ func (c *ProjectsLocationsTransferConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3606,8 +3599,8 @@ type ProjectsLocationsTransferConfigsListCall struct {
 // List: Returns information about all transfer configs owned by a
 // project in the specified location.
 //
-// - parent: The BigQuery project id for which data sources should be
-//   returned: `projects/{project_id}` or
+// - parent: The BigQuery project id for which transfer configs should
+//   be returned: `projects/{project_id}` or
 //   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsTransferConfigsService) List(parent string) *ProjectsLocationsTransferConfigsListCall {
 	c := &ProjectsLocationsTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3678,7 +3671,7 @@ func (c *ProjectsLocationsTransferConfigsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3766,7 +3759,7 @@ func (c *ProjectsLocationsTransferConfigsListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
+	//       "description": "Required. The BigQuery project id for which transfer configs should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3836,31 +3829,31 @@ func (r *ProjectsLocationsTransferConfigsService) Patch(name string, transfercon
 
 // AuthorizationCode sets the optional parameter "authorizationCode":
 // Optional OAuth2 authorization code to use with this transfer
-// configuration. If it is provided, the transfer configuration will be
-// associated with the authorizing user. In order to obtain
-// authorization_code, please make a request to
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri=
-// * client_id should be OAuth client_id of BigQuery DTS API for the
-// given data source returned by ListDataSources method. *
-// data_source_scopes are the scopes returned by ListDataSources method.
-// * redirect_uri is an optional parameter. If not specified, then
-// authorization code is posted to the opener of authorization flow
-// window. Otherwise it will be sent to the redirect uri. A special
-// value of urn:ietf:wg:oauth:2.0:oob means that authorization code
-// should be returned in the title bar of the browser, with the page
-// text prompting the user to copy the code and paste it in the
-// application.
+// configuration. This is required only if `transferConfig.dataSourceId`
+// is 'youtube_channel' and new credentials are needed, as indicated by
+// `CheckValidCreds`. In order to obtain authorization_code, make a
+// request to the following URL:
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
+// client_id=client_id&scope=data_source_scopes
+// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_co
+// de * The client_id is the OAuth client_id of the a data source as
+// returned by ListDataSources method. * data_source_scopes are the
+// scopes returned by ListDataSources method. Note that this should not
+// be set when `service_account_name` is used to update the transfer
+// config.
 func (c *ProjectsLocationsTransferConfigsPatchCall) AuthorizationCode(authorizationCode string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
 	return c
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set and
-// "service_account_name" is set in update_mask, transfer config will be
-// updated to use this service account credentials. It requires that
-// requesting user calling this API has permissions to act as this
-// service account.
+// Optional service account name. If this field is set, the transfer
+// config will be created with this service account's credentials. It
+// requires that the requesting user calling this API has permissions to
+// act as this service account. Note that not all data sources support
+// service account credentials when creating a transfer config. For the
+// latest list of data sources, read about using service accounts
+// (https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).
 func (c *ProjectsLocationsTransferConfigsPatchCall) ServiceAccountName(serviceAccountName string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("serviceAccountName", serviceAccountName)
 	return c
@@ -3874,12 +3867,17 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) UpdateMask(updateMask string
 }
 
 // VersionInfo sets the optional parameter "versionInfo": Optional
-// version info. If users want to find a very recent access token, that
-// is, immediately after approving access, users have to set the
-// version_info claim in the token request. To obtain the version_info,
-// users must use the "none+gsession" response type. which be return a
-// version_info back in the authorization response which be be put in a
-// JWT claim in the token request.
+// version info. This is required only if `transferConfig.dataSourceId`
+// is not 'youtube_channel' and new credentials are needed, as indicated
+// by `CheckValidCreds`. In order to obtain version info, make a request
+// to the following URL:
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
+// client_id=client_id&scope=data_source_scopes
+// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info *
+// The client_id is the OAuth client_id of the a data source as returned
+// by ListDataSources method. * data_source_scopes are the scopes
+// returned by ListDataSources method. Note that this should not be set
+// when `service_account_name` is used to update the transfer config.
 func (c *ProjectsLocationsTransferConfigsPatchCall) VersionInfo(versionInfo string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -3912,7 +3910,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3985,7 +3983,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. If it is provided, the transfer configuration will be associated with the authorizing user. In order to obtain authorization_code, please make a request to https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u0026scope=\u0026redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the application.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3997,7 +3995,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set and \"service_account_name\" is set in update_mask, transfer config will be updated to use this service account credentials. It requires that requesting user calling this API has permissions to act as this service account.",
+	//       "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4008,7 +4006,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. If users want to find a very recent access token, that is, immediately after approving access, users have to set the version_info claim in the token request. To obtain the version_info, users must use the \"none+gsession\" response type. which be return a version_info back in the authorization response which be be put in a JWT claim in the token request.",
+	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4082,7 +4080,7 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Header() http.Header 
 
 func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4231,7 +4229,7 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Header() http.Head
 
 func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4377,7 +4375,7 @@ func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4526,7 +4524,7 @@ func (c *ProjectsLocationsTransferConfigsRunsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4628,7 +4626,7 @@ type ProjectsLocationsTransferConfigsRunsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns information about running and completed jobs.
+// List: Returns information about running and completed transfer runs.
 //
 // - parent: Name of transfer configuration for which transfer runs
 //   should be retrieved. Format of transfer configuration resource name
@@ -4723,7 +4721,7 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4785,7 +4783,7 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns information about running and completed jobs.",
+	//   "description": "Returns information about running and completed transfer runs.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}/runs",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.runs.list",
@@ -4892,7 +4890,7 @@ type ProjectsLocationsTransferConfigsRunsTransferLogsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns user facing log messages for the data transfer run.
+// List: Returns log messages for the transfer run.
 //
 // - parent: Transfer run name in the form:
 //   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
@@ -4974,7 +4972,7 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Header() http
 
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5036,7 +5034,7 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns user facing log messages for the data transfer run.",
+	//   "description": "Returns log messages for the transfer run.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}/runs/{runsId}/transferLogs",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.runs.transferLogs.list",
@@ -5142,42 +5140,48 @@ func (r *ProjectsTransferConfigsService) Create(parent string, transferconfig *T
 
 // AuthorizationCode sets the optional parameter "authorizationCode":
 // Optional OAuth2 authorization code to use with this transfer
-// configuration. This is required if new credentials are needed, as
-// indicated by `CheckValidCreds`. In order to obtain
-// authorization_code, please make a request to
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri=
-// * client_id should be OAuth client_id of BigQuery DTS API for the
-// given data source returned by ListDataSources method. *
-// data_source_scopes are the scopes returned by ListDataSources method.
-// * redirect_uri is an optional parameter. If not specified, then
-// authorization code is posted to the opener of authorization flow
-// window. Otherwise it will be sent to the redirect uri. A special
-// value of urn:ietf:wg:oauth:2.0:oob means that authorization code
-// should be returned in the title bar of the browser, with the page
-// text prompting the user to copy the code and paste it in the
-// application.
+// configuration. This is required only if `transferConfig.dataSourceId`
+// is 'youtube_channel' and new credentials are needed, as indicated by
+// `CheckValidCreds`. In order to obtain authorization_code, make a
+// request to the following URL:
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
+// client_id=client_id&scope=data_source_scopes
+// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_co
+// de * The client_id is the OAuth client_id of the a data source as
+// returned by ListDataSources method. * data_source_scopes are the
+// scopes returned by ListDataSources method. Note that this should not
+// be set when `service_account_name` is used to create the transfer
+// config.
 func (c *ProjectsTransferConfigsCreateCall) AuthorizationCode(authorizationCode string) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
 	return c
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set, transfer config
-// will be created with this service account credentials. It requires
-// that requesting user calling this API has permissions to act as this
-// service account.
+// Optional service account name. If this field is set, the transfer
+// config will be created with this service account's credentials. It
+// requires that the requesting user calling this API has permissions to
+// act as this service account. Note that not all data sources support
+// service account credentials when creating a transfer config. For the
+// latest list of data sources, read about using service accounts
+// (https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).
 func (c *ProjectsTransferConfigsCreateCall) ServiceAccountName(serviceAccountName string) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("serviceAccountName", serviceAccountName)
 	return c
 }
 
 // VersionInfo sets the optional parameter "versionInfo": Optional
-// version info. If users want to find a very recent access token, that
-// is, immediately after approving access, users have to set the
-// version_info claim in the token request. To obtain the version_info,
-// users must use the "none+gsession" response type. which be return a
-// version_info back in the authorization response which be be put in a
-// JWT claim in the token request.
+// version info. This is required only if `transferConfig.dataSourceId`
+// is not 'youtube_channel' and new credentials are needed, as indicated
+// by `CheckValidCreds`. In order to obtain version info, make a request
+// to the following URL:
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
+// client_id=client_id&scope=data_source_scopes
+// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info *
+// The client_id is the OAuth client_id of the a data source as returned
+// by ListDataSources method. * data_source_scopes are the scopes
+// returned by ListDataSources method. Note that this should not be set
+// when `service_account_name` is used to create the transfer config.
 func (c *ProjectsTransferConfigsCreateCall) VersionInfo(versionInfo string) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -5210,7 +5214,7 @@ func (c *ProjectsTransferConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5283,7 +5287,7 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required if new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, please make a request to https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u0026scope=\u0026redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the application.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5295,12 +5299,12 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set, transfer config will be created with this service account credentials. It requires that requesting user calling this API has permissions to act as this service account.",
+	//       "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. If users want to find a very recent access token, that is, immediately after approving access, users have to set the version_info claim in the token request. To obtain the version_info, users must use the \"none+gsession\" response type. which be return a version_info back in the authorization response which be be put in a JWT claim in the token request.",
+	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5369,7 +5373,7 @@ func (c *ProjectsTransferConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5516,7 +5520,7 @@ func (c *ProjectsTransferConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5621,8 +5625,8 @@ type ProjectsTransferConfigsListCall struct {
 // List: Returns information about all transfer configs owned by a
 // project in the specified location.
 //
-// - parent: The BigQuery project id for which data sources should be
-//   returned: `projects/{project_id}` or
+// - parent: The BigQuery project id for which transfer configs should
+//   be returned: `projects/{project_id}` or
 //   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsTransferConfigsService) List(parent string) *ProjectsTransferConfigsListCall {
 	c := &ProjectsTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5693,7 +5697,7 @@ func (c *ProjectsTransferConfigsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5781,7 +5785,7 @@ func (c *ProjectsTransferConfigsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
+	//       "description": "Required. The BigQuery project id for which transfer configs should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5851,31 +5855,31 @@ func (r *ProjectsTransferConfigsService) Patch(name string, transferconfig *Tran
 
 // AuthorizationCode sets the optional parameter "authorizationCode":
 // Optional OAuth2 authorization code to use with this transfer
-// configuration. If it is provided, the transfer configuration will be
-// associated with the authorizing user. In order to obtain
-// authorization_code, please make a request to
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri=
-// * client_id should be OAuth client_id of BigQuery DTS API for the
-// given data source returned by ListDataSources method. *
-// data_source_scopes are the scopes returned by ListDataSources method.
-// * redirect_uri is an optional parameter. If not specified, then
-// authorization code is posted to the opener of authorization flow
-// window. Otherwise it will be sent to the redirect uri. A special
-// value of urn:ietf:wg:oauth:2.0:oob means that authorization code
-// should be returned in the title bar of the browser, with the page
-// text prompting the user to copy the code and paste it in the
-// application.
+// configuration. This is required only if `transferConfig.dataSourceId`
+// is 'youtube_channel' and new credentials are needed, as indicated by
+// `CheckValidCreds`. In order to obtain authorization_code, make a
+// request to the following URL:
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
+// client_id=client_id&scope=data_source_scopes
+// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_co
+// de * The client_id is the OAuth client_id of the a data source as
+// returned by ListDataSources method. * data_source_scopes are the
+// scopes returned by ListDataSources method. Note that this should not
+// be set when `service_account_name` is used to update the transfer
+// config.
 func (c *ProjectsTransferConfigsPatchCall) AuthorizationCode(authorizationCode string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
 	return c
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set and
-// "service_account_name" is set in update_mask, transfer config will be
-// updated to use this service account credentials. It requires that
-// requesting user calling this API has permissions to act as this
-// service account.
+// Optional service account name. If this field is set, the transfer
+// config will be created with this service account's credentials. It
+// requires that the requesting user calling this API has permissions to
+// act as this service account. Note that not all data sources support
+// service account credentials when creating a transfer config. For the
+// latest list of data sources, read about using service accounts
+// (https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).
 func (c *ProjectsTransferConfigsPatchCall) ServiceAccountName(serviceAccountName string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("serviceAccountName", serviceAccountName)
 	return c
@@ -5889,12 +5893,17 @@ func (c *ProjectsTransferConfigsPatchCall) UpdateMask(updateMask string) *Projec
 }
 
 // VersionInfo sets the optional parameter "versionInfo": Optional
-// version info. If users want to find a very recent access token, that
-// is, immediately after approving access, users have to set the
-// version_info claim in the token request. To obtain the version_info,
-// users must use the "none+gsession" response type. which be return a
-// version_info back in the authorization response which be be put in a
-// JWT claim in the token request.
+// version info. This is required only if `transferConfig.dataSourceId`
+// is not 'youtube_channel' and new credentials are needed, as indicated
+// by `CheckValidCreds`. In order to obtain version info, make a request
+// to the following URL:
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
+// client_id=client_id&scope=data_source_scopes
+// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info *
+// The client_id is the OAuth client_id of the a data source as returned
+// by ListDataSources method. * data_source_scopes are the scopes
+// returned by ListDataSources method. Note that this should not be set
+// when `service_account_name` is used to update the transfer config.
 func (c *ProjectsTransferConfigsPatchCall) VersionInfo(versionInfo string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -5927,7 +5936,7 @@ func (c *ProjectsTransferConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6000,7 +6009,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. If it is provided, the transfer configuration will be associated with the authorizing user. In order to obtain authorization_code, please make a request to https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u0026scope=\u0026redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the application.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6012,7 +6021,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set and \"service_account_name\" is set in update_mask, transfer config will be updated to use this service account credentials. It requires that requesting user calling this API has permissions to act as this service account.",
+	//       "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6023,7 +6032,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. If users want to find a very recent access token, that is, immediately after approving access, users have to set the version_info claim in the token request. To obtain the version_info, users must use the \"none+gsession\" response type. which be return a version_info back in the authorization response which be be put in a JWT claim in the token request.",
+	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6097,7 +6106,7 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6246,7 +6255,7 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6392,7 +6401,7 @@ func (c *ProjectsTransferConfigsRunsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6541,7 +6550,7 @@ func (c *ProjectsTransferConfigsRunsGetCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6643,7 +6652,7 @@ type ProjectsTransferConfigsRunsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns information about running and completed jobs.
+// List: Returns information about running and completed transfer runs.
 //
 // - parent: Name of transfer configuration for which transfer runs
 //   should be retrieved. Format of transfer configuration resource name
@@ -6738,7 +6747,7 @@ func (c *ProjectsTransferConfigsRunsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6800,7 +6809,7 @@ func (c *ProjectsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns information about running and completed jobs.",
+	//   "description": "Returns information about running and completed transfer runs.",
 	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}/runs",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.transferConfigs.runs.list",
@@ -6907,7 +6916,7 @@ type ProjectsTransferConfigsRunsTransferLogsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns user facing log messages for the data transfer run.
+// List: Returns log messages for the transfer run.
 //
 // - parent: Transfer run name in the form:
 //   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
@@ -6989,7 +6998,7 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7051,7 +7060,7 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns user facing log messages for the data transfer run.",
+	//   "description": "Returns log messages for the transfer run.",
 	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}/runs/{runsId}/transferLogs",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.transferConfigs.runs.transferLogs.list",

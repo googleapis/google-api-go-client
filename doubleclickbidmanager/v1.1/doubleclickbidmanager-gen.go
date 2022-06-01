@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -85,7 +86,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/doubleclickbidmanager",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -548,6 +549,9 @@ type FilterPair struct {
 	//   "FILTER_VERIFICATION_VIDEO_RESIZED"
 	//   "FILTER_VERIFICATION_AUDIBILITY_START"
 	//   "FILTER_VERIFICATION_AUDIBILITY_COMPLETE"
+	//   "FILTER_MEDIA_TYPE"
+	//   "FILTER_AUDIO_FEED_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_TARGETING_EXPANSION"
 	Type string `json:"type,omitempty"`
 
 	// Value: Filter value.
@@ -988,6 +992,9 @@ type Parameters struct {
 	//   "FILTER_VERIFICATION_VIDEO_RESIZED"
 	//   "FILTER_VERIFICATION_AUDIBILITY_START"
 	//   "FILTER_VERIFICATION_AUDIBILITY_COMPLETE"
+	//   "FILTER_MEDIA_TYPE"
+	//   "FILTER_AUDIO_FEED_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_TARGETING_EXPANSION"
 	GroupBys []string `json:"groupBys,omitempty"`
 
 	// IncludeInviteData: Deprecated. This field is no longer in use.
@@ -1398,7 +1405,6 @@ type Parameters struct {
 	//   "METRIC_INVALID_CLICKS"
 	//   "METRIC_INVALID_IMPRESSIONS"
 	//   "METRIC_INVALID_TRACKED_ADS"
-	//   "METRIC_MEDIA_COST_ADVERTISER_CURRENCY_PER_STORE_VISIT_ADX_ONLY"
 	//   "METRIC_MIDPOINT_AUDIO"
 	//   "METRIC_ORIGINAL_AUDIENCE_FREQUENCY"
 	//   "METRIC_PAUSES_AUDIO"
@@ -1417,11 +1423,9 @@ type Parameters struct {
 	//   "METRIC_REFUND_BILLABLE_COST_ADVERTISER_CURRENCY"
 	//   "METRIC_REFUND_MEDIA_COST_ADVERTISER_CURRENCY"
 	//   "METRIC_REFUND_PLATFORM_FEE_ADVERTISER_CURRENCY"
-	//   "METRIC_REVENUE_ADVERTISER_CURRENCY_PER_STORE_VISIT_ADX_ONLY"
 	//   "METRIC_RICH_MEDIA_ENGAGEMENTS"
 	//   "METRIC_STARTS_AUDIO"
 	//   "METRIC_STOPS_AUDIO"
-	//   "METRIC_STORE_VISITS_ADX_ONLY"
 	//   "METRIC_STORE_VISIT_CONVERSIONS"
 	//   "METRIC_THIRD_QUARTILE_AUDIO"
 	//   "METRIC_TIMERS"
@@ -1430,8 +1434,6 @@ type Parameters struct {
 	//   "METRIC_TOTAL_DISPLAY_TIME"
 	//   "METRIC_TOTAL_IMPRESSION_CUSTOM_VALUE"
 	//   "METRIC_TOTAL_INTERACTION_TIME"
-	//
-	// "METRIC_TOTAL_MEDIA_COST_ADVERTISER_CURRENCY_PER_STORE_VISIT_ADX_ONLY"
 	//   "METRIC_TOTAL_USERS"
 	//   "METRIC_TRACKED_ADS"
 	//   "METRIC_TRUEVIEW_GENERAL_INVALID_TRAFFIC_GIVT_VIEWS"
@@ -1491,6 +1493,7 @@ type Parameters struct {
 	//   "METRIC_WIN_LOSS_DEAL_TARGETED_IMPRESSIONS"
 	//   "METRIC_WIN_LOSS_LINEITEM_TARGETED_IMPRESSIONS"
 	//   "METRIC_VERIFICATION_VIDEO_PLAYER_SIZE_MEASURABLE_IMPRESSIONS"
+	//   "METRIC_TRUEVIEW_ALL_AD_SEQUENCE_IMPRESSIONS"
 	Metrics []string `json:"metrics,omitempty"`
 
 	// Options: Additional query options.
@@ -1928,6 +1931,9 @@ type PathQueryOptionsFilter struct {
 	//   "FILTER_VERIFICATION_VIDEO_RESIZED"
 	//   "FILTER_VERIFICATION_AUDIBILITY_START"
 	//   "FILTER_VERIFICATION_AUDIBILITY_COMPLETE"
+	//   "FILTER_MEDIA_TYPE"
+	//   "FILTER_AUDIO_FEED_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_TARGETING_EXPANSION"
 	Filter string `json:"filter,omitempty"`
 
 	// Match: Indicates how the filter should be matched to the value.
@@ -2530,7 +2536,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2665,7 +2671,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2780,7 +2786,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2937,7 +2943,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3101,7 +3107,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3245,7 +3251,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

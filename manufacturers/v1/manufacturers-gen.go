@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -85,7 +86,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/manufacturercenter",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -194,7 +195,10 @@ type Attributes struct {
 	// https://support.google.com/manufacturers/answer/6124116#disclosure.
 	DisclosureDate string `json:"disclosureDate,omitempty"`
 
-	// ExcludedDestination: A list of excluded destinations.
+	// ExcludedDestination: A list of excluded destinations such as
+	// "ClientExport", "ClientShoppingCatalog" or "PartnerShoppingCatalog".
+	// For more information, see
+	// https://support.google.com/manufacturers/answer/7443550
 	ExcludedDestination []string `json:"excludedDestination,omitempty"`
 
 	// FeatureDescription: The rich format description of the product. For
@@ -223,7 +227,10 @@ type Attributes struct {
 	// https://support.google.com/manufacturers/answer/6124116#image.
 	ImageLink *Image `json:"imageLink,omitempty"`
 
-	// IncludedDestination: A list of included destinations.
+	// IncludedDestination: A list of included destinations such as
+	// "ClientExport", "ClientShoppingCatalog" or "PartnerShoppingCatalog".
+	// For more information, see
+	// https://support.google.com/manufacturers/answer/7443550
 	IncludedDestination []string `json:"includedDestination,omitempty"`
 
 	// ItemGroupId: The item group id of the product. For more information,
@@ -302,7 +309,8 @@ type Attributes struct {
 	SuggestedRetailPrice *Price `json:"suggestedRetailPrice,omitempty"`
 
 	// TargetClientId: The target client id. Should only be used in the
-	// accounts of the data partners.
+	// accounts of the data partners. For more information, see
+	// https://support.google.com/manufacturers/answer/10857344
 	TargetClientId string `json:"targetClientId,omitempty"`
 
 	// Theme: The theme of the product. For more information, see
@@ -448,8 +456,7 @@ func (s *DestinationStatus) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -852,7 +859,7 @@ func (c *AccountsProductsDeleteCall) Header() http.Header {
 
 func (c *AccountsProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1033,7 +1040,7 @@ func (c *AccountsProductsGetCall) Header() http.Header {
 
 func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1235,7 +1242,7 @@ func (c *AccountsProductsListCall) Header() http.Header {
 
 func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1445,7 +1452,7 @@ func (c *AccountsProductsUpdateCall) Header() http.Header {
 
 func (c *AccountsProductsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

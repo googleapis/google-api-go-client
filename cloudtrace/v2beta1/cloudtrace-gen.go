@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -96,7 +97,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/trace.append",
 		"https://www.googleapis.com/auth/trace.readonly",
@@ -173,8 +174,7 @@ type ProjectsTraceSinksService struct {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -183,10 +183,10 @@ type Empty struct {
 
 // ListTraceSinksResponse: Result returned from `ListTraceSinks`.
 type ListTraceSinksResponse struct {
-	// NextPageToken: If there might be more results than appear in this
-	// response, then `nextPageToken` is included. To get the next set of
-	// results, call the same method again using the value of
-	// `nextPageToken` as `pageToken`.
+	// NextPageToken: A paginated response where more pages might be
+	// available has `next_page_token` set. To get the next set of results,
+	// call the same method again using the value of `next_page_token` as
+	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Sinks: A list of sinks.
@@ -222,8 +222,8 @@ func (s *ListTraceSinksResponse) MarshalJSON() ([]byte, error) {
 // OutputConfig: OutputConfig contains a destination for writing trace
 // data.
 type OutputConfig struct {
-	// Destination: The destination for writing trace data. Currently only
-	// BigQuery is supported. E.g.:
+	// Destination: The destination for writing trace data. Supported
+	// formats include:
 	// "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]"
 	Destination string `json:"destination,omitempty"`
 
@@ -255,7 +255,7 @@ func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 type TraceSink struct {
 	// Name: Required. The canonical sink resource name, unique within the
 	// project. Must be of the form:
-	// project/[PROJECT_NUMBER]/traceSinks/[SINK_ID]. E.g.:
+	// projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]. E.g.:
 	// "projects/12345/traceSinks/my-project-trace-sink". Sink identifiers
 	// are limited to 256 characters and can include only the following
 	// characters: upper and lower-case alphanumeric characters,
@@ -271,9 +271,9 @@ type TraceSink struct {
 	// specified in the output configuration, see Granting access for a
 	// resource
 	// (/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_ser
-	// vice_account_for_a_resource). To create tables and write data this
-	// account will need the dataEditor role. Read more about roles in the
-	// BigQuery documentation
+	// vice_account_for_a_resource). To create tables and to write data,
+	// this account needs the `dataEditor` role. Read more about roles in
+	// the BigQuery documentation
 	// (https://cloud.google.com/bigquery/docs/access-control). E.g.:
 	// "service-00000001@00000002.iam.gserviceaccount.com"
 	WriterIdentity string `json:"writerIdentity,omitempty"`
@@ -359,7 +359,7 @@ func (c *ProjectsTraceSinksCreateCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -503,7 +503,7 @@ func (c *ProjectsTraceSinksDeleteCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -650,7 +650,7 @@ func (c *ProjectsTraceSinksGetCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -764,7 +764,7 @@ func (r *ProjectsTraceSinksService) List(parent string) *ProjectsTraceSinksListC
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of results to return from this request. Non-positive values are
-// ignored. The presence of `nextPageToken` in the response indicates
+// ignored. The presence of `next_page_token` in the response indicates
 // that more results might be available.
 func (c *ProjectsTraceSinksListCall) PageSize(pageSize int64) *ProjectsTraceSinksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -773,7 +773,7 @@ func (c *ProjectsTraceSinksListCall) PageSize(pageSize int64) *ProjectsTraceSink
 
 // PageToken sets the optional parameter "pageToken": If present, then
 // retrieve the next batch of results from the preceding call to this
-// method. `pageToken` must be the value of `nextPageToken` from the
+// method. `page_token` must be the value of `next_page_token` from the
 // previous response. The values of other method parameters should be
 // identical to those in the previous call.
 func (c *ProjectsTraceSinksListCall) PageToken(pageToken string) *ProjectsTraceSinksListCall {
@@ -818,7 +818,7 @@ func (c *ProjectsTraceSinksListCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -889,13 +889,13 @@ func (c *ProjectsTraceSinksListCall) Do(opts ...googleapi.CallOption) (*ListTrac
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of `nextPageToken` in the response indicates that more results might be available.",
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of `next_page_token` in the response indicates that more results might be available.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. `pageToken` must be the value of `nextPageToken` from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. `page_token` must be the value of `next_page_token` from the previous response. The values of other method parameters should be identical to those in the previous call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -970,7 +970,7 @@ func (r *ProjectsTraceSinksService) Patch(nameid string, tracesink *TraceSink) *
 // mask that specifies the fields in `trace_sink` that are to be
 // updated. A sink field is overwritten if, and only if, it is in the
 // update mask. `name` and `writer_identity` fields cannot be updated.
-// An empty updateMask is considered an error. For a detailed
+// An empty `update_mask` is considered an error. For a detailed
 // `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 // Example: `updateMask=output_config`.
@@ -1006,7 +1006,7 @@ func (c *ProjectsTraceSinksPatchCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1086,7 +1086,7 @@ func (c *ProjectsTraceSinksPatchCall) Do(opts ...googleapi.CallOption) (*TraceSi
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Field mask that specifies the fields in `trace_sink` that are to be updated. A sink field is overwritten if, and only if, it is in the update mask. `name` and `writer_identity` fields cannot be updated. An empty updateMask is considered an error. For a detailed `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask Example: `updateMask=output_config`.",
+	//       "description": "Required. Field mask that specifies the fields in `trace_sink` that are to be updated. A sink field is overwritten if, and only if, it is in the update mask. `name` and `writer_identity` fields cannot be updated. An empty `update_mask` is considered an error. For a detailed `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask Example: `updateMask=output_config`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

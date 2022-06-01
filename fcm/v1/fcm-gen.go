@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -94,7 +95,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/firebase.messaging",
 	)
@@ -299,6 +300,10 @@ type AndroidNotification struct {
 	// to use to localize the body text to the user's current localization.
 	// See String Resources (https://goo.gl/NdFZGI) for more information.
 	BodyLocKey string `json:"bodyLocKey,omitempty"`
+
+	// BypassProxyNotification: If set, display notifications delivered to
+	// the device will be handled by the app instead of the proxy.
+	BypassProxyNotification bool `json:"bypassProxyNotification,omitempty"`
 
 	// ChannelId: The notification's channel id
 	// (https://developer.android.com/guide/topics/ui/notifiers/notifications#ManageChannels)
@@ -1049,7 +1054,7 @@ func (c *ProjectsMessagesSendCall) Header() http.Header {
 
 func (c *ProjectsMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

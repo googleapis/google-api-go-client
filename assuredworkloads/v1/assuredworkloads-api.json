@@ -351,7 +351,7 @@
       }
     }
   },
-  "revision": "20210916",
+  "revision": "20220317",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata": {
@@ -466,13 +466,32 @@
           "description": "Required. The user-assigned display name of the Workload. When present it must be between 4 to 30 characters. Allowed characters are: lowercase and uppercase letters, numbers, hyphen, and spaces. Example: My Workload",
           "type": "string"
         },
+        "enableSovereignControls": {
+          "description": "Optional. Indicates the sovereignty status of the given workload. Currently meant to be used by Europe/Canada customers.",
+          "type": "boolean"
+        },
         "etag": {
           "description": "Optional. ETag of the workload, it is calculated on the basis of the Workload contents. It will be used in Update \u0026 Delete operations.",
           "type": "string"
         },
+        "kajEnrollmentState": {
+          "description": "Output only. Represents the KAJ enrollment state of the given workload.",
+          "enum": [
+            "KAJ_ENROLLMENT_STATE_UNSPECIFIED",
+            "KAJ_ENROLLMENT_STATE_PENDING",
+            "KAJ_ENROLLMENT_STATE_COMPLETE"
+          ],
+          "enumDescriptions": [
+            "Default State for KAJ Enrollment.",
+            "Pending State for KAJ Enrollment.",
+            "Complete State for KAJ Enrollment."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
         "kmsSettings": {
           "$ref": "GoogleCloudAssuredworkloadsV1WorkloadKMSSettings",
-          "description": "Input only. Settings used to create a CMEK crypto key. When set a project with a KMS CMEK key is provisioned. This field is mandatory for a subset of Compliance Regimes."
+          "description": "Input only. Settings used to create a CMEK crypto key. When set, a project with a KMS CMEK key is provisioned. This field is deprecated as of Feb 28, 2022. In order to create a Keyring, callers should specify, ENCRYPTION_KEYS_PROJECT or KEYRING in ResourceSettings.resource_type field."
         },
         "labels": {
           "additionalProperties": {
@@ -503,6 +522,11 @@
           },
           "readOnly": true,
           "type": "array"
+        },
+        "saaEnrollmentResponse": {
+          "$ref": "GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse",
+          "description": "Output only. Represents the SAA enrollment response of the given workload. SAA enrollment response is queried during GetWorkload call. In failure cases, user friendly error message is shown in SAA details page.",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -538,12 +562,14 @@
           "enum": [
             "RESOURCE_TYPE_UNSPECIFIED",
             "CONSUMER_PROJECT",
+            "CONSUMER_FOLDER",
             "ENCRYPTION_KEYS_PROJECT",
             "KEYRING"
           ],
           "enumDescriptions": [
             "Unknown resource type.",
-            "Consumer project.",
+            "Consumer project. AssuredWorkloads Projects are no longer supported. This field will be ignored only in CreateWorkload requests. ListWorkloads and GetWorkload will continue to provide projects information. Use CONSUMER_FOLDER instead.",
+            "Consumer Folder.",
             "Consumer project containing encryption keys.",
             "Keyring resource that hosts encryption keys."
           ],
@@ -561,7 +587,7 @@
           "type": "string"
         },
         "resourceId": {
-          "description": "Resource identifier. For a project this represents project_id. If the project is already taken, the workload creation will fail.",
+          "description": "Resource identifier. For a project this represents project_id. If the project is already taken, the workload creation will fail. For KeyRing, this represents the keyring_id. For a folder, don't set this value as folder_id is assigned by Google.",
           "type": "string"
         },
         "resourceType": {
@@ -569,14 +595,58 @@
           "enum": [
             "RESOURCE_TYPE_UNSPECIFIED",
             "CONSUMER_PROJECT",
+            "CONSUMER_FOLDER",
             "ENCRYPTION_KEYS_PROJECT",
             "KEYRING"
           ],
           "enumDescriptions": [
             "Unknown resource type.",
-            "Consumer project.",
+            "Consumer project. AssuredWorkloads Projects are no longer supported. This field will be ignored only in CreateWorkload requests. ListWorkloads and GetWorkload will continue to provide projects information. Use CONSUMER_FOLDER instead.",
+            "Consumer Folder.",
             "Consumer project containing encryption keys.",
             "Keyring resource that hosts encryption keys."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse": {
+      "description": "Signed Access Approvals (SAA) enrollment response.",
+      "id": "GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse",
+      "properties": {
+        "setupErrors": {
+          "description": "Indicates SAA enrollment setup error if any.",
+          "items": {
+            "enum": [
+              "SETUP_ERROR_UNSPECIFIED",
+              "ERROR_INVALID_BASE_SETUP",
+              "ERROR_MISSING_EXTERNAL_SIGNING_KEY",
+              "ERROR_NOT_ALL_SERVICES_ENROLLED",
+              "ERROR_SETUP_CHECK_FAILED"
+            ],
+            "enumDescriptions": [
+              "Unspecified.",
+              "Invalid states for all customers, to be redirected to AA UI for additional details.",
+              "Returned when there is not an EKM key configured.",
+              "Returned when there are no enrolled services or the customer is enrolled in CAA only for a subset of services.",
+              "Returned when exception was encountered during evaluation of other criteria."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "setupStatus": {
+          "description": "Indicates SAA enrollment status of a given workload.",
+          "enum": [
+            "SETUP_STATE_UNSPECIFIED",
+            "STATUS_PENDING",
+            "STATUS_COMPLETE"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "SAA enrollment pending.",
+            "SAA enrollment comopleted."
           ],
           "type": "string"
         }
@@ -648,7 +718,7 @@
         },
         "cjisSettings": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1WorkloadCJISSettings",
-          "description": "Required. Input only. Immutable. Settings specific to resources needed for CJIS."
+          "description": "Input only. Immutable. Settings specific to resources needed for CJIS."
         },
         "complianceRegime": {
           "description": "Required. Immutable. Compliance Regime associated with this workload.",
@@ -688,25 +758,44 @@
           "description": "Required. The user-assigned display name of the Workload. When present it must be between 4 to 30 characters. Allowed characters are: lowercase and uppercase letters, numbers, hyphen, and spaces. Example: My Workload",
           "type": "string"
         },
+        "enableSovereignControls": {
+          "description": "Optional. Indicates the sovereignty status of the given workload. Currently meant to be used by Europe/Canada customers.",
+          "type": "boolean"
+        },
         "etag": {
           "description": "Optional. ETag of the workload, it is calculated on the basis of the Workload contents. It will be used in Update \u0026 Delete operations.",
           "type": "string"
         },
         "fedrampHighSettings": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampHighSettings",
-          "description": "Required. Input only. Immutable. Settings specific to resources needed for FedRAMP High."
+          "description": "Input only. Immutable. Settings specific to resources needed for FedRAMP High."
         },
         "fedrampModerateSettings": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1WorkloadFedrampModerateSettings",
-          "description": "Required. Input only. Immutable. Settings specific to resources needed for FedRAMP Moderate."
+          "description": "Input only. Immutable. Settings specific to resources needed for FedRAMP Moderate."
         },
         "il4Settings": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1WorkloadIL4Settings",
-          "description": "Required. Input only. Immutable. Settings specific to resources needed for IL4."
+          "description": "Input only. Immutable. Settings specific to resources needed for IL4."
+        },
+        "kajEnrollmentState": {
+          "description": "Output only. Represents the KAJ enrollment state of the given workload.",
+          "enum": [
+            "KAJ_ENROLLMENT_STATE_UNSPECIFIED",
+            "KAJ_ENROLLMENT_STATE_PENDING",
+            "KAJ_ENROLLMENT_STATE_COMPLETE"
+          ],
+          "enumDescriptions": [
+            "Default State for KAJ Enrollment.",
+            "Pending State for KAJ Enrollment.",
+            "Complete State for KAJ Enrollment."
+          ],
+          "readOnly": true,
+          "type": "string"
         },
         "kmsSettings": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings",
-          "description": "Input only. Settings used to create a CMEK crypto key. When set a project with a KMS CMEK key is provisioned. This field is mandatory for a subset of Compliance Regimes."
+          "description": "Input only. Settings used to create a CMEK crypto key. When set, a project with a KMS CMEK key is provisioned. This field is deprecated as of Feb 28, 2022. In order to create a Keyring, callers should specify, ENCRYPTION_KEYS_PROJECT or KEYRING in ResourceSettings.resource_type field."
         },
         "labels": {
           "additionalProperties": {
@@ -737,6 +826,11 @@
           },
           "readOnly": true,
           "type": "array"
+        },
+        "saaEnrollmentResponse": {
+          "$ref": "GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse",
+          "description": "Output only. Represents the SAA enrollment response of the given workload. SAA enrollment response is queried during GetWorkload call. In failure cases, user friendly error message is shown in SAA details page.",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -747,7 +841,7 @@
       "properties": {
         "kmsSettings": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings",
-          "description": "Required. Input only. Immutable. Settings used to create a CMEK crypto key."
+          "description": "Input only. Immutable. Settings used to create a CMEK crypto key."
         }
       },
       "type": "object"
@@ -758,7 +852,7 @@
       "properties": {
         "kmsSettings": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings",
-          "description": "Required. Input only. Immutable. Settings used to create a CMEK crypto key."
+          "description": "Input only. Immutable. Settings used to create a CMEK crypto key."
         }
       },
       "type": "object"
@@ -769,7 +863,7 @@
       "properties": {
         "kmsSettings": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings",
-          "description": "Required. Input only. Immutable. Settings used to create a CMEK crypto key."
+          "description": "Input only. Immutable. Settings used to create a CMEK crypto key."
         }
       },
       "type": "object"
@@ -780,7 +874,7 @@
       "properties": {
         "kmsSettings": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings",
-          "description": "Required. Input only. Immutable. Settings used to create a CMEK crypto key."
+          "description": "Input only. Immutable. Settings used to create a CMEK crypto key."
         }
       },
       "type": "object"
@@ -841,7 +935,7 @@
           "type": "string"
         },
         "resourceId": {
-          "description": "Resource identifier. For a project this represents project_id. If the project is already taken, the workload creation will fail.",
+          "description": "Resource identifier. For a project this represents project_id. If the project is already taken, the workload creation will fail. For KeyRing, this represents the keyring_id. For a folder, don't set this value as folder_id is assigned by Google.",
           "type": "string"
         },
         "resourceType": {
@@ -859,6 +953,396 @@
             "Consumer Folder.",
             "Consumer project containing encryption keys.",
             "Keyring resource that hosts encryption keys."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse": {
+      "description": "Signed Access Approvals (SAA) enrollment response.",
+      "id": "GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse",
+      "properties": {
+        "setupErrors": {
+          "description": "Indicates SAA enrollment setup error if any.",
+          "items": {
+            "enum": [
+              "SETUP_ERROR_UNSPECIFIED",
+              "ERROR_INVALID_BASE_SETUP",
+              "ERROR_MISSING_EXTERNAL_SIGNING_KEY",
+              "ERROR_NOT_ALL_SERVICES_ENROLLED",
+              "ERROR_SETUP_CHECK_FAILED"
+            ],
+            "enumDescriptions": [
+              "Unspecified.",
+              "Invalid states for all customers, to be redirected to AA UI for additional details.",
+              "Returned when there is not an EKM key configured.",
+              "Returned when there are no enrolled services or the customer is enrolled in CAA only for a subset of services.",
+              "Returned when exception was encountered during evaluation of other criteria."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "setupStatus": {
+          "description": "Indicates SAA enrollment status of a given workload.",
+          "enum": [
+            "SETUP_STATE_UNSPECIFIED",
+            "STATUS_PENDING",
+            "STATUS_COMPLETE"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "SAA enrollment pending.",
+            "SAA enrollment comopleted."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMetadata": {
+      "description": "Operation metadata to give request details of CreateWorkload.",
+      "id": "GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMetadata",
+      "properties": {
+        "complianceRegime": {
+          "description": "Optional. Compliance controls that should be applied to the resources managed by the workload.",
+          "enum": [
+            "COMPLIANCE_REGIME_UNSPECIFIED",
+            "IL4",
+            "CJIS",
+            "FEDRAMP_HIGH",
+            "FEDRAMP_MODERATE",
+            "US_REGIONAL_ACCESS",
+            "HIPAA",
+            "HITRUST",
+            "EU_REGIONS_AND_SUPPORT",
+            "CA_REGIONS_AND_SUPPORT"
+          ],
+          "enumDescriptions": [
+            "Unknown compliance regime.",
+            "Information protection as per DoD IL4 requirements.",
+            "Criminal Justice Information Services (CJIS) Security policies.",
+            "FedRAMP High data protection controls",
+            "FedRAMP Moderate data protection controls",
+            "Assured Workloads For US Regions data protection controls",
+            "Health Insurance Portability and Accountability Act controls",
+            "Health Information Trust Alliance controls",
+            "Assured Workloads For EU Regions and Support controls",
+            "Assured Workloads For Canada Regions and Support controls"
+          ],
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Optional. Time when the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Optional. The display name of the workload.",
+          "type": "string"
+        },
+        "parent": {
+          "description": "Optional. The parent of the workload.",
+          "type": "string"
+        },
+        "resourceSettings": {
+          "description": "Optional. Resource properties in the input that are used for creating/customizing workload resources.",
+          "items": {
+            "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceSettings"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsVersioningV1mainWorkload": {
+      "description": "An Workload object for managing highly regulated workloads of cloud customers.",
+      "id": "GoogleCloudAssuredworkloadsVersioningV1mainWorkload",
+      "properties": {
+        "billingAccount": {
+          "description": "Input only. The billing account used for the resources which are direct children of workload. This billing account is initially associated with the resources created as part of Workload creation. After the initial creation of these resources, the customer can change the assigned billing account. The resource name has the form `billingAccounts/{billing_account_id}`. For example, `billingAccounts/012345-567890-ABCDEF`.",
+          "type": "string"
+        },
+        "cjisSettings": {
+          "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings",
+          "description": "Required. Input only. Immutable. Settings specific to resources needed for CJIS."
+        },
+        "complianceRegime": {
+          "description": "Required. Immutable. Compliance Regime associated with this workload.",
+          "enum": [
+            "COMPLIANCE_REGIME_UNSPECIFIED",
+            "IL4",
+            "CJIS",
+            "FEDRAMP_HIGH",
+            "FEDRAMP_MODERATE",
+            "US_REGIONAL_ACCESS",
+            "HIPAA",
+            "HITRUST",
+            "EU_REGIONS_AND_SUPPORT",
+            "CA_REGIONS_AND_SUPPORT"
+          ],
+          "enumDescriptions": [
+            "Unknown compliance regime.",
+            "Information protection as per DoD IL4 requirements.",
+            "Criminal Justice Information Services (CJIS) Security policies.",
+            "FedRAMP High data protection controls",
+            "FedRAMP Moderate data protection controls",
+            "Assured Workloads For US Regions data protection controls",
+            "Health Insurance Portability and Accountability Act controls",
+            "Health Information Trust Alliance controls",
+            "Assured Workloads For EU Regions and Support controls",
+            "Assured Workloads For Canada Regions and Support controls"
+          ],
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Output only. Immutable. The Workload creation timestamp.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Required. The user-assigned display name of the Workload. When present it must be between 4 to 30 characters. Allowed characters are: lowercase and uppercase letters, numbers, hyphen, and spaces. Example: My Workload",
+          "type": "string"
+        },
+        "enableSovereignControls": {
+          "description": "Optional. Indicates the sovereignty status of the given workload. Currently meant to be used by Europe/Canada customers.",
+          "type": "boolean"
+        },
+        "etag": {
+          "description": "Optional. ETag of the workload, it is calculated on the basis of the Workload contents. It will be used in Update \u0026 Delete operations.",
+          "type": "string"
+        },
+        "fedrampHighSettings": {
+          "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampHighSettings",
+          "description": "Required. Input only. Immutable. Settings specific to resources needed for FedRAMP High."
+        },
+        "fedrampModerateSettings": {
+          "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampModerateSettings",
+          "description": "Required. Input only. Immutable. Settings specific to resources needed for FedRAMP Moderate."
+        },
+        "il4Settings": {
+          "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadIL4Settings",
+          "description": "Required. Input only. Immutable. Settings specific to resources needed for IL4."
+        },
+        "kajEnrollmentState": {
+          "description": "Output only. Represents the KAJ enrollment state of the given workload.",
+          "enum": [
+            "KAJ_ENROLLMENT_STATE_UNSPECIFIED",
+            "KAJ_ENROLLMENT_STATE_PENDING",
+            "KAJ_ENROLLMENT_STATE_COMPLETE"
+          ],
+          "enumDescriptions": [
+            "Default State for KAJ Enrollment.",
+            "Pending State for KAJ Enrollment.",
+            "Complete State for KAJ Enrollment."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "kmsSettings": {
+          "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings",
+          "description": "Input only. Settings used to create a CMEK crypto key. When set, a project with a KMS CMEK key is provisioned. This field is deprecated as of Feb 28, 2022. In order to create a Keyring, callers should specify, ENCRYPTION_KEYS_PROJECT or KEYRING in ResourceSettings.resource_type field."
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. Labels applied to the workload.",
+          "type": "object"
+        },
+        "name": {
+          "description": "Optional. The resource name of the workload. Format: organizations/{organization}/locations/{location}/workloads/{workload} Read-only.",
+          "type": "string"
+        },
+        "provisionedResourcesParent": {
+          "description": "Input only. The parent resource for the resources managed by this Assured Workload. May be either empty or a folder resource which is a child of the Workload parent. If not specified all resources are created under the parent organization. Format: folders/{folder_id}",
+          "type": "string"
+        },
+        "resourceSettings": {
+          "description": "Input only. Resource properties that are used to customize workload resources. These properties (such as custom project id) will be used to create workload resources if possible. This field is optional.",
+          "items": {
+            "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceSettings"
+          },
+          "type": "array"
+        },
+        "resources": {
+          "description": "Output only. The resources associated with this workload. These resources will be created when creating the workload. If any of the projects already exist, the workload creation will fail. Always read only.",
+          "items": {
+            "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceInfo"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "saaEnrollmentResponse": {
+          "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadSaaEnrollmentResponse",
+          "description": "Output only. Represents the SAA enrollment response of the given workload. SAA enrollment response is queried during GetWorkload call. In failure cases, user friendly error message is shown in SAA details page.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings": {
+      "description": "Settings specific to resources needed for CJIS.",
+      "id": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings",
+      "properties": {
+        "kmsSettings": {
+          "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings",
+          "description": "Input only. Immutable. Settings used to create a CMEK crypto key."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampHighSettings": {
+      "description": "Settings specific to resources needed for FedRAMP High.",
+      "id": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampHighSettings",
+      "properties": {
+        "kmsSettings": {
+          "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings",
+          "description": "Input only. Immutable. Settings used to create a CMEK crypto key."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampModerateSettings": {
+      "description": "Settings specific to resources needed for FedRAMP Moderate.",
+      "id": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampModerateSettings",
+      "properties": {
+        "kmsSettings": {
+          "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings",
+          "description": "Input only. Immutable. Settings used to create a CMEK crypto key."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadIL4Settings": {
+      "description": "Settings specific to resources needed for IL4.",
+      "id": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadIL4Settings",
+      "properties": {
+        "kmsSettings": {
+          "$ref": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings",
+          "description": "Input only. Immutable. Settings used to create a CMEK crypto key."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings": {
+      "description": "Settings specific to the Key Management Service.",
+      "id": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings",
+      "properties": {
+        "nextRotationTime": {
+          "description": "Required. Input only. Immutable. The time at which the Key Management Service will automatically create a new version of the crypto key and mark it as the primary.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "rotationPeriod": {
+          "description": "Required. Input only. Immutable. [next_rotation_time] will be advanced by this period when the Key Management Service automatically rotates a key. Must be at least 24 hours and at most 876,000 hours.",
+          "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceInfo": {
+      "description": "Represent the resources that are children of this Workload.",
+      "id": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceInfo",
+      "properties": {
+        "resourceId": {
+          "description": "Resource identifier. For a project this represents project_number.",
+          "format": "int64",
+          "type": "string"
+        },
+        "resourceType": {
+          "description": "Indicates the type of resource.",
+          "enum": [
+            "RESOURCE_TYPE_UNSPECIFIED",
+            "CONSUMER_PROJECT",
+            "CONSUMER_FOLDER",
+            "ENCRYPTION_KEYS_PROJECT",
+            "KEYRING"
+          ],
+          "enumDescriptions": [
+            "Unknown resource type.",
+            "Deprecated. Existing workloads will continue to support this, but new CreateWorkloadRequests should not specify this as an input value.",
+            "Consumer Folder.",
+            "Consumer project containing encryption keys.",
+            "Keyring resource that hosts encryption keys."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceSettings": {
+      "description": "Represent the custom settings for the resources to be created.",
+      "id": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceSettings",
+      "properties": {
+        "displayName": {
+          "description": "User-assigned resource display name. If not empty it will be used to create a resource with the specified name.",
+          "type": "string"
+        },
+        "resourceId": {
+          "description": "Resource identifier. For a project this represents project_id. If the project is already taken, the workload creation will fail. For KeyRing, this represents the keyring_id. For a folder, don't set this value as folder_id is assigned by Google.",
+          "type": "string"
+        },
+        "resourceType": {
+          "description": "Indicates the type of resource. This field should be specified to correspond the id to the right project type (CONSUMER_PROJECT or ENCRYPTION_KEYS_PROJECT)",
+          "enum": [
+            "RESOURCE_TYPE_UNSPECIFIED",
+            "CONSUMER_PROJECT",
+            "CONSUMER_FOLDER",
+            "ENCRYPTION_KEYS_PROJECT",
+            "KEYRING"
+          ],
+          "enumDescriptions": [
+            "Unknown resource type.",
+            "Deprecated. Existing workloads will continue to support this, but new CreateWorkloadRequests should not specify this as an input value.",
+            "Consumer Folder.",
+            "Consumer project containing encryption keys.",
+            "Keyring resource that hosts encryption keys."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadSaaEnrollmentResponse": {
+      "description": "Signed Access Approvals (SAA) enrollment response.",
+      "id": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadSaaEnrollmentResponse",
+      "properties": {
+        "setupErrors": {
+          "description": "Indicates SAA enrollment setup error if any.",
+          "items": {
+            "enum": [
+              "SETUP_ERROR_UNSPECIFIED",
+              "ERROR_INVALID_BASE_SETUP",
+              "ERROR_MISSING_EXTERNAL_SIGNING_KEY",
+              "ERROR_NOT_ALL_SERVICES_ENROLLED",
+              "ERROR_SETUP_CHECK_FAILED"
+            ],
+            "enumDescriptions": [
+              "Unspecified.",
+              "Invalid states for all customers, to be redirected to AA UI for additional details.",
+              "Returned when there is not an EKM key configured.",
+              "Returned when there are no enrolled services or the customer is enrolled in CAA only for a subset of services.",
+              "Returned when exception was encountered during evaluation of other criteria."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "setupStatus": {
+          "description": "Indicates SAA enrollment status of a given workload.",
+          "enum": [
+            "SETUP_STATE_UNSPECIFIED",
+            "STATUS_PENDING",
+            "STATUS_COMPLETE"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "SAA enrollment pending.",
+            "SAA enrollment comopleted."
           ],
           "type": "string"
         }
@@ -919,7 +1403,7 @@
       "type": "object"
     },
     "GoogleProtobufEmpty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "GoogleProtobufEmpty",
       "properties": {},
       "type": "object"

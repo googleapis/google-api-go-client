@@ -282,36 +282,34 @@
                   }
                 },
                 "osPolicyAssignments": {
-                  "methods": {
-                    "getReport": {
-                      "description": "Get the OS policy asssignment report for the specified Compute Engine VM instance.",
-                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/osPolicyAssignments/{osPolicyAssignmentsId}/report",
-                      "httpMethod": "GET",
-                      "id": "osconfig.projects.locations.instances.osPolicyAssignments.getReport",
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "description": "Required. API resource name for OS policy assignment report. Format: `/projects/{project}/locations/{location}/instances/{instance}/osPolicyAssignments/{assignment}/report` For `{project}`, either `project-number` or `project-id` can be provided. For `{instance_id}`, either Compute Engine `instance-id` or `instance-name` can be provided. For `{assignment_id}`, the OSPolicyAssignment id must be provided.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+/osPolicyAssignments/[^/]+/report$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1alpha/{+name}",
-                      "response": {
-                        "$ref": "OSPolicyAssignmentReport"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    }
-                  },
                   "resources": {
                     "reports": {
                       "methods": {
+                        "get": {
+                          "description": "Get the OS policy asssignment report for the specified Compute Engine VM instance.",
+                          "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/osPolicyAssignments/{osPolicyAssignmentsId}/report",
+                          "httpMethod": "GET",
+                          "id": "osconfig.projects.locations.instances.osPolicyAssignments.reports.get",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. API resource name for OS policy assignment report. Format: `/projects/{project}/locations/{location}/instances/{instance}/osPolicyAssignments/{assignment}/report` For `{project}`, either `project-number` or `project-id` can be provided. For `{instance_id}`, either Compute Engine `instance-id` or `instance-name` can be provided. For `{assignment_id}`, the OSPolicyAssignment id must be provided.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+/osPolicyAssignments/[^/]+/report$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1alpha/{+name}",
+                          "response": {
+                            "$ref": "OSPolicyAssignmentReport"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        },
                         "list": {
                           "description": "List OS policy asssignment reports for all Compute Engine VM instances in the specified zone.",
                           "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/osPolicyAssignments/{osPolicyAssignmentsId}/reports",
@@ -394,7 +392,7 @@
                       ],
                       "parameters": {
                         "filter": {
-                          "description": "If provided, this field specifies the criteria that must be met by a `vulnerabilityReport` API resource to be included in the response.",
+                          "description": "This field supports filtering by the severity level for the vulnerability. For a list of severity levels, see [Severity levels for vulnerabilities](https://cloud.google.com/container-analysis/docs/container-scanning-overview#severity_levels_for_vulnerabilities). The filter field follows the rules described in the [AIP-160](https://google.aip.dev/160) guidelines as follows: + **Filter for a specific severity type**: you can list reports that contain vulnerabilities that are classified as medium by specifying `vulnerabilities.details.severity:MEDIUM`. + **Filter for a range of severities** : you can list reports that have vulnerabilities that are classified as critical or high by specifying `vulnerabilities.details.severity:HIGH OR vulnerabilities.details.severity:CRITICAL`",
                           "location": "query",
                           "type": "string"
                         },
@@ -686,7 +684,7 @@
       }
     }
   },
-  "revision": "20210914",
+  "revision": "20220319",
   "rootUrl": "https://osconfig.googleapis.com/",
   "schemas": {
     "CVSSv3": {
@@ -842,7 +840,7 @@
       "type": "object"
     },
     "Date": {
-      "description": "Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values * A month and day value, with a zero year, such as an anniversary * A year on its own, with zero month and day values * A year and month value, with a zero day, such as a credit card expiration date Related types are google.type.TimeOfDay and `google.protobuf.Timestamp`.",
+      "description": "Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp",
       "id": "Date",
       "properties": {
         "day": {
@@ -864,7 +862,7 @@
       "type": "object"
     },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
       "type": "object"
@@ -882,6 +880,61 @@
           "description": "Specifies the relative value defined as a percentage, which will be multiplied by a reference value.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata": {
+      "description": "OS policy assignment operation metadata provided by OS policy assignment API methods that return long running operations.",
+      "id": "GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata",
+      "properties": {
+        "apiMethod": {
+          "description": "The OS policy assignment API method.",
+          "enum": [
+            "API_METHOD_UNSPECIFIED",
+            "CREATE",
+            "UPDATE",
+            "DELETE"
+          ],
+          "enumDescriptions": [
+            "Invalid value",
+            "Create OS policy assignment API method",
+            "Update OS policy assignment API method",
+            "Delete OS policy assignment API method"
+          ],
+          "type": "string"
+        },
+        "osPolicyAssignment": {
+          "description": "Reference to the `OSPolicyAssignment` API resource. Format: `projects/{project_number}/locations/{location}/osPolicyAssignments/{os_policy_assignment_id@revision_id}`",
+          "type": "string"
+        },
+        "rolloutStartTime": {
+          "description": "Rollout start time",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "rolloutState": {
+          "description": "State of the rollout",
+          "enum": [
+            "ROLLOUT_STATE_UNSPECIFIED",
+            "IN_PROGRESS",
+            "CANCELLING",
+            "CANCELLED",
+            "SUCCEEDED"
+          ],
+          "enumDescriptions": [
+            "Invalid value",
+            "The rollout is in progress.",
+            "The rollout is being cancelled.",
+            "The rollout is cancelled.",
+            "The rollout has completed successfully."
+          ],
+          "type": "string"
+        },
+        "rolloutUpdateTime": {
+          "description": "Rollout update time",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1179,7 +1232,7 @@
       "type": "object"
     },
     "InventoryWindowsApplication": {
-      "description": "Contains information about a Windows application as retrieved from the Windows Registry. For more information about these fields, see [Windows Installer Properties for the Uninstall Registry](https://docs.microsoft.com/en-us/windows/win32/msi/uninstall-registry-key){: class=\"external\" }",
+      "description": "Contains information about a Windows application that is retrieved from the Windows Registry. For more information about these fields, see: https://docs.microsoft.com/en-us/windows/win32/msi/uninstall-registry-key",
       "id": "InventoryWindowsApplication",
       "properties": {
         "displayName": {
@@ -2035,7 +2088,7 @@
             "POWERSHELL"
           ],
           "enumDescriptions": [
-            "Defaults to NONE.",
+            "Invalid value, the request will return validation error.",
             "If an interpreter is not specified, the source is executed directly. This execution, without an interpreter, only succeeds for executables and scripts that have shebang lines.",
             "Indicates that the script runs with `/bin/sh` on Linux and `cmd.exe` on Windows.",
             "Indicates that the script runs with PowerShell."
@@ -2561,6 +2614,13 @@
           },
           "type": "array"
         },
+        "items": {
+          "description": "List of items affected by the vulnerability.",
+          "items": {
+            "$ref": "VulnerabilityReportVulnerabilityItem"
+          },
+          "type": "array"
+        },
         "updateTime": {
           "description": "The timestamp for when the vulnerability was last modified.",
           "format": "google-datetime",
@@ -2614,6 +2674,29 @@
         },
         "url": {
           "description": "The url of the reference.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VulnerabilityReportVulnerabilityItem": {
+      "description": "OS inventory item that is affected by a vulnerability or fixed as a result of a vulnerability.",
+      "id": "VulnerabilityReportVulnerabilityItem",
+      "properties": {
+        "availableInventoryItemId": {
+          "description": "Corresponds to the `AVAILABLE_PACKAGE` inventory item on the VM. If the vulnerability report was not updated after the VM inventory update, these values might not display in VM inventory. If there is no available fix, the field is empty. The `inventory_item` value specifies the latest `SoftwarePackage` available to the VM that fixes the vulnerability.",
+          "type": "string"
+        },
+        "fixedCpeUri": {
+          "description": "The recommended [CPE URI](https://cpe.mitre.org/specification/) update that contains a fix for this vulnerability.",
+          "type": "string"
+        },
+        "installedInventoryItemId": {
+          "description": "Corresponds to the `INSTALLED_PACKAGE` inventory item on the VM. This field displays the inventory items affected by this vulnerability. If the vulnerability report was not updated after the VM inventory update, these values might not display in VM inventory. For some operating systems, this field might be empty.",
+          "type": "string"
+        },
+        "upstreamFix": {
+          "description": "The upstream OS patch, packages or KB that fixes the vulnerability.",
           "type": "string"
         }
       },

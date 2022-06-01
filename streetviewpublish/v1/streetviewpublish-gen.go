@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -85,7 +86,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/streetviewpublish",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -351,8 +352,7 @@ func (s *Connection) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -420,9 +420,10 @@ type Level struct {
 	// this level if there was an elevator.
 	Name string `json:"name,omitempty"`
 
-	// Number: Floor number, used for ordering. 0 indicates the ground
-	// level, 1 indicates the first level above ground level, -1 indicates
-	// the first level under ground level. Non-integer values are OK.
+	// Number: Optional. Floor number, used for ordering. 0 indicates the
+	// ground level, 1 indicates the first level above ground level, -1
+	// indicates the first level under ground level. Non-integer values are
+	// OK.
 	Number float64 `json:"number,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -560,13 +561,13 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 
 // Photo: Photo is used to store 360 photos along with photo metadata.
 type Photo struct {
-	// CaptureTime: Absolute time when the photo was captured. When the
-	// photo has no exif timestamp, this is used to set a timestamp in the
-	// photo metadata.
+	// CaptureTime: Optional. Absolute time when the photo was captured.
+	// When the photo has no exif timestamp, this is used to set a timestamp
+	// in the photo metadata.
 	CaptureTime string `json:"captureTime,omitempty"`
 
-	// Connections: Connections to other photos. A connection represents the
-	// link from this photo to another photo.
+	// Connections: Optional. Connections to other photos. A connection
+	// represents the link from this photo to another photo.
 	Connections []*Connection `json:"connections,omitempty"`
 
 	// DownloadUrl: Output only. The download URL for the photo bytes. This
@@ -575,7 +576,7 @@ type Photo struct {
 	DownloadUrl string `json:"downloadUrl,omitempty"`
 
 	// MapsPublishStatus: Output only. Status in Google Maps, whether this
-	// photo was published or rejected. Not currently populated.
+	// photo was published or rejected.
 	//
 	// Possible values:
 	//   "UNSPECIFIED_MAPS_PUBLISH_STATUS" - The status of the photo is
@@ -586,15 +587,15 @@ type Photo struct {
 	// reason.
 	MapsPublishStatus string `json:"mapsPublishStatus,omitempty"`
 
-	// PhotoId: Required when updating a photo. Output only when creating a
-	// photo. Identifier for the photo, which is unique among all photos in
-	// Google.
+	// PhotoId: Required. Output only. Required when updating a photo.
+	// Output only when creating a photo. Identifier for the photo, which is
+	// unique among all photos in Google.
 	PhotoId *PhotoId `json:"photoId,omitempty"`
 
-	// Places: Places where this photo belongs.
+	// Places: Optional. Places where this photo belongs.
 	Places []*Place `json:"places,omitempty"`
 
-	// Pose: Pose of the photo.
+	// Pose: Optional. Pose of the photo.
 	Pose *Pose `json:"pose,omitempty"`
 
 	// ShareLink: Output only. The share link for the photo.
@@ -622,11 +623,11 @@ type Photo struct {
 	// rights transfer.
 	TransferStatus string `json:"transferStatus,omitempty"`
 
-	// UploadReference: Required when creating a photo. Input only. The
-	// resource URL where the photo bytes are uploaded to.
+	// UploadReference: Input only. Required when creating a photo. Input
+	// only. The resource URL where the photo bytes are uploaded to.
 	UploadReference *UploadRef `json:"uploadReference,omitempty"`
 
-	// UploadTime: Time when the image was uploaded.
+	// UploadTime: Output only. Time when the image was uploaded.
 	UploadTime string `json:"uploadTime,omitempty"`
 
 	// ViewCount: Output only. View count of the photo.
@@ -661,7 +662,7 @@ func (s *Photo) MarshalJSON() ([]byte, error) {
 
 // PhotoId: Identifier for a Photo.
 type PhotoId struct {
-	// Id: Required. A unique identifier for a photo.
+	// Id: A unique identifier for a photo.
 	Id string `json:"id,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -722,12 +723,12 @@ func (s *PhotoResponse) MarshalJSON() ([]byte, error) {
 
 // Place: Place metadata for an entity.
 type Place struct {
-	// LanguageCode: Output-only. The language_code that the name is
+	// LanguageCode: Output only. The language_code that the name is
 	// localized with. This should be the language_code specified in the
 	// request, but may be a fallback.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// Name: Output-only. The name of the place, localized to the
+	// Name: Output only. The name of the place, localized to the
 	// language_code.
 	Name string `json:"name,omitempty"`
 
@@ -772,9 +773,12 @@ type Pose struct {
 	// indicates an unmeasured quantity.
 	Altitude float64 `json:"altitude,omitempty"`
 
-	// Heading: Compass heading, measured at the center of the photo in
-	// degrees clockwise from North. Value must be >=0 and <360. NaN
-	// indicates an unmeasured quantity.
+	// Heading: The following pose parameters pertain to the center of the
+	// photo. They match
+	// https://developers.google.com/streetview/spherical-metadata. Compass
+	// heading, measured at the center of the photo in degrees clockwise
+	// from North. Value must be >=0 and <360. NaN indicates an unmeasured
+	// quantity.
 	Heading float64 `json:"heading,omitempty"`
 
 	// LatLngPair: Latitude and longitude pair of the pose, as explained
@@ -903,7 +907,7 @@ type UpdatePhotoRequest struct {
 	// update fails if invalid fields are specified. Multiple fields can be
 	// specified in a comma-delimited list. The following fields are valid:
 	// * `pose.heading` * `pose.latLngPair` * `pose.pitch` * `pose.roll` *
-	// `pose.level` * `pose.altitude` * `connections` * `places` *Note:*
+	// `pose.level` * `pose.altitude` * `connections` * `places` > Note:
 	// When updateMask contains repeated fields, the entire set of repeated
 	// values get replaced with the new contents. For example, if updateMask
 	// contains `connections` and `UpdatePhotoRequest.photo.connections` is
@@ -1025,7 +1029,7 @@ func (c *PhotoCreateCall) Header() http.Header {
 
 func (c *PhotoCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1155,7 +1159,7 @@ func (c *PhotoDeleteCall) Header() http.Header {
 
 func (c *PhotoDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1326,7 +1330,7 @@ func (c *PhotoGetCall) Header() http.Header {
 
 func (c *PhotoGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1489,7 +1493,7 @@ func (c *PhotoStartUploadCall) Header() http.Header {
 
 func (c *PhotoStartUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1607,7 +1611,7 @@ func (r *PhotoService) Update(id string, photo *Photo) *PhotoUpdateCall {
 // are specified. Multiple fields can be specified in a comma-delimited
 // list. The following fields are valid: * `pose.heading` *
 // `pose.latLngPair` * `pose.pitch` * `pose.roll` * `pose.level` *
-// `pose.altitude` * `connections` * `places` *Note:* When updateMask
+// `pose.altitude` * `connections` * `places` > Note: When updateMask
 // contains repeated fields, the entire set of repeated values get
 // replaced with the new contents. For example, if updateMask contains
 // `connections` and `UpdatePhotoRequest.photo.connections` is empty,
@@ -1644,7 +1648,7 @@ func (c *PhotoUpdateCall) Header() http.Header {
 
 func (c *PhotoUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1717,13 +1721,13 @@ func (c *PhotoUpdateCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Required. A unique identifier for a photo.",
+	//       "description": "A unique identifier for a photo.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Mask that identifies fields on the photo metadata to update. If not present, the old Photo metadata is entirely replaced with the new Photo metadata in this request. The update fails if invalid fields are specified. Multiple fields can be specified in a comma-delimited list. The following fields are valid: * `pose.heading` * `pose.latLngPair` * `pose.pitch` * `pose.roll` * `pose.level` * `pose.altitude` * `connections` * `places` *Note:* When updateMask contains repeated fields, the entire set of repeated values get replaced with the new contents. For example, if updateMask contains `connections` and `UpdatePhotoRequest.photo.connections` is empty, all connections are removed.",
+	//       "description": "Required. Mask that identifies fields on the photo metadata to update. If not present, the old Photo metadata is entirely replaced with the new Photo metadata in this request. The update fails if invalid fields are specified. Multiple fields can be specified in a comma-delimited list. The following fields are valid: * `pose.heading` * `pose.latLngPair` * `pose.pitch` * `pose.roll` * `pose.level` * `pose.altitude` * `connections` * `places` \u003e Note: When updateMask contains repeated fields, the entire set of repeated values get replaced with the new contents. For example, if updateMask contains `connections` and `UpdatePhotoRequest.photo.connections` is empty, all connections are removed.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -1793,7 +1797,7 @@ func (c *PhotosBatchDeleteCall) Header() http.Header {
 
 func (c *PhotosBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1965,7 +1969,7 @@ func (c *PhotosBatchGetCall) Header() http.Header {
 
 func (c *PhotosBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2031,7 +2035,7 @@ func (c *PhotosBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetPhotosRe
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier. If language_code is unspecified, the user's language preference for Google services is used.",
+	//       "description": "Optional. The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier. If language_code is unspecified, the user's language preference for Google services is used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2086,7 +2090,7 @@ type PhotosBatchUpdateCall struct {
 // failures that can occur per photo. Only the fields specified in
 // updateMask field are used. If `updateMask` is not present, the update
 // applies to all fields. The number of UpdatePhotoRequest messages in a
-// BatchUpdatePhotosRequest must not exceed 20. *Note:* To update
+// BatchUpdatePhotosRequest must not exceed 20. > Note: To update
 // Pose.altitude, Pose.latLngPair has to be filled as well. Otherwise,
 // the request will fail.
 func (r *PhotosService) BatchUpdate(batchupdatephotosrequest *BatchUpdatePhotosRequest) *PhotosBatchUpdateCall {
@@ -2122,7 +2126,7 @@ func (c *PhotosBatchUpdateCall) Header() http.Header {
 
 func (c *PhotosBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2183,7 +2187,7 @@ func (c *PhotosBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUpdatePh
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the metadata of Photos, such as pose, place association, connections, etc. Changing the pixels of photos is not supported. Note that if BatchUpdatePhotos fails, either critical fields are missing or there is an authentication error. Even if BatchUpdatePhotos succeeds, individual photos in the batch may have failures. These failures are specified in each PhotoResponse.status in BatchUpdatePhotosResponse.results. See UpdatePhoto for specific failures that can occur per photo. Only the fields specified in updateMask field are used. If `updateMask` is not present, the update applies to all fields. The number of UpdatePhotoRequest messages in a BatchUpdatePhotosRequest must not exceed 20. *Note:* To update Pose.altitude, Pose.latLngPair has to be filled as well. Otherwise, the request will fail.",
+	//   "description": "Updates the metadata of Photos, such as pose, place association, connections, etc. Changing the pixels of photos is not supported. Note that if BatchUpdatePhotos fails, either critical fields are missing or there is an authentication error. Even if BatchUpdatePhotos succeeds, individual photos in the batch may have failures. These failures are specified in each PhotoResponse.status in BatchUpdatePhotosResponse.results. See UpdatePhoto for specific failures that can occur per photo. Only the fields specified in updateMask field are used. If `updateMask` is not present, the update applies to all fields. The number of UpdatePhotoRequest messages in a BatchUpdatePhotosRequest must not exceed 20. \u003e Note: To update Pose.altitude, Pose.latLngPair has to be filled as well. Otherwise, the request will fail.",
 	//   "flatPath": "v1/photos:batchUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "streetviewpublish.photos.batchUpdate",
@@ -2213,7 +2217,7 @@ type PhotosListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all the Photos that belong to the user. *Note:* Recently
+// List: Lists all the Photos that belong to the user. > Note: Recently
 // created photos that are still being indexed are not returned in the
 // response.
 func (r *PhotosService) List() *PhotosListCall {
@@ -2222,8 +2226,10 @@ func (r *PhotosService) List() *PhotosListCall {
 }
 
 // Filter sets the optional parameter "filter": The filter expression.
-// For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The only filter
-// supported at the moment is `placeId`.
+// For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The filters
+// supported are: `placeId`, `min_latitude`, `max_latitude`,
+// `min_longitude`, and `max_longitude`. See https://google.aip.dev/160
+// for more information.
 func (c *PhotosListCall) Filter(filter string) *PhotosListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2308,7 +2314,7 @@ func (c *PhotosListCall) Header() http.Header {
 
 func (c *PhotosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2367,30 +2373,30 @@ func (c *PhotosListCall) Do(opts ...googleapi.CallOption) (*ListPhotosResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all the Photos that belong to the user. *Note:* Recently created photos that are still being indexed are not returned in the response.",
+	//   "description": "Lists all the Photos that belong to the user. \u003e Note: Recently created photos that are still being indexed are not returned in the response.",
 	//   "flatPath": "v1/photos",
 	//   "httpMethod": "GET",
 	//   "id": "streetviewpublish.photos.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The only filter supported at the moment is `placeId`.",
+	//       "description": "Optional. The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The filters supported are: `placeId`, `min_latitude`, `max_latitude`, `min_longitude`, and `max_longitude`. See https://google.aip.dev/160 for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier. If language_code is unspecified, the user's language preference for Google services is used.",
+	//       "description": "Optional. The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier. If language_code is unspecified, the user's language preference for Google services is used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of photos to return. `pageSize` must be non-negative. If `pageSize` is zero or is not provided, the default page size of 100 is used. The number of photos returned in the response may be less than `pageSize` if the number of photos that belong to the user is less than `pageSize`.",
+	//       "description": "Optional. The maximum number of photos to return. `pageSize` must be non-negative. If `pageSize` is zero or is not provided, the default page size of 100 is used. The number of photos returned in the response may be less than `pageSize` if the number of photos that belong to the user is less than `pageSize`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The nextPageToken value returned from a previous ListPhotos request, if any.",
+	//       "description": "Optional. The nextPageToken value returned from a previous ListPhotos request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

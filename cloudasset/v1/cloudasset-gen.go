@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -86,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -118,8 +119,10 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Assets = NewAssetsService(s)
+	s.EffectiveIamPolicies = NewEffectiveIamPoliciesService(s)
 	s.Feeds = NewFeedsService(s)
 	s.Operations = NewOperationsService(s)
+	s.SavedQueries = NewSavedQueriesService(s)
 	s.V1 = NewV1Service(s)
 	return s, nil
 }
@@ -131,9 +134,13 @@ type Service struct {
 
 	Assets *AssetsService
 
+	EffectiveIamPolicies *EffectiveIamPoliciesService
+
 	Feeds *FeedsService
 
 	Operations *OperationsService
+
+	SavedQueries *SavedQueriesService
 
 	V1 *V1Service
 }
@@ -154,6 +161,15 @@ type AssetsService struct {
 	s *Service
 }
 
+func NewEffectiveIamPoliciesService(s *Service) *EffectiveIamPoliciesService {
+	rs := &EffectiveIamPoliciesService{s: s}
+	return rs
+}
+
+type EffectiveIamPoliciesService struct {
+	s *Service
+}
+
 func NewFeedsService(s *Service) *FeedsService {
 	rs := &FeedsService{s: s}
 	return rs
@@ -169,6 +185,15 @@ func NewOperationsService(s *Service) *OperationsService {
 }
 
 type OperationsService struct {
+	s *Service
+}
+
+func NewSavedQueriesService(s *Service) *SavedQueriesService {
+	rs := &SavedQueriesService{s: s}
+	return rs
+}
+
+type SavedQueriesService struct {
 	s *Service
 }
 
@@ -254,6 +279,21 @@ type AnalyzeIamPolicyLongrunningRequest struct {
 	// OutputConfig: Required. Output configuration indicating where the
 	// results will be output to.
 	OutputConfig *IamPolicyAnalysisOutputConfig `json:"outputConfig,omitempty"`
+
+	// SavedAnalysisQuery: Optional. The name of a saved query, which must
+	// be in the format of: *
+	// projects/project_number/savedQueries/saved_query_id *
+	// folders/folder_number/savedQueries/saved_query_id *
+	// organizations/organization_number/savedQueries/saved_query_id If both
+	// `analysis_query` and `saved_analysis_query` are provided, they will
+	// be merged together with the `saved_analysis_query` as base and the
+	// `analysis_query` as overrides. For more details of the merge
+	// behavior, please refer to the MergeFrom
+	// (https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.message#Message.MergeFrom.details)
+	// doc. Note that you cannot override primitive fields with default
+	// value, such as 0 or empty string, etc., because we use proto3, which
+	// doesn't support field presence yet.
+	SavedAnalysisQuery string `json:"savedAnalysisQuery,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisQuery") to
 	// unconditionally include in API requests. By default, fields with
@@ -402,8 +442,8 @@ type Asset struct {
 	// resource hierarchy. Therefore, the effectively policy is the union of
 	// both the policy set on this resource and each policy set on all of
 	// the resource's ancestry resource levels in the hierarchy. See this
-	// topic (https://cloud.google.com/iam/docs/policies#inheritance) for
-	// more information.
+	// topic (https://cloud.google.com/iam/help/allow-policies/inheritance)
+	// for more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:
@@ -425,7 +465,12 @@ type Asset struct {
 	// for more information.
 	OsInventory *Inventory `json:"osInventory,omitempty"`
 
-	// RelatedAssets: The related assets of the asset of one relationship
+	// RelatedAsset: One related asset of the current asset.
+	RelatedAsset *RelatedAsset `json:"relatedAsset,omitempty"`
+
+	// RelatedAssets: DEPRECATED. This field only presents for the purpose
+	// of backward-compatibility. The server will never generate responses
+	// with this field. The related assets of the asset of one relationship
 	// type. One asset only represents one type of relationship.
 	RelatedAssets *RelatedAssets `json:"relatedAssets,omitempty"`
 
@@ -519,8 +564,8 @@ func (s *AttachedResource) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -632,12 +677,53 @@ func (s *BatchGetAssetsHistoryResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchGetEffectiveIamPoliciesResponse: A response message for
+// AssetService.BatchGetEffectiveIamPolicies.
+type BatchGetEffectiveIamPoliciesResponse struct {
+	// PolicyResults: The effective policies for a batch of resources. Note
+	// that the results order is the same as the order of
+	// BatchGetEffectiveIamPoliciesRequest.names. When a resource does not
+	// have any effective IAM policies, its corresponding policy_result will
+	// contain empty EffectiveIamPolicy.policies.
+	PolicyResults []*EffectiveIamPolicy `json:"policyResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "PolicyResults") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PolicyResults") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchGetEffectiveIamPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchGetEffectiveIamPoliciesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BigQueryDestination: A BigQuery destination for exporting assets to.
 type BigQueryDestination struct {
 	// Dataset: Required. The BigQuery dataset in format
 	// "projects/projectId/datasets/datasetId", to which the snapshot result
 	// should be exported. If this dataset does not exist, the export call
-	// returns an INVALID_ARGUMENT error.
+	// returns an INVALID_ARGUMENT error. Setting the `contentType` for
+	// `exportAssets` determines the schema
+	// (/asset-inventory/docs/exporting-to-bigquery#bigquery-schema) of the
+	// BigQuery table. Setting `separateTablesPerAssetType` to `TRUE` also
+	// influences the schema.
 	Dataset string `json:"dataset,omitempty"`
 
 	// Force: If the destination table already exists and this flag is
@@ -718,20 +804,20 @@ func (s *BigQueryDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -764,8 +850,8 @@ type Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -899,11 +985,12 @@ func (s *CreateFeedRequest) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -941,12 +1028,56 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EffectiveIamPolicy: The effective IAM policies on one resource.
+type EffectiveIamPolicy struct {
+	// FullResourceName: The [full_resource_name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// for which the policies are computed. This is one of the
+	// BatchGetEffectiveIamPoliciesRequest.names the caller provides in the
+	// request.
+	FullResourceName string `json:"fullResourceName,omitempty"`
+
+	// Policies: The effective policies for the full_resource_name. These
+	// policies include the policy set on the full_resource_name and those
+	// set on its parents and ancestors up to the
+	// BatchGetEffectiveIamPoliciesRequest.scope. Note that these policies
+	// are not filtered according to the resource type of the
+	// full_resource_name. These policies are hierarchically ordered by
+	// PolicyInfo.attached_resource starting from full_resource_name itself
+	// to its parents and ancestors, such that policies[i]'s
+	// PolicyInfo.attached_resource is the child of policies[i+1]'s
+	// PolicyInfo.attached_resource, if policies[i+1] exists.
+	Policies []*PolicyInfo `json:"policies,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FullResourceName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EffectiveIamPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod EffectiveIamPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1141,18 +1272,17 @@ type Feed struct {
 	// asset_types. Only asset updates matching specified asset_names or
 	// asset_types are exported to the feed. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
-	// s/instance1`. See Resource Names
-	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
-	// for more info.
+	// s/instance1`. For a list of the full names for supported asset types,
+	// see Resource name format
+	// (/asset-inventory/docs/resource-name-format).
 	AssetNames []string `json:"assetNames,omitempty"`
 
 	// AssetTypes: A list of types of the assets to receive updates. You
 	// must specify either or both of asset_names and asset_types. Only
 	// asset updates matching specified asset_names or asset_types are
-	// exported to the feed. Example: "compute.googleapis.com/Disk" See
-	// this topic
-	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
-	// for a list of all supported asset types.
+	// exported to the feed. Example: "compute.googleapis.com/Disk" For a
+	// list of all supported asset types, see Supported asset types
+	// (/asset-inventory/docs/supported-asset-types).
 	AssetTypes []string `json:"assetTypes,omitempty"`
 
 	// Condition: A condition which determines whether an asset update
@@ -1679,8 +1809,8 @@ type GoogleCloudAssetV1p7beta1Asset struct {
 	// resource hierarchy. Therefore, the effectively policy is the union of
 	// both the policy set on this resource and each policy set on all of
 	// the resource's ancestry resource levels in the hierarchy. See this
-	// topic (https://cloud.google.com/iam/docs/policies#inheritance) for
-	// more information.
+	// topic (https://cloud.google.com/iam/help/allow-policies/inheritance)
+	// for more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:
@@ -2272,6 +2402,21 @@ type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	// Resource Hierarchy. Currently immutable once created. Format:
 	// `organizations/{organization_id}`
 	Parent string `json:"parent,omitempty"`
+
+	// Scopes: The scopes of a policy define which resources an ACM policy
+	// can restrict, and where ACM resources can be referenced. For example,
+	// a policy with scopes=["folders/123"] has the following behavior: -
+	// vpcsc perimeters can only restrict projects within folders/123 -
+	// access levels can only be referenced by resources within folders/123.
+	// If empty, there are no limitations on which resources can be
+	// restricted by an ACM policy, and there are no limitations on where
+	// ACM resources can be referenced. Only one policy can include a given
+	// scope (attempting to create a second policy which includes
+	// "folders/123" will result in an error). Currently, scopes cannot be
+	// modified after a policy is created. Currently, policies can only have
+	// a single scope. Format: list of `folders/{folder_number}` or
+	// `projects/{project_number}`
+	Scopes []string `json:"scopes,omitempty"`
 
 	// Title: Required. Human readable title. Does not affect behavior.
 	Title string `json:"title,omitempty"`
@@ -3234,7 +3379,7 @@ func (s *IamPolicyAnalysisOutputConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// IamPolicyAnalysisQuery: ## IAM policy analysis query message.
+// IamPolicyAnalysisQuery: IAM policy analysis query message.
 type IamPolicyAnalysisQuery struct {
 	// AccessSelector: Optional. Specifies roles or permissions for
 	// analysis. This is optional.
@@ -3549,8 +3694,8 @@ func (s *IamPolicySearchResult) MarshalJSON() ([]byte, error) {
 // resource access, based on roles assigned either directly to them or
 // to the groups they belong to, directly or indirectly.
 type IdentitySelector struct {
-	// Identity: Required. The identity appear in the form of members in IAM
-	// policy binding
+	// Identity: Required. The identity appear in the form of principals in
+	// IAM policy binding
 	// (https://cloud.google.com/iam/reference/rest/v1/Binding). The
 	// examples of supported forms are: "user:mike@example.com",
 	// "group:admins@example.com", "domain:google.com",
@@ -3763,6 +3908,43 @@ func (s *ListFeedsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListSavedQueriesResponse: Response of listing saved queries.
+type ListSavedQueriesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SavedQueries: A list of savedQueries.
+	SavedQueries []*SavedQuery `json:"savedQueries,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSavedQueriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSavedQueriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MoveAnalysis: A message to group the analysis information.
 type MoveAnalysis struct {
 	// Analysis: Analysis result of moving the target resource.
@@ -3945,15 +4127,20 @@ type Options struct {
 	// there's another IAM policy states service account SA has permission P
 	// to the GCP folder F, then user A potentially has access to the GCP
 	// folder F. And those advanced analysis results will be included in
-	// AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
-	// Default is false.
+	// AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Only
+	// the following permissions are considered in this analysis: *
+	// `iam.serviceAccounts.actAs` * `iam.serviceAccounts.signBlob` *
+	// `iam.serviceAccounts.signJwt` * `iam.serviceAccounts.getAccessToken`
+	// * `iam.serviceAccounts.getOpenIdToken` *
+	// `iam.serviceAccounts.implicitDelegation` Default is false.
 	AnalyzeServiceAccountImpersonation bool `json:"analyzeServiceAccountImpersonation,omitempty"`
 
 	// ExpandGroups: Optional. If true, the identities section of the result
 	// will expand any Google groups appearing in an IAM policy binding. If
 	// IamPolicyAnalysisQuery.identity_selector is specified, the identity
 	// in the result will be determined by the selector, and this flag is
-	// not allowed to set. Default is false.
+	// not allowed to set. If true, the default max expansion per group is
+	// 1000 for AssetService.AnalyzeIamPolicy][]. Default is false.
 	ExpandGroups bool `json:"expandGroups,omitempty"`
 
 	// ExpandResources: Optional. If true and
@@ -3970,8 +4157,10 @@ type Options struct {
 	// organization resource cannot be used together with this option. For
 	// example, if the request analyzes for which users have permission P on
 	// a GCP project with this option enabled, the results will include all
-	// users who have permission P on that project or any lower resource.
-	// Default is false.
+	// users who have permission P on that project or any lower resource. If
+	// true, the default max expansion per resource is 1000 for
+	// AssetService.AnalyzeIamPolicy][] and 100000 for
+	// AssetService.AnalyzeIamPolicyLongrunning][]. Default is false.
 	ExpandResources bool `json:"expandResources,omitempty"`
 
 	// ExpandRoles: Optional. If true, the access section of result will
@@ -3981,14 +4170,14 @@ type Options struct {
 	// and this flag is not allowed to set. Default is false.
 	ExpandRoles bool `json:"expandRoles,omitempty"`
 
-	// OutputGroupEdges: Optional. If true, the result will output group
-	// identity edges, starting from the binding's group members, to any
-	// expanded identities. Default is false.
+	// OutputGroupEdges: Optional. If true, the result will output the
+	// relevant membership relationships between groups and other groups,
+	// and between groups and principals. Default is false.
 	OutputGroupEdges bool `json:"outputGroupEdges,omitempty"`
 
-	// OutputResourceEdges: Optional. If true, the result will output
-	// resource edges, starting from the policy attached resource, to any
-	// expanded resources. Default is false.
+	// OutputResourceEdges: Optional. If true, the result will output the
+	// relevant parent/child relationships between resources. Default is
+	// false.
 	OutputResourceEdges bool `json:"outputResourceEdges,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4175,17 +4364,17 @@ func (s *Permissions) MarshalJSON() ([]byte, error) {
 
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members` to
-// a single `role`. Members can be user accounts, service accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of permissions; each `role` can be an IAM predefined role or a
-// user-created custom role. For some types of Google Cloud resources, a
-// `binding` can also specify a `condition`, which is a logical
-// expression that allows access to a resource only if the expression
-// evaluates to `true`. A condition can add constraints based on
-// attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -4212,9 +4401,15 @@ type Policy struct {
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -4273,6 +4468,40 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PolicyInfo: The IAM policy and its attached resource.
+type PolicyInfo struct {
+	// AttachedResource: The full resource name the policy is directly
+	// attached to.
+	AttachedResource string `json:"attachedResource,omitempty"`
+
+	// Policy: The IAM policy that's directly attached to the
+	// attached_resource.
+	Policy *Policy `json:"policy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttachedResource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttachedResource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PubsubDestination: A Pub/Sub destination.
 type PubsubDestination struct {
 	// Topic: The name of the Pub/Sub topic to publish to. Example:
@@ -4298,6 +4527,38 @@ type PubsubDestination struct {
 
 func (s *PubsubDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryContent: The query content.
+type QueryContent struct {
+	// IamPolicyAnalysisQuery: An IAM Policy Analysis query, which could be
+	// used in the AssetService.AnalyzeIamPolicy rpc or the
+	// AssetService.AnalyzeIamPolicyLongrunning rpc.
+	IamPolicyAnalysisQuery *IamPolicyAnalysisQuery `json:"iamPolicyAnalysisQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IamPolicyAnalysisQuery") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IamPolicyAnalysisQuery")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryContent) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryContent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4334,6 +4595,10 @@ type RelatedAsset struct {
 	// for more information.
 	AssetType string `json:"assetType,omitempty"`
 
+	// RelationshipType: The unique identifier of the relationship type.
+	// Example: `INSTANCE_TO_INSTANCEGROUP`
+	RelationshipType string `json:"relationshipType,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Ancestors") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4357,7 +4622,9 @@ func (s *RelatedAsset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RelatedAssets: The detailed related assets with the
+// RelatedAssets: DEPRECATED. This message only presents for the purpose
+// of backward-compatibility. The server will never populate this
+// message in responses. The detailed related assets with the
 // `relationship_type`.
 type RelatedAssets struct {
 	// Assets: The peer resources of the relationship.
@@ -4454,7 +4721,9 @@ func (s *RelatedResources) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RelationshipAttributes: The relationship attributes which include
+// RelationshipAttributes: DEPRECATED. This message only presents for
+// the purpose of backward-compatibility. The server will never populate
+// this message in responses. The relationship attributes which include
 // `type`, `source_resource_type`, `target_resource_type` and `action`.
 type RelationshipAttributes struct {
 	// Action: The detail of the relationship, e.g. `contains`, `attaches`
@@ -4731,6 +5000,27 @@ type ResourceSearchResult struct {
 	// `state:RUNNING` * use a free text query. Example: `RUNNING`
 	State string `json:"state,omitempty"`
 
+	// TagKeys: TagKey namespaced names, in the format of
+	// {ORG_ID}/{TAG_KEY_SHORT_NAME}. To search against the `tagKeys`: * use
+	// a field query. Example: - `tagKeys:"123456789/env*" -
+	// `tagKeys="123456789/env" - `tagKeys:"env" * use a free text query.
+	// Example: - `env`
+	TagKeys []string `json:"tagKeys,omitempty"`
+
+	// TagValueIds: TagValue IDs, in the format of tagValues/{TAG_VALUE_ID}.
+	// To search against the `tagValueIds`: * use a field query. Example: -
+	// `tagValueIds:"456" - `tagValueIds="tagValues/456" * use a free text
+	// query. Example: - `456`
+	TagValueIds []string `json:"tagValueIds,omitempty"`
+
+	// TagValues: TagValue namespaced names, in the format of
+	// {ORG_ID}/{TAG_KEY_SHORT_NAME}/{TAG_VALUE_SHORT_NAME}. To search
+	// against the `tagValues`: * use a field query. Example: -
+	// `tagValues:"env" - `tagValues:"env/prod" -
+	// `tagValues:"123456789/env/prod*" - `tagValues="123456789/env/prod"
+	// * use a free text query. Example: - `prod`
+	TagValues []string `json:"tagValues,omitempty"`
+
 	// UpdateTime: The last update timestamp of this resource, at which the
 	// resource was last modified or deleted. The granularity is in seconds.
 	// Timestamp.nanos will always be 0. This field is available only when
@@ -4804,6 +5094,69 @@ type ResourceSelector struct {
 
 func (s *ResourceSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SavedQuery: A saved query which can be shared with others or used
+// later.
+type SavedQuery struct {
+	// Content: The query content.
+	Content *QueryContent `json:"content,omitempty"`
+
+	// CreateTime: Output only. The create time of this saved query.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Creator: Output only. The account's email address who has created
+	// this saved query.
+	Creator string `json:"creator,omitempty"`
+
+	// Description: The description of this saved query. This value should
+	// be fewer than 255 characters.
+	Description string `json:"description,omitempty"`
+
+	// Labels: Labels applied on the resource. This value should not contain
+	// more than 10 entries. The key and value of each entry must be
+	// non-empty and fewer than 64 characters.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// LastUpdateTime: Output only. The last update time of this saved
+	// query.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// LastUpdater: Output only. The account's email address who has updated
+	// this saved query most recently.
+	LastUpdater string `json:"lastUpdater,omitempty"`
+
+	// Name: The resource name of the saved query. The format must be: *
+	// projects/project_number/savedQueries/saved_query_id *
+	// folders/folder_number/savedQueries/saved_query_id *
+	// organizations/organization_number/savedQueries/saved_query_id
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SavedQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod SavedQuery
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5197,11 +5550,9 @@ func (s *VersionedResource) MarshalJSON() ([]byte, error) {
 }
 
 // WindowsApplication: Contains information about a Windows application
-// as retrieved from the Windows Registry. For more information about
-// these fields, see Windows Installer Properties for the Uninstall
-// Registry
-// (https://docs.microsoft.com/en-us/windows/win32/msi/uninstall-registry-key){:
-// class="external" }
+// that is retrieved from the Windows Registry. For more information
+// about these fields, see:
+// https://docs.microsoft.com/en-us/windows/win32/msi/uninstall-registry-key
 type WindowsApplication struct {
 	// DisplayName: The name of the application or product.
 	DisplayName string `json:"displayName,omitempty"`
@@ -5431,11 +5782,12 @@ type AssetsListCall struct {
 // List: Lists assets with time and resource types and returns paged
 // results in response.
 //
-// - parent: Name of the organization or project the assets belong to.
-//   Format: "organizations/[organization-number]" (such as
+// - parent: Name of the organization, folder, or project the assets
+//   belong to. Format: "organizations/[organization-number]" (such as
 //   "organizations/123"), "projects/[project-id]" (such as
-//   "projects/my-project-id"), or "projects/[project-number]" (such as
-//   "projects/12345").
+//   "projects/my-project-id"), "projects/[project-number]" (such as
+//   "projects/12345"), or "folders/[folder-number]" (such as
+//   "folders/12345").
 func (r *AssetsService) List(parent string) *AssetsListCall {
 	c := &AssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5565,7 +5917,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5676,7 +6028,7 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization or project the assets belong to. Format: \"organizations/[organization-number]\" (such as \"organizations/123\"), \"projects/[project-id]\" (such as \"projects/my-project-id\"), or \"projects/[project-number]\" (such as \"projects/12345\").",
+	//       "description": "Required. Name of the organization, folder, or project the assets belong to. Format: \"organizations/[organization-number]\" (such as \"organizations/123\"), \"projects/[project-id]\" (such as \"projects/my-project-id\"), \"projects/[project-number]\" (such as \"projects/12345\"), or \"folders/[folder-number]\" (such as \"folders/12345\").",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -5725,6 +6077,179 @@ func (c *AssetsListCall) Pages(ctx context.Context, f func(*ListAssetsResponse) 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "cloudasset.effectiveIamPolicies.batchGet":
+
+type EffectiveIamPoliciesBatchGetCall struct {
+	s            *Service
+	scope        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BatchGet: Gets effective IAM policies for a batch of resources.
+//
+// - scope: Only IAM policies on or below the scope will be returned.
+//   This can only be an organization number (such as
+//   "organizations/123"), a folder number (such as "folders/123"), a
+//   project ID (such as "projects/my-project-id"), or a project number
+//   (such as "projects/12345"). To know how to get organization id,
+//   visit here
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+//   To know how to get folder or project id, visit here
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
+func (r *EffectiveIamPoliciesService) BatchGet(scope string) *EffectiveIamPoliciesBatchGetCall {
+	c := &EffectiveIamPoliciesBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.scope = scope
+	return c
+}
+
+// Names sets the optional parameter "names": Required. The names refer
+// to the [full_resource_names]
+// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+// of searchable asset types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+// A maximum of 20 resources' effective policies can be retrieved in a
+// batch.
+func (c *EffectiveIamPoliciesBatchGetCall) Names(names ...string) *EffectiveIamPoliciesBatchGetCall {
+	c.urlParams_.SetMulti("names", append([]string{}, names...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EffectiveIamPoliciesBatchGetCall) Fields(s ...googleapi.Field) *EffectiveIamPoliciesBatchGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *EffectiveIamPoliciesBatchGetCall) IfNoneMatch(entityTag string) *EffectiveIamPoliciesBatchGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EffectiveIamPoliciesBatchGetCall) Context(ctx context.Context) *EffectiveIamPoliciesBatchGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EffectiveIamPoliciesBatchGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EffectiveIamPoliciesBatchGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+scope}/effectiveIamPolicies:batchGet")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"scope": c.scope,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.effectiveIamPolicies.batchGet" call.
+// Exactly one of *BatchGetEffectiveIamPoliciesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BatchGetEffectiveIamPoliciesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *EffectiveIamPoliciesBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetEffectiveIamPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchGetEffectiveIamPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets effective IAM policies for a batch of resources.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/effectiveIamPolicies:batchGet",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.effectiveIamPolicies.batchGet",
+	//   "parameterOrder": [
+	//     "scope"
+	//   ],
+	//   "parameters": {
+	//     "names": {
+	//       "description": "Required. The names refer to the [full_resource_names] (https://cloud.google.com/asset-inventory/docs/resource-name-format) of [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types). A maximum of 20 resources' effective policies can be retrieved in a batch.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "scope": {
+	//       "description": "Required. Only IAM policies on or below the scope will be returned. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+scope}/effectiveIamPolicies:batchGet",
+	//   "response": {
+	//     "$ref": "BatchGetEffectiveIamPoliciesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "cloudasset.feeds.create":
@@ -5780,7 +6305,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5923,7 +6448,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6069,7 +6594,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6218,7 +6743,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6361,7 +6886,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6514,7 +7039,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6603,6 +7128,830 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 
 }
 
+// method id "cloudasset.savedQueries.create":
+
+type SavedQueriesCreateCall struct {
+	s          *Service
+	parent     string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a saved query in a parent
+// project/folder/organization.
+//
+// - parent: The name of the project/folder/organization where this
+//   saved_query should be created in. It can only be an organization
+//   number (such as "organizations/123"), a folder number (such as
+//   "folders/123"), a project ID (such as "projects/my-project-id")",
+//   or a project number (such as "projects/12345").
+func (r *SavedQueriesService) Create(parent string, savedquery *SavedQuery) *SavedQueriesCreateCall {
+	c := &SavedQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.savedquery = savedquery
+	return c
+}
+
+// SavedQueryId sets the optional parameter "savedQueryId": Required.
+// The ID to use for the saved query, which must be unique in the
+// specified parent. It will become the final component of the saved
+// query's resource name. This value should be 4-63 characters, and
+// valid characters are /a-z-/. Notice that this field is required in
+// the saved query creation, and the `name` field of the `saved_query`
+// will be ignored.
+func (c *SavedQueriesCreateCall) SavedQueryId(savedQueryId string) *SavedQueriesCreateCall {
+	c.urlParams_.Set("savedQueryId", savedQueryId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SavedQueriesCreateCall) Fields(s ...googleapi.Field) *SavedQueriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SavedQueriesCreateCall) Context(ctx context.Context) *SavedQueriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SavedQueriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SavedQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/savedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.savedQueries.create" call.
+// Exactly one of *SavedQuery or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SavedQueriesCreateCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a saved query in a parent project/folder/organization.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/savedQueries",
+	//   "httpMethod": "POST",
+	//   "id": "cloudasset.savedQueries.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the project/folder/organization where this saved_query should be created in. It can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\")\", or a project number (such as \"projects/12345\").",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "savedQueryId": {
+	//       "description": "Required. The ID to use for the saved query, which must be unique in the specified parent. It will become the final component of the saved query's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Notice that this field is required in the saved query creation, and the `name` field of the `saved_query` will be ignored.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/savedQueries",
+	//   "request": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "response": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudasset.savedQueries.delete":
+
+type SavedQueriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a saved query.
+//
+// - name: The name of the saved query to delete. It must be in the
+//   format of: * projects/project_number/savedQueries/saved_query_id *
+//   folders/folder_number/savedQueries/saved_query_id *
+//   organizations/organization_number/savedQueries/saved_query_id.
+func (r *SavedQueriesService) Delete(name string) *SavedQueriesDeleteCall {
+	c := &SavedQueriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SavedQueriesDeleteCall) Fields(s ...googleapi.Field) *SavedQueriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SavedQueriesDeleteCall) Context(ctx context.Context) *SavedQueriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SavedQueriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SavedQueriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.savedQueries.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SavedQueriesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a saved query.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/savedQueries/{savedQueriesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "cloudasset.savedQueries.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the saved query to delete. It must be in the format of: * projects/project_number/savedQueries/saved_query_id * folders/folder_number/savedQueries/saved_query_id * organizations/organization_number/savedQueries/saved_query_id",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/savedQueries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudasset.savedQueries.get":
+
+type SavedQueriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details about a saved query.
+//
+// - name: The name of the saved query and it must be in the format of:
+//   * projects/project_number/savedQueries/saved_query_id *
+//   folders/folder_number/savedQueries/saved_query_id *
+//   organizations/organization_number/savedQueries/saved_query_id.
+func (r *SavedQueriesService) Get(name string) *SavedQueriesGetCall {
+	c := &SavedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SavedQueriesGetCall) Fields(s ...googleapi.Field) *SavedQueriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SavedQueriesGetCall) IfNoneMatch(entityTag string) *SavedQueriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SavedQueriesGetCall) Context(ctx context.Context) *SavedQueriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SavedQueriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.savedQueries.get" call.
+// Exactly one of *SavedQuery or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details about a saved query.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/savedQueries/{savedQueriesId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.savedQueries.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the saved query and it must be in the format of: * projects/project_number/savedQueries/saved_query_id * folders/folder_number/savedQueries/saved_query_id * organizations/organization_number/savedQueries/saved_query_id",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/savedQueries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudasset.savedQueries.list":
+
+type SavedQueriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all saved queries in a parent
+// project/folder/organization.
+//
+// - parent: The parent project/folder/organization whose savedQueries
+//   are to be listed. It can only be using project/folder/organization
+//   number (such as "folders/12345")", or a project ID (such as
+//   "projects/my-project-id").
+func (r *SavedQueriesService) List(parent string) *SavedQueriesListCall {
+	c := &SavedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The expression to filter
+// resources. The expression is a list of zero or more restrictions
+// combined via logical operators `AND` and `OR`. When `AND` and `OR`
+// are both used in the expression, parentheses must be appropriately
+// used to group the combinations. The expression may also contain
+// regular expressions. See https://google.aip.dev/160 for more
+// information on the grammar.
+func (c *SavedQueriesListCall) Filter(filter string) *SavedQueriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of saved queries to return per page. The service may return fewer
+// than this value. If unspecified, at most 50 will be returned. The
+// maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *SavedQueriesListCall) PageSize(pageSize int64) *SavedQueriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListSavedQueries` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListSavedQueries` must match the call that provided the
+// page token.
+func (c *SavedQueriesListCall) PageToken(pageToken string) *SavedQueriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SavedQueriesListCall) Fields(s ...googleapi.Field) *SavedQueriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SavedQueriesListCall) IfNoneMatch(entityTag string) *SavedQueriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SavedQueriesListCall) Context(ctx context.Context) *SavedQueriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SavedQueriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SavedQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/savedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.savedQueries.list" call.
+// Exactly one of *ListSavedQueriesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSavedQueriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SavedQueriesListCall) Do(opts ...googleapi.CallOption) (*ListSavedQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListSavedQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all saved queries in a parent project/folder/organization.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/savedQueries",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.savedQueries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. The expression to filter resources. The expression is a list of zero or more restrictions combined via logical operators `AND` and `OR`. When `AND` and `OR` are both used in the expression, parentheses must be appropriately used to group the combinations. The expression may also contain regular expressions. See https://google.aip.dev/160 for more information on the grammar.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of saved queries to return per page. The service may return fewer than this value. If unspecified, at most 50 will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListSavedQueries` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSavedQueries` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent project/folder/organization whose savedQueries are to be listed. It can only be using project/folder/organization number (such as \"folders/12345\")\", or a project ID (such as \"projects/my-project-id\").",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/savedQueries",
+	//   "response": {
+	//     "$ref": "ListSavedQueriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *SavedQueriesListCall) Pages(ctx context.Context, f func(*ListSavedQueriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudasset.savedQueries.patch":
+
+type SavedQueriesPatchCall struct {
+	s          *Service
+	name       string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a saved query.
+//
+// - name: The resource name of the saved query. The format must be: *
+//   projects/project_number/savedQueries/saved_query_id *
+//   folders/folder_number/savedQueries/saved_query_id *
+//   organizations/organization_number/savedQueries/saved_query_id.
+func (r *SavedQueriesService) Patch(name string, savedquery *SavedQuery) *SavedQueriesPatchCall {
+	c := &SavedQueriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.savedquery = savedquery
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update.
+func (c *SavedQueriesPatchCall) UpdateMask(updateMask string) *SavedQueriesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SavedQueriesPatchCall) Fields(s ...googleapi.Field) *SavedQueriesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SavedQueriesPatchCall) Context(ctx context.Context) *SavedQueriesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SavedQueriesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SavedQueriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.savedQueries.patch" call.
+// Exactly one of *SavedQuery or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SavedQueriesPatchCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a saved query.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/savedQueries/{savedQueriesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "cloudasset.savedQueries.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the saved query. The format must be: * projects/project_number/savedQueries/saved_query_id * folders/folder_number/savedQueries/saved_query_id * organizations/organization_number/savedQueries/saved_query_id",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/savedQueries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "response": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "cloudasset.analyzeIamPolicy":
 
 type V1AnalyzeIamPolicyCall struct {
@@ -6659,7 +8008,7 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryConditionContextAccessTime(analysi
 
 // AnalysisQueryIdentitySelectorIdentity sets the optional parameter
 // "analysisQuery.identitySelector.identity": Required. The identity
-// appear in the form of members in IAM policy binding
+// appear in the form of principals in IAM policy binding
 // (https://cloud.google.com/iam/reference/rest/v1/Binding). The
 // examples of supported forms are: "user:mike@example.com",
 // "group:admins@example.com", "domain:google.com",
@@ -6692,8 +8041,12 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryIdentitySelectorIdentity(analysisQ
 // there's another IAM policy states service account SA has permission P
 // to the GCP folder F, then user A potentially has access to the GCP
 // folder F. And those advanced analysis results will be included in
-// AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
-// Default is false.
+// AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Only
+// the following permissions are considered in this analysis: *
+// `iam.serviceAccounts.actAs` * `iam.serviceAccounts.signBlob` *
+// `iam.serviceAccounts.signJwt` * `iam.serviceAccounts.getAccessToken`
+// * `iam.serviceAccounts.getOpenIdToken` *
+// `iam.serviceAccounts.implicitDelegation` Default is false.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsAnalyzeServiceAccountImpersonation(analysisQueryOptionsAnalyzeServiceAccountImpersonation bool) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.options.analyzeServiceAccountImpersonation", fmt.Sprint(analysisQueryOptionsAnalyzeServiceAccountImpersonation))
 	return c
@@ -6704,7 +8057,9 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsAnalyzeServiceAccountImpers
 // of the result will expand any Google groups appearing in an IAM
 // policy binding. If IamPolicyAnalysisQuery.identity_selector is
 // specified, the identity in the result will be determined by the
-// selector, and this flag is not allowed to set. Default is false.
+// selector, and this flag is not allowed to set. If true, the default
+// max expansion per group is 1000 for AssetService.AnalyzeIamPolicy][].
+// Default is false.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandGroups(analysisQueryOptionsExpandGroups bool) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.options.expandGroups", fmt.Sprint(analysisQueryOptionsExpandGroups))
 	return c
@@ -6725,8 +8080,10 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandGroups(analysisQueryO
 // organization resource cannot be used together with this option. For
 // example, if the request analyzes for which users have permission P on
 // a GCP project with this option enabled, the results will include all
-// users who have permission P on that project or any lower resource.
-// Default is false.
+// users who have permission P on that project or any lower resource. If
+// true, the default max expansion per resource is 1000 for
+// AssetService.AnalyzeIamPolicy][] and 100000 for
+// AssetService.AnalyzeIamPolicyLongrunning][]. Default is false.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandResources(analysisQueryOptionsExpandResources bool) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.options.expandResources", fmt.Sprint(analysisQueryOptionsExpandResources))
 	return c
@@ -6745,8 +8102,8 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandRoles(analysisQueryOp
 
 // AnalysisQueryOptionsOutputGroupEdges sets the optional parameter
 // "analysisQuery.options.outputGroupEdges": If true, the result will
-// output group identity edges, starting from the binding's group
-// members, to any expanded identities. Default is false.
+// output the relevant membership relationships between groups and other
+// groups, and between groups and principals. Default is false.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsOutputGroupEdges(analysisQueryOptionsOutputGroupEdges bool) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.options.outputGroupEdges", fmt.Sprint(analysisQueryOptionsOutputGroupEdges))
 	return c
@@ -6754,8 +8111,8 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsOutputGroupEdges(analysisQu
 
 // AnalysisQueryOptionsOutputResourceEdges sets the optional parameter
 // "analysisQuery.options.outputResourceEdges": If true, the result will
-// output resource edges, starting from the policy attached resource, to
-// any expanded resources. Default is false.
+// output the relevant parent/child relationships between resources.
+// Default is false.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsOutputResourceEdges(analysisQueryOptionsOutputResourceEdges bool) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.options.outputResourceEdges", fmt.Sprint(analysisQueryOptionsOutputResourceEdges))
 	return c
@@ -6784,6 +8141,24 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryResourceSelectorFullResourceName(a
 // is empty.
 func (c *V1AnalyzeIamPolicyCall) ExecutionTimeout(executionTimeout string) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("executionTimeout", executionTimeout)
+	return c
+}
+
+// SavedAnalysisQuery sets the optional parameter "savedAnalysisQuery":
+// The name of a saved query, which must be in the format of: *
+// projects/project_number/savedQueries/saved_query_id *
+// folders/folder_number/savedQueries/saved_query_id *
+// organizations/organization_number/savedQueries/saved_query_id If both
+// `analysis_query` and `saved_analysis_query` are provided, they will
+// be merged together with the `saved_analysis_query` as base and the
+// `analysis_query` as overrides. For more details of the merge
+// behavior, please refer to the MergeFrom
+// (https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.message#Message.MergeFrom.details)
+// page. Note that you cannot override primitive fields with default
+// value, such as 0 or empty string, etc., because we use proto3, which
+// doesn't support field presence yet.
+func (c *V1AnalyzeIamPolicyCall) SavedAnalysisQuery(savedAnalysisQuery string) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("savedAnalysisQuery", savedAnalysisQuery)
 	return c
 }
 
@@ -6824,7 +8199,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6913,22 +8288,22 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//       "type": "string"
 	//     },
 	//     "analysisQuery.identitySelector.identity": {
-	//       "description": "Required. The identity appear in the form of members in [IAM policy binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The examples of supported forms are: \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\". Notice that wildcard characters (such as * and ?) are not supported. You must give a specific identity.",
+	//       "description": "Required. The identity appear in the form of principals in [IAM policy binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The examples of supported forms are: \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\". Notice that wildcard characters (such as * and ?) are not supported. You must give a specific identity.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "analysisQuery.options.analyzeServiceAccountImpersonation": {
-	//       "description": "Optional. If true, the response will include access analysis from identities to resources via service account impersonation. This is a very expensive operation, because many derived queries will be executed. We highly recommend you use AssetService.AnalyzeIamPolicyLongrunning rpc instead. For example, if the request analyzes for which resources user A has permission P, and there's an IAM policy states user A has iam.serviceAccounts.getAccessToken permission to a service account SA, and there's another IAM policy states service account SA has permission P to a GCP folder F, then user A potentially has access to the GCP folder F. And those advanced analysis results will be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Another example, if the request analyzes for who has permission P to a GCP folder F, and there's an IAM policy states user A has iam.serviceAccounts.actAs permission to a service account SA, and there's another IAM policy states service account SA has permission P to the GCP folder F, then user A potentially has access to the GCP folder F. And those advanced analysis results will be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Default is false.",
+	//       "description": "Optional. If true, the response will include access analysis from identities to resources via service account impersonation. This is a very expensive operation, because many derived queries will be executed. We highly recommend you use AssetService.AnalyzeIamPolicyLongrunning rpc instead. For example, if the request analyzes for which resources user A has permission P, and there's an IAM policy states user A has iam.serviceAccounts.getAccessToken permission to a service account SA, and there's another IAM policy states service account SA has permission P to a GCP folder F, then user A potentially has access to the GCP folder F. And those advanced analysis results will be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Another example, if the request analyzes for who has permission P to a GCP folder F, and there's an IAM policy states user A has iam.serviceAccounts.actAs permission to a service account SA, and there's another IAM policy states service account SA has permission P to the GCP folder F, then user A potentially has access to the GCP folder F. And those advanced analysis results will be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Only the following permissions are considered in this analysis: * `iam.serviceAccounts.actAs` * `iam.serviceAccounts.signBlob` * `iam.serviceAccounts.signJwt` * `iam.serviceAccounts.getAccessToken` * `iam.serviceAccounts.getOpenIdToken` * `iam.serviceAccounts.implicitDelegation` Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "analysisQuery.options.expandGroups": {
-	//       "description": "Optional. If true, the identities section of the result will expand any Google groups appearing in an IAM policy binding. If IamPolicyAnalysisQuery.identity_selector is specified, the identity in the result will be determined by the selector, and this flag is not allowed to set. Default is false.",
+	//       "description": "Optional. If true, the identities section of the result will expand any Google groups appearing in an IAM policy binding. If IamPolicyAnalysisQuery.identity_selector is specified, the identity in the result will be determined by the selector, and this flag is not allowed to set. If true, the default max expansion per group is 1000 for AssetService.AnalyzeIamPolicy][]. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "analysisQuery.options.expandResources": {
-	//       "description": "Optional. If true and IamPolicyAnalysisQuery.resource_selector is not specified, the resource section of the result will expand any resource attached to an IAM policy to include resources lower in the resource hierarchy. For example, if the request analyzes for which resources user A has permission P, and the results include an IAM policy with P on a GCP folder, the results will also include resources in that folder with permission P. If true and IamPolicyAnalysisQuery.resource_selector is specified, the resource section of the result will expand the specified resource to include resources lower in the resource hierarchy. Only project or lower resources are supported. Folder and organization resource cannot be used together with this option. For example, if the request analyzes for which users have permission P on a GCP project with this option enabled, the results will include all users who have permission P on that project or any lower resource. Default is false.",
+	//       "description": "Optional. If true and IamPolicyAnalysisQuery.resource_selector is not specified, the resource section of the result will expand any resource attached to an IAM policy to include resources lower in the resource hierarchy. For example, if the request analyzes for which resources user A has permission P, and the results include an IAM policy with P on a GCP folder, the results will also include resources in that folder with permission P. If true and IamPolicyAnalysisQuery.resource_selector is specified, the resource section of the result will expand the specified resource to include resources lower in the resource hierarchy. Only project or lower resources are supported. Folder and organization resource cannot be used together with this option. For example, if the request analyzes for which users have permission P on a GCP project with this option enabled, the results will include all users who have permission P on that project or any lower resource. If true, the default max expansion per resource is 1000 for AssetService.AnalyzeIamPolicy][] and 100000 for AssetService.AnalyzeIamPolicyLongrunning][]. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -6938,12 +8313,12 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//       "type": "boolean"
 	//     },
 	//     "analysisQuery.options.outputGroupEdges": {
-	//       "description": "Optional. If true, the result will output group identity edges, starting from the binding's group members, to any expanded identities. Default is false.",
+	//       "description": "Optional. If true, the result will output the relevant membership relationships between groups and other groups, and between groups and principals. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "analysisQuery.options.outputResourceEdges": {
-	//       "description": "Optional. If true, the result will output resource edges, starting from the policy attached resource, to any expanded resources. Default is false.",
+	//       "description": "Optional. If true, the result will output the relevant parent/child relationships between resources. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -6955,6 +8330,11 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//     "executionTimeout": {
 	//       "description": "Optional. Amount of time executable has to complete. See JSON representation of [Duration](https://developers.google.com/protocol-buffers/docs/proto3#json). If this field is set with a value less than the RPC deadline, and the execution of your query hasn't finished in the specified execution timeout, you will get a response with partial result. Otherwise, your query's execution will continue until the RPC deadline. If it's not finished until then, you will get a DEADLINE_EXCEEDED error. Default is empty.",
 	//       "format": "google-duration",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "savedAnalysisQuery": {
+	//       "description": "Optional. The name of a saved query, which must be in the format of: * projects/project_number/savedQueries/saved_query_id * folders/folder_number/savedQueries/saved_query_id * organizations/organization_number/savedQueries/saved_query_id If both `analysis_query` and `saved_analysis_query` are provided, they will be merged together with the `saved_analysis_query` as base and the `analysis_query` as overrides. For more details of the merge behavior, please refer to the [MergeFrom](https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.message#Message.MergeFrom.details) page. Note that you cannot override primitive fields with default value, such as 0 or empty string, etc., because we use proto3, which doesn't support field presence yet.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7041,7 +8421,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7226,7 +8606,7 @@ func (c *V1AnalyzeMoveCall) Header() http.Header {
 
 func (c *V1AnalyzeMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7465,7 +8845,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7662,7 +9042,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7845,24 +9225,26 @@ func (c *V1SearchAllIamPoliciesCall) PageToken(pageToken string) *V1SearchAllIam
 // for more information. If not specified or empty, it will search all
 // the IAM policies within the specified `scope`. Note that the query
 // string is compared against each Cloud IAM policy binding, including
-// its members, roles, and Cloud IAM conditions. The returned Cloud IAM
-// policies will only contain the bindings that match your query. To
-// learn more about the IAM policy structure, see IAM policy doc
-// (https://cloud.google.com/iam/docs/policies#structure). Examples: *
-// `policy:amy@gmail.com` to find IAM policy bindings that specify user
-// "amy@gmail.com". * `policy:roles/compute.admin` to find IAM policy
-// bindings that specify the Compute Admin role. * `policy:comp*` to
-// find IAM policy bindings that contain "comp" as a prefix of any word
-// in the binding. * `policy.role.permissions:storage.buckets.update` to
-// find IAM policy bindings that specify a role containing
-// "storage.buckets.update" permission. Note that if callers don't have
-// `iam.roles.get` access to a role's included permissions, policy
-// bindings that specify this role will be dropped from the search
-// results. * `policy.role.permissions:upd*` to find IAM policy bindings
-// that specify a role containing "upd" as a prefix of any word in the
-// role permission. Note that if callers don't have `iam.roles.get`
-// access to a role's included permissions, policy bindings that specify
-// this role will be dropped from the search results. *
+// its principals, roles, and Cloud IAM conditions. The returned Cloud
+// IAM policies will only contain the bindings that match your query. To
+// learn more about the IAM policy structure, see the IAM policy
+// documentation
+// (https://cloud.google.com/iam/help/allow-policies/structure).
+// Examples: * `policy:amy@gmail.com` to find IAM policy bindings that
+// specify user "amy@gmail.com". * `policy:roles/compute.admin` to find
+// IAM policy bindings that specify the Compute Admin role. *
+// `policy:comp*` to find IAM policy bindings that contain "comp" as a
+// prefix of any word in the binding. *
+// `policy.role.permissions:storage.buckets.update` to find IAM policy
+// bindings that specify a role containing "storage.buckets.update"
+// permission. Note that if callers don't have `iam.roles.get` access to
+// a role's included permissions, policy bindings that specify this role
+// will be dropped from the search results. *
+// `policy.role.permissions:upd*` to find IAM policy bindings that
+// specify a role containing "upd" as a prefix of any word in the role
+// permission. Note that if callers don't have `iam.roles.get` access to
+// a role's included permissions, policy bindings that specify this role
+// will be dropped from the search results. *
 // `resource:organizations/123456` to find IAM policy bindings that are
 // set on "organizations/123456". *
 // `resource=//cloudresourcemanager.googleapis.com/projects/myproject`
@@ -7874,7 +9256,7 @@ func (c *V1SearchAllIamPoliciesCall) PageToken(pageToken string) *V1SearchAllIam
 // "instance1" or "instance2" and also specify user "amy". *
 // `roles:roles/compute.admin` to find IAM policy bindings that specify
 // the Compute Admin role. * `memberTypes:user` to find IAM policy
-// bindings that contain the "user" member type.
+// bindings that contain the principal type "user".
 func (c *V1SearchAllIamPoliciesCall) Query(query string) *V1SearchAllIamPoliciesCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -7917,7 +9299,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8010,7 +9392,7 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its members, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see [IAM policy doc](https://cloud.google.com/iam/docs/policies#structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy:comp*` to find IAM policy bindings that contain \"comp\" as a prefix of any word in the binding. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `policy.role.permissions:upd*` to find IAM policy bindings that specify a role containing \"upd\" as a prefix of any word in the role permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\". * `roles:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `memberTypes:user` to find IAM policy bindings that contain the \"user\" member type.",
+	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its principals, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see the [IAM policy documentation](https://cloud.google.com/iam/help/allow-policies/structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy:comp*` to find IAM policy bindings that contain \"comp\" as a prefix of any word in the binding. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `policy.role.permissions:upd*` to find IAM policy bindings that specify a role containing \"upd\" as a prefix of any word in the role permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\". * `roles:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `memberTypes:user` to find IAM policy bindings that contain the principal type \"user\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8182,12 +9564,12 @@ func (c *V1SearchAllResourcesCall) Query(query string) *V1SearchAllResourcesCall
 // "name,versionedResources". The read_mask paths must be valid field
 // paths listed but not limited to (both snake_case and camelCase are
 // supported): * name * assetType * project * displayName * description
-// * location * labels * networkTags * kmsKey * createTime * updateTime
-// * state * additionalAttributes * versionedResources If read_mask is
-// not specified, all fields except versionedResources will be returned.
-// If only '*' is specified, all fields including versionedResources
-// will be returned. Any invalid field path will trigger
-// INVALID_ARGUMENT error.
+// * location * tagKeys * tagValues * tagValueIds * labels * networkTags
+// * kmsKey * createTime * updateTime * state * additionalAttributes *
+// versionedResources If read_mask is not specified, all fields except
+// versionedResources will be returned. If only '*' is specified, all
+// fields including versionedResources will be returned. Any invalid
+// field path will trigger INVALID_ARGUMENT error.
 func (c *V1SearchAllResourcesCall) ReadMask(readMask string) *V1SearchAllResourcesCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -8230,7 +9612,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8328,7 +9710,7 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Optional. A comma-separated list of fields specifying which fields to be returned in ResourceSearchResult. Only '*' or combination of top level fields can be specified. Field names of both snake_case and camelCase are supported. Examples: `\"*\"`, `\"name,location\"`, `\"name,versionedResources\"`. The read_mask paths must be valid field paths listed but not limited to (both snake_case and camelCase are supported): * name * assetType * project * displayName * description * location * labels * networkTags * kmsKey * createTime * updateTime * state * additionalAttributes * versionedResources If read_mask is not specified, all fields except versionedResources will be returned. If only '*' is specified, all fields including versionedResources will be returned. Any invalid field path will trigger INVALID_ARGUMENT error.",
+	//       "description": "Optional. A comma-separated list of fields specifying which fields to be returned in ResourceSearchResult. Only '*' or combination of top level fields can be specified. Field names of both snake_case and camelCase are supported. Examples: `\"*\"`, `\"name,location\"`, `\"name,versionedResources\"`. The read_mask paths must be valid field paths listed but not limited to (both snake_case and camelCase are supported): * name * assetType * project * displayName * description * location * tagKeys * tagValues * tagValueIds * labels * networkTags * kmsKey * createTime * updateTime * state * additionalAttributes * versionedResources If read_mask is not specified, all fields except versionedResources will be returned. If only '*' is specified, all fields including versionedResources will be returned. Any invalid field path will trigger INVALID_ARGUMENT error.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

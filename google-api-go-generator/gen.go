@@ -27,7 +27,6 @@ import (
 	"unicode"
 
 	"google.golang.org/api/google-api-go-generator/internal/disco"
-	"google.golang.org/api/internal/version"
 )
 
 const (
@@ -50,6 +49,7 @@ var (
 	baseURL        = flag.String("base_url", "", "(optional) Override the default service API URL. If empty, the service's root URL will be used.")
 	headerPath     = flag.String("header_path", "", "If non-empty, prepend the contents of this file to generated services.")
 
+	internalPkg       = flag.String("internal_pkg", "google.golang.org/api/internal", "Go package path of the 'internal' support package.")
 	gensupportPkg     = flag.String("gensupport_pkg", "google.golang.org/api/internal/gensupport", "Go package path of the 'api/internal/gensupport' support package.")
 	googleapiPkg      = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
 	optionPkg         = flag.String("option_pkg", "google.golang.org/api/option", "Go package path of the 'api/option' support package.")
@@ -699,10 +699,14 @@ func (a *API) GenerateCode() ([]byte, error) {
 		pn("  %q", imp)
 	}
 	pn("")
+	if a.Name == "storage" {
+		pn("  %q", "github.com/googleapis/gax-go/v2")
+	}
 	for _, imp := range []struct {
 		pkg   string
 		lname string
 	}{
+		{*internalPkg, "internal"},
 		{*gensupportPkg, "gensupport"},
 		{*googleapiPkg, "googleapi"},
 		{*optionPkg, "option"},
@@ -747,7 +751,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("// NewService creates a new %s.", service)
 	pn("func NewService(ctx context.Context, opts ...option.ClientOption) (*%s, error) {", service)
 	if len(a.doc.Auth.OAuth2Scopes) != 0 {
-		pn("scopesOption := option.WithScopes(")
+		pn("scopesOption := internaloption.WithDefaultScopes(")
 		for _, scope := range a.doc.Auth.OAuth2Scopes {
 			pn("%q,", scope.ID)
 		}
@@ -1838,6 +1842,9 @@ func (meth *Method) generateCode() {
 
 	if meth.supportsMediaUpload() {
 		pn(" mediaInfo_ *gensupport.MediaInfo")
+		if meth.api.Name == "storage" {
+			pn("	retry *gensupport.RetryConfig")
+		}
 	}
 	pn(" ctx_ context.Context")
 	pn(" header_ http.Header")
@@ -1986,6 +1993,32 @@ func (meth *Method) generateCode() {
 		pn("}")
 	}
 
+	if meth.supportsMediaUpload() && meth.api.Name == "storage" {
+		comment := "WithRetry causes the library to retry the initial request of the upload" +
+			"(for resumable uploads) or the entire upload (for multipart uploads) if" +
+			"a transient error occurs. This is contingent on ChunkSize being > 0 (so" +
+			"that the input data may be buffered). The backoff argument will be used to" +
+			"determine exponential backoff timing, and the errorFunc is used to determine" +
+			"which errors are considered retryable. By default, exponetial backoff will be" +
+			"applied using gax defaults, and the following errors are retried:" +
+			"\n\n" +
+			"- HTTP responses with codes 408, 429, 502, 503, and 504." +
+			"\n\n" +
+			"- Transient network errors such as connection reset and io.ErrUnexpectedEOF." +
+			"\n\n" +
+			"- Errors which are considered transient using the Temporary() interface." +
+			"\n\n" +
+			"- Wrapped versions of these errors."
+		p("\n%s", asComment("", comment))
+		pn("func (c *%s) WithRetry(bo *gax.Backoff, errorFunc func(err error) bool) *%s {", callName, callName)
+		pn("	c.retry = &gensupport.RetryConfig{")
+		pn("		Backoff:     bo,")
+		pn("		ShouldRetry: errorFunc,")
+		pn("	}")
+		pn("	return c")
+		pn("}")
+	}
+
 	comment := "Fields allows partial responses to be retrieved. " +
 		"See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse " +
 		"for more information."
@@ -2039,7 +2072,7 @@ func (meth *Method) generateCode() {
 
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
 	pn(`reqHeaders := make(http.Header)`)
-	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/%s")`, version.Repo)
+	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)`)
 	pn("for k, v := range c.header_ {")
 	pn(" reqHeaders[k] = v")
 	pn("}")
@@ -2106,7 +2139,10 @@ func (meth *Method) generateCode() {
 		pn(`})`)
 	}
 	if meth.supportsMediaUpload() && meth.api.Name == "storage" {
-		pn("return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req)")
+		pn("if c.retry != nil {")
+		pn("	return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req, c.retry)")
+		pn("}")
+		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
 	} else {
 		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
 	}
@@ -2172,6 +2208,9 @@ func (meth *Method) generateCode() {
 			pn("if rx != nil {")
 			pn(" rx.Client = c.s.client")
 			pn(" rx.UserAgent = c.s.userAgent()")
+			if meth.api.Name == "storage" {
+				pn("	rx.Retry = c.retry")
+			}
 			pn(" ctx := c.ctx_")
 			pn(" if ctx == nil {")
 			// TODO(mcgreevy): Require context when calling Media, or Do.

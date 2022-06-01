@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -94,7 +95,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
 	)
@@ -445,40 +446,6 @@ func (s *V2BrowserKeyRestrictions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// V2CloneKeyRequest: Request message for `CloneKey` method.
-type V2CloneKeyRequest struct {
-	// KeyId: User specified key id (optional). If specified, it will become
-	// the final component of the key resource name. The id must be unique
-	// within the project, must conform with RFC-1034, is restricted to
-	// lower-cased letters, and has a maximum length of 63 characters. In
-	// another word, the id must match the regular expression:
-	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`. The id must NOT be a UUID-like
-	// string.
-	KeyId string `json:"keyId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "KeyId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "KeyId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *V2CloneKeyRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod V2CloneKeyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // V2GetKeyStringResponse: Response message for `GetKeyString` method.
 type V2GetKeyStringResponse struct {
 	// KeyString: An encrypted and signed value of the key.
@@ -543,6 +510,12 @@ func (s *V2IosKeyRestrictions) MarshalJSON() ([]byte, error) {
 
 // V2Key: The representation of a key managed by the API Keys API.
 type V2Key struct {
+	// Annotations: Annotations is an unstructured key-value map stored with
+	// a policy that may be set by external tools to store and retrieve
+	// arbitrary metadata. They are not queryable and should be preserved
+	// when modifying objects.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
 	// CreateTime: Output only. A timestamp identifying the time this key
 	// was originally created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -558,7 +531,7 @@ type V2Key struct {
 	// Etag: Output only. A checksum computed by the server based on the
 	// current value of the Key resource. This may be sent on update and
 	// delete requests to ensure the client has an up-to-date value before
-	// proceeding.
+	// proceeding. See https://google.aip.dev/154.
 	Etag string `json:"etag,omitempty"`
 
 	// KeyString: Output only. An encrypted and signed value held by this
@@ -587,7 +560,7 @@ type V2Key struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -595,10 +568,10 @@ type V2Key struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -827,7 +800,7 @@ func (c *KeysLookupKeyCall) Header() http.Header {
 
 func (c *KeysLookupKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -969,7 +942,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1059,153 +1032,6 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 
 }
 
-// method id "apikeys.projects.locations.keys.clone":
-
-type ProjectsLocationsKeysCloneCall struct {
-	s                 *Service
-	name              string
-	v2clonekeyrequest *V2CloneKeyRequest
-	urlParams_        gensupport.URLParams
-	ctx_              context.Context
-	header_           http.Header
-}
-
-// Clone: Clones the existing key's restriction and display name to a
-// new API key. The service account must have the `apikeys.keys.get` and
-// `apikeys.keys.create` permissions in the project. NOTE: Key is a
-// global resource; hence the only supported value for location is
-// `global`.
-//
-// - name: The resource name of the API key to be cloned in the same
-//   project.
-func (r *ProjectsLocationsKeysService) Clone(name string, v2clonekeyrequest *V2CloneKeyRequest) *ProjectsLocationsKeysCloneCall {
-	c := &ProjectsLocationsKeysCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.v2clonekeyrequest = v2clonekeyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsKeysCloneCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeysCloneCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsKeysCloneCall) Context(ctx context.Context) *ProjectsLocationsKeysCloneCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsKeysCloneCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsKeysCloneCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.v2clonekeyrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:clone")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apikeys.projects.locations.keys.clone" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsKeysCloneCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Clones the existing key's restriction and display name to a new API key. The service account must have the `apikeys.keys.get` and `apikeys.keys.create` permissions in the project. NOTE: Key is a global resource; hence the only supported value for location is `global`.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}:clone",
-	//   "httpMethod": "POST",
-	//   "id": "apikeys.projects.locations.keys.clone",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the API key to be cloned in the same project.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/keys/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}:clone",
-	//   "request": {
-	//     "$ref": "V2CloneKeyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "apikeys.projects.locations.keys.create":
 
 type ProjectsLocationsKeysCreateCall struct {
@@ -1267,7 +1093,7 @@ func (c *ProjectsLocationsKeysCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1423,7 +1249,7 @@ func (c *ProjectsLocationsKeysDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1573,7 +1399,7 @@ func (c *ProjectsLocationsKeysGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1722,7 +1548,7 @@ func (c *ProjectsLocationsKeysGetKeyStringCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysGetKeyStringCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1834,15 +1660,6 @@ func (r *ProjectsLocationsKeysService) List(parent string) *ProjectsLocationsKey
 	return c
 }
 
-// Filter sets the optional parameter "filter": Only list keys that
-// conform to the specified filter. The allowed filter strings are
-// `state:ACTIVE` and `state:DELETED`. By default, ListKeys returns only
-// active keys.
-func (c *ProjectsLocationsKeysListCall) Filter(filter string) *ProjectsLocationsKeysListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
 // PageSize sets the optional parameter "pageSize": Specifies the
 // maximum number of results to be returned at a time.
 func (c *ProjectsLocationsKeysListCall) PageSize(pageSize int64) *ProjectsLocationsKeysListCall {
@@ -1854,6 +1671,13 @@ func (c *ProjectsLocationsKeysListCall) PageSize(pageSize int64) *ProjectsLocati
 // specific page of results.
 func (c *ProjectsLocationsKeysListCall) PageToken(pageToken string) *ProjectsLocationsKeysListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Indicate that
+// keys deleted in the past 30 days should also be returned.
+func (c *ProjectsLocationsKeysListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsKeysListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
@@ -1894,7 +1718,7 @@ func (c *ProjectsLocationsKeysListCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1964,11 +1788,6 @@ func (c *ProjectsLocationsKeysListCall) Do(opts ...googleapi.CallOption) (*V2Lis
 	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Only list keys that conform to the specified filter. The allowed filter strings are `state:ACTIVE` and `state:DELETED`. By default, ListKeys returns only active keys.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "pageSize": {
 	//       "description": "Optional. Specifies the maximum number of results to be returned at a time.",
 	//       "format": "int32",
@@ -1986,6 +1805,11 @@ func (c *ProjectsLocationsKeysListCall) Do(opts ...googleapi.CallOption) (*V2Lis
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Optional. Indicate that keys deleted in the past 30 days should also be returned.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v2/{+parent}/keys",
@@ -2050,11 +1874,12 @@ func (r *ProjectsLocationsKeysService) Patch(name string, v2key *V2Key) *Project
 
 // UpdateMask sets the optional parameter "updateMask": The field mask
 // specifies which fields to be updated as part of this request. All
-// other fields are ignored. Mutable fields are: `display_name` and
-// `restrictions`. If an update mask is not provided, the service treats
-// it as an implied mask equivalent to all allowed fields that are set
-// on the wire. If the field mask has a special value "*", the service
-// treats it equivalent to replace all allowed mutable fields.
+// other fields are ignored. Mutable fields are: `display_name`,
+// `restrictions`, and `annotations`. If an update mask is not provided,
+// the service treats it as an implied mask equivalent to all allowed
+// fields that are set on the wire. If the field mask has a special
+// value "*", the service treats it equivalent to replace all allowed
+// mutable fields.
 func (c *ProjectsLocationsKeysPatchCall) UpdateMask(updateMask string) *ProjectsLocationsKeysPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2087,7 +1912,7 @@ func (c *ProjectsLocationsKeysPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2167,7 +1992,7 @@ func (c *ProjectsLocationsKeysPatchCall) Do(opts ...googleapi.CallOption) (*Oper
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The field mask specifies which fields to be updated as part of this request. All other fields are ignored. Mutable fields are: `display_name` and `restrictions`. If an update mask is not provided, the service treats it as an implied mask equivalent to all allowed fields that are set on the wire. If the field mask has a special value \"*\", the service treats it equivalent to replace all allowed mutable fields.",
+	//       "description": "The field mask specifies which fields to be updated as part of this request. All other fields are ignored. Mutable fields are: `display_name`, `restrictions`, and `annotations`. If an update mask is not provided, the service treats it as an implied mask equivalent to all allowed fields that are set on the wire. If the field mask has a special value \"*\", the service treats it equivalent to replace all allowed mutable fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2237,7 +2062,7 @@ func (c *ProjectsLocationsKeysUndeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

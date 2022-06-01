@@ -148,7 +148,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
                   "location": "query",
                   "type": "string"
                 },
@@ -224,7 +224,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "The name of the parent resource where the repository will be created.",
+                      "description": "Required. The name of the parent resource where the repository will be created.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -257,7 +257,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name of the repository to delete.",
+                      "description": "Required. The name of the repository to delete.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
                       "required": true,
@@ -282,7 +282,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name of the repository to retrieve.",
+                      "description": "Required. The name of the repository to retrieve.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
                       "required": true,
@@ -308,13 +308,13 @@
                   ],
                   "parameters": {
                     "options.requestedPolicyVersion": {
-                      "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                      "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "resource": {
-                      "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+                      "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
                       "required": true,
@@ -340,7 +340,7 @@
                   ],
                   "parameters": {
                     "pageSize": {
-                      "description": "The maximum number of repositories to return.",
+                      "description": "The maximum number of repositories to return. Maximum page size is 1,000.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
@@ -351,7 +351,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "The name of the parent resource whose repositories will be listed.",
+                      "description": "Required. The name of the parent resource whose repositories will be listed.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -411,7 +411,7 @@
                   ],
                   "parameters": {
                     "resource": {
-                      "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+                      "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
                       "required": true,
@@ -439,7 +439,7 @@
                   ],
                   "parameters": {
                     "resource": {
-                      "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+                      "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
                       "required": true,
@@ -514,7 +514,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the parent resource whose files will be listed.",
+                          "description": "The name of the repository whose files will be listed. For example: \"projects/p1/locations/us-central1/repositories/repo1",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
                           "required": true,
@@ -544,7 +544,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The name of the package to delete.",
+                          "description": "Required. The name of the package to delete.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/packages/[^/]+$",
                           "required": true,
@@ -569,7 +569,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The name of the package to retrieve.",
+                          "description": "Required. The name of the package to retrieve.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/packages/[^/]+$",
                           "required": true,
@@ -595,7 +595,7 @@
                       ],
                       "parameters": {
                         "pageSize": {
-                          "description": "The maximum number of packages to return.",
+                          "description": "The maximum number of packages to return. Maximum page size is 1,000.",
                           "format": "int32",
                           "location": "query",
                           "type": "integer"
@@ -606,7 +606,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the parent resource whose packages will be listed.",
+                          "description": "Required. The name of the parent resource whose packages will be listed.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
                           "required": true,
@@ -725,7 +725,7 @@
                               "type": "string"
                             },
                             "pageSize": {
-                              "description": "The maximum number of tags to return.",
+                              "description": "The maximum number of tags to return. Maximum page size is 10,000.",
                               "format": "int32",
                               "location": "query",
                               "type": "integer"
@@ -871,12 +871,12 @@
                           ],
                           "parameters": {
                             "orderBy": {
-                              "description": "Optional. Sorting field and order",
+                              "description": "Optional. The field to order the results by.",
                               "location": "query",
                               "type": "string"
                             },
                             "pageSize": {
-                              "description": "The maximum number of versions to return.",
+                              "description": "The maximum number of versions to return. Maximum page size is 1,000.",
                               "format": "int32",
                               "location": "query",
                               "type": "integer"
@@ -929,81 +929,33 @@
       }
     }
   },
-  "revision": "20210918",
+  "revision": "20220506",
   "rootUrl": "https://artifactregistry.googleapis.com/",
   "schemas": {
-    "AptArtifact": {
-      "description": "A detailed representation of an Apt artifact. Information in the record is derived from the archive's control file. See https://www.debian.org/doc/debian-policy/ch-controlfields.html",
-      "id": "AptArtifact",
-      "properties": {
-        "architecture": {
-          "description": "Output only. Operating system architecture of the artifact.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "component": {
-          "description": "Output only. Repository component of the artifact.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "controlFile": {
-          "description": "Output only. Contents of the artifact's control metadata file.",
-          "format": "byte",
-          "readOnly": true,
-          "type": "string"
-        },
-        "name": {
-          "description": "Output only. The Artifact Registry resource name of the artifact.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "packageName": {
-          "description": "Output only. The Apt package name of the artifact.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "packageType": {
-          "description": "Output only. An artifact is a binary or source package.",
-          "enum": [
-            "PACKAGE_TYPE_UNSPECIFIED",
-            "BINARY",
-            "SOURCE"
-          ],
-          "enumDescriptions": [
-            "Package type is not specified.",
-            "Binary package.",
-            "Source package."
-          ],
-          "readOnly": true,
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Binding": {
-      "description": "Associates `members` with a `role`.",
+      "description": "Associates `members`, or principals, with a `role`.",
       "id": "Binding",
       "properties": {
         "condition": {
           "$ref": "Expr",
-          "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the members in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
+          "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
+          "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
       "type": "object"
@@ -1076,11 +1028,13 @@
           "description": "The algorithm used to compute the hash value.",
           "enum": [
             "HASH_TYPE_UNSPECIFIED",
-            "SHA256"
+            "SHA256",
+            "MD5"
           ],
           "enumDescriptions": [
             "Unspecified.",
-            "SHA256 hash."
+            "SHA256 hash.",
+            "MD5 hash."
           ],
           "type": "string"
         },
@@ -1088,114 +1042,6 @@
           "description": "The hash value.",
           "format": "byte",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ImportAptArtifactsErrorInfo": {
-      "description": "Error information explaining why a package was not imported.",
-      "id": "ImportAptArtifactsErrorInfo",
-      "properties": {
-        "error": {
-          "$ref": "Status",
-          "description": "The detailed error status."
-        },
-        "gcsSource": {
-          "$ref": "ImportAptArtifactsGcsSource",
-          "description": "Google Cloud Storage location requested."
-        }
-      },
-      "type": "object"
-    },
-    "ImportAptArtifactsGcsSource": {
-      "description": "Google Cloud Storage location where the artifacts currently reside.",
-      "id": "ImportAptArtifactsGcsSource",
-      "properties": {
-        "uris": {
-          "description": "Cloud Storage paths URI (e.g., gs://my_bucket//my_object).",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "useWildcards": {
-          "description": "Supports URI wildcards for matching multiple objects from a single URI.",
-          "type": "boolean"
-        }
-      },
-      "type": "object"
-    },
-    "ImportAptArtifactsResponse": {
-      "description": "The response message from importing artifacts.",
-      "id": "ImportAptArtifactsResponse",
-      "properties": {
-        "aptArtifacts": {
-          "description": "The Apt artifacts updated.",
-          "items": {
-            "$ref": "AptArtifact"
-          },
-          "type": "array"
-        },
-        "errors": {
-          "description": "Detailed error info for packages that were not imported.",
-          "items": {
-            "$ref": "ImportAptArtifactsErrorInfo"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "ImportYumArtifactsErrorInfo": {
-      "description": "Error information explaining why a package was not imported.",
-      "id": "ImportYumArtifactsErrorInfo",
-      "properties": {
-        "error": {
-          "$ref": "Status",
-          "description": "The detailed error status."
-        },
-        "gcsSource": {
-          "$ref": "ImportYumArtifactsGcsSource",
-          "description": "Google Cloud Storage location requested."
-        }
-      },
-      "type": "object"
-    },
-    "ImportYumArtifactsGcsSource": {
-      "description": "Google Cloud Storage location where the artifacts currently reside.",
-      "id": "ImportYumArtifactsGcsSource",
-      "properties": {
-        "uris": {
-          "description": "Cloud Storage paths URI (e.g., gs://my_bucket//my_object).",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "useWildcards": {
-          "description": "Supports URI wildcards for matching multiple objects from a single URI.",
-          "type": "boolean"
-        }
-      },
-      "type": "object"
-    },
-    "ImportYumArtifactsResponse": {
-      "description": "The response message from importing artifacts.",
-      "id": "ImportYumArtifactsResponse",
-      "properties": {
-        "errors": {
-          "description": "Detailed error info for packages that were not imported.",
-          "items": {
-            "$ref": "ImportYumArtifactsErrorInfo"
-          },
-          "type": "array"
-        },
-        "yumArtifacts": {
-          "description": "The yum artifacts updated.",
-          "items": {
-            "$ref": "YumArtifact"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -1403,11 +1249,11 @@
       "type": "object"
     },
     "Policy": {
-      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
+      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
       "properties": {
         "bindings": {
-          "description": "Associates a list of `members` to a `role`. Optionally, may specify a `condition` that determines how and when the `bindings` are applied. Each of the `bindings` must contain at least one member.",
+          "description": "Associates a list of `members`, or principals, with a `role`. Optionally, may specify a `condition` that determines how and when the `bindings` are applied. Each of the `bindings` must contain at least one principal. The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250 of these principals can be Google groups. Each occurrence of a principal counts towards these limits. For example, if the `bindings` grant 50 different roles to `user:alice@example.com`, and not to any other principal, then you can add another 1,450 principals to the `bindings` in the `Policy`.",
           "items": {
             "$ref": "Binding"
           },
@@ -1446,7 +1292,6 @@
             "DOCKER",
             "MAVEN",
             "NPM",
-            "PYPI",
             "APT",
             "YUM",
             "PYTHON"
@@ -1456,7 +1301,6 @@
             "Docker package format.",
             "Maven package format.",
             "NPM package format.",
-            "PyPI package format. Deprecated, use PYTHON instead.",
             "APT package format.",
             "YUM package format.",
             "Python package format."
@@ -1464,7 +1308,7 @@
           "type": "string"
         },
         "kmsKeyName": {
-          "description": "The Cloud KMS resource name of the customer managed encryption key that’s used to encrypt the contents of the Repository. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. This value may not be changed after the Repository has been created.",
+          "description": "The Cloud KMS resource name of the customer managed encryption key that's used to encrypt the contents of the Repository. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. This value may not be changed after the Repository has been created.",
           "type": "string"
         },
         "labels": {
@@ -1476,6 +1320,12 @@
         },
         "name": {
           "description": "The name of the repository, for example: \"projects/p1/locations/us-central1/repositories/repo1\".",
+          "type": "string"
+        },
+        "sizeBytes": {
+          "description": "Output only. The size, in bytes, of all artifact storage in this repository. Repositories that are generally available or in public preview use this to calculate storage costs.",
+          "format": "int64",
+          "readOnly": true,
           "type": "string"
         },
         "updateTime": {
@@ -1492,7 +1342,7 @@
       "properties": {
         "policy": {
           "$ref": "Policy",
-          "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of the policy is limited to a few 10s of KB. An empty policy is a valid policy but certain Cloud Platform services (such as Projects) might reject them."
+          "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of the policy is limited to a few 10s of KB. An empty policy is a valid policy but certain Google Cloud services (such as Projects) might reject them."
         }
       },
       "type": "object"
@@ -1533,7 +1383,7 @@
           "type": "string"
         },
         "version": {
-          "description": "The name of the version the tag refers to, for example: \"projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/sha256:5243811\"",
+          "description": "The name of the version the tag refers to, for example: \"projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/sha256:5243811\" If the package or version ID parts contain slashes, the slashes are escaped.",
           "type": "string"
         }
       },
@@ -1544,7 +1394,7 @@
       "id": "TestIamPermissionsRequest",
       "properties": {
         "permissions": {
-          "description": "The set of permissions to check for the `resource`. Permissions with wildcards (such as '*' or 'storage.*') are not allowed. For more information see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
+          "description": "The set of permissions to check for the `resource`. Permissions with wildcards (such as `*` or `storage.*`) are not allowed. For more information see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
           "items": {
             "type": "string"
           },
@@ -1561,56 +1411,6 @@
           "description": "A subset of `TestPermissionsRequest.permissions` that the caller is allowed.",
           "items": {
             "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "UploadAptArtifactMediaResponse": {
-      "description": "The response to upload an artifact.",
-      "id": "UploadAptArtifactMediaResponse",
-      "properties": {
-        "operation": {
-          "$ref": "Operation",
-          "description": "Operation to be returned to the user."
-        }
-      },
-      "type": "object"
-    },
-    "UploadAptArtifactResponse": {
-      "description": "The response of the completed artifact upload operation. This response is contained in the Operation and available to users.",
-      "id": "UploadAptArtifactResponse",
-      "properties": {
-        "aptArtifacts": {
-          "description": "The Apt artifacts updated.",
-          "items": {
-            "$ref": "AptArtifact"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "UploadYumArtifactMediaResponse": {
-      "description": "The response to upload an artifact.",
-      "id": "UploadYumArtifactMediaResponse",
-      "properties": {
-        "operation": {
-          "$ref": "Operation",
-          "description": "Operation to be returned to the user."
-        }
-      },
-      "type": "object"
-    },
-    "UploadYumArtifactResponse": {
-      "description": "The response of the completed artifact upload operation. This response is contained in the Operation and available to users.",
-      "id": "UploadYumArtifactResponse",
-      "properties": {
-        "yumArtifacts": {
-          "description": "The Apt artifacts updated.",
-          "items": {
-            "$ref": "YumArtifact"
           },
           "type": "array"
         }
@@ -1644,43 +1444,6 @@
         "updateTime": {
           "description": "The time when the version was last updated.",
           "format": "google-datetime",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "YumArtifact": {
-      "description": "A detailed representation of a Yum artifact.",
-      "id": "YumArtifact",
-      "properties": {
-        "architecture": {
-          "description": "Output only. Operating system architecture of the artifact.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "name": {
-          "description": "Output only. The Artifact Registry resource name of the artifact.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "packageName": {
-          "description": "Output only. The yum package name of the artifact.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "packageType": {
-          "description": "Output only. An artifact is a binary or source package.",
-          "enum": [
-            "PACKAGE_TYPE_UNSPECIFIED",
-            "BINARY",
-            "SOURCE"
-          ],
-          "enumDescriptions": [
-            "Package type is not specified.",
-            "Binary package (.rpm). .rpm",
-            "Source package (.srpm)."
-          ],
-          "readOnly": true,
           "type": "string"
         }
       },

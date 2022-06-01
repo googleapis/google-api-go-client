@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -86,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -245,11 +246,19 @@ func (s *ConfigMapKeySelector) MarshalJSON() ([]byte, error) {
 // the file names, unless the items element is populated with specific
 // mappings of keys to paths.
 type ConfigMapVolumeSource struct {
-	// DefaultMode: (Optional) Mode bits to use on created files by default.
-	// Must be a value between 0 and 0777. Defaults to 0644. Directories
-	// within the path are not affected by this setting. This might be in
-	// conflict with other options that affect the file mode, like fsGroup,
-	// and the result can be other mode bits set.
+	// DefaultMode: (Optional) Integer representation of mode bits to use on
+	// created files by default. Must be a value between 01 and 0777
+	// (octal). If 0 or not set, it will default to 0644. Directories within
+	// the path are not affected by this setting. Notes * Internally, a
+	// umask of 0222 will be applied to any non-zero value. * This is an
+	// integer representation of the mode bits. So, the octal integer value
+	// should look exactly as the chmod numeric notation with a leading
+	// zero. Some examples: for chmod 777 (a=rwx), set to 0777 (octal) or
+	// 511 (base-10). For chmod 640 (u=rw,g=r), set to 0640 (octal) or 416
+	// (base-10). For chmod 755 (u=rwx,g=rx,o=rx), set to 0755 (octal) or
+	// 493 (base-10). * This might be in conflict with other options that
+	// affect the file mode, like fsGroup, and the result can be other mode
+	// bits set.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 
 	// Items: (Optional) If unspecified, each key-value pair in the Data
@@ -468,8 +477,7 @@ func (s *ContainerPort) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -621,6 +629,42 @@ type ExecAction struct {
 
 func (s *ExecAction) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GRPCAction: Not supported by Cloud Run GRPCAction describes an action
+// involving a GRPC port.
+type GRPCAction struct {
+	// Port: Port number of the gRPC service. Number must be in the range 1
+	// to 65535.
+	Port int64 `json:"port,omitempty"`
+
+	// Service: Service is the name of the service to place in the gRPC
+	// HealthCheckRequest (see
+	// https://github.com/grpc/grpc/blob/master/doc/health-checking.md). If
+	// this is not specified, the default behavior is defined by gRPC.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Port") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Port") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GRPCAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GRPCAction
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1206,9 +1250,16 @@ type KeyToPath struct {
 	Key string `json:"key,omitempty"`
 
 	// Mode: (Optional) Mode bits to use on this file, must be a value
-	// between 0000 and 0777. If not specified, the volume defaultMode will
-	// be used. This might be in conflict with other options that affect the
-	// file mode, like fsGroup, and the result can be other mode bits set.
+	// between 01 and 0777 (octal). If 0 or not set, the Volume's default
+	// mode will be used. Notes * Internally, a umask of 0222 will be
+	// applied to any non-zero value. * This is an integer representation of
+	// the mode bits. So, the octal integer value should look exactly as the
+	// chmod numeric notation with a leading zero. Some examples: for chmod
+	// 777 (a=rwx), set to 0777 (octal) or 511 (base-10). For chmod 640
+	// (u=rw,g=r), set to 0640 (octal) or 416 (base-10). For chmod 755
+	// (u=rwx,g=rx,o=rx), set to 0755 (octal) or 493 (base-10). * This might
+	// be in conflict with other options that affect the file mode, like
+	// fsGroup, and the result can be other mode bits set.
 	Mode int64 `json:"mode,omitempty"`
 
 	// Path: The relative path of the file to map the key to. May not be an
@@ -1384,7 +1435,7 @@ type ObjectMeta struct {
 	// stored with a resource that may be set by external tools to store and
 	// retrieve arbitrary metadata. They are not queryable and should be
 	// preserved when modifying objects. More info:
-	// http://kubernetes.io/docs/user-guide/annotations
+	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// ClusterName: (Optional) Not supported by Cloud Run The name of the
@@ -1465,7 +1516,7 @@ type ObjectMeta struct {
 	// Labels: (Optional) Map of string keys and values that can be used to
 	// organize and categorize (scope and select) objects. May match
 	// selectors of replication controllers and routes. More info:
-	// http://kubernetes.io/docs/user-guide/labels
+	// https://kubernetes.io/docs/user-guide/labels
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Name must be unique within a namespace, within a Cloud Run
@@ -1473,7 +1524,7 @@ type ObjectMeta struct {
 	// may allow a client to request the generation of an appropriate name
 	// automatically. Name is primarily intended for creation idempotence
 	// and configuration definition. Cannot be updated. More info:
-	// http://kubernetes.io/docs/user-guide/identifiers#names +optional
+	// https://kubernetes.io/docs/user-guide/identifiers#names +optional
 	Name string `json:"name,omitempty"`
 
 	// Namespace: Namespace defines the space within each name must be
@@ -1506,7 +1557,7 @@ type ObjectMeta struct {
 	// object. It is typically generated by the server on successful
 	// creation of a resource and is not allowed to change on PUT
 	// operations. Populated by the system. Read-only. More info:
-	// http://kubernetes.io/docs/user-guide/identifiers#uids
+	// https://kubernetes.io/docs/user-guide/identifiers#uids
 	Uid string `json:"uid,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
@@ -1556,11 +1607,11 @@ type OwnerReference struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Name of the referent. More info:
-	// http://kubernetes.io/docs/user-guide/identifiers#names
+	// https://kubernetes.io/docs/user-guide/identifiers#names
 	Name string `json:"name,omitempty"`
 
 	// Uid: UID of the referent. More info:
-	// http://kubernetes.io/docs/user-guide/identifiers#uids
+	// https://kubernetes.io/docs/user-guide/identifiers#uids
 	Uid string `json:"uid,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
@@ -1600,22 +1651,30 @@ type Probe struct {
 	// Minimum value is 1.
 	FailureThreshold int64 `json:"failureThreshold,omitempty"`
 
+	// Grpc: (Optional) GRPCAction specifies an action involving a GRPC
+	// port. A field inlined from the Handler message.
+	Grpc *GRPCAction `json:"grpc,omitempty"`
+
 	// HttpGet: (Optional) HTTPGet specifies the http request to perform. A
 	// field inlined from the Handler message.
 	HttpGet *HTTPGetAction `json:"httpGet,omitempty"`
 
 	// InitialDelaySeconds: (Optional) Number of seconds after the container
-	// has started before liveness probes are initiated. More info:
+	// has started before liveness probes are initiated. Defaults to 0
+	// seconds. Minimum value is 0. Max value for liveness probe is 3600.
+	// Max value for startup probe is 240. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
 
 	// PeriodSeconds: (Optional) How often (in seconds) to perform the
-	// probe. Default to 10 seconds. Minimum value is 1.
+	// probe. Default to 10 seconds. Minimum value is 1. Max value for
+	// liveness probe is 3600. Max value for startup probe is 240. Must be
+	// greater or equal than timeout_seconds.
 	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
 
 	// SuccessThreshold: (Optional) Minimum consecutive successes for the
 	// probe to be considered successful after having failed. Defaults to 1.
-	// Must be 1 for liveness. Minimum value is 1.
+	// Must be 1 for liveness and startup Probes.
 	SuccessThreshold int64 `json:"successThreshold,omitempty"`
 
 	// TcpSocket: (Optional) TCPSocket specifies an action involving a TCP
@@ -1624,7 +1683,8 @@ type Probe struct {
 	TcpSocket *TCPSocketAction `json:"tcpSocket,omitempty"`
 
 	// TimeoutSeconds: (Optional) Number of seconds after which the probe
-	// times out. Defaults to 1 second. Minimum value is 1. More info:
+	// times out. Defaults to 1 second. Minimum value is 1. Maximum value is
+	// 3600. Must be smaller than period_seconds. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
 
@@ -1654,20 +1714,17 @@ func (s *Probe) MarshalJSON() ([]byte, error) {
 // ResourceRequirements: ResourceRequirements describes the compute
 // resource requirements.
 type ResourceRequirements struct {
-	// Limits: (Optional) Only memory and CPU are supported. Note: The only
-	// supported values for CPU are '1', '2', and '4'. Setting 4 CPU
-	// requires at least 2Gi of memory. Limits describes the maximum amount
-	// of compute resources allowed. The values of the map is string form of
-	// the 'quantity' k8s type:
+	// Limits: (Optional) Only memory and CPU are supported. Limits
+	// describes the maximum amount of compute resources allowed. The values
+	// of the map is string form of the 'quantity' k8s type:
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	Limits map[string]string `json:"limits,omitempty"`
 
-	// Requests: (Optional) Only memory and CPU are supported. Note: The
-	// only supported values for CPU are '1' and '2'. Requests describes the
-	// minimum amount of compute resources required. If Requests is omitted
-	// for a container, it defaults to Limits if that is explicitly
-	// specified, otherwise to an implementation-defined value. The values
-	// of the map is string form of the 'quantity' k8s type:
+	// Requests: (Optional) Only memory and CPU are supported. Requests
+	// describes the minimum amount of compute resources required. If
+	// Requests is omitted for a container, it defaults to Limits if that is
+	// explicitly specified, otherwise to an implementation-defined value.
+	// The values of the map is string form of the 'quantity' k8s type:
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	Requests map[string]string `json:"requests,omitempty"`
 
@@ -1789,14 +1846,19 @@ func (s *SecretKeySelector) MarshalJSON() ([]byte, error) {
 // the target Secret's Data field will be presented in a volume as files
 // using the keys in the Data field as the file names.
 type SecretVolumeSource struct {
-	// DefaultMode: (Optional) Mode bits to use on created files by default.
-	// Must be a value between 0000 and 0777. Defaults to 0644. Directories
-	// within the path are not affected by this setting. This might be in
-	// conflict with other options that affect the file mode, like fsGroup,
-	// and the result can be other mode bits set. NOTE: This is an integer
-	// representation of the mode bits. So, the integer value should look
-	// exactly as the chmod numeric notation, i.e. Unix chmod "777" (a=rwx)
-	// should have the integer value 777.
+	// DefaultMode: Integer representation of mode bits to use on created
+	// files by default. Must be a value between 01 and 0777 (octal). If 0
+	// or not set, it will default to 0644. Directories within the path are
+	// not affected by this setting. Notes * Internally, a umask of 0222
+	// will be applied to any non-zero value. * This is an integer
+	// representation of the mode bits. So, the octal integer value should
+	// look exactly as the chmod numeric notation with a leading zero. Some
+	// examples: for chmod 777 (a=rwx), set to 0777 (octal) or 511
+	// (base-10). For chmod 640 (u=rw,g=r), set to 0640 (octal) or 416
+	// (base-10). For chmod 755 (u=rwx,g=rx,o=rx), set to 0755 (octal) or
+	// 493 (base-10). * This might be in conflict with other options that
+	// affect the file mode, like fsGroup, and the result can be other mode
+	// bits set.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 
 	// Items: (Optional) If unspecified, the volume will expose a file whose
@@ -2042,7 +2104,7 @@ func (c *NamespacesJobsCreateCall) Header() http.Header {
 
 func (c *NamespacesJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2207,7 +2269,7 @@ func (c *NamespacesJobsDeleteCall) Header() http.Header {
 
 func (c *NamespacesJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2366,7 +2428,7 @@ func (c *NamespacesJobsGetCall) Header() http.Header {
 
 func (c *NamespacesJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2567,7 +2629,7 @@ func (c *NamespacesJobsListCall) Header() http.Header {
 
 func (c *NamespacesJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

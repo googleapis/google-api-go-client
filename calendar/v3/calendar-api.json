@@ -960,7 +960,7 @@
               "enumDescriptions": [
                 "Notifications are sent to all guests.",
                 "Notifications are sent to non-Google Calendar guests only.",
-                "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
+                "No notifications are sent. Warning: Using the value none can have significant adverse effects, including events not syncing to external calendars or events being lost altogether for some users. For calendar migration tasks, consider using the events.import method instead."
               ],
               "location": "query",
               "type": "string"
@@ -1132,7 +1132,7 @@
               "type": "string"
             },
             "q": {
-              "description": "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
+              "description": "Free text search terms to find events that match these terms in the following fields: summary, description, location, attendee's displayName, attendee's email. Optional.",
               "location": "query",
               "type": "string"
             },
@@ -1529,7 +1529,7 @@
               "type": "string"
             },
             "q": {
-              "description": "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
+              "description": "Free text search terms to find events that match these terms in the following fields: summary, description, location, attendee's displayName, attendee's email. Optional.",
               "location": "query",
               "type": "string"
             },
@@ -1723,7 +1723,7 @@
       }
     }
   },
-  "revision": "20210807",
+  "revision": "20220520",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Acl": {
@@ -2131,7 +2131,7 @@
           "description": "Additional properties related to a conference. An example would be a solution-specific setting for enabling video streaming."
         },
         "signature": {
-          "description": "The signature of the conference data.\nGenerated on server side. Must be preserved while copying the conference data between events, otherwise the conference data will not be copied.\nUnset for a conference with a failed create request.\nOptional for a conference with a pending create request.",
+          "description": "The signature of the conference data.\nGenerated on server side.\nUnset for a conference with a failed create request.\nOptional for a conference with a pending create request.",
           "type": "string"
         }
       },
@@ -2300,7 +2300,7 @@
           "type": "boolean"
         },
         "attachments": {
-          "description": "File attachments for the event. Currently only Google Drive attachments are supported.\nIn order to modify attachments the supportsAttachments request parameter should be set to true.\nThere can be at most 25 attachments per event,",
+          "description": "File attachments for the event.\nIn order to modify attachments the supportsAttachments request parameter should be set to true.\nThere can be at most 25 attachments per event,",
           "items": {
             "$ref": "EventAttachment"
           },
@@ -2380,7 +2380,7 @@
         },
         "eventType": {
           "default": "default",
-          "description": "Specific type of the event. Read-only. Possible values are:  \n- \"default\" - A regular event or not further specified. \n- \"outOfOffice\" - An out-of-office event.",
+          "description": "Specific type of the event. Read-only. Possible values are:  \n- \"default\" - A regular event or not further specified. \n- \"outOfOffice\" - An out-of-office event. \n- \"focusTime\" - A focus-time event.",
           "type": "string"
         },
         "extendedProperties": {
@@ -2627,7 +2627,7 @@
           "type": "string"
         },
         "iconLink": {
-          "description": "URL link to the attachment's icon. Read-only.",
+          "description": "URL link to the attachment's icon. This field can only be modified for custom third-party attachments.",
           "type": "string"
         },
         "mimeType": {
@@ -2681,7 +2681,7 @@
           "type": "boolean"
         },
         "responseStatus": {
-          "description": "The attendee's response status. Possible values are:  \n- \"needsAction\" - The attendee has not responded to the invitation. \n- \"declined\" - The attendee has declined the invitation. \n- \"tentative\" - The attendee has tentatively accepted the invitation. \n- \"accepted\" - The attendee has accepted the invitation.",
+          "description": "The attendee's response status. Possible values are:  \n- \"needsAction\" - The attendee has not responded to the invitation (recommended for new events). \n- \"declined\" - The attendee has declined the invitation. \n- \"tentative\" - The attendee has tentatively accepted the invitation. \n- \"accepted\" - The attendee has accepted the invitation.  Warning: If you add an event using the values declined, tentative, or accepted, attendees with the \"Add invitations to my calendar\" setting set to \"When I respond to invitation in email\" won't see an event on their calendar unless they choose to change their invitation response in the event invitation email.",
           "type": "string"
         },
         "self": {

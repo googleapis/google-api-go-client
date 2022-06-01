@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -173,9 +174,15 @@ type NotificationSetting struct {
 	// notification will provide the resource name of question and answer.
 	//   "DUPLICATE_LOCATION" - Indicates whether there is a change in
 	// location metadata's duplicate location field.
-	//   "LOSS_OF_VOICE_OF_MERCHANT" - Indicates whether the location has a
-	// loss in voice of merchant status. Call GetVoiceOfMerchantState rpc
-	// for more details
+	//   "LOSS_OF_VOICE_OF_MERCHANT" - Deprecated: Migrate the existing
+	// usages of this value to the more expanded
+	// "VOICE_OF_MERCHANT_UPDATED".
+	//   "VOICE_OF_MERCHANT_UPDATED" - Indicates whether the location has an
+	// update in Voice of Merchant (VOM) status. VOM dictates whether the
+	// location is in good standing and the merchant has control over the
+	// business on Google. Any edits made to the location will propagate to
+	// Maps after passing the review phase. Call GetVoiceOfMerchantState rpc
+	// for more details.
 	NotificationTypes []string `json:"notificationTypes,omitempty"`
 
 	// PubsubTopic: Optional. The Google Pub/Sub topic that will receive
@@ -271,7 +278,7 @@ func (c *AccountsGetNotificationSettingCall) Header() http.Header {
 
 func (c *AccountsGetNotificationSettingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -420,7 +427,7 @@ func (c *AccountsUpdateNotificationSettingCall) Header() http.Header {
 
 func (c *AccountsUpdateNotificationSettingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

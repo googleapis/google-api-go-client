@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -102,7 +103,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/documents",
 		"https://www.googleapis.com/auth/documents.readonly",
 		"https://www.googleapis.com/auth/drive",
@@ -533,7 +534,7 @@ func (s *ColumnBreak) MarshalJSON() ([]byte, error) {
 }
 
 // CreateFooterRequest: Creates a Footer. The new footer is applied to
-// the SectionStyle at the location of the SectionBreak if specificed,
+// the SectionStyle at the location of the SectionBreak if specified,
 // otherwise it is applied to the DocumentStyle. If a footer of the
 // specified type already exists, a 400 bad request error is returned.
 type CreateFooterRequest struct {
@@ -677,7 +678,7 @@ func (s *CreateFootnoteResponse) MarshalJSON() ([]byte, error) {
 }
 
 // CreateHeaderRequest: Creates a Header. The new header is applied to
-// the SectionStyle at the location of the SectionBreak if specificed,
+// the SectionStyle at the location of the SectionBreak if specified,
 // otherwise it is applied to the DocumentStyle. If a header of the
 // specified type already exists, a 400 bad request error is returned.
 type CreateHeaderRequest struct {
@@ -1382,14 +1383,14 @@ type Document struct {
 	// in update requests to specify which revision of a document to apply
 	// updates to and how the request should behave if the document has been
 	// edited since that revision. Only populated if the user has edit
-	// access to the document. The format of the revision ID may change over
-	// time, so it should be treated opaquely. A returned revision ID is
-	// only guaranteed to be valid for 24 hours after it has been returned
-	// and cannot be shared across users. If the revision ID is unchanged
-	// between calls, then the document has not changed. Conversely, a
-	// changed ID (for the same document and user) usually means the
-	// document has been updated; however, a changed ID can also be due to
-	// internal factors such as ID format changes.
+	// access to the document. The revision ID is not a sequential number
+	// but an opaque string. The format of the revision ID might change over
+	// time. A returned revision ID is only guaranteed to be valid for 24
+	// hours after it has been returned and cannot be shared across users.
+	// If the revision ID is unchanged between calls, then the document has
+	// not changed. Conversely, a changed ID (for the same document and
+	// user) usually means the document has been updated. However, a changed
+	// ID can also be due to internal factors such as ID format changes.
 	RevisionId string `json:"revisionId,omitempty"`
 
 	// SuggestedDocumentStyleChanges: Output only. The suggested changes to
@@ -2312,7 +2313,8 @@ type InlineObject struct {
 	// InlineObjectProperties: The properties of this inline object.
 	InlineObjectProperties *InlineObjectProperties `json:"inlineObjectProperties,omitempty"`
 
-	// ObjectId: The ID of this inline object.
+	// ObjectId: The ID of this inline object. Can be used to update an
+	// object’s properties.
 	ObjectId string `json:"objectId,omitempty"`
 
 	// SuggestedDeletionIds: The suggested deletion IDs. If empty, then
@@ -3949,6 +3951,11 @@ type ParagraphStyle struct {
 	//   "HEADING_6" - Heading 6.
 	NamedStyleType string `json:"namedStyleType,omitempty"`
 
+	// PageBreakBefore: Whether the current paragraph should always start at
+	// the beginning of a page. If unset, the value is inherited from the
+	// parent.
+	PageBreakBefore bool `json:"pageBreakBefore,omitempty"`
+
 	// Shading: The shading of the paragraph. If unset, the value is
 	// inherited from the parent.
 	Shading *Shading `json:"shading,omitempty"`
@@ -4081,6 +4088,10 @@ type ParagraphStyleSuggestionState struct {
 	// named_style_type.
 	NamedStyleTypeSuggested bool `json:"namedStyleTypeSuggested,omitempty"`
 
+	// PageBreakBeforeSuggested: Indicates if there was a suggested change
+	// to page_break_before.
+	PageBreakBeforeSuggested bool `json:"pageBreakBeforeSuggested,omitempty"`
+
 	// ShadingSuggestionState: A mask that indicates which of the fields in
 	// shading have been changed in this suggestion.
 	ShadingSuggestionState *ShadingSuggestionState `json:"shadingSuggestionState,omitempty"`
@@ -4204,6 +4215,42 @@ type PersonProperties struct {
 
 func (s *PersonProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod PersonProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PinTableHeaderRowsRequest: Updates the number of pinned table header
+// rows in a table.
+type PinTableHeaderRowsRequest struct {
+	// PinnedHeaderRowsCount: The number of table rows to pin, where 0
+	// implies that all rows are unpinned.
+	PinnedHeaderRowsCount int64 `json:"pinnedHeaderRowsCount,omitempty"`
+
+	// TableStartLocation: The location where the table starts in the
+	// document.
+	TableStartLocation *Location `json:"tableStartLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PinnedHeaderRowsCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PinnedHeaderRowsCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PinTableHeaderRowsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PinTableHeaderRowsRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4526,6 +4573,7 @@ func (s *ReplaceAllTextResponse) MarshalJSON() ([]byte, error) {
 // in order to mirror the behavior of the Docs editor.
 type ReplaceImageRequest struct {
 	// ImageObjectId: The ID of the existing image that will be replaced.
+	// The ID can be retrieved from the response of a get request.
 	ImageObjectId string `json:"imageObjectId,omitempty"`
 
 	// ImageReplaceMethod: The replacement method.
@@ -4536,15 +4584,15 @@ type ReplaceImageRequest struct {
 	//   "CENTER_CROP" - Scales and centers the image to fill the bounds of
 	// the original image. The image may be cropped in order to fill the
 	// original image's bounds. The rendered size of the image will be the
-	// same as that of the original image.
+	// same as the original image.
 	ImageReplaceMethod string `json:"imageReplaceMethod,omitempty"`
 
 	// Uri: The URI of the new image. The image is fetched once at insertion
 	// time and a copy is stored for display inside the document. Images
-	// must be less than 50MB in size, cannot exceed 25 megapixels, and must
-	// be in one of PNG, JPEG, or GIF format. The provided URI can be at
-	// most 2 kB in length. The URI itself is saved with the image, and
-	// exposed via the ImageProperties.source_uri field.
+	// must be less than 50MB, cannot exceed 25 megapixels, and must be in
+	// PNG, JPEG, or GIF format. The provided URI can't surpass 2 KB in
+	// length. The URI is saved with the image, and exposed through the
+	// ImageProperties.source_uri field.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageObjectId") to
@@ -4683,6 +4731,10 @@ type Request struct {
 
 	// MergeTableCells: Merges cells in a table.
 	MergeTableCells *MergeTableCellsRequest `json:"mergeTableCells,omitempty"`
+
+	// PinTableHeaderRows: Updates the number of pinned header rows in a
+	// table.
+	PinTableHeaderRows *PinTableHeaderRowsRequest `json:"pinTableHeaderRows,omitempty"`
 
 	// ReplaceAllText: Replaces all instances of the specified text.
 	ReplaceAllText *ReplaceAllTextRequest `json:"replaceAllText,omitempty"`
@@ -6388,6 +6440,13 @@ type TableRowStyle struct {
 	// order to show all the content in the row's cells.
 	MinRowHeight *Dimension `json:"minRowHeight,omitempty"`
 
+	// PreventOverflow: Whether the row cannot overflow across page or
+	// column boundaries.
+	PreventOverflow bool `json:"preventOverflow,omitempty"`
+
+	// TableHeader: Whether the row is a table header.
+	TableHeader bool `json:"tableHeader,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "MinRowHeight") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -7103,31 +7162,29 @@ func (s *WeightedFontFamily) MarshalJSON() ([]byte, error) {
 
 // WriteControl: Provides control over how write requests are executed.
 type WriteControl struct {
-	// RequiredRevisionId: The revision ID of the document that the write
-	// request will be applied to. If this is not the latest revision of the
-	// document, the request will not be processed and will return a 400 bad
+	// RequiredRevisionId: The optional revision ID of the document the
+	// write request is applied to. If this is not the latest revision of
+	// the document, the request is not processed and returns a 400 bad
 	// request error. When a required revision ID is returned in a response,
 	// it indicates the revision ID of the document after the request was
 	// applied.
 	RequiredRevisionId string `json:"requiredRevisionId,omitempty"`
 
-	// TargetRevisionId: The target revision ID of the document that the
-	// write request will be applied to. If collaborator changes have
-	// occurred after the document was read using the API, the changes
-	// produced by this write request will be transformed against the
-	// collaborator changes. This results in a new revision of the document
-	// which incorporates both the changes in the request and the
-	// collaborator changes, and the Docs server will resolve conflicting
-	// changes. When using `target_revision_id`, the API client can be
-	// thought of as another collaborator of the document. The target
-	// revision ID may only be used to write to recent versions of a
-	// document. If the target revision is too far behind the latest
-	// revision, the request will not be processed and will return a 400 bad
-	// request error and the request should be retried after reading the
-	// latest version of the document. In most cases a `revision_id` will
-	// remain valid for use as a target revision for several minutes after
-	// it is read, but for frequently-edited documents this window may be
-	// shorter.
+	// TargetRevisionId: The optional target revision ID of the document the
+	// write request is applied to. If collaborator changes have occurred
+	// after the document was read using the API, the changes produced by
+	// this write request are applied against the collaborator changes. This
+	// results in a new revision of the document that incorporates both the
+	// collaborator changes and the changes in the request, with the Docs
+	// server resolving conflicting changes. When using target revision ID,
+	// the API client can be thought of as another collaborator of the
+	// document. The target revision ID can only be used to write to recent
+	// versions of a document. If the target revision is too far behind the
+	// latest revision, the request is not processed and returns a 400 bad
+	// request error. The request should be tried again after retrieving the
+	// latest version of the document. Usually a revision ID remains valid
+	// for use as a target revision for several minutes after it's read, but
+	// for frequently edited documents this window might be shorter.
 	TargetRevisionId string `json:"targetRevisionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RequiredRevisionId")
@@ -7216,7 +7273,7 @@ func (c *DocumentsBatchUpdateCall) Header() http.Header {
 
 func (c *DocumentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7357,7 +7414,7 @@ func (c *DocumentsCreateCall) Header() http.Header {
 
 func (c *DocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7526,7 +7583,7 @@ func (c *DocumentsGetCall) Header() http.Header {
 
 func (c *DocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

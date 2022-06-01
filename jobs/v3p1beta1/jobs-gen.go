@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -93,7 +94,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/jobs",
 	)
@@ -1428,8 +1429,7 @@ func (s *DeviceInfo) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1528,13 +1528,14 @@ type HistogramQuery struct {
 	// `count(string_histogram_facet)`: Count the number of matching entity,
 	// for each distinct attribute value. * `count(numeric_histogram_facet,
 	// list of buckets)`: Count the number of matching entity within each
-	// bucket. Data types: * Histogram facet: facet names with format
-	// a-zA-Z+. * String: string like "any string with backslash escape for
-	// quote(\")." * Number: whole number and floating point number like 10,
-	// -1 and -0.01. * List: list of elements with comma(,) separator
-	// surrounded by square brackets. For example, [1, 2, 3] and ["one",
-	// "two", "three"]. Built-in constants: * MIN (minimum number similar to
-	// java Double.MIN_VALUE) * MAX (maximum number similar to java
+	// bucket. A maximum of 200 histogram buckets are supported. Data types:
+	// * Histogram facet: facet names with format a-zA-Z+. * String: string
+	// like "any string with backslash escape for quote(\")." * Number:
+	// whole number and floating point number like 10, -1 and -0.01. * List:
+	// list of elements with comma(,) separator surrounded by square
+	// brackets. For example, [1, 2, 3] and ["one", "two", "three"].
+	// Built-in constants: * MIN (minimum number similar to java
+	// Double.MIN_VALUE) * MAX (maximum number similar to java
 	// Double.MAX_VALUE) Built-in functions: * bucket(start, end[, label]):
 	// bucket built-in function creates a bucket with range of start, end).
 	// Note that the end is exclusive. For example, bucket(1, MAX, "positive
@@ -2347,12 +2348,21 @@ type JobQuery struct {
 	// sorting by commute time.
 	CommuteFilter *CommuteFilter `json:"commuteFilter,omitempty"`
 
-	// CompanyDisplayNames: Optional. This filter specifies the exact
-	// company display name of the jobs to search against. If a value isn't
-	// specified, jobs within the search results are associated with any
-	// company. If multiple values are specified, jobs within the search
-	// results may be associated with any of the specified companies. At
-	// most 20 company display name filters are allowed.
+	// CompanyDisplayNames: Optional. This filter specifies the company
+	// Company.display_name of the jobs to search against. The company name
+	// must match the value exactly. Alternatively, the value being searched
+	// for can be wrapped in different match operators.
+	// `SUBSTRING_MATCH([value])` The company name must contain a case
+	// insensitive substring match of the value. Using this function may
+	// increase latency. Sample Value: `SUBSTRING_MATCH(google)`
+	// `MULTI_WORD_TOKEN_MATCH([value])` The value will be treated as a
+	// multi word token and the company name must contain a case insensitive
+	// match of the value. Using this function may increase latency. Sample
+	// Value: `MULTI_WORD_TOKEN_MATCH(google)` If a value isn't specified,
+	// jobs within the search results are associated with any company. If
+	// multiple values are specified, jobs within the search results may be
+	// associated with any of the specified companies. At most 20 company
+	// display name filters are allowed.
 	CompanyDisplayNames []string `json:"companyDisplayNames,omitempty"`
 
 	// CompanyNames: Optional. This filter specifies the company entities to
@@ -2806,24 +2816,29 @@ type LocationFilter struct {
 
 	// TelecommutePreference: Optional. Allows the client to return jobs
 	// without a set location, specifically, telecommuting jobs
-	// (telecommuting is considered by the service as a special location.
+	// (telecommuting is considered by the service as a special location).
 	// Job.posting_region indicates if a job permits telecommuting. If this
 	// field is set to TelecommutePreference.TELECOMMUTE_ALLOWED,
 	// telecommuting jobs are searched, and address and lat_lng are ignored.
-	// If not set or set to TelecommutePreference.TELECOMMUTE_EXCLUDED,
-	// telecommute job are not searched. This filter can be used by itself
-	// to search exclusively for telecommuting jobs, or it can be combined
-	// with another location filter to search for a combination of job
-	// locations, such as "Mountain View" or "telecommuting" jobs. However,
-	// when used in combination with other location filters, telecommuting
-	// jobs can be treated as less relevant than other jobs in the search
-	// response.
+	// If not set or set to TelecommutePreference.TELECOMMUTE_EXCLUDED, the
+	// telecommute status of the jobs is ignored. Jobs that have
+	// PostingRegion.TELECOMMUTE and have additional Job.addresses may still
+	// be matched based on other location filters using address or latlng.
+	// This filter can be used by itself to search exclusively for
+	// telecommuting jobs, or it can be combined with another location
+	// filter to search for a combination of job locations, such as
+	// "Mountain View" or "telecommuting" jobs. However, when used in
+	// combination with other location filters, telecommuting jobs can be
+	// treated as less relevant than other jobs in the search response.
 	//
 	// Possible values:
 	//   "TELECOMMUTE_PREFERENCE_UNSPECIFIED" - Default value if the
 	// telecommute preference is not specified.
-	//   "TELECOMMUTE_EXCLUDED" - Exclude telecommute jobs.
+	//   "TELECOMMUTE_EXCLUDED" - DEPRECATED. Ignore telecommute status of
+	// jobs. Use TELECOMMUTE_JOBS_EXCLUDED if want to exclude telecommute
+	// jobs.
 	//   "TELECOMMUTE_ALLOWED" - Allow telecommute jobs.
+	//   "TELECOMMUTE_JOBS_EXCLUDED" - Exclude telecommute jobs.
 	TelecommutePreference string `json:"telecommutePreference,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
@@ -3334,8 +3349,8 @@ type PostalAddress struct {
 
 	// RegionCode: Required. CLDR region code of the country/region of the
 	// address. This is never inferred and it is up to the user to ensure
-	// the value is correct. See http://cldr.unicode.org/ and
-	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// the value is correct. See https://cldr.unicode.org/ and
+	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
 	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 
@@ -4160,7 +4175,7 @@ func (c *ProjectsCompleteCall) Header() http.Header {
 
 func (c *ProjectsCompleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4362,7 +4377,7 @@ func (c *ProjectsClientEventsCreateCall) Header() http.Header {
 
 func (c *ProjectsClientEventsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4507,7 +4522,7 @@ func (c *ProjectsCompaniesCreateCall) Header() http.Header {
 
 func (c *ProjectsCompaniesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4651,7 +4666,7 @@ func (c *ProjectsCompaniesDeleteCall) Header() http.Header {
 
 func (c *ProjectsCompaniesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4797,7 +4812,7 @@ func (c *ProjectsCompaniesGetCall) Header() http.Header {
 
 func (c *ProjectsCompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4970,7 +4985,7 @@ func (c *ProjectsCompaniesListCall) Header() http.Header {
 
 func (c *ProjectsCompaniesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5151,7 +5166,7 @@ func (c *ProjectsCompaniesPatchCall) Header() http.Header {
 
 func (c *ProjectsCompaniesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5296,7 +5311,7 @@ func (c *ProjectsJobsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsJobsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5442,7 +5457,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5586,7 +5601,7 @@ func (c *ProjectsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5733,7 +5748,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5938,7 +5953,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6139,7 +6154,7 @@ func (c *ProjectsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6286,7 +6301,7 @@ func (c *ProjectsJobsSearchCall) Header() http.Header {
 
 func (c *ProjectsJobsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6459,7 +6474,7 @@ func (c *ProjectsJobsSearchForAlertCall) Header() http.Header {
 
 func (c *ProjectsJobsSearchForAlertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6634,7 +6649,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

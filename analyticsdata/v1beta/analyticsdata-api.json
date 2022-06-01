@@ -253,7 +253,7 @@
           ]
         },
         "runRealtimeReport": {
-          "description": "The Google Analytics Realtime API returns a customized report of realtime event data for your property. These reports show events and usage from the last 30 minutes.",
+          "description": "Returns a customized report of realtime event data for your property. Events appear in realtime reports seconds after they have been sent to the Google Analytics. Realtime reports show events and usage data for the periods of time ranging from the present moment to 30 minutes ago (up to 60 minutes for Google Analytics 360 properties). For a guide to constructing realtime requests \u0026 understanding responses, see [Creating a Realtime Report](https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics).",
           "flatPath": "v1beta/properties/{propertiesId}:runRealtimeReport",
           "httpMethod": "POST",
           "id": "analyticsdata.properties.runRealtimeReport",
@@ -282,7 +282,7 @@
           ]
         },
         "runReport": {
-          "description": "Returns a customized report of your Google Analytics event data. Reports contain statistics derived from data collected by the Google Analytics tracking code. The data returned from the API is as a table with columns for the requested dimensions and metrics. Metrics are individual measurements of user activity on your property, such as active users or event count. Dimensions break down metrics across some common criteria, such as country or event name.",
+          "description": "Returns a customized report of your Google Analytics event data. Reports contain statistics derived from data collected by the Google Analytics tracking code. The data returned from the API is as a table with columns for the requested dimensions and metrics. Metrics are individual measurements of user activity on your property, such as active users or event count. Dimensions break down metrics across some common criteria, such as country or event name. For a guide to constructing requests \u0026 understanding responses, see [Creating a Report](https://developers.google.com/analytics/devguides/reporting/data/v1/basics).",
           "flatPath": "v1beta/properties/{propertiesId}:runReport",
           "httpMethod": "POST",
           "id": "analyticsdata.properties.runReport",
@@ -313,9 +313,37 @@
       }
     }
   },
-  "revision": "20210827",
+  "revision": "20220504",
   "rootUrl": "https://analyticsdata.googleapis.com/",
   "schemas": {
+    "ActiveMetricRestriction": {
+      "description": "A metric actively restricted in creating the report.",
+      "id": "ActiveMetricRestriction",
+      "properties": {
+        "metricName": {
+          "description": "The name of the restricted metric.",
+          "type": "string"
+        },
+        "restrictedMetricTypes": {
+          "description": "The reason for this metric's restriction.",
+          "items": {
+            "enum": [
+              "RESTRICTED_METRIC_TYPE_UNSPECIFIED",
+              "COST_DATA",
+              "REVENUE_DATA"
+            ],
+            "enumDescriptions": [
+              "Unspecified type.",
+              "Cost metrics such as `adCost`.",
+              "Revenue metrics such as `purchaseRevenue`."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "BatchRunPivotReportsRequest": {
       "description": "The batch request containing multiple pivot report requests.",
       "id": "BatchRunPivotReportsRequest",
@@ -593,7 +621,7 @@
       "type": "object"
     },
     "Dimension": {
-      "description": "Dimensions are attributes of your data. For example, the dimension city indicates the city from which an event originates. Dimension values in report responses are strings; for example, city could be \"Paris\" or \"New York\". Requests are allowed up to 9 dimensions.",
+      "description": "Dimensions are attributes of your data. For example, the dimension city indicates the city from which an event originates. Dimension values in report responses are strings; for example, the city could be \"Paris\" or \"New York\". Requests are allowed up to 9 dimensions.",
       "id": "Dimension",
       "properties": {
         "dimensionExpression": {
@@ -601,7 +629,7 @@
           "description": "One dimension can be the result of an expression of multiple dimensions. For example, dimension \"country, city\": concatenate(country, \", \", city)."
         },
         "name": {
-          "description": "The name of the dimension. See the [API Dimensions](https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#dimensions) for the list of dimension names. If `dimensionExpression` is specified, `name` can be any string that you would like within the allowed character set. For example if a `dimensionExpression` concatenates `country` and `city`, you could call that dimension `countryAndCity`. Dimension names that you choose must match the regular expression \"^[a-zA-Z0-9_]$\". Dimensions are referenced by `name` in `dimensionFilter`, `orderBys`, `dimensionExpression`, and `pivots`.",
+          "description": "The name of the dimension. See the [API Dimensions](https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#dimensions) for the list of dimension names. If `dimensionExpression` is specified, `name` can be any string that you would like within the allowed character set. For example if a `dimensionExpression` concatenates `country` and `city`, you could call that dimension `countryAndCity`. Dimension names that you choose must match the regular expression `^[a-zA-Z0-9_]$`. Dimensions are referenced by `name` in `dimensionFilter`, `orderBys`, `dimensionExpression`, and `pivots`.",
           "type": "string"
         }
       },
@@ -771,7 +799,7 @@
         },
         "filter": {
           "$ref": "Filter",
-          "description": "A primitive filter. All fields in filter in same FilterExpression needs to be either all dimensions or metrics."
+          "description": "A primitive filter. In the same FilterExpression, all of the filter's field names need to be either all dimensions or all metrics."
         },
         "notExpression": {
           "$ref": "FilterExpression",
@@ -854,7 +882,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "The name of the metric. See the [API Metrics](https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#metrics) for the list of metric names. If `expression` is specified, `name` can be any string that you would like within the allowed character set. For example if `expression` is `screenPageViews/sessions`, you could call that metric's name = `viewsPerSession`. Metric names that you choose must match the regular expression \"^[a-zA-Z0-9_]$\". Metrics are referenced by `name` in `metricFilter`, `orderBys`, and metric `expression`.",
+          "description": "The name of the metric. See the [API Metrics](https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#metrics) for the list of metric names. If `expression` is specified, `name` can be any string that you would like within the allowed character set. For example if `expression` is `screenPageViews/sessions`, you could call that metric's name = `viewsPerSession`. Metric names that you choose must match the regular expression `^[a-zA-Z0-9_]$`. Metrics are referenced by `name` in `metricFilter`, `orderBys`, and metric `expression`.",
           "type": "string"
         }
       },
@@ -937,6 +965,23 @@
         "apiName": {
           "description": "A metric name. Useable in [Metric](#Metric)'s `name`. For example, `eventCount`.",
           "type": "string"
+        },
+        "blockedReasons": {
+          "description": "If reasons are specified, your access is blocked to this metric for this property. API requests from you to this property for this metric will succeed; however, the report will contain only zeros for this metric. API requests with metric filters on blocked metrics will fail. If reasons are empty, you have access to this metric. To learn more, see [Access and data-restriction management](https://support.google.com/analytics/answer/10851388).",
+          "items": {
+            "enum": [
+              "BLOCKED_REASON_UNSPECIFIED",
+              "NO_REVENUE_METRICS",
+              "NO_COST_METRICS"
+            ],
+            "enumDescriptions": [
+              "Will never be specified in API response.",
+              "If present, your access is blocked to revenue related metrics for this property, and this metric is revenue related.",
+              "If present, your access is blocked to cost related metrics for this property, and this metric is cost related."
+            ],
+            "type": "string"
+          },
+          "type": "array"
         },
         "category": {
           "description": "The display name of the category that this metrics belongs to. Similar dimensions and metrics are categorized together.",
@@ -1094,7 +1139,7 @@
       "type": "object"
     },
     "OrderBy": {
-      "description": "The sort options.",
+      "description": "Order bys define how rows will be sorted in the response. For example, ordering rows by descending event count is one ordering, and ordering rows by the event name string is a different ordering.",
       "id": "OrderBy",
       "properties": {
         "desc": {
@@ -1288,6 +1333,18 @@
         },
         "dataLossFromOtherRow": {
           "description": "If true, indicates some buckets of dimension combinations are rolled into \"(other)\" row. This can happen for high cardinality reports.",
+          "type": "boolean"
+        },
+        "emptyReason": {
+          "description": "If empty reason is specified, the report is empty for this reason.",
+          "type": "string"
+        },
+        "schemaRestrictionResponse": {
+          "$ref": "SchemaRestrictionResponse",
+          "description": "Describes the schema restrictions actively enforced in creating this report. To learn more, see [Access and data-restriction management](https://support.google.com/analytics/answer/10851388)."
+        },
+        "subjectToThresholding": {
+          "description": "If `subjectToThresholding` is true, this report is subject to thresholding and only returns data that meets the minimum aggregation thresholds. It is possible for a request to be subject to thresholding thresholding and no data is absent from the report, and this happens when all data is above the thresholds. To learn more, see [Data thresholds](https://support.google.com/analytics/answer/9383630) and [About Demographics and Interests](https://support.google.com/analytics/answer/2799357).",
           "type": "boolean"
         },
         "timeZone": {
@@ -1632,7 +1689,7 @@
         },
         "metricFilter": {
           "$ref": "FilterExpression",
-          "description": "The filter clause of metrics. Applied at post aggregation phase, similar to SQL having-clause. Dimensions cannot be used in this filter."
+          "description": "The filter clause of metrics. Applied after aggregating the report's rows, similar to SQL having-clause. Dimensions cannot be used in this filter."
         },
         "metrics": {
           "description": "The metrics requested and displayed.",
@@ -1730,6 +1787,20 @@
       },
       "type": "object"
     },
+    "SchemaRestrictionResponse": {
+      "description": "The schema restrictions actively enforced in creating this report. To learn more, see [Access and data-restriction management](https://support.google.com/analytics/answer/10851388).",
+      "id": "SchemaRestrictionResponse",
+      "properties": {
+        "activeMetricRestrictions": {
+          "description": "All restrictions actively enforced in creating the report. For example, `purchaseRevenue` always has the restriction type `REVENUE_DATA`. However, this active response restriction is only populated if the user's custom role disallows access to `REVENUE_DATA`.",
+          "items": {
+            "$ref": "ActiveMetricRestriction"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "StringFilter": {
       "description": "The filter for string",
       "id": "StringFilter",
@@ -1755,8 +1826,8 @@
             "Begins with the string value.",
             "Ends with the string value.",
             "Contains the string value.",
-            "Full regular expression match with the string value.",
-            "Partial regular expression match with the string value."
+            "Full match for the regular expression with the string value.",
+            "Partial match for the regular expression with the string value."
           ],
           "type": "string"
         },

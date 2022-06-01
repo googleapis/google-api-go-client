@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -86,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -194,19 +195,22 @@ type AppEngineHttpTarget struct {
 	// (+http://code.google.com/appengine)". This header can be modified,
 	// but Cloud Scheduler will append "AppEngine-Google;
 	// (+http://code.google.com/appengine)" to the modified `User-Agent`. *
-	// `X-CloudScheduler`: This header will be set to true. If the job has
-	// an body, Cloud Scheduler sets the following headers: *
-	// `Content-Type`: By default, the `Content-Type` header is set to
-	// "application/octet-stream". The default can be overridden by
-	// explictly setting `Content-Type` to a particular media type when the
-	// job is created. For example, `Content-Type` can be set to
-	// "application/json". * `Content-Length`: This is computed by Cloud
-	// Scheduler. This value is output only. It cannot be changed. The
-	// headers below are output only. They cannot be set or overridden: *
-	// `X-Google-*`: For Google internal use only. * `X-AppEngine-*`: For
-	// Google internal use only. In addition, some App Engine headers, which
-	// contain job-specific information, are also be sent to the job
-	// handler.
+	// `X-CloudScheduler`: This header will be set to true. *
+	// `X-CloudScheduler-JobName`: This header will contain the job name. *
+	// `X-CloudScheduler-ScheduleTime`: For Cloud Scheduler jobs specified
+	// in the unix-cron format, this header will contain the job schedule
+	// time in RFC3339 UTC "Zulu" format. If the job has an body, Cloud
+	// Scheduler sets the following headers: * `Content-Type`: By default,
+	// the `Content-Type` header is set to "application/octet-stream". The
+	// default can be overridden by explictly setting `Content-Type` to a
+	// particular media type when the job is created. For example,
+	// `Content-Type` can be set to "application/json". *
+	// `Content-Length`: This is computed by Cloud Scheduler. This value is
+	// output only. It cannot be changed. The headers below are output only.
+	// They cannot be set or overridden: * `X-Google-*`: For Google internal
+	// use only. * `X-AppEngine-*`: For Google internal use only. In
+	// addition, some App Engine headers, which contain job-specific
+	// information, are also be sent to the job handler.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// HttpMethod: The HTTP method to use for the request. PATCH and OPTIONS
@@ -296,7 +300,7 @@ type AppEngineRouting struct {
 	// which is available when the job is attempted. Requests can only be
 	// sent to a specific instance if manual scaling is used in App Engine
 	// Standard
-	// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-engine?hl=en_US#scaling_types_and_instance_classes).
+	// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-engine?#scaling_types_and_instance_classes).
 	// App Engine Flex does not support instances. For more information, see
 	// App Engine Standard request routing
 	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed)
@@ -339,8 +343,7 @@ func (s *AppEngineRouting) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -369,8 +372,12 @@ type HttpTarget struct {
 	// Scheduler and derived from uri. * `Content-Length`: This will be
 	// computed by Cloud Scheduler. * `User-Agent`: This will be set to
 	// "Google-Cloud-Scheduler". * `X-Google-*`: Google internal use only.
-	// * `X-AppEngine-*`: Google internal use only. The total size of
-	// headers must be less than 80KB.
+	// * `X-AppEngine-*`: Google internal use only. * `X-CloudScheduler`:
+	// This header will be set to true. * `X-CloudScheduler-JobName`: This
+	// header will contain the job name. * `X-CloudScheduler-ScheduleTime`:
+	// For Cloud Scheduler jobs specified in the unix-cron format, this
+	// header will contain the job schedule time in RFC3339 UTC "Zulu"
+	// format. The total size of headers must be less than 80KB.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// HttpMethod: Which HTTP method to use for the request.
@@ -434,7 +441,7 @@ func (s *HttpTarget) MarshalJSON() ([]byte, error) {
 }
 
 // Job: Configuration for a job. The maximum allowed size for a job is
-// 100KB.
+// 1MB.
 type Job struct {
 	// AppEngineHttpTarget: App Engine HTTP target.
 	AppEngineHttpTarget *AppEngineHttpTarget `json:"appEngineHttpTarget,omitempty"`
@@ -446,7 +453,7 @@ type Job struct {
 	// will retry the job according to the RetryConfig. The allowed duration
 	// for this deadline is: * For HTTP targets, between 15 seconds and 30
 	// minutes. * For App Engine HTTP targets, between 15 seconds and 24
-	// hours.
+	// hours 15 seconds.
 	AttemptDeadline string `json:"attemptDeadline,omitempty"`
 
 	// Description: Optionally caller-specified in CreateJob or UpdateJob. A
@@ -484,7 +491,7 @@ type Job struct {
 	// Schedule: Required, except when used with UpdateJob. Describes the
 	// schedule on which the job will be executed. The schedule can be
 	// either of the following types: * Crontab
-	// (http://en.wikipedia.org/wiki/Cron#Overview) * English-like schedule
+	// (https://en.wikipedia.org/wiki/Cron#Overview) * English-like schedule
 	// (https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules)
 	// As a general rule, execution `n + 1` of a job will not begin until
 	// execution `n` has finished. Cloud Scheduler will never allow two
@@ -805,7 +812,8 @@ type PubsubMessage struct {
 	// same non-empty `ordering_key` value will be delivered to subscribers
 	// in the order in which they are received by the Pub/Sub system. All
 	// `PubsubMessage`s published in a given `PublishRequest` must specify
-	// the same `ordering_key` value.
+	// the same `ordering_key` value. For more information, see ordering
+	// messages (https://cloud.google.com/pubsub/docs/ordering).
 	OrderingKey string `json:"orderingKey,omitempty"`
 
 	// PublishTime: The time at which the message was published, populated
@@ -849,7 +857,7 @@ type PubsubTarget struct {
 
 	// TopicName: Required. The name of the Cloud Pub/Sub topic to which
 	// messages will be published when a job is delivered. The topic name
-	// must be in the same format as required by PubSub's
+	// must be in the same format as required by Pub/Sub's
 	// PublishRequest.name
 	// (https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#publishrequest),
 	// for example `projects/PROJECT_ID/topics/TOPIC_ID`. The topic must be
@@ -1061,7 +1069,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1174,8 +1182,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1233,7 +1241,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1304,7 +1312,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1408,7 +1416,7 @@ func (c *ProjectsLocationsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1549,7 +1557,7 @@ func (c *ProjectsLocationsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1693,7 +1701,7 @@ func (c *ProjectsLocationsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1860,7 +1868,7 @@ func (c *ProjectsLocationsJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2053,7 +2061,7 @@ func (c *ProjectsLocationsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2205,7 +2213,7 @@ func (c *ProjectsLocationsJobsPauseCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2351,7 +2359,7 @@ func (c *ProjectsLocationsJobsResumeCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2495,7 +2503,7 @@ func (c *ProjectsLocationsJobsRunCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

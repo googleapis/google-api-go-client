@@ -146,7 +146,7 @@
             "orgunits": {
               "methods": {
                 "batchInherit": {
-                  "description": "Modify multiple policy values that are applied to a specific org unit so that they now inherit the value from a parent (if applicable). All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`. On failure the request will return the error details as part of the google.rpc.Status.",
+                  "description": "Modify multiple policy values that are applied to a specific org unit so that they now inherit the value from a parent (if applicable). All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`, though the values for those keys may be different. On failure the request will return the error details as part of the google.rpc.Status.",
                   "flatPath": "v1/customers/{customersId}/policies/orgunits:batchInherit",
                   "httpMethod": "POST",
                   "id": "chromepolicy.customers.policies.orgunits.batchInherit",
@@ -174,7 +174,7 @@
                   ]
                 },
                 "batchModify": {
-                  "description": "Modify multiple policy values that are applied to a specific org unit. All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`. On failure the request will return the error details as part of the google.rpc.Status.",
+                  "description": "Modify multiple policy values that are applied to a specific org unit. All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`, though the values for those keys may be different. On failure the request will return the error details as part of the google.rpc.Status.",
                   "flatPath": "v1/customers/{customersId}/policies/orgunits:batchModify",
                   "httpMethod": "POST",
                   "id": "chromepolicy.customers.policies.orgunits.batchModify",
@@ -324,9 +324,41 @@
       }
     }
   },
-  "revision": "20210826",
+  "revision": "20220506",
   "rootUrl": "https://chromepolicy.googleapis.com/",
   "schemas": {
+    "ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle": {
+      "id": "ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle",
+      "properties": {
+        "description": {
+          "description": "Description about current life cycle.",
+          "type": "string"
+        },
+        "endSupport": {
+          "$ref": "GoogleTypeDate",
+          "description": "End supporting date for current policy."
+        },
+        "policyApiLifecycleStage": {
+          "description": "Indicate current life cycle stage of the policy API.",
+          "enum": [
+            "API_UNSPECIFIED",
+            "API_PREVIEW",
+            "API_DEVELOPMENT",
+            "API_CURRENT",
+            "API_DEPRECATED"
+          ],
+          "enumDescriptions": [
+            "unspecified.",
+            "Policy is not working yet, but giving developers heads up on format. This stage can transfer to API_DEVELOPEMNT or API_CURRENT.",
+            "Policy can change format in backward incompatible way (breaking change). This stage can transfer to API_CURRENT or API_DEPRECATED. This could be used for policies launched only to TTs or launched to selected customers for emergency usage.",
+            "Policy in official format. Policy can change format in backward compatible way (non-breaking change). Example: this policy can introduce a new field, which is considered non-breaking change, when field masks are properly utilized. This stage can transfer to API_DEPRECATED.",
+            "Please stop using this policy. This policy is deprecated and may/will be removed in the future. Most likely a new policy was introduced to replace this one."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleChromePolicyV1AdditionalTargetKeyName": {
       "description": "Additional key names that will be used to identify the target of the policy value.",
       "id": "GoogleChromePolicyV1AdditionalTargetKeyName",
@@ -424,7 +456,7 @@
       "type": "object"
     },
     "GoogleChromePolicyV1PolicySchema": {
-      "description": "Resource representing a policy schema. Next ID: 10",
+      "description": "Resource representing a policy schema. Next ID: 12",
       "id": "GoogleChromePolicyV1PolicySchema",
       "properties": {
         "accessRestrictions": {
@@ -467,13 +499,18 @@
           "readOnly": true,
           "type": "array"
         },
+        "policyApiLifeycle": {
+          "$ref": "ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle",
+          "description": "Output only. Current life cycle information.",
+          "readOnly": true
+        },
         "policyDescription": {
           "description": "Output only. Description about the policy schema for user consumption.",
           "readOnly": true,
           "type": "string"
         },
         "schemaName": {
-          "description": "Output only. The full qualified name of the policy schema. This value is used to fill the field `policy_schema` in PolicyValue when calling BatchInheritOrgUnitPolicies or BatchModifyOrgUnitPolicies.",
+          "description": "Output only. The fully qualified name of the policy schema. This value is used to fill the field `policy_schema` in PolicyValue when calling BatchInheritOrgUnitPolicies or BatchModifyOrgUnitPolicies",
           "readOnly": true,
           "type": "string"
         },
@@ -481,6 +518,24 @@
           "description": "Output only. URI to related support article for this schema.",
           "readOnly": true,
           "type": "string"
+        },
+        "validTargetResources": {
+          "description": "Output only. Information about applicable target resources for the policy.",
+          "items": {
+            "enum": [
+              "TARGET_RESOURCE_UNSPECIFIED",
+              "ORG_UNIT",
+              "GROUP"
+            ],
+            "enumDescriptions": [
+              "Unspecified target resource.",
+              "Organizational Unit target resource.",
+              "Group target resource."
+            ],
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
         }
       },
       "type": "object"
@@ -515,7 +570,7 @@
           "type": "string"
         },
         "fieldDependencies": {
-          "description": "Output only. Provides a list of fields and the values they must have for this field to be allowed to be set.",
+          "description": "Output only. Provides a list of fields and values. At least one of the fields must have the corresponding value in order for this field to be allowed to be set.",
           "items": {
             "$ref": "GoogleChromePolicyV1PolicySchemaFieldDependencies"
           },
@@ -539,6 +594,14 @@
           "description": "Output only. Provides the description of the fields nested in this field, if the field is a message type that defines multiple fields.",
           "items": {
             "$ref": "GoogleChromePolicyV1PolicySchemaFieldDescription"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "requiredItems": {
+          "description": "Output only. Provides a list of fields that are required to be set if this field has a certain value.",
+          "items": {
+            "$ref": "GoogleChromePolicyV1PolicySchemaRequiredItems"
           },
           "readOnly": true,
           "type": "array"
@@ -586,6 +649,27 @@
           "description": "Output only. The value of the field that has a notice. When setting the field to this value, the user may be required to acknowledge the notice message in order for the value to be set.",
           "readOnly": true,
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleChromePolicyV1PolicySchemaRequiredItems": {
+      "description": "The fields that will become required based on the value of this field.",
+      "id": "GoogleChromePolicyV1PolicySchemaRequiredItems",
+      "properties": {
+        "fieldConditions": {
+          "description": "The value(s) of the field that provoke required field enforcement. An empty field_conditions implies that any value assigned to this field will provoke required field enforcement.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requiredFields": {
+          "description": "The fields that are required as a consequence of the field conditions.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -673,6 +757,11 @@
       "description": "The resolved value of a policy for a given target.",
       "id": "GoogleChromePolicyV1ResolvedPolicy",
       "properties": {
+        "addedSourceKey": {
+          "$ref": "GoogleChromePolicyV1PolicyTargetKey",
+          "description": "Output only. The added source key establishes at which level an entity was explicitly added for management. This is useful for certain type of policies that are only applied if they are explicitly added for management. For example: apps and networks. An entity can only be deleted from management in an Organizational Unit that it was explicitly added to. If this is not present it means that the policy is managed without the need to explicitly add an entity, for example: standard user or device policies.",
+          "readOnly": true
+        },
         "sourceKey": {
           "$ref": "GoogleChromePolicyV1PolicyTargetKey",
           "description": "Output only. The source resource from which this policy value is obtained. May be the same as `targetKey` if the policy is directly modified on the target, otherwise it would be another resource from which the policy gets its value (if applicable). If not present, the source is the default value for the customer.",
@@ -714,9 +803,31 @@
       "type": "object"
     },
     "GoogleProtobufEmpty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "GoogleProtobufEmpty",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleTypeDate": {
+      "description": "Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp",
+      "id": "GoogleTypeDate",
+      "properties": {
+        "day": {
+          "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn't significant.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "month": {
+          "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "year": {
+          "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
       "type": "object"
     },
     "Proto2DescriptorProto": {

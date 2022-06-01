@@ -624,6 +624,34 @@
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/firebase"
               ]
+            },
+            "remove": {
+              "description": "Removes the specified AndroidApp from the project.",
+              "flatPath": "v1beta1/projects/{projectsId}/androidApps/{androidAppsId}:remove",
+              "httpMethod": "POST",
+              "id": "firebase.projects.androidApps.remove",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The resource name of the AndroidApp, in the format: projects/ PROJECT_IDENTIFIER/androidApps/APP_ID Since an APP_ID is a unique identifier, the Unique Resource from Sub-Collection access pattern may be used here, in the format: projects/-/androidApps/APP_ID Refer to the AndroidApp [name](../projects.androidApps#AndroidApp.FIELDS.name) field for details about PROJECT_IDENTIFIER and APP_ID values.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/androidApps/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+name}:remove",
+              "request": {
+                "$ref": "RemoveAndroidAppRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             }
           },
           "resources": {
@@ -952,6 +980,34 @@
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/firebase"
               ]
+            },
+            "remove": {
+              "description": "Removes the specified IosApp from the project.",
+              "flatPath": "v1beta1/projects/{projectsId}/iosApps/{iosAppsId}:remove",
+              "httpMethod": "POST",
+              "id": "firebase.projects.iosApps.remove",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The resource name of the IosApp, in the format: projects/ PROJECT_IDENTIFIER/iosApps/APP_ID Since an APP_ID is a unique identifier, the Unique Resource from Sub-Collection access pattern may be used here, in the format: projects/-/iosApps/APP_ID Refer to the IosApp [name](../projects.iosApps#IosApp.FIELDS.name) field for details about PROJECT_IDENTIFIER and APP_ID values.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/iosApps/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+name}:remove",
+              "request": {
+                "$ref": "RemoveIosAppRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             }
           }
         },
@@ -1115,13 +1171,41 @@
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/firebase"
               ]
+            },
+            "remove": {
+              "description": "Removes the specified WebApp from the project.",
+              "flatPath": "v1beta1/projects/{projectsId}/webApps/{webAppsId}:remove",
+              "httpMethod": "POST",
+              "id": "firebase.projects.webApps.remove",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The resource name of the WebApp, in the format: projects/ PROJECT_IDENTIFIER/webApps/APP_ID Since an APP_ID is a unique identifier, the Unique Resource from Sub-Collection access pattern may be used here, in the format: projects/-/webApps/APP_ID Refer to the WebApp [name](../projects.webApps#WebApp.FIELDS.name) field for details about PROJECT_IDENTIFIER and APP_ID values.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/webApps/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+name}:remove",
+              "request": {
+                "$ref": "RemoveWebAppRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             }
           }
         }
       }
     }
   },
-  "revision": "20210809",
+  "revision": "20220518",
   "rootUrl": "https://firebase.googleapis.com/",
   "schemas": {
     "AddFirebaseRequest": {
@@ -1192,6 +1276,11 @@
       "description": "Details of a Google Analytics property",
       "id": "AnalyticsProperty",
       "properties": {
+        "analyticsAccountId": {
+          "description": "Output only. The ID of the [Google Analytics account](https://www.google.com/analytics/) for the Google Analytics property associated with the specified FirebaseProject.",
+          "readOnly": true,
+          "type": "string"
+        },
         "displayName": {
           "description": "The display name of the Google Analytics property associated with the specified `FirebaseProject`.",
           "type": "string"
@@ -1207,6 +1296,10 @@
       "description": "Details of a Firebase App for Android.",
       "id": "AndroidApp",
       "properties": {
+        "apiKeyId": {
+          "description": "The key_id of the GCP ApiKey associated with this App. If set must have no restrictions, or only have restrictions that are valid for the associated Firebase App. Cannot be set in create requests, instead an existing valid API Key will be chosen, or if no valid API Keys exist, one will be provisioned for you. Cannot be set to an empty value in update requests.",
+          "type": "string"
+        },
         "appId": {
           "description": "Immutable. The globally unique, Firebase-assigned identifier for the `AndroidApp`. This identifier should be treated as an opaque token, as the data format is not specified.",
           "type": "string"
@@ -1270,7 +1363,7 @@
       "type": "object"
     },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
       "type": "object"
@@ -1373,6 +1466,10 @@
       "description": "Details of a Firebase App for iOS.",
       "id": "IosApp",
       "properties": {
+        "apiKeyId": {
+          "description": "The key_id of the GCP ApiKey associated with this App. If set must have no restrictions, or only have restrictions that are valid for the associated Firebase App. Cannot be set in create requests, instead an existing valid API Key will be chosen, or if no valid API Keys exist, one will be provisioned for you. Cannot be set to an empty value in update requests.",
+          "type": "string"
+        },
         "appId": {
           "description": "Immutable. The globally unique, Firebase-assigned identifier for the `IosApp`. This identifier should be treated as an opaque token, as the data format is not specified.",
           "type": "string"
@@ -1395,6 +1492,10 @@
         },
         "projectId": {
           "description": "Immutable. A user-assigned unique identifier of the parent FirebaseProject for the `IosApp`.",
+          "type": "string"
+        },
+        "teamId": {
+          "description": "The Apple Developer Team ID associated with the App in the App Store.",
           "type": "string"
         }
       },
@@ -1645,6 +1746,60 @@
       },
       "type": "object"
     },
+    "RemoveAndroidAppRequest": {
+      "id": "RemoveAndroidAppRequest",
+      "properties": {
+        "allowMissing": {
+          "description": "If set to true, and the App is not found, the request will succeed but no action will be taken on the server.",
+          "type": "boolean"
+        },
+        "etag": {
+          "description": "Checksum provided in the AndroidApp entity, which if provided ensures the client has an up-to-date value before proceeding.",
+          "type": "string"
+        },
+        "validateOnly": {
+          "description": "If set to true, only validate the request and do not delete the app.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "RemoveIosAppRequest": {
+      "id": "RemoveIosAppRequest",
+      "properties": {
+        "allowMissing": {
+          "description": "If set to true, and the App is not found, the request will succeed but no action will be taken on the server.",
+          "type": "boolean"
+        },
+        "etag": {
+          "description": "Checksum provided in the IosApp entity, which if provided ensures the client has an up-to-date value before proceeding.",
+          "type": "string"
+        },
+        "validateOnly": {
+          "description": "If set to true, only validate the request and do not delete the app.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "RemoveWebAppRequest": {
+      "id": "RemoveWebAppRequest",
+      "properties": {
+        "allowMissing": {
+          "description": "If set to true, and the App is not found, the request will succeed but no action will be taken on the server.",
+          "type": "boolean"
+        },
+        "etag": {
+          "description": "Checksum provided in the WebApp entity, which if provided ensures the client has an up-to-date value before proceeding.",
+          "type": "string"
+        },
+        "validateOnly": {
+          "description": "If set to true, only validate the request and do not delete the app.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "SearchFirebaseAppsResponse": {
       "id": "SearchFirebaseAppsResponse",
       "properties": {
@@ -1756,7 +1911,7 @@
           "type": "string"
         },
         "measurementId": {
-          "description": "Applicable for Firebase Web Apps only. The unique Google-assigned identifier of the Google Analytics web stream associated with the Firebase Web App. Firebase SDKs use this ID to interact with Google Analytics APIs. Learn more about this ID and Google Analytics web streams in the [Analytics documentation](https://support.google.com/analytics/topic/9303475).",
+          "description": "Applicable for Firebase Web Apps only. The unique Google-assigned identifier of the Google Analytics web stream associated with the Firebase Web App. Firebase SDKs use this ID to interact with Google Analytics APIs. Learn more about this ID and Google Analytics web streams in the [Analytics documentation](https://support.google.com/analytics/answer/9304153).",
           "type": "string"
         },
         "streamId": {
@@ -1771,6 +1926,10 @@
       "description": "Details of a Firebase App for the web.",
       "id": "WebApp",
       "properties": {
+        "apiKeyId": {
+          "description": "The key_id of the GCP ApiKey associated with this App. If set must have no restrictions, or only have restrictions that are valid for the associated Firebase App. Cannot be set in create requests, instead an existing valid API Key will be chosen, or if no valid API Keys exist, one will be provisioned for you. Cannot be set to an empty value in update requests.",
+          "type": "string"
+        },
         "appId": {
           "description": "Immutable. The globally unique, Firebase-assigned identifier for the `WebApp`. This identifier should be treated as an opaque token, as the data format is not specified.",
           "type": "string"
@@ -1827,7 +1986,7 @@
           "type": "string"
         },
         "measurementId": {
-          "description": "The unique Google-assigned identifier of the Google Analytics web stream associated with the `WebApp`. Firebase SDKs use this ID to interact with Google Analytics APIs. This field is only present if the `WebApp` is linked to a web stream in a Google Analytics App + Web property. Learn more about this ID and Google Analytics web streams in the [Analytics documentation](https://support.google.com/analytics/topic/9303475). To generate a `measurementId` and link the `WebApp` with a Google Analytics web stream, call [`AddGoogleAnalytics`](../../v1beta1/projects/addGoogleAnalytics). For apps using the Firebase JavaScript SDK v7.20.0 and later, Firebase dynamically fetches the `measurementId` when your app initializes Analytics. Having this ID in your config object is optional, but it does serve as a fallback in the rare case that the dynamic fetch fails.",
+          "description": "The unique Google-assigned identifier of the Google Analytics web stream associated with the `WebApp`. Firebase SDKs use this ID to interact with Google Analytics APIs. This field is only present if the `WebApp` is linked to a web stream in a Google Analytics App + Web property. Learn more about this ID and Google Analytics web streams in the [Analytics documentation](https://support.google.com/analytics/answer/9304153). To generate a `measurementId` and link the `WebApp` with a Google Analytics web stream, call [`AddGoogleAnalytics`](../../v1beta1/projects/addGoogleAnalytics). For apps using the Firebase JavaScript SDK v7.20.0 and later, Firebase dynamically fetches the `measurementId` when your app initializes Analytics. Having this ID in your config object is optional, but it does serve as a fallback in the rare case that the dynamic fetch fails.",
           "type": "string"
         },
         "messagingSenderId": {

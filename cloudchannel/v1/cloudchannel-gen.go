@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -85,7 +86,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/apps.order",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -161,6 +162,7 @@ type AccountsService struct {
 
 func NewAccountsChannelPartnerLinksService(s *Service) *AccountsChannelPartnerLinksService {
 	rs := &AccountsChannelPartnerLinksService{s: s}
+	rs.ChannelPartnerRepricingConfigs = NewAccountsChannelPartnerLinksChannelPartnerRepricingConfigsService(s)
 	rs.Customers = NewAccountsChannelPartnerLinksCustomersService(s)
 	return rs
 }
@@ -168,7 +170,18 @@ func NewAccountsChannelPartnerLinksService(s *Service) *AccountsChannelPartnerLi
 type AccountsChannelPartnerLinksService struct {
 	s *Service
 
+	ChannelPartnerRepricingConfigs *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService
+
 	Customers *AccountsChannelPartnerLinksCustomersService
+}
+
+func NewAccountsChannelPartnerLinksChannelPartnerRepricingConfigsService(s *Service) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService {
+	rs := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService{s: s}
+	return rs
+}
+
+type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService struct {
+	s *Service
 }
 
 func NewAccountsChannelPartnerLinksCustomersService(s *Service) *AccountsChannelPartnerLinksCustomersService {
@@ -182,6 +195,7 @@ type AccountsChannelPartnerLinksCustomersService struct {
 
 func NewAccountsCustomersService(s *Service) *AccountsCustomersService {
 	rs := &AccountsCustomersService{s: s}
+	rs.CustomerRepricingConfigs = NewAccountsCustomersCustomerRepricingConfigsService(s)
 	rs.Entitlements = NewAccountsCustomersEntitlementsService(s)
 	return rs
 }
@@ -189,7 +203,18 @@ func NewAccountsCustomersService(s *Service) *AccountsCustomersService {
 type AccountsCustomersService struct {
 	s *Service
 
+	CustomerRepricingConfigs *AccountsCustomersCustomerRepricingConfigsService
+
 	Entitlements *AccountsCustomersEntitlementsService
+}
+
+func NewAccountsCustomersCustomerRepricingConfigsService(s *Service) *AccountsCustomersCustomerRepricingConfigsService {
+	rs := &AccountsCustomersCustomerRepricingConfigsService{s: s}
+	return rs
+}
+
+type AccountsCustomersCustomerRepricingConfigsService struct {
+	s *Service
 }
 
 func NewAccountsCustomersEntitlementsService(s *Service) *AccountsCustomersEntitlementsService {
@@ -387,7 +412,9 @@ type GoogleCloudChannelV1ChangeOfferRequest struct {
 	// accounts/{account_id}/offers/{offer_id}.
 	Offer string `json:"offer,omitempty"`
 
-	// Parameters: Optional. Parameters needed to purchase the Offer.
+	// Parameters: Optional. Parameters needed to purchase the Offer. To
+	// view the available Parameters refer to the
+	// Offer.parameter_definitions from the desired offer.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
 
 	// PurchaseOrderId: Optional. Purchase order id provided by the
@@ -432,7 +459,9 @@ func (s *GoogleCloudChannelV1ChangeOfferRequest) MarshalJSON() ([]byte, error) {
 // CloudChannelService.ChangeParametersRequest.
 type GoogleCloudChannelV1ChangeParametersRequest struct {
 	// Parameters: Required. Entitlement parameters to update. You can only
-	// change editable parameters.
+	// change editable parameters. To view the available Parameters for a
+	// request, refer to the Offer.parameter_definitions from the desired
+	// offer.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
 
 	// PurchaseOrderId: Optional. Purchase order ID provided by the
@@ -533,8 +562,7 @@ type GoogleCloudChannelV1ChannelPartnerLink struct {
 	// LinkState: Required. State of the channel partner link.
 	//
 	// Possible values:
-	//   "CHANNEL_PARTNER_LINK_STATE_UNSPECIFIED" - The state is not
-	// specified.
+	//   "CHANNEL_PARTNER_LINK_STATE_UNSPECIFIED" - Not used.
 	//   "INVITED" - An invitation has been sent to the reseller to create a
 	// channel partner link.
 	//   "ACTIVE" - Status when the reseller is active.
@@ -586,6 +614,53 @@ type GoogleCloudChannelV1ChannelPartnerLink struct {
 
 func (s *GoogleCloudChannelV1ChannelPartnerLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ChannelPartnerLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1ChannelPartnerRepricingConfig: Configuration for
+// how a distributor will rebill a channel partner (also known as a
+// distributor-authorized reseller).
+type GoogleCloudChannelV1ChannelPartnerRepricingConfig struct {
+	// Name: Output only. Resource name of the
+	// ChannelPartnerRepricingConfig. Format:
+	// accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/channel
+	// PartnerRepricingConfigs/{id}.
+	Name string `json:"name,omitempty"`
+
+	// RepricingConfig: Required. The configuration for bill modifications
+	// made by a reseller before sending it to ChannelPartner.
+	RepricingConfig *GoogleCloudChannelV1RepricingConfig `json:"repricingConfig,omitempty"`
+
+	// UpdateTime: Output only. Timestamp of an update to the repricing
+	// rule. If `update_time` is after
+	// RepricingConfig.effective_invoice_month then it indicates this was
+	// set mid-month.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1ChannelPartnerRepricingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1ChannelPartnerRepricingConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -716,8 +791,7 @@ type GoogleCloudChannelV1CloudIdentityInfo struct {
 	// using services.
 	//
 	// Possible values:
-	//   "CUSTOMER_TYPE_UNSPECIFIED" - Default value. This state doesn't
-	// show unless an error occurs.
+	//   "CUSTOMER_TYPE_UNSPECIFIED" - Not used.
 	//   "DOMAIN" - Domain-owning customer which needs domain verification
 	// to use services.
 	//   "TEAM" - Team customer which needs email verification to use
@@ -1016,8 +1090,7 @@ type GoogleCloudChannelV1CustomerConstraints struct {
 	// AllowedCustomerTypes: Allowed Customer Type.
 	//
 	// Possible values:
-	//   "CUSTOMER_TYPE_UNSPECIFIED" - Default value. This state doesn't
-	// show unless an error occurs.
+	//   "CUSTOMER_TYPE_UNSPECIFIED" - Not used.
 	//   "DOMAIN" - Domain-owning customer which needs domain verification
 	// to use services.
 	//   "TEAM" - Team customer which needs email verification to use
@@ -1074,8 +1147,7 @@ type GoogleCloudChannelV1CustomerEvent struct {
 	// EventType: Type of event which happened on the customer.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value. This state doesn't show unless
-	// an error occurs.
+	//   "TYPE_UNSPECIFIED" - Not used.
 	//   "PRIMARY_DOMAIN_CHANGED" - Primary domain for customer was changed.
 	//   "PRIMARY_DOMAIN_VERIFIED" - Primary domain of the customer has been
 	// verified.
@@ -1104,13 +1176,58 @@ func (s *GoogleCloudChannelV1CustomerEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1CustomerRepricingConfig: Configuration for how a
+// reseller will reprice a Customer.
+type GoogleCloudChannelV1CustomerRepricingConfig struct {
+	// Name: Output only. Resource name of the CustomerRepricingConfig.
+	// Format:
+	// accounts/{account_id}/customers/{customer_id}/customerRepricingConfigs
+	// /{id}.
+	Name string `json:"name,omitempty"`
+
+	// RepricingConfig: Required. The configuration for bill modifications
+	// made by a reseller before sending it to customers.
+	RepricingConfig *GoogleCloudChannelV1RepricingConfig `json:"repricingConfig,omitempty"`
+
+	// UpdateTime: Output only. Timestamp of an update to the repricing
+	// rule. If `update_time` is after
+	// RepricingConfig.effective_invoice_month then it indicates this was
+	// set mid-month.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1CustomerRepricingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1CustomerRepricingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1EduData: Required Edu Attributes
 type GoogleCloudChannelV1EduData struct {
 	// InstituteSize: Size of the institute.
 	//
 	// Possible values:
-	//   "INSTITUTE_SIZE_UNSPECIFIED" - Default value. This state doesn't
-	// show unless an error occurs.
+	//   "INSTITUTE_SIZE_UNSPECIFIED" - Not used.
 	//   "SIZE_1_100" - 1 - 100
 	//   "SIZE_101_500" - 101 - 500
 	//   "SIZE_501_1000" - 501 - 1,000
@@ -1123,8 +1240,7 @@ type GoogleCloudChannelV1EduData struct {
 	// InstituteType: Designated institute type of customer.
 	//
 	// Possible values:
-	//   "INSTITUTE_TYPE_UNSPECIFIED" - Default value. This state doesn't
-	// show unless an error occurs.
+	//   "INSTITUTE_TYPE_UNSPECIFIED" - Not used.
 	//   "K12" - Elementary/Secondary Schools & Districts
 	//   "UNIVERSITY" - Higher Education Universities & Colleges
 	InstituteType string `json:"instituteType,omitempty"`
@@ -1180,8 +1296,12 @@ type GoogleCloudChannelV1Entitlement struct {
 	Offer string `json:"offer,omitempty"`
 
 	// Parameters: Extended entitlement parameters. When creating an
-	// entitlement, valid parameters' names and values are defined in the
-	// offer's parameter definitions.
+	// entitlement, valid parameter names and values are defined in the
+	// Offer.parameter_definitions. The response may include the following
+	// output-only Parameters: - assigned_units: The number of licenses
+	// assigned to users. - max_units: The maximum assignable units for a
+	// flexible offer. - num_units: The total commitment for
+	// commitment-based offers.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
 
 	// ProvisionedService: Output only. Service provisioning details for the
@@ -1192,8 +1312,7 @@ type GoogleCloudChannelV1Entitlement struct {
 	// entitlement.
 	//
 	// Possible values:
-	//   "PROVISIONING_STATE_UNSPECIFIED" - Default value. This state
-	// doesn't show unless an error occurs.
+	//   "PROVISIONING_STATE_UNSPECIFIED" - Not used.
 	//   "ACTIVE" - The entitlement is currently active.
 	//   "SUSPENDED" - The entitlement is currently suspended.
 	ProvisioningState string `json:"provisioningState,omitempty"`
@@ -1202,15 +1321,14 @@ type GoogleCloudChannelV1Entitlement struct {
 	// for resellers to use for their company tracking usage. If a
 	// purchaseOrderId value is given, it appears in the API responses and
 	// shows up in the invoice. The property accepts up to 80 plain text
-	// characters.
+	// characters. This is only supported for Google Workspace entitlements.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
 
 	// SuspensionReasons: Output only. Enumerable of all current suspension
 	// reasons for an entitlement.
 	//
 	// Possible values:
-	//   "SUSPENSION_REASON_UNSPECIFIED" - Default value. This state doesn't
-	// show unless an error occurs.
+	//   "SUSPENSION_REASON_UNSPECIFIED" - Not used.
 	//   "RESELLER_INITIATED" - Entitlement was manually suspended by the
 	// Reseller.
 	//   "TRIAL_ENDED" - Trial ended.
@@ -1266,8 +1384,7 @@ type GoogleCloudChannelV1EntitlementEvent struct {
 	// EventType: Type of event which happened on the entitlement.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value. This state doesn't show unless
-	// an error occurs.
+	//   "TYPE_UNSPECIFIED" - Not used.
 	//   "CREATED" - A new entitlement was created.
 	//   "PRICE_PLAN_SWITCHED" - The offer type associated with an
 	// entitlement was changed. This is not triggered if an entitlement
@@ -1404,6 +1521,88 @@ type GoogleCloudChannelV1ListChannelPartnerLinksResponse struct {
 
 func (s *GoogleCloudChannelV1ListChannelPartnerLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListChannelPartnerLinksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse:
+// Response message for
+// CloudChannelService.ListChannelPartnerRepricingConfigs.
+type GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse struct {
+	// ChannelPartnerRepricingConfigs: The repricing configs for this
+	// channel partner.
+	ChannelPartnerRepricingConfigs []*GoogleCloudChannelV1ChannelPartnerRepricingConfig `json:"channelPartnerRepricingConfigs,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results. Pass to
+	// ListChannelPartnerRepricingConfigsRequest.page_token to obtain that
+	// page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ChannelPartnerRepricingConfigs") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ChannelPartnerRepricingConfigs") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1ListCustomerRepricingConfigsResponse: Response
+// message for CloudChannelService.ListCustomerRepricingConfigs.
+type GoogleCloudChannelV1ListCustomerRepricingConfigsResponse struct {
+	// CustomerRepricingConfigs: The repricing configs for this channel
+	// partner.
+	CustomerRepricingConfigs []*GoogleCloudChannelV1CustomerRepricingConfig `json:"customerRepricingConfigs,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results. Pass to
+	// ListCustomerRepricingConfigsRequest.page_token to obtain that page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomerRepricingConfigs") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomerRepricingConfigs")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1ListCustomerRepricingConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1ListCustomerRepricingConfigsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2027,8 +2226,7 @@ type GoogleCloudChannelV1OperationMetadata struct {
 	// OperationType: The RPC that initiated this Long Running Operation.
 	//
 	// Possible values:
-	//   "OPERATION_TYPE_UNSPECIFIED" - Default value. This state doesn't
-	// show unless an error occurs.
+	//   "OPERATION_TYPE_UNSPECIFIED" - Not used.
 	//   "CREATE_ENTITLEMENT" - Long Running Operation was triggered by
 	// CreateEntitlement.
 	//   "CHANGE_RENEWAL_SETTINGS" - Long Running Operation was triggered by
@@ -2169,6 +2367,36 @@ type GoogleCloudChannelV1ParameterDefinition struct {
 
 func (s *GoogleCloudChannelV1ParameterDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ParameterDefinition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1PercentageAdjustment: An adjustment that applies
+// a flat markup or markdown to an entire bill.
+type GoogleCloudChannelV1PercentageAdjustment struct {
+	// Percentage: The percentage of the bill to adjust. For example: Mark
+	// down by 1% => "-1.00" Mark up by 1% => "1.00" Pass-Through => "0.00"
+	Percentage *GoogleTypeDecimal `json:"percentage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Percentage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Percentage") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1PercentageAdjustment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1PercentageAdjustment
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2541,7 +2769,9 @@ type GoogleCloudChannelV1ProvisionedService struct {
 	ProductId string `json:"productId,omitempty"`
 
 	// ProvisioningId: Output only. Provisioning ID of the entitlement. For
-	// Google Workspace, this would be the underlying Subscription ID.
+	// Google Workspace, this is the underlying Subscription ID. For Google
+	// Cloud Platform, this is the Billing Account ID of the billing
+	// subaccount."
 	ProvisioningId string `json:"provisioningId,omitempty"`
 
 	// SkuId: Output only. The SKU pertaining to the provisioning resource
@@ -2742,6 +2972,132 @@ func (s *GoogleCloudChannelV1RenewalSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1RepricingAdjustment: A type that represents the
+// various adjustments you can apply to a bill.
+type GoogleCloudChannelV1RepricingAdjustment struct {
+	// PercentageAdjustment: Flat markup or markdown on an entire bill.
+	PercentageAdjustment *GoogleCloudChannelV1PercentageAdjustment `json:"percentageAdjustment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PercentageAdjustment") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PercentageAdjustment") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1RepricingAdjustment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1RepricingAdjustment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1RepricingConfig: Configuration for repricing a
+// Google bill over a period of time.
+type GoogleCloudChannelV1RepricingConfig struct {
+	// Adjustment: Required. Information about the adjustment.
+	Adjustment *GoogleCloudChannelV1RepricingAdjustment `json:"adjustment,omitempty"`
+
+	// ChannelPartnerGranularity: Applies the repricing configuration at the
+	// channel partner level. This is the only supported value for
+	// ChannelPartnerRepricingConfig.
+	ChannelPartnerGranularity *GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity `json:"channelPartnerGranularity,omitempty"`
+
+	// EffectiveInvoiceMonth: Required. The YearMonth when these adjustments
+	// activate. The Day field needs to be "0" since we only accept
+	// YearMonth repricing boundaries.
+	EffectiveInvoiceMonth *GoogleTypeDate `json:"effectiveInvoiceMonth,omitempty"`
+
+	// EntitlementGranularity: Applies the repricing configuration at the
+	// entitlement level. This is the only supported value for
+	// CustomerRepricingConfig.
+	EntitlementGranularity *GoogleCloudChannelV1RepricingConfigEntitlementGranularity `json:"entitlementGranularity,omitempty"`
+
+	// RebillingBasis: Required. The RebillingBasis to use for this bill.
+	// Specifies the relative cost based on repricing costs you will apply.
+	//
+	// Possible values:
+	//   "REBILLING_BASIS_UNSPECIFIED" - Not used.
+	//   "COST_AT_LIST" - Use the list cost, also known as the MSRP.
+	//   "DIRECT_CUSTOMER_COST" - Pass through all discounts except the
+	// Reseller Program Discount. If this is the default cost base and no
+	// adjustments are specified, the output cost will be exactly what the
+	// customer would see if they viewed the bill in the Google Cloud
+	// Console.
+	RebillingBasis string `json:"rebillingBasis,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Adjustment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Adjustment") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1RepricingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1RepricingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity: Applies
+// the repricing configuration at the channel partner level. The channel
+// partner value is derived from the resource name. Takes an empty json
+// object.
+type GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity struct {
+}
+
+// GoogleCloudChannelV1RepricingConfigEntitlementGranularity: Applies
+// the repricing configuration at the entitlement level.
+type GoogleCloudChannelV1RepricingConfigEntitlementGranularity struct {
+	// Entitlement: Resource name of the entitlement. Format:
+	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlemen
+	// t_id}
+	Entitlement string `json:"entitlement,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entitlement") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entitlement") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1RepricingConfigEntitlementGranularity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1RepricingConfigEntitlementGranularity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1Sku: Represents a product's purchasable Stock
 // Keeping Unit (SKU). SKUs represent the different variations of the
 // product. For example, Google Workspace Business Standard and Google
@@ -2818,13 +3174,13 @@ func (s *GoogleCloudChannelV1StartPaidServiceRequest) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudChannelV1SubscriberEvent: Represents information which
-// resellers will get as part of notification from Cloud Pub/Sub.
+// resellers will get as part of notification from Pub/Sub.
 type GoogleCloudChannelV1SubscriberEvent struct {
-	// CustomerEvent: Customer event send as part of Pub/Sub event to
+	// CustomerEvent: Customer event sent as part of Pub/Sub event to
 	// partners.
 	CustomerEvent *GoogleCloudChannelV1CustomerEvent `json:"customerEvent,omitempty"`
 
-	// EntitlementEvent: Entitlement event send as part of Pub/Sub event to
+	// EntitlementEvent: Entitlement event sent as part of Pub/Sub event to
 	// partners.
 	EntitlementEvent *GoogleCloudChannelV1EntitlementEvent `json:"entitlementEvent,omitempty"`
 
@@ -2898,7 +3254,7 @@ type GoogleCloudChannelV1TransferEligibility struct {
 	// IneligibilityReason: Specified the reason for ineligibility.
 	//
 	// Possible values:
-	//   "REASON_UNSPECIFIED" - Reason is not available.
+	//   "REASON_UNSPECIFIED" - Not used.
 	//   "PENDING_TOS_ACCEPTANCE" - Reseller needs to accept TOS before
 	// transferring the SKU.
 	//   "SKU_NOT_ELIGIBLE" - Reseller not eligible to sell the SKU.
@@ -3383,8 +3739,7 @@ type GoogleCloudChannelV1alpha1CustomerEvent struct {
 	// EventType: Type of event which happened on the customer.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value. This state doesn't show unless
-	// an error occurs.
+	//   "TYPE_UNSPECIFIED" - Not used.
 	//   "PRIMARY_DOMAIN_CHANGED" - Primary domain for customer was changed.
 	//   "PRIMARY_DOMAIN_VERIFIED" - Primary domain of the customer has been
 	// verified.
@@ -3464,8 +3819,12 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 	Offer string `json:"offer,omitempty"`
 
 	// Parameters: Extended entitlement parameters. When creating an
-	// entitlement, valid parameters' names and values are defined in the
-	// offer's parameter definitions.
+	// entitlement, valid parameter names and values are defined in the
+	// Offer.parameter_definitions. The response may include the following
+	// output-only Parameters: - assigned_units: The number of licenses
+	// assigned to users. - max_units: The maximum assignable units for a
+	// flexible offer. - num_units: The total commitment for
+	// commitment-based offers.
 	Parameters []*GoogleCloudChannelV1alpha1Parameter `json:"parameters,omitempty"`
 
 	// ProvisionedService: Output only. Service provisioning details for the
@@ -3476,8 +3835,7 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 	// entitlement.
 	//
 	// Possible values:
-	//   "PROVISIONING_STATE_UNSPECIFIED" - Default value. This state
-	// doesn't show unless an error occurs.
+	//   "PROVISIONING_STATE_UNSPECIFIED" - Not used.
 	//   "ACTIVE" - The entitlement is currently active.
 	//   "CANCELED" - The entitlement was canceled. After an entitlement is
 	// `CANCELED`, its status will not change. Deprecated: Canceled
@@ -3497,15 +3855,14 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 	// for resellers to use for their company tracking usage. If a
 	// purchaseOrderId value is given, it appears in the API responses and
 	// shows up in the invoice. The property accepts up to 80 plain text
-	// characters.
+	// characters. This is only supported for Google Workspace entitlements.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
 
 	// SuspensionReasons: Output only. Enumerable of all current suspension
 	// reasons for an entitlement.
 	//
 	// Possible values:
-	//   "SUSPENSION_REASON_UNSPECIFIED" - Default value. This state doesn't
-	// show unless an error occurs.
+	//   "SUSPENSION_REASON_UNSPECIFIED" - Not used.
 	//   "RESELLER_INITIATED" - Entitlement was manually suspended by the
 	// Reseller.
 	//   "TRIAL_ENDED" - Trial ended.
@@ -3556,8 +3913,7 @@ type GoogleCloudChannelV1alpha1EntitlementEvent struct {
 	// EventType: Type of event which happened on the entitlement.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value. This state doesn't show unless
-	// an error occurs.
+	//   "TYPE_UNSPECIFIED" - Not used.
 	//   "CREATED" - A new entitlement was created.
 	//   "PRICE_PLAN_SWITCHED" - The offer type associated with an
 	// entitlement was changed. This is not triggered if an entitlement
@@ -3611,8 +3967,7 @@ type GoogleCloudChannelV1alpha1OperationMetadata struct {
 	// OperationType: The RPC that initiated this Long Running Operation.
 	//
 	// Possible values:
-	//   "OPERATION_TYPE_UNSPECIFIED" - Default value. This state doesn't
-	// show unless an error occurs.
+	//   "OPERATION_TYPE_UNSPECIFIED" - Not used.
 	//   "CREATE_ENTITLEMENT" - Long Running Operation was triggered by
 	// CreateEntitlement.
 	//   "CHANGE_QUANTITY" - Long Running Operation was triggered by
@@ -3748,7 +4103,9 @@ type GoogleCloudChannelV1alpha1ProvisionedService struct {
 	ProductId string `json:"productId,omitempty"`
 
 	// ProvisioningId: Output only. Provisioning ID of the entitlement. For
-	// Google Workspace, this would be the underlying Subscription ID.
+	// Google Workspace, this is the underlying Subscription ID. For Google
+	// Cloud Platform, this is the Billing Account ID of the billing
+	// subaccount."
 	ProvisioningId string `json:"provisioningId,omitempty"`
 
 	// SkuId: Output only. The SKU pertaining to the provisioning resource
@@ -3797,8 +4154,7 @@ type GoogleCloudChannelV1alpha1RenewalSettings struct {
 	// `payment_cycle` instead.
 	//
 	// Possible values:
-	//   "PAYMENT_OPTION_UNSPECIFIED" - Default value. This state doesn't
-	// show unless an error occurs.
+	//   "PAYMENT_OPTION_UNSPECIFIED" - Not used.
 	//   "ANNUAL" - Paid in yearly installments.
 	//   "MONTHLY" - Paid in monthly installments.
 	PaymentOption string `json:"paymentOption,omitempty"`
@@ -3844,13 +4200,13 @@ func (s *GoogleCloudChannelV1alpha1RenewalSettings) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudChannelV1alpha1SubscriberEvent: Represents information
-// which resellers will get as part of notification from Cloud Pub/Sub.
+// which resellers will get as part of notification from Pub/Sub.
 type GoogleCloudChannelV1alpha1SubscriberEvent struct {
-	// CustomerEvent: Customer event send as part of Pub/Sub event to
+	// CustomerEvent: Customer event sent as part of Pub/Sub event to
 	// partners.
 	CustomerEvent *GoogleCloudChannelV1alpha1CustomerEvent `json:"customerEvent,omitempty"`
 
-	// EntitlementEvent: Entitlement event send as part of Pub/Sub event to
+	// EntitlementEvent: Entitlement event sent as part of Pub/Sub event to
 	// partners.
 	EntitlementEvent *GoogleCloudChannelV1alpha1EntitlementEvent `json:"entitlementEvent,omitempty"`
 
@@ -4104,8 +4460,7 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
 // method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); } The JSON representation for
-// `Empty` is empty JSON object `{}`.
+// returns (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -4152,6 +4507,123 @@ type GoogleRpcStatus struct {
 
 func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeDate: Represents a whole or partial calendar date, such as
+// a birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type GoogleTypeDate struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeDate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeDecimal: A representation of a decimal value, such as 2.5.
+// Clients may convert values into language-native decimal formats, such
+// as Java's BigDecimal or Python's decimal.Decimal. [BigDecimal]:
+// https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/BigDecimal.html
+// [decimal.Decimal]: https://docs.python.org/3/library/decimal.html
+type GoogleTypeDecimal struct {
+	// Value: The decimal value, as a string. The string representation
+	// consists of an optional sign, `+` (`U+002B`) or `-` (`U+002D`),
+	// followed by a sequence of zero or more decimal digits ("the
+	// integer"), optionally followed by a fraction, optionally followed by
+	// an exponent. The fraction consists of a decimal point followed by
+	// zero or more decimal digits. The string must contain at least one
+	// digit in either the integer or the fraction. The number formed by the
+	// sign, the integer and the fraction is referred to as the significand.
+	// The exponent consists of the character `e` (`U+0065`) or `E`
+	// (`U+0045`) followed by one or more decimal digits. Services
+	// **should** normalize decimal values before storing them by: -
+	// Removing an explicitly-provided `+` sign (`+2.5` -> `2.5`). -
+	// Replacing a zero-length integer value with `0` (`.5` -> `0.5`). -
+	// Coercing the exponent character to lower-case (`2.5E8` -> `2.5e8`). -
+	// Removing an explicitly-provided zero exponent (`2.5e0` -> `2.5`).
+	// Services **may** perform additional normalization based on its own
+	// needs and the internal decimal implementation selected, such as
+	// shifting the decimal point and exponent value together (example:
+	// `2.5e-1` <-> `0.25`). Additionally, services **may** preserve
+	// trailing zeroes in the fraction to indicate increased precision, but
+	// are not required to do so. Note that only the `.` character is
+	// supported to divide the integer and the fraction; `,` **should not**
+	// be supported regardless of locale. Additionally, thousand separators
+	// **should not** be supported. If a service does support them, values
+	// **must** be normalized. The ENBF grammar is: DecimalString = [Sign]
+	// Significand [Exponent]; Sign = '+' | '-'; Significand = Digits '.' |
+	// [Digits] '.' Digits; Exponent = ('e' | 'E') [Sign] Digits; Digits = {
+	// '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' }; Services
+	// **should** clearly document the range of supported values, the
+	// maximum supported precision (total number of digits), and, if
+	// applicable, the scale (number of digits after the decimal point), as
+	// well as how it behaves when receiving out-of-bounds values. Services
+	// **may** choose to accept values passed as input even when the value
+	// has a higher precision or scale than the service supports, and
+	// **should** round the value to fit the supported scale. Alternatively,
+	// the service **may** error with `400 Bad Request` (`INVALID_ARGUMENT`
+	// in gRPC) if precision would be lost. Services **should** error with
+	// `400 Bad Request` (`INVALID_ARGUMENT` in gRPC) if the service
+	// receives a value outside of the supported range.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleTypeDecimal) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeDecimal
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4273,8 +4745,8 @@ type GoogleTypePostalAddress struct {
 
 	// RegionCode: Required. CLDR region code of the country/region of the
 	// address. This is never inferred and it is up to the user to ensure
-	// the value is correct. See http://cldr.unicode.org/ and
-	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// the value is correct. See https://cldr.unicode.org/ and
+	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
 	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 
@@ -4377,7 +4849,7 @@ func (c *AccountsCheckCloudIdentityAccountsExistCall) Header() http.Header {
 
 func (c *AccountsCheckCloudIdentityAccountsExistCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4560,7 +5032,7 @@ func (c *AccountsListSubscribersCall) Header() http.Header {
 
 func (c *AccountsListSubscribersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4741,7 +5213,7 @@ func (c *AccountsListTransferableOffersCall) Header() http.Header {
 
 func (c *AccountsListTransferableOffersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4916,7 +5388,7 @@ func (c *AccountsListTransferableSkusCall) Header() http.Header {
 
 func (c *AccountsListTransferableSkusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5091,7 +5563,7 @@ func (c *AccountsRegisterCall) Header() http.Header {
 
 func (c *AccountsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5249,7 +5721,7 @@ func (c *AccountsUnregisterCall) Header() http.Header {
 
 func (c *AccountsUnregisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5409,7 +5881,7 @@ func (c *AccountsChannelPartnerLinksCreateCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5585,7 +6057,7 @@ func (c *AccountsChannelPartnerLinksGetCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5787,7 +6259,7 @@ func (c *AccountsChannelPartnerLinksListCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5988,7 +6460,7 @@ func (c *AccountsChannelPartnerLinksPatchCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6083,6 +6555,873 @@ func (c *AccountsChannelPartnerLinksPatchCall) Do(opts ...googleapi.CallOption) 
 
 }
 
+// method id "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.create":
+
+type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall struct {
+	s                                                 *Service
+	parent                                            string
+	googlecloudchannelv1channelpartnerrepricingconfig *GoogleCloudChannelV1ChannelPartnerRepricingConfig
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// Create: Creates a ChannelPartnerRepricingConfig. Call this method to
+// set modifications for a specific ChannelPartner's bill. You can only
+// create configs if the RepricingConfig.effective_invoice_month is a
+// future month. If needed, you can create a config for the current
+// month, with some restrictions. When creating a config for a future
+// month, make sure there are no existing configs for that
+// RepricingConfig.effective_invoice_month. The following restrictions
+// are for creating configs in the current month. * This functionality
+// is reserved for recovering from an erroneous config, and should not
+// be used for regular business cases. * The new config will not modify
+// exports used with other configs. Changes to the config may be
+// immediate, but may take up to 24 hours. * There is a limit of ten
+// configs for any ChannelPartner or
+// RepricingConfig.effective_invoice_month. * The contained
+// ChannelPartnerRepricingConfig.repricing_config vaule must be
+// different from the value used in the current config for a
+// ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the
+// account making the request and the account being queried are
+// different. * INVALID_ARGUMENT: Missing or invalid required parameters
+// in the request. Also displays if the updated config is for the
+// current month or past months. * NOT_FOUND: The
+// ChannelPartnerRepricingConfig specified does not exist or is not
+// associated with the given account. * INTERNAL: Any non-user error
+// related to technical issues in the backend. In this case, contact
+// Cloud Channel support. Return Value: If successful, the updated
+// ChannelPartnerRepricingConfig resource, otherwise returns an error.
+//
+// - parent: The resource name of the ChannelPartner that will receive
+//   the repricing config. Parent uses the format:
+//   accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
+func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Create(parent string, googlecloudchannelv1channelpartnerrepricingconfig *GoogleCloudChannelV1ChannelPartnerRepricingConfig) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall {
+	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudchannelv1channelpartnerrepricingconfig = googlecloudchannelv1channelpartnerrepricingconfig
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) Context(ctx context.Context) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1channelpartnerrepricingconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/channelPartnerRepricingConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.create" call.
+// Exactly one of *GoogleCloudChannelV1ChannelPartnerRepricingConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1ChannelPartnerRepricingConfig.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ChannelPartnerRepricingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudChannelV1ChannelPartnerRepricingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a ChannelPartnerRepricingConfig. Call this method to set modifications for a specific ChannelPartner's bill. You can only create configs if the RepricingConfig.effective_invoice_month is a future month. If needed, you can create a config for the current month, with some restrictions. When creating a config for a future month, make sure there are no existing configs for that RepricingConfig.effective_invoice_month. The following restrictions are for creating configs in the current month. * This functionality is reserved for recovering from an erroneous config, and should not be used for regular business cases. * The new config will not modify exports used with other configs. Changes to the config may be immediate, but may take up to 24 hours. * There is a limit of ten configs for any ChannelPartner or RepricingConfig.effective_invoice_month. * The contained ChannelPartnerRepricingConfig.repricing_config vaule must be different from the value used in the current config for a ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Also displays if the updated config is for the current month or past months. * NOT_FOUND: The ChannelPartnerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated ChannelPartnerRepricingConfig resource, otherwise returns an error.",
+	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/channelPartnerRepricingConfigs",
+	//   "httpMethod": "POST",
+	//   "id": "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource name of the ChannelPartner that will receive the repricing config. Parent uses the format: accounts/{account_id}/channelPartnerLinks/{channel_partner_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/channelPartnerRepricingConfigs",
+	//   "request": {
+	//     "$ref": "GoogleCloudChannelV1ChannelPartnerRepricingConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1ChannelPartnerRepricingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// method id "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.delete":
+
+type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the given ChannelPartnerRepricingConfig permanently.
+// You can only delete configs if their
+// RepricingConfig.effective_invoice_month is set to a date after the
+// current month. Possible error codes: * PERMISSION_DENIED: The account
+// making the request does not own this customer. * INVALID_ARGUMENT:
+// Required request parameters are missing or invalid. *
+// FAILED_PRECONDITION: The ChannelPartnerRepricingConfig is active or
+// in the past. * NOT_FOUND: No ChannelPartnerRepricingConfig found for
+// the name in the request.
+//
+// - name: The resource name of the channel partner repricing config
+//   rule to delete.
+func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Delete(name string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall {
+	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) Context(ctx context.Context) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the given ChannelPartnerRepricingConfig permanently. You can only delete configs if their RepricingConfig.effective_invoice_month is set to a date after the current month. Possible error codes: * PERMISSION_DENIED: The account making the request does not own this customer. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * FAILED_PRECONDITION: The ChannelPartnerRepricingConfig is active or in the past. * NOT_FOUND: No ChannelPartnerRepricingConfig found for the name in the request.",
+	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/channelPartnerRepricingConfigs/{channelPartnerRepricingConfigsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the channel partner repricing config rule to delete.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/channelPartnerRepricingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// method id "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.get":
+
+type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about how a Distributor modifies their bill
+// before sending it to a ChannelPartner. Possible Error Codes: *
+// PERMISSION_DENIED: If the account making the request and the account
+// being queried are different. * NOT_FOUND: The
+// ChannelPartnerRepricingConfig was not found. * INTERNAL: Any non-user
+// error related to technical issues in the backend. In this case,
+// contact Cloud Channel support. Return Value: If successful, the
+// ChannelPartnerRepricingConfig resource, otherwise returns an error.
+//
+// - name: The resource name of the ChannelPartnerRepricingConfig
+//   Format:
+//   accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/chann
+//   elPartnerRepricingConfigs/{id}.
+func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Get(name string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall {
+	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) IfNoneMatch(entityTag string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) Context(ctx context.Context) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.get" call.
+// Exactly one of *GoogleCloudChannelV1ChannelPartnerRepricingConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1ChannelPartnerRepricingConfig.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ChannelPartnerRepricingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudChannelV1ChannelPartnerRepricingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about how a Distributor modifies their bill before sending it to a ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * NOT_FOUND: The ChannelPartnerRepricingConfig was not found. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the ChannelPartnerRepricingConfig resource, otherwise returns an error.",
+	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/channelPartnerRepricingConfigs/{channelPartnerRepricingConfigsId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the ChannelPartnerRepricingConfig Format: accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/channelPartnerRepricingConfigs/{id}.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/channelPartnerRepricingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1ChannelPartnerRepricingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// method id "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.list":
+
+type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists information about how a Reseller modifies their bill
+// before sending it to a ChannelPartner. Possible Error Codes: *
+// PERMISSION_DENIED: If the account making the request and the account
+// being queried are different. * NOT_FOUND: The
+// ChannelPartnerRepricingConfig specified does not exist or is not
+// associated with the given account. * INTERNAL: Any non-user error
+// related to technical issues in the backend. In this case, contact
+// Cloud Channel support. Return Value: If successful, the
+// ChannelPartnerRepricingConfig resources. The data for each resource
+// is displayed in the ascending order of: * channel partner ID *
+// RepricingConfig.effective_invoice_month *
+// ChannelPartnerRepricingConfig.update_time If unsuccessful, returns an
+// error.
+//
+// - parent: The resource name of the account's ChannelPartnerLink.
+//   Parent uses the format:
+//   accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
+//   Supports accounts/{account_id}/channelPartnerLinks/- to retrieve
+//   configs for all channel partners.
+func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) List(parent string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
+	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter for
+// [CloudChannelService.ListChannelPartnerRepricingConfigs] results
+// (channel_partner_link only). You can use this filter when you support
+// a BatchGet-like query. To use the filter, you must set
+// `parent=accounts/{account_id}/channelPartnerLinks/-`. Example:
+// `channel_partner_link = accounts/account_id/channelPartnerLinks/c1`
+// OR `channel_partner_link =
+// accounts/account_id/channelPartnerLinks/c2`.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Filter(filter string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of repricing configs to return. The service may return fewer than
+// this value. If unspecified, returns a maximum of 50 rules. The
+// maximum value is 100; values above 100 will be coerced to 100.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) PageSize(pageSize int64) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results beyond the first page. Obtained through
+// ListChannelPartnerRepricingConfigsResponse.next_page_token of the
+// previous CloudChannelService.ListChannelPartnerRepricingConfigs call.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) PageToken(pageToken string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) IfNoneMatch(entityTag string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Context(ctx context.Context) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/channelPartnerRepricingConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.list" call.
+// Exactly one of
+// *GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists information about how a Reseller modifies their bill before sending it to a ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * NOT_FOUND: The ChannelPartnerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the ChannelPartnerRepricingConfig resources. The data for each resource is displayed in the ascending order of: * channel partner ID * RepricingConfig.effective_invoice_month * ChannelPartnerRepricingConfig.update_time If unsuccessful, returns an error.",
+	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/channelPartnerRepricingConfigs",
+	//   "httpMethod": "GET",
+	//   "id": "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. A filter for [CloudChannelService.ListChannelPartnerRepricingConfigs] results (channel_partner_link only). You can use this filter when you support a BatchGet-like query. To use the filter, you must set `parent=accounts/{account_id}/channelPartnerLinks/-`. Example: `channel_partner_link = accounts/account_id/channelPartnerLinks/c1` OR `channel_partner_link = accounts/account_id/channelPartnerLinks/c2`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of repricing configs to return. The service may return fewer than this value. If unspecified, returns a maximum of 50 rules. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results beyond the first page. Obtained through ListChannelPartnerRepricingConfigsResponse.next_page_token of the previous CloudChannelService.ListChannelPartnerRepricingConfigs call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the account's ChannelPartnerLink. Parent uses the format: accounts/{account_id}/channelPartnerLinks/{channel_partner_id}. Supports accounts/{account_id}/channelPartnerLinks/- to retrieve configs for all channel partners.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/channelPartnerRepricingConfigs",
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.patch":
+
+type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall struct {
+	s                                                 *Service
+	name                                              string
+	googlecloudchannelv1channelpartnerrepricingconfig *GoogleCloudChannelV1ChannelPartnerRepricingConfig
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// Patch: Updates a ChannelPartnerRepricingConfig. Call this method to
+// set modifications for a specific ChannelPartner's bill. This method
+// overwrites the existing CustomerRepricingConfig. You can only update
+// configs if the RepricingConfig.effective_invoice_month is a future
+// month. To make changes to configs for the current month, use
+// CreateChannelPartnerRepricingConfig, taking note of its restrictions.
+// You cannot update the RepricingConfig.effective_invoice_month. When
+// updating a config in the future: * This config must already exist.
+// Possible Error Codes: * PERMISSION_DENIED: If the account making the
+// request and the account being queried are different. *
+// INVALID_ARGUMENT: Missing or invalid required parameters in the
+// request. Also displays if the updated config is for the current month
+// or past months. * NOT_FOUND: The ChannelPartnerRepricingConfig
+// specified does not exist or is not associated with the given account.
+// * INTERNAL: Any non-user error related to technical issues in the
+// backend. In this case, contact Cloud Channel support. Return Value:
+// If successful, the updated ChannelPartnerRepricingConfig resource,
+// otherwise returns an error.
+//
+// - name: Output only. Resource name of the
+//   ChannelPartnerRepricingConfig. Format:
+//   accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/chann
+//   elPartnerRepricingConfigs/{id}.
+func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Patch(name string, googlecloudchannelv1channelpartnerrepricingconfig *GoogleCloudChannelV1ChannelPartnerRepricingConfig) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall {
+	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudchannelv1channelpartnerrepricingconfig = googlecloudchannelv1channelpartnerrepricingconfig
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) Context(ctx context.Context) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1channelpartnerrepricingconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.patch" call.
+// Exactly one of *GoogleCloudChannelV1ChannelPartnerRepricingConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1ChannelPartnerRepricingConfig.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ChannelPartnerRepricingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudChannelV1ChannelPartnerRepricingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a ChannelPartnerRepricingConfig. Call this method to set modifications for a specific ChannelPartner's bill. This method overwrites the existing CustomerRepricingConfig. You can only update configs if the RepricingConfig.effective_invoice_month is a future month. To make changes to configs for the current month, use CreateChannelPartnerRepricingConfig, taking note of its restrictions. You cannot update the RepricingConfig.effective_invoice_month. When updating a config in the future: * This config must already exist. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Also displays if the updated config is for the current month or past months. * NOT_FOUND: The ChannelPartnerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated ChannelPartnerRepricingConfig resource, otherwise returns an error.",
+	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/channelPartnerRepricingConfigs/{channelPartnerRepricingConfigsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of the ChannelPartnerRepricingConfig. Format: accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/channelPartnerRepricingConfigs/{id}.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/channelPartnerRepricingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudChannelV1ChannelPartnerRepricingConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1ChannelPartnerRepricingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
 // method id "cloudchannel.accounts.channelPartnerLinks.customers.create":
 
 type AccountsChannelPartnerLinksCustomersCreateCall struct {
@@ -6138,7 +7477,7 @@ func (c *AccountsChannelPartnerLinksCustomersCreateCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCustomersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6283,7 +7622,7 @@ func (c *AccountsChannelPartnerLinksCustomersDeleteCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCustomersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6432,7 +7771,7 @@ func (c *AccountsChannelPartnerLinksCustomersGetCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6581,7 +7920,7 @@ func (c *AccountsChannelPartnerLinksCustomersImportCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCustomersImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6700,6 +8039,15 @@ func (r *AccountsChannelPartnerLinksCustomersService) List(parent string) *Accou
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filters applied to the
+// [CloudChannelService.ListCustomers] results. See
+// https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers
+// for more information.
+func (c *AccountsChannelPartnerLinksCustomersListCall) Filter(filter string) *AccountsChannelPartnerLinksCustomersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of customers to return. The service may return fewer than this value.
 // If unspecified, returns at most 10 customers. The maximum value is
@@ -6755,7 +8103,7 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6827,6 +8175,11 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) Do(opts ...googleapi.Call
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filters applied to the [CloudChannelService.ListCustomers] results. See https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers for more information.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
 	//       "format": "int32",
@@ -6939,7 +8292,7 @@ func (c *AccountsChannelPartnerLinksCustomersPatchCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7094,7 +8447,7 @@ func (c *AccountsCustomersCreateCall) Header() http.Header {
 
 func (c *AccountsCustomersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7239,7 +8592,7 @@ func (c *AccountsCustomersDeleteCall) Header() http.Header {
 
 func (c *AccountsCustomersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7388,7 +8741,7 @@ func (c *AccountsCustomersGetCall) Header() http.Header {
 
 func (c *AccountsCustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7537,7 +8890,7 @@ func (c *AccountsCustomersImportCall) Header() http.Header {
 
 func (c *AccountsCustomersImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7656,6 +9009,15 @@ func (r *AccountsCustomersService) List(parent string) *AccountsCustomersListCal
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filters applied to the
+// [CloudChannelService.ListCustomers] results. See
+// https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers
+// for more information.
+func (c *AccountsCustomersListCall) Filter(filter string) *AccountsCustomersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of customers to return. The service may return fewer than this value.
 // If unspecified, returns at most 10 customers. The maximum value is
@@ -7711,7 +9073,7 @@ func (c *AccountsCustomersListCall) Header() http.Header {
 
 func (c *AccountsCustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7783,6 +9145,11 @@ func (c *AccountsCustomersListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filters applied to the [CloudChannelService.ListCustomers] results. See https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers for more information.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
 	//       "format": "int32",
@@ -7948,7 +9315,7 @@ func (c *AccountsCustomersListPurchasableOffersCall) Header() http.Header {
 
 func (c *AccountsCustomersListPurchasableOffersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8210,7 +9577,7 @@ func (c *AccountsCustomersListPurchasableSkusCall) Header() http.Header {
 
 func (c *AccountsCustomersListPurchasableSkusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8424,7 +9791,7 @@ func (c *AccountsCustomersPatchCall) Header() http.Header {
 
 func (c *AccountsCustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8586,7 +9953,7 @@ func (c *AccountsCustomersProvisionCloudIdentityCall) Header() http.Header {
 
 func (c *AccountsCustomersProvisionCloudIdentityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8748,7 +10115,7 @@ func (c *AccountsCustomersTransferEntitlementsCall) Header() http.Header {
 
 func (c *AccountsCustomersTransferEntitlementsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8911,7 +10278,7 @@ func (c *AccountsCustomersTransferEntitlementsToGoogleCall) Header() http.Header
 
 func (c *AccountsCustomersTransferEntitlementsToGoogleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9005,6 +10372,872 @@ func (c *AccountsCustomersTransferEntitlementsToGoogleCall) Do(opts ...googleapi
 
 }
 
+// method id "cloudchannel.accounts.customers.customerRepricingConfigs.create":
+
+type AccountsCustomersCustomerRepricingConfigsCreateCall struct {
+	s                                           *Service
+	parent                                      string
+	googlecloudchannelv1customerrepricingconfig *GoogleCloudChannelV1CustomerRepricingConfig
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Create: Creates a CustomerRepricingConfig. Call this method to set
+// modifications for a specific customer's bill. You can only create
+// configs if the RepricingConfig.effective_invoice_month is a future
+// month. If needed, you can create a config for the current month, with
+// some restrictions. When creating a config for a future month, make
+// sure there are no existing configs for that
+// RepricingConfig.effective_invoice_month. The following restrictions
+// are for creating configs in the current month. * This functionality
+// is reserved for recovering from an erroneous config, and should not
+// be used for regular business cases. * The new config will not modify
+// exports used with other configs. Changes to the config may be
+// immediate, but may take up to 24 hours. * There is a limit of ten
+// configs for any RepricingConfig.EntitlementGranularity.entitlement or
+// RepricingConfig.effective_invoice_month. * The contained
+// CustomerRepricingConfig.repricing_config vaule must be different from
+// the value used in the current config for a
+// RepricingConfig.EntitlementGranularity.entitlement. Possible Error
+// Codes: * PERMISSION_DENIED: If the account making the request and the
+// account being queried are different. * INVALID_ARGUMENT: Missing or
+// invalid required parameters in the request. Also displays if the
+// updated config is for the current month or past months. * NOT_FOUND:
+// The CustomerRepricingConfig specified does not exist or is not
+// associated with the given account. * INTERNAL: Any non-user error
+// related to technical issues in the backend. In this case, contact
+// Cloud Channel support. Return Value: If successful, the updated
+// CustomerRepricingConfig resource, otherwise returns an error.
+//
+// - parent: The resource name of the customer that will receive this
+//   repricing config. Parent uses the format:
+//   accounts/{account_id}/customers/{customer_id}.
+func (r *AccountsCustomersCustomerRepricingConfigsService) Create(parent string, googlecloudchannelv1customerrepricingconfig *GoogleCloudChannelV1CustomerRepricingConfig) *AccountsCustomersCustomerRepricingConfigsCreateCall {
+	c := &AccountsCustomersCustomerRepricingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudchannelv1customerrepricingconfig = googlecloudchannelv1customerrepricingconfig
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) Fields(s ...googleapi.Field) *AccountsCustomersCustomerRepricingConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) Context(ctx context.Context) *AccountsCustomersCustomerRepricingConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1customerrepricingconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customerRepricingConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.create" call.
+// Exactly one of *GoogleCloudChannelV1CustomerRepricingConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1CustomerRepricingConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1CustomerRepricingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudChannelV1CustomerRepricingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a CustomerRepricingConfig. Call this method to set modifications for a specific customer's bill. You can only create configs if the RepricingConfig.effective_invoice_month is a future month. If needed, you can create a config for the current month, with some restrictions. When creating a config for a future month, make sure there are no existing configs for that RepricingConfig.effective_invoice_month. The following restrictions are for creating configs in the current month. * This functionality is reserved for recovering from an erroneous config, and should not be used for regular business cases. * The new config will not modify exports used with other configs. Changes to the config may be immediate, but may take up to 24 hours. * There is a limit of ten configs for any RepricingConfig.EntitlementGranularity.entitlement or RepricingConfig.effective_invoice_month. * The contained CustomerRepricingConfig.repricing_config vaule must be different from the value used in the current config for a RepricingConfig.EntitlementGranularity.entitlement. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Also displays if the updated config is for the current month or past months. * NOT_FOUND: The CustomerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated CustomerRepricingConfig resource, otherwise returns an error.",
+	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/customerRepricingConfigs",
+	//   "httpMethod": "POST",
+	//   "id": "cloudchannel.accounts.customers.customerRepricingConfigs.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource name of the customer that will receive this repricing config. Parent uses the format: accounts/{account_id}/customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customerRepricingConfigs",
+	//   "request": {
+	//     "$ref": "GoogleCloudChannelV1CustomerRepricingConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1CustomerRepricingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// method id "cloudchannel.accounts.customers.customerRepricingConfigs.delete":
+
+type AccountsCustomersCustomerRepricingConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the given CustomerRepricingConfig permanently. You
+// can only delete configs if their
+// RepricingConfig.effective_invoice_month is set to a date after the
+// current month. Possible error codes: * PERMISSION_DENIED: The account
+// making the request does not own this customer. * INVALID_ARGUMENT:
+// Required request parameters are missing or invalid. *
+// FAILED_PRECONDITION: The CustomerRepricingConfig is active or in the
+// past. * NOT_FOUND: No CustomerRepricingConfig found for the name in
+// the request.
+//
+// - name: The resource name of the customer repricing config rule to
+//   delete. Format:
+//   accounts/{account_id}/customers/{customer_id}/customerRepricingConfi
+//   gs/{id}.
+func (r *AccountsCustomersCustomerRepricingConfigsService) Delete(name string) *AccountsCustomersCustomerRepricingConfigsDeleteCall {
+	c := &AccountsCustomersCustomerRepricingConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) Fields(s ...googleapi.Field) *AccountsCustomersCustomerRepricingConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) Context(ctx context.Context) *AccountsCustomersCustomerRepricingConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the given CustomerRepricingConfig permanently. You can only delete configs if their RepricingConfig.effective_invoice_month is set to a date after the current month. Possible error codes: * PERMISSION_DENIED: The account making the request does not own this customer. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * FAILED_PRECONDITION: The CustomerRepricingConfig is active or in the past. * NOT_FOUND: No CustomerRepricingConfig found for the name in the request.",
+	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/customerRepricingConfigs/{customerRepricingConfigsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "cloudchannel.accounts.customers.customerRepricingConfigs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the customer repricing config rule to delete. Format: accounts/{account_id}/customers/{customer_id}/customerRepricingConfigs/{id}.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/customers/[^/]+/customerRepricingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// method id "cloudchannel.accounts.customers.customerRepricingConfigs.get":
+
+type AccountsCustomersCustomerRepricingConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about how a Reseller modifies their bill before
+// sending it to a Customer. Possible Error Codes: * PERMISSION_DENIED:
+// If the account making the request and the account being queried are
+// different. * NOT_FOUND: The CustomerRepricingConfig was not found. *
+// INTERNAL: Any non-user error related to technical issues in the
+// backend. In this case, contact Cloud Channel support. Return Value:
+// If successful, the CustomerRepricingConfig resource, otherwise
+// returns an error.
+//
+// - name: The resource name of the CustomerRepricingConfig. Format:
+//   accounts/{account_id}/customers/{customer_id}/customerRepricingConfi
+//   gs/{id}.
+func (r *AccountsCustomersCustomerRepricingConfigsService) Get(name string) *AccountsCustomersCustomerRepricingConfigsGetCall {
+	c := &AccountsCustomersCustomerRepricingConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsCustomersCustomerRepricingConfigsGetCall) Fields(s ...googleapi.Field) *AccountsCustomersCustomerRepricingConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsCustomersCustomerRepricingConfigsGetCall) IfNoneMatch(entityTag string) *AccountsCustomersCustomerRepricingConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsCustomersCustomerRepricingConfigsGetCall) Context(ctx context.Context) *AccountsCustomersCustomerRepricingConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsCustomersCustomerRepricingConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsCustomersCustomerRepricingConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.get" call.
+// Exactly one of *GoogleCloudChannelV1CustomerRepricingConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1CustomerRepricingConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsCustomersCustomerRepricingConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1CustomerRepricingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudChannelV1CustomerRepricingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about how a Reseller modifies their bill before sending it to a Customer. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * NOT_FOUND: The CustomerRepricingConfig was not found. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the CustomerRepricingConfig resource, otherwise returns an error.",
+	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/customerRepricingConfigs/{customerRepricingConfigsId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudchannel.accounts.customers.customerRepricingConfigs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the CustomerRepricingConfig. Format: accounts/{account_id}/customers/{customer_id}/customerRepricingConfigs/{id}.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/customers/[^/]+/customerRepricingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1CustomerRepricingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// method id "cloudchannel.accounts.customers.customerRepricingConfigs.list":
+
+type AccountsCustomersCustomerRepricingConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists information about how a Reseller modifies their bill
+// before sending it to a Customer. Possible Error Codes: *
+// PERMISSION_DENIED: If the account making the request and the account
+// being queried are different. * NOT_FOUND: The CustomerRepricingConfig
+// specified does not exist or is not associated with the given account.
+// * INTERNAL: Any non-user error related to technical issues in the
+// backend. In this case, contact Cloud Channel support. Return Value:
+// If successful, the CustomerRepricingConfig resources. The data for
+// each resource is displayed in the ascending order of: * customer ID *
+// RepricingConfig.EntitlementGranularity.entitlement *
+// RepricingConfig.effective_invoice_month *
+// CustomerRepricingConfig.update_time If unsuccessful, returns an
+// error.
+//
+// - parent: The resource name of the customer. Parent uses the format:
+//   accounts/{account_id}/customers/{customer_id}. Supports
+//   accounts/{account_id}/customers/- to retrieve configs for all
+//   customers.
+func (r *AccountsCustomersCustomerRepricingConfigsService) List(parent string) *AccountsCustomersCustomerRepricingConfigsListCall {
+	c := &AccountsCustomersCustomerRepricingConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter for
+// [CloudChannelService.ListCustomerRepricingConfigs] results (customer
+// only). You can use this filter when you support a BatchGet-like
+// query. To use the filter, you must set
+// `parent=accounts/{account_id}/customers/-`. Example: customer =
+// accounts/account_id/customers/c1 OR customer =
+// accounts/account_id/customers/c2.
+func (c *AccountsCustomersCustomerRepricingConfigsListCall) Filter(filter string) *AccountsCustomersCustomerRepricingConfigsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of repricing configs to return. The service may return fewer than
+// this value. If unspecified, returns a maximum of 50 rules. The
+// maximum value is 100; values above 100 will be coerced to 100.
+func (c *AccountsCustomersCustomerRepricingConfigsListCall) PageSize(pageSize int64) *AccountsCustomersCustomerRepricingConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results beyond the first page. Obtained through
+// ListCustomerRepricingConfigsResponse.next_page_token of the previous
+// CloudChannelService.ListCustomerRepricingConfigs call.
+func (c *AccountsCustomersCustomerRepricingConfigsListCall) PageToken(pageToken string) *AccountsCustomersCustomerRepricingConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsCustomersCustomerRepricingConfigsListCall) Fields(s ...googleapi.Field) *AccountsCustomersCustomerRepricingConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsCustomersCustomerRepricingConfigsListCall) IfNoneMatch(entityTag string) *AccountsCustomersCustomerRepricingConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsCustomersCustomerRepricingConfigsListCall) Context(ctx context.Context) *AccountsCustomersCustomerRepricingConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsCustomersCustomerRepricingConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsCustomersCustomerRepricingConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customerRepricingConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.list" call.
+// Exactly one of
+// *GoogleCloudChannelV1ListCustomerRepricingConfigsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1ListCustomerRepricingConfigsResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsCustomersCustomerRepricingConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListCustomerRepricingConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudChannelV1ListCustomerRepricingConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists information about how a Reseller modifies their bill before sending it to a Customer. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * NOT_FOUND: The CustomerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the CustomerRepricingConfig resources. The data for each resource is displayed in the ascending order of: * customer ID * RepricingConfig.EntitlementGranularity.entitlement * RepricingConfig.effective_invoice_month * CustomerRepricingConfig.update_time If unsuccessful, returns an error.",
+	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/customerRepricingConfigs",
+	//   "httpMethod": "GET",
+	//   "id": "cloudchannel.accounts.customers.customerRepricingConfigs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. A filter for [CloudChannelService.ListCustomerRepricingConfigs] results (customer only). You can use this filter when you support a BatchGet-like query. To use the filter, you must set `parent=accounts/{account_id}/customers/-`. Example: customer = accounts/account_id/customers/c1 OR customer = accounts/account_id/customers/c2.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of repricing configs to return. The service may return fewer than this value. If unspecified, returns a maximum of 50 rules. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results beyond the first page. Obtained through ListCustomerRepricingConfigsResponse.next_page_token of the previous CloudChannelService.ListCustomerRepricingConfigs call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the customer. Parent uses the format: accounts/{account_id}/customers/{customer_id}. Supports accounts/{account_id}/customers/- to retrieve configs for all customers.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customerRepricingConfigs",
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1ListCustomerRepricingConfigsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsCustomersCustomerRepricingConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListCustomerRepricingConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudchannel.accounts.customers.customerRepricingConfigs.patch":
+
+type AccountsCustomersCustomerRepricingConfigsPatchCall struct {
+	s                                           *Service
+	name                                        string
+	googlecloudchannelv1customerrepricingconfig *GoogleCloudChannelV1CustomerRepricingConfig
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Patch: Updates a CustomerRepricingConfig. Call this method to set
+// modifications for a specific customer's bill. This method overwrites
+// the existing CustomerRepricingConfig. You can only update configs if
+// the RepricingConfig.effective_invoice_month is a future month. To
+// make changes to configs for the current month, use
+// CreateCustomerRepricingConfig, taking note of its restrictions. You
+// cannot update the RepricingConfig.effective_invoice_month. When
+// updating a config in the future: * This config must already exist.
+// Possible Error Codes: * PERMISSION_DENIED: If the account making the
+// request and the account being queried are different. *
+// INVALID_ARGUMENT: Missing or invalid required parameters in the
+// request. Also displays if the updated config is for the current month
+// or past months. * NOT_FOUND: The CustomerRepricingConfig specified
+// does not exist or is not associated with the given account. *
+// INTERNAL: Any non-user error related to technical issues in the
+// backend. In this case, contact Cloud Channel support. Return Value:
+// If successful, the updated CustomerRepricingConfig resource,
+// otherwise returns an error.
+//
+// - name: Output only. Resource name of the CustomerRepricingConfig.
+//   Format:
+//   accounts/{account_id}/customers/{customer_id}/customerRepricingConfi
+//   gs/{id}.
+func (r *AccountsCustomersCustomerRepricingConfigsService) Patch(name string, googlecloudchannelv1customerrepricingconfig *GoogleCloudChannelV1CustomerRepricingConfig) *AccountsCustomersCustomerRepricingConfigsPatchCall {
+	c := &AccountsCustomersCustomerRepricingConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudchannelv1customerrepricingconfig = googlecloudchannelv1customerrepricingconfig
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) Fields(s ...googleapi.Field) *AccountsCustomersCustomerRepricingConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) Context(ctx context.Context) *AccountsCustomersCustomerRepricingConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1customerrepricingconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.patch" call.
+// Exactly one of *GoogleCloudChannelV1CustomerRepricingConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1CustomerRepricingConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1CustomerRepricingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudChannelV1CustomerRepricingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a CustomerRepricingConfig. Call this method to set modifications for a specific customer's bill. This method overwrites the existing CustomerRepricingConfig. You can only update configs if the RepricingConfig.effective_invoice_month is a future month. To make changes to configs for the current month, use CreateCustomerRepricingConfig, taking note of its restrictions. You cannot update the RepricingConfig.effective_invoice_month. When updating a config in the future: * This config must already exist. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Also displays if the updated config is for the current month or past months. * NOT_FOUND: The CustomerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated CustomerRepricingConfig resource, otherwise returns an error.",
+	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/customerRepricingConfigs/{customerRepricingConfigsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "cloudchannel.accounts.customers.customerRepricingConfigs.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of the CustomerRepricingConfig. Format: accounts/{account_id}/customers/{customer_id}/customerRepricingConfigs/{id}.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/customers/[^/]+/customerRepricingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudChannelV1CustomerRepricingConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1CustomerRepricingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
 // method id "cloudchannel.accounts.customers.entitlements.activate":
 
 type AccountsCustomersEntitlementsActivateCall struct {
@@ -9073,7 +11306,7 @@ func (c *AccountsCustomersEntitlementsActivateCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9235,7 +11468,7 @@ func (c *AccountsCustomersEntitlementsCancelCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9392,7 +11625,7 @@ func (c *AccountsCustomersEntitlementsChangeOfferCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsChangeOfferCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9550,7 +11783,7 @@ func (c *AccountsCustomersEntitlementsChangeParametersCall) Header() http.Header
 
 func (c *AccountsCustomersEntitlementsChangeParametersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9708,7 +11941,7 @@ func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) Header() http.H
 
 func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9875,7 +12108,7 @@ func (c *AccountsCustomersEntitlementsCreateCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10033,7 +12266,7 @@ func (c *AccountsCustomersEntitlementsGetCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10202,7 +12435,7 @@ func (c *AccountsCustomersEntitlementsListCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10389,7 +12622,7 @@ func (c *AccountsCustomersEntitlementsLookupOfferCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsLookupOfferCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10543,7 +12776,7 @@ func (c *AccountsCustomersEntitlementsStartPaidServiceCall) Header() http.Header
 
 func (c *AccountsCustomersEntitlementsStartPaidServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10699,7 +12932,7 @@ func (c *AccountsCustomersEntitlementsSuspendCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10887,7 +13120,7 @@ func (c *AccountsOffersListCall) Header() http.Header {
 
 func (c *AccountsOffersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11076,7 +13309,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11219,7 +13452,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11364,7 +13597,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11540,7 +13773,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11754,7 +13987,7 @@ func (c *ProductsListCall) Header() http.Header {
 
 func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11968,7 +14201,7 @@ func (c *ProductsSkusListCall) Header() http.Header {
 
 func (c *ProductsSkusListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

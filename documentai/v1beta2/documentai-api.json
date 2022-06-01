@@ -292,7 +292,7 @@
       }
     }
   },
-  "revision": "20210907",
+  "revision": "20220505",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata": {
@@ -301,6 +301,28 @@
         "commonMetadata": {
           "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
           "description": "The basic metadata of the long running operation."
+        },
+        "individualBatchDeleteStatuses": {
+          "description": "The list of response details of each document.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus": {
+      "description": "The status of each individual document in the batch delete process.",
+      "id": "GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus",
+      "properties": {
+        "documentId": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3DocumentId",
+          "description": "The document id of the document."
+        },
+        "status": {
+          "$ref": "GoogleRpcStatus",
+          "description": "The status of deleting the document."
         }
       },
       "type": "object"
@@ -317,6 +339,60 @@
         "commonMetadata": {
           "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
           "description": "The basic metadata of the long running operation."
+        },
+        "destDatasetType": {
+          "description": "The destination dataset split type.",
+          "enum": [
+            "DATASET_SPLIT_TYPE_UNSPECIFIED",
+            "DATASET_SPLIT_TRAIN",
+            "DATASET_SPLIT_TEST",
+            "DATASET_SPLIT_UNASSIGNED"
+          ],
+          "enumDescriptions": [
+            "Default value if the enum is not set. go/protodosdonts#do-include-an-unspecified-value-in-an-enum",
+            "Identifies the train documents.",
+            "Identifies the test documents.",
+            "Identifies the unassigned documents."
+          ],
+          "type": "string"
+        },
+        "destSplitType": {
+          "description": "The destination dataset split type.",
+          "enum": [
+            "DATASET_SPLIT_TYPE_UNSPECIFIED",
+            "DATASET_SPLIT_TRAIN",
+            "DATASET_SPLIT_TEST",
+            "DATASET_SPLIT_UNASSIGNED"
+          ],
+          "enumDescriptions": [
+            "Default value if the enum is not set. go/protodosdonts#do-include-an-unspecified-value-in-an-enum",
+            "Identifies the train documents.",
+            "Identifies the test documents.",
+            "Identifies the unassigned documents."
+          ],
+          "type": "string"
+        },
+        "individualBatchMoveStatuses": {
+          "description": "The list of response details of each document.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus": {
+      "description": "The status of each individual document in the batch move process.",
+      "id": "GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus",
+      "properties": {
+        "documentId": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3DocumentId",
+          "description": "The document id of the document."
+        },
+        "status": {
+          "$ref": "GoogleRpcStatus",
+          "description": "The status of moving the document."
         }
       },
       "type": "object"
@@ -334,6 +410,10 @@
         "createTime": {
           "description": "The creation time of the operation.",
           "format": "google-datetime",
+          "type": "string"
+        },
+        "resource": {
+          "description": "A related resource to this operation.",
           "type": "string"
         },
         "state": {
@@ -371,6 +451,17 @@
     "GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata": {
       "description": "The long running operation metadata for CreateLabelerPool.",
       "id": "GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3DeleteDataLabelingJobOperationMetadata": {
+      "description": "The long running operation metadata for DeleteDataLabelingJob.",
+      "id": "GoogleCloudDocumentaiUiv1beta3DeleteDataLabelingJobOperationMetadata",
       "properties": {
         "commonMetadata": {
           "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
@@ -446,6 +537,35 @@
       "properties": {},
       "type": "object"
     },
+    "GoogleCloudDocumentaiUiv1beta3DocumentId": {
+      "description": "Document Identifier.",
+      "id": "GoogleCloudDocumentaiUiv1beta3DocumentId",
+      "properties": {
+        "gcsManagedDocId": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId"
+        },
+        "revisionReference": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3RevisionReference",
+          "description": "Points to a specific revision of the document if set."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId": {
+      "description": "Identifies a document uniquely within the scope of a dataset in the GCS-based option.",
+      "id": "GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId",
+      "properties": {
+        "cwDocId": {
+          "description": "Optional. Id of the document (indexed) managed by Content Warehouse.",
+          "type": "string"
+        },
+        "gcsUri": {
+          "description": "Required. The Cloud Storage uri where the actual document is stored.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata": {
       "description": "The long running operation metadata for enable processor method.",
       "id": "GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata",
@@ -514,6 +634,32 @@
         "commonMetadata": {
           "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
           "description": "The basic metadata of the long running operation."
+        },
+        "individualImportStatuses": {
+          "description": "The list of response details of each document.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus": {
+      "description": "The status of each individual document in the import process.",
+      "id": "GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus",
+      "properties": {
+        "inputGcsSource": {
+          "description": "The source Cloud Storage URI of the document.",
+          "type": "string"
+        },
+        "outputGcsDestination": {
+          "description": "The output_gcs_destination of the processed document if it was successful, otherwise empty.",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "GoogleRpcStatus",
+          "description": "The status of the importing of the document."
         }
       },
       "type": "object"
@@ -522,6 +668,78 @@
       "description": "Response of the import document operation.",
       "id": "GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata": {
+      "description": "The metadata proto of ResyncDataset method.",
+      "id": "GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        },
+        "newlyAddedDocuments": {
+          "description": "Returns the newly added document Cloud Storage prefix if the documents are founded in Cloud Storage while not in Document Service storage.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataUpdatedDocument"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataUpdatedDocument": {
+      "description": "The proto for updated document in resync pipeline.",
+      "id": "GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataUpdatedDocument",
+      "properties": {
+        "destinationPrefix": {
+          "description": "The prefix of cloud storage, identifies the destination document which should be updated by resync pipeline.",
+          "type": "string"
+        },
+        "sourcePrefix": {
+          "description": "The prefix of cloud storage, identifies the original document which should be updated by resync pipeline.",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "GoogleRpcStatus",
+          "description": "The final status of the documents which should be updated by resync pipeline."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3ResyncDatasetResponse": {
+      "description": "The response proto of ResyncDataset method.",
+      "id": "GoogleCloudDocumentaiUiv1beta3ResyncDatasetResponse",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3RevisionReference": {
+      "description": "The revision reference specifies which revision on the document to read.",
+      "id": "GoogleCloudDocumentaiUiv1beta3RevisionReference",
+      "properties": {
+        "latestProcessorVersion": {
+          "description": "Read the revision generated by the processor version, returns error if it does not exist.",
+          "type": "string"
+        },
+        "revisionCase": {
+          "description": "Read the revision by the predefined case.",
+          "enum": [
+            "REVISION_CASE_UNSPECIFIED",
+            "LATEST_HUMAN_REVIEW",
+            "LATEST_TIMESTAMP"
+          ],
+          "enumDescriptions": [
+            "Unspecified case, fallback to read the first (OCR) revision.",
+            "The latest revision made by a human.",
+            "The latest revision based on timestamp."
+          ],
+          "type": "string"
+        },
+        "revisionId": {
+          "description": "Read the revision given by the id, returns error if it does not exist.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata": {
@@ -714,7 +932,7 @@
           "type": "string"
         },
         "outputGcsDestination": {
-          "description": "The output_gcs_destination (in the request as 'output_gcs_destination') of the processed document if it was successful, otherwise empty.",
+          "description": "The output_gcs_destination (in the request as `output_gcs_destination`) of the processed document if it was successful, otherwise empty.",
           "type": "string"
         },
         "status": {
@@ -737,6 +955,10 @@
         "createTime": {
           "description": "The creation time of the operation.",
           "format": "google-datetime",
+          "type": "string"
+        },
+        "resource": {
+          "description": "A related resource to this operation.",
           "type": "string"
         },
         "state": {
@@ -884,6 +1106,10 @@
         "commonMetadata": {
           "$ref": "GoogleCloudDocumentaiV1CommonOperationMetadata",
           "description": "The basic metadata of the long running operation."
+        },
+        "questionId": {
+          "description": "The Crowd Compute question ID.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -933,6 +1159,62 @@
       "properties": {},
       "type": "object"
     },
+    "GoogleCloudDocumentaiV1alpha1AnalyzeHitlDataMetadata": {
+      "description": "The long running operation metadata for AnalyzeHitlData.",
+      "id": "GoogleCloudDocumentaiV1alpha1AnalyzeHitlDataMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiV1alpha1CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1alpha1CommonOperationMetadata": {
+      "description": "The common metadata for long running operations.",
+      "id": "GoogleCloudDocumentaiV1alpha1CommonOperationMetadata",
+      "properties": {
+        "createTime": {
+          "description": "The creation time of the operation.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "resource": {
+          "description": "A related resource to this operation.",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state of the operation.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "RUNNING",
+            "CANCELLING",
+            "SUCCEEDED",
+            "FAILED",
+            "CANCELLED"
+          ],
+          "enumDescriptions": [
+            "Unspecified state.",
+            "Operation is still running.",
+            "Operation is being cancelled.",
+            "Operation succeeded.",
+            "Operation failed.",
+            "Operation is cancelled."
+          ],
+          "type": "string"
+        },
+        "stateMessage": {
+          "description": "A message providing more details about the current state of processing.",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "The last update time of the operation.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse": {
       "description": "Response to an batch document processing request. This is returned in the LRO Operation after the operation is complete.",
       "id": "GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse",
@@ -969,7 +1251,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta1Document": {
-      "description": "Document represents the canonical document resource in Document Understanding AI. It is an interchange format that provides insights into documents and allows for collaboration between users and Document Understanding AI to iterate and optimize for quality.",
+      "description": "Document represents the canonical document resource in Document AI. It is an interchange format that provides insights into documents and allows for collaboration between users and Document AI to iterate and optimize for quality.",
       "id": "GoogleCloudDocumentaiV1beta1Document",
       "properties": {
         "content": {
@@ -985,7 +1267,7 @@
           "type": "array"
         },
         "entityRelations": {
-          "description": "Relationship among Document.entities.",
+          "description": "Placeholder. Relationship among Document.entities.",
           "items": {
             "$ref": "GoogleCloudDocumentaiV1beta1DocumentEntityRelation"
           },
@@ -1007,7 +1289,7 @@
           "type": "array"
         },
         "revisions": {
-          "description": "Revision history of this document.",
+          "description": "Placeholder. Revision history of this document.",
           "items": {
             "$ref": "GoogleCloudDocumentaiV1beta1DocumentRevision"
           },
@@ -1022,14 +1304,14 @@
           "type": "string"
         },
         "textChanges": {
-          "description": "A list of text corrections made to [Document.text]. This is usually used for annotating corrections to OCR mistakes. Text changes for a given revision may not overlap with each other.",
+          "description": "Placeholder. A list of text corrections made to [Document.text]. This is usually used for annotating corrections to OCR mistakes. Text changes for a given revision may not overlap with each other.",
           "items": {
             "$ref": "GoogleCloudDocumentaiV1beta1DocumentTextChange"
           },
           "type": "array"
         },
         "textStyles": {
-          "description": "Styles for the Document.text.",
+          "description": "Placeholder. Styles for the Document.text.",
           "items": {
             "$ref": "GoogleCloudDocumentaiV1beta1DocumentStyle"
           },
@@ -1043,7 +1325,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta1DocumentEntity": {
-      "description": "An entity that could be a phrase in the text or a property belongs to the document. It is a known entity type, such as a person, an organization, or location.",
+      "description": "An entity that could be a phrase in the text or a property that belongs to the document. It is a known entity type, such as a person, an organization, or location.",
       "id": "GoogleCloudDocumentaiV1beta1DocumentEntity",
       "properties": {
         "confidence": {
@@ -1062,6 +1344,10 @@
         "mentionText": {
           "description": "Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`. If the entity is not present in the document, this field will be empty.",
           "type": "string"
+        },
+        "nonPresent": {
+          "description": "Optional. This attribute indicates that the processing didn't actually identify this entity, but a confidence score was assigned that represent the potential that this could be a false negative. A non-present entity should have an empty mention_text and text_anchor.",
+          "type": "boolean"
         },
         "normalizedValue": {
           "$ref": "GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue",
@@ -1091,7 +1377,7 @@
           "description": "Optional. Provenance of the entity. Text anchor indexing into the Document.text."
         },
         "type": {
-          "description": "Entity type from a schema e.g. `Address`.",
+          "description": "Required. Entity type from a schema e.g. `Address`.",
           "type": "string"
         }
       },
@@ -1132,7 +1418,7 @@
           "description": "Money value. See also: https://github.com/googleapis/googleapis/blob/master/google/type/money.proto"
         },
         "text": {
-          "description": "Optional. An optional field to store a normalized string. For some entity types, one of respective 'structured_value' fields may also be populated. Also not all the types of 'structured_value' will be normalized. For example, some processors may not generate float or int normalized text by default. Below are sample formats mapped to structured values. - Money/Currency type (`money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO 8601 text format.",
+          "description": "Optional. An optional field to store a normalized string. For some entity types, one of respective `structured_value` fields may also be populated. Also not all the types of `structured_value` will be normalized. For example, some processors may not generate float or int normalized text by default. Below are sample formats mapped to structured values. - Money/Currency type (`money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO 8601 text format.",
           "type": "string"
         }
       },
@@ -1217,6 +1503,13 @@
           "$ref": "GoogleCloudDocumentaiV1beta1DocumentProvenance",
           "description": "The history of this page."
         },
+        "symbols": {
+          "description": "A list of visually detected symbols on the page.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiV1beta1DocumentPageSymbol"
+          },
+          "type": "array"
+        },
         "tables": {
           "description": "A list of visually detected tables on the page.",
           "items": {
@@ -1232,7 +1525,7 @@
           "type": "array"
         },
         "transforms": {
-          "description": "Transformation matrices that were applied to the original document image to produce Page.image.",
+          "description": "Transformation matrices (both already applied and not) to the original document image to produce Page.image.",
           "items": {
             "$ref": "GoogleCloudDocumentaiV1beta1DocumentPageMatrix"
           },
@@ -1343,7 +1636,7 @@
           "type": "number"
         },
         "languageCode": {
-          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
           "type": "string"
         }
       },
@@ -1505,6 +1798,10 @@
       "description": "Representation for transformation matrix, intended to be compatible and used with OpenCV format for image manipulation.",
       "id": "GoogleCloudDocumentaiV1beta1DocumentPageMatrix",
       "properties": {
+        "applied": {
+          "description": "Has the transformation already been applied to the current Document? Needed to disambiguate pre-processing transformations already applied vs transformations added at annotation time by HITL operators.",
+          "type": "boolean"
+        },
         "cols": {
           "description": "Number of columns in the matrix.",
           "format": "int32",
@@ -1546,6 +1843,24 @@
         "provenance": {
           "$ref": "GoogleCloudDocumentaiV1beta1DocumentProvenance",
           "description": "The history of this annotation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1beta1DocumentPageSymbol": {
+      "description": "A detected symbol.",
+      "id": "GoogleCloudDocumentaiV1beta1DocumentPageSymbol",
+      "properties": {
+        "detectedLanguages": {
+          "description": "A list of detected languages together with confidence.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage"
+          },
+          "type": "array"
+        },
+        "layout": {
+          "$ref": "GoogleCloudDocumentaiV1beta1DocumentPageLayout",
+          "description": "Layout for Symbol."
         }
       },
       "type": "object"
@@ -1728,11 +2043,11 @@
             "EVAL_SKIPPED"
           ],
           "enumDescriptions": [
-            "Operation type unspecified.",
-            "Add an element. Implicit if no `parents` are set for the provenance.",
-            "The element is removed. No `parents` should be set.",
-            "Explicitly replaces the element(s) identified by `parents`.",
-            "Element is requested for human review.",
+            "Operation type unspecified. If no operation is specified a provenance entry is simply used to match against a `parent`.",
+            "Add an element.",
+            "Remove an element identified by `parent`.",
+            "Replace an element identified by `parent`.",
+            "Request human review for the element identified by `parent`.",
             "Element is reviewed and approved at human review, confidence will be set to 1.0.",
             "Element is skipped in the validation process."
           ],
@@ -1742,7 +2057,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta1DocumentProvenanceParent": {
-      "description": "Structure for referencing parent provenances. When an element replaces one of more other elements parent references identify the elements that are replaced.",
+      "description": "The parent element the current element is based on. Used for referencing/aligning, removal and replacement operations.",
       "id": "GoogleCloudDocumentaiV1beta1DocumentProvenanceParent",
       "properties": {
         "id": {
@@ -1751,12 +2066,12 @@
           "type": "integer"
         },
         "index": {
-          "description": "The index of the parent item in the corresponding item list (eg. list of entities, properties within entities, etc.) on parent revision.",
+          "description": "The index of the parent item in the corresponding item list (eg. list of entities, properties within entities, etc.) in the parent revision.",
           "format": "int32",
           "type": "integer"
         },
         "revision": {
-          "description": "The index of the [Document.revisions] identifying the parent revision.",
+          "description": "The index of the index into current revision's parent_ids list.",
           "format": "int32",
           "type": "integer"
         }
@@ -1789,6 +2104,13 @@
           "items": {
             "format": "int32",
             "type": "integer"
+          },
+          "type": "array"
+        },
+        "parentIds": {
+          "description": "The revisions that this revision is based on. Must include all the ids that have anything to do with this revision - eg. there are `provenance.parent.revision` fields that index into this field.",
+          "items": {
+            "type": "string"
           },
           "type": "array"
         },
@@ -1892,7 +2214,7 @@
       "id": "GoogleCloudDocumentaiV1beta1DocumentTextAnchor",
       "properties": {
         "content": {
-          "description": "Contains the content of the text span so that users do not have to look it up in the text_segments.",
+          "description": "Contains the content of the text span so that users do not have to look it up in the text_segments. It is always populated for formFields.",
           "type": "string"
         },
         "textSegments": {
@@ -2148,7 +2470,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta2Document": {
-      "description": "Document represents the canonical document resource in Document Understanding AI. It is an interchange format that provides insights into documents and allows for collaboration between users and Document Understanding AI to iterate and optimize for quality.",
+      "description": "Document represents the canonical document resource in Document AI. It is an interchange format that provides insights into documents and allows for collaboration between users and Document AI to iterate and optimize for quality.",
       "id": "GoogleCloudDocumentaiV1beta2Document",
       "properties": {
         "content": {
@@ -2164,7 +2486,7 @@
           "type": "array"
         },
         "entityRelations": {
-          "description": "Relationship among Document.entities.",
+          "description": "Placeholder. Relationship among Document.entities.",
           "items": {
             "$ref": "GoogleCloudDocumentaiV1beta2DocumentEntityRelation"
           },
@@ -2193,7 +2515,7 @@
           "type": "array"
         },
         "revisions": {
-          "description": "Revision history of this document.",
+          "description": "Placeholder. Revision history of this document.",
           "items": {
             "$ref": "GoogleCloudDocumentaiV1beta2DocumentRevision"
           },
@@ -2208,14 +2530,14 @@
           "type": "string"
         },
         "textChanges": {
-          "description": "A list of text corrections made to [Document.text]. This is usually used for annotating corrections to OCR mistakes. Text changes for a given revision may not overlap with each other.",
+          "description": "Placeholder. A list of text corrections made to [Document.text]. This is usually used for annotating corrections to OCR mistakes. Text changes for a given revision may not overlap with each other.",
           "items": {
             "$ref": "GoogleCloudDocumentaiV1beta2DocumentTextChange"
           },
           "type": "array"
         },
         "textStyles": {
-          "description": "Styles for the Document.text.",
+          "description": "Placeholder. Styles for the Document.text.",
           "items": {
             "$ref": "GoogleCloudDocumentaiV1beta2DocumentStyle"
           },
@@ -2229,7 +2551,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta2DocumentEntity": {
-      "description": "An entity that could be a phrase in the text or a property belongs to the document. It is a known entity type, such as a person, an organization, or location.",
+      "description": "An entity that could be a phrase in the text or a property that belongs to the document. It is a known entity type, such as a person, an organization, or location.",
       "id": "GoogleCloudDocumentaiV1beta2DocumentEntity",
       "properties": {
         "confidence": {
@@ -2248,6 +2570,10 @@
         "mentionText": {
           "description": "Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`. If the entity is not present in the document, this field will be empty.",
           "type": "string"
+        },
+        "nonPresent": {
+          "description": "Optional. This attribute indicates that the processing didn't actually identify this entity, but a confidence score was assigned that represent the potential that this could be a false negative. A non-present entity should have an empty mention_text and text_anchor.",
+          "type": "boolean"
         },
         "normalizedValue": {
           "$ref": "GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue",
@@ -2277,7 +2603,7 @@
           "description": "Optional. Provenance of the entity. Text anchor indexing into the Document.text."
         },
         "type": {
-          "description": "Entity type from a schema e.g. `Address`.",
+          "description": "Required. Entity type from a schema e.g. `Address`.",
           "type": "string"
         }
       },
@@ -2318,7 +2644,7 @@
           "description": "Money value. See also: https://github.com/googleapis/googleapis/blob/master/google/type/money.proto"
         },
         "text": {
-          "description": "Optional. An optional field to store a normalized string. For some entity types, one of respective 'structured_value' fields may also be populated. Also not all the types of 'structured_value' will be normalized. For example, some processors may not generate float or int normalized text by default. Below are sample formats mapped to structured values. - Money/Currency type (`money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO 8601 text format.",
+          "description": "Optional. An optional field to store a normalized string. For some entity types, one of respective `structured_value` fields may also be populated. Also not all the types of `structured_value` will be normalized. For example, some processors may not generate float or int normalized text by default. Below are sample formats mapped to structured values. - Money/Currency type (`money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO 8601 text format.",
           "type": "string"
         }
       },
@@ -2423,6 +2749,13 @@
           "$ref": "GoogleCloudDocumentaiV1beta2DocumentProvenance",
           "description": "The history of this page."
         },
+        "symbols": {
+          "description": "A list of visually detected symbols on the page.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiV1beta2DocumentPageSymbol"
+          },
+          "type": "array"
+        },
         "tables": {
           "description": "A list of visually detected tables on the page.",
           "items": {
@@ -2438,7 +2771,7 @@
           "type": "array"
         },
         "transforms": {
-          "description": "Transformation matrices that were applied to the original document image to produce Page.image.",
+          "description": "Transformation matrices (both already applied and not) to the original document image to produce Page.image.",
           "items": {
             "$ref": "GoogleCloudDocumentaiV1beta2DocumentPageMatrix"
           },
@@ -2549,7 +2882,7 @@
           "type": "number"
         },
         "languageCode": {
-          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
           "type": "string"
         }
       },
@@ -2711,6 +3044,10 @@
       "description": "Representation for transformation matrix, intended to be compatible and used with OpenCV format for image manipulation.",
       "id": "GoogleCloudDocumentaiV1beta2DocumentPageMatrix",
       "properties": {
+        "applied": {
+          "description": "Has the transformation already been applied to the current Document? Needed to disambiguate pre-processing transformations already applied vs transformations added at annotation time by HITL operators.",
+          "type": "boolean"
+        },
         "cols": {
           "description": "Number of columns in the matrix.",
           "format": "int32",
@@ -2752,6 +3089,24 @@
         "provenance": {
           "$ref": "GoogleCloudDocumentaiV1beta2DocumentProvenance",
           "description": "The history of this annotation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1beta2DocumentPageSymbol": {
+      "description": "A detected symbol.",
+      "id": "GoogleCloudDocumentaiV1beta2DocumentPageSymbol",
+      "properties": {
+        "detectedLanguages": {
+          "description": "A list of detected languages together with confidence.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage"
+          },
+          "type": "array"
+        },
+        "layout": {
+          "$ref": "GoogleCloudDocumentaiV1beta2DocumentPageLayout",
+          "description": "Layout for Symbol."
         }
       },
       "type": "object"
@@ -2934,11 +3289,11 @@
             "EVAL_SKIPPED"
           ],
           "enumDescriptions": [
-            "Operation type unspecified.",
-            "Add an element. Implicit if no `parents` are set for the provenance.",
-            "The element is removed. No `parents` should be set.",
-            "Explicitly replaces the element(s) identified by `parents`.",
-            "Element is requested for human review.",
+            "Operation type unspecified. If no operation is specified a provenance entry is simply used to match against a `parent`.",
+            "Add an element.",
+            "Remove an element identified by `parent`.",
+            "Replace an element identified by `parent`.",
+            "Request human review for the element identified by `parent`.",
             "Element is reviewed and approved at human review, confidence will be set to 1.0.",
             "Element is skipped in the validation process."
           ],
@@ -2948,7 +3303,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta2DocumentProvenanceParent": {
-      "description": "Structure for referencing parent provenances. When an element replaces one of more other elements parent references identify the elements that are replaced.",
+      "description": "The parent element the current element is based on. Used for referencing/aligning, removal and replacement operations.",
       "id": "GoogleCloudDocumentaiV1beta2DocumentProvenanceParent",
       "properties": {
         "id": {
@@ -2957,12 +3312,12 @@
           "type": "integer"
         },
         "index": {
-          "description": "The index of the parent item in the corresponding item list (eg. list of entities, properties within entities, etc.) on parent revision.",
+          "description": "The index of the parent item in the corresponding item list (eg. list of entities, properties within entities, etc.) in the parent revision.",
           "format": "int32",
           "type": "integer"
         },
         "revision": {
-          "description": "The index of the [Document.revisions] identifying the parent revision.",
+          "description": "The index of the index into current revision's parent_ids list.",
           "format": "int32",
           "type": "integer"
         }
@@ -2995,6 +3350,13 @@
           "items": {
             "format": "int32",
             "type": "integer"
+          },
+          "type": "array"
+        },
+        "parentIds": {
+          "description": "The revisions that this revision is based on. Must include all the ids that have anything to do with this revision - eg. there are `provenance.parent.revision` fields that index into this field.",
+          "items": {
+            "type": "string"
           },
           "type": "array"
         },
@@ -3098,7 +3460,7 @@
       "id": "GoogleCloudDocumentaiV1beta2DocumentTextAnchor",
       "properties": {
         "content": {
-          "description": "Contains the content of the text span so that users do not have to look it up in the text_segments.",
+          "description": "Contains the content of the text span so that users do not have to look it up in the text_segments. It is always populated for formFields.",
           "type": "string"
         },
         "textSegments": {
@@ -3181,7 +3543,7 @@
           "type": "array"
         },
         "modelVersion": {
-          "description": "Model version of the form extraction system. Default is \"builtin/stable\". Specify \"builtin/latest\" for the latest model. For custom form models, specify: “custom/{model_name}\". Model name format is \"bucket_name/path/to/modeldir\" corresponding to \"gs://bucket_name/path/to/modeldir\" where annotated examples are stored.",
+          "description": "Model version of the form extraction system. Default is \"builtin/stable\". Specify \"builtin/latest\" for the latest model. For custom form models, specify: \"custom/{model_name}\". Model name format is \"bucket_name/path/to/modeldir\" corresponding to \"gs://bucket_name/path/to/modeldir\" where annotated examples are stored.",
           "type": "string"
         }
       },
@@ -3522,7 +3884,7 @@
           "type": "string"
         },
         "outputGcsDestination": {
-          "description": "The output_gcs_destination (in the request as 'output_gcs_destination') of the processed document if it was successful, otherwise empty.",
+          "description": "The output_gcs_destination (in the request as `output_gcs_destination`) of the processed document if it was successful, otherwise empty.",
           "type": "string"
         },
         "status": {
@@ -3545,6 +3907,10 @@
         "createTime": {
           "description": "The creation time of the operation.",
           "format": "google-datetime",
+          "type": "string"
+        },
+        "resource": {
+          "description": "A related resource to this operation.",
           "type": "string"
         },
         "state": {
@@ -3698,6 +4064,10 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "questionId": {
+          "description": "The Crowd Compute question ID.",
+          "type": "string"
+        },
         "state": {
           "description": "Used only when Operation.done is false.",
           "enum": [
@@ -3811,7 +4181,7 @@
       "type": "object"
     },
     "GoogleProtobufEmpty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "GoogleProtobufEmpty",
       "properties": {},
       "type": "object"
@@ -3871,7 +4241,7 @@
       "type": "object"
     },
     "GoogleTypeDate": {
-      "description": "Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values * A month and day value, with a zero year, such as an anniversary * A year on its own, with zero month and day values * A year and month value, with a zero day, such as a credit card expiration date Related types are google.type.TimeOfDay and `google.protobuf.Timestamp`.",
+      "description": "Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp",
       "id": "GoogleTypeDate",
       "properties": {
         "day": {
@@ -4003,7 +4373,7 @@
           "type": "array"
         },
         "regionCode": {
-          "description": "Required. CLDR region code of the country/region of the address. This is never inferred and it is up to the user to ensure the value is correct. See http://cldr.unicode.org/ and http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html for details. Example: \"CH\" for Switzerland.",
+          "description": "Required. CLDR region code of the country/region of the address. This is never inferred and it is up to the user to ensure the value is correct. See https://cldr.unicode.org/ and https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html for details. Example: \"CH\" for Switzerland.",
           "type": "string"
         },
         "revision": {

@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -94,7 +95,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/bigquery",
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
@@ -224,7 +225,8 @@ type Assignment struct {
 
 	// Name: Output only. Name of the resource. E.g.:
 	// `projects/myproject/locations/US/reservations/team1-prod/assignments/1
-	// 23`.
+	// 23`. The assignment_id must only contain lower case alphanumeric
+	// characters or dashes and the max length is 64 characters.
 	Name string `json:"name,omitempty"`
 
 	// State: Output only. State of the assignment.
@@ -269,6 +271,9 @@ type BiReservation struct {
 	// names have the form
 	// `projects/{project_id}/locations/{location_id}/biReservation`.
 	Name string `json:"name,omitempty"`
+
+	// PreferredTables: Preferred tables to use BI capacity for.
+	PreferredTables []*TableReference `json:"preferredTables,omitempty"`
 
 	// Size: Size of a reservation, in bytes.
 	Size int64 `json:"size,omitempty,string"`
@@ -323,8 +328,18 @@ type CapacityCommitment struct {
 	// reason of failure.
 	FailureStatus *Status `json:"failureStatus,omitempty"`
 
+	// MultiRegionAuxiliary: Applicable only for commitments located within
+	// one of the BigQuery multi-regions (US or EU). If set to true, this
+	// commitment is placed in the organization's secondary region which is
+	// designated for disaster recovery purposes. If false, this commitment
+	// is placed in the organization's default region.
+	MultiRegionAuxiliary bool `json:"multiRegionAuxiliary,omitempty"`
+
 	// Name: Output only. The resource name of the capacity commitment,
-	// e.g., `projects/myproject/locations/US/capacityCommitments/123`
+	// e.g., `projects/myproject/locations/US/capacityCommitments/123` The
+	// commitment_id must only contain lower case alphanumeric characters or
+	// dashes. It must start with a letter and must not end with a dash. Its
+	// maximum length is 64 characters.
 	Name string `json:"name,omitempty"`
 
 	// Plan: Capacity commitment commitment plan.
@@ -382,10 +397,10 @@ type CapacityCommitment struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Invalid state value.
 	//   "PENDING" - Capacity commitment is pending provisioning. Pending
-	// capacity commitment does not contribute to the parent's
+	// capacity commitment does not contribute to the project's
 	// slot_capacity.
 	//   "ACTIVE" - Once slots are provisioned, capacity commitment becomes
-	// active. slot_count is added to the parent's slot_capacity.
+	// active. slot_count is added to the project's slot_capacity.
 	//   "FAILED" - Capacity commitment is failed to be activated by the
 	// backend.
 	State string `json:"state,omitempty"`
@@ -422,8 +437,7 @@ func (s *CapacityCommitment) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -616,6 +630,13 @@ func (s *MoveAssignmentRequest) MarshalJSON() ([]byte, error) {
 // Reservation: A reservation is a mechanism used to guarantee slots to
 // users.
 type Reservation struct {
+	// Concurrency: Maximum number of queries that are allowed to run
+	// concurrently in this reservation. This is a soft limit due to
+	// asynchronous nature of the system and various optimizations for small
+	// queries. Default value is 0 which means that concurrency will be
+	// automatically set based on the reservation size.
+	Concurrency int64 `json:"concurrency,omitempty,string"`
+
 	// CreationTime: Output only. Creation time of the reservation.
 	CreationTime string `json:"creationTime,omitempty"`
 
@@ -626,18 +647,31 @@ type Reservation struct {
 	// slot_capacity field at most.
 	IgnoreIdleSlots bool `json:"ignoreIdleSlots,omitempty"`
 
+	// MultiRegionAuxiliary: Applicable only for reservations located within
+	// one of the BigQuery multi-regions (US or EU). If set to true, this
+	// reservation is placed in the organization's secondary region which is
+	// designated for disaster recovery purposes. If false, this reservation
+	// is placed in the organization's default region.
+	MultiRegionAuxiliary bool `json:"multiRegionAuxiliary,omitempty"`
+
 	// Name: The resource name of the reservation, e.g.,
-	// `projects/*/locations/*/reservations/team1-prod`.
+	// `projects/*/locations/*/reservations/team1-prod`. The reservation_id
+	// must only contain lower case alphanumeric characters or dashes. It
+	// must start with a letter and must not end with a dash. Its maximum
+	// length is 64 characters.
 	Name string `json:"name,omitempty"`
 
 	// SlotCapacity: Minimum slots available to this reservation. A slot is
 	// a unit of computational power in BigQuery, and serves as the unit of
 	// parallelism. Queries using this reservation might use more slots
 	// during runtime if ignore_idle_slots is set to false. If the new
-	// reservation's slot capacity exceed the parent's slot capacity or if
+	// reservation's slot capacity exceeds the project's slot capacity or if
 	// total slot capacity of the new reservation and its siblings exceeds
-	// the parent's slot capacity, the request will fail with
-	// `google.rpc.Code.RESOURCE_EXHAUSTED`.
+	// the project's slot capacity, the request will fail with
+	// `google.rpc.Code.RESOURCE_EXHAUSTED`. NOTE: for reservations in US or
+	// EU multi-regions, slot capacity constraints are checked separately
+	// for default and auxiliary regions. See multi_region_auxiliary flag
+	// for more details.
 	SlotCapacity int64 `json:"slotCapacity,omitempty,string"`
 
 	// UpdateTime: Output only. Last update time of the reservation.
@@ -647,7 +681,7 @@ type Reservation struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// ForceSendFields is a list of field names (e.g. "Concurrency") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -655,7 +689,7 @@ type Reservation struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreationTime") to include
+	// NullFields is a list of field names (e.g. "Concurrency") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -817,6 +851,41 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableReference: Fully qualified reference to BigQuery table.
+// Internally stored as google.cloud.bi.v1.BqTableReference.
+type TableReference struct {
+	// DatasetId: The ID of the dataset in the above project.
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// ProjectId: The assigned project ID of the project.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// TableId: The ID of the table in the above dataset.
+	TableId string `json:"tableId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableReference) MarshalJSON() ([]byte, error) {
+	type NoMethod TableReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "bigqueryreservation.projects.locations.getBiReservation":
 
 type ProjectsLocationsGetBiReservationCall struct {
@@ -875,7 +944,7 @@ func (c *ProjectsLocationsGetBiReservationCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetBiReservationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1059,7 +1128,7 @@ func (c *ProjectsLocationsSearchAssignmentsCall) Header() http.Header {
 
 func (c *ProjectsLocationsSearchAssignmentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1247,7 +1316,7 @@ func (c *ProjectsLocationsUpdateBiReservationCall) Header() http.Header {
 
 func (c *ProjectsLocationsUpdateBiReservationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1374,8 +1443,9 @@ func (r *ProjectsLocationsCapacityCommitmentsService) Create(parent string, capa
 // "capacityCommitmentId": The optional capacity commitment ID. Capacity
 // commitment name will be generated automatically if this field is
 // empty. This field must only contain lower case alphanumeric
-// characters or dash. Max length is 64 characters. NOTE: this ID won't
-// be kept if the capacity commitment is split or merged.
+// characters or dashes. The first and last character cannot be a dash.
+// Max length is 64 characters. NOTE: this ID won't be kept if the
+// capacity commitment is split or merged.
 func (c *ProjectsLocationsCapacityCommitmentsCreateCall) CapacityCommitmentId(capacityCommitmentId string) *ProjectsLocationsCapacityCommitmentsCreateCall {
 	c.urlParams_.Set("capacityCommitmentId", capacityCommitmentId)
 	return c
@@ -1416,7 +1486,7 @@ func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1489,7 +1559,7 @@ func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "capacityCommitmentId": {
-	//       "description": "The optional capacity commitment ID. Capacity commitment name will be generated automatically if this field is empty. This field must only contain lower case alphanumeric characters or dash. Max length is 64 characters. NOTE: this ID won't be kept if the capacity commitment is split or merged.",
+	//       "description": "The optional capacity commitment ID. Capacity commitment name will be generated automatically if this field is empty. This field must only contain lower case alphanumeric characters or dashes. The first and last character cannot be a dash. Max length is 64 characters. NOTE: this ID won't be kept if the capacity commitment is split or merged.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1579,7 +1649,7 @@ func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1729,7 +1799,7 @@ func (c *ProjectsLocationsCapacityCommitmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1891,7 +1961,7 @@ func (c *ProjectsLocationsCapacityCommitmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2066,7 +2136,7 @@ func (c *ProjectsLocationsCapacityCommitmentsMergeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsMergeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2179,7 +2249,10 @@ type ProjectsLocationsCapacityCommitmentsPatchCall struct {
 // `google.rpc.Code.FAILED_PRECONDITION`.
 //
 // - name: Output only. The resource name of the capacity commitment,
-//   e.g., `projects/myproject/locations/US/capacityCommitments/123`.
+//   e.g., `projects/myproject/locations/US/capacityCommitments/123` The
+//   commitment_id must only contain lower case alphanumeric characters
+//   or dashes. It must start with a letter and must not end with a
+//   dash. Its maximum length is 64 characters.
 func (r *ProjectsLocationsCapacityCommitmentsService) Patch(name string, capacitycommitment *CapacityCommitment) *ProjectsLocationsCapacityCommitmentsPatchCall {
 	c := &ProjectsLocationsCapacityCommitmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2221,7 +2294,7 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2294,7 +2367,7 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The resource name of the capacity commitment, e.g., `projects/myproject/locations/US/capacityCommitments/123`",
+	//       "description": "Output only. The resource name of the capacity commitment, e.g., `projects/myproject/locations/US/capacityCommitments/123` The commitment_id must only contain lower case alphanumeric characters or dashes. It must start with a letter and must not end with a dash. Its maximum length is 64 characters.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/capacityCommitments/[^/]+$",
 	//       "required": true,
@@ -2337,8 +2410,8 @@ type ProjectsLocationsCapacityCommitmentsSplitCall struct {
 // and `commitment_end_time`. A common use case is to enable downgrading
 // commitments. For example, in order to downgrade from 10000 slots to
 // 8000, you might split a 10000 capacity commitment into commitments of
-// 2000 and 8000. Then, you would change the plan of the first one to
-// `FLEX` and then delete it.
+// 2000 and 8000. Then, you delete the first one after the commitment
+// end time passes.
 //
 // - name: The resource name e.g.,:
 //   `projects/myproject/locations/US/capacityCommitments/123`.
@@ -2376,7 +2449,7 @@ func (c *ProjectsLocationsCapacityCommitmentsSplitCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsSplitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2440,7 +2513,7 @@ func (c *ProjectsLocationsCapacityCommitmentsSplitCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Splits capacity commitment to two commitments of the same plan and `commitment_end_time`. A common use case is to enable downgrading commitments. For example, in order to downgrade from 10000 slots to 8000, you might split a 10000 capacity commitment into commitments of 2000 and 8000. Then, you would change the plan of the first one to `FLEX` and then delete it.",
+	//   "description": "Splits capacity commitment to two commitments of the same plan and `commitment_end_time`. A common use case is to enable downgrading commitments. For example, in order to downgrade from 10000 slots to 8000, you might split a 10000 capacity commitment into commitments of 2000 and 8000. Then, you delete the first one after the commitment end time passes.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}:split",
 	//   "httpMethod": "POST",
 	//   "id": "bigqueryreservation.projects.locations.capacityCommitments.split",
@@ -2493,8 +2566,9 @@ func (r *ProjectsLocationsReservationsService) Create(parent string, reservation
 }
 
 // ReservationId sets the optional parameter "reservationId": The
-// reservation ID. This field must only contain lower case alphanumeric
-// characters or dash. Max length is 64 characters.
+// reservation ID. It must only contain lower case alphanumeric
+// characters or dashes. It must start with a letter and must not end
+// with a dash. Its maximum length is 64 characters.
 func (c *ProjectsLocationsReservationsCreateCall) ReservationId(reservationId string) *ProjectsLocationsReservationsCreateCall {
 	c.urlParams_.Set("reservationId", reservationId)
 	return c
@@ -2527,7 +2601,7 @@ func (c *ProjectsLocationsReservationsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2607,7 +2681,7 @@ func (c *ProjectsLocationsReservationsCreateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "reservationId": {
-	//       "description": "The reservation ID. This field must only contain lower case alphanumeric characters or dash. Max length is 64 characters.",
+	//       "description": "The reservation ID. It must only contain lower case alphanumeric characters or dashes. It must start with a letter and must not end with a dash. Its maximum length is 64 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2676,7 +2750,7 @@ func (c *ProjectsLocationsReservationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2821,7 +2895,7 @@ func (c *ProjectsLocationsReservationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2994,7 +3068,7 @@ func (c *ProjectsLocationsReservationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3135,7 +3209,10 @@ type ProjectsLocationsReservationsPatchCall struct {
 // Patch: Updates an existing reservation resource.
 //
 // - name: The resource name of the reservation, e.g.,
-//   `projects/*/locations/*/reservations/team1-prod`.
+//   `projects/*/locations/*/reservations/team1-prod`. The
+//   reservation_id must only contain lower case alphanumeric characters
+//   or dashes. It must start with a letter and must not end with a
+//   dash. Its maximum length is 64 characters.
 func (r *ProjectsLocationsReservationsService) Patch(name string, reservation *Reservation) *ProjectsLocationsReservationsPatchCall {
 	c := &ProjectsLocationsReservationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3177,7 +3254,7 @@ func (c *ProjectsLocationsReservationsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3250,7 +3327,7 @@ func (c *ProjectsLocationsReservationsPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the reservation, e.g., `projects/*/locations/*/reservations/team1-prod`.",
+	//       "description": "The resource name of the reservation, e.g., `projects/*/locations/*/reservations/team1-prod`. The reservation_id must only contain lower case alphanumeric characters or dashes. It must start with a letter and must not end with a dash. Its maximum length is 64 characters.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+$",
 	//       "required": true,
@@ -3326,7 +3403,7 @@ func (r *ProjectsLocationsReservationsAssignmentsService) Create(parent string, 
 // AssignmentId sets the optional parameter "assignmentId": The optional
 // assignment ID. Assignment name will be generated automatically if
 // this field is empty. This field must only contain lower case
-// alphanumeric characters or dash. Max length is 64 characters.
+// alphanumeric characters or dashes. Max length is 64 characters.
 func (c *ProjectsLocationsReservationsAssignmentsCreateCall) AssignmentId(assignmentId string) *ProjectsLocationsReservationsAssignmentsCreateCall {
 	c.urlParams_.Set("assignmentId", assignmentId)
 	return c
@@ -3359,7 +3436,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3432,7 +3509,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "assignmentId": {
-	//       "description": "The optional assignment ID. Assignment name will be generated automatically if this field is empty. This field must only contain lower case alphanumeric characters or dash. Max length is 64 characters.",
+	//       "description": "The optional assignment ID. Assignment name will be generated automatically if this field is empty. This field must only contain lower case alphanumeric characters or dashes. Max length is 64 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3515,7 +3592,7 @@ func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3685,7 +3762,7 @@ func (c *ProjectsLocationsReservationsAssignmentsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3860,7 +3937,7 @@ func (c *ProjectsLocationsReservationsAssignmentsMoveCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3971,7 +4048,8 @@ type ProjectsLocationsReservationsAssignmentsPatchCall struct {
 //
 // - name: Output only. Name of the resource. E.g.:
 //   `projects/myproject/locations/US/reservations/team1-prod/assignments
-//   /123`.
+//   /123`. The assignment_id must only contain lower case alphanumeric
+//   characters or dashes and the max length is 64 characters.
 func (r *ProjectsLocationsReservationsAssignmentsService) Patch(name string, assignment *Assignment) *ProjectsLocationsReservationsAssignmentsPatchCall {
 	c := &ProjectsLocationsReservationsAssignmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4013,7 +4091,7 @@ func (c *ProjectsLocationsReservationsAssignmentsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsReservationsAssignmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4086,7 +4164,7 @@ func (c *ProjectsLocationsReservationsAssignmentsPatchCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Name of the resource. E.g.: `projects/myproject/locations/US/reservations/team1-prod/assignments/123`.",
+	//       "description": "Output only. Name of the resource. E.g.: `projects/myproject/locations/US/reservations/team1-prod/assignments/123`. The assignment_id must only contain lower case alphanumeric characters or dashes and the max length is 64 characters.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+/assignments/[^/]+$",
 	//       "required": true,

@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -86,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -197,8 +198,8 @@ type ProjectsLocationsFunctionsService struct {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -278,20 +279,20 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -324,8 +325,8 @@ type Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -422,7 +423,7 @@ func (s *CallFunctionResponse) MarshalJSON() ([]byte, error) {
 
 // CloudFunction: Describes a Cloud Function that contains user
 // computation executed in response to an event. It encapsulate function
-// and triggers configurations. Next tag: 35
+// and triggers configurations.
 type CloudFunction struct {
 	// AvailableMemoryMb: The amount of memory in MB available for a
 	// function. Defaults to 256MB.
@@ -455,6 +456,35 @@ type CloudFunction struct {
 	// Description: User-provided description of a function.
 	Description string `json:"description,omitempty"`
 
+	// DockerRegistry: Docker Registry to use for this deployment. If
+	// `docker_repository` field is specified, this field will be
+	// automatically set as `ARTIFACT_REGISTRY`. If unspecified, it
+	// currently defaults to `CONTAINER_REGISTRY`. This field may be
+	// overridden by the backend for eligible deployments.
+	//
+	// Possible values:
+	//   "DOCKER_REGISTRY_UNSPECIFIED" - Unspecified.
+	//   "CONTAINER_REGISTRY" - Docker images will be stored in
+	// multi-regional Container Registry repositories named `gcf`.
+	//   "ARTIFACT_REGISTRY" - Docker images will be stored in regional
+	// Artifact Registry repositories. By default, GCF will create and use
+	// repositories named `gcf-artifacts` in every region in which a
+	// function is deployed. But the repository to use can also be specified
+	// by the user using the `docker_repository` field.
+	DockerRegistry string `json:"dockerRegistry,omitempty"`
+
+	// DockerRepository: User managed repository created in Artifact
+	// Registry optionally with a customer managed encryption key. If
+	// specified, deployments will use Artifact Registry. If unspecified and
+	// the deployment is eligible to use Artifact Registry, GCF will create
+	// and use a repository named 'gcf-artifacts' for every deployed region.
+	// This is the repository to which the function docker image will be
+	// pushed after it is built by Cloud Build. It must match the pattern
+	// `projects/{project}/locations/{location}/repositories/{repository}`.
+	// Cross-project repositories are not supported. Cross-location
+	// repositories are not supported. Repository format must be 'DOCKER'.
+	DockerRepository string `json:"dockerRepository,omitempty"`
+
 	// EntryPoint: The name of the function (as defined in source code) that
 	// will be executed. Defaults to the resource name suffix, if not
 	// specified. For backward compatibility, if function with given name is
@@ -486,6 +516,31 @@ type CloudFunction struct {
 	//   "ALLOW_INTERNAL_AND_GCLB" - Allow HTTP traffic from private VPC
 	// sources and through GCLB.
 	IngressSettings string `json:"ingressSettings,omitempty"`
+
+	// KmsKeyName: Resource name of a KMS crypto key (managed by the user)
+	// used to encrypt/decrypt function resources. It must match the pattern
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}`. If specified, you must also provide an artifact
+	// registry repository using the `docker_repository` field that was
+	// created with the same KMS crypto key. The following service accounts
+	// need to be granted the role 'Cloud KMS CryptoKey Encrypter/Decrypter
+	// (roles/cloudkms.cryptoKeyEncrypterDecrypter)' on the
+	// Key/KeyRing/Project/Organization (least access preferred). 1. Google
+	// Cloud Functions service account
+	// (service-{project_number}@gcf-admin-robot.iam.gserviceaccount.com) -
+	// Required to protect the function's image. 2. Google Storage service
+	// account
+	// (service-{project_number}@gs-project-accounts.iam.gserviceaccount.com)
+	//  - Required to protect the function's source code. If this service
+	// account does not exist, deploying a function without a KMS key or
+	// retrieving the service agent name provisions it. For more
+	// information, see
+	// https://cloud.google.com/storage/docs/projects#service-agents and
+	// https://cloud.google.com/storage/docs/getting-service-agent#gsutil.
+	// Google Cloud Functions delegates access to service agents to protect
+	// function resources in internal projects that are not accessible by
+	// the end user.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// Labels: Labels associated with this Cloud Function.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -856,6 +911,44 @@ func (s *GenerateDownloadUrlResponse) MarshalJSON() ([]byte, error) {
 // GenerateUploadUrlRequest: Request of `GenerateSourceUploadUrl`
 // method.
 type GenerateUploadUrlRequest struct {
+	// KmsKeyName: Resource name of a KMS crypto key (managed by the user)
+	// used to encrypt/decrypt function source code objects in staging Cloud
+	// Storage buckets. When you generate an upload url and upload your
+	// source code, it gets copied to a staging Cloud Storage bucket in an
+	// internal regional project. The source code is then copied to a
+	// versioned directory in the sources bucket in the consumer project
+	// during the function deployment. It must match the pattern
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}`. The Google Cloud Functions service account
+	// (service-{project_number}@gcf-admin-robot.iam.gserviceaccount.com)
+	// must be granted the role 'Cloud KMS CryptoKey Encrypter/Decrypter
+	// (roles/cloudkms.cryptoKeyEncrypterDecrypter)' on the
+	// Key/KeyRing/Project/Organization (least access preferred). GCF will
+	// delegate access to the Google Storage service account in the internal
+	// project.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenerateUploadUrlRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateUploadUrlRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GenerateUploadUrlResponse: Response of `GenerateSourceUploadUrl`
@@ -889,6 +982,317 @@ type GenerateUploadUrlResponse struct {
 
 func (s *GenerateUploadUrlResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateUploadUrlResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudFunctionsV2alphaOperationMetadata: Represents the metadata
+// of the long-running operation.
+type GoogleCloudFunctionsV2alphaOperationMetadata struct {
+	// ApiVersion: API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// CancelRequested: Identifies whether the user has requested
+	// cancellation of the operation. Operations that have successfully been
+	// cancelled have Operation.error value with a google.rpc.Status.code of
+	// 1, corresponding to `Code.CANCELLED`.
+	CancelRequested bool `json:"cancelRequested,omitempty"`
+
+	// CreateTime: The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// RequestResource: The original request that started the operation.
+	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`
+
+	// Stages: Mechanism for reporting in-progress stages
+	Stages []*GoogleCloudFunctionsV2alphaStage `json:"stages,omitempty"`
+
+	// StatusDetail: Human-readable status of the operation, if any.
+	StatusDetail string `json:"statusDetail,omitempty"`
+
+	// Target: Server-defined resource path for the target of the operation.
+	Target string `json:"target,omitempty"`
+
+	// Verb: Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudFunctionsV2alphaOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudFunctionsV2alphaOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudFunctionsV2alphaStage: Each Stage of the deployment
+// process
+type GoogleCloudFunctionsV2alphaStage struct {
+	// Message: Message describing the Stage
+	Message string `json:"message,omitempty"`
+
+	// Name: Name of the Stage. This will be unique for each Stage.
+	//
+	// Possible values:
+	//   "NAME_UNSPECIFIED" - Not specified. Invalid name.
+	//   "ARTIFACT_REGISTRY" - Artifact Regsitry Stage
+	//   "BUILD" - Build Stage
+	//   "SERVICE" - Service Stage
+	//   "TRIGGER" - Trigger Stage
+	//   "SERVICE_ROLLBACK" - Service Rollback Stage
+	//   "TRIGGER_ROLLBACK" - Trigger Rollback Stage
+	Name string `json:"name,omitempty"`
+
+	// Resource: Resource of the Stage
+	Resource string `json:"resource,omitempty"`
+
+	// ResourceUri: Link to the current Stage resource
+	ResourceUri string `json:"resourceUri,omitempty"`
+
+	// State: Current state of the Stage
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified. Invalid state.
+	//   "NOT_STARTED" - Stage has not started.
+	//   "IN_PROGRESS" - Stage is in progress.
+	//   "COMPLETE" - Stage has completed.
+	State string `json:"state,omitempty"`
+
+	// StateMessages: State messages from the current Stage.
+	StateMessages []*GoogleCloudFunctionsV2alphaStateMessage `json:"stateMessages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudFunctionsV2alphaStage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudFunctionsV2alphaStage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudFunctionsV2alphaStateMessage: Informational messages about
+// the state of the Cloud Function or Operation.
+type GoogleCloudFunctionsV2alphaStateMessage struct {
+	// Message: The message.
+	Message string `json:"message,omitempty"`
+
+	// Severity: Severity of the state message.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Not specified. Invalid severity.
+	//   "ERROR" - ERROR-level severity.
+	//   "WARNING" - WARNING-level severity.
+	//   "INFO" - INFO-level severity.
+	Severity string `json:"severity,omitempty"`
+
+	// Type: One-word CamelCase type of the state message.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudFunctionsV2alphaStateMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudFunctionsV2alphaStateMessage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudFunctionsV2betaOperationMetadata: Represents the metadata
+// of the long-running operation.
+type GoogleCloudFunctionsV2betaOperationMetadata struct {
+	// ApiVersion: API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// CancelRequested: Identifies whether the user has requested
+	// cancellation of the operation. Operations that have successfully been
+	// cancelled have Operation.error value with a google.rpc.Status.code of
+	// 1, corresponding to `Code.CANCELLED`.
+	CancelRequested bool `json:"cancelRequested,omitempty"`
+
+	// CreateTime: The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// RequestResource: The original request that started the operation.
+	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`
+
+	// Stages: Mechanism for reporting in-progress stages
+	Stages []*GoogleCloudFunctionsV2betaStage `json:"stages,omitempty"`
+
+	// StatusDetail: Human-readable status of the operation, if any.
+	StatusDetail string `json:"statusDetail,omitempty"`
+
+	// Target: Server-defined resource path for the target of the operation.
+	Target string `json:"target,omitempty"`
+
+	// Verb: Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudFunctionsV2betaOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudFunctionsV2betaOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudFunctionsV2betaStage: Each Stage of the deployment process
+type GoogleCloudFunctionsV2betaStage struct {
+	// Message: Message describing the Stage
+	Message string `json:"message,omitempty"`
+
+	// Name: Name of the Stage. This will be unique for each Stage.
+	//
+	// Possible values:
+	//   "NAME_UNSPECIFIED" - Not specified. Invalid name.
+	//   "ARTIFACT_REGISTRY" - Artifact Regsitry Stage
+	//   "BUILD" - Build Stage
+	//   "SERVICE" - Service Stage
+	//   "TRIGGER" - Trigger Stage
+	//   "SERVICE_ROLLBACK" - Service Rollback Stage
+	//   "TRIGGER_ROLLBACK" - Trigger Rollback Stage
+	Name string `json:"name,omitempty"`
+
+	// Resource: Resource of the Stage
+	Resource string `json:"resource,omitempty"`
+
+	// ResourceUri: Link to the current Stage resource
+	ResourceUri string `json:"resourceUri,omitempty"`
+
+	// State: Current state of the Stage
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified. Invalid state.
+	//   "NOT_STARTED" - Stage has not started.
+	//   "IN_PROGRESS" - Stage is in progress.
+	//   "COMPLETE" - Stage has completed.
+	State string `json:"state,omitempty"`
+
+	// StateMessages: State messages from the current Stage.
+	StateMessages []*GoogleCloudFunctionsV2betaStateMessage `json:"stateMessages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudFunctionsV2betaStage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudFunctionsV2betaStage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudFunctionsV2betaStateMessage: Informational messages about
+// the state of the Cloud Function or Operation.
+type GoogleCloudFunctionsV2betaStateMessage struct {
+	// Message: The message.
+	Message string `json:"message,omitempty"`
+
+	// Severity: Severity of the state message.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Not specified. Invalid severity.
+	//   "ERROR" - ERROR-level severity.
+	//   "WARNING" - WARNING-level severity.
+	//   "INFO" - INFO-level severity.
+	Severity string `json:"severity,omitempty"`
+
+	// Type: One-word CamelCase type of the state message.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudFunctionsV2betaStateMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudFunctionsV2betaStateMessage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1223,17 +1627,17 @@ func (s *OperationMetadataV1) MarshalJSON() ([]byte, error) {
 
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members` to
-// a single `role`. Members can be user accounts, service accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of permissions; each `role` can be an IAM predefined role or a
-// user-created custom role. For some types of Google Cloud resources, a
-// `binding` can also specify a `condition`, which is a logical
-// expression that allows access to a resource only if the expression
-// evaluates to `true`. A condition can add constraints based on
-// attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -1260,9 +1664,15 @@ type Policy struct {
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -1335,9 +1745,7 @@ type Retry struct {
 
 // SecretEnvVar: Configuration for a secret environment variable. It has
 // the information necessary to fetch the secret value from secret
-// manager and expose it as an environment variable. Secret value is not
-// a part of the configuration. Secret values are only fetched when a
-// new clone starts.
+// manager and expose it as an environment variable.
 type SecretEnvVar struct {
 	// Key: Name of the environment variable.
 	Key string `json:"key,omitempty"`
@@ -1355,7 +1763,7 @@ type SecretEnvVar struct {
 	// Version: Version of the secret (version number or the string
 	// 'latest'). It is recommended to use a numeric version for secret
 	// environment variables as any updates to the secret value is not
-	// reflected until new clones start.
+	// reflected until new instances start.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -1475,7 +1883,7 @@ func (s *SecretVolume) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -1600,7 +2008,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -1721,7 +2129,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1906,7 +2314,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2049,8 +2457,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2108,7 +2516,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2179,7 +2587,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2285,7 +2693,7 @@ func (c *ProjectsLocationsFunctionsCallCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsCallCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2430,7 +2838,7 @@ func (c *ProjectsLocationsFunctionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2572,7 +2980,7 @@ func (c *ProjectsLocationsFunctionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2711,7 +3119,7 @@ func (c *ProjectsLocationsFunctionsGenerateDownloadUrlCall) Header() http.Header
 
 func (c *ProjectsLocationsFunctionsGenerateDownloadUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2870,7 +3278,7 @@ func (c *ProjectsLocationsFunctionsGenerateUploadUrlCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsGenerateUploadUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3022,7 +3430,7 @@ func (c *ProjectsLocationsFunctionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3127,8 +3535,9 @@ type ProjectsLocationsFunctionsGetIamPolicyCall struct {
 // policy set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsFunctionsService) GetIamPolicy(resource string) *ProjectsLocationsFunctionsGetIamPolicyCall {
 	c := &ProjectsLocationsFunctionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3136,13 +3545,17 @@ func (r *ProjectsLocationsFunctionsService) GetIamPolicy(resource string) *Proje
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsFunctionsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsFunctionsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -3186,7 +3599,7 @@ func (c *ProjectsLocationsFunctionsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3257,13 +3670,13 @@ func (c *ProjectsLocationsFunctionsGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,
@@ -3361,7 +3774,7 @@ func (c *ProjectsLocationsFunctionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3505,8 +3918,8 @@ func (r *ProjectsLocationsFunctionsService) Patch(name string, cloudfunction *Cl
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required list of
-// fields to be updated in this request.
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields in `CloudFunction` that have to be updated.
 func (c *ProjectsLocationsFunctionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFunctionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3539,7 +3952,7 @@ func (c *ProjectsLocationsFunctionsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3619,7 +4032,7 @@ func (c *ProjectsLocationsFunctionsPatchCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required list of fields to be updated in this request.",
+	//       "description": "Required. The list of fields in `CloudFunction` that have to be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3654,8 +4067,9 @@ type ProjectsLocationsFunctionsSetIamPolicyCall struct {
 // function. Replaces any existing policy.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsFunctionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsFunctionsSetIamPolicyCall {
 	c := &ProjectsLocationsFunctionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3690,7 +4104,7 @@ func (c *ProjectsLocationsFunctionsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3763,7 +4177,7 @@ func (c *ProjectsLocationsFunctionsSetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,
@@ -3800,7 +4214,8 @@ type ProjectsLocationsFunctionsTestIamPermissionsCall struct {
 // this will return an empty set of permissions, not a NOT_FOUND error.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsFunctionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsFunctionsTestIamPermissionsCall {
 	c := &ProjectsLocationsFunctionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3836,7 +4251,7 @@ func (c *ProjectsLocationsFunctionsTestIamPermissionsCall) Header() http.Header 
 
 func (c *ProjectsLocationsFunctionsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3909,7 +4324,7 @@ func (c *ProjectsLocationsFunctionsTestIamPermissionsCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,

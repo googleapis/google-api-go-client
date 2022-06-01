@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -92,7 +93,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/analytics",
 		"https://www.googleapis.com/auth/analytics.readonly",
 	)
@@ -1627,6 +1628,10 @@ type ReportData struct {
 	// in the calculation of the report.
 	DataLastRefreshed string `json:"dataLastRefreshed,omitempty"`
 
+	// EmptyReason: If empty reason is specified, the report is empty for
+	// this reason.
+	EmptyReason string `json:"emptyReason,omitempty"`
+
 	// IsDataGolden: Indicates if response to this request is golden or not.
 	// Data is golden when the exact same request will not produce any new
 	// results if asked at a later point in time.
@@ -2683,7 +2688,7 @@ func (c *ReportsBatchGetCall) Header() http.Header {
 
 func (c *ReportsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2809,7 +2814,7 @@ func (c *UserActivitySearchCall) Header() http.Header {
 
 func (c *UserActivitySearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

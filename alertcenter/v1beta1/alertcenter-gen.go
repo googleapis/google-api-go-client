@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -85,7 +86,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/apps.alerts",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -188,11 +189,13 @@ type AccountSuspensionDetails struct {
 	// harvesting.
 	//   "PAYMENTS_FRAUD" - This account is being suspended for payments
 	// fraud.
+	//   "UNWANTED_CONTENT" - This account is being suspended for unwanted
+	// content.
 	AbuseReason string `json:"abuseReason,omitempty"`
 
 	// ProductName: The name of the product being abused. This is restricted
-	// to only the following values: "Gmail" "Payments" "Voice" "Workspace"
-	// "Other"
+	// to only the following values: "Gmail" "Google Workspace" "Payments"
+	// "Voice" "YouTube" "Other"
 	ProductName string `json:"productName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AbuseReason") to
@@ -535,7 +538,7 @@ type AlertMetadata struct {
 	// Etag: Optional. `etag` is used for optimistic concurrency control as
 	// a way to help prevent simultaneous updates of an alert metadata from
 	// overwriting each other. It is strongly suggested that systems make
-	// use of the `etag` in the read-modify-write cycle to perform metatdata
+	// use of the `etag` in the read-modify-write cycle to perform metadata
 	// updates in order to avoid race conditions: An `etag` is returned in
 	// the response which contains alert metadata, and systems are expected
 	// to put that etag in the request to update alert metadata to ensure
@@ -656,6 +659,13 @@ type AppsOutage struct {
 	// Dashboard
 	DashboardUri string `json:"dashboardUri,omitempty"`
 
+	// IncidentTrackingId: Incident tracking ID.
+	IncidentTrackingId string `json:"incidentTrackingId,omitempty"`
+
+	// MergeInfo: Indicates new alert details under which the outage is
+	// communicated. Only populated when Status is MERGED.
+	MergeInfo *MergeInfo `json:"mergeInfo,omitempty"`
+
 	// NextUpdateTime: Timestamp by which the next update is expected to
 	// arrive.
 	NextUpdateTime string `json:"nextUpdateTime,omitempty"`
@@ -674,6 +684,11 @@ type AppsOutage struct {
 	//   "NEW" - The incident has just been reported.
 	//   "ONGOING" - The incident is ongoing.
 	//   "RESOLVED" - The incident has been resolved.
+	//   "FALSE_POSITIVE" - Further assessment indicated no customer impact.
+	//   "PARTIALLY_RESOLVED" - The incident has been partially resolved.
+	//   "MERGED" - The incident was merged into a parent.
+	//   "DOWNGRADED" - The incident has lower impact than initially
+	// anticipated.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DashboardUri") to
@@ -1193,8 +1208,7 @@ func (s *DomainWideTakeoutInitiated) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1270,6 +1284,9 @@ type GoogleOperations struct {
 
 	// Description: A detailed, freeform incident description.
 	Description string `json:"description,omitempty"`
+
+	// Domain: Customer domain for email template personalization.
+	Domain string `json:"domain,omitempty"`
 
 	// Header: A header to display above the incident message. Typically
 	// used to attach a localized notice on the timeline for followup comms
@@ -1495,6 +1512,39 @@ func (s *MaliciousEntity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MandatoryServiceAnnouncement: Alert Created by the MSA team for
+// communications necessary for continued use of Google Workspace
+// Products.
+type MandatoryServiceAnnouncement struct {
+	// Description: Detailed, freeform text describing the announcement
+	Description string `json:"description,omitempty"`
+
+	// Title: One line summary of the announcement
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MandatoryServiceAnnouncement) MarshalJSON() ([]byte, error) {
+	type NoMethod MandatoryServiceAnnouncement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MatchInfo: Proto that contains match information from the condition
 // part of the rule.
 type MatchInfo struct {
@@ -1524,6 +1574,38 @@ type MatchInfo struct {
 
 func (s *MatchInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod MatchInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MergeInfo: New alert tracking numbers.
+type MergeInfo struct {
+	// NewAlertId: Optional. New alert ID. Reference the
+	// [google.apps.alertcenter.Alert] with this ID for the current state.
+	NewAlertId string `json:"newAlertId,omitempty"`
+
+	// NewIncidentTrackingId: The new tracking ID from the parent incident.
+	NewIncidentTrackingId string `json:"newIncidentTrackingId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NewAlertId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NewAlertId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MergeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod MergeInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1624,6 +1706,44 @@ type PredefinedDetectorInfo struct {
 
 func (s *PredefinedDetectorInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PredefinedDetectorInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrimaryAdminChangedEvent: Event occurred when primary admin changed
+// in customer's account. The event are being received from insight
+// forwarder
+type PrimaryAdminChangedEvent struct {
+	// Domain: domain in which actioned occurred
+	Domain string `json:"domain,omitempty"`
+
+	// PreviousAdminEmail: Email of person who was the primary admin before
+	// the action
+	PreviousAdminEmail string `json:"previousAdminEmail,omitempty"`
+
+	// UpdatedAdminEmail: Email of person who is the primary admin after the
+	// action
+	UpdatedAdminEmail string `json:"updatedAdminEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Domain") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrimaryAdminChangedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod PrimaryAdminChangedEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1858,6 +1978,157 @@ func (s *RuleViolationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SSOProfileCreatedEvent: Event occurred when SSO Profile created in
+// customer's account. The event are being received from insight
+// forwarder
+type SSOProfileCreatedEvent struct {
+	// InboundSsoProfileName: sso profile name which got created
+	InboundSsoProfileName string `json:"inboundSsoProfileName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "InboundSsoProfileName") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InboundSsoProfileName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SSOProfileCreatedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod SSOProfileCreatedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SSOProfileDeletedEvent: Event occurred when SSO Profile deleted in
+// customer's account. The event are being received from insight
+// forwarder
+type SSOProfileDeletedEvent struct {
+	// InboundSsoProfileName: sso profile name which got deleted
+	InboundSsoProfileName string `json:"inboundSsoProfileName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "InboundSsoProfileName") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InboundSsoProfileName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SSOProfileDeletedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod SSOProfileDeletedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SSOProfileUpdatedEvent: Event occurred when SSO Profile updated in
+// customer's account. The event are being received from insight
+// forwarder
+type SSOProfileUpdatedEvent struct {
+	// InboundSsoProfileChanges: changes made to sso profile
+	InboundSsoProfileChanges string `json:"inboundSsoProfileChanges,omitempty"`
+
+	// InboundSsoProfileName: sso profile name which got updated
+	InboundSsoProfileName string `json:"inboundSsoProfileName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "InboundSsoProfileChanges") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InboundSsoProfileChanges")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SSOProfileUpdatedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod SSOProfileUpdatedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SensitiveAdminAction: Alert that is triggered when Sensitive Admin
+// Action occur in customer account.
+type SensitiveAdminAction struct {
+	// ActorEmail: Email of person who performed the action
+	ActorEmail string `json:"actorEmail,omitempty"`
+
+	// EventTime: The time at which event occurred
+	EventTime string `json:"eventTime,omitempty"`
+
+	// PrimaryAdminChangedEvent: Event occurred when primary admin changed
+	// in customer's account
+	PrimaryAdminChangedEvent *PrimaryAdminChangedEvent `json:"primaryAdminChangedEvent,omitempty"`
+
+	// SsoProfileCreatedEvent: Event occurred when SSO Profile created in
+	// customer's account
+	SsoProfileCreatedEvent *SSOProfileCreatedEvent `json:"ssoProfileCreatedEvent,omitempty"`
+
+	// SsoProfileDeletedEvent: Event occurred when SSO Profile deleted in
+	// customer's account
+	SsoProfileDeletedEvent *SSOProfileDeletedEvent `json:"ssoProfileDeletedEvent,omitempty"`
+
+	// SsoProfileUpdatedEvent: Event occurred when SSO Profile updated in
+	// customer's account
+	SsoProfileUpdatedEvent *SSOProfileUpdatedEvent `json:"ssoProfileUpdatedEvent,omitempty"`
+
+	// SuperAdminPasswordResetEvent: Event occurred when password was reset
+	// for super admin in customer's account
+	SuperAdminPasswordResetEvent *SuperAdminPasswordResetEvent `json:"superAdminPasswordResetEvent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActorEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActorEmail") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SensitiveAdminAction) MarshalJSON() ([]byte, error) {
+	type NoMethod SensitiveAdminAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Settings: Customer-level settings.
 type Settings struct {
 	// Notifications: The list of notifications.
@@ -1959,6 +2230,36 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SuperAdminPasswordResetEvent: Event occurred when password was reset
+// for super admin in customer's account. The event are being received
+// from insight forwarder
+type SuperAdminPasswordResetEvent struct {
+	// UserEmail: email of person whose password was reset
+	UserEmail string `json:"userEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UserEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UserEmail") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SuperAdminPasswordResetEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod SuperAdminPasswordResetEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2216,7 +2517,7 @@ func (c *AlertsBatchDeleteCall) Header() http.Header {
 
 func (c *AlertsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2341,7 +2642,7 @@ func (c *AlertsBatchUndeleteCall) Header() http.Header {
 
 func (c *AlertsBatchUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2481,7 +2782,7 @@ func (c *AlertsDeleteCall) Header() http.Header {
 
 func (c *AlertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2638,7 +2939,7 @@ func (c *AlertsGetCall) Header() http.Header {
 
 func (c *AlertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2798,7 +3099,7 @@ func (c *AlertsGetMetadataCall) Header() http.Header {
 
 func (c *AlertsGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2991,7 +3292,7 @@ func (c *AlertsListCall) Header() http.Header {
 
 func (c *AlertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3168,7 +3469,7 @@ func (c *AlertsUndeleteCall) Header() http.Header {
 
 func (c *AlertsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3321,7 +3622,7 @@ func (c *AlertsFeedbackCreateCall) Header() http.Header {
 
 func (c *AlertsFeedbackCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3497,7 +3798,7 @@ func (c *AlertsFeedbackListCall) Header() http.Header {
 
 func (c *AlertsFeedbackListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3657,7 +3958,7 @@ func (c *V1beta1GetSettingsCall) Header() http.Header {
 
 func (c *V1beta1GetSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3792,7 +4093,7 @@ func (c *V1beta1UpdateSettingsCall) Header() http.Header {
 
 func (c *V1beta1UpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

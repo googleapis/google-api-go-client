@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -86,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -433,11 +434,12 @@ type CancelOperationRequest struct {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -479,8 +481,7 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -516,6 +517,64 @@ type FixedOrPercent struct {
 
 func (s *FixedOrPercent) MarshalJSON() ([]byte, error) {
 	type NoMethod FixedOrPercent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata: OS policy
+// assignment operation metadata provided by OS policy assignment API
+// methods that return long running operations.
+type GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata struct {
+	// ApiMethod: The OS policy assignment API method.
+	//
+	// Possible values:
+	//   "API_METHOD_UNSPECIFIED" - Invalid value
+	//   "CREATE" - Create OS policy assignment API method
+	//   "UPDATE" - Update OS policy assignment API method
+	//   "DELETE" - Delete OS policy assignment API method
+	ApiMethod string `json:"apiMethod,omitempty"`
+
+	// OsPolicyAssignment: Reference to the `OSPolicyAssignment` API
+	// resource. Format:
+	// `projects/{project_number}/locations/{location}/osPolicyAssignments/{o
+	// s_policy_assignment_id@revision_id}`
+	OsPolicyAssignment string `json:"osPolicyAssignment,omitempty"`
+
+	// RolloutStartTime: Rollout start time
+	RolloutStartTime string `json:"rolloutStartTime,omitempty"`
+
+	// RolloutState: State of the rollout
+	//
+	// Possible values:
+	//   "ROLLOUT_STATE_UNSPECIFIED" - Invalid value
+	//   "IN_PROGRESS" - The rollout is in progress.
+	//   "CANCELLING" - The rollout is being cancelled.
+	//   "CANCELLED" - The rollout is cancelled.
+	//   "SUCCEEDED" - The rollout has completed successfully.
+	RolloutState string `json:"rolloutState,omitempty"`
+
+	// RolloutUpdateTime: Rollout update time
+	RolloutUpdateTime string `json:"rolloutUpdateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiMethod") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiMethod") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -928,11 +987,9 @@ func (s *InventoryVersionedPackage) MarshalJSON() ([]byte, error) {
 }
 
 // InventoryWindowsApplication: Contains information about a Windows
-// application as retrieved from the Windows Registry. For more
-// information about these fields, see Windows Installer Properties for
-// the Uninstall Registry
-// (https://docs.microsoft.com/en-us/windows/win32/msi/uninstall-registry-key){:
-// class="external" }
+// application that is retrieved from the Windows Registry. For more
+// information about these fields, see:
+// https://docs.microsoft.com/en-us/windows/win32/msi/uninstall-registry-key
 type InventoryWindowsApplication struct {
 	// DisplayName: The name of the application or product.
 	DisplayName string `json:"displayName,omitempty"`
@@ -2347,7 +2404,8 @@ type OSPolicyResourceExecResourceExec struct {
 	// Interpreter: Required. The script interpreter to use.
 	//
 	// Possible values:
-	//   "INTERPRETER_UNSPECIFIED" - Defaults to NONE.
+	//   "INTERPRETER_UNSPECIFIED" - Invalid value, the request will return
+	// validation error.
 	//   "NONE" - If an interpreter is not specified, the source is executed
 	// directly. This execution, without an interpreter, only succeeds for
 	// executables and scripts that have shebang lines.
@@ -3266,6 +3324,9 @@ type VulnerabilityReportVulnerability struct {
 	// in VM inventory. For some distros, this field may be empty.
 	InstalledInventoryItemIds []string `json:"installedInventoryItemIds,omitempty"`
 
+	// Items: List of items affected by the vulnerability.
+	Items []*VulnerabilityReportVulnerabilityItem `json:"items,omitempty"`
+
 	// UpdateTime: The timestamp for when the vulnerability was last
 	// modified.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -3392,6 +3453,59 @@ func (s *VulnerabilityReportVulnerabilityDetailsReference) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VulnerabilityReportVulnerabilityItem: OS inventory item that is
+// affected by a vulnerability or fixed as a result of a vulnerability.
+type VulnerabilityReportVulnerabilityItem struct {
+	// AvailableInventoryItemId: Corresponds to the `AVAILABLE_PACKAGE`
+	// inventory item on the VM. If the vulnerability report was not updated
+	// after the VM inventory update, these values might not display in VM
+	// inventory. If there is no available fix, the field is empty. The
+	// `inventory_item` value specifies the latest `SoftwarePackage`
+	// available to the VM that fixes the vulnerability.
+	AvailableInventoryItemId string `json:"availableInventoryItemId,omitempty"`
+
+	// FixedCpeUri: The recommended CPE URI
+	// (https://cpe.mitre.org/specification/) update that contains a fix for
+	// this vulnerability.
+	FixedCpeUri string `json:"fixedCpeUri,omitempty"`
+
+	// InstalledInventoryItemId: Corresponds to the `INSTALLED_PACKAGE`
+	// inventory item on the VM. This field displays the inventory items
+	// affected by this vulnerability. If the vulnerability report was not
+	// updated after the VM inventory update, these values might not display
+	// in VM inventory. For some operating systems, this field might be
+	// empty.
+	InstalledInventoryItemId string `json:"installedInventoryItemId,omitempty"`
+
+	// UpstreamFix: The upstream OS patch, packages or KB that fixes the
+	// vulnerability.
+	UpstreamFix string `json:"upstreamFix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AvailableInventoryItemId") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvailableInventoryItemId")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VulnerabilityReportVulnerabilityItem) MarshalJSON() ([]byte, error) {
+	type NoMethod VulnerabilityReportVulnerabilityItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "osconfig.projects.locations.instanceOSPoliciesCompliances.get":
 
 type ProjectsLocationsInstanceOSPoliciesCompliancesGetCall struct {
@@ -3456,7 +3570,7 @@ func (c *ProjectsLocationsInstanceOSPoliciesCompliancesGetCall) Header() http.He
 
 func (c *ProjectsLocationsInstanceOSPoliciesCompliancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3629,7 +3743,7 @@ func (c *ProjectsLocationsInstanceOSPoliciesCompliancesListCall) Header() http.H
 
 func (c *ProjectsLocationsInstanceOSPoliciesCompliancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3834,7 +3948,7 @@ func (c *ProjectsLocationsInstancesInventoriesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesInventoriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4036,7 +4150,7 @@ func (c *ProjectsLocationsInstancesInventoriesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesInventoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4177,9 +4291,9 @@ func (c *ProjectsLocationsInstancesInventoriesListCall) Pages(ctx context.Contex
 	}
 }
 
-// method id "osconfig.projects.locations.instances.osPolicyAssignments.getReport":
+// method id "osconfig.projects.locations.instances.osPolicyAssignments.reports.get":
 
-type ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall struct {
+type ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -4188,8 +4302,8 @@ type ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall struct {
 	header_      http.Header
 }
 
-// GetReport: Get the OS policy asssignment report for the specified
-// Compute Engine VM instance.
+// Get: Get the OS policy asssignment report for the specified Compute
+// Engine VM instance.
 //
 // - name: API resource name for OS policy assignment report. Format:
 //   `/projects/{project}/locations/{location}/instances/{instance}/osPol
@@ -4198,8 +4312,8 @@ type ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall struct {
 //   `{instance_id}`, either Compute Engine `instance-id` or
 //   `instance-name` can be provided. For `{assignment_id}`, the
 //   OSPolicyAssignment id must be provided.
-func (r *ProjectsLocationsInstancesOsPolicyAssignmentsService) GetReport(name string) *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall {
-	c := &ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsInstancesOsPolicyAssignmentsReportsService) Get(name string) *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall {
+	c := &ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -4207,7 +4321,7 @@ func (r *ProjectsLocationsInstancesOsPolicyAssignmentsService) GetReport(name st
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall {
+func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4217,7 +4331,7 @@ func (c *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall) Fields(s ..
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall) IfNoneMatch(entityTag string) *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall {
+func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -4225,23 +4339,23 @@ func (c *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall) IfNoneMatch
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall) Context(ctx context.Context) *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall {
+func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall) Context(ctx context.Context) *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall) Header() http.Header {
+func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4265,14 +4379,14 @@ func (c *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall) doRequest(a
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "osconfig.projects.locations.instances.osPolicyAssignments.getReport" call.
+// Do executes the "osconfig.projects.locations.instances.osPolicyAssignments.reports.get" call.
 // Exactly one of *OSPolicyAssignmentReport or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *OSPolicyAssignmentReport.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall) Do(opts ...googleapi.CallOption) (*OSPolicyAssignmentReport, error) {
+func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall) Do(opts ...googleapi.CallOption) (*OSPolicyAssignmentReport, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4306,7 +4420,7 @@ func (c *ProjectsLocationsInstancesOsPolicyAssignmentsGetReportCall) Do(opts ...
 	//   "description": "Get the OS policy asssignment report for the specified Compute Engine VM instance.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/osPolicyAssignments/{osPolicyAssignmentsId}/report",
 	//   "httpMethod": "GET",
-	//   "id": "osconfig.projects.locations.instances.osPolicyAssignments.getReport",
+	//   "id": "osconfig.projects.locations.instances.osPolicyAssignments.reports.get",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -4431,7 +4545,7 @@ func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsListCall) Header() 
 
 func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4621,7 +4735,7 @@ func (c *ProjectsLocationsInstancesVulnerabilityReportsGetCall) Header() http.He
 
 func (c *ProjectsLocationsInstancesVulnerabilityReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4734,9 +4848,19 @@ func (r *ProjectsLocationsInstancesVulnerabilityReportsService) List(parent stri
 	return c
 }
 
-// Filter sets the optional parameter "filter": If provided, this field
-// specifies the criteria that must be met by a `vulnerabilityReport`
-// API resource to be included in the response.
+// Filter sets the optional parameter "filter": This field supports
+// filtering by the severity level for the vulnerability. For a list of
+// severity levels, see Severity levels for vulnerabilities
+// (https://cloud.google.com/container-analysis/docs/container-scanning-overview#severity_levels_for_vulnerabilities).
+// The filter field follows the rules described in the AIP-160
+// (https://google.aip.dev/160) guidelines as follows: + **Filter for a
+// specific severity type**: you can list reports that contain
+// vulnerabilities that are classified as medium by specifying
+// `vulnerabilities.details.severity:MEDIUM`. + **Filter for a range of
+// severities** : you can list reports that have vulnerabilities that
+// are classified as critical or high by specifying
+// `vulnerabilities.details.severity:HIGH OR
+// vulnerabilities.details.severity:CRITICAL`
 func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) Filter(filter string) *ProjectsLocationsInstancesVulnerabilityReportsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4794,7 +4918,7 @@ func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) Header() http.H
 
 func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4865,7 +4989,7 @@ func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "If provided, this field specifies the criteria that must be met by a `vulnerabilityReport` API resource to be included in the response.",
+	//       "description": "This field supports filtering by the severity level for the vulnerability. For a list of severity levels, see [Severity levels for vulnerabilities](https://cloud.google.com/container-analysis/docs/container-scanning-overview#severity_levels_for_vulnerabilities). The filter field follows the rules described in the [AIP-160](https://google.aip.dev/160) guidelines as follows: + **Filter for a specific severity type**: you can list reports that contain vulnerabilities that are classified as medium by specifying `vulnerabilities.details.severity:MEDIUM`. + **Filter for a range of severities** : you can list reports that have vulnerabilities that are classified as critical or high by specifying `vulnerabilities.details.severity:HIGH OR vulnerabilities.details.severity:CRITICAL`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4985,7 +5109,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsOsPolicyAssignmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5137,7 +5261,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOsPolicyAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5285,7 +5409,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOsPolicyAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5447,7 +5571,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOsPolicyAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5641,7 +5765,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsListRevisionsCall) Header() http.He
 
 func (c *ProjectsLocationsOsPolicyAssignmentsListRevisionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5826,7 +5950,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsOsPolicyAssignmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5983,7 +6107,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsOperationsCancelCall) Header() http
 
 func (c *ProjectsLocationsOsPolicyAssignmentsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6136,7 +6260,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsOperationsGetCall) Header() http.He
 
 func (c *ProjectsLocationsOsPolicyAssignmentsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

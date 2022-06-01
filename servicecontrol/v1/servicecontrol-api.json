@@ -197,7 +197,7 @@
       }
     }
   },
-  "revision": "20210818",
+  "revision": "20220506",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -331,6 +331,10 @@
           "description": "The number of items returned from a List or Query API method, if applicable.",
           "format": "int64",
           "type": "string"
+        },
+        "policyViolationInfo": {
+          "$ref": "PolicyViolationInfo",
+          "description": "Indicates the policy violations for this request. If the request is denied by the policy, violation information will be logged here."
         },
         "request": {
           "additionalProperties": {
@@ -695,7 +699,7 @@
       "type": "object"
     },
     "Distribution": {
-      "description": "Distribution represents a frequency distribution of double-valued sample points. It contains the size of the population of sample points plus additional optional information: - the arithmetic mean of the samples - the minimum and maximum of the samples - the sum-squared-deviation of the samples, used to compute variance - a histogram of the values of the sample points",
+      "description": "Distribution represents a frequency distribution of double-valued sample points. It contains the size of the population of sample points plus additional optional information: * the arithmetic mean of the samples * the minimum and maximum of the samples * the sum-squared-deviation of the samples, used to compute variance * a histogram of the values of the sample points",
       "id": "Distribution",
       "properties": {
         "bucketCounts": {
@@ -1165,17 +1169,6 @@
           "format": "google-datetime",
           "type": "string"
         },
-        "extensions": {
-          "description": "Unimplemented.",
-          "items": {
-            "additionalProperties": {
-              "description": "Properties of the object. Contains field @type with type URL.",
-              "type": "any"
-            },
-            "type": "object"
-          },
-          "type": "array"
-        },
         "importance": {
           "description": "DO NOT USE. This is an experimental field.",
           "enum": [
@@ -1252,6 +1245,39 @@
       },
       "type": "object"
     },
+    "OrgPolicyViolationInfo": {
+      "description": "Represents OrgPolicy Violation information.",
+      "id": "OrgPolicyViolationInfo",
+      "properties": {
+        "payload": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Optional. Resource payload that is currently in scope and is subjected to orgpolicy conditions. This payload may be the subset of the actual Resource that may come in the request. This payload should not contain any core content.",
+          "type": "object"
+        },
+        "resourceTags": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. Tags referenced on the resource at the time of evaluation. These also include the federated tags, if they are supplied in the CheckOrgPolicy or CheckCustomConstraints Requests. Optional field as of now. These tags are the Cloud tags that are available on the resource during the policy evaluation and will be available as part of the OrgPolicy check response for logging purposes.",
+          "type": "object"
+        },
+        "resourceType": {
+          "description": "Optional. Resource type that the orgpolicy is checked against. Example: compute.googleapis.com/Instance, store.googleapis.com/bucket",
+          "type": "string"
+        },
+        "violationInfo": {
+          "description": "Optional. Policy violations",
+          "items": {
+            "$ref": "ViolationInfo"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Peer": {
       "description": "This message defines attributes for a node that handles a network request. The node can be either a service or an application that sends, forwards, or receives the request. Service peers should fill in `principal` and `labels` as appropriate.",
       "id": "Peer",
@@ -1279,6 +1305,17 @@
         "regionCode": {
           "description": "The CLDR country/region code associated with the above IP address. If the IP address is private, the `region_code` should reflect the physical location where this peer is running.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PolicyViolationInfo": {
+      "description": "Information related to policy violations for this request.",
+      "id": "PolicyViolationInfo",
+      "properties": {
+        "orgPolicyViolationInfo": {
+          "$ref": "OrgPolicyViolationInfo",
+          "description": "Indicates the orgpolicy violations for this resource."
         }
       },
       "type": "object"
@@ -1387,7 +1424,7 @@
           "type": "string"
         },
         "operationId": {
-          "description": "Identity of the operation. This is expected to be unique within the scope of the service that generated the operation, and guarantees idempotency in case of retries. In order to ensure best performance and latency in the Quota backends, operation_ids are optimally associated with time, so that related operations can be accessed fast in storage. For this reason, the recommended token for services that intend to operate at a high QPS is Unix time in nanos + UUID",
+          "description": "Identity of the operation. For Allocation Quota, this is expected to be unique within the scope of the service that generated the operation, and guarantees idempotency in case of retries. In order to ensure best performance and latency in the Quota backends, operation_ids are optimally associated with time, so that related operations can be accessed fast in storage. For this reason, the recommended token for services that intend to operate at a high QPS is Unix time in nanos + UUID",
           "type": "string"
         },
         "quotaMetrics": {
@@ -1404,7 +1441,6 @@
             "NORMAL",
             "BEST_EFFORT",
             "CHECK_ONLY",
-            "QUERY_ONLY",
             "ADJUST_ONLY"
           ],
           "enumDescriptions": [
@@ -1412,7 +1448,6 @@
             "For AllocateQuota request, allocates quota for the amount specified in the service configuration or specified using the quota metrics. If the amount is higher than the available quota, allocation error will be returned and no quota will be allocated. If multiple quotas are part of the request, and one fails, none of the quotas are allocated or released.",
             "The operation allocates quota for the amount specified in the service configuration or specified using the quota metrics. If the amount is higher than the available quota, request does not fail but all available quota will be allocated. For rate quota, BEST_EFFORT will continue to deduct from other groups even if one does not have enough quota. For allocation, it will find the minimum available amount across all groups and deduct that amount from all the affected groups.",
             "For AllocateQuota request, only checks if there is enough quota available and does not change the available quota. No lock is placed on the available quota either.",
-            "Unimplemented. When used in AllocateQuotaRequest, this returns the effective quota limit(s) in the response, and no quota check will be performed. Not supported for other requests, and even for AllocateQuotaRequest, this is currently supported only for allowlisted services.",
             "The operation allocates quota for the amount specified in the service configuration or specified using the quota metrics. If the requested amount is higher than the available quota, request does not fail and remaining quota would become negative (going over the limit). Not supported for Rate Quota."
           ],
           "type": "string"
@@ -1634,7 +1669,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The type of the resource. The syntax is platform-specific because different platforms define their resources differently. For Google APIs, the type format must be \"{service}/{kind}\".",
+          "description": "The type of the resource. The syntax is platform-specific because different platforms define their resources differently. For Google APIs, the type format must be \"{service}/{kind}\", such as \"pubsub.googleapis.com/Topic\".",
           "type": "string"
         },
         "uid": {
@@ -1842,6 +1877,252 @@
         },
         "value": {
           "description": "The shortened string. For example, if the original string is 500 bytes long and the limit of the string is 128 bytes, then `value` contains the first 128 bytes of the 500-byte string. Truncation always happens on a UTF8 character boundary. If there are multi-byte characters in the string, then the length of the shortened string might be less than the size limit.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "V1HttpRequest": {
+      "description": "A common proto for logging HTTP requests. Only contains semantics defined by the HTTP specification. Product-specific logging information MUST be defined in a separate message.",
+      "id": "V1HttpRequest",
+      "properties": {
+        "cacheFillBytes": {
+          "description": "The number of HTTP response bytes inserted into cache. Set only when a cache fill was attempted.",
+          "format": "int64",
+          "type": "string"
+        },
+        "cacheHit": {
+          "description": "Whether or not an entity was served from cache (with or without validation).",
+          "type": "boolean"
+        },
+        "cacheLookup": {
+          "description": "Whether or not a cache lookup was attempted.",
+          "type": "boolean"
+        },
+        "cacheValidatedWithOriginServer": {
+          "description": "Whether or not the response was validated with the origin server before being served from cache. This field is only meaningful if `cache_hit` is True.",
+          "type": "boolean"
+        },
+        "latency": {
+          "description": "The request processing latency on the server, from the time the request was received until the response was sent.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "protocol": {
+          "description": "Protocol used for the request. Examples: \"HTTP/1.1\", \"HTTP/2\", \"websocket\"",
+          "type": "string"
+        },
+        "referer": {
+          "description": "The referer URL of the request, as defined in [HTTP/1.1 Header Field Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).",
+          "type": "string"
+        },
+        "remoteIp": {
+          "description": "The IP address (IPv4 or IPv6) of the client that issued the HTTP request. Examples: `\"192.168.1.1\"`, `\"FE80::0202:B3FF:FE1E:8329\"`.",
+          "type": "string"
+        },
+        "requestMethod": {
+          "description": "The request method. Examples: `\"GET\"`, `\"HEAD\"`, `\"PUT\"`, `\"POST\"`.",
+          "type": "string"
+        },
+        "requestSize": {
+          "description": "The size of the HTTP request message in bytes, including the request headers and the request body.",
+          "format": "int64",
+          "type": "string"
+        },
+        "requestUrl": {
+          "description": "The scheme (http, https), the host name, the path, and the query portion of the URL that was requested. Example: `\"http://example.com/some/info?color=red\"`.",
+          "type": "string"
+        },
+        "responseSize": {
+          "description": "The size of the HTTP response message sent back to the client, in bytes, including the response headers and the response body.",
+          "format": "int64",
+          "type": "string"
+        },
+        "serverIp": {
+          "description": "The IP address (IPv4 or IPv6) of the origin server that the request was sent to.",
+          "type": "string"
+        },
+        "status": {
+          "description": "The response code indicating the status of the response. Examples: 200, 404.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "userAgent": {
+          "description": "The user agent sent by the client. Example: `\"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)\"`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "V1LogEntry": {
+      "description": "An individual log entry.",
+      "id": "V1LogEntry",
+      "properties": {
+        "httpRequest": {
+          "$ref": "V1HttpRequest",
+          "description": "Optional. Information about the HTTP request associated with this log entry, if applicable."
+        },
+        "insertId": {
+          "description": "A unique ID for the log entry used for deduplication. If omitted, the implementation will generate one based on operation_id.",
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "A set of user-defined (key, value) data that provides additional information about the log entry.",
+          "type": "object"
+        },
+        "monitoredResourceLabels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "A set of user-defined (key, value) data that provides additional information about the moniotored resource that the log entry belongs to.",
+          "type": "object"
+        },
+        "name": {
+          "description": "Required. The log to which this log entry belongs. Examples: `\"syslog\"`, `\"book_log\"`.",
+          "type": "string"
+        },
+        "operation": {
+          "$ref": "V1LogEntryOperation",
+          "description": "Optional. Information about an operation associated with the log entry, if applicable."
+        },
+        "protoPayload": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "The log entry payload, represented as a protocol buffer that is expressed as a JSON object. The only accepted type currently is AuditLog.",
+          "type": "object"
+        },
+        "severity": {
+          "description": "The severity of the log entry. The default value is `LogSeverity.DEFAULT`.",
+          "enum": [
+            "DEFAULT",
+            "DEBUG",
+            "INFO",
+            "NOTICE",
+            "WARNING",
+            "ERROR",
+            "CRITICAL",
+            "ALERT",
+            "EMERGENCY"
+          ],
+          "enumDescriptions": [
+            "(0) The log entry has no assigned severity level.",
+            "(100) Debug or trace information.",
+            "(200) Routine information, such as ongoing status or performance.",
+            "(300) Normal but significant events, such as start up, shut down, or a configuration change.",
+            "(400) Warning events might cause problems.",
+            "(500) Error events are likely to cause problems.",
+            "(600) Critical events cause more severe problems or outages.",
+            "(700) A person must take an action immediately.",
+            "(800) One or more systems are unusable."
+          ],
+          "type": "string"
+        },
+        "sourceLocation": {
+          "$ref": "V1LogEntrySourceLocation",
+          "description": "Optional. Source code location information associated with the log entry, if any."
+        },
+        "structPayload": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "The log entry payload, represented as a structure that is expressed as a JSON object.",
+          "type": "object"
+        },
+        "textPayload": {
+          "description": "The log entry payload, represented as a Unicode string (UTF-8).",
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "The time the event described by the log entry occurred. If omitted, defaults to operation start time.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "trace": {
+          "description": "Optional. Resource name of the trace associated with the log entry, if any. If this field contains a relative resource name, you can assume the name is relative to `//tracing.googleapis.com`. Example: `projects/my-projectid/traces/06796866738c859f2f19b7cfb3214824`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "V1LogEntryOperation": {
+      "description": "Additional information about a potentially long-running operation with which a log entry is associated.",
+      "id": "V1LogEntryOperation",
+      "properties": {
+        "first": {
+          "description": "Optional. Set this to True if this is the first log entry in the operation.",
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Optional. An arbitrary operation identifier. Log entries with the same identifier are assumed to be part of the same operation.",
+          "type": "string"
+        },
+        "last": {
+          "description": "Optional. Set this to True if this is the last log entry in the operation.",
+          "type": "boolean"
+        },
+        "producer": {
+          "description": "Optional. An arbitrary producer identifier. The combination of `id` and `producer` must be globally unique. Examples for `producer`: `\"MyDivision.MyBigCompany.com\"`, `\"github.com/MyProject/MyApplication\"`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "V1LogEntrySourceLocation": {
+      "description": "Additional information about the source code location that produced the log entry.",
+      "id": "V1LogEntrySourceLocation",
+      "properties": {
+        "file": {
+          "description": "Optional. Source file name. Depending on the runtime environment, this might be a simple name or a fully-qualified name.",
+          "type": "string"
+        },
+        "function": {
+          "description": "Optional. Human-readable name of the function or method being invoked, with optional context such as the class or package name. This information may be used in contexts such as the logs viewer, where a file and line number are less meaningful. The format can vary by language. For example: `qual.if.ied.Class.method` (Java), `dir/package.func` (Go), `function` (Python).",
+          "type": "string"
+        },
+        "line": {
+          "description": "Optional. Line within the source file. 1-based; 0 indicates no line number available.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ViolationInfo": {
+      "description": "Provides information about the Policy violation info for this request.",
+      "id": "ViolationInfo",
+      "properties": {
+        "checkedValue": {
+          "description": "Optional. Value that is being checked for the policy. This could be in encrypted form (if pii sensitive). This field will only be emitted in LIST_POLICY types",
+          "type": "string"
+        },
+        "constraint": {
+          "description": "Optional. Constraint name",
+          "type": "string"
+        },
+        "errorMessage": {
+          "description": "Optional. Error message that policy is indicating.",
+          "type": "string"
+        },
+        "policyType": {
+          "description": "Optional. Indicates the type of the policy.",
+          "enum": [
+            "POLICY_TYPE_UNSPECIFIED",
+            "BOOLEAN_CONSTRAINT",
+            "LIST_CONSTRAINT",
+            "CUSTOM_CONSTRAINT"
+          ],
+          "enumDescriptions": [
+            "Default value. This value should not be used.",
+            "Indicates boolean policy constraint",
+            "Indicates list policy constraint",
+            "Indicates custom policy constraint"
+          ],
           "type": "string"
         }
       },

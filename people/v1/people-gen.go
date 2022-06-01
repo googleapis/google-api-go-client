@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -124,7 +125,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/contacts",
 		"https://www.googleapis.com/auth/contacts.other.readonly",
 		"https://www.googleapis.com/auth/contacts.readonly",
@@ -645,15 +646,17 @@ func (s *Biography) MarshalJSON() ([]byte, error) {
 
 // Birthday: A person's birthday. At least one of the `date` and `text`
 // fields are specified. The `date` and `text` fields typically
-// represent the same date, but are not guaranteed to.
+// represent the same date, but are not guaranteed to. Clients should
+// always set the `date` field when mutating birthdays.
 type Birthday struct {
-	// Date: The date of the birthday.
+	// Date: The structured date of the birthday.
 	Date *Date `json:"date,omitempty"`
 
 	// Metadata: Metadata about the birthday.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
 
-	// Text: A free-form string representing the user's birthday.
+	// Text: Prefer to use the `date` field if set. A free-form string
+	// representing the user's birthday. This value is not validated.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Date") to
@@ -1129,11 +1132,12 @@ func (s *CreateContactGroupRequest) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -1282,8 +1286,7 @@ func (s *EmailAddress) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3475,7 +3478,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3584,7 +3587,8 @@ type ContactGroupsCreateCall struct {
 // Create: Create a new contact group owned by the authenticated user.
 // Created contact group names must be unique to the users contact
 // groups. Attempting to create a group with a duplicate name will
-// return a HTTP 409 error.
+// return a HTTP 409 error. Mutate requests for the same user should be
+// sent sequentially to avoid increased latency and failures.
 func (r *ContactGroupsService) Create(createcontactgrouprequest *CreateContactGroupRequest) *ContactGroupsCreateCall {
 	c := &ContactGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.createcontactgrouprequest = createcontactgrouprequest
@@ -3618,7 +3622,7 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3679,7 +3683,7 @@ func (c *ContactGroupsCreateCall) Do(opts ...googleapi.CallOption) (*ContactGrou
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a new contact group owned by the authenticated user. Created contact group names must be unique to the users contact groups. Attempting to create a group with a duplicate name will return a HTTP 409 error.",
+	//   "description": "Create a new contact group owned by the authenticated user. Created contact group names must be unique to the users contact groups. Attempting to create a group with a duplicate name will return a HTTP 409 error. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
 	//   "flatPath": "v1/contactGroups",
 	//   "httpMethod": "POST",
 	//   "id": "people.contactGroups.create",
@@ -3710,7 +3714,9 @@ type ContactGroupsDeleteCall struct {
 }
 
 // Delete: Delete an existing contact group owned by the authenticated
-// user by specifying a contact group resource name.
+// user by specifying a contact group resource name. Mutate requests for
+// the same user should be sent sequentially to avoid increased latency
+// and failures.
 //
 // - resourceName: The resource name of the contact group to delete.
 func (r *ContactGroupsService) Delete(resourceName string) *ContactGroupsDeleteCall {
@@ -3753,7 +3759,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3812,7 +3818,7 @@ func (c *ContactGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete an existing contact group owned by the authenticated user by specifying a contact group resource name.",
+	//   "description": "Delete an existing contact group owned by the authenticated user by specifying a contact group resource name. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
 	//   "flatPath": "v1/contactGroups/{contactGroupsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "people.contactGroups.delete",
@@ -3920,7 +3926,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4111,7 +4117,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4246,7 +4252,8 @@ type ContactGroupsUpdateCall struct {
 // Update: Update the name of an existing contact group owned by the
 // authenticated user. Updated contact group names must be unique to the
 // users contact groups. Attempting to create a group with a duplicate
-// name will return a HTTP 409 error.
+// name will return a HTTP 409 error. Mutate requests for the same user
+// should be sent sequentially to avoid increased latency and failures.
 //
 // - resourceName: The resource name for the contact group, assigned by
 //   the server. An ASCII string, in the form of
@@ -4285,7 +4292,7 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4349,7 +4356,7 @@ func (c *ContactGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ContactGrou
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the name of an existing contact group owned by the authenticated user. Updated contact group names must be unique to the users contact groups. Attempting to create a group with a duplicate name will return a HTTP 409 error.",
+	//   "description": "Update the name of an existing contact group owned by the authenticated user. Updated contact group names must be unique to the users contact groups. Attempting to create a group with a duplicate name will return a HTTP 409 error. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
 	//   "flatPath": "v1/contactGroups/{contactGroupsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "people.contactGroups.update",
@@ -4431,7 +4438,7 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4538,7 +4545,9 @@ type OtherContactsCopyOtherContactToMyContactsGroupCall struct {
 }
 
 // CopyOtherContactToMyContactsGroup: Copies an "Other contact" to a new
-// contact in the user's "myContacts" group
+// contact in the user's "myContacts" group Mutate requests for the same
+// user should be sent sequentially to avoid increased latency and
+// failures.
 //
 // - resourceName: The resource name of the "Other contact" to copy.
 func (r *OtherContactsService) CopyOtherContactToMyContactsGroup(resourceName string, copyothercontacttomycontactsgrouprequest *CopyOtherContactToMyContactsGroupRequest) *OtherContactsCopyOtherContactToMyContactsGroupCall {
@@ -4575,7 +4584,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Heade
 
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4639,7 +4648,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Copies an \"Other contact\" to a new contact in the user's \"myContacts\" group",
+	//   "description": "Copies an \"Other contact\" to a new contact in the user's \"myContacts\" group Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
 	//   "flatPath": "v1/otherContacts/{otherContactsId}:copyOtherContactToMyContactsGroup",
 	//   "httpMethod": "POST",
 	//   "id": "people.otherContacts.copyOtherContactToMyContactsGroup",
@@ -4683,14 +4692,15 @@ type OtherContactsListCall struct {
 // List: List all "Other contacts", that is contacts that are not in a
 // contact group. "Other contacts" are typically auto created contacts
 // from interactions. Sync tokens expire 7 days after the full sync. A
-// request with an expired sync token will result in a 410 error. In the
-// case of such an error clients should make a full sync request without
-// a `sync_token`. The first page of a full sync request has an
-// additional quota. If the quota is exceeded, a 429 error will be
-// returned. This quota is fixed and can not be increased. When the
-// `sync_token` is specified, resources deleted since the last sync will
-// be returned as a person with `PersonMetadata.deleted` set to true.
-// When the `page_token` or `sync_token` is specified, all other request
+// request with an expired sync token will get an error with an
+// google.rpc.ErrorInfo with reason "EXPIRED_SYNC_TOKEN". In the case of
+// such an error clients should make a full sync request without a
+// `sync_token`. The first page of a full sync request has an additional
+// quota. If the quota is exceeded, a 429 error will be returned. This
+// quota is fixed and can not be increased. When the `sync_token` is
+// specified, resources deleted since the last sync will be returned as
+// a person with `PersonMetadata.deleted` set to true. When the
+// `page_token` or `sync_token` is specified, all other request
 // parameters must match the first call. Writes may have a propagation
 // delay of several minutes for sync requests. Incremental syncs are not
 // intended for read-after-write use cases. See example usage at List
@@ -4750,6 +4760,10 @@ func (c *OtherContactsListCall) RequestSyncToken(requestSyncToken bool) *OtherCo
 
 // Sources sets the optional parameter "sources": A mask of what source
 // types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.
+// Possible values for this field are: * READ_SOURCE_TYPE_CONTACT *
+// READ_SOURCE_TYPE_CONTACT,READ_SOURCE_TYPE_PROFILE Specifying
+// READ_SOURCE_TYPE_PROFILE without specifying READ_SOURCE_TYPE_CONTACT
+// is not permitted.
 //
 // Possible values:
 //   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
@@ -4811,7 +4825,7 @@ func (c *OtherContactsListCall) Header() http.Header {
 
 func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4870,7 +4884,7 @@ func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherCont
 	}
 	return ret, nil
 	// {
-	//   "description": "List all \"Other contacts\", that is contacts that are not in a contact group. \"Other contacts\" are typically auto created contacts from interactions. Sync tokens expire 7 days after the full sync. A request with an expired sync token will result in a 410 error. In the case of such an error clients should make a full sync request without a `sync_token`. The first page of a full sync request has an additional quota. If the quota is exceeded, a 429 error will be returned. This quota is fixed and can not be increased. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. Writes may have a propagation delay of several minutes for sync requests. Incremental syncs are not intended for read-after-write use cases. See example usage at [List the user's other contacts that have changed](/people/v1/other-contacts#list_the_users_other_contacts_that_have_changed).",
+	//   "description": "List all \"Other contacts\", that is contacts that are not in a contact group. \"Other contacts\" are typically auto created contacts from interactions. Sync tokens expire 7 days after the full sync. A request with an expired sync token will get an error with an google.rpc.ErrorInfo with reason \"EXPIRED_SYNC_TOKEN\". In the case of such an error clients should make a full sync request without a `sync_token`. The first page of a full sync request has an additional quota. If the quota is exceeded, a 429 error will be returned. This quota is fixed and can not be increased. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. Writes may have a propagation delay of several minutes for sync requests. Incremental syncs are not intended for read-after-write use cases. See example usage at [List the user's other contacts that have changed](/people/v1/other-contacts#list_the_users_other_contacts_that_have_changed).",
 	//   "flatPath": "v1/otherContacts",
 	//   "httpMethod": "GET",
 	//   "id": "people.otherContacts.list",
@@ -4899,7 +4913,7 @@ func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherCont
 	//       "type": "boolean"
 	//     },
 	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.",
+	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set. Possible values for this field are: * READ_SOURCE_TYPE_CONTACT * READ_SOURCE_TYPE_CONTACT,READ_SOURCE_TYPE_PROFILE Specifying READ_SOURCE_TYPE_PROFILE without specifying READ_SOURCE_TYPE_CONTACT is not permitted.",
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",
@@ -5040,7 +5054,7 @@ func (c *OtherContactsSearchCall) Header() http.Header {
 
 func (c *OtherContactsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5145,8 +5159,8 @@ type PeopleBatchCreateContactsCall struct {
 }
 
 // BatchCreateContacts: Create a batch of new contacts and return the
-// PersonResponses for the newly created contacts. Limited to 10
-// parallel requests per user.
+// PersonResponses for the newly Mutate requests for the same user
+// should be sent sequentially to avoid increased latency and failures.
 func (r *PeopleService) BatchCreateContacts(batchcreatecontactsrequest *BatchCreateContactsRequest) *PeopleBatchCreateContactsCall {
 	c := &PeopleBatchCreateContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.batchcreatecontactsrequest = batchcreatecontactsrequest
@@ -5180,7 +5194,7 @@ func (c *PeopleBatchCreateContactsCall) Header() http.Header {
 
 func (c *PeopleBatchCreateContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5241,7 +5255,7 @@ func (c *PeopleBatchCreateContactsCall) Do(opts ...googleapi.CallOption) (*Batch
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a batch of new contacts and return the PersonResponses for the newly created contacts. Limited to 10 parallel requests per user.",
+	//   "description": "Create a batch of new contacts and return the PersonResponses for the newly Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
 	//   "flatPath": "v1/people:batchCreateContacts",
 	//   "httpMethod": "POST",
 	//   "id": "people.people.batchCreateContacts",
@@ -5272,7 +5286,8 @@ type PeopleBatchDeleteContactsCall struct {
 }
 
 // BatchDeleteContacts: Delete a batch of contacts. Any non-contact data
-// will not be deleted. Limited to 10 parallel requests per user.
+// will not be deleted. Mutate requests for the same user should be sent
+// sequentially to avoid increased latency and failures.
 func (r *PeopleService) BatchDeleteContacts(batchdeletecontactsrequest *BatchDeleteContactsRequest) *PeopleBatchDeleteContactsCall {
 	c := &PeopleBatchDeleteContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.batchdeletecontactsrequest = batchdeletecontactsrequest
@@ -5306,7 +5321,7 @@ func (c *PeopleBatchDeleteContactsCall) Header() http.Header {
 
 func (c *PeopleBatchDeleteContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5367,7 +5382,7 @@ func (c *PeopleBatchDeleteContactsCall) Do(opts ...googleapi.CallOption) (*Empty
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete a batch of contacts. Any non-contact data will not be deleted. Limited to 10 parallel requests per user.",
+	//   "description": "Delete a batch of contacts. Any non-contact data will not be deleted. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
 	//   "flatPath": "v1/people:batchDeleteContacts",
 	//   "httpMethod": "POST",
 	//   "id": "people.people.batchDeleteContacts",
@@ -5398,8 +5413,9 @@ type PeopleBatchUpdateContactsCall struct {
 }
 
 // BatchUpdateContacts: Update a batch of contacts and return a map of
-// resource names to PersonResponses for the updated contacts. Limited
-// to 10 parallel requests per user.
+// resource names to PersonResponses for the updated contacts. Mutate
+// requests for the same user should be sent sequentially to avoid
+// increased latency and failures.
 func (r *PeopleService) BatchUpdateContacts(batchupdatecontactsrequest *BatchUpdateContactsRequest) *PeopleBatchUpdateContactsCall {
 	c := &PeopleBatchUpdateContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.batchupdatecontactsrequest = batchupdatecontactsrequest
@@ -5433,7 +5449,7 @@ func (c *PeopleBatchUpdateContactsCall) Header() http.Header {
 
 func (c *PeopleBatchUpdateContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5494,7 +5510,7 @@ func (c *PeopleBatchUpdateContactsCall) Do(opts ...googleapi.CallOption) (*Batch
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a batch of contacts and return a map of resource names to PersonResponses for the updated contacts. Limited to 10 parallel requests per user.",
+	//   "description": "Update a batch of contacts and return a map of resource names to PersonResponses for the updated contacts. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
 	//   "flatPath": "v1/people:batchUpdateContacts",
 	//   "httpMethod": "POST",
 	//   "id": "people.people.batchUpdateContacts",
@@ -5527,7 +5543,9 @@ type PeopleCreateContactCall struct {
 // CreateContact: Create a new contact and return the person resource
 // for that contact. The request returns a 400 error if more than one
 // field is specified on a field that is a singleton for contact
-// sources: * biographies * birthdays * genders * names
+// sources: * biographies * birthdays * genders * names Mutate requests
+// for the same user should be sent sequentially to avoid increased
+// latency and failures.
 func (r *PeopleService) CreateContact(person *Person) *PeopleCreateContactCall {
 	c := &PeopleCreateContactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.person = person
@@ -5592,7 +5610,7 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5653,7 +5671,7 @@ func (c *PeopleCreateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a new contact and return the person resource for that contact. The request returns a 400 error if more than one field is specified on a field that is a singleton for contact sources: * biographies * birthdays * genders * names",
+	//   "description": "Create a new contact and return the person resource for that contact. The request returns a 400 error if more than one field is specified on a field that is a singleton for contact sources: * biographies * birthdays * genders * names Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
 	//   "flatPath": "v1/people:createContact",
 	//   "httpMethod": "POST",
 	//   "id": "people.people.createContact",
@@ -5709,7 +5727,8 @@ type PeopleDeleteContactCall struct {
 }
 
 // DeleteContact: Delete a contact person. Any non-contact data will not
-// be deleted.
+// be deleted. Mutate requests for the same user should be sent
+// sequentially to avoid increased latency and failures.
 //
 // - resourceName: The resource name of the contact to delete.
 func (r *PeopleService) DeleteContact(resourceName string) *PeopleDeleteContactCall {
@@ -5745,7 +5764,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5804,7 +5823,7 @@ func (c *PeopleDeleteContactCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete a contact person. Any non-contact data will not be deleted.",
+	//   "description": "Delete a contact person. Any non-contact data will not be deleted. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
 	//   "flatPath": "v1/people/{peopleId}:deleteContact",
 	//   "httpMethod": "DELETE",
 	//   "id": "people.people.deleteContact",
@@ -5841,7 +5860,8 @@ type PeopleDeleteContactPhotoCall struct {
 	header_      http.Header
 }
 
-// DeleteContactPhoto: Delete a contact's photo.
+// DeleteContactPhoto: Delete a contact's photo. Mutate requests for the
+// same user should be done sequentially to avoid // lock contention.
 //
 // - resourceName: The resource name of the contact whose photo will be
 //   deleted.
@@ -5909,7 +5929,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5968,7 +5988,7 @@ func (c *PeopleDeleteContactPhotoCall) Do(opts ...googleapi.CallOption) (*Delete
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete a contact's photo.",
+	//   "description": "Delete a contact's photo. Mutate requests for the same user should be done sequentially to avoid // lock contention.",
 	//   "flatPath": "v1/people/{peopleId}:deleteContactPhoto",
 	//   "httpMethod": "DELETE",
 	//   "id": "people.people.deleteContactPhoto",
@@ -6122,7 +6142,7 @@ func (c *PeopleGetCall) Header() http.Header {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6360,7 +6380,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6625,7 +6645,7 @@ func (c *PeopleListDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6886,7 +6906,7 @@ func (c *PeopleSearchContactsCall) Header() http.Header {
 
 func (c *PeopleSearchContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7120,7 +7140,7 @@ func (c *PeopleSearchDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7295,7 +7315,9 @@ type PeopleUpdateContactCall struct {
 // being updated and there are no contact group memberships specified on
 // the person. The server returns a 400 error if more than one field is
 // specified on a field that is a singleton for contact sources: *
-// biographies * birthdays * genders * names
+// biographies * birthdays * genders * names Mutate requests for the
+// same user should be sent sequentially to avoid increased latency and
+// failures.
 //
 // - resourceName: The resource name for the person, assigned by the
 //   server. An ASCII string with a max length of 27 characters, in the
@@ -7379,7 +7401,7 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7443,7 +7465,7 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Update contact data for an existing contact person. Any non-contact data will not be modified. Any non-contact data in the person to update will be ignored. All fields specified in the `update_mask` will be replaced. The server returns a 400 error if `person.metadata.sources` is not specified for the contact to be updated or if there is no contact source. The server returns a 400 error with reason `\"failedPrecondition\"` if `person.metadata.sources.etag` is different than the contact's etag, which indicates the contact has changed since its data was read. Clients should get the latest person and merge their updates into the latest person. The server returns a 400 error if `memberships` are being updated and there are no contact group memberships specified on the person. The server returns a 400 error if more than one field is specified on a field that is a singleton for contact sources: * biographies * birthdays * genders * names",
+	//   "description": "Update contact data for an existing contact person. Any non-contact data will not be modified. Any non-contact data in the person to update will be ignored. All fields specified in the `update_mask` will be replaced. The server returns a 400 error if `person.metadata.sources` is not specified for the contact to be updated or if there is no contact source. The server returns a 400 error with reason `\"failedPrecondition\"` if `person.metadata.sources.etag` is different than the contact's etag, which indicates the contact has changed since its data was read. Clients should get the latest person and merge their updates into the latest person. The server returns a 400 error if `memberships` are being updated and there are no contact group memberships specified on the person. The server returns a 400 error if more than one field is specified on a field that is a singleton for contact sources: * biographies * birthdays * genders * names Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
 	//   "flatPath": "v1/people/{peopleId}:updateContact",
 	//   "httpMethod": "PATCH",
 	//   "id": "people.people.updateContact",
@@ -7514,7 +7536,9 @@ type PeopleUpdateContactPhotoCall struct {
 	header_                   http.Header
 }
 
-// UpdateContactPhoto: Update a contact's photo.
+// UpdateContactPhoto: Update a contact's photo. Mutate requests for the
+// same user should be sent sequentially to avoid increased latency and
+// failures.
 //
 // - resourceName: Person resource name.
 func (r *PeopleService) UpdateContactPhoto(resourceName string, updatecontactphotorequest *UpdateContactPhotoRequest) *PeopleUpdateContactPhotoCall {
@@ -7551,7 +7575,7 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7615,7 +7639,7 @@ func (c *PeopleUpdateContactPhotoCall) Do(opts ...googleapi.CallOption) (*Update
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a contact's photo.",
+	//   "description": "Update a contact's photo. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
 	//   "flatPath": "v1/people/{peopleId}:updateContactPhoto",
 	//   "httpMethod": "PATCH",
 	//   "id": "people.people.updateContactPhoto",
@@ -7658,13 +7682,14 @@ type PeopleConnectionsListCall struct {
 
 // List: Provides a list of the authenticated user's contacts. Sync
 // tokens expire 7 days after the full sync. A request with an expired
-// sync token will result in a 410 error. In the case of such an error
-// clients should make a full sync request without a `sync_token`. The
-// first page of a full sync request has an additional quota. If the
-// quota is exceeded, a 429 error will be returned. This quota is fixed
-// and can not be increased. When the `sync_token` is specified,
-// resources deleted since the last sync will be returned as a person
-// with `PersonMetadata.deleted` set to true. When the `page_token` or
+// sync token will get an error with an google.rpc.ErrorInfo with reason
+// "EXPIRED_SYNC_TOKEN". In the case of such an error clients should
+// make a full sync request without a `sync_token`. The first page of a
+// full sync request has an additional quota. If the quota is exceeded,
+// a 429 error will be returned. This quota is fixed and can not be
+// increased. When the `sync_token` is specified, resources deleted
+// since the last sync will be returned as a person with
+// `PersonMetadata.deleted` set to true. When the `page_token` or
 // `sync_token` is specified, all other request parameters must match
 // the first call. Writes may have a propagation delay of several
 // minutes for sync requests. Incremental syncs are not intended for
@@ -7811,7 +7836,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7873,7 +7898,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	}
 	return ret, nil
 	// {
-	//   "description": "Provides a list of the authenticated user's contacts. Sync tokens expire 7 days after the full sync. A request with an expired sync token will result in a 410 error. In the case of such an error clients should make a full sync request without a `sync_token`. The first page of a full sync request has an additional quota. If the quota is exceeded, a 429 error will be returned. This quota is fixed and can not be increased. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. Writes may have a propagation delay of several minutes for sync requests. Incremental syncs are not intended for read-after-write use cases. See example usage at [List the user's contacts that have changed](/people/v1/contacts#list_the_users_contacts_that_have_changed).",
+	//   "description": "Provides a list of the authenticated user's contacts. Sync tokens expire 7 days after the full sync. A request with an expired sync token will get an error with an google.rpc.ErrorInfo with reason \"EXPIRED_SYNC_TOKEN\". In the case of such an error clients should make a full sync request without a `sync_token`. The first page of a full sync request has an additional quota. If the quota is exceeded, a 429 error will be returned. This quota is fixed and can not be increased. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. Writes may have a propagation delay of several minutes for sync requests. Incremental syncs are not intended for read-after-write use cases. See example usage at [List the user's contacts that have changed](/people/v1/contacts#list_the_users_contacts_that_have_changed).",
 	//   "flatPath": "v1/people/{peopleId}/connections",
 	//   "httpMethod": "GET",
 	//   "id": "people.people.connections.list",

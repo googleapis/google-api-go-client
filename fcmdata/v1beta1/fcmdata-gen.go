@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -86,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -383,8 +384,9 @@ func (s *GoogleFirebaseFcmDataV1beta1ListAndroidDeliveryDataResponse) MarshalJSO
 // with countMessagesAccepted as the denominator.
 type GoogleFirebaseFcmDataV1beta1MessageInsightPercents struct {
 	// PriorityLowered: The percentage of accepted messages that had their
-	// priority lowered from high to normal due to app standby buckets
-	// (https://firebase.google.com/docs/cloud-messaging/concept-options#setting-the-priority-of-a-message).
+	// priority lowered from high to normal. See documentation for setting
+	// message priority
+	// (https://firebase.google.com/docs/cloud-messaging/android/message-priority).
 	PriorityLowered float64 `json:"priorityLowered,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PriorityLowered") to
@@ -517,11 +519,12 @@ func (s *GoogleFirebaseFcmDataV1beta1MessageOutcomePercents) UnmarshalJSON(data 
 // a birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type GoogleTypeDate struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -637,7 +640,7 @@ func (c *ProjectsAndroidAppsDeliveryDataListCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsDeliveryDataListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

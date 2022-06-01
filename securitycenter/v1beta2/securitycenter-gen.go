@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -86,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -147,6 +148,7 @@ func NewFoldersService(s *Service) *FoldersService {
 	rs.ContainerThreatDetectionSettings = NewFoldersContainerThreatDetectionSettingsService(s)
 	rs.EventThreatDetectionSettings = NewFoldersEventThreatDetectionSettingsService(s)
 	rs.SecurityHealthAnalyticsSettings = NewFoldersSecurityHealthAnalyticsSettingsService(s)
+	rs.VirtualMachineThreatDetectionSettings = NewFoldersVirtualMachineThreatDetectionSettingsService(s)
 	rs.WebSecurityScannerSettings = NewFoldersWebSecurityScannerSettingsService(s)
 	return rs
 }
@@ -159,6 +161,8 @@ type FoldersService struct {
 	EventThreatDetectionSettings *FoldersEventThreatDetectionSettingsService
 
 	SecurityHealthAnalyticsSettings *FoldersSecurityHealthAnalyticsSettingsService
+
+	VirtualMachineThreatDetectionSettings *FoldersVirtualMachineThreatDetectionSettingsService
 
 	WebSecurityScannerSettings *FoldersWebSecurityScannerSettingsService
 }
@@ -190,6 +194,15 @@ type FoldersSecurityHealthAnalyticsSettingsService struct {
 	s *Service
 }
 
+func NewFoldersVirtualMachineThreatDetectionSettingsService(s *Service) *FoldersVirtualMachineThreatDetectionSettingsService {
+	rs := &FoldersVirtualMachineThreatDetectionSettingsService{s: s}
+	return rs
+}
+
+type FoldersVirtualMachineThreatDetectionSettingsService struct {
+	s *Service
+}
+
 func NewFoldersWebSecurityScannerSettingsService(s *Service) *FoldersWebSecurityScannerSettingsService {
 	rs := &FoldersWebSecurityScannerSettingsService{s: s}
 	return rs
@@ -204,6 +217,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.ContainerThreatDetectionSettings = NewOrganizationsContainerThreatDetectionSettingsService(s)
 	rs.EventThreatDetectionSettings = NewOrganizationsEventThreatDetectionSettingsService(s)
 	rs.SecurityHealthAnalyticsSettings = NewOrganizationsSecurityHealthAnalyticsSettingsService(s)
+	rs.VirtualMachineThreatDetectionSettings = NewOrganizationsVirtualMachineThreatDetectionSettingsService(s)
 	rs.WebSecurityScannerSettings = NewOrganizationsWebSecurityScannerSettingsService(s)
 	return rs
 }
@@ -216,6 +230,8 @@ type OrganizationsService struct {
 	EventThreatDetectionSettings *OrganizationsEventThreatDetectionSettingsService
 
 	SecurityHealthAnalyticsSettings *OrganizationsSecurityHealthAnalyticsSettingsService
+
+	VirtualMachineThreatDetectionSettings *OrganizationsVirtualMachineThreatDetectionSettingsService
 
 	WebSecurityScannerSettings *OrganizationsWebSecurityScannerSettingsService
 }
@@ -247,6 +263,15 @@ type OrganizationsSecurityHealthAnalyticsSettingsService struct {
 	s *Service
 }
 
+func NewOrganizationsVirtualMachineThreatDetectionSettingsService(s *Service) *OrganizationsVirtualMachineThreatDetectionSettingsService {
+	rs := &OrganizationsVirtualMachineThreatDetectionSettingsService{s: s}
+	return rs
+}
+
+type OrganizationsVirtualMachineThreatDetectionSettingsService struct {
+	s *Service
+}
+
 func NewOrganizationsWebSecurityScannerSettingsService(s *Service) *OrganizationsWebSecurityScannerSettingsService {
 	rs := &OrganizationsWebSecurityScannerSettingsService{s: s}
 	return rs
@@ -262,6 +287,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs.EventThreatDetectionSettings = NewProjectsEventThreatDetectionSettingsService(s)
 	rs.Locations = NewProjectsLocationsService(s)
 	rs.SecurityHealthAnalyticsSettings = NewProjectsSecurityHealthAnalyticsSettingsService(s)
+	rs.VirtualMachineThreatDetectionSettings = NewProjectsVirtualMachineThreatDetectionSettingsService(s)
 	rs.WebSecurityScannerSettings = NewProjectsWebSecurityScannerSettingsService(s)
 	return rs
 }
@@ -276,6 +302,8 @@ type ProjectsService struct {
 	Locations *ProjectsLocationsService
 
 	SecurityHealthAnalyticsSettings *ProjectsSecurityHealthAnalyticsSettingsService
+
+	VirtualMachineThreatDetectionSettings *ProjectsVirtualMachineThreatDetectionSettingsService
 
 	WebSecurityScannerSettings *ProjectsWebSecurityScannerSettingsService
 }
@@ -340,6 +368,15 @@ type ProjectsSecurityHealthAnalyticsSettingsService struct {
 	s *Service
 }
 
+func NewProjectsVirtualMachineThreatDetectionSettingsService(s *Service) *ProjectsVirtualMachineThreatDetectionSettingsService {
+	rs := &ProjectsVirtualMachineThreatDetectionSettingsService{s: s}
+	return rs
+}
+
+type ProjectsVirtualMachineThreatDetectionSettingsService struct {
+	s *Service
+}
+
 func NewProjectsWebSecurityScannerSettingsService(s *Service) *ProjectsWebSecurityScannerSettingsService {
 	rs := &ProjectsWebSecurityScannerSettingsService{s: s}
 	return rs
@@ -347,6 +384,88 @@ func NewProjectsWebSecurityScannerSettingsService(s *Service) *ProjectsWebSecuri
 
 type ProjectsWebSecurityScannerSettingsService struct {
 	s *Service
+}
+
+// Access: Represents an access event.
+type Access struct {
+	// CallerIp: Caller's IP address, such as "1.1.1.1".
+	CallerIp string `json:"callerIp,omitempty"`
+
+	// CallerIpGeo: The caller IP's geolocation, which identifies where the
+	// call came from.
+	CallerIpGeo *Geolocation `json:"callerIpGeo,omitempty"`
+
+	// MethodName: The method that the service account called, e.g.
+	// "SetIamPolicy".
+	MethodName string `json:"methodName,omitempty"`
+
+	// PrincipalEmail: Associated email, such as "foo@google.com".
+	PrincipalEmail string `json:"principalEmail,omitempty"`
+
+	// ServiceName: This is the API service that the service account made a
+	// call to, e.g. "iam.googleapis.com"
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// UserAgentFamily: What kind of user agent is associated, e.g.
+	// operating system shells, embedded or stand-alone applications, etc.
+	UserAgentFamily string `json:"userAgentFamily,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CallerIp") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CallerIp") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Access) MarshalJSON() ([]byte, error) {
+	type NoMethod Access
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Compliance: Contains compliance information about a security standard
+// indicating unmet recommendations.
+type Compliance struct {
+	// Ids: e.g. A.12.4.1
+	Ids []string `json:"ids,omitempty"`
+
+	// Standard: e.g. "cis", "pci", "owasp", etc.
+	Standard string `json:"standard,omitempty"`
+
+	// Version: e.g. 1.1
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ids") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ids") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Compliance) MarshalJSON() ([]byte, error) {
+	type NoMethod Compliance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Config: Configuration of a module.
@@ -387,6 +506,113 @@ type Config struct {
 
 func (s *Config) MarshalJSON() ([]byte, error) {
 	type NoMethod Config
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Connection: Contains information about the IP connection associated
+// with the finding.
+type Connection struct {
+	// DestinationIp: Destination IP address. Not present for sockets that
+	// are listening and not connected.
+	DestinationIp string `json:"destinationIp,omitempty"`
+
+	// DestinationPort: Destination port. Not present for sockets that are
+	// listening and not connected.
+	DestinationPort int64 `json:"destinationPort,omitempty"`
+
+	// Protocol: IANA Internet Protocol Number such as TCP(6) and UDP(17).
+	//
+	// Possible values:
+	//   "PROTOCOL_UNSPECIFIED" - Unspecified protocol (not HOPOPT).
+	//   "ICMP" - Internet Control Message Protocol.
+	//   "TCP" - Transmission Control Protocol.
+	//   "UDP" - User Datagram Protocol.
+	//   "GRE" - Generic Routing Encapsulation.
+	//   "ESP" - Encap Security Payload.
+	Protocol string `json:"protocol,omitempty"`
+
+	// SourceIp: Source IP address.
+	SourceIp string `json:"sourceIp,omitempty"`
+
+	// SourcePort: Source port.
+	SourcePort int64 `json:"sourcePort,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationIp") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationIp") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Connection) MarshalJSON() ([]byte, error) {
+	type NoMethod Connection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Contact: Representa a single contact's email address
+type Contact struct {
+	// Email: An email address e.g. "person123@company.com"
+	Email string `json:"email,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Contact) MarshalJSON() ([]byte, error) {
+	type NoMethod Contact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContactDetails: The details pertaining to specific contacts
+type ContactDetails struct {
+	// Contacts: A list of contacts
+	Contacts []*Contact `json:"contacts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Contacts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Contacts") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContactDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContactDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -469,6 +695,9 @@ type Cve struct {
 	// References: Additional information about the CVE. e.g.
 	// https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-34527
 	References []*Reference `json:"references,omitempty"`
+
+	// UpstreamFixAvailable: Whether upstream fix is available for the CVE.
+	UpstreamFixAvailable bool `json:"upstreamFixAvailable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cvssv3") to
 	// unconditionally include in API requests. By default, fields with
@@ -692,6 +921,38 @@ func (s *Details) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EnvironmentVariable: EnvironmentVariable is a name-value pair to
+// store env variables for Process.
+type EnvironmentVariable struct {
+	// Name: Environment variable name as a JSON encoded string.
+	Name string `json:"name,omitempty"`
+
+	// Val: Environment variable value as a JSON encoded string.
+	Val string `json:"val,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnvironmentVariable) MarshalJSON() ([]byte, error) {
+	type NoMethod EnvironmentVariable
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EventThreatDetectionSettings: Resource capturing the settings for the
 // Event Threat Detection service.
 type EventThreatDetectionSettings struct {
@@ -748,6 +1009,128 @@ func (s *EventThreatDetectionSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ExfilResource: Resource that has been exfiltrated or exfiltrated_to.
+type ExfilResource struct {
+	// Components: Subcomponents of the asset that is exfiltrated - these
+	// could be URIs used during exfiltration, table names, databases,
+	// filenames, etc. For example, multiple tables may be exfiltrated from
+	// the same CloudSQL instance, or multiple files from the same Cloud
+	// Storage bucket.
+	Components []string `json:"components,omitempty"`
+
+	// Name: Resource’s URI
+	// (https://google.aip.dev/122#full-resource-names)
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Components") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Components") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExfilResource) MarshalJSON() ([]byte, error) {
+	type NoMethod ExfilResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Exfiltration: Exfiltration represents a data exfiltration attempt of
+// one or more source(s) to one or more target(s). Source(s) represent
+// the source of data that is exfiltrated, and Target(s) represents the
+// destination the data was copied to.
+type Exfiltration struct {
+	// Sources: If there are multiple sources, then the data is considered
+	// “joined” between them. For instance, BigQuery can join multiple
+	// tables, and each table would be considered a source.
+	Sources []*ExfilResource `json:"sources,omitempty"`
+
+	// Targets: If there are multiple targets, each target would get a
+	// complete copy of the “joined” source data.
+	Targets []*ExfilResource `json:"targets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sources") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Sources") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Exfiltration) MarshalJSON() ([]byte, error) {
+	type NoMethod Exfiltration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// File: File information about the related binary/library used by an
+// executable, or the script used by a script interpreter
+type File struct {
+	// Contents: Prefix of the file contents as a JSON encoded string.
+	// (Currently only populated for Malicious Script Executed findings.)
+	Contents string `json:"contents,omitempty"`
+
+	// HashedSize: The length in bytes of the file prefix that was hashed.
+	// If hashed_size == size, any hashes reported represent the entire
+	// file.
+	HashedSize int64 `json:"hashedSize,omitempty,string"`
+
+	// PartiallyHashed: True when the hash covers only a prefix of the file.
+	PartiallyHashed bool `json:"partiallyHashed,omitempty"`
+
+	// Path: Absolute path of the file as a JSON encoded string.
+	Path string `json:"path,omitempty"`
+
+	// Sha256: SHA256 hash of the first hashed_size bytes of the file
+	// encoded as a hex string. If hashed_size == size, hash_sha256
+	// represents the SHA256 hash of the entire file.
+	Sha256 string `json:"sha256,omitempty"`
+
+	// Size: Size of the file in bytes.
+	Size int64 `json:"size,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Contents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *File) MarshalJSON() ([]byte, error) {
+	type NoMethod File
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Finding: Security Command Center finding. A finding is a record of
 // assessment data like security, risk, health, or privacy, that is
 // ingested into Security Command Center for presentation, notification,
@@ -755,6 +1138,11 @@ func (s *EventThreatDetectionSettings) MarshalJSON() ([]byte, error) {
 // scripting (XSS) vulnerability in an App Engine application is a
 // finding.
 type Finding struct {
+	// Access: Access details associated to the Finding, such as more
+	// information on the caller, which method was accessed, from where,
+	// etc.
+	Access *Access `json:"access,omitempty"`
+
 	// CanonicalName: The canonical name of the finding. It's either
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
 	// _id}",
@@ -769,18 +1157,46 @@ type Finding struct {
 	// "XSS_FLASH_INJECTION"
 	Category string `json:"category,omitempty"`
 
+	// Compliances: Contains compliance information for security standards
+	// associated to the finding.
+	Compliances []*Compliance `json:"compliances,omitempty"`
+
+	// Connections: Contains information about the IP connection associated
+	// with the finding.
+	Connections []*Connection `json:"connections,omitempty"`
+
+	// Contacts: Output only. Map containing the point of contacts for the
+	// given finding. The key represents the type of contact, while the
+	// value contains a list of all the contacts that pertain. Please refer
+	// to:
+	// https://cloud.google.com/resource-manager/docs/managing-notification-contacts#notification-categories
+	// { “security”: {contact: {email: “person1@company.com”}
+	// contact: {email: “person2@company.com”} }
+	Contacts map[string]ContactDetails `json:"contacts,omitempty"`
+
 	// CreateTime: The time at which the finding was created in Security
 	// Command Center.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// EventTime: The time at which the event took place, or when an update
-	// to the finding occurred. For example, if the finding represents an
-	// open firewall it would capture the time the detector believes the
-	// firewall became open. The accuracy is determined by the detector. If
-	// the finding were to be resolved afterward, this time would reflect
-	// when the finding was resolved. Must not be set to a value greater
-	// than the current timestamp.
+	// Description: Contains more detail about the finding.
+	Description string `json:"description,omitempty"`
+
+	// EventTime: The time the finding was first detected. If an existing
+	// finding is updated, then this is the time the update occurred. For
+	// example, if the finding represents an open firewall, this property
+	// captures the time the detector believes the firewall became open. The
+	// accuracy is determined by the detector. If the finding is later
+	// resolved, then this time reflects when the finding was resolved. This
+	// must not be set to a value greater than the current timestamp.
 	EventTime string `json:"eventTime,omitempty"`
+
+	// Exfiltration: Represents exfiltrations associated with the Finding.
+	Exfiltration *Exfiltration `json:"exfiltration,omitempty"`
+
+	// ExternalSystems: Output only. Third party SIEM/SOAR fields within
+	// SCC, contains external system information and external system finding
+	// fields.
+	ExternalSystems map[string]GoogleCloudSecuritycenterV1ExternalSystem `json:"externalSystems,omitempty"`
 
 	// ExternalUri: The URI that, if available, points to a web page outside
 	// of Security Command Center where additional information about the
@@ -799,7 +1215,12 @@ type Finding struct {
 	// resource/asset configuration that increases risk.
 	//   "OBSERVATION" - Describes a security observation that is for
 	// informational purposes.
+	//   "SCC_ERROR" - Describes an error that prevents some SCC
+	// functionality.
 	FindingClass string `json:"findingClass,omitempty"`
+
+	// IamBindings: Represents IAM bindings associated with the Finding.
+	IamBindings []*IamBinding `json:"iamBindings,omitempty"`
 
 	// Indicator: Represents what's commonly known as an Indicator of
 	// compromise (IoC) in computer forensics. This is an artifact observed
@@ -808,6 +1229,31 @@ type Finding struct {
 	// https://en.wikipedia.org/wiki/Indicator_of_compromise
 	Indicator *Indicator `json:"indicator,omitempty"`
 
+	// MitreAttack: MITRE ATT&CK tactics and techniques related to this
+	// finding. See: https://attack.mitre.org
+	MitreAttack *MitreAttack `json:"mitreAttack,omitempty"`
+
+	// Mute: Indicates the mute state of a finding (either muted, unmuted or
+	// undefined). Unlike other attributes of a finding, a finding provider
+	// shouldn't set the value of mute.
+	//
+	// Possible values:
+	//   "MUTE_UNSPECIFIED" - Unspecified.
+	//   "MUTED" - Finding has been muted.
+	//   "UNMUTED" - Finding has been unmuted.
+	//   "UNDEFINED" - Finding has never been muted/unmuted.
+	Mute string `json:"mute,omitempty"`
+
+	// MuteInitiator: First known as mute_annotation. Records additional
+	// information about the mute operation e.g. mute config that muted the
+	// finding, user who muted the finding, etc. Unlike other attributes of
+	// a finding, a finding provider shouldn't set the value of mute.
+	MuteInitiator string `json:"muteInitiator,omitempty"`
+
+	// MuteUpdateTime: Output only. The most recent time this finding was
+	// muted or unmuted.
+	MuteUpdateTime string `json:"muteUpdateTime,omitempty"`
+
 	// Name: The relative resource name of this finding. See:
 	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
 	// Example:
@@ -815,12 +1261,19 @@ type Finding struct {
 	// _id}"
 	Name string `json:"name,omitempty"`
 
+	// NextSteps: Next steps associate to the finding.
+	NextSteps string `json:"nextSteps,omitempty"`
+
 	// Parent: The relative resource name of the source the finding belongs
 	// to. See:
 	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
 	// This field is immutable after creation time. For example:
 	// "organizations/{organization_id}/sources/{source_id}"
 	Parent string `json:"parent,omitempty"`
+
+	// Processes: Represents operating system processes associated with the
+	// Finding.
+	Processes []*Process `json:"processes,omitempty"`
 
 	// ResourceName: For findings on Google Cloud resources, the full
 	// resource name of the Google Cloud resource this finding is for. See:
@@ -870,8 +1323,8 @@ type Finding struct {
 	// to cause operational impact but may not access data or execute
 	// unauthorized code.
 	//   "LOW" - Vulnerability: A low risk vulnerability hampers a security
-	// organization’s ability to detect vulnerabilities or active threats
-	// in their deployment, or prevents the root cause investigation of
+	// organization's ability to detect vulnerabilities or active threats in
+	// their deployment, or prevents the root cause investigation of
 	// security issues. An example is monitoring and logs being disabled for
 	// resource configurations and access. Threat: Indicates a threat that
 	// has obtained minimal access to an environment but is not able to
@@ -900,7 +1353,7 @@ type Finding struct {
 	// (https://cve.mitre.org/about/)
 	Vulnerability *Vulnerability `json:"vulnerability,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
+	// ForceSendFields is a list of field names (e.g. "Access") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -908,10 +1361,10 @@ type Finding struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CanonicalName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Access") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -958,6 +1411,233 @@ func (s *Folder) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Geolocation: Represents a geographical location for a given access.
+type Geolocation struct {
+	// RegionCode: A CLDR.
+	RegionCode string `json:"regionCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RegionCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RegionCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Geolocation) MarshalJSON() ([]byte, error) {
+	type NoMethod Geolocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1BigQueryExport: Configures how to deliver
+// Findings to BigQuery Instance.
+type GoogleCloudSecuritycenterV1BigQueryExport struct {
+	// CreateTime: Output only. The time at which the big query export was
+	// created. This field is set by the server and will be ignored if
+	// provided on export on creation.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Dataset: The dataset to write findings' updates to. Its format is
+	// "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery
+	// Dataset unique ID must contain only letters (a-z, A-Z), numbers
+	// (0-9), or underscores (_).
+	Dataset string `json:"dataset,omitempty"`
+
+	// Description: The description of the export (max of 1024 characters).
+	Description string `json:"description,omitempty"`
+
+	// Filter: Expression that defines the filter to apply across
+	// create/update events of findings. The expression is a list of zero or
+	// more restrictions combined via logical operators `AND` and `OR`.
+	// Parentheses are supported, and `OR` has higher precedence than `AND`.
+	// Restrictions have the form ` ` and may have a `-` character in front
+	// of them to indicate negation. The fields map to those defined in the
+	// corresponding resource. The supported operators are: * `=` for all
+	// value types. * `>`, `<`, `>=`, `<=` for integer values. * `:`,
+	// meaning substring matching, for strings. The supported value types
+	// are: * string literals in quotes. * integer literals without quotes.
+	// * boolean literals `true` and `false` without quotes.
+	Filter string `json:"filter,omitempty"`
+
+	// MostRecentEditor: Output only. Email address of the user who last
+	// edited the big query export. This field is set by the server and will
+	// be ignored if provided on export creation or update.
+	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
+
+	// Name: The relative resource name of this export. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name.
+	// Example format:
+	// "organizations/{organization_id}/bigQueryExports/{export_id}" Example
+	// format: "folders/{folder_id}/bigQueryExports/{export_id}" Example
+	// format: "projects/{project_id}/bigQueryExports/{export_id}" This
+	// field is provided in responses, and is ignored when provided in
+	// create requests.
+	Name string `json:"name,omitempty"`
+
+	// Principal: Output only. The service account that needs permission to
+	// create table, upload data to the big query dataset.
+	Principal string `json:"principal,omitempty"`
+
+	// UpdateTime: Output only. The most recent time at which the big export
+	// was updated. This field is set by the server and will be ignored if
+	// provided on export creation or update.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1BigQueryExport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1BigQueryExport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1BulkMuteFindingsResponse: The response to
+// a BulkMute request. Contains the LRO information.
+type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
+}
+
+// GoogleCloudSecuritycenterV1ExternalSystem: Representation of third
+// party SIEM/SOAR fields within SCC.
+type GoogleCloudSecuritycenterV1ExternalSystem struct {
+	// Assignees: References primary/secondary etc assignees in the external
+	// system.
+	Assignees []string `json:"assignees,omitempty"`
+
+	// ExternalSystemUpdateTime: The most recent time when the corresponding
+	// finding's ticket/tracker was updated in the external system.
+	ExternalSystemUpdateTime string `json:"externalSystemUpdateTime,omitempty"`
+
+	// ExternalUid: Identifier that's used to track the given finding in the
+	// external system.
+	ExternalUid string `json:"externalUid,omitempty"`
+
+	// Name: External System Name e.g. jira, demisto, etc. e.g.:
+	// `organizations/1234/sources/5678/findings/123456/externalSystems/jira`
+	//  `folders/1234/sources/5678/findings/123456/externalSystems/jira`
+	// `projects/1234/sources/5678/findings/123456/externalSystems/jira`
+	Name string `json:"name,omitempty"`
+
+	// Status: Most recent status of the corresponding finding's
+	// ticket/tracker in the external system.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Assignees") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Assignees") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1ExternalSystem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1ExternalSystem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1MuteConfig: A mute config is a Cloud SCC
+// resource that contains the configuration to mute create/update events
+// of findings.
+type GoogleCloudSecuritycenterV1MuteConfig struct {
+	// CreateTime: Output only. The time at which the mute config was
+	// created. This field is set by the server and will be ignored if
+	// provided on config creation.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: A description of the mute config.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: The human readable name to be displayed for the mute
+	// config.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Filter: Required. An expression that defines the filter to apply
+	// across create/update events of findings. While creating a filter
+	// string, be mindful of the scope in which the mute configuration is
+	// being created. E.g., If a filter contains project = X but is created
+	// under the project = Y scope, it might not match any findings. The
+	// following field and operator combinations are supported: * severity:
+	// `=`, `:` * category: `=`, `:` * resource.name: `=`, `:` *
+	// resource.project_name: `=`, `:` * resource.project_display_name: `=`,
+	// `:` * resource.folders.resource_folder: `=`, `:` *
+	// resource.parent_name: `=`, `:` * resource.parent_display_name: `=`,
+	// `:` * resource.type: `=`, `:` * finding_class: `=`, `:` *
+	// indicator.ip_addresses: `=`, `:` * indicator.domains: `=`, `:`
+	Filter string `json:"filter,omitempty"`
+
+	// MostRecentEditor: Output only. Email address of the user who last
+	// edited the mute config. This field is set by the server and will be
+	// ignored if provided on config creation or update.
+	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
+
+	// Name: This field will be ignored if provided on config creation.
+	// Format "organizations/{organization}/muteConfigs/{mute_config}"
+	// "folders/{folder}/muteConfigs/{mute_config}"
+	// "projects/{project}/muteConfigs/{mute_config}"
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The most recent time at which the mute
+	// config was updated. This field is set by the server and will be
+	// ignored if provided on config creation or update.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1MuteConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1MuteConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV1NotificationMessage: Cloud SCC's
 // Notification
 type GoogleCloudSecuritycenterV1NotificationMessage struct {
@@ -998,6 +1678,9 @@ func (s *GoogleCloudSecuritycenterV1NotificationMessage) MarshalJSON() ([]byte, 
 // GoogleCloudSecuritycenterV1Resource: Information related to the
 // Google Cloud resource.
 type GoogleCloudSecuritycenterV1Resource struct {
+	// DisplayName: The human readable name of the resource.
+	DisplayName string `json:"displayName,omitempty"`
+
 	// Folders: Output only. Contains a Folder message for each folder in
 	// the assets ancestry. The first folder is the deepest nested folder,
 	// and the last folder is the folder directly under the Organization.
@@ -1017,14 +1700,13 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	// to.
 	Project string `json:"project,omitempty"`
 
-	// ProjectDisplayName: The human readable name of project that the
-	// resource belongs to.
+	// ProjectDisplayName: The project ID that the resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
 	// Type: The full resource type of the resource.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Folders") to
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1032,10 +1714,10 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Folders") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1339,8 +2021,7 @@ type GoogleCloudSecuritycenterV1p1beta1Resource struct {
 	// to.
 	Project string `json:"project,omitempty"`
 
-	// ProjectDisplayName: The human readable name of project that the
-	// resource belongs to.
+	// ProjectDisplayName: The project id that the resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Folders") to
@@ -1463,6 +2144,48 @@ func (s *GoogleCloudSecuritycenterV1p1beta1SecurityMarks) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IamBinding: Represents a particular IAM binding, which captures a
+// member's role addition, removal, or state.
+type IamBinding struct {
+	// Action: The action that was performed on a Binding.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - Unspecified.
+	//   "ADD" - Addition of a Binding.
+	//   "REMOVE" - Removal of a Binding.
+	Action string `json:"action,omitempty"`
+
+	// Member: A single identity requesting access for a Cloud Platform
+	// resource, e.g. "foo@google.com".
+	Member string `json:"member,omitempty"`
+
+	// Role: Role that is assigned to "members". For example,
+	// "roles/viewer", "roles/editor", or "roles/owner".
+	Role string `json:"role,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IamBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod IamBinding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Indicator: Represents what's commonly known as an Indicator of
 // compromise (IoC) in computer forensics. This is an artifact observed
 // on a network or in an operating system that, with high confidence,
@@ -1494,6 +2217,265 @@ type Indicator struct {
 
 func (s *Indicator) MarshalJSON() ([]byte, error) {
 	type NoMethod Indicator
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MitreAttack: MITRE ATT&CK tactics and techniques related to this
+// finding. See: https://attack.mitre.org
+type MitreAttack struct {
+	// AdditionalTactics: Additional MITRE ATT&CK tactics related to this
+	// finding, if any.
+	//
+	// Possible values:
+	//   "TACTIC_UNSPECIFIED" - Unspecified value.
+	//   "RECONNAISSANCE" - TA0043
+	//   "RESOURCE_DEVELOPMENT" - TA0042
+	//   "INITIAL_ACCESS" - TA0001
+	//   "EXECUTION" - TA0002
+	//   "PERSISTENCE" - TA0003
+	//   "PRIVILEGE_ESCALATION" - TA0004
+	//   "DEFENSE_EVASION" - TA0005
+	//   "CREDENTIAL_ACCESS" - TA0006
+	//   "DISCOVERY" - TA0007
+	//   "LATERAL_MOVEMENT" - TA0008
+	//   "COLLECTION" - TA0009
+	//   "COMMAND_AND_CONTROL" - TA0011
+	//   "EXFILTRATION" - TA0010
+	//   "IMPACT" - TA0040
+	AdditionalTactics []string `json:"additionalTactics,omitempty"`
+
+	// AdditionalTechniques: Additional MITRE ATT&CK techniques related to
+	// this finding, if any, along with any of their respective parent
+	// techniques.
+	//
+	// Possible values:
+	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "ACTIVE_SCANNING" - T1595
+	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "INGRESS_TOOL_TRANSFER" - T1105
+	//   "NATIVE_API" - T1106
+	//   "SHARED_MODULES" - T1129
+	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
+	//   "UNIX_SHELL" - T1059.004
+	//   "RESOURCE_HIJACKING" - T1496
+	//   "PROXY" - T1090
+	//   "EXTERNAL_PROXY" - T1090.002
+	//   "MULTI_HOP_PROXY" - T1090.003
+	//   "DYNAMIC_RESOLUTION" - T1568
+	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "VALID_ACCOUNTS" - T1078
+	//   "LOCAL_ACCOUNTS" - T1078.003
+	//   "CLOUD_ACCOUNTS" - T1078.004
+	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
+	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
+	//   "CLOUD_GROUPS" - T1069.003
+	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
+	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
+	//   "ACCOUNT_MANIPULATION" - T1098
+	//   "SSH_AUTHORIZED_KEYS" - T1098.004
+	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "STEAL_WEB_SESSION_COOKIE" - T1539
+	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
+	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
+	//   "DATA_DESTRUCTION" - T1485
+	//   "DOMAIN_POLICY_MODIFICATION" - T1484
+	//   "IMPAIR_DEFENSES" - T1562
+	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
+
+	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
+	// this finding, if any.
+	//
+	// Possible values:
+	//   "TACTIC_UNSPECIFIED" - Unspecified value.
+	//   "RECONNAISSANCE" - TA0043
+	//   "RESOURCE_DEVELOPMENT" - TA0042
+	//   "INITIAL_ACCESS" - TA0001
+	//   "EXECUTION" - TA0002
+	//   "PERSISTENCE" - TA0003
+	//   "PRIVILEGE_ESCALATION" - TA0004
+	//   "DEFENSE_EVASION" - TA0005
+	//   "CREDENTIAL_ACCESS" - TA0006
+	//   "DISCOVERY" - TA0007
+	//   "LATERAL_MOVEMENT" - TA0008
+	//   "COLLECTION" - TA0009
+	//   "COMMAND_AND_CONTROL" - TA0011
+	//   "EXFILTRATION" - TA0010
+	//   "IMPACT" - TA0040
+	PrimaryTactic string `json:"primaryTactic,omitempty"`
+
+	// PrimaryTechniques: The MITRE ATT&CK technique most closely
+	// represented by this finding, if any. primary_techniques is a repeated
+	// field because there are multiple levels of MITRE ATT&CK techniques.
+	// If the technique most closely represented by this finding is a
+	// sub-technique (e.g. `SCANNING_IP_BLOCKS`), both the sub-technique and
+	// its parent technique(s) will be listed (e.g. `SCANNING_IP_BLOCKS`,
+	// `ACTIVE_SCANNING`).
+	//
+	// Possible values:
+	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "ACTIVE_SCANNING" - T1595
+	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "INGRESS_TOOL_TRANSFER" - T1105
+	//   "NATIVE_API" - T1106
+	//   "SHARED_MODULES" - T1129
+	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
+	//   "UNIX_SHELL" - T1059.004
+	//   "RESOURCE_HIJACKING" - T1496
+	//   "PROXY" - T1090
+	//   "EXTERNAL_PROXY" - T1090.002
+	//   "MULTI_HOP_PROXY" - T1090.003
+	//   "DYNAMIC_RESOLUTION" - T1568
+	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "VALID_ACCOUNTS" - T1078
+	//   "LOCAL_ACCOUNTS" - T1078.003
+	//   "CLOUD_ACCOUNTS" - T1078.004
+	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
+	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
+	//   "CLOUD_GROUPS" - T1069.003
+	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
+	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
+	//   "ACCOUNT_MANIPULATION" - T1098
+	//   "SSH_AUTHORIZED_KEYS" - T1098.004
+	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "STEAL_WEB_SESSION_COOKIE" - T1539
+	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
+	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
+	//   "DATA_DESTRUCTION" - T1485
+	//   "DOMAIN_POLICY_MODIFICATION" - T1484
+	//   "IMPAIR_DEFENSES" - T1562
+	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
+
+	// Version: The MITRE ATT&CK version referenced by the above fields.
+	// E.g. "8".
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalTactics")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalTactics") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MitreAttack) MarshalJSON() ([]byte, error) {
+	type NoMethod MitreAttack
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OnboardingState: Resource capturing onboarding information for a
+// given CRM resource.
+type OnboardingState struct {
+	// Name: The resource name of the OnboardingState. Format:
+	// organizations/{organization}/onboardingState Format:
+	// folders/{folder}/onboardingState Format:
+	// projects/{project}/onboardingState
+	Name string `json:"name,omitempty"`
+
+	// OnboardingLevel: Describes the level a given organization, folder, or
+	// project is onboarded with SCC. If the resource wasn't onboarded,
+	// NOT_FOUND would have been thrown.
+	//
+	// Possible values:
+	//   "ONBOARDING_LEVEL_UNSPECIFIED" - Unused.
+	//   "ONBOARDING_LEVEL_PROJECT" - This resource is onboarded at the
+	// project level. Only possible for projects.
+	//   "ONBOARDING_LEVEL_ORGANIZATION" - This resource is onboarded at the
+	// organization level. Possible for organizations, folders, and
+	// projects.
+	OnboardingLevel string `json:"onboardingLevel,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OnboardingState) MarshalJSON() ([]byte, error) {
+	type NoMethod OnboardingState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Process: Represents an operating system process.
+type Process struct {
+	// Args: Process arguments as JSON encoded strings.
+	Args []string `json:"args,omitempty"`
+
+	// ArgumentsTruncated: True if arguments is incomplete.
+	ArgumentsTruncated bool `json:"argumentsTruncated,omitempty"`
+
+	// Binary: File information for the process executable.
+	Binary *File `json:"binary,omitempty"`
+
+	// EnvVariables: Process environment variables.
+	EnvVariables []*EnvironmentVariable `json:"envVariables,omitempty"`
+
+	// EnvVariablesTruncated: True if env_variables is incomplete.
+	EnvVariablesTruncated bool `json:"envVariablesTruncated,omitempty"`
+
+	// Libraries: File information for libraries loaded by the process.
+	Libraries []*File `json:"libraries,omitempty"`
+
+	// ParentPid: The parent process id.
+	ParentPid int64 `json:"parentPid,omitempty,string"`
+
+	// Pid: The process id.
+	Pid int64 `json:"pid,omitempty,string"`
+
+	// Script: When the process represents the invocation of a script,
+	// binary provides information about the interpreter while script
+	// provides information about the script file provided to the
+	// interpreter.
+	Script *File `json:"script,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Args") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Args") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Process) MarshalJSON() ([]byte, error) {
+	type NoMethod Process
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1542,8 +2524,14 @@ type SecurityCenterSettings struct {
 	LogSinkProject string `json:"logSinkProject,omitempty"`
 
 	// Name: The resource name of the SecurityCenterSettings. Format:
-	// organizations/{organization}/securityCenterSettings
+	// organizations/{organization}/securityCenterSettings Format:
+	// folders/{folder}/securityCenterSettings Format:
+	// projects/{project}/securityCenterSettings
 	Name string `json:"name,omitempty"`
+
+	// OnboardingTime: Timestamp of when the customer organization was
+	// onboarded to SCC.
+	OnboardingTime string `json:"onboardingTime,omitempty"`
 
 	// OrgServiceAccount: The organization level service account to be used
 	// for security center components.
@@ -1742,6 +2730,67 @@ func (s *Subscription) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VirtualMachineThreatDetectionSettings: Resource capturing the
+// settings for the Virtual Machine Threat Detection service.
+type VirtualMachineThreatDetectionSettings struct {
+	// Modules: The configurations including the state of enablement for the
+	// service's different modules. The absence of a module in the map
+	// implies its configuration is inherited from its parent's.
+	Modules map[string]Config `json:"modules,omitempty"`
+
+	// Name: The resource name of the VirtualMachineThreatDetectionSettings.
+	// Formats: *
+	// organizations/{organization}/virtualMachineThreatDetectionSettings *
+	// folders/{folder}/virtualMachineThreatDetectionSettings *
+	// projects/{project}/virtualMachineThreatDetectionSettings
+	Name string `json:"name,omitempty"`
+
+	// ServiceAccount: Output only. The service account used by Virtual
+	// Machine Threat Detection detectors.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// ServiceEnablementState: The state of enablement for the service at
+	// its level of the resource hierarchy. A DISABLED state will override
+	// all module enablement_states to DISABLED.
+	//
+	// Possible values:
+	//   "ENABLEMENT_STATE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "INHERITED" - State is inherited from the parent resource.
+	//   "ENABLED" - State is enabled.
+	//   "DISABLED" - State is disabled.
+	ServiceEnablementState string `json:"serviceEnablementState,omitempty"`
+
+	// UpdateTime: Output only. The time the settings were last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Modules") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Modules") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VirtualMachineThreatDetectionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod VirtualMachineThreatDetectionSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Vulnerability: Refers to common vulnerability fields e.g. cve, cvss,
 // cwe etc.
 type Vulnerability struct {
@@ -1892,7 +2941,7 @@ func (c *FoldersGetContainerThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *FoldersGetContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2043,7 +3092,7 @@ func (c *FoldersGetEventThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *FoldersGetEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2132,6 +3181,304 @@ func (c *FoldersGetEventThreatDetectionSettingsCall) Do(opts ...googleapi.CallOp
 
 }
 
+// method id "securitycenter.folders.getOnboardingState":
+
+type FoldersGetOnboardingStateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetOnboardingState: Retrieve the OnboardingState of a resource.
+//
+// - name: The name of the OnboardingState to retrieve. Formats: *
+//   organizations/{organization}/onboardingState *
+//   folders/{folder}/onboardingState *
+//   projects/{project}/onboardingState.
+func (r *FoldersService) GetOnboardingState(name string) *FoldersGetOnboardingStateCall {
+	c := &FoldersGetOnboardingStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersGetOnboardingStateCall) Fields(s ...googleapi.Field) *FoldersGetOnboardingStateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersGetOnboardingStateCall) IfNoneMatch(entityTag string) *FoldersGetOnboardingStateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersGetOnboardingStateCall) Context(ctx context.Context) *FoldersGetOnboardingStateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersGetOnboardingStateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersGetOnboardingStateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.getOnboardingState" call.
+// Exactly one of *OnboardingState or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *OnboardingState.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersGetOnboardingStateCall) Do(opts ...googleapi.CallOption) (*OnboardingState, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &OnboardingState{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve the OnboardingState of a resource.",
+	//   "flatPath": "v1beta2/folders/{foldersId}/onboardingState",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.getOnboardingState",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the OnboardingState to retrieve. Formats: * organizations/{organization}/onboardingState * folders/{folder}/onboardingState * projects/{project}/onboardingState",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/onboardingState$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "OnboardingState"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.getSecurityCenterSettings":
+
+type FoldersGetSecurityCenterSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSecurityCenterSettings: Get the SecurityCenterSettings resource.
+//
+// - name: The name of the SecurityCenterSettings to retrieve. Format:
+//   organizations/{organization}/securityCenterSettings Format:
+//   folders/{folder}/securityCenterSettings Format:
+//   projects/{project}/securityCenterSettings.
+func (r *FoldersService) GetSecurityCenterSettings(name string) *FoldersGetSecurityCenterSettingsCall {
+	c := &FoldersGetSecurityCenterSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersGetSecurityCenterSettingsCall) Fields(s ...googleapi.Field) *FoldersGetSecurityCenterSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersGetSecurityCenterSettingsCall) IfNoneMatch(entityTag string) *FoldersGetSecurityCenterSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersGetSecurityCenterSettingsCall) Context(ctx context.Context) *FoldersGetSecurityCenterSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersGetSecurityCenterSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersGetSecurityCenterSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.getSecurityCenterSettings" call.
+// Exactly one of *SecurityCenterSettings or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SecurityCenterSettings.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersGetSecurityCenterSettingsCall) Do(opts ...googleapi.CallOption) (*SecurityCenterSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SecurityCenterSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the SecurityCenterSettings resource.",
+	//   "flatPath": "v1beta2/folders/{foldersId}/securityCenterSettings",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.getSecurityCenterSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the SecurityCenterSettings to retrieve. Format: organizations/{organization}/securityCenterSettings Format: folders/{folder}/securityCenterSettings Format: projects/{project}/securityCenterSettings",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityCenterSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "SecurityCenterSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.folders.getSecurityHealthAnalyticsSettings":
 
 type FoldersGetSecurityHealthAnalyticsSettingsCall struct {
@@ -2194,7 +3541,7 @@ func (c *FoldersGetSecurityHealthAnalyticsSettingsCall) Header() http.Header {
 
 func (c *FoldersGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2283,6 +3630,158 @@ func (c *FoldersGetSecurityHealthAnalyticsSettingsCall) Do(opts ...googleapi.Cal
 
 }
 
+// method id "securitycenter.folders.getVirtualMachineThreatDetectionSettings":
+
+type FoldersGetVirtualMachineThreatDetectionSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetVirtualMachineThreatDetectionSettings: Get the
+// VirtualMachineThreatDetectionSettings resource.
+//
+// - name: The name of the VirtualMachineThreatDetectionSettings to
+//   retrieve. Formats: *
+//   organizations/{organization}/virtualMachineThreatDetectionSettings
+//   * folders/{folder}/virtualMachineThreatDetectionSettings *
+//   projects/{project}/virtualMachineThreatDetectionSettings.
+func (r *FoldersService) GetVirtualMachineThreatDetectionSettings(name string) *FoldersGetVirtualMachineThreatDetectionSettingsCall {
+	c := &FoldersGetVirtualMachineThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersGetVirtualMachineThreatDetectionSettingsCall) Fields(s ...googleapi.Field) *FoldersGetVirtualMachineThreatDetectionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersGetVirtualMachineThreatDetectionSettingsCall) IfNoneMatch(entityTag string) *FoldersGetVirtualMachineThreatDetectionSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersGetVirtualMachineThreatDetectionSettingsCall) Context(ctx context.Context) *FoldersGetVirtualMachineThreatDetectionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersGetVirtualMachineThreatDetectionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersGetVirtualMachineThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.getVirtualMachineThreatDetectionSettings" call.
+// Exactly one of *VirtualMachineThreatDetectionSettings or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *VirtualMachineThreatDetectionSettings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersGetVirtualMachineThreatDetectionSettingsCall) Do(opts ...googleapi.CallOption) (*VirtualMachineThreatDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &VirtualMachineThreatDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the VirtualMachineThreatDetectionSettings resource.",
+	//   "flatPath": "v1beta2/folders/{foldersId}/virtualMachineThreatDetectionSettings",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.getVirtualMachineThreatDetectionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the VirtualMachineThreatDetectionSettings to retrieve. Formats: * organizations/{organization}/virtualMachineThreatDetectionSettings * folders/{folder}/virtualMachineThreatDetectionSettings * projects/{project}/virtualMachineThreatDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/virtualMachineThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "VirtualMachineThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.folders.getWebSecurityScannerSettings":
 
 type FoldersGetWebSecurityScannerSettingsCall struct {
@@ -2344,7 +3843,7 @@ func (c *FoldersGetWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *FoldersGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2495,7 +3994,7 @@ func (c *FoldersUpdateContainerThreatDetectionSettingsCall) Header() http.Header
 
 func (c *FoldersUpdateContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2655,7 +4154,7 @@ func (c *FoldersUpdateEventThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *FoldersUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2815,7 +4314,7 @@ func (c *FoldersUpdateSecurityHealthAnalyticsSettingsCall) Header() http.Header 
 
 func (c *FoldersUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2915,6 +4414,167 @@ func (c *FoldersUpdateSecurityHealthAnalyticsSettingsCall) Do(opts ...googleapi.
 
 }
 
+// method id "securitycenter.folders.updateVirtualMachineThreatDetectionSettings":
+
+type FoldersUpdateVirtualMachineThreatDetectionSettingsCall struct {
+	s                                     *Service
+	name                                  string
+	virtualmachinethreatdetectionsettings *VirtualMachineThreatDetectionSettings
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// UpdateVirtualMachineThreatDetectionSettings: Update the
+// VirtualMachineThreatDetectionSettings resource.
+//
+// - name: The resource name of the
+//   VirtualMachineThreatDetectionSettings. Formats: *
+//   organizations/{organization}/virtualMachineThreatDetectionSettings
+//   * folders/{folder}/virtualMachineThreatDetectionSettings *
+//   projects/{project}/virtualMachineThreatDetectionSettings.
+func (r *FoldersService) UpdateVirtualMachineThreatDetectionSettings(name string, virtualmachinethreatdetectionsettings *VirtualMachineThreatDetectionSettings) *FoldersUpdateVirtualMachineThreatDetectionSettingsCall {
+	c := &FoldersUpdateVirtualMachineThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.virtualmachinethreatdetectionsettings = virtualmachinethreatdetectionsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *FoldersUpdateVirtualMachineThreatDetectionSettingsCall) UpdateMask(updateMask string) *FoldersUpdateVirtualMachineThreatDetectionSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersUpdateVirtualMachineThreatDetectionSettingsCall) Fields(s ...googleapi.Field) *FoldersUpdateVirtualMachineThreatDetectionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersUpdateVirtualMachineThreatDetectionSettingsCall) Context(ctx context.Context) *FoldersUpdateVirtualMachineThreatDetectionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersUpdateVirtualMachineThreatDetectionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersUpdateVirtualMachineThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.virtualmachinethreatdetectionsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.updateVirtualMachineThreatDetectionSettings" call.
+// Exactly one of *VirtualMachineThreatDetectionSettings or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *VirtualMachineThreatDetectionSettings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersUpdateVirtualMachineThreatDetectionSettingsCall) Do(opts ...googleapi.CallOption) (*VirtualMachineThreatDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &VirtualMachineThreatDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the VirtualMachineThreatDetectionSettings resource.",
+	//   "flatPath": "v1beta2/folders/{foldersId}/virtualMachineThreatDetectionSettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.folders.updateVirtualMachineThreatDetectionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the VirtualMachineThreatDetectionSettings. Formats: * organizations/{organization}/virtualMachineThreatDetectionSettings * folders/{folder}/virtualMachineThreatDetectionSettings * projects/{project}/virtualMachineThreatDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/virtualMachineThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "request": {
+	//     "$ref": "VirtualMachineThreatDetectionSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "VirtualMachineThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.folders.updateWebSecurityScannerSettings":
 
 type FoldersUpdateWebSecurityScannerSettingsCall struct {
@@ -2974,7 +4634,7 @@ func (c *FoldersUpdateWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *FoldersUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3138,7 +4798,7 @@ func (c *FoldersContainerThreatDetectionSettingsCalculateCall) Header() http.Hea
 
 func (c *FoldersContainerThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3289,7 +4949,7 @@ func (c *FoldersEventThreatDetectionSettingsCalculateCall) Header() http.Header 
 
 func (c *FoldersEventThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3440,7 +5100,7 @@ func (c *FoldersSecurityHealthAnalyticsSettingsCalculateCall) Header() http.Head
 
 func (c *FoldersSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3529,6 +5189,159 @@ func (c *FoldersSecurityHealthAnalyticsSettingsCalculateCall) Do(opts ...googlea
 
 }
 
+// method id "securitycenter.folders.virtualMachineThreatDetectionSettings.calculate":
+
+type FoldersVirtualMachineThreatDetectionSettingsCalculateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Calculate: Calculates the effective
+// VirtualMachineThreatDetectionSettings based on its level in the
+// resource hierarchy and its settings.
+//
+// - name: The name of the VirtualMachineThreatDetectionSettings to
+//   calculate. Formats: *
+//   organizations/{organization}/virtualMachineThreatDetectionSettings
+//   * folders/{folder}/virtualMachineThreatDetectionSettings *
+//   projects/{project}/virtualMachineThreatDetectionSettings.
+func (r *FoldersVirtualMachineThreatDetectionSettingsService) Calculate(name string) *FoldersVirtualMachineThreatDetectionSettingsCalculateCall {
+	c := &FoldersVirtualMachineThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersVirtualMachineThreatDetectionSettingsCalculateCall) Fields(s ...googleapi.Field) *FoldersVirtualMachineThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersVirtualMachineThreatDetectionSettingsCalculateCall) IfNoneMatch(entityTag string) *FoldersVirtualMachineThreatDetectionSettingsCalculateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersVirtualMachineThreatDetectionSettingsCalculateCall) Context(ctx context.Context) *FoldersVirtualMachineThreatDetectionSettingsCalculateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersVirtualMachineThreatDetectionSettingsCalculateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersVirtualMachineThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}:calculate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.virtualMachineThreatDetectionSettings.calculate" call.
+// Exactly one of *VirtualMachineThreatDetectionSettings or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *VirtualMachineThreatDetectionSettings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersVirtualMachineThreatDetectionSettingsCalculateCall) Do(opts ...googleapi.CallOption) (*VirtualMachineThreatDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &VirtualMachineThreatDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Calculates the effective VirtualMachineThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "flatPath": "v1beta2/folders/{foldersId}/virtualMachineThreatDetectionSettings:calculate",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.virtualMachineThreatDetectionSettings.calculate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the VirtualMachineThreatDetectionSettings to calculate. Formats: * organizations/{organization}/virtualMachineThreatDetectionSettings * folders/{folder}/virtualMachineThreatDetectionSettings * projects/{project}/virtualMachineThreatDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/virtualMachineThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}:calculate",
+	//   "response": {
+	//     "$ref": "VirtualMachineThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.folders.webSecurityScannerSettings.calculate":
 
 type FoldersWebSecurityScannerSettingsCalculateCall struct {
@@ -3590,7 +5403,7 @@ func (c *FoldersWebSecurityScannerSettingsCalculateCall) Header() http.Header {
 
 func (c *FoldersWebSecurityScannerSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3743,7 +5556,7 @@ func (c *OrganizationsGetContainerThreatDetectionSettingsCall) Header() http.Hea
 
 func (c *OrganizationsGetContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3894,7 +5707,7 @@ func (c *OrganizationsGetEventThreatDetectionSettingsCall) Header() http.Header 
 
 func (c *OrganizationsGetEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3983,6 +5796,155 @@ func (c *OrganizationsGetEventThreatDetectionSettingsCall) Do(opts ...googleapi.
 
 }
 
+// method id "securitycenter.organizations.getOnboardingState":
+
+type OrganizationsGetOnboardingStateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetOnboardingState: Retrieve the OnboardingState of a resource.
+//
+// - name: The name of the OnboardingState to retrieve. Formats: *
+//   organizations/{organization}/onboardingState *
+//   folders/{folder}/onboardingState *
+//   projects/{project}/onboardingState.
+func (r *OrganizationsService) GetOnboardingState(name string) *OrganizationsGetOnboardingStateCall {
+	c := &OrganizationsGetOnboardingStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsGetOnboardingStateCall) Fields(s ...googleapi.Field) *OrganizationsGetOnboardingStateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsGetOnboardingStateCall) IfNoneMatch(entityTag string) *OrganizationsGetOnboardingStateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsGetOnboardingStateCall) Context(ctx context.Context) *OrganizationsGetOnboardingStateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsGetOnboardingStateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetOnboardingStateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.getOnboardingState" call.
+// Exactly one of *OnboardingState or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *OnboardingState.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsGetOnboardingStateCall) Do(opts ...googleapi.CallOption) (*OnboardingState, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &OnboardingState{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve the OnboardingState of a resource.",
+	//   "flatPath": "v1beta2/organizations/{organizationsId}/onboardingState",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.getOnboardingState",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the OnboardingState to retrieve. Formats: * organizations/{organization}/onboardingState * folders/{folder}/onboardingState * projects/{project}/onboardingState",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/onboardingState$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "OnboardingState"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.organizations.getSecurityCenterSettings":
 
 type OrganizationsGetSecurityCenterSettingsCall struct {
@@ -3997,7 +5959,9 @@ type OrganizationsGetSecurityCenterSettingsCall struct {
 // GetSecurityCenterSettings: Get the SecurityCenterSettings resource.
 //
 // - name: The name of the SecurityCenterSettings to retrieve. Format:
-//   organizations/{organization}/securityCenterSettings.
+//   organizations/{organization}/securityCenterSettings Format:
+//   folders/{folder}/securityCenterSettings Format:
+//   projects/{project}/securityCenterSettings.
 func (r *OrganizationsService) GetSecurityCenterSettings(name string) *OrganizationsGetSecurityCenterSettingsCall {
 	c := &OrganizationsGetSecurityCenterSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4041,7 +6005,7 @@ func (c *OrganizationsGetSecurityCenterSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetSecurityCenterSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4112,7 +6076,7 @@ func (c *OrganizationsGetSecurityCenterSettingsCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the SecurityCenterSettings to retrieve. Format: organizations/{organization}/securityCenterSettings",
+	//       "description": "Required. The name of the SecurityCenterSettings to retrieve. Format: organizations/{organization}/securityCenterSettings Format: folders/{folder}/securityCenterSettings Format: projects/{project}/securityCenterSettings",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/securityCenterSettings$",
 	//       "required": true,
@@ -4192,7 +6156,7 @@ func (c *OrganizationsGetSecurityHealthAnalyticsSettingsCall) Header() http.Head
 
 func (c *OrganizationsGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4339,7 +6303,7 @@ func (c *OrganizationsGetSubscriptionCall) Header() http.Header {
 
 func (c *OrganizationsGetSubscriptionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4428,6 +6392,158 @@ func (c *OrganizationsGetSubscriptionCall) Do(opts ...googleapi.CallOption) (*Su
 
 }
 
+// method id "securitycenter.organizations.getVirtualMachineThreatDetectionSettings":
+
+type OrganizationsGetVirtualMachineThreatDetectionSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetVirtualMachineThreatDetectionSettings: Get the
+// VirtualMachineThreatDetectionSettings resource.
+//
+// - name: The name of the VirtualMachineThreatDetectionSettings to
+//   retrieve. Formats: *
+//   organizations/{organization}/virtualMachineThreatDetectionSettings
+//   * folders/{folder}/virtualMachineThreatDetectionSettings *
+//   projects/{project}/virtualMachineThreatDetectionSettings.
+func (r *OrganizationsService) GetVirtualMachineThreatDetectionSettings(name string) *OrganizationsGetVirtualMachineThreatDetectionSettingsCall {
+	c := &OrganizationsGetVirtualMachineThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsGetVirtualMachineThreatDetectionSettingsCall) Fields(s ...googleapi.Field) *OrganizationsGetVirtualMachineThreatDetectionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsGetVirtualMachineThreatDetectionSettingsCall) IfNoneMatch(entityTag string) *OrganizationsGetVirtualMachineThreatDetectionSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsGetVirtualMachineThreatDetectionSettingsCall) Context(ctx context.Context) *OrganizationsGetVirtualMachineThreatDetectionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsGetVirtualMachineThreatDetectionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetVirtualMachineThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.getVirtualMachineThreatDetectionSettings" call.
+// Exactly one of *VirtualMachineThreatDetectionSettings or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *VirtualMachineThreatDetectionSettings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsGetVirtualMachineThreatDetectionSettingsCall) Do(opts ...googleapi.CallOption) (*VirtualMachineThreatDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &VirtualMachineThreatDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the VirtualMachineThreatDetectionSettings resource.",
+	//   "flatPath": "v1beta2/organizations/{organizationsId}/virtualMachineThreatDetectionSettings",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.getVirtualMachineThreatDetectionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the VirtualMachineThreatDetectionSettings to retrieve. Formats: * organizations/{organization}/virtualMachineThreatDetectionSettings * folders/{folder}/virtualMachineThreatDetectionSettings * projects/{project}/virtualMachineThreatDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/virtualMachineThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "VirtualMachineThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.organizations.getWebSecurityScannerSettings":
 
 type OrganizationsGetWebSecurityScannerSettingsCall struct {
@@ -4489,7 +6605,7 @@ func (c *OrganizationsGetWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4640,7 +6756,7 @@ func (c *OrganizationsUpdateContainerThreatDetectionSettingsCall) Header() http.
 
 func (c *OrganizationsUpdateContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4800,7 +6916,7 @@ func (c *OrganizationsUpdateEventThreatDetectionSettingsCall) Header() http.Head
 
 func (c *OrganizationsUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4960,7 +7076,7 @@ func (c *OrganizationsUpdateSecurityHealthAnalyticsSettingsCall) Header() http.H
 
 func (c *OrganizationsUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5060,6 +7176,167 @@ func (c *OrganizationsUpdateSecurityHealthAnalyticsSettingsCall) Do(opts ...goog
 
 }
 
+// method id "securitycenter.organizations.updateVirtualMachineThreatDetectionSettings":
+
+type OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall struct {
+	s                                     *Service
+	name                                  string
+	virtualmachinethreatdetectionsettings *VirtualMachineThreatDetectionSettings
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// UpdateVirtualMachineThreatDetectionSettings: Update the
+// VirtualMachineThreatDetectionSettings resource.
+//
+// - name: The resource name of the
+//   VirtualMachineThreatDetectionSettings. Formats: *
+//   organizations/{organization}/virtualMachineThreatDetectionSettings
+//   * folders/{folder}/virtualMachineThreatDetectionSettings *
+//   projects/{project}/virtualMachineThreatDetectionSettings.
+func (r *OrganizationsService) UpdateVirtualMachineThreatDetectionSettings(name string, virtualmachinethreatdetectionsettings *VirtualMachineThreatDetectionSettings) *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall {
+	c := &OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.virtualmachinethreatdetectionsettings = virtualmachinethreatdetectionsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall) UpdateMask(updateMask string) *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall) Fields(s ...googleapi.Field) *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall) Context(ctx context.Context) *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.virtualmachinethreatdetectionsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.updateVirtualMachineThreatDetectionSettings" call.
+// Exactly one of *VirtualMachineThreatDetectionSettings or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *VirtualMachineThreatDetectionSettings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall) Do(opts ...googleapi.CallOption) (*VirtualMachineThreatDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &VirtualMachineThreatDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the VirtualMachineThreatDetectionSettings resource.",
+	//   "flatPath": "v1beta2/organizations/{organizationsId}/virtualMachineThreatDetectionSettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.organizations.updateVirtualMachineThreatDetectionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the VirtualMachineThreatDetectionSettings. Formats: * organizations/{organization}/virtualMachineThreatDetectionSettings * folders/{folder}/virtualMachineThreatDetectionSettings * projects/{project}/virtualMachineThreatDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/virtualMachineThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "request": {
+	//     "$ref": "VirtualMachineThreatDetectionSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "VirtualMachineThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.organizations.updateWebSecurityScannerSettings":
 
 type OrganizationsUpdateWebSecurityScannerSettingsCall struct {
@@ -5119,7 +7396,7 @@ func (c *OrganizationsUpdateWebSecurityScannerSettingsCall) Header() http.Header
 
 func (c *OrganizationsUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5283,7 +7560,7 @@ func (c *OrganizationsContainerThreatDetectionSettingsCalculateCall) Header() ht
 
 func (c *OrganizationsContainerThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5434,7 +7711,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCalculateCall) Header() http.H
 
 func (c *OrganizationsEventThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5585,7 +7862,7 @@ func (c *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall) Header() htt
 
 func (c *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5674,6 +7951,159 @@ func (c *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall) Do(opts ...g
 
 }
 
+// method id "securitycenter.organizations.virtualMachineThreatDetectionSettings.calculate":
+
+type OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Calculate: Calculates the effective
+// VirtualMachineThreatDetectionSettings based on its level in the
+// resource hierarchy and its settings.
+//
+// - name: The name of the VirtualMachineThreatDetectionSettings to
+//   calculate. Formats: *
+//   organizations/{organization}/virtualMachineThreatDetectionSettings
+//   * folders/{folder}/virtualMachineThreatDetectionSettings *
+//   projects/{project}/virtualMachineThreatDetectionSettings.
+func (r *OrganizationsVirtualMachineThreatDetectionSettingsService) Calculate(name string) *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall {
+	c := &OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall) Fields(s ...googleapi.Field) *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall) IfNoneMatch(entityTag string) *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall) Context(ctx context.Context) *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}:calculate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.virtualMachineThreatDetectionSettings.calculate" call.
+// Exactly one of *VirtualMachineThreatDetectionSettings or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *VirtualMachineThreatDetectionSettings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall) Do(opts ...googleapi.CallOption) (*VirtualMachineThreatDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &VirtualMachineThreatDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Calculates the effective VirtualMachineThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "flatPath": "v1beta2/organizations/{organizationsId}/virtualMachineThreatDetectionSettings:calculate",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.virtualMachineThreatDetectionSettings.calculate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the VirtualMachineThreatDetectionSettings to calculate. Formats: * organizations/{organization}/virtualMachineThreatDetectionSettings * folders/{folder}/virtualMachineThreatDetectionSettings * projects/{project}/virtualMachineThreatDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/virtualMachineThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}:calculate",
+	//   "response": {
+	//     "$ref": "VirtualMachineThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.organizations.webSecurityScannerSettings.calculate":
 
 type OrganizationsWebSecurityScannerSettingsCalculateCall struct {
@@ -5735,7 +8165,7 @@ func (c *OrganizationsWebSecurityScannerSettingsCalculateCall) Header() http.Hea
 
 func (c *OrganizationsWebSecurityScannerSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5888,7 +8318,7 @@ func (c *ProjectsGetContainerThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6039,7 +8469,7 @@ func (c *ProjectsGetEventThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6128,6 +8558,304 @@ func (c *ProjectsGetEventThreatDetectionSettingsCall) Do(opts ...googleapi.CallO
 
 }
 
+// method id "securitycenter.projects.getOnboardingState":
+
+type ProjectsGetOnboardingStateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetOnboardingState: Retrieve the OnboardingState of a resource.
+//
+// - name: The name of the OnboardingState to retrieve. Formats: *
+//   organizations/{organization}/onboardingState *
+//   folders/{folder}/onboardingState *
+//   projects/{project}/onboardingState.
+func (r *ProjectsService) GetOnboardingState(name string) *ProjectsGetOnboardingStateCall {
+	c := &ProjectsGetOnboardingStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetOnboardingStateCall) Fields(s ...googleapi.Field) *ProjectsGetOnboardingStateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetOnboardingStateCall) IfNoneMatch(entityTag string) *ProjectsGetOnboardingStateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetOnboardingStateCall) Context(ctx context.Context) *ProjectsGetOnboardingStateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetOnboardingStateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetOnboardingStateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.getOnboardingState" call.
+// Exactly one of *OnboardingState or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *OnboardingState.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetOnboardingStateCall) Do(opts ...googleapi.CallOption) (*OnboardingState, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &OnboardingState{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve the OnboardingState of a resource.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/onboardingState",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.getOnboardingState",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the OnboardingState to retrieve. Formats: * organizations/{organization}/onboardingState * folders/{folder}/onboardingState * projects/{project}/onboardingState",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/onboardingState$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "OnboardingState"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.getSecurityCenterSettings":
+
+type ProjectsGetSecurityCenterSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSecurityCenterSettings: Get the SecurityCenterSettings resource.
+//
+// - name: The name of the SecurityCenterSettings to retrieve. Format:
+//   organizations/{organization}/securityCenterSettings Format:
+//   folders/{folder}/securityCenterSettings Format:
+//   projects/{project}/securityCenterSettings.
+func (r *ProjectsService) GetSecurityCenterSettings(name string) *ProjectsGetSecurityCenterSettingsCall {
+	c := &ProjectsGetSecurityCenterSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetSecurityCenterSettingsCall) Fields(s ...googleapi.Field) *ProjectsGetSecurityCenterSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetSecurityCenterSettingsCall) IfNoneMatch(entityTag string) *ProjectsGetSecurityCenterSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetSecurityCenterSettingsCall) Context(ctx context.Context) *ProjectsGetSecurityCenterSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetSecurityCenterSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetSecurityCenterSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.getSecurityCenterSettings" call.
+// Exactly one of *SecurityCenterSettings or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SecurityCenterSettings.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetSecurityCenterSettingsCall) Do(opts ...googleapi.CallOption) (*SecurityCenterSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SecurityCenterSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the SecurityCenterSettings resource.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/securityCenterSettings",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.getSecurityCenterSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the SecurityCenterSettings to retrieve. Format: organizations/{organization}/securityCenterSettings Format: folders/{folder}/securityCenterSettings Format: projects/{project}/securityCenterSettings",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityCenterSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "SecurityCenterSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.projects.getSecurityHealthAnalyticsSettings":
 
 type ProjectsGetSecurityHealthAnalyticsSettingsCall struct {
@@ -6190,7 +8918,7 @@ func (c *ProjectsGetSecurityHealthAnalyticsSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6279,6 +9007,158 @@ func (c *ProjectsGetSecurityHealthAnalyticsSettingsCall) Do(opts ...googleapi.Ca
 
 }
 
+// method id "securitycenter.projects.getVirtualMachineThreatDetectionSettings":
+
+type ProjectsGetVirtualMachineThreatDetectionSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetVirtualMachineThreatDetectionSettings: Get the
+// VirtualMachineThreatDetectionSettings resource.
+//
+// - name: The name of the VirtualMachineThreatDetectionSettings to
+//   retrieve. Formats: *
+//   organizations/{organization}/virtualMachineThreatDetectionSettings
+//   * folders/{folder}/virtualMachineThreatDetectionSettings *
+//   projects/{project}/virtualMachineThreatDetectionSettings.
+func (r *ProjectsService) GetVirtualMachineThreatDetectionSettings(name string) *ProjectsGetVirtualMachineThreatDetectionSettingsCall {
+	c := &ProjectsGetVirtualMachineThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetVirtualMachineThreatDetectionSettingsCall) Fields(s ...googleapi.Field) *ProjectsGetVirtualMachineThreatDetectionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetVirtualMachineThreatDetectionSettingsCall) IfNoneMatch(entityTag string) *ProjectsGetVirtualMachineThreatDetectionSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetVirtualMachineThreatDetectionSettingsCall) Context(ctx context.Context) *ProjectsGetVirtualMachineThreatDetectionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetVirtualMachineThreatDetectionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetVirtualMachineThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.getVirtualMachineThreatDetectionSettings" call.
+// Exactly one of *VirtualMachineThreatDetectionSettings or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *VirtualMachineThreatDetectionSettings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetVirtualMachineThreatDetectionSettingsCall) Do(opts ...googleapi.CallOption) (*VirtualMachineThreatDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &VirtualMachineThreatDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the VirtualMachineThreatDetectionSettings resource.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/virtualMachineThreatDetectionSettings",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.getVirtualMachineThreatDetectionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the VirtualMachineThreatDetectionSettings to retrieve. Formats: * organizations/{organization}/virtualMachineThreatDetectionSettings * folders/{folder}/virtualMachineThreatDetectionSettings * projects/{project}/virtualMachineThreatDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/virtualMachineThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "VirtualMachineThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.projects.getWebSecurityScannerSettings":
 
 type ProjectsGetWebSecurityScannerSettingsCall struct {
@@ -6340,7 +9220,7 @@ func (c *ProjectsGetWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6491,7 +9371,7 @@ func (c *ProjectsUpdateContainerThreatDetectionSettingsCall) Header() http.Heade
 
 func (c *ProjectsUpdateContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6651,7 +9531,7 @@ func (c *ProjectsUpdateEventThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *ProjectsUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6811,7 +9691,7 @@ func (c *ProjectsUpdateSecurityHealthAnalyticsSettingsCall) Header() http.Header
 
 func (c *ProjectsUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6911,6 +9791,167 @@ func (c *ProjectsUpdateSecurityHealthAnalyticsSettingsCall) Do(opts ...googleapi
 
 }
 
+// method id "securitycenter.projects.updateVirtualMachineThreatDetectionSettings":
+
+type ProjectsUpdateVirtualMachineThreatDetectionSettingsCall struct {
+	s                                     *Service
+	name                                  string
+	virtualmachinethreatdetectionsettings *VirtualMachineThreatDetectionSettings
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// UpdateVirtualMachineThreatDetectionSettings: Update the
+// VirtualMachineThreatDetectionSettings resource.
+//
+// - name: The resource name of the
+//   VirtualMachineThreatDetectionSettings. Formats: *
+//   organizations/{organization}/virtualMachineThreatDetectionSettings
+//   * folders/{folder}/virtualMachineThreatDetectionSettings *
+//   projects/{project}/virtualMachineThreatDetectionSettings.
+func (r *ProjectsService) UpdateVirtualMachineThreatDetectionSettings(name string, virtualmachinethreatdetectionsettings *VirtualMachineThreatDetectionSettings) *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall {
+	c := &ProjectsUpdateVirtualMachineThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.virtualmachinethreatdetectionsettings = virtualmachinethreatdetectionsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall) UpdateMask(updateMask string) *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall) Fields(s ...googleapi.Field) *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall) Context(ctx context.Context) *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.virtualmachinethreatdetectionsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.updateVirtualMachineThreatDetectionSettings" call.
+// Exactly one of *VirtualMachineThreatDetectionSettings or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *VirtualMachineThreatDetectionSettings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall) Do(opts ...googleapi.CallOption) (*VirtualMachineThreatDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &VirtualMachineThreatDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the VirtualMachineThreatDetectionSettings resource.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/virtualMachineThreatDetectionSettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.projects.updateVirtualMachineThreatDetectionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the VirtualMachineThreatDetectionSettings. Formats: * organizations/{organization}/virtualMachineThreatDetectionSettings * folders/{folder}/virtualMachineThreatDetectionSettings * projects/{project}/virtualMachineThreatDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/virtualMachineThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "request": {
+	//     "$ref": "VirtualMachineThreatDetectionSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "VirtualMachineThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.projects.updateWebSecurityScannerSettings":
 
 type ProjectsUpdateWebSecurityScannerSettingsCall struct {
@@ -6970,7 +10011,7 @@ func (c *ProjectsUpdateWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *ProjectsUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7134,7 +10175,7 @@ func (c *ProjectsContainerThreatDetectionSettingsCalculateCall) Header() http.He
 
 func (c *ProjectsContainerThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7285,7 +10326,7 @@ func (c *ProjectsEventThreatDetectionSettingsCalculateCall) Header() http.Header
 
 func (c *ProjectsEventThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7438,7 +10479,7 @@ func (c *ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall) Heade
 
 func (c *ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7589,7 +10630,7 @@ func (c *ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall) He
 
 func (c *ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7753,7 +10794,7 @@ func (c *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall)
 
 func (c *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7904,7 +10945,7 @@ func (c *ProjectsSecurityHealthAnalyticsSettingsCalculateCall) Header() http.Hea
 
 func (c *ProjectsSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7993,6 +11034,159 @@ func (c *ProjectsSecurityHealthAnalyticsSettingsCalculateCall) Do(opts ...google
 
 }
 
+// method id "securitycenter.projects.virtualMachineThreatDetectionSettings.calculate":
+
+type ProjectsVirtualMachineThreatDetectionSettingsCalculateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Calculate: Calculates the effective
+// VirtualMachineThreatDetectionSettings based on its level in the
+// resource hierarchy and its settings.
+//
+// - name: The name of the VirtualMachineThreatDetectionSettings to
+//   calculate. Formats: *
+//   organizations/{organization}/virtualMachineThreatDetectionSettings
+//   * folders/{folder}/virtualMachineThreatDetectionSettings *
+//   projects/{project}/virtualMachineThreatDetectionSettings.
+func (r *ProjectsVirtualMachineThreatDetectionSettingsService) Calculate(name string) *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall {
+	c := &ProjectsVirtualMachineThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall) Fields(s ...googleapi.Field) *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall) IfNoneMatch(entityTag string) *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall) Context(ctx context.Context) *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}:calculate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.virtualMachineThreatDetectionSettings.calculate" call.
+// Exactly one of *VirtualMachineThreatDetectionSettings or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *VirtualMachineThreatDetectionSettings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall) Do(opts ...googleapi.CallOption) (*VirtualMachineThreatDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &VirtualMachineThreatDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Calculates the effective VirtualMachineThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/virtualMachineThreatDetectionSettings:calculate",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.virtualMachineThreatDetectionSettings.calculate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the VirtualMachineThreatDetectionSettings to calculate. Formats: * organizations/{organization}/virtualMachineThreatDetectionSettings * folders/{folder}/virtualMachineThreatDetectionSettings * projects/{project}/virtualMachineThreatDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/virtualMachineThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}:calculate",
+	//   "response": {
+	//     "$ref": "VirtualMachineThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.projects.webSecurityScannerSettings.calculate":
 
 type ProjectsWebSecurityScannerSettingsCalculateCall struct {
@@ -8054,7 +11248,7 @@ func (c *ProjectsWebSecurityScannerSettingsCalculateCall) Header() http.Header {
 
 func (c *ProjectsWebSecurityScannerSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

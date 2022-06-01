@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -85,7 +86,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/adwords",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -304,6 +305,51 @@ func (s *GoogleAdsHomeservicesLocalservicesV1AggregatorInfo) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsHomeservicesLocalservicesV1BookingLead: Container for
+// booking lead specific information.
+type GoogleAdsHomeservicesLocalservicesV1BookingLead struct {
+	// BookingAppointmentTimestamp: Timestamp of when service is provided by
+	// advertiser.
+	BookingAppointmentTimestamp string `json:"bookingAppointmentTimestamp,omitempty"`
+
+	// ConsumerEmail: Consumer email associated with the booking lead.
+	ConsumerEmail string `json:"consumerEmail,omitempty"`
+
+	// ConsumerPhoneNumber: Consumer phone number associated with the
+	// booking lead.
+	ConsumerPhoneNumber string `json:"consumerPhoneNumber,omitempty"`
+
+	// CustomerName: Name of the customer who created the lead.
+	CustomerName string `json:"customerName,omitempty"`
+
+	// JobType: The job type of the specified lead.
+	JobType string `json:"jobType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BookingAppointmentTimestamp") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "BookingAppointmentTimestamp") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsHomeservicesLocalservicesV1BookingLead) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsHomeservicesLocalservicesV1BookingLead
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport: A Detailed
 // Lead Report of a lead identified by their lead id and contains
 // consumer, account, monetization, and lead data.
@@ -313,6 +359,9 @@ type GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport struct {
 
 	// AggregatorInfo: Aggregator specific information related to the lead.
 	AggregatorInfo *GoogleAdsHomeservicesLocalservicesV1AggregatorInfo `json:"aggregatorInfo,omitempty"`
+
+	// BookingLead: More information associated to only booking leads.
+	BookingLead *GoogleAdsHomeservicesLocalservicesV1BookingLead `json:"bookingLead,omitempty"`
 
 	// BusinessName: Business name associated to the account.
 	BusinessName string `json:"businessName,omitempty"`
@@ -353,6 +402,7 @@ type GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport struct {
 	//   "LEAD_TYPE_UNSPECIFIED" - Not specified.
 	//   "MESSAGE" - Message lead.
 	//   "PHONE_CALL" - Phone call lead.
+	//   "BOOKING" - Booking lead.
 	LeadType string `json:"leadType,omitempty"`
 
 	// MessageLead: More information associated to only message leads.
@@ -734,7 +784,7 @@ func (c *AccountReportsSearchCall) Header() http.Header {
 
 func (c *AccountReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1022,7 +1072,7 @@ func (c *DetailedLeadReportsSearchCall) Header() http.Header {
 
 func (c *DetailedLeadReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -15,7 +15,7 @@ The Go versions are pretty natural, but please forgive any small non-idiomatic t
 
 Pick an API and a version of that API to install.
 You can find the complete list by looking at the
-[directories here](https://github.com/google/google-api-go-client/tree/master/).
+[directories here](https://github.com/google/google-api-go-client/tree/main/).
 
 For example, let's install the
 [urlshortener's version 1 API](https://godoc.org/google.golang.org/api/urlshortener/v1):
@@ -125,8 +125,8 @@ For instance, the urlshortener API has just the "Url" sub-service:
 ```
 
 For a more complete example, see
-[urlshortener.go](https://github.com/google/google-api-go-client/tree/master/examples/urlshortener.go)
-in the [examples directory](https://github.com/google/google-api-go-client/tree/master/examples/).
+[urlshortener.go](https://github.com/google/google-api-go-client/tree/main/examples/urlshortener.go)
+in the [examples directory](https://github.com/google/google-api-go-client/tree/main/examples/).
 (the examples use some functions in `main.go` in the same directory)
 
 ## Error Handling

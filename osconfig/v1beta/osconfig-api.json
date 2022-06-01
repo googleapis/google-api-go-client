@@ -384,6 +384,96 @@
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
+            },
+            "patch": {
+              "description": "Update an OS Config patch deployment.",
+              "flatPath": "v1beta/projects/{projectsId}/patchDeployments/{patchDeploymentsId}",
+              "httpMethod": "PATCH",
+              "id": "osconfig.projects.patchDeployments.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Unique name for the patch deployment resource in a project. The patch deployment name is in the form: `projects/{project_id}/patchDeployments/{patch_deployment_id}`. This field is ignored when you create a new patch deployment.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/patchDeployments/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Optional. Field mask that controls which fields of the patch deployment should be updated.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1beta/{+name}",
+              "request": {
+                "$ref": "PatchDeployment"
+              },
+              "response": {
+                "$ref": "PatchDeployment"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "pause": {
+              "description": "Change state of patch deployment to \"PAUSED\". Patch deployment in paused state doesn't generate patch jobs.",
+              "flatPath": "v1beta/projects/{projectsId}/patchDeployments/{patchDeploymentsId}:pause",
+              "httpMethod": "POST",
+              "id": "osconfig.projects.patchDeployments.pause",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The resource name of the patch deployment in the form `projects/*/patchDeployments/*`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/patchDeployments/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta/{+name}:pause",
+              "request": {
+                "$ref": "PausePatchDeploymentRequest"
+              },
+              "response": {
+                "$ref": "PatchDeployment"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "resume": {
+              "description": "Change state of patch deployment back to \"ACTIVE\". Patch deployment in active state continues to generate patch jobs.",
+              "flatPath": "v1beta/projects/{projectsId}/patchDeployments/{patchDeploymentsId}:resume",
+              "httpMethod": "POST",
+              "id": "osconfig.projects.patchDeployments.resume",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The resource name of the patch deployment in the form `projects/*/patchDeployments/*`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/patchDeployments/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta/{+name}:resume",
+              "request": {
+                "$ref": "ResumePatchDeploymentRequest"
+              },
+              "response": {
+                "$ref": "PatchDeployment"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             }
           }
         },
@@ -599,7 +689,7 @@
       }
     }
   },
-  "revision": "20210806",
+  "revision": "20220319",
   "rootUrl": "https://osconfig.googleapis.com/",
   "schemas": {
     "AptRepository": {
@@ -832,7 +922,7 @@
       "type": "object"
     },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
       "type": "object"
@@ -872,13 +962,15 @@
           "description": "The script interpreter to use to run the script. If no interpreter is specified the script will be executed directly, which will likely only succeed for scripts with [shebang lines] (https://en.wikipedia.org/wiki/Shebang_\\(Unix\\)).",
           "enum": [
             "INTERPRETER_UNSPECIFIED",
+            "NONE",
             "SHELL",
             "POWERSHELL"
           ],
           "enumDescriptions": [
-            "Invalid for a Windows ExecStepConfig. For a Linux ExecStepConfig, the interpreter will be parsed from the shebang line of the script if unspecified.",
-            "Indicates that the script is run with `/bin/sh` on Linux and `cmd` on Windows.",
-            "Indicates that the file is run with PowerShell flags `-NonInteractive`, `-NoProfile`, and `-ExecutionPolicy Bypass`."
+            "If the interpreter is not specified, the value defaults to `NONE`.",
+            "Indicates that the file is run as follows on each operating system: + For Linux VMs, the file is ran as an executable and the interpreter might be parsed from the [shebang line](https://wikipedia.org/wiki/Shebang_(Unix)) of the file. + For Windows VM, this value is not supported.",
+            "Indicates that the file is run with `/bin/sh` on Linux and `cmd` on Windows.",
+            "Indicates that the file is run with PowerShell."
           ],
           "type": "string"
         },
@@ -981,6 +1073,61 @@
       "description": "Googet patching is performed by running `googet update`.",
       "id": "GooSettings",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata": {
+      "description": "OS policy assignment operation metadata provided by OS policy assignment API methods that return long running operations.",
+      "id": "GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata",
+      "properties": {
+        "apiMethod": {
+          "description": "The OS policy assignment API method.",
+          "enum": [
+            "API_METHOD_UNSPECIFIED",
+            "CREATE",
+            "UPDATE",
+            "DELETE"
+          ],
+          "enumDescriptions": [
+            "Invalid value",
+            "Create OS policy assignment API method",
+            "Update OS policy assignment API method",
+            "Delete OS policy assignment API method"
+          ],
+          "type": "string"
+        },
+        "osPolicyAssignment": {
+          "description": "Reference to the `OSPolicyAssignment` API resource. Format: `projects/{project_number}/locations/{location}/osPolicyAssignments/{os_policy_assignment_id@revision_id}`",
+          "type": "string"
+        },
+        "rolloutStartTime": {
+          "description": "Rollout start time",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "rolloutState": {
+          "description": "State of the rollout",
+          "enum": [
+            "ROLLOUT_STATE_UNSPECIFIED",
+            "IN_PROGRESS",
+            "CANCELLING",
+            "CANCELLED",
+            "SUCCEEDED"
+          ],
+          "enumDescriptions": [
+            "Invalid value",
+            "The rollout is in progress.",
+            "The rollout is being cancelled.",
+            "The rollout is cancelled.",
+            "The rollout has completed successfully."
+          ],
+          "type": "string"
+        },
+        "rolloutUpdateTime": {
+          "description": "Rollout update time",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "GuestPolicy": {
@@ -1295,6 +1442,10 @@
           "$ref": "GooSettings",
           "description": "Goo update settings. Use this setting to override the default `goo` patch rules."
         },
+        "migInstancesAllowed": {
+          "description": "Allows the patch job to run on Managed instance groups (MIGs).",
+          "type": "boolean"
+        },
         "postStep": {
           "$ref": "ExecStep",
           "description": "The `ExecStep` to run after the patch update."
@@ -1382,6 +1533,21 @@
         "rollout": {
           "$ref": "PatchRollout",
           "description": "Optional. Rollout strategy of the patch job."
+        },
+        "state": {
+          "description": "Output only. Current state of the patch deployment.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "ACTIVE",
+            "PAUSED"
+          ],
+          "enumDescriptions": [
+            "The default value. This value is used if the state is omitted.",
+            "Active value means that patch deployment generates Patch Jobs.",
+            "Paused value means that patch deployment does not generate Patch jobs. Requires user action to move in and out from this state."
+          ],
+          "readOnly": true,
+          "type": "string"
         },
         "updateTime": {
           "description": "Output only. Time the patch deployment was last updated. Timestamp is in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.",
@@ -1708,6 +1874,12 @@
       },
       "type": "object"
     },
+    "PausePatchDeploymentRequest": {
+      "description": "A request message for pausing a patch deployment.",
+      "id": "PausePatchDeploymentRequest",
+      "properties": {},
+      "type": "object"
+    },
     "RecurringSchedule": {
       "description": "Sets the time for recurring patch deployments.",
       "id": "RecurringSchedule",
@@ -1722,12 +1894,14 @@
           "enum": [
             "FREQUENCY_UNSPECIFIED",
             "WEEKLY",
-            "MONTHLY"
+            "MONTHLY",
+            "DAILY"
           ],
           "enumDescriptions": [
             "Invalid. A frequency must be specified.",
-            "Indicates that the frequency should be expressed in terms of weeks.",
-            "Indicates that the frequency should be expressed in terms of months."
+            "Indicates that the frequency of recurrence should be expressed in terms of weeks.",
+            "Indicates that the frequency of recurrence should be expressed in terms of months.",
+            "Indicates that the frequency of recurrence should be expressed in terms of days."
           ],
           "type": "string"
         },
@@ -1765,6 +1939,12 @@
           "description": "Required. Schedule with weekly executions."
         }
       },
+      "type": "object"
+    },
+    "ResumePatchDeploymentRequest": {
+      "description": "A request message for resuming a patch deployment.",
+      "id": "ResumePatchDeploymentRequest",
+      "properties": {},
       "type": "object"
     },
     "SoftwareRecipe": {
@@ -2152,6 +2332,11 @@
             "Sunday"
           ],
           "type": "string"
+        },
+        "dayOffset": {
+          "description": "Optional. Represents the number of days before or after the given week day of month that the patch deployment is scheduled for. For example if `week_ordinal` and `day_of_week` values point to the second day of the month and this `day_offset` value is set to `3`, the patch deployment takes place three days after the second Tuesday of the month. If this value is negative, for example -5, the patches are deployed five days before before the second Tuesday of the month. Allowed values are in range [-30, 30].",
+          "format": "int32",
+          "type": "integer"
         },
         "weekOrdinal": {
           "description": "Required. Week number in a month. 1-4 indicates the 1st to 4th week of the month. -1 indicates the last week of the month.",

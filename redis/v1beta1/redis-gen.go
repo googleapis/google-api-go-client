@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -52,6 +52,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -88,7 +89,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -187,8 +188,7 @@ type ProjectsLocationsOperationsService struct {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -471,12 +471,14 @@ func (s *InputConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Instance: A Google Cloud Redis instance. next id = 37
+// Instance: A Memorystore for Redis instance.
 type Instance struct {
-	// AlternativeLocationId: Optional. Only applicable to STANDARD_HA tier
-	// which protects the instance against zonal failures by provisioning it
-	// across two zones. If provided, it must be a different zone from the
-	// one provided in location_id.
+	// AlternativeLocationId: Optional. If specified, at least one node will
+	// be provisioned in this zone in addition to the zone specified in
+	// location_id. Only applicable to standard tier. If provided, it must
+	// be a different zone from the one provided in [location_id].
+	// Additional nodes beyond the first 2 will be placed in zones selected
+	// by the service.
 	AlternativeLocationId string `json:"alternativeLocationId,omitempty"`
 
 	// AuthEnabled: Optional. Indicates whether OSS Redis AUTH is enabled
@@ -490,6 +492,10 @@ type Instance struct {
 	// will be used.
 	AuthorizedNetwork string `json:"authorizedNetwork,omitempty"`
 
+	// AvailableMaintenanceVersions: Optional. The available maintenance
+	// versions that an instance could update to.
+	AvailableMaintenanceVersions []string `json:"availableMaintenanceVersions,omitempty"`
+
 	// ConnectMode: Optional. The network connect mode of the Redis
 	// instance. If not provided, the connect mode defaults to
 	// DIRECT_PEERING.
@@ -499,7 +505,7 @@ type Instance struct {
 	//   "DIRECT_PEERING" - Connect via direct peering to the Memorystore
 	// for Redis hosted service.
 	//   "PRIVATE_SERVICE_ACCESS" - Connect your Memorystore for Redis
-	// instance using Private Services Access. Private services access
+	// instance using Private Service Access. Private services access
 	// provides an IP address range for multiple Google Cloud services,
 	// including Memorystore.
 	ConnectMode string `json:"connectMode,omitempty"`
@@ -508,11 +514,14 @@ type Instance struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// CurrentLocationId: Output only. The current zone where the Redis
-	// endpoint is placed. For Basic Tier instances, this will always be the
-	// same as the location_id provided by the user at creation time. For
-	// Standard Tier instances, this can be either location_id or
-	// alternative_location_id and can change after a failover event.
+	// primary node is located. In basic tier, this will always be the same
+	// as [location_id]. In standard tier, this can be the zone of any node
+	// in the instance.
 	CurrentLocationId string `json:"currentLocationId,omitempty"`
+
+	// CustomerManagedKey: Optional. The KMS key reference that the customer
+	// provides when trying to create the instance.
+	CustomerManagedKey string `json:"customerManagedKey,omitempty"`
 
 	// DisplayName: An arbitrary and optional user-provided name for the
 	// instance.
@@ -527,10 +536,10 @@ type Instance struct {
 
 	// LocationId: Optional. The zone where the instance will be
 	// provisioned. If not provided, the service will choose a zone from the
-	// specified region for the instance. For standard tier, instances will
-	// be created across two zones for protection against zonal failures. If
-	// [alternative_location_id] is also provided, it must be different from
-	// [location_id].
+	// specified region for the instance. For standard tier, additional
+	// nodes will be added across multiple zones for protection against
+	// zonal failures. If specified, at least one node will be provisioned
+	// in this zone.
 	LocationId string `json:"locationId,omitempty"`
 
 	// MaintenancePolicy: Optional. The maintenance policy for the instance.
@@ -540,6 +549,10 @@ type Instance struct {
 	// MaintenanceSchedule: Output only. Date and time of upcoming
 	// maintenance events which have been scheduled.
 	MaintenanceSchedule *MaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
+
+	// MaintenanceVersion: Optional. The self service update maintenance
+	// version. The version is date based such as "20210712_00_00".
+	MaintenanceVersion string `json:"maintenanceVersion,omitempty"`
 
 	// MemorySizeGb: Required. Redis memory size in GiB.
 	MemorySizeGb int64 `json:"memorySizeGb,omitempty"`
@@ -554,6 +567,12 @@ type Instance struct {
 	// alternative_location_id fields for more details.
 	Name string `json:"name,omitempty"`
 
+	// Nodes: Output only. Info per node.
+	Nodes []*NodeInfo `json:"nodes,omitempty"`
+
+	// PersistenceConfig: Optional. Persistence configuration parameters
+	PersistenceConfig *PersistenceConfig `json:"persistenceConfig,omitempty"`
+
 	// PersistenceIamIdentity: Output only. Cloud IAM identity used by
 	// import / export operations to transfer data to/from Cloud Storage.
 	// Format is "serviceAccount:". The value may change over time for a
@@ -563,6 +582,32 @@ type Instance struct {
 
 	// Port: Output only. The port number of the exposed Redis endpoint.
 	Port int64 `json:"port,omitempty"`
+
+	// ReadEndpoint: Output only. Hostname or IP address of the exposed
+	// readonly Redis endpoint. Standard tier only. Targets all healthy
+	// replica nodes in instance. Replication is asynchronous and replica
+	// nodes will exhibit some lag behind the primary. Write requests must
+	// target 'host'.
+	ReadEndpoint string `json:"readEndpoint,omitempty"`
+
+	// ReadEndpointPort: Output only. The port number of the exposed
+	// readonly redis endpoint. Standard tier only. Write requests should
+	// target 'port'.
+	ReadEndpointPort int64 `json:"readEndpointPort,omitempty"`
+
+	// ReadReplicasMode: Optional. Read replicas mode for the instance.
+	// Defaults to READ_REPLICAS_DISABLED.
+	//
+	// Possible values:
+	//   "READ_REPLICAS_MODE_UNSPECIFIED" - If not set, Memorystore Redis
+	// backend will default to READ_REPLICAS_DISABLED.
+	//   "READ_REPLICAS_DISABLED" - If disabled, read endpoint will not be
+	// provided and the instance cannot scale up or down the number of
+	// replicas.
+	//   "READ_REPLICAS_ENABLED" - If enabled, read endpoint will be
+	// provided and the instance can scale up and down the number of
+	// replicas. Not valid for basic tier.
+	ReadReplicasMode string `json:"readReplicasMode,omitempty"`
 
 	// RedisConfigs: Optional. Redis configuration parameters, according to
 	// http://redis.io/topics/config. Currently, the only supported
@@ -579,14 +624,30 @@ type Instance struct {
 	// Redis 5.0 compatibility * `REDIS_6_X` for Redis 6.x compatibility
 	RedisVersion string `json:"redisVersion,omitempty"`
 
+	// ReplicaCount: Optional. The number of replica nodes. The valid range
+	// for the Standard Tier with read replicas enabled is [1-5] and
+	// defaults to 2. If read replicas are not enabled for a Standard Tier
+	// instance, the only valid value is 1 and the default is 1. The valid
+	// value for basic tier is 0 and the default is also 0.
+	ReplicaCount int64 `json:"replicaCount,omitempty"`
+
 	// ReservedIpRange: Optional. For DIRECT_PEERING mode, the CIDR range of
 	// internal addresses that are reserved for this instance. Range must be
 	// unique and non-overlapping with existing subnets in an authorized
 	// network. For PRIVATE_SERVICE_ACCESS mode, the name of one allocated
 	// IP address ranges associated with this private service access
 	// connection. If not provided, the service will choose an unused /29
-	// block, for example, 10.0.0.0/29 or 192.168.0.0/29.
+	// block, for example, 10.0.0.0/29 or 192.168.0.0/29. For
+	// READ_REPLICAS_ENABLED the default block size is /28.
 	ReservedIpRange string `json:"reservedIpRange,omitempty"`
+
+	// SecondaryIpRange: Optional. Additional IP range for node placement.
+	// Required when enabling read replicas on an existing instance. For
+	// DIRECT_PEERING mode value must be a CIDR range of size /28, or
+	// "auto". For PRIVATE_SERVICE_ACCESS mode value must be the name of an
+	// allocated address range associated with the private service access
+	// connection, or "auto".
+	SecondaryIpRange string `json:"secondaryIpRange,omitempty"`
 
 	// ServerCaCerts: Output only. List of server CA certificates for the
 	// instance.
@@ -614,6 +675,15 @@ type Instance struct {
 	// StatusMessage: Output only. Additional information about the current
 	// status of this instance, if available.
 	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// SuspensionReasons: Optional. reasons that causes instance in
+	// "SUSPENDED" state.
+	//
+	// Possible values:
+	//   "SUSPENSION_REASON_UNSPECIFIED" - Not set.
+	//   "CUSTOMER_MANAGED_KEY_ISSUE" - Something wrong with the CMEK key
+	// provided by customer.
+	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
 
 	// Tier: Required. The service tier of the instance.
 	//
@@ -918,8 +988,8 @@ type MaintenanceSchedule struct {
 	// maintenance for this instance.
 	EndTime string `json:"endTime,omitempty"`
 
-	// ScheduleDeadlineTime: Output only. The time deadline any schedule
-	// start time cannot go beyond, including reschedule.
+	// ScheduleDeadlineTime: Output only. The deadline that the maintenance
+	// schedule start time can not go beyond, including reschedule.
 	ScheduleDeadlineTime string `json:"scheduleDeadlineTime,omitempty"`
 
 	// StartTime: Output only. The start time of any upcoming scheduled
@@ -945,6 +1015,37 @@ type MaintenanceSchedule struct {
 
 func (s *MaintenanceSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceSchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NodeInfo: Node specific properties.
+type NodeInfo struct {
+	// Id: Output only. Node identifying string. e.g. 'node-0', 'node-1'
+	Id string `json:"id,omitempty"`
+
+	// Zone: Output only. Location of the node.
+	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1041,6 +1142,67 @@ type OutputConfig struct {
 
 func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OutputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PersistenceConfig: Configuration of the persistence functionality.
+type PersistenceConfig struct {
+	// PersistenceMode: Optional. Controls whether Persistence features are
+	// enabled. If not provided, the existing value will be used.
+	//
+	// Possible values:
+	//   "PERSISTENCE_MODE_UNSPECIFIED" - Not set.
+	//   "DISABLED" - Persistence is disabled for the instance, and any
+	// existing snapshots are deleted.
+	//   "RDB" - RDB based Persistence is enabled.
+	PersistenceMode string `json:"persistenceMode,omitempty"`
+
+	// RdbNextSnapshotTime: Output only. The next time that a snapshot
+	// attempt is scheduled to occur.
+	RdbNextSnapshotTime string `json:"rdbNextSnapshotTime,omitempty"`
+
+	// RdbSnapshotPeriod: Optional. Period between RDB snapshots. Snapshots
+	// will be attempted every period starting from the provided snapshot
+	// start time. For example, a start time of 01/01/2033 06:45 and
+	// SIX_HOURS snapshot period will do nothing until 01/01/2033, and then
+	// trigger snapshots every day at 06:45, 12:45, 18:45, and 00:45 the
+	// next day, and so on. If not provided, TWENTY_FOUR_HOURS will be used
+	// as default.
+	//
+	// Possible values:
+	//   "SNAPSHOT_PERIOD_UNSPECIFIED" - Not set.
+	//   "ONE_HOUR" - Snapshot every 1 hour.
+	//   "SIX_HOURS" - Snapshot every 6 hours.
+	//   "TWELVE_HOURS" - Snapshot every 12 hours.
+	//   "TWENTY_FOUR_HOURS" - Snapshot every 24 horus.
+	RdbSnapshotPeriod string `json:"rdbSnapshotPeriod,omitempty"`
+
+	// RdbSnapshotStartTime: Optional. Date and time that the first snapshot
+	// was/will be attempted, and to which future snapshots will be aligned.
+	// If not provided, the current time will be used.
+	RdbSnapshotStartTime string `json:"rdbSnapshotStartTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PersistenceMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PersistenceMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PersistenceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PersistenceConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1354,7 +1516,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1467,8 +1629,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1526,7 +1688,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1597,7 +1759,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1668,7 +1830,7 @@ type ProjectsLocationsInstancesCreateCall struct {
 // project's default network (https://cloud.google.com/vpc/docs/vpc).
 // The creation is executed asynchronously and callers may check the
 // returned operation to track its progress. Once the operation is
-// completed the Redis instance will be fully functional. Completed
+// completed the Redis instance will be fully functional. The completed
 // longrunning.Operation will contain the new instance object in the
 // response field. The returned operation is automatically deleted after
 // a few hours, so there is no need to call DeleteOperation.
@@ -1721,7 +1883,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1785,7 +1947,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Redis instance based on the specified tier and memory size. By default, the instance is accessible from the project's [default network](https://cloud.google.com/vpc/docs/vpc). The creation is executed asynchronously and callers may check the returned operation to track its progress. Once the operation is completed the Redis instance will be fully functional. Completed longrunning.Operation will contain the new instance object in the response field. The returned operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.",
+	//   "description": "Creates a Redis instance based on the specified tier and memory size. By default, the instance is accessible from the project's [default network](https://cloud.google.com/vpc/docs/vpc). The creation is executed asynchronously and callers may check the returned operation to track its progress. Once the operation is completed the Redis instance will be fully functional. The completed longrunning.Operation will contain the new instance object in the response field. The returned operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances",
 	//   "httpMethod": "POST",
 	//   "id": "redis.projects.locations.instances.create",
@@ -1869,7 +2031,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2008,7 +2170,7 @@ func (c *ProjectsLocationsInstancesExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2154,7 +2316,7 @@ func (c *ProjectsLocationsInstancesFailoverCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2307,7 +2469,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2457,7 +2619,7 @@ func (c *ProjectsLocationsInstancesGetAuthStringCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetAuthStringCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2601,7 +2763,7 @@ func (c *ProjectsLocationsInstancesImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2778,7 +2940,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2935,7 +3097,7 @@ func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instanc
 // of fields to update. At least one path must be supplied in this
 // field. The elements of the repeated paths field may only include
 // these fields from Instance: * `displayName` * `labels` *
-// `memorySizeGb` * `redisConfig`
+// `memorySizeGb` * `redisConfig` * `replica_count`
 func (c *ProjectsLocationsInstancesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInstancesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2968,7 +3130,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3048,7 +3210,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include these fields from Instance: * `displayName` * `labels` * `memorySizeGb` * `redisConfig`",
+	//       "description": "Required. Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include these fields from Instance: * `displayName` * `labels` * `memorySizeGb` * `redisConfig` * `replica_count`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3119,7 +3281,7 @@ func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Header() http.Head
 
 func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3264,7 +3426,7 @@ func (c *ProjectsLocationsInstancesUpgradeCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesUpgradeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3413,7 +3575,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3548,7 +3710,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3693,7 +3855,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3869,7 +4031,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

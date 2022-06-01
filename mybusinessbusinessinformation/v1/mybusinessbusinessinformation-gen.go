@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -744,11 +745,12 @@ type ClearLocationAssociationRequest struct {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -790,8 +792,7 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1160,8 +1161,8 @@ type Location struct {
 	// a location, this field is ignored if the provided address geocodes
 	// successfully. This field is only returned on get requests if the
 	// user-provided `latlng` value was accepted during create, or the
-	// `latlng` value was updated through the Google My Business website.
-	// This field can only be updated by approved clients.
+	// `latlng` value was updated through the Google Business Profile
+	// website. This field can only be updated by approved clients.
 	Latlng *LatLng `json:"latlng,omitempty"`
 
 	// Metadata: Output only. Additional non-user-editable information.
@@ -1183,15 +1184,17 @@ type Location struct {
 	// can use to get in touch with the business.
 	PhoneNumbers *PhoneNumbers `json:"phoneNumbers,omitempty"`
 
-	// Profile: Required. Describes your business in your own voice and
+	// Profile: Optional. Describes your business in your own voice and
 	// shares with users the unique story of your business and offerings.
+	// This field is required for all categories except lodging categories
+	// (e.g. hotels, motels, inns).
 	Profile *Profile `json:"profile,omitempty"`
 
 	// RegularHours: Optional. Operating hours for the business.
 	RegularHours *BusinessHours `json:"regularHours,omitempty"`
 
-	// RelationshipData: Output only. All locations and chain related to
-	// this one.
+	// RelationshipData: Optional. All locations and chain related to this
+	// one.
 	RelationshipData *RelationshipData `json:"relationshipData,omitempty"`
 
 	// ServiceArea: Optional. Service area businesses provide their service
@@ -1277,6 +1280,10 @@ type Metadata struct {
 	// using the API.
 	CanDelete bool `json:"canDelete,omitempty"`
 
+	// CanHaveBusinessCalls: Output only. Indicates if the listing is
+	// eligible for business calls.
+	CanHaveBusinessCalls bool `json:"canHaveBusinessCalls,omitempty"`
+
 	// CanHaveFoodMenus: Output only. Indicates if the listing is eligible
 	// for food menu.
 	CanHaveFoodMenus bool `json:"canHaveFoodMenus,omitempty"`
@@ -1311,6 +1318,12 @@ type Metadata struct {
 	// HasPendingEdits: Output only. Indicates whether any of this
 	// Location's properties are in the edit pending state.
 	HasPendingEdits bool `json:"hasPendingEdits,omitempty"`
+
+	// HasVoiceOfMerchant: Output only. Indicates if the listing has Voice
+	// of Merchant. If this boolean is false, you should call the
+	// locations.getVoiceOfMerchantState API to get details as to why they
+	// do not have Voice of Merchant.
+	HasVoiceOfMerchant bool `json:"hasVoiceOfMerchant,omitempty"`
 
 	// MapsUri: Output only. A link to the location on Maps.
 	MapsUri string `json:"mapsUri,omitempty"`
@@ -1690,8 +1703,8 @@ type PostalAddress struct {
 
 	// RegionCode: Required. CLDR region code of the country/region of the
 	// address. This is never inferred and it is up to the user to ensure
-	// the value is correct. See http://cldr.unicode.org/ and
-	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// the value is correct. See https://cldr.unicode.org/ and
+	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
 	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 
@@ -2460,7 +2473,7 @@ func (c *AccountsLocationsCreateCall) Header() http.Header {
 
 func (c *AccountsLocationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2669,7 +2682,7 @@ func (c *AccountsLocationsListCall) Header() http.Header {
 
 func (c *AccountsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2912,7 +2925,7 @@ func (c *AttributesListCall) Header() http.Header {
 
 func (c *AttributesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3136,7 +3149,7 @@ func (c *CategoriesBatchGetCall) Header() http.Header {
 
 func (c *CategoriesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3349,7 +3362,7 @@ func (c *CategoriesListCall) Header() http.Header {
 
 func (c *CategoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3544,7 +3557,7 @@ func (c *ChainsGetCall) Header() http.Header {
 
 func (c *ChainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3699,7 +3712,7 @@ func (c *ChainsSearchCall) Header() http.Header {
 
 func (c *ChainsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3829,7 +3842,7 @@ func (c *GoogleLocationsSearchCall) Header() http.Header {
 
 func (c *GoogleLocationsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3958,7 +3971,7 @@ func (c *LocationsAssociateCall) Header() http.Header {
 
 func (c *LocationsAssociateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4099,7 +4112,7 @@ func (c *LocationsClearLocationAssociationCall) Header() http.Header {
 
 func (c *LocationsClearLocationAssociationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4203,7 +4216,8 @@ type LocationsDeleteCall struct {
 // Delete: Deletes a location. If this location cannot be deleted using
 // the API and it is marked so in the
 // `google.mybusiness.businessinformation.v1.LocationState`, use the
-// Google My Business (https://business.google.com/manage/) website.
+// Google Business Profile (https://business.google.com/manage/)
+// website.
 //
 // - name: The name of the location to delete.
 func (r *LocationsService) Delete(name string) *LocationsDeleteCall {
@@ -4239,7 +4253,7 @@ func (c *LocationsDeleteCall) Header() http.Header {
 
 func (c *LocationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4298,7 +4312,7 @@ func (c *LocationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a location. If this location cannot be deleted using the API and it is marked so in the `google.mybusiness.businessinformation.v1.LocationState`, use the [Google My Business](https://business.google.com/manage/) website.",
+	//   "description": "Deletes a location. If this location cannot be deleted using the API and it is marked so in the `google.mybusiness.businessinformation.v1.LocationState`, use the [Google Business Profile](https://business.google.com/manage/) website.",
 	//   "flatPath": "v1/locations/{locationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "mybusinessbusinessinformation.locations.delete",
@@ -4386,7 +4400,7 @@ func (c *LocationsGetCall) Header() http.Header {
 
 func (c *LocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4536,7 +4550,7 @@ func (c *LocationsGetAttributesCall) Header() http.Header {
 
 func (c *LocationsGetAttributesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4687,7 +4701,7 @@ func (c *LocationsGetGoogleUpdatedCall) Header() http.Header {
 
 func (c *LocationsGetGoogleUpdatedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4844,7 +4858,7 @@ func (c *LocationsPatchCall) Header() http.Header {
 
 func (c *LocationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5011,7 +5025,7 @@ func (c *LocationsUpdateAttributesCall) Header() http.Header {
 
 func (c *LocationsUpdateAttributesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5167,7 +5181,7 @@ func (c *LocationsAttributesGetGoogleUpdatedCall) Header() http.Header {
 
 func (c *LocationsAttributesGetGoogleUpdatedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

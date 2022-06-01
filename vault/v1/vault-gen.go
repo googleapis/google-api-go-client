@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -92,7 +93,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/ediscovery",
 		"https://www.googleapis.com/auth/ediscovery.readonly",
 	)
@@ -760,6 +761,23 @@ func (s *DriveExportOptions) MarshalJSON() ([]byte, error) {
 
 // DriveOptions: Additional options for Drive search
 type DriveOptions struct {
+	// ClientSideEncryptedOption: Set whether the results include only
+	// content encrypted with Google Workspace Client-side encryption
+	// (https://support.google.com/a?p=cse_ov) content, only unencrypted
+	// content, or both. Defaults to both. Currently supported for Drive.
+	//
+	// Possible values:
+	//   "CLIENT_SIDE_ENCRYPTED_OPTION_UNSPECIFIED" - Encryption status
+	// unspecified. Results include both client-side encrypted and
+	// non-encrypted content.
+	//   "CLIENT_SIDE_ENCRYPTED_OPTION_ANY" - Include both client-side
+	// encrypted and unencrypted content in results.
+	//   "CLIENT_SIDE_ENCRYPTED_OPTION_ENCRYPTED" - Include client-side
+	// encrypted content only.
+	//   "CLIENT_SIDE_ENCRYPTED_OPTION_UNENCRYPTED" - Include unencrypted
+	// content only.
+	ClientSideEncryptedOption string `json:"clientSideEncryptedOption,omitempty"`
+
 	// IncludeSharedDrives: Set to **true** to include shared drives.
 	IncludeSharedDrives bool `json:"includeSharedDrives,omitempty"`
 
@@ -771,21 +789,22 @@ type DriveOptions struct {
 	// specified date. Enter the date in UTC.
 	VersionDate string `json:"versionDate,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "IncludeSharedDrives")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ClientSideEncryptedOption") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IncludeSharedDrives") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "ClientSideEncryptedOption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -799,8 +818,7 @@ func (s *DriveOptions) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -830,7 +848,8 @@ type Export struct {
 	// MatterId: Output only. The matter ID.
 	MatterId string `json:"matterId,omitempty"`
 
-	// Name: The export name.
+	// Name: The export name. Don't use special characters (~!$'(),;@:/?) in
+	// the name, they can prevent you from downloading exports.
 	Name string `json:"name,omitempty"`
 
 	// Query: The query parameters used to create the export.
@@ -1018,8 +1037,10 @@ type GroupsExportOptions struct {
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - Export as MBOX.
-	//   "PST" - Export as PST.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -1051,8 +1072,10 @@ type HangoutsChatExportOptions struct {
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - Export as MBOX.
-	//   "PST" - Export as PST.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -1419,7 +1442,7 @@ type Hold struct {
 	//   "MAIL" - For search, Gmail and classic Hangouts. For holds, Gmail
 	// only.
 	//   "GROUPS" - Groups.
-	//   "HANGOUTS_CHAT" - For search, Google Chat only. For holds, Google
+	//   "HANGOUTS_CHAT" - For export, Google Chat only. For holds, Google
 	// Chat and classic Hangouts.
 	//   "VOICE" - Google Voice.
 	Corpus string `json:"corpus,omitempty"`
@@ -1698,9 +1721,10 @@ type MailCountResult struct {
 	// and have more than zero messages.
 	MatchingAccountsCount int64 `json:"matchingAccountsCount,omitempty,string"`
 
-	// NonQueryableAccounts: When **DataScope** is **HELD_DATA**, the number
-	// of accounts in the request that are not queried because they are not
-	// on hold. For other data scopes, this field is not set.
+	// NonQueryableAccounts: When **DataScope** is **HELD_DATA** and when
+	// account emails are passed in explicitly, the list of accounts in the
+	// request that are not queried because they are not on hold in the
+	// matter. For other data scopes, this field is not set.
 	NonQueryableAccounts []string `json:"nonQueryableAccounts,omitempty"`
 
 	// QueriedAccountsCount: Total number of accounts involved in this count
@@ -1737,13 +1761,18 @@ type MailExportOptions struct {
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - Export as MBOX.
-	//   "PST" - Export as PST.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ShowConfidentialModeContent: To export confidential mode content, set
 	// to **true**.
 	ShowConfidentialModeContent bool `json:"showConfidentialModeContent,omitempty"`
+
+	// UseNewExport: To use the new export system, set to **true**.
+	UseNewExport bool `json:"useNewExport,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with
@@ -2003,7 +2032,7 @@ type Query struct {
 	//   "MAIL" - For search, Gmail and classic Hangouts. For holds, Gmail
 	// only.
 	//   "GROUPS" - Groups.
-	//   "HANGOUTS_CHAT" - For search, Google Chat only. For holds, Google
+	//   "HANGOUTS_CHAT" - For export, Google Chat only. For holds, Google
 	// Chat and classic Hangouts.
 	//   "VOICE" - Google Voice.
 	Corpus string `json:"corpus,omitempty"`
@@ -2057,9 +2086,13 @@ type Query struct {
 	//   "ROOM" - Search messages in the Chat spaces specified in
 	// [HangoutsChatInfo](https://developers.google.com/vault/reference/rest/
 	// v1/Query#hangoutschatinfo).
+	//   "SITES_URL" - Search for sites by the published site URLs specified
+	// in
+	// [SitesUrlInfo](https://developers.google.com/vault/reference/rest/v1/Q
+	// uery#sitesurlinfo).
 	//   "SHARED_DRIVE" - Search the files in the shared drives specified in
-	// [SharedDriveInfo](https://developers.devsite.corp.google.com/vault/ref
-	// erence/rest/v1/Query#shareddriveinfo).
+	// [SharedDriveInfo](https://developers.google.com/vault/reference/rest/v
+	// 1/Query#shareddriveinfo).
 	Method string `json:"method,omitempty"`
 
 	// OrgUnitInfo: Required when **SearchMethod** is **ORG_UNIT**.
@@ -2085,13 +2118,20 @@ type Query struct {
 	//   "ROOM" - Search messages in the Chat spaces specified in
 	// [HangoutsChatInfo](https://developers.google.com/vault/reference/rest/
 	// v1/Query#hangoutschatinfo).
+	//   "SITES_URL" - Search for sites by the published site URLs specified
+	// in
+	// [SitesUrlInfo](https://developers.google.com/vault/reference/rest/v1/Q
+	// uery#sitesurlinfo).
 	//   "SHARED_DRIVE" - Search the files in the shared drives specified in
-	// [SharedDriveInfo](https://developers.devsite.corp.google.com/vault/ref
-	// erence/rest/v1/Query#shareddriveinfo).
+	// [SharedDriveInfo](https://developers.google.com/vault/reference/rest/v
+	// 1/Query#shareddriveinfo).
 	SearchMethod string `json:"searchMethod,omitempty"`
 
 	// SharedDriveInfo: Required when **SearchMethod** is **SHARED_DRIVE**.
 	SharedDriveInfo *SharedDriveInfo `json:"sharedDriveInfo,omitempty"`
+
+	// SitesUrlInfo: Required when **SearchMethod** is **SITES_URL**.
+	SitesUrlInfo *SitesUrlInfo `json:"sitesUrlInfo,omitempty"`
 
 	// StartTime: The start time for the search query. Specify in GMT. The
 	// value is rounded to 12 AM on the specified date.
@@ -2346,6 +2386,34 @@ func (s *SharedDriveInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SitesUrlInfo: The published site URLs of new Google Sites to search
+type SitesUrlInfo struct {
+	// Urls: A list of published site URLs.
+	Urls []string `json:"urls,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Urls") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Urls") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SitesUrlInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SitesUrlInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -2460,8 +2528,10 @@ type VoiceExportOptions struct {
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - Export as MBOX.
-	//   "PST" - Export as PST.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -2569,7 +2639,7 @@ func (c *MattersAddPermissionsCall) Header() http.Header {
 
 func (c *MattersAddPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2711,7 +2781,7 @@ func (c *MattersCloseCall) Header() http.Header {
 
 func (c *MattersCloseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2852,7 +2922,7 @@ func (c *MattersCountCall) Header() http.Header {
 
 func (c *MattersCountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2991,7 +3061,7 @@ func (c *MattersCreateCall) Header() http.Header {
 
 func (c *MattersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3119,7 +3189,7 @@ func (c *MattersDeleteCall) Header() http.Header {
 
 func (c *MattersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3278,7 +3348,7 @@ func (c *MattersGetCall) Header() http.Header {
 
 func (c *MattersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3479,7 +3549,7 @@ func (c *MattersListCall) Header() http.Header {
 
 func (c *MattersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3669,7 +3739,7 @@ func (c *MattersRemovePermissionsCall) Header() http.Header {
 
 func (c *MattersRemovePermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3811,7 +3881,7 @@ func (c *MattersReopenCall) Header() http.Header {
 
 func (c *MattersReopenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3953,7 +4023,7 @@ func (c *MattersUndeleteCall) Header() http.Header {
 
 func (c *MattersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4096,7 +4166,7 @@ func (c *MattersUpdateCall) Header() http.Header {
 
 func (c *MattersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4237,7 +4307,7 @@ func (c *MattersExportsCreateCall) Header() http.Header {
 
 func (c *MattersExportsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4379,7 +4449,7 @@ func (c *MattersExportsDeleteCall) Header() http.Header {
 
 func (c *MattersExportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4532,7 +4602,7 @@ func (c *MattersExportsGetCall) Header() http.Header {
 
 func (c *MattersExportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4700,7 +4770,7 @@ func (c *MattersExportsListCall) Header() http.Header {
 
 func (c *MattersExportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4874,7 +4944,7 @@ func (c *MattersHoldsAddHeldAccountsCall) Header() http.Header {
 
 func (c *MattersHoldsAddHeldAccountsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5023,7 +5093,7 @@ func (c *MattersHoldsCreateCall) Header() http.Header {
 
 func (c *MattersHoldsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5167,7 +5237,7 @@ func (c *MattersHoldsDeleteCall) Header() http.Header {
 
 func (c *MattersHoldsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5335,7 +5405,7 @@ func (c *MattersHoldsGetCall) Header() http.Header {
 
 func (c *MattersHoldsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5535,7 +5605,7 @@ func (c *MattersHoldsListCall) Header() http.Header {
 
 func (c *MattersHoldsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5723,7 +5793,7 @@ func (c *MattersHoldsRemoveHeldAccountsCall) Header() http.Header {
 
 func (c *MattersHoldsRemoveHeldAccountsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5879,7 +5949,7 @@ func (c *MattersHoldsUpdateCall) Header() http.Header {
 
 func (c *MattersHoldsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6034,7 +6104,7 @@ func (c *MattersHoldsAccountsCreateCall) Header() http.Header {
 
 func (c *MattersHoldsAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6187,7 +6257,7 @@ func (c *MattersHoldsAccountsDeleteCall) Header() http.Header {
 
 func (c *MattersHoldsAccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6352,7 +6422,7 @@ func (c *MattersHoldsAccountsListCall) Header() http.Header {
 
 func (c *MattersHoldsAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6497,7 +6567,7 @@ func (c *MattersSavedQueriesCreateCall) Header() http.Header {
 
 func (c *MattersSavedQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6639,7 +6709,7 @@ func (c *MattersSavedQueriesDeleteCall) Header() http.Header {
 
 func (c *MattersSavedQueriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6792,7 +6862,7 @@ func (c *MattersSavedQueriesGetCall) Header() http.Header {
 
 func (c *MattersSavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6961,7 +7031,7 @@ func (c *MattersSavedQueriesListCall) Header() http.Header {
 
 func (c *MattersSavedQueriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7139,7 +7209,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7279,7 +7349,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7421,7 +7491,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7598,7 +7668,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

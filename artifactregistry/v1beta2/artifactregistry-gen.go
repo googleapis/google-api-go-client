@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -94,7 +95,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
 	)
@@ -184,11 +185,9 @@ type ProjectsLocationsOperationsService struct {
 func NewProjectsLocationsRepositoriesService(s *Service) *ProjectsLocationsRepositoriesService {
 	rs := &ProjectsLocationsRepositoriesService{s: s}
 	rs.AptArtifacts = NewProjectsLocationsRepositoriesAptArtifactsService(s)
-	rs.Aptartifacts = NewProjectsLocationsRepositoriesAptartifactsService(s)
 	rs.Files = NewProjectsLocationsRepositoriesFilesService(s)
 	rs.Packages = NewProjectsLocationsRepositoriesPackagesService(s)
 	rs.YumArtifacts = NewProjectsLocationsRepositoriesYumArtifactsService(s)
-	rs.Yumartifacts = NewProjectsLocationsRepositoriesYumartifactsService(s)
 	return rs
 }
 
@@ -197,15 +196,11 @@ type ProjectsLocationsRepositoriesService struct {
 
 	AptArtifacts *ProjectsLocationsRepositoriesAptArtifactsService
 
-	Aptartifacts *ProjectsLocationsRepositoriesAptartifactsService
-
 	Files *ProjectsLocationsRepositoriesFilesService
 
 	Packages *ProjectsLocationsRepositoriesPackagesService
 
 	YumArtifacts *ProjectsLocationsRepositoriesYumArtifactsService
-
-	Yumartifacts *ProjectsLocationsRepositoriesYumartifactsService
 }
 
 func NewProjectsLocationsRepositoriesAptArtifactsService(s *Service) *ProjectsLocationsRepositoriesAptArtifactsService {
@@ -214,15 +209,6 @@ func NewProjectsLocationsRepositoriesAptArtifactsService(s *Service) *ProjectsLo
 }
 
 type ProjectsLocationsRepositoriesAptArtifactsService struct {
-	s *Service
-}
-
-func NewProjectsLocationsRepositoriesAptartifactsService(s *Service) *ProjectsLocationsRepositoriesAptartifactsService {
-	rs := &ProjectsLocationsRepositoriesAptartifactsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsRepositoriesAptartifactsService struct {
 	s *Service
 }
 
@@ -274,15 +260,6 @@ func NewProjectsLocationsRepositoriesYumArtifactsService(s *Service) *ProjectsLo
 }
 
 type ProjectsLocationsRepositoriesYumArtifactsService struct {
-	s *Service
-}
-
-func NewProjectsLocationsRepositoriesYumartifactsService(s *Service) *ProjectsLocationsRepositoriesYumartifactsService {
-	rs := &ProjectsLocationsRepositoriesYumartifactsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsRepositoriesYumartifactsService struct {
 	s *Service
 }
 
@@ -339,20 +316,20 @@ func (s *AptArtifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -385,8 +362,8 @@ type Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -416,8 +393,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -542,6 +518,7 @@ type Hash struct {
 	// Possible values:
 	//   "HASH_TYPE_UNSPECIFIED" - Unspecified.
 	//   "SHA256" - SHA256 hash.
+	//   "MD5" - MD5 hash.
 	Type string `json:"type,omitempty"`
 
 	// Value: The hash value.
@@ -635,6 +612,11 @@ func (s *ImportAptArtifactsGcsSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportAptArtifactsMetadata: The operation metadata for importing
+// artifacts.
+type ImportAptArtifactsMetadata struct {
+}
+
 // ImportAptArtifactsRequest: The request to import new apt artifacts.
 type ImportAptArtifactsRequest struct {
 	// GcsSource: Google Cloud Storage location where input content is
@@ -664,10 +646,10 @@ func (s *ImportAptArtifactsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ImportAptArtifactsResponse: The response message from importing
+// ImportAptArtifactsResponse: The response message from importing APT
 // artifacts.
 type ImportAptArtifactsResponse struct {
-	// AptArtifacts: The Apt artifacts updated.
+	// AptArtifacts: The Apt artifacts imported.
 	AptArtifacts []*AptArtifact `json:"aptArtifacts,omitempty"`
 
 	// Errors: Detailed error info for packages that were not imported.
@@ -761,6 +743,11 @@ func (s *ImportYumArtifactsGcsSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportYumArtifactsMetadata: The operation metadata for importing
+// artifacts.
+type ImportYumArtifactsMetadata struct {
+}
+
 // ImportYumArtifactsRequest: The request to import new yum artifacts.
 type ImportYumArtifactsRequest struct {
 	// GcsSource: Google Cloud Storage location where input content is
@@ -790,13 +777,13 @@ func (s *ImportYumArtifactsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ImportYumArtifactsResponse: The response message from importing
+// ImportYumArtifactsResponse: The response message from importing YUM
 // artifacts.
 type ImportYumArtifactsResponse struct {
 	// Errors: Detailed error info for packages that were not imported.
 	Errors []*ImportYumArtifactsErrorInfo `json:"errors,omitempty"`
 
-	// YumArtifacts: The yum artifacts updated.
+	// YumArtifacts: The yum artifacts imported.
 	YumArtifacts []*YumArtifact `json:"yumArtifacts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Errors") to
@@ -1089,6 +1076,51 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MavenRepositoryConfig: MavenRepositoryConfig is maven related
+// repository details. Provides additional configuration details for
+// repositories of the maven format type.
+type MavenRepositoryConfig struct {
+	// AllowSnapshotOverwrites: The repository with this flag will allow
+	// publishing the same snapshot versions.
+	AllowSnapshotOverwrites bool `json:"allowSnapshotOverwrites,omitempty"`
+
+	// VersionPolicy: Version policy defines the versions that the registry
+	// will accept.
+	//
+	// Possible values:
+	//   "VERSION_POLICY_UNSPECIFIED" - VERSION_POLICY_UNSPECIFIED - the
+	// version policy is not defined. When the version policy is not
+	// defined, no validation is performed for the versions.
+	//   "RELEASE" - RELEASE - repository will accept only Release versions.
+	//   "SNAPSHOT" - SNAPSHOT - repository will accept only Snapshot
+	// versions.
+	VersionPolicy string `json:"versionPolicy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowSnapshotOverwrites") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowSnapshotOverwrites")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MavenRepositoryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MavenRepositoryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -1151,6 +1183,11 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OperationMetadata: Metadata type for longrunning-operations,
+// currently empty.
+type OperationMetadata struct {
+}
+
 // Package: Packages are named collections of versions.
 type Package struct {
 	// CreateTime: The time when the package was created.
@@ -1197,17 +1234,17 @@ func (s *Package) MarshalJSON() ([]byte, error) {
 
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members` to
-// a single `role`. Members can be user accounts, service accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of permissions; each `role` can be an IAM predefined role or a
-// user-created custom role. For some types of Google Cloud resources, a
-// `binding` can also specify a `condition`, which is a logical
-// expression that allows access to a resource only if the expression
-// evaluates to `true`. A condition can add constraints based on
-// attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -1230,9 +1267,15 @@ func (s *Package) MarshalJSON() ([]byte, error) {
 // For a description of IAM and its features, see the IAM documentation
 // (https://cloud.google.com/iam/docs/).
 type Policy struct {
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -1295,6 +1338,55 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProjectSettings: The Artifact Registry settings that apply to a
+// Project.
+type ProjectSettings struct {
+	// LegacyRedirectionState: The redirection state of the legacy
+	// repositories in this project.
+	//
+	// Possible values:
+	//   "REDIRECTION_STATE_UNSPECIFIED" - No redirection status has been
+	// set.
+	//   "REDIRECTION_FROM_GCR_IO_DISABLED" - Redirection is disabled.
+	//   "REDIRECTION_FROM_GCR_IO_ENABLED" - Redirection is enabled.
+	//   "REDIRECTION_FROM_GCR_IO_FINALIZED" - Redirection is enabled, and
+	// has been finalized so cannot be reverted.
+	LegacyRedirectionState string `json:"legacyRedirectionState,omitempty"`
+
+	// Name: The name of the project's settings. Always of the form:
+	// projects/{project-id}/projectSettings In update request: never set In
+	// response: always set
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LegacyRedirectionState") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LegacyRedirectionState")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProjectSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ProjectSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Repository: A Repository for storing artifacts with a specific
 // format.
 type Repository struct {
@@ -1311,15 +1403,14 @@ type Repository struct {
 	//   "DOCKER" - Docker package format.
 	//   "MAVEN" - Maven package format.
 	//   "NPM" - NPM package format.
-	//   "PYPI" - PyPI package format. Deprecated, use PYTHON instead.
 	//   "APT" - APT package format.
 	//   "YUM" - YUM package format.
 	//   "PYTHON" - Python package format.
 	Format string `json:"format,omitempty"`
 
 	// KmsKeyName: The Cloud KMS resource name of the customer managed
-	// encryption key that’s used to encrypt the contents of the
-	// Repository. Has the form:
+	// encryption key that's used to encrypt the contents of the Repository.
+	// Has the form:
 	// `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-
 	// key`. This value may not be changed after the Repository has been
 	// created.
@@ -1332,9 +1423,18 @@ type Repository struct {
 	// dashes.
 	Labels map[string]string `json:"labels,omitempty"`
 
+	// MavenConfig: Maven repository config contains repository level
+	// configuration for the repositories of maven type.
+	MavenConfig *MavenRepositoryConfig `json:"mavenConfig,omitempty"`
+
 	// Name: The name of the repository, for example:
 	// "projects/p1/locations/us-central1/repositories/repo1".
 	Name string `json:"name,omitempty"`
+
+	// SizeBytes: Output only. The size, in bytes, of all artifact storage
+	// in this repository. Repositories that are generally available or in
+	// public preview use this to calculate storage costs.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 
 	// UpdateTime: The time when the repository was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1370,7 +1470,7 @@ func (s *Repository) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -1488,7 +1588,7 @@ func (s *Tag) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -1582,6 +1682,11 @@ func (s *UploadAptArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UploadAptArtifactMetadata: The operation metadata for uploading
+// artifacts.
+type UploadAptArtifactMetadata struct {
+}
+
 // UploadAptArtifactRequest: The request to upload an artifact.
 type UploadAptArtifactRequest struct {
 }
@@ -1646,6 +1751,11 @@ func (s *UploadYumArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadYumArtifactMediaResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UploadYumArtifactMetadata: The operation metadata for uploading
+// artifacts.
+type UploadYumArtifactMetadata struct {
 }
 
 // UploadYumArtifactRequest: The request to upload an artifact.
@@ -1756,7 +1866,7 @@ type YumArtifact struct {
 	//
 	// Possible values:
 	//   "PACKAGE_TYPE_UNSPECIFIED" - Package type is not specified.
-	//   "BINARY" - Binary package (.rpm). .rpm
+	//   "BINARY" - Binary package (.rpm).
 	//   "SOURCE" - Source package (.srpm).
 	PackageType string `json:"packageType,omitempty"`
 
@@ -1781,6 +1891,310 @@ func (s *YumArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod YumArtifact
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "artifactregistry.projects.getProjectSettings":
+
+type ProjectsGetProjectSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetProjectSettings: Retrieves the Settings for the Project.
+//
+// - name: The name of the projectSettings resource.
+func (r *ProjectsService) GetProjectSettings(name string) *ProjectsGetProjectSettingsCall {
+	c := &ProjectsGetProjectSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetProjectSettingsCall) Fields(s ...googleapi.Field) *ProjectsGetProjectSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetProjectSettingsCall) IfNoneMatch(entityTag string) *ProjectsGetProjectSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetProjectSettingsCall) Context(ctx context.Context) *ProjectsGetProjectSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetProjectSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetProjectSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.getProjectSettings" call.
+// Exactly one of *ProjectSettings or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ProjectSettings.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetProjectSettingsCall) Do(opts ...googleapi.CallOption) (*ProjectSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ProjectSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the Settings for the Project.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/projectSettings",
+	//   "httpMethod": "GET",
+	//   "id": "artifactregistry.projects.getProjectSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the projectSettings resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/projectSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "ProjectSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "artifactregistry.projects.updateProjectSettings":
+
+type ProjectsUpdateProjectSettingsCall struct {
+	s               *Service
+	name            string
+	projectsettings *ProjectSettings
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// UpdateProjectSettings: Updates the Settings for the Project.
+//
+// - name: The name of the project's settings. Always of the form:
+//   projects/{project-id}/projectSettings In update request: never set
+//   In response: always set.
+func (r *ProjectsService) UpdateProjectSettings(name string, projectsettings *ProjectSettings) *ProjectsUpdateProjectSettingsCall {
+	c := &ProjectsUpdateProjectSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.projectsettings = projectsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask to
+// support partial updates.
+func (c *ProjectsUpdateProjectSettingsCall) UpdateMask(updateMask string) *ProjectsUpdateProjectSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsUpdateProjectSettingsCall) Fields(s ...googleapi.Field) *ProjectsUpdateProjectSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsUpdateProjectSettingsCall) Context(ctx context.Context) *ProjectsUpdateProjectSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsUpdateProjectSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsUpdateProjectSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.projectsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.updateProjectSettings" call.
+// Exactly one of *ProjectSettings or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ProjectSettings.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsUpdateProjectSettingsCall) Do(opts ...googleapi.CallOption) (*ProjectSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ProjectSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the Settings for the Project.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/projectSettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "artifactregistry.projects.updateProjectSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the project's settings. Always of the form: projects/{project-id}/projectSettings In update request: never set In response: always set",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/projectSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Field mask to support partial updates.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "request": {
+	//     "$ref": "ProjectSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "ProjectSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "artifactregistry.projects.locations.get":
@@ -1840,7 +2254,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1954,8 +2368,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2013,7 +2427,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2084,7 +2498,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2199,7 +2613,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2347,7 +2761,7 @@ func (c *ProjectsLocationsRepositoriesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2420,7 +2834,7 @@ func (c *ProjectsLocationsRepositoriesCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The name of the parent resource where the repository will be created.",
+	//       "description": "Required. The name of the parent resource where the repository will be created.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2495,7 +2909,7 @@ func (c *ProjectsLocationsRepositoriesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2563,7 +2977,7 @@ func (c *ProjectsLocationsRepositoriesDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the repository to delete.",
+	//       "description": "Required. The name of the repository to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -2638,7 +3052,7 @@ func (c *ProjectsLocationsRepositoriesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2709,7 +3123,7 @@ func (c *ProjectsLocationsRepositoriesGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the repository to retrieve.",
+	//       "description": "Required. The name of the repository to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -2742,8 +3156,9 @@ type ProjectsLocationsRepositoriesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the IAM policy for a given resource.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsRepositoriesService) GetIamPolicy(resource string) *ProjectsLocationsRepositoriesGetIamPolicyCall {
 	c := &ProjectsLocationsRepositoriesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2751,13 +3166,17 @@ func (r *ProjectsLocationsRepositoriesService) GetIamPolicy(resource string) *Pr
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned. Valid values are 0, 1, and 3. Requests specifying an
-// invalid value will be rejected. Requests for policies with any
-// conditional bindings must specify version 3. Policies without any
-// conditional bindings may specify any valid value or leave the field
-// unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsRepositoriesGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -2801,7 +3220,7 @@ func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2872,13 +3291,13 @@ func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -2969,7 +3388,7 @@ func (c *ProjectsLocationsRepositoriesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3051,7 +3470,7 @@ func (c *ProjectsLocationsRepositoriesListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the parent resource whose repositories will be listed.",
+	//       "description": "Required. The name of the parent resource whose repositories will be listed.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3148,7 +3567,7 @@ func (c *ProjectsLocationsRepositoriesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3262,8 +3681,9 @@ type ProjectsLocationsRepositoriesSetIamPolicyCall struct {
 // SetIamPolicy: Updates the IAM policy for a given resource.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsRepositoriesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRepositoriesSetIamPolicyCall {
 	c := &ProjectsLocationsRepositoriesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3298,7 +3718,7 @@ func (c *ProjectsLocationsRepositoriesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3371,7 +3791,7 @@ func (c *ProjectsLocationsRepositoriesSetIamPolicyCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -3407,7 +3827,8 @@ type ProjectsLocationsRepositoriesTestIamPermissionsCall struct {
 // a resource.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsRepositoriesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRepositoriesTestIamPermissionsCall {
 	c := &ProjectsLocationsRepositoriesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3443,7 +3864,7 @@ func (c *ProjectsLocationsRepositoriesTestIamPermissionsCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3516,7 +3937,7 @@ func (c *ProjectsLocationsRepositoriesTestIamPermissionsCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -3590,7 +4011,7 @@ func (c *ProjectsLocationsRepositoriesAptArtifactsImportCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesAptArtifactsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3684,9 +4105,9 @@ func (c *ProjectsLocationsRepositoriesAptArtifactsImportCall) Do(opts ...googlea
 
 }
 
-// method id "artifactregistry.projects.locations.repositories.aptartifacts.upload":
+// method id "artifactregistry.projects.locations.repositories.aptArtifacts.upload":
 
-type ProjectsLocationsRepositoriesAptartifactsUploadCall struct {
+type ProjectsLocationsRepositoriesAptArtifactsUploadCall struct {
 	s                        *Service
 	parent                   string
 	uploadaptartifactrequest *UploadAptArtifactRequest
@@ -3703,8 +4124,8 @@ type ProjectsLocationsRepositoriesAptartifactsUploadCall struct {
 //
 // - parent: The name of the parent resource where the artifacts will be
 //   uploaded.
-func (r *ProjectsLocationsRepositoriesAptartifactsService) Upload(parent string, uploadaptartifactrequest *UploadAptArtifactRequest) *ProjectsLocationsRepositoriesAptartifactsUploadCall {
-	c := &ProjectsLocationsRepositoriesAptartifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsRepositoriesAptArtifactsService) Upload(parent string, uploadaptartifactrequest *UploadAptArtifactRequest) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
+	c := &ProjectsLocationsRepositoriesAptArtifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.uploadaptartifactrequest = uploadaptartifactrequest
 	return c
@@ -3718,7 +4139,7 @@ func (r *ProjectsLocationsRepositoriesAptartifactsService) Upload(parent string,
 // unless a MediaOption generated by googleapi.ContentType is
 // supplied.
 // At most one of Media and ResumableMedia may be set.
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsRepositoriesAptartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
 	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
 	return c
 }
@@ -3732,7 +4153,7 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Media(r io.Reader,
 // identifies the MIME media type of the upload, such as "image/png". If
 // mediaType is "", it will be auto-detected. The provided ctx will
 // supersede any context previously provided to the Context method.
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsRepositoriesAptartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
 	c.ctx_ = ctx
 	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
 	return c
@@ -3742,7 +4163,7 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) ResumableMedia(ctx
 // after every chunk. It should be a low-latency function in order to
 // not slow down the upload operation. This should only be called when
 // using ResumableMedia (as opposed to Media).
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsRepositoriesAptartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
 	c.mediaInfo_.SetProgressUpdater(pu)
 	return c
 }
@@ -3750,7 +4171,7 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) ProgressUpdater(pu
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesAptartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3760,23 +4181,23 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Fields(s ...google
 // canceled.
 // This context will supersede any context previously provided to the
 // ResumableMedia method.
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesAptartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Header() http.Header {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3813,14 +4234,14 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) doRequest(alt stri
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "artifactregistry.projects.locations.repositories.aptartifacts.upload" call.
+// Do executes the "artifactregistry.projects.locations.repositories.aptArtifacts.upload" call.
 // Exactly one of *UploadAptArtifactMediaResponse or error will be
 // non-nil. Any non-2xx status code is an error. Response headers are in
 // either *UploadAptArtifactMediaResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Do(opts ...googleapi.CallOption) (*UploadAptArtifactMediaResponse, error) {
+func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Do(opts ...googleapi.CallOption) (*UploadAptArtifactMediaResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3871,7 +4292,7 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Do(opts ...googlea
 	//   "description": "Directly uploads an Apt artifact. The returned Operation will complete once the resources are uploaded. Package, Version, and File resources are created based on the imported artifact. Imported artifacts that conflict with existing resources are ignored.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/aptArtifacts:create",
 	//   "httpMethod": "POST",
-	//   "id": "artifactregistry.projects.locations.repositories.aptartifacts.upload",
+	//   "id": "artifactregistry.projects.locations.repositories.aptArtifacts.upload",
 	//   "mediaUpload": {
 	//     "accept": [
 	//       "*/*"
@@ -3967,7 +4388,7 @@ func (c *ProjectsLocationsRepositoriesFilesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesFilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4072,7 +4493,8 @@ type ProjectsLocationsRepositoriesFilesListCall struct {
 
 // List: Lists files.
 //
-// - parent: The name of the parent resource whose files will be listed.
+// - parent: The name of the repository whose files will be listed. For
+//   example: "projects/p1/locations/us-central1/repositories/repo1.
 func (r *ProjectsLocationsRepositoriesFilesService) List(parent string) *ProjectsLocationsRepositoriesFilesListCall {
 	c := &ProjectsLocationsRepositoriesFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4144,7 +4566,7 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesFilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4231,7 +4653,7 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the parent resource whose files will be listed.",
+	//       "description": "The name of the repository whose files will be listed. For example: \"projects/p1/locations/us-central1/repositories/repo1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -4318,7 +4740,7 @@ func (c *ProjectsLocationsRepositoriesPackagesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPackagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4386,7 +4808,7 @@ func (c *ProjectsLocationsRepositoriesPackagesDeleteCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the package to delete.",
+	//       "description": "Required. The name of the package to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/packages/[^/]+$",
 	//       "required": true,
@@ -4461,7 +4883,7 @@ func (c *ProjectsLocationsRepositoriesPackagesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPackagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4532,7 +4954,7 @@ func (c *ProjectsLocationsRepositoriesPackagesGetCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the package to retrieve.",
+	//       "description": "Required. The name of the package to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/packages/[^/]+$",
 	//       "required": true,
@@ -4623,7 +5045,7 @@ func (c *ProjectsLocationsRepositoriesPackagesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPackagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4705,7 +5127,7 @@ func (c *ProjectsLocationsRepositoriesPackagesListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the parent resource whose packages will be listed.",
+	//       "description": "Required. The name of the parent resource whose packages will be listed.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -4801,7 +5223,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4946,7 +5368,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5089,7 +5511,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5262,7 +5684,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Header() http.Header
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5449,7 +5871,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5604,7 +6026,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsDeleteCall) Header() http.
 
 func (c *ProjectsLocationsRepositoriesPackagesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5766,7 +6188,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsGetCall) Header() http.Hea
 
 func (c *ProjectsLocationsRepositoriesPackagesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5892,8 +6314,8 @@ func (r *ProjectsLocationsRepositoriesPackagesVersionsService) List(parent strin
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sorting field and
-// order
+// OrderBy sets the optional parameter "orderBy": The field to order the
+// results by.
 func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) OrderBy(orderBy string) *ProjectsLocationsRepositoriesPackagesVersionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -5964,7 +6386,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) Header() http.He
 
 func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6035,7 +6457,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "orderBy": {
-	//       "description": "Optional. Sorting field and order",
+	//       "description": "Optional. The field to order the results by.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6158,7 +6580,7 @@ func (c *ProjectsLocationsRepositoriesYumArtifactsImportCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesYumArtifactsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6252,9 +6674,9 @@ func (c *ProjectsLocationsRepositoriesYumArtifactsImportCall) Do(opts ...googlea
 
 }
 
-// method id "artifactregistry.projects.locations.repositories.yumartifacts.upload":
+// method id "artifactregistry.projects.locations.repositories.yumArtifacts.upload":
 
-type ProjectsLocationsRepositoriesYumartifactsUploadCall struct {
+type ProjectsLocationsRepositoriesYumArtifactsUploadCall struct {
 	s                        *Service
 	parent                   string
 	uploadyumartifactrequest *UploadYumArtifactRequest
@@ -6271,8 +6693,8 @@ type ProjectsLocationsRepositoriesYumartifactsUploadCall struct {
 //
 // - parent: The name of the parent resource where the artifacts will be
 //   uploaded.
-func (r *ProjectsLocationsRepositoriesYumartifactsService) Upload(parent string, uploadyumartifactrequest *UploadYumArtifactRequest) *ProjectsLocationsRepositoriesYumartifactsUploadCall {
-	c := &ProjectsLocationsRepositoriesYumartifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsRepositoriesYumArtifactsService) Upload(parent string, uploadyumartifactrequest *UploadYumArtifactRequest) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
+	c := &ProjectsLocationsRepositoriesYumArtifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.uploadyumartifactrequest = uploadyumartifactrequest
 	return c
@@ -6286,7 +6708,7 @@ func (r *ProjectsLocationsRepositoriesYumartifactsService) Upload(parent string,
 // unless a MediaOption generated by googleapi.ContentType is
 // supplied.
 // At most one of Media and ResumableMedia may be set.
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsRepositoriesYumartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
 	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
 	return c
 }
@@ -6300,7 +6722,7 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Media(r io.Reader,
 // identifies the MIME media type of the upload, such as "image/png". If
 // mediaType is "", it will be auto-detected. The provided ctx will
 // supersede any context previously provided to the Context method.
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsRepositoriesYumartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
 	c.ctx_ = ctx
 	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
 	return c
@@ -6310,7 +6732,7 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) ResumableMedia(ctx
 // after every chunk. It should be a low-latency function in order to
 // not slow down the upload operation. This should only be called when
 // using ResumableMedia (as opposed to Media).
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsRepositoriesYumartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
 	c.mediaInfo_.SetProgressUpdater(pu)
 	return c
 }
@@ -6318,7 +6740,7 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) ProgressUpdater(pu
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesYumartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -6328,23 +6750,23 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Fields(s ...google
 // canceled.
 // This context will supersede any context previously provided to the
 // ResumableMedia method.
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesYumartifactsUploadCall {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Header() http.Header {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6381,14 +6803,14 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) doRequest(alt stri
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "artifactregistry.projects.locations.repositories.yumartifacts.upload" call.
+// Do executes the "artifactregistry.projects.locations.repositories.yumArtifacts.upload" call.
 // Exactly one of *UploadYumArtifactMediaResponse or error will be
 // non-nil. Any non-2xx status code is an error. Response headers are in
 // either *UploadYumArtifactMediaResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Do(opts ...googleapi.CallOption) (*UploadYumArtifactMediaResponse, error) {
+func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) Do(opts ...googleapi.CallOption) (*UploadYumArtifactMediaResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6439,7 +6861,7 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Do(opts ...googlea
 	//   "description": "Directly uploads a Yum artifact. The returned Operation will complete once the resources are uploaded. Package, Version, and File resources are created based on the imported artifact. Imported artifacts that conflict with existing resources are ignored.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/yumArtifacts:create",
 	//   "httpMethod": "POST",
-	//   "id": "artifactregistry.projects.locations.repositories.yumartifacts.upload",
+	//   "id": "artifactregistry.projects.locations.repositories.yumArtifacts.upload",
 	//   "mediaUpload": {
 	//     "accept": [
 	//       "*/*"

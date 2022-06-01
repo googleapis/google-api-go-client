@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -86,7 +87,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -187,7 +188,7 @@ type CancelExecutionRequest struct {
 
 // Error: Error describes why the execution was abnormally terminated.
 type Error struct {
-	// Context: Human readable stack trace string.
+	// Context: Human-readable stack trace string.
 	Context string `json:"context,omitempty"`
 
 	// Payload: Error message and data returned represented as a JSON
@@ -348,9 +349,8 @@ type Position struct {
 	// instruction was generated from.
 	Column int64 `json:"column,omitempty,string"`
 
-	// Length: The length in bytes of text in this character group, e.g.
-	// digits of a number, string length, or AST (abstract syntax tree)
-	// node.
+	// Length: The number of bytes of source code making up this stack trace
+	// element.
 	Length int64 `json:"length,omitempty,string"`
 
 	// Line: The source code line number the current instruction was
@@ -380,10 +380,74 @@ func (s *Position) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PubsubMessage: A message that is published by publishers and consumed
+// by subscribers. The message must contain either a non-empty data
+// field or at least one attribute. Note that client libraries represent
+// this object differently depending on the language. See the
+// corresponding client library documentation
+// (https://cloud.google.com/pubsub/docs/reference/libraries) for more
+// information. See [quotas and limits]
+// (https://cloud.google.com/pubsub/quotas) for more information about
+// message limits.
+type PubsubMessage struct {
+	// Attributes: Attributes for this message. If this field is empty, the
+	// message must contain non-empty data. This can be used to filter
+	// messages on the subscription.
+	Attributes map[string]string `json:"attributes,omitempty"`
+
+	// Data: The message data field. If this field is empty, the message
+	// must contain at least one attribute.
+	Data string `json:"data,omitempty"`
+
+	// MessageId: ID of this message, assigned by the server when the
+	// message is published. Guaranteed to be unique within the topic. This
+	// value may be read by a subscriber that receives a `PubsubMessage` via
+	// a `Pull` call or a push delivery. It must not be populated by the
+	// publisher in a `Publish` call.
+	MessageId string `json:"messageId,omitempty"`
+
+	// OrderingKey: If non-empty, identifies related messages for which
+	// publish order should be respected. If a `Subscription` has
+	// `enable_message_ordering` set to `true`, messages published with the
+	// same non-empty `ordering_key` value will be delivered to subscribers
+	// in the order in which they are received by the Pub/Sub system. All
+	// `PubsubMessage`s published in a given `PublishRequest` must specify
+	// the same `ordering_key` value. For more information, see ordering
+	// messages (https://cloud.google.com/pubsub/docs/ordering).
+	OrderingKey string `json:"orderingKey,omitempty"`
+
+	// PublishTime: The time at which the message was published, populated
+	// by the server when it receives the `Publish` call. It must not be
+	// populated by the publisher in a `Publish` call.
+	PublishTime string `json:"publishTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attributes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod PubsubMessage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StackTrace: A collection of stack elements (frames) where an error
 // occurred.
 type StackTrace struct {
-	// Elements: An array of Stack elements.
+	// Elements: An array of stack elements.
 	Elements []*StackTraceElement `json:"elements,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Elements") to
@@ -412,7 +476,7 @@ func (s *StackTrace) MarshalJSON() ([]byte, error) {
 // StackTraceElement: A single stack element (frame) where an error
 // occurred.
 type StackTraceElement struct {
-	// Position: The source position information of the stacktrace element.
+	// Position: The source position information of the stack trace element.
 	Position *Position `json:"position,omitempty"`
 
 	// Routine: The routine where the error occurred.
@@ -442,6 +506,190 @@ func (s *StackTraceElement) MarshalJSON() ([]byte, error) {
 	type NoMethod StackTraceElement
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TriggerPubsubExecutionRequest: Request for the TriggerPubsubExecution
+// method.
+type TriggerPubsubExecutionRequest struct {
+	// GCPCloudEventsMode: Required. LINT: LEGACY_NAMES The query parameter
+	// value for __GCP_CloudEventsMode, set by the Eventarc service when
+	// configuring triggers.
+	GCPCloudEventsMode string `json:"GCPCloudEventsMode,omitempty"`
+
+	// Message: Required. The message of the Pub/Sub push notification.
+	Message *PubsubMessage `json:"message,omitempty"`
+
+	// Subscription: Required. The subscription of the Pub/Sub push
+	// notification. Format: projects/{project}/subscriptions/{sub}
+	Subscription string `json:"subscription,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GCPCloudEventsMode")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GCPCloudEventsMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TriggerPubsubExecutionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod TriggerPubsubExecutionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "workflowexecutions.projects.locations.workflows.triggerPubsubExecution":
+
+type ProjectsLocationsWorkflowsTriggerPubsubExecutionCall struct {
+	s                             *Service
+	workflow                      string
+	triggerpubsubexecutionrequest *TriggerPubsubExecutionRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// TriggerPubsubExecution: Triggers a new execution using the latest
+// revision of the given workflow by a Pub/Sub push notification.
+//
+// - workflow: Name of the workflow for which an execution should be
+//   created. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}.
+func (r *ProjectsLocationsWorkflowsService) TriggerPubsubExecution(workflow string, triggerpubsubexecutionrequest *TriggerPubsubExecutionRequest) *ProjectsLocationsWorkflowsTriggerPubsubExecutionCall {
+	c := &ProjectsLocationsWorkflowsTriggerPubsubExecutionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.workflow = workflow
+	c.triggerpubsubexecutionrequest = triggerpubsubexecutionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsWorkflowsTriggerPubsubExecutionCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkflowsTriggerPubsubExecutionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsWorkflowsTriggerPubsubExecutionCall) Context(ctx context.Context) *ProjectsLocationsWorkflowsTriggerPubsubExecutionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsWorkflowsTriggerPubsubExecutionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkflowsTriggerPubsubExecutionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.triggerpubsubexecutionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+workflow}:triggerPubsubExecution")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"workflow": c.workflow,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workflowexecutions.projects.locations.workflows.triggerPubsubExecution" call.
+// Exactly one of *Execution or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Execution.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkflowsTriggerPubsubExecutionCall) Do(opts ...googleapi.CallOption) (*Execution, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Execution{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Triggers a new execution using the latest revision of the given workflow by a Pub/Sub push notification.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflows/{workflowsId}:triggerPubsubExecution",
+	//   "httpMethod": "POST",
+	//   "id": "workflowexecutions.projects.locations.workflows.triggerPubsubExecution",
+	//   "parameterOrder": [
+	//     "workflow"
+	//   ],
+	//   "parameters": {
+	//     "workflow": {
+	//       "description": "Required. Name of the workflow for which an execution should be created. Format: projects/{project}/locations/{location}/workflows/{workflow}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflows/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+workflow}:triggerPubsubExecution",
+	//   "request": {
+	//     "$ref": "TriggerPubsubExecutionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Execution"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "workflowexecutions.projects.locations.workflows.executions.cancel":
@@ -494,7 +742,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -640,7 +888,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -808,7 +1056,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1010,7 +1258,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

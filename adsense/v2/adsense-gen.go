@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,7 +6,7 @@
 
 // Package adsense provides access to the AdSense Management API.
 //
-// For product documentation, see: http://code.google.com/apis/adsense/management/
+// For product documentation, see: https://developers.google.com/adsense/management/
 //
 // Creating a client
 //
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -92,7 +93,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/adsense",
 		"https://www.googleapis.com/auth/adsense.readonly",
 	)
@@ -279,6 +280,16 @@ type Account struct {
 	// Premium: Output only. Whether this account is premium.
 	Premium bool `json:"premium,omitempty"`
 
+	// State: Output only. State of the account.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "READY" - The account is open and ready to serve ads.
+	//   "NEEDS_ATTENTION" - There are some issues with this account.
+	// Publishers should visit AdSense in order to fix the account.
+	//   "CLOSED" - The account is closed and can't serve ads.
+	State string `json:"state,omitempty"`
+
 	// TimeZone: The account time zone, as used by reporting. For more
 	// information, see changing the time zone of your reports
 	// (https://support.google.com/adsense/answer/9830725).
@@ -315,17 +326,34 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 // user's subscription with a specific AdSense product.
 type AdClient struct {
 	// Name: Resource name of the ad client. Format:
-	// accounts/{account}/adclient/{adclient}
+	// accounts/{account}/adclients/{adclient}
 	Name string `json:"name,omitempty"`
 
-	// ProductCode: Output only. Product code of the ad client. For example,
-	// "AFC" for AdSense for Content.
+	// ProductCode: Output only. Reporting product code of the ad client.
+	// For example, "AFC" for AdSense for Content. Corresponds to the
+	// `PRODUCT_CODE` dimension, and present only if the ad client supports
+	// reporting.
 	ProductCode string `json:"productCode,omitempty"`
 
 	// ReportingDimensionId: Output only. Unique ID of the ad client as used
 	// in the `AD_CLIENT_ID` reporting dimension. Present only if the ad
 	// client supports reporting.
 	ReportingDimensionId string `json:"reportingDimensionId,omitempty"`
+
+	// State: Output only. State of the ad client.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "READY" - The ad client is ready to show ads.
+	//   "GETTING_READY" - Running some checks on the ad client before it is
+	// ready to serve ads.
+	//   "REQUIRES_REVIEW" - The ad client hasn't been checked yet. There
+	// are tasks pending before AdSense will start the review.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -397,15 +425,15 @@ func (s *AdClientAdCode) MarshalJSON() ([]byte, error) {
 // ad unit with a specific set of ad settings that have been customized
 // within an account.
 type AdUnit struct {
-	// ContentAdsSettings: Settings specific to content ads (AFC).
+	// ContentAdsSettings: Required. Settings specific to content ads (AFC).
 	ContentAdsSettings *ContentAdsSettings `json:"contentAdsSettings,omitempty"`
 
-	// DisplayName: Display name of the ad unit, as provided when the ad
-	// unit was created.
+	// DisplayName: Required. Display name of the ad unit, as provided when
+	// the ad unit was created.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Resource name of the ad unit. Format:
-	// accounts/{account}/adclient/{adclient}/adunits/{adunit}
+	// accounts/{account}/adclients/{adclient}/adunits/{adunit}
 	Name string `json:"name,omitempty"`
 
 	// ReportingDimensionId: Output only. Unique ID of the ad unit as used
@@ -561,11 +589,11 @@ func (s *Cell) MarshalJSON() ([]byte, error) {
 
 // ContentAdsSettings: Settings specific to content ads (AFC).
 type ContentAdsSettings struct {
-	// Size: Size of the ad unit. e.g. "728x90", "1x3" (for responsive ad
-	// units).
+	// Size: Required. Size of the ad unit. e.g. "728x90", "1x3" (for
+	// responsive ad units).
 	Size string `json:"size,omitempty"`
 
-	// Type: Type of the ad unit.
+	// Type: Required. Type of the ad unit.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified ad unit type.
@@ -602,7 +630,7 @@ func (s *ContentAdsSettings) MarshalJSON() ([]byte, error) {
 
 // CustomChannel: Representation of a custom channel.
 type CustomChannel struct {
-	// DisplayName: Display name of the custom channel.
+	// DisplayName: Required. Display name of the custom channel.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Resource name of the custom channel. Format:
@@ -644,11 +672,12 @@ func (s *CustomChannel) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -1235,7 +1264,9 @@ func (s *ListUrlChannelsResponse) MarshalJSON() ([]byte, error) {
 // Payment: Representation of an unpaid or paid payment. See Payment
 // timelines for AdSense
 // (https://support.google.com/adsense/answer/7164703) for more
-// information about payments.
+// information about payments and the YouTube homepage and payments
+// account (https://support.google.com/adsense/answer/11622510) article
+// for information about dedicated payments accounts for YouTube.
 type Payment struct {
 	// Amount: Output only. The amount of unpaid or paid earnings, as a
 	// formatted string, including the currency. E.g. "¥1,235 JPY",
@@ -1247,9 +1278,13 @@ type Payment struct {
 	// always returned in the billing timezone (America/Los_Angeles).
 	Date *Date `json:"date,omitempty"`
 
-	// Name: Resource name of the payment. Format:
-	// accounts/{account}/payments/unpaid for unpaid (current) earnings.
-	// accounts/{account}/payments/yyyy-MM-dd for paid earnings.
+	// Name: Resource name of the payment. Format: -
+	// accounts/{account}/payments/unpaid for unpaid (current) AdSense
+	// earnings. - accounts/{account}/payments/youtube-unpaid for unpaid
+	// (current) YouTube earnings. - accounts/{account}/payments/yyyy-MM-dd
+	// for paid AdSense earnings. -
+	// accounts/{account}/payments/youtube-yyyy-MM-dd for paid YouTube
+	// earnings.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Amount") to
@@ -1374,6 +1409,10 @@ type SavedReport struct {
 	// Title: Report title as specified by publisher.
 	Title string `json:"title,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1494,7 +1533,7 @@ func (s *TimeZone) MarshalJSON() ([]byte, error) {
 // information.
 type UrlChannel struct {
 	// Name: Resource name of the URL channel. Format:
-	// accounts/{account}/adclient/{adclient}/urlchannels/{urlchannel}
+	// accounts/{account}/adclients/{adclient}/urlchannels/{urlchannel}
 	Name string `json:"name,omitempty"`
 
 	// ReportingDimensionId: Output only. Unique ID of the custom channel as
@@ -1504,6 +1543,10 @@ type UrlChannel struct {
 	// UriPattern: URI pattern of the channel. Does not include "http://" or
 	// "https://". Example: www.example.com/home
 	UriPattern string `json:"uriPattern,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -1541,8 +1584,7 @@ type AccountsGetCall struct {
 
 // Get: Gets information about the selected AdSense account.
 //
-// - name: Account to get information about. Format:
-//   accounts/{account_id}.
+// - name: Account to get information about. Format: accounts/{account}.
 func (r *AccountsService) Get(name string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1586,7 +1628,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1657,7 +1699,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Account to get information about. Format: accounts/{account_id}",
+	//       "description": "Required. Account to get information about. Format: accounts/{account}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -1748,7 +1790,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1936,7 +1978,7 @@ func (c *AccountsListChildAccountsCall) Header() http.Header {
 
 func (c *AccountsListChildAccountsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2058,6 +2100,154 @@ func (c *AccountsListChildAccountsCall) Pages(ctx context.Context, f func(*ListC
 	}
 }
 
+// method id "adsense.accounts.adclients.get":
+
+type AccountsAdclientsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the ad client from the given resource name.
+//
+// - name: The name of the ad client to retrieve. Format:
+//   accounts/{account}/adclients/{adclient}.
+func (r *AccountsAdclientsService) Get(name string) *AccountsAdclientsGetCall {
+	c := &AccountsAdclientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAdclientsGetCall) Fields(s ...googleapi.Field) *AccountsAdclientsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsAdclientsGetCall) IfNoneMatch(entityTag string) *AccountsAdclientsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAdclientsGetCall) Context(ctx context.Context) *AccountsAdclientsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAdclientsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAdclientsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.adclients.get" call.
+// Exactly one of *AdClient or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *AdClient.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsAdclientsGetCall) Do(opts ...googleapi.CallOption) (*AdClient, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AdClient{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the ad client from the given resource name.",
+	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.adclients.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the ad client to retrieve. Format: accounts/{account}/adclients/{adclient}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/adclients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "AdClient"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "adsense.accounts.adclients.getAdcode":
 
 type AccountsAdclientsGetAdcodeCall struct {
@@ -2120,7 +2310,7 @@ func (c *AccountsAdclientsGetAdcodeCall) Header() http.Header {
 
 func (c *AccountsAdclientsGetAdcodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2287,7 +2477,7 @@ func (c *AccountsAdclientsListCall) Header() http.Header {
 
 func (c *AccountsAdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2423,7 +2613,7 @@ type AccountsAdclientsAdunitsGetCall struct {
 // Get: Gets an ad unit from a specified account and ad client.
 //
 // - name: AdUnit to get information about. Format:
-//   accounts/{account_id}/adclient/{adclient_id}/adunit/{adunit_id}.
+//   accounts/{account}/adclients/{adclient}/adunits/{adunit}.
 func (r *AccountsAdclientsAdunitsService) Get(name string) *AccountsAdclientsAdunitsGetCall {
 	c := &AccountsAdclientsAdunitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2467,7 +2657,7 @@ func (c *AccountsAdclientsAdunitsGetCall) Header() http.Header {
 
 func (c *AccountsAdclientsAdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2538,7 +2728,7 @@ func (c *AccountsAdclientsAdunitsGetCall) Do(opts ...googleapi.CallOption) (*AdU
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. AdUnit to get information about. Format: accounts/{account_id}/adclient/{adclient_id}/adunit/{adunit_id}",
+	//       "description": "Required. AdUnit to get information about. Format: accounts/{account}/adclients/{adclient}/adunits/{adunit}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/adclients/[^/]+/adunits/[^/]+$",
 	//       "required": true,
@@ -2615,7 +2805,7 @@ func (c *AccountsAdclientsAdunitsGetAdcodeCall) Header() http.Header {
 
 func (c *AccountsAdclientsAdunitsGetAdcodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2781,7 +2971,7 @@ func (c *AccountsAdclientsAdunitsListCall) Header() http.Header {
 
 func (c *AccountsAdclientsAdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2981,7 +3171,7 @@ func (c *AccountsAdclientsAdunitsListLinkedCustomChannelsCall) Header() http.Hea
 
 func (c *AccountsAdclientsAdunitsListLinkedCustomChannelsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3162,7 +3352,7 @@ func (c *AccountsAdclientsCustomchannelsGetCall) Header() http.Header {
 
 func (c *AccountsAdclientsCustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3329,7 +3519,7 @@ func (c *AccountsAdclientsCustomchannelsListCall) Header() http.Header {
 
 func (c *AccountsAdclientsCustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3531,7 +3721,7 @@ func (c *AccountsAdclientsCustomchannelsListLinkedAdUnitsCall) Header() http.Hea
 
 func (c *AccountsAdclientsCustomchannelsListLinkedAdUnitsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3653,6 +3843,154 @@ func (c *AccountsAdclientsCustomchannelsListLinkedAdUnitsCall) Pages(ctx context
 	}
 }
 
+// method id "adsense.accounts.adclients.urlchannels.get":
+
+type AccountsAdclientsUrlchannelsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about the selected url channel.
+//
+// - name: The name of the url channel to retrieve. Format:
+//   accounts/{account}/adclients/{adclient}/urlchannels/{urlchannel}.
+func (r *AccountsAdclientsUrlchannelsService) Get(name string) *AccountsAdclientsUrlchannelsGetCall {
+	c := &AccountsAdclientsUrlchannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAdclientsUrlchannelsGetCall) Fields(s ...googleapi.Field) *AccountsAdclientsUrlchannelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsAdclientsUrlchannelsGetCall) IfNoneMatch(entityTag string) *AccountsAdclientsUrlchannelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAdclientsUrlchannelsGetCall) Context(ctx context.Context) *AccountsAdclientsUrlchannelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAdclientsUrlchannelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAdclientsUrlchannelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.adclients.urlchannels.get" call.
+// Exactly one of *UrlChannel or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *UrlChannel.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsAdclientsUrlchannelsGetCall) Do(opts ...googleapi.CallOption) (*UrlChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &UrlChannel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about the selected url channel.",
+	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/urlchannels/{urlchannelsId}",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.adclients.urlchannels.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the url channel to retrieve. Format: accounts/{account}/adclients/{adclient}/urlchannels/{urlchannel}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/adclients/[^/]+/urlchannels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "UrlChannel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "adsense.accounts.adclients.urlchannels.list":
 
 type AccountsAdclientsUrlchannelsListCall struct {
@@ -3730,7 +4068,7 @@ func (c *AccountsAdclientsUrlchannelsListCall) Header() http.Header {
 
 func (c *AccountsAdclientsUrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3921,7 +4259,7 @@ func (c *AccountsAlertsListCall) Header() http.Header {
 
 func (c *AccountsAlertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4074,7 +4412,7 @@ func (c *AccountsPaymentsListCall) Header() http.Header {
 
 func (c *AccountsPaymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4450,7 +4788,9 @@ func (c *AccountsReportsGenerateCall) Limit(limit int64) *AccountsReportsGenerat
 // clicks on an ad. CPC is calculated by dividing the estimated revenue
 // by the number of clicks received.
 //   "ADS_PER_IMPRESSION" - Number of ad views per impression.
-//   "TOTAL_EARNINGS" - Total earnings.
+//   "TOTAL_EARNINGS" - Total earnings are the gross estimated earnings
+// from revenue shared traffic before any parent and child account
+// revenue share is applied.
 //   "WEBSEARCH_RESULT_PAGES" - Number of results pages.
 func (c *AccountsReportsGenerateCall) Metrics(metrics ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("metrics", append([]string{}, metrics...))
@@ -4544,7 +4884,7 @@ func (c *AccountsReportsGenerateCall) Header() http.Header {
 
 func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4857,7 +5197,7 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "Revenue per thousand individual ad impressions. This is calculated by dividing estimated revenue by the number of individual ad impressions multiplied by 1000.",
 	//         "Amount the publisher earns each time a user clicks on an ad. CPC is calculated by dividing the estimated revenue by the number of clicks received.",
 	//         "Number of ad views per impression.",
-	//         "Total earnings.",
+	//         "Total earnings are the gross estimated earnings from revenue shared traffic before any parent and child account revenue share is applied.",
 	//         "Number of results pages."
 	//       ],
 	//       "location": "query",
@@ -5202,7 +5542,9 @@ func (c *AccountsReportsGenerateCsvCall) Limit(limit int64) *AccountsReportsGene
 // clicks on an ad. CPC is calculated by dividing the estimated revenue
 // by the number of clicks received.
 //   "ADS_PER_IMPRESSION" - Number of ad views per impression.
-//   "TOTAL_EARNINGS" - Total earnings.
+//   "TOTAL_EARNINGS" - Total earnings are the gross estimated earnings
+// from revenue shared traffic before any parent and child account
+// revenue share is applied.
 //   "WEBSEARCH_RESULT_PAGES" - Number of results pages.
 func (c *AccountsReportsGenerateCsvCall) Metrics(metrics ...string) *AccountsReportsGenerateCsvCall {
 	c.urlParams_.SetMulti("metrics", append([]string{}, metrics...))
@@ -5296,7 +5638,7 @@ func (c *AccountsReportsGenerateCsvCall) Header() http.Header {
 
 func (c *AccountsReportsGenerateCsvCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5609,7 +5951,7 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "Revenue per thousand individual ad impressions. This is calculated by dividing estimated revenue by the number of individual ad impressions multiplied by 1000.",
 	//         "Amount the publisher earns each time a user clicks on an ad. CPC is calculated by dividing the estimated revenue by the number of clicks received.",
 	//         "Number of ad views per impression.",
-	//         "Total earnings.",
+	//         "Total earnings are the gross estimated earnings from revenue shared traffic before any parent and child account revenue share is applied.",
 	//         "Number of results pages."
 	//       ],
 	//       "location": "query",
@@ -5659,6 +6001,154 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//   "path": "v2/{+account}/reports:generateCsv",
 	//   "response": {
 	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.accounts.reports.getSaved":
+
+type AccountsReportsGetSavedCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSaved: Gets the saved report from the given resource name.
+//
+// - name: The name of the saved report to retrieve. Format:
+//   accounts/{account}/reports/{report}.
+func (r *AccountsReportsService) GetSaved(name string) *AccountsReportsGetSavedCall {
+	c := &AccountsReportsGetSavedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsReportsGetSavedCall) Fields(s ...googleapi.Field) *AccountsReportsGetSavedCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsReportsGetSavedCall) IfNoneMatch(entityTag string) *AccountsReportsGetSavedCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsReportsGetSavedCall) Context(ctx context.Context) *AccountsReportsGetSavedCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsReportsGetSavedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsReportsGetSavedCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}/saved")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.reports.getSaved" call.
+// Exactly one of *SavedReport or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SavedReport.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsReportsGetSavedCall) Do(opts ...googleapi.CallOption) (*SavedReport, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SavedReport{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the saved report from the given resource name.",
+	//   "flatPath": "v2/accounts/{accountsId}/reports/{reportsId}/saved",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.reports.getSaved",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the saved report to retrieve. Format: accounts/{account}/reports/{report}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/reports/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}/saved",
+	//   "response": {
+	//     "$ref": "SavedReport"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adsense",
@@ -5834,7 +6324,7 @@ func (c *AccountsReportsSavedGenerateCall) Header() http.Header {
 
 func (c *AccountsReportsSavedGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6176,7 +6666,7 @@ func (c *AccountsReportsSavedGenerateCsvCall) Header() http.Header {
 
 func (c *AccountsReportsSavedGenerateCsvCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6429,7 +6919,7 @@ func (c *AccountsReportsSavedListCall) Header() http.Header {
 
 func (c *AccountsReportsSavedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6608,7 +7098,7 @@ func (c *AccountsSitesGetCall) Header() http.Header {
 
 func (c *AccountsSitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6774,7 +7264,7 @@ func (c *AccountsSitesListCall) Header() http.Header {
 
 func (c *AccountsSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

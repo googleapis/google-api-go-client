@@ -646,6 +646,72 @@
         "locations": {
           "resources": {
             "insightTypes": {
+              "methods": {
+                "getConfig": {
+                  "description": "Gets the requested InsightTypeConfig. There is only one instance of the config for each InsightType.",
+                  "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/insightTypes/{insightTypesId}/config",
+                  "httpMethod": "GET",
+                  "id": "recommender.organizations.locations.insightTypes.getConfig",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the InsightTypeConfig to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config` * `projects/[PROJECT_ID]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config`",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/locations/[^/]+/insightTypes/[^/]+/config$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudRecommenderV1beta1InsightTypeConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "updateConfig": {
+                  "description": "Updates an InsightTypeConfig change. This will create a new revision of the config.",
+                  "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/insightTypes/{insightTypesId}/config",
+                  "httpMethod": "PATCH",
+                  "id": "recommender.organizations.locations.insightTypes.updateConfig",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Name of insight type config. Eg, projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/locations/[^/]+/insightTypes/[^/]+/config$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The list of fields to be updated.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "validateOnly": {
+                      "description": "If true, validate the request and preview the change, but do not actually update it.",
+                      "location": "query",
+                      "type": "boolean"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudRecommenderV1beta1InsightTypeConfig"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudRecommenderV1beta1InsightTypeConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              },
               "resources": {
                 "insights": {
                   "methods": {
@@ -748,6 +814,72 @@
               }
             },
             "recommenders": {
+              "methods": {
+                "getConfig": {
+                  "description": "Gets the requested Recommender Config. There is only one instance of the config for each Recommender.",
+                  "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/recommenders/{recommendersId}/config",
+                  "httpMethod": "GET",
+                  "id": "recommender.organizations.locations.recommenders.getConfig",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the Recommendation Config to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/locations/[^/]+/recommenders/[^/]+/config$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudRecommenderV1beta1RecommenderConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "updateConfig": {
+                  "description": "Updates a Recommender Config. This will create a new revision of the config.",
+                  "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/recommenders/{recommendersId}/config",
+                  "httpMethod": "PATCH",
+                  "id": "recommender.organizations.locations.recommenders.updateConfig",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Name of recommender config. Eg, projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/locations/[^/]+/recommenders/[^/]+/config$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The list of fields to be updated.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "validateOnly": {
+                      "description": "If true, validate the request and preview the change, but do not actually update it.",
+                      "location": "query",
+                      "type": "boolean"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudRecommenderV1beta1RecommenderConfig"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudRecommenderV1beta1RecommenderConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              },
               "resources": {
                 "recommendations": {
                   "methods": {
@@ -914,6 +1046,72 @@
         "locations": {
           "resources": {
             "insightTypes": {
+              "methods": {
+                "getConfig": {
+                  "description": "Gets the requested InsightTypeConfig. There is only one instance of the config for each InsightType.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/insightTypes/{insightTypesId}/config",
+                  "httpMethod": "GET",
+                  "id": "recommender.projects.locations.insightTypes.getConfig",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the InsightTypeConfig to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config` * `projects/[PROJECT_ID]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/insightTypes/[^/]+/config$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudRecommenderV1beta1InsightTypeConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "updateConfig": {
+                  "description": "Updates an InsightTypeConfig change. This will create a new revision of the config.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/insightTypes/{insightTypesId}/config",
+                  "httpMethod": "PATCH",
+                  "id": "recommender.projects.locations.insightTypes.updateConfig",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Name of insight type config. Eg, projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/insightTypes/[^/]+/config$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The list of fields to be updated.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "validateOnly": {
+                      "description": "If true, validate the request and preview the change, but do not actually update it.",
+                      "location": "query",
+                      "type": "boolean"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudRecommenderV1beta1InsightTypeConfig"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudRecommenderV1beta1InsightTypeConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              },
               "resources": {
                 "insights": {
                   "methods": {
@@ -1016,6 +1214,72 @@
               }
             },
             "recommenders": {
+              "methods": {
+                "getConfig": {
+                  "description": "Gets the requested Recommender Config. There is only one instance of the config for each Recommender.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/recommenders/{recommendersId}/config",
+                  "httpMethod": "GET",
+                  "id": "recommender.projects.locations.recommenders.getConfig",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the Recommendation Config to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/config$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudRecommenderV1beta1RecommenderConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "updateConfig": {
+                  "description": "Updates a Recommender Config. This will create a new revision of the config.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/recommenders/{recommendersId}/config",
+                  "httpMethod": "PATCH",
+                  "id": "recommender.projects.locations.recommenders.updateConfig",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Name of recommender config. Eg, projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/config$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The list of fields to be updated.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "validateOnly": {
+                      "description": "If true, validate the request and preview the change, but do not actually update it.",
+                      "location": "query",
+                      "type": "boolean"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudRecommenderV1beta1RecommenderConfig"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudRecommenderV1beta1RecommenderConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              },
               "resources": {
                 "recommendations": {
                   "methods": {
@@ -1178,7 +1442,7 @@
       }
     }
   },
-  "revision": "20210806",
+  "revision": "20220307",
   "rootUrl": "https://recommender.googleapis.com/",
   "schemas": {
     "GoogleCloudRecommenderV1beta1CostProjection": {
@@ -1187,7 +1451,7 @@
       "properties": {
         "cost": {
           "$ref": "GoogleTypeMoney",
-          "description": "An approximate projection on amount saved or amount incurred. Negative cost units indicate cost savings and positive cost units indicate increase. See google.type.Money documentation for positive/negative units."
+          "description": "An approximate projection on amount saved or amount incurred. Negative cost units indicate cost savings and positive cost units indicate increase. See google.type.Money documentation for positive/negative units. A user's permissions may affect whether the cost is computed using list prices or custom contract prices."
         },
         "duration": {
           "description": "Duration for which this cost applies.",
@@ -1208,14 +1472,16 @@
             "COST",
             "SECURITY",
             "PERFORMANCE",
-            "MANAGEABILITY"
+            "MANAGEABILITY",
+            "SUSTAINABILITY"
           ],
           "enumDescriptions": [
             "Default unspecified category. Don't use directly.",
             "Indicates a potential increase or decrease in cost.",
             "Indicates a potential increase or decrease in security.",
             "Indicates a potential increase or decrease in performance.",
-            "Indicates a potential increase or decrease in manageability."
+            "Indicates a potential increase or decrease in manageability.",
+            "Indicates a potential increase or decrease in sustainability."
           ],
           "type": "string"
         },
@@ -1226,6 +1492,10 @@
         "securityProjection": {
           "$ref": "GoogleCloudRecommenderV1beta1SecurityProjection",
           "description": "Use with CategoryType.SECURITY"
+        },
+        "sustainabilityProjection": {
+          "$ref": "GoogleCloudRecommenderV1beta1SustainabilityProjection",
+          "description": "Use with CategoryType.SUSTAINABILITY"
         }
       },
       "type": "object"
@@ -1366,6 +1636,61 @@
       },
       "type": "object"
     },
+    "GoogleCloudRecommenderV1beta1InsightTypeConfig": {
+      "description": "Configuration for an InsightType.",
+      "id": "GoogleCloudRecommenderV1beta1InsightTypeConfig",
+      "properties": {
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Allows clients to store small amounts of arbitrary data. Annotations must follow the Kubernetes syntax. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.",
+          "type": "object"
+        },
+        "displayName": {
+          "description": "A user-settable field to provide a human-readable name to be used in user interfaces.",
+          "type": "string"
+        },
+        "etag": {
+          "description": "Fingerprint of the InsightTypeConfig. Provides optimistic locking when updating.",
+          "type": "string"
+        },
+        "insightTypeGenerationConfig": {
+          "$ref": "GoogleCloudRecommenderV1beta1InsightTypeGenerationConfig",
+          "description": "InsightTypeGenerationConfig which configures the generation of insights for this insight type."
+        },
+        "name": {
+          "description": "Name of insight type config. Eg, projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config",
+          "type": "string"
+        },
+        "revisionId": {
+          "description": "Output only. Immutable. The revision ID of the config. A new revision is committed whenever the config is changed in any way. The format is an 8-character hexadecimal string.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Last time when the config was updated.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRecommenderV1beta1InsightTypeGenerationConfig": {
+      "description": "A configuration to customize the generation of insights. Eg, customizing the lookback period considered when generating a insight.",
+      "id": "GoogleCloudRecommenderV1beta1InsightTypeGenerationConfig",
+      "properties": {
+        "params": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Parameters for this InsightTypeGenerationConfig. These configs can be used by or are applied to all subtypes.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudRecommenderV1beta1ListInsightsResponse": {
       "description": "Response to the `ListInsights` method.",
       "id": "GoogleCloudRecommenderV1beta1ListInsightsResponse",
@@ -1432,7 +1757,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "State properties to include with this state. Overwrites any existing `state_metadata`. Keys must match the regex /^a-z0-9{0,62}$/. Values must match the regex /^[a-zA-Z0-9_./-]{0,255}$/.",
+          "description": "State properties to include with this state. Overwrites any existing `state_metadata`. Keys must match the regex `/^a-z0-9{0,62}$/`. Values must match the regex `/^[a-zA-Z0-9_./-]{0,255}$/`.",
           "type": "object"
         }
       },
@@ -1450,7 +1775,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "State properties to include with this state. Overwrites any existing `state_metadata`. Keys must match the regex /^a-z0-9{0,62}$/. Values must match the regex /^[a-zA-Z0-9_./-]{0,255}$/.",
+          "description": "State properties to include with this state. Overwrites any existing `state_metadata`. Keys must match the regex `/^a-z0-9{0,62}$/`. Values must match the regex `/^[a-zA-Z0-9_./-]{0,255}$/`.",
           "type": "object"
         }
       },
@@ -1468,7 +1793,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "State properties to include with this state. Overwrites any existing `state_metadata`. Keys must match the regex /^a-z0-9{0,62}$/. Values must match the regex /^[a-zA-Z0-9_./-]{0,255}$/.",
+          "description": "State properties to include with this state. Overwrites any existing `state_metadata`. Keys must match the regex `/^a-z0-9{0,62}$/`. Values must match the regex `/^[a-zA-Z0-9_./-]{0,255}$/`.",
           "type": "object"
         }
       },
@@ -1490,7 +1815,7 @@
           "additionalProperties": {
             "type": "any"
           },
-          "description": "Set of filters to apply if `path` refers to array elements or nested array elements in order to narrow down to a single unique element that is being tested/modified. This is intended to be an exact match per filter. To perform advanced matching, use path_value_matchers. * Example: { \"/versions/*/name\" : \"it-123\" \"/versions/*/targetSize/percent\": 20 } * Example: { \"/bindings/*/role\": \"roles/owner\" \"/bindings/*/condition\" : null } * Example: { \"/bindings/*/role\": \"roles/owner\" \"/bindings/*/members/*\" : [\"x@example.com\", \"y@example.com\"] } When both path_filters and path_value_matchers are set, an implicit AND must be performed.",
+          "description": "Set of filters to apply if `path` refers to array elements or nested array elements in order to narrow down to a single unique element that is being tested/modified. This is intended to be an exact match per filter. To perform advanced matching, use path_value_matchers. * Example: ``` { \"/versions/*/name\" : \"it-123\" \"/versions/*/targetSize/percent\": 20 } ``` * Example: ``` { \"/bindings/*/role\": \"roles/owner\" \"/bindings/*/condition\" : null } ``` * Example: ``` { \"/bindings/*/role\": \"roles/owner\" \"/bindings/*/members/*\" : [\"x@example.com\", \"y@example.com\"] } ``` When both path_filters and path_value_matchers are set, an implicit AND must be performed.",
           "type": "object"
         },
         "pathValueMatchers": {
@@ -1609,6 +1934,10 @@
         "stateInfo": {
           "$ref": "GoogleCloudRecommenderV1beta1RecommendationStateInfo",
           "description": "Information for state. Contains state and metadata."
+        },
+        "xorGroupId": {
+          "description": "Corresponds to a mutually exclusive group ID within a recommender. A non-empty ID indicates that the recommendation belongs to a mutually exclusive group. This means that only one recommendation within the group is suggested to be applied.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1680,6 +2009,61 @@
       },
       "type": "object"
     },
+    "GoogleCloudRecommenderV1beta1RecommenderConfig": {
+      "description": "Configuration for a Recommender.",
+      "id": "GoogleCloudRecommenderV1beta1RecommenderConfig",
+      "properties": {
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Allows clients to store small amounts of arbitrary data. Annotations must follow the Kubernetes syntax. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.",
+          "type": "object"
+        },
+        "displayName": {
+          "description": "A user-settable field to provide a human-readable name to be used in user interfaces.",
+          "type": "string"
+        },
+        "etag": {
+          "description": "Fingerprint of the RecommenderConfig. Provides optimistic locking when updating.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of recommender config. Eg, projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config",
+          "type": "string"
+        },
+        "recommenderGenerationConfig": {
+          "$ref": "GoogleCloudRecommenderV1beta1RecommenderGenerationConfig",
+          "description": "RecommenderGenerationConfig which configures the Generation of recommendations for this recommender."
+        },
+        "revisionId": {
+          "description": "Output only. Immutable. The revision ID of the config. A new revision is committed whenever the config is changed in any way. The format is an 8-character hexadecimal string.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Last time when the config was updated.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRecommenderV1beta1RecommenderGenerationConfig": {
+      "description": "A Configuration to customize the generation of recommendations. Eg, customizing the lookback period considered when generating a recommendation.",
+      "id": "GoogleCloudRecommenderV1beta1RecommenderGenerationConfig",
+      "properties": {
+        "params": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Parameters for this RecommenderGenerationConfig. These configs can be used by or are applied to all subtypes.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudRecommenderV1beta1SecurityProjection": {
       "description": "Contains various ways of describing the impact on Security.",
       "id": "GoogleCloudRecommenderV1beta1SecurityProjection",
@@ -1691,6 +2075,23 @@
           },
           "description": "This field can be used by the recommender to define details specific to security impact.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRecommenderV1beta1SustainabilityProjection": {
+      "description": "Contains metadata about how much sustainability a recommendation can save or incur.",
+      "id": "GoogleCloudRecommenderV1beta1SustainabilityProjection",
+      "properties": {
+        "duration": {
+          "description": "Duration for which this sustanability applies.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "kgCO2e": {
+          "description": "Carbon Footprint generated in kg of CO2 equivalent. Chose kg_c_o2e so that the name renders correctly in camelCase (kgCO2e).",
+          "format": "double",
+          "type": "number"
         }
       },
       "type": "object"

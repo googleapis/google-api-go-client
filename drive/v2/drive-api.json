@@ -38,7 +38,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"uWj2hSb4GVjzdDlAnRd2gbM1ZQ8/1zEdrQsJh-Ob8KbDsrp0vIynqK0\"",
+  "etag": "\"uWj2hSb4GVjzdDlAnRd2gbM1ZQ8/FJ_l9FpOo0745yxBh-UGhApXY3k\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -932,11 +932,23 @@
             "driveId"
           ],
           "parameters": {
+            "allowItemDeletion": {
+              "default": "false",
+              "description": "Whether any items inside the shared drive should also be deleted. This option is only supported when useDomainAdminAccess is also set to true.",
+              "location": "query",
+              "type": "boolean"
+            },
             "driveId": {
               "description": "The ID of the shared drive.",
               "location": "path",
               "required": true,
               "type": "string"
+            },
+            "useDomainAdminAccess": {
+              "default": "false",
+              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the shared drive belongs.",
+              "location": "query",
+              "type": "boolean"
             }
           },
           "path": "drives/{driveId}",
@@ -1280,7 +1292,7 @@
           ]
         },
         "export": {
-          "description": "Exports a Google Doc to the requested MIME type and returns the exported content. Please note that the exported content is limited to 10MB.",
+          "description": "Exports a Google Workspace document to the requested MIME type and returns exported byte content. Note that the exported content is limited to 10MB.",
           "httpMethod": "GET",
           "id": "drive.files.export",
           "parameterOrder": [
@@ -1659,7 +1671,7 @@
           ]
         },
         "patch": {
-          "description": "Updates a file's metadata and/or content. When calling this method, only populate fields in the request that you want to modify. When updating fields, some fields might might change automatically, such as modifiedDate. This method supports patch semantics.",
+          "description": "Updates a file's metadata and/or content. When calling this method, only populate fields in the request that you want to modify. When updating fields, some fields might change automatically, such as modifiedDate. This method supports patch semantics.",
           "httpMethod": "PATCH",
           "id": "drive.files.patch",
           "parameterOrder": [
@@ -2090,7 +2102,7 @@
           "supportsMediaUpload": true
         },
         "watch": {
-          "description": "Subscribe to changes on a file",
+          "description": "Subscribes to changes to a file. While you can establish a channel for changes to a file on a shared drive, a change to a shared drive file won't create a notification.",
           "httpMethod": "POST",
           "id": "drive.files.watch",
           "parameterOrder": [
@@ -3527,7 +3539,7 @@
       }
     }
   },
-  "revision": "20210921",
+  "revision": "20220508",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -4519,6 +4531,10 @@
               "description": "Whether the current user can rename this shared drive.",
               "type": "boolean"
             },
+            "canResetDriveRestrictions": {
+              "description": "Whether the current user can reset the shared drive restrictions to defaults.",
+              "type": "boolean"
+            },
             "canShare": {
               "description": "Whether the current user can share files or folders in this shared drive.",
               "type": "boolean"
@@ -4559,6 +4575,10 @@
             ]
           },
           "description": "The name of this shared drive.",
+          "type": "string"
+        },
+        "orgUnitId": {
+          "description": "The organizational unit of this shared drive. This field is only populated on drives.list responses when the useDomainAdminAccess parameter is set to true.",
           "type": "string"
         },
         "restrictions": {
@@ -4636,6 +4656,10 @@
         "capabilities": {
           "description": "Capabilities the current user has on this file. Each capability corresponds to a fine-grained action that a user may take.",
           "properties": {
+            "canAcceptOwnership": {
+              "description": "Whether the current user is the pending owner of the file. Not populated for shared drive files.",
+              "type": "boolean"
+            },
             "canAddChildren": {
               "description": "Whether the current user can add children to this folder. This is always false when the item is not a folder.",
               "type": "boolean"
@@ -5462,6 +5486,10 @@
           "description": "The name for this permission.",
           "type": "string"
         },
+        "pendingOwner": {
+          "description": "Whether the account associated with this permission is a pending owner. Only populated for user type permissions for files that are not in a shared drive.",
+          "type": "boolean"
+        },
         "permissionDetails": {
           "description": "Details of whether the permissions on this shared drive item are inherited or directly on this item. This is an output-only field which is present only for shared drive items.",
           "items": {
@@ -5915,6 +5943,10 @@
               "description": "Whether the current user can rename this Team Drive.",
               "type": "boolean"
             },
+            "canResetTeamDriveRestrictions": {
+              "description": "Whether the current user can reset the Team Drive restrictions to defaults.",
+              "type": "boolean"
+            },
             "canShare": {
               "description": "Whether the current user can share files or folders in this Team Drive.",
               "type": "boolean"
@@ -5951,6 +5983,10 @@
             ]
           },
           "description": "The name of this Team Drive.",
+          "type": "string"
+        },
+        "orgUnitId": {
+          "description": "The organizational unit of this shared drive. This field is only populated on drives.list responses when the useDomainAdminAccess parameter is set to true.",
           "type": "string"
         },
         "restrictions": {

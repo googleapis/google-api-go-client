@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -94,7 +95,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
 	)
@@ -347,7 +348,7 @@ type AndroidInstrumentationTest struct {
 	// OrchestratorOption: The option of whether running each test within
 	// its own invocation of instrumentation with Android Test Orchestrator
 	// or not. ** Orchestrator is only compatible with AndroidJUnitRunner
-	// version 1.0 or higher! ** Orchestrator offers the following benefits:
+	// version 1.1 or higher! ** Orchestrator offers the following benefits:
 	// - No shared state - Crashes are isolated - Logs are scoped per test
 	// See for more information about Android Test Orchestrator. If not set,
 	// the test will be run without the orchestrator.
@@ -359,7 +360,7 @@ type AndroidInstrumentationTest struct {
 	// with the orchestrator. Using the orchestrator is highly encouraged
 	// because of all the benefits it offers.
 	//   "USE_ORCHESTRATOR" - Run test using orchestrator. ** Only
-	// compatible with AndroidJUnitRunner version 1.0 or higher! **
+	// compatible with AndroidJUnitRunner version 1.1 or higher! **
 	// Recommended.
 	//   "DO_NOT_USE_ORCHESTRATOR" - Run test without using orchestrator.
 	OrchestratorOption string `json:"orchestratorOption,omitempty"`
@@ -535,8 +536,7 @@ type AndroidModel struct {
 	// "deprecated".
 	Tags []string `json:"tags,omitempty"`
 
-	// ThumbnailUrl: URL of a thumbnail image (photo) of the device. e.g.
-	// https://lh3.googleusercontent.com/90WcauuJiCYABEl8U0lcZeuS5STUbf2yW...
+	// ThumbnailUrl: URL of a thumbnail image (photo) of the device.
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Brand") to
@@ -1050,11 +1050,12 @@ func (s *ClientInfoDetail) MarshalJSON() ([]byte, error) {
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
 // Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values * A month and day value,
-// with a zero year, such as an anniversary * A year on its own, with
-// zero month and day values * A year and month value, with a zero day,
-// such as a credit card expiration date Related types are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
 	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
 	// month, or 0 to specify a year by itself or a year and month where the
@@ -2350,7 +2351,8 @@ type Shard struct {
 	// ShardIndex: Output only. The index of the shard among all the shards.
 	ShardIndex int64 `json:"shardIndex,omitempty"`
 
-	// TestTargetsForShard: Output only. Test targets for each shard.
+	// TestTargetsForShard: Output only. Test targets for each shard. Only
+	// set for manual sharding.
 	TestTargetsForShard *TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NumShards") to
@@ -2695,7 +2697,7 @@ type TestMatrix struct {
 	//   "INSTRUMENTATION_ORCHESTRATOR_INCOMPATIBLE" - The test runner class
 	// specified by user or in the test APK's manifest file is not
 	// compatible with Android Test Orchestrator. Orchestrator is only
-	// compatible with AndroidJUnitRunner version 1.0 or higher.
+	// compatible with AndroidJUnitRunner version 1.1 or higher.
 	// Orchestrator can be disabled by using DO_NOT_USE_ORCHESTRATOR
 	// OrchestratorOption.
 	//   "NO_TEST_RUNNER_CLASS" - The test APK does not contain the test
@@ -2991,7 +2993,7 @@ type TestTargetsForShard struct {
 	// run for each shard. The targets need to be specified in
 	// AndroidJUnitRunner argument format. For example, "package
 	// com.my.packages" "class com.my.package.MyClass". The number of
-	// shard_test_targets must be greater than 0.
+	// test_targets must be greater than 0.
 	TestTargets []string `json:"testTargets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestTargets") to
@@ -3186,8 +3188,10 @@ func (s *TrafficRule) UnmarshalJSON(data []byte) error {
 
 // UniformSharding: Uniformly shards test cases given a total number of
 // shards. For Instrumentation test, it will be translated to "-e
-// numShard" "-e shardIndex" AndroidJUnitRunner arguments. With uniform
-// sharding enabled, specifying these sharding arguments via
+// numShard" "-e shardIndex" AndroidJUnitRunner arguments. Based on the
+// sharding mechanism AndroidJUnitRunner uses, there is no guarantee
+// that test cases will be distributed uniformly across all shards. With
+// uniform sharding enabled, specifying these sharding arguments via
 // environment_variables is invalid.
 type UniformSharding struct {
 	// NumShards: Required. Total number of shards. When any physical
@@ -3294,7 +3298,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Header() http.Header {
 
 func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3430,7 +3434,7 @@ func (c *ProjectsTestMatricesCancelCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3586,7 +3590,7 @@ func (c *ProjectsTestMatricesCreateCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3748,7 +3752,7 @@ func (c *ProjectsTestMatricesGetCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3912,7 +3916,7 @@ func (c *TestEnvironmentCatalogGetCall) Header() http.Header {
 
 func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

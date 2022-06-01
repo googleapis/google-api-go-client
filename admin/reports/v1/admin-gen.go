@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -92,7 +93,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/admin.reports.audit.readonly",
 		"https://www.googleapis.com/auth/admin.reports.usage.readonly",
 	)
@@ -312,8 +313,10 @@ type ActivityActor struct {
 	// identifier for robot accounts.
 	Key string `json:"key,omitempty"`
 
-	// ProfileId: The unique Google Workspace profile ID of the actor. May
-	// be absent if the actor is not a Google Workspace user.
+	// ProfileId: The unique Google Workspace profile ID of the actor. This
+	// value might be absent if the actor is not a Google Workspace user, or
+	// may be the number 105250506097979753968 which acts as a placeholder
+	// ID.
 	ProfileId string `json:"profileId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CallerType") to
@@ -1123,7 +1126,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1237,10 +1240,10 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//         "The Enterprise Groups activity reports return information about various Enterprise group activity events.",
 	//         "The Jamboard activity reports return information about various Jamboard activity events.",
 	//         "The Login application's activity reports return account information about different types of Login activity events.",
-	//         "The Meet Audit activity report return information about different types of Meet Audit activity events.",
-	//         "The Mobile Audit activity report return information about different types of Mobile Audit activity events.",
-	//         "The Rules activity report return information about different types of Rules activity events.",
-	//         "The SAML activity report return information about different types of SAML activity events.",
+	//         "The Meet Audit activity report returns information about different types of Meet Audit activity events.",
+	//         "The Device Audit activity report returns information about different types of Device Audit activity events.",
+	//         "The Rules activity report returns information about different types of Rules activity events.",
+	//         "The SAML activity report returns information about different types of SAML activity events.",
 	//         "The Token application's activity reports return account information about different types of Token activity events.",
 	//         "The User Accounts application's activity reports return account information about different types of User Accounts activity events.",
 	//         "The Context-aware access activity reports return information about users' access denied events due to Context-aware access rules.",
@@ -1552,7 +1555,7 @@ func (c *ActivitiesWatchCall) Header() http.Header {
 
 func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1668,10 +1671,10 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//         "The Enterprise Groups activity reports return information about various Enterprise group activity events.",
 	//         "The Jamboard activity reports return information about various Jamboard activity events.",
 	//         "The Login application's activity reports return account information about different types of Login activity events.",
-	//         "The Meet Audit activity report return information about different types of Meet Audit activity events.",
-	//         "The Mobile Audit activity report return information about different types of Mobile Audit activity events.",
-	//         "The Rules activity report return information about different types of Rules activity events.",
-	//         "The SAML activity report return information about different types of SAML activity events.",
+	//         "The Meet Audit activity report returns information about different types of Meet Audit activity events.",
+	//         "The Device Audit activity report returns information about different types of Device Audit activity events.",
+	//         "The Rules activity report returns information about different types of Rules activity events.",
+	//         "The SAML activity report returns information about different types of SAML activity events.",
 	//         "The Token application's activity reports return account information about different types of Token activity events.",
 	//         "The User Accounts application's activity reports return account information about different types of User Accounts activity events.",
 	//         "The Context-aware access activity reports return information about users' access denied events due to Context-aware access rules.",
@@ -1805,7 +1808,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1959,7 +1962,7 @@ func (c *CustomerUsageReportsGetCall) Header() http.Header {
 
 func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2109,7 +2112,11 @@ type EntityUsageReportsGetCall struct {
 //   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
 //   account's time zone for this.
 // - entityKey: Represents the key of the object to filter the data
-//   with.
+//   with. It is a string which can take the value `all` to get activity
+//   events for all users, or any other value for an app-specific
+//   entity. For details on how to obtain the `entityKey` for a
+//   particular `entityType`, see the Entities Usage parameters
+//   reference guides.
 // - entityType: Represents the type of entity for the report.
 func (r *EntityUsageReportsService) Get(entityType string, entityKey string, date string) *EntityUsageReportsGetCall {
 	c := &EntityUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2226,7 +2233,7 @@ func (c *EntityUsageReportsGetCall) Header() http.Header {
 
 func (c *EntityUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2314,15 +2321,7 @@ func (c *EntityUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRepo
 	//       "type": "string"
 	//     },
 	//     "entityKey": {
-	//       "description": "Represents the key of the object to filter the data with.",
-	//       "enum": [
-	//         "all",
-	//         "entityKey"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Returns activity events for all users.",
-	//         "Represents an app-specific identifier for the entity. For details on how to obtain the `entityKey` for a particular `entityType`, see the Entities Usage parameters reference guides."
-	//       ],
+	//       "description": "Represents the key of the object to filter the data with. It is a string which can take the value `all` to get activity events for all users, or any other value for an app-specific entity. For details on how to obtain the `entityKey` for a particular `entityType`, see the Entities Usage parameters reference guides.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2559,7 +2558,7 @@ func (c *UserUsageReportGetCall) Header() http.Header {
 
 func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

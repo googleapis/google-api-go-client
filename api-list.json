@@ -813,6 +813,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "businessprofileperformance:v1",
+      "name": "businessprofileperformance",
+      "version": "v1",
+      "title": "Business Profile Performance API",
+      "description": "The Business Profile Performance API allows merchants to fetch performance insights about their business profile on Google.",
+      "discoveryRestUrl": "https://businessprofileperformance.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/my-business/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "calendar:v3",
       "name": "calendar",
       "version": "v3",

@@ -857,7 +857,7 @@ func (s *ContextAttribute) MarshalJSON() ([]byte, error) {
 // CustomEmoji: Proto representation of a custom emoji. May be used in
 // both APIs and in Spanner, but certain fields should be restricted to
 // one or the other. See the per-field documentation for details.
-// NEXT_TAG: 13
+// NEXT_TAG: 14
 type CustomEmoji struct {
 	// BlobId: ID for the underlying image data in Blobstore. This field
 	// should *only* be present in Spanner or within the server, but should
@@ -875,6 +875,11 @@ type CustomEmoji struct {
 
 	// CreatorUserId: This field should *never* be persisted to Spanner.
 	CreatorUserId *UserId `json:"creatorUserId,omitempty"`
+
+	// DeleteTimeMicros: Time when the emoji was deleted, in microseconds.
+	// This field may be present in Spanner, within the server, or in public
+	// APIs. Only present if the emoji has been deleted.
+	DeleteTimeMicros int64 `json:"deleteTimeMicros,omitempty,string"`
 
 	// EphemeralUrl: Output only. A short-lived URL clients can use for
 	// directly accessing a custom emoji image. This field is intended for
@@ -2340,7 +2345,7 @@ func (s *FacetOptions) MarshalJSON() ([]byte, error) {
 // FacetResult: Source specific facet response
 type FacetResult struct {
 	// Buckets: FacetBuckets for values in response containing at least a
-	// single result.
+	// single result with the corresponding filter.
 	Buckets []*FacetBucket `json:"buckets,omitempty"`
 
 	// ObjectType: Object type for which facet results are returned. Can be

@@ -581,6 +581,9 @@ type ConfigVariableTemplate struct {
 	// DisplayName: Display name of the parameter.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EnumOptions: Enum options. To be populated if `ValueType` is `ENUM`
+	EnumOptions []*EnumOption `json:"enumOptions,omitempty"`
+
 	// Key: Key of the config variable.
 	Key string `json:"key,omitempty"`
 
@@ -604,6 +607,7 @@ type ConfigVariableTemplate struct {
 	//   "INT" - Value type is integer.
 	//   "BOOL" - Value type is boolean.
 	//   "SECRET" - Value type is secret.
+	//   "ENUM" - Value type is enum.
 	ValueType string `json:"valueType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -1008,6 +1012,37 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EnumOption: EnumOption definition
+type EnumOption struct {
+	// DisplayName: Display name of the option.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: Id of the option.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnumOption) MarshalJSON() ([]byte, error) {
+	type NoMethod EnumOption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression

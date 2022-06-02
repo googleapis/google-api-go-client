@@ -2989,11 +2989,11 @@ func (s *Features) MarshalJSON() ([]byte, error) {
 // information about common tasks, see the Developer's Guide
 // (/admin-sdk/directory/v1/guides/manage-groups).
 type Group struct {
-	// AdminCreated: Value is `true` if this group was created by an
-	// administrator rather than a user.
+	// AdminCreated: Read-only. Value is `true` if this group was created by
+	// an administrator rather than a user.
 	AdminCreated bool `json:"adminCreated,omitempty"`
 
-	// Aliases: List of a group's alias email addresses.
+	// Aliases: Read-only. A list of a group's alias email addresses.
 	Aliases []string `json:"aliases,omitempty"`
 
 	// Description: An extended description to help users determine the
@@ -3020,8 +3020,8 @@ type Group struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The unique ID of a group. A group `id` can be used as a group
-	// request URI's `groupKey`.
+	// Id: Read-only. The unique ID of a group. A group `id` can be used as
+	// a group request URI's `groupKey`.
 	Id string `json:"id,omitempty"`
 
 	// Kind: The type of the API resource. For Groups resources, the value
@@ -3031,12 +3031,12 @@ type Group struct {
 	// Name: The group's display name.
 	Name string `json:"name,omitempty"`
 
-	// NonEditableAliases: List of the group's non-editable alias email
-	// addresses that are outside of the account's primary domain or
-	// subdomains. These are functioning email addresses used by the group.
-	// This is a read-only property returned in the API's response for a
-	// group. If edited in a group's POST or PUT request, the edit is
-	// ignored by the API service.
+	// NonEditableAliases: Read-only. A list of the group's non-editable
+	// alias email addresses that are outside of the account's primary
+	// domain or subdomains. These are functioning email addresses used by
+	// the group. This is a read-only property returned in the API's
+	// response for a group. If edited in a group's POST or PUT request, the
+	// edit is ignored by the API service.
 	NonEditableAliases []string `json:"nonEditableAliases,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

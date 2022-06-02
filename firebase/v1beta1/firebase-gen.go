@@ -1753,9 +1753,9 @@ type WebApp struct {
 	// to an empty value in update requests.
 	ApiKeyId string `json:"apiKeyId,omitempty"`
 
-	// AppId: Immutable. The globally unique, Firebase-assigned identifier
-	// for the `WebApp`. This identifier should be treated as an opaque
-	// token, as the data format is not specified.
+	// AppId: Output only. Immutable. The globally unique, Firebase-assigned
+	// identifier for the `WebApp`. This identifier should be treated as an
+	// opaque token, as the data format is not specified.
 	AppId string `json:"appId,omitempty"`
 
 	// AppUrls: The URLs where the `WebApp` is hosted.
@@ -1777,8 +1777,8 @@ type WebApp struct {
 	// (see `appId` (../projects.webApps#WebApp.FIELDS.app_id)).
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: Immutable. A user-assigned unique identifier of the parent
-	// FirebaseProject for the `WebApp`.
+	// ProjectId: Output only. Immutable. A user-assigned unique identifier
+	// of the parent FirebaseProject for the `WebApp`.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// WebId: Output only. Immutable. A unique, Firebase-assigned identifier

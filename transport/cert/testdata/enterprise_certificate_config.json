@@ -1,0 +1,8 @@
+{
+  "cert_info": {
+    "issuer": "Test Issuer"
+  },
+  "libs": {
+    "signer_binary": "./testdata/signer.sh"
+  }
+}

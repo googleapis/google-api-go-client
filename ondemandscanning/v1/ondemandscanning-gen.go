@@ -2277,6 +2277,10 @@ type PackageData struct {
 	//   "GO_STDLIB" - Go toolchain + standard library packages.
 	PackageType string `json:"packageType,omitempty"`
 
+	// PatchedCve: CVEs that this package is no longer vulnerable to
+	// go/drydock-dd-custom-binary-scanning
+	PatchedCve []string `json:"patchedCve,omitempty"`
+
 	Unused string `json:"unused,omitempty"`
 
 	// Version: The version of the package being analysed

@@ -2357,6 +2357,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/bid-manager/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "doubleclickbidmanager:v2",
+      "name": "doubleclickbidmanager",
+      "version": "v2",
+      "title": "DoubleClick Bid Manager API",
+      "description": "DoubleClick Bid Manager API allows users to manage and create campaigns and reports.",
+      "discoveryRestUrl": "https://doubleclickbidmanager.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/bid-manager/",
       "preferred": true
     },
     {

@@ -2553,7 +2553,7 @@ type GoogleCloudRetailV2betaControl struct {
 	FacetSpec *GoogleCloudRetailV2betaSearchRequestFacetSpec `json:"facetSpec,omitempty"`
 
 	// Name: Immutable. Fully qualified name
-	// projects/*/locations/global/catalogs/*/controls/*
+	// `projects/*/locations/global/catalogs/*/controls/*`
 	Name string `json:"name,omitempty"`
 
 	// Rule: A rule control - a condition-action pair. Enacts a set action
@@ -4506,14 +4506,16 @@ func (s *GoogleCloudRetailV2betaProductLevelConfig) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2betaPromotion: Promotion information.
+// GoogleCloudRetailV2betaPromotion: Promotion specification.
 type GoogleCloudRetailV2betaPromotion struct {
-	// PromotionId: ID of the promotion. For example, "free gift". The value
-	// must be a UTF-8 encoded string with a length limit of 128 characters,
-	// and match the pattern: `a-zA-Z*`. For example, id0LikeThis or
-	// ID_1_LIKE_THIS. Otherwise, an INVALID_ARGUMENT error is returned.
-	// Google Merchant Center property promotion
-	// (https://support.google.com/merchants/answer/7050148).
+	// PromotionId: Promotion identifier, which is the final component of
+	// name. For example, this field is "free_gift", if name is
+	// `projects/*/locations/global/catalogs/default_catalog/promotions/free_
+	// gift`. The value must be a UTF-8 encoded string with a length limit
+	// of 128 characters, and match the pattern: `a-zA-Z*`. For example,
+	// id0LikeThis or ID_1_LIKE_THIS. Otherwise, an INVALID_ARGUMENT error
+	// is returned. Corresponds to Google Merchant Center property
+	// promotion_id (https://support.google.com/merchants/answer/7050148).
 	PromotionId string `json:"promotionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PromotionId") to
@@ -6402,7 +6404,7 @@ type GoogleCloudRetailV2betaServingConfig struct {
 	ModelId string `json:"modelId,omitempty"`
 
 	// Name: Immutable. Fully qualified name
-	// projects/*/locations/global/catalogs/*/servingConfig/*
+	// `projects/*/locations/global/catalogs/*/servingConfig/*`
 	Name string `json:"name,omitempty"`
 
 	// OnewaySynonymsControlIds: Condition oneway synonyms specifications.
@@ -7447,8 +7449,8 @@ type ProjectsLocationsCatalogsGetAttributesConfigCall struct {
 // GetAttributesConfig: Gets an AttributesConfig.
 //
 // - name: Full AttributesConfig resource name. Format:
-//   projects/{project_number}/locations/{location_id}/catalogs/{catalog_
-//   id}/attributesConfig.
+//   `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//   _id}/attributesConfig`.
 func (r *ProjectsLocationsCatalogsService) GetAttributesConfig(name string) *ProjectsLocationsCatalogsGetAttributesConfigCall {
 	c := &ProjectsLocationsCatalogsGetAttributesConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7564,7 +7566,7 @@ func (c *ProjectsLocationsCatalogsGetAttributesConfigCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full AttributesConfig resource name. Format: projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/attributesConfig",
+	//       "description": "Required. Full AttributesConfig resource name. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/attributesConfig`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/attributesConfig$",
 	//       "required": true,
@@ -8748,8 +8750,8 @@ type ProjectsLocationsCatalogsAttributesConfigAddCatalogAttributeCall struct {
 // ALREADY_EXISTS error is returned.
 //
 // - attributesConfig: Full AttributesConfig resource name. Format:
-//   projects/{project_number}/locations/{location_id}/catalogs/{catalog_
-//   id}/attributesConfig.
+//   `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//   _id}/attributesConfig`.
 func (r *ProjectsLocationsCatalogsAttributesConfigService) AddCatalogAttribute(attributesConfig string, googlecloudretailv2betaaddcatalogattributerequest *GoogleCloudRetailV2betaAddCatalogAttributeRequest) *ProjectsLocationsCatalogsAttributesConfigAddCatalogAttributeCall {
 	c := &ProjectsLocationsCatalogsAttributesConfigAddCatalogAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.attributesConfig = attributesConfig
@@ -8858,7 +8860,7 @@ func (c *ProjectsLocationsCatalogsAttributesConfigAddCatalogAttributeCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "attributesConfig": {
-	//       "description": "Required. Full AttributesConfig resource name. Format: projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/attributesConfig",
+	//       "description": "Required. Full AttributesConfig resource name. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/attributesConfig`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/attributesConfig$",
 	//       "required": true,
@@ -8895,8 +8897,8 @@ type ProjectsLocationsCatalogsAttributesConfigRemoveCatalogAttributeCall struct 
 // exist, a NOT_FOUND error is returned.
 //
 // - attributesConfig: Full AttributesConfig resource name. Format:
-//   projects/{project_number}/locations/{location_id}/catalogs/{catalog_
-//   id}/attributesConfig.
+//   `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//   _id}/attributesConfig`.
 func (r *ProjectsLocationsCatalogsAttributesConfigService) RemoveCatalogAttribute(attributesConfig string, googlecloudretailv2betaremovecatalogattributerequest *GoogleCloudRetailV2betaRemoveCatalogAttributeRequest) *ProjectsLocationsCatalogsAttributesConfigRemoveCatalogAttributeCall {
 	c := &ProjectsLocationsCatalogsAttributesConfigRemoveCatalogAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.attributesConfig = attributesConfig
@@ -9005,7 +9007,7 @@ func (c *ProjectsLocationsCatalogsAttributesConfigRemoveCatalogAttributeCall) Do
 	//   ],
 	//   "parameters": {
 	//     "attributesConfig": {
-	//       "description": "Required. Full AttributesConfig resource name. Format: projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/attributesConfig",
+	//       "description": "Required. Full AttributesConfig resource name. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/attributesConfig`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/attributesConfig$",
 	//       "required": true,
@@ -9043,8 +9045,8 @@ type ProjectsLocationsCatalogsAttributesConfigReplaceCatalogAttributeCall struct
 // exist, a NOT_FOUND error is returned.
 //
 // - attributesConfig: Full AttributesConfig resource name. Format:
-//   projects/{project_number}/locations/{location_id}/catalogs/{catalog_
-//   id}/attributesConfig.
+//   `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//   _id}/attributesConfig`.
 func (r *ProjectsLocationsCatalogsAttributesConfigService) ReplaceCatalogAttribute(attributesConfig string, googlecloudretailv2betareplacecatalogattributerequest *GoogleCloudRetailV2betaReplaceCatalogAttributeRequest) *ProjectsLocationsCatalogsAttributesConfigReplaceCatalogAttributeCall {
 	c := &ProjectsLocationsCatalogsAttributesConfigReplaceCatalogAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.attributesConfig = attributesConfig
@@ -9153,7 +9155,7 @@ func (c *ProjectsLocationsCatalogsAttributesConfigReplaceCatalogAttributeCall) D
 	//   ],
 	//   "parameters": {
 	//     "attributesConfig": {
-	//       "description": "Required. Full AttributesConfig resource name. Format: projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/attributesConfig",
+	//       "description": "Required. Full AttributesConfig resource name. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/attributesConfig`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/attributesConfig$",
 	//       "required": true,
@@ -11295,8 +11297,8 @@ type ProjectsLocationsCatalogsControlsCreateCall struct {
 // an ALREADY_EXISTS error is returned.
 //
 // - parent: Full resource name of parent catalog. Format:
-//   projects/{project_number}/locations/{location_id}/catalogs/{catalog_
-//   id}.
+//   `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//   _id}`.
 func (r *ProjectsLocationsCatalogsControlsService) Create(parent string, googlecloudretailv2betacontrol *GoogleCloudRetailV2betaControl) *ProjectsLocationsCatalogsControlsCreateCall {
 	c := &ProjectsLocationsCatalogsControlsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11418,7 +11420,7 @@ func (c *ProjectsLocationsCatalogsControlsCreateCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Full resource name of parent catalog. Format: projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}",
+	//       "description": "Required. Full resource name of parent catalog. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
 	//       "required": true,
@@ -11453,8 +11455,8 @@ type ProjectsLocationsCatalogsControlsDeleteCall struct {
 // NOT_FOUND error is returned.
 //
 // - name: The resource name of the Control to delete. Format:
-//   projects/{project_number}/locations/{location_id}/catalogs/{catalog_
-//   id}/controls/{control_id}.
+//   `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//   _id}/controls/{control_id}`.
 func (r *ProjectsLocationsCatalogsControlsService) Delete(name string) *ProjectsLocationsCatalogsControlsDeleteCall {
 	c := &ProjectsLocationsCatalogsControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11556,7 +11558,7 @@ func (c *ProjectsLocationsCatalogsControlsDeleteCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Control to delete. Format: projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/controls/{control_id}",
+	//       "description": "Required. The resource name of the Control to delete. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/controls/{control_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/controls/[^/]+$",
 	//       "required": true,
@@ -11588,8 +11590,8 @@ type ProjectsLocationsCatalogsControlsGetCall struct {
 // Get: Gets a Control.
 //
 // - name: The resource name of the Control to delete. Format:
-//   projects/{project_number}/locations/{location_id}/catalogs/{catalog_
-//   id}/controls/{control_id}.
+//   `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//   _id}/controls/{control_id}`.
 func (r *ProjectsLocationsCatalogsControlsService) Get(name string) *ProjectsLocationsCatalogsControlsGetCall {
 	c := &ProjectsLocationsCatalogsControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11704,7 +11706,7 @@ func (c *ProjectsLocationsCatalogsControlsGetCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Control to delete. Format: projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/controls/{control_id}",
+	//       "description": "Required. The resource name of the Control to delete. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/controls/{control_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/controls/[^/]+$",
 	//       "required": true,
@@ -11736,8 +11738,8 @@ type ProjectsLocationsCatalogsControlsListCall struct {
 // List: Lists all Controls linked to this catalog.
 //
 // - parent: The catalog resource name. Format:
-//   projects/{project_number}/locations/{location_id}/catalogs/{catalog_
-//   id}.
+//   `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//   _id}`.
 func (r *ProjectsLocationsCatalogsControlsService) List(parent string) *ProjectsLocationsCatalogsControlsListCall {
 	c := &ProjectsLocationsCatalogsControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11895,7 +11897,7 @@ func (c *ProjectsLocationsCatalogsControlsListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The catalog resource name. Format: projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}",
+	//       "description": "Required. The catalog resource name. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
 	//       "required": true,
@@ -11950,7 +11952,7 @@ type ProjectsLocationsCatalogsControlsPatchCall struct {
 // delete does not exist, a NOT_FOUND error is returned.
 //
 // - name: Immutable. Fully qualified name
-//   projects/*/locations/global/catalogs/*/controls/*.
+//   `projects/*/locations/global/catalogs/*/controls/*`.
 func (r *ProjectsLocationsCatalogsControlsService) Patch(name string, googlecloudretailv2betacontrol *GoogleCloudRetailV2betaControl) *ProjectsLocationsCatalogsControlsPatchCall {
 	c := &ProjectsLocationsCatalogsControlsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12067,7 +12069,7 @@ func (c *ProjectsLocationsCatalogsControlsPatchCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. Fully qualified name projects/*/locations/global/catalogs/*/controls/*",
+	//       "description": "Immutable. Fully qualified name `projects/*/locations/global/catalogs/*/controls/*`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/controls/[^/]+$",
 	//       "required": true,
@@ -12470,8 +12472,8 @@ type ProjectsLocationsCatalogsPlacementsPredictCall struct {
 // Predict: Makes a recommendation prediction.
 //
 // - placement: Full resource name of the format:
-//   {name=projects/*/locations/global/catalogs/default_catalog/placement
-//   s/*} The ID of the Recommendations AI placement. Before you can
+//   `{name=projects/*/locations/global/catalogs/default_catalog/placemen
+//   ts/*}` The ID of the Recommendations AI placement. Before you can
 //   request predictions from your model, you must create at least one
 //   placement for it. For more information, see Managing placements
 //   (https://cloud.google.com/retail/recommendations-ai/docs/manage-placements).
@@ -12585,7 +12587,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/placements/*} The ID of the Recommendations AI placement. Before you can request predictions from your model, you must create at least one placement for it. For more information, see [Managing placements](https://cloud.google.com/retail/recommendations-ai/docs/manage-placements). The full list of available placements can be seen at https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements",
+	//       "description": "Required. Full resource name of the format: `{name=projects/*/locations/global/catalogs/default_catalog/placements/*}` The ID of the Recommendations AI placement. Before you can request predictions from your model, you must create at least one placement for it. For more information, see [Managing placements](https://cloud.google.com/retail/recommendations-ai/docs/manage-placements). The full list of available placements can be seen at https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -12944,8 +12946,8 @@ type ProjectsLocationsCatalogsServingConfigsCreateCall struct {
 // returned.
 //
 // - parent: Full resource name of parent. Format:
-//   projects/{project_number}/locations/{location_id}/catalogs/{catalog_
-//   id}.
+//   `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//   _id}`.
 func (r *ProjectsLocationsCatalogsServingConfigsService) Create(parent string, googlecloudretailv2betaservingconfig *GoogleCloudRetailV2betaServingConfig) *ProjectsLocationsCatalogsServingConfigsCreateCall {
 	c := &ProjectsLocationsCatalogsServingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13063,7 +13065,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsCreateCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Full resource name of parent. Format: projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}",
+	//       "description": "Required. Full resource name of parent. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
 	//       "required": true,
@@ -13586,7 +13588,7 @@ type ProjectsLocationsCatalogsServingConfigsPatchCall struct {
 // Patch: Updates a ServingConfig.
 //
 // - name: Immutable. Fully qualified name
-//   projects/*/locations/global/catalogs/*/servingConfig/*.
+//   `projects/*/locations/global/catalogs/*/servingConfig/*`.
 func (r *ProjectsLocationsCatalogsServingConfigsService) Patch(name string, googlecloudretailv2betaservingconfig *GoogleCloudRetailV2betaServingConfig) *ProjectsLocationsCatalogsServingConfigsPatchCall {
 	c := &ProjectsLocationsCatalogsServingConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13704,7 +13706,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsPatchCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. Fully qualified name projects/*/locations/global/catalogs/*/servingConfig/*",
+	//       "description": "Immutable. Fully qualified name `projects/*/locations/global/catalogs/*/servingConfig/*`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/servingConfigs/[^/]+$",
 	//       "required": true,

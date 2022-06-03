@@ -2707,14 +2707,16 @@ func (s *GoogleCloudRetailV2ProductLevelConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2Promotion: Promotion information.
+// GoogleCloudRetailV2Promotion: Promotion specification.
 type GoogleCloudRetailV2Promotion struct {
-	// PromotionId: ID of the promotion. For example, "free gift". The value
-	// must be a UTF-8 encoded string with a length limit of 128 characters,
-	// and match the pattern: `a-zA-Z*`. For example, id0LikeThis or
-	// ID_1_LIKE_THIS. Otherwise, an INVALID_ARGUMENT error is returned.
-	// Google Merchant Center property promotion
-	// (https://support.google.com/merchants/answer/7050148).
+	// PromotionId: Promotion identifier, which is the final component of
+	// name. For example, this field is "free_gift", if name is
+	// `projects/*/locations/global/catalogs/default_catalog/promotions/free_
+	// gift`. The value must be a UTF-8 encoded string with a length limit
+	// of 128 characters, and match the pattern: `a-zA-Z*`. For example,
+	// id0LikeThis or ID_1_LIKE_THIS. Otherwise, an INVALID_ARGUMENT error
+	// is returned. Corresponds to Google Merchant Center property
+	// promotion_id (https://support.google.com/merchants/answer/7050148).
 	PromotionId string `json:"promotionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PromotionId") to
@@ -9248,8 +9250,8 @@ type ProjectsLocationsCatalogsPlacementsPredictCall struct {
 // Predict: Makes a recommendation prediction.
 //
 // - placement: Full resource name of the format:
-//   {name=projects/*/locations/global/catalogs/default_catalog/placement
-//   s/*} The ID of the Recommendations AI placement. Before you can
+//   `{name=projects/*/locations/global/catalogs/default_catalog/placemen
+//   ts/*}` The ID of the Recommendations AI placement. Before you can
 //   request predictions from your model, you must create at least one
 //   placement for it. For more information, see Managing placements
 //   (https://cloud.google.com/retail/recommendations-ai/docs/manage-placements).
@@ -9363,7 +9365,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/placements/*} The ID of the Recommendations AI placement. Before you can request predictions from your model, you must create at least one placement for it. For more information, see [Managing placements](https://cloud.google.com/retail/recommendations-ai/docs/manage-placements). The full list of available placements can be seen at https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements",
+	//       "description": "Required. Full resource name of the format: `{name=projects/*/locations/global/catalogs/default_catalog/placements/*}` The ID of the Recommendations AI placement. Before you can request predictions from your model, you must create at least one placement for it. For more information, see [Managing placements](https://cloud.google.com/retail/recommendations-ai/docs/manage-placements). The full list of available placements can be seen at https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,

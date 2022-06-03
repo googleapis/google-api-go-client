@@ -936,6 +936,11 @@ func (s *EgressPolicy) MarshalJSON() ([]byte, error) {
 // succeed. The request must match `operations` AND `resources` fields
 // in order to be allowed egress out of the perimeter.
 type EgressTo struct {
+	// ExternalResources: A list of external resources that are allowed to
+	// be accessed. A request matches if it contains an external resource in
+	// this list (Example: s3://bucket/path). Currently '*' is not allowed.
+	ExternalResources []string `json:"externalResources,omitempty"`
+
 	// Operations: A list of ApiOperations allowed to be performed by the
 	// sources specified in the corresponding EgressFrom. A request matches
 	// if it uses an operation/service in this list.
@@ -949,20 +954,21 @@ type EgressTo struct {
 	// perimeter.
 	Resources []string `json:"resources,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Operations") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ExternalResources")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Operations") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExternalResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

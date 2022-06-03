@@ -3338,6 +3338,9 @@ type RequestLog struct {
 	// repositories.
 	SourceReference []*SourceReference `json:"sourceReference,omitempty"`
 
+	// SpanId: Stackdriver Trace span identifier for this request.
+	SpanId string `json:"spanId,omitempty"`
+
 	// StartTime: Time when the request started.
 	StartTime string `json:"startTime,omitempty"`
 

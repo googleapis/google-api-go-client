@@ -1485,6 +1485,16 @@ type SchemaSettings struct {
 	// schema types, binary encoding may not be available.
 	Encoding string `json:"encoding,omitempty"`
 
+	// FirstRevisionId: The minimum (inclusive) revision allowed for
+	// validating messages. If empty or not present, allow any revision to
+	// be validated against last_revision or any revision created before.
+	FirstRevisionId string `json:"firstRevisionId,omitempty"`
+
+	// LastRevisionId: The maximum (inclusive) revision allowed for
+	// validating messages. If empty or not present, allow any revision to
+	// be validated against first_revision or any revision created after.
+	LastRevisionId string `json:"lastRevisionId,omitempty"`
+
 	// Schema: Required. The name of the schema that messages published
 	// should be validated against. Format is
 	// `projects/{project}/schemas/{schema}`. The value of this field will
@@ -1674,8 +1684,8 @@ type Subscription struct {
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// BigqueryConfig: If delivery to BigQuery is used with this
-	// subscription, this field is used to configure it. At most one of
-	// `pushConfig` and `bigQueryConfig` can be set. If both are empty, then
+	// subscription, this field is used to configure it. Either `pushConfig`
+	// or `bigQueryConfig` can be set, but not both. If both are empty, then
 	// the subscriber will pull and ack messages using API methods.
 	BigqueryConfig *BigQueryConfig `json:"bigqueryConfig,omitempty"`
 
@@ -1749,9 +1759,9 @@ type Subscription struct {
 	Name string `json:"name,omitempty"`
 
 	// PushConfig: If push delivery is used with this subscription, this
-	// field is used to configure it. At most one of `pushConfig` and
-	// `bigQueryConfig` can be set. If both are empty, then the subscriber
-	// will pull and ack messages using API methods.
+	// field is used to configure it. Either `pushConfig` or
+	// `bigQueryConfig` can be set, but not both. If both are empty, then
+	// the subscriber will pull and ack messages using API methods.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
 
 	// RetainAckedMessages: Indicates whether to retain acknowledged

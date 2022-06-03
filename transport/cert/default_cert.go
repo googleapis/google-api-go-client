@@ -37,7 +37,9 @@ type Source func(*tls.CertificateRequestInfo) (*tls.Certificate, error)
 
 // DefaultSource returns a certificate source using the preferred EnterpriseCertificateProxySource.
 // If EnterpriseCertificateProxySource is not available, fall back to the legacy SecureConnectSource.
-// If neither of these are successful, a nil source is returned.
+//
+// If neither source is available (due to missing configurations), a nil Source and a nil Error are
+// returned to indicate that a default certificate source is unavailable.
 func DefaultSource() (Source, error) {
 	defaultCert.once.Do(func() {
 		defaultCert.source, defaultCert.err = NewEnterpriseCertificateProxySource("")

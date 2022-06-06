@@ -100,10 +100,10 @@ func TestCertificateCaching(t *testing.T) {
 		t.Fatal(err)
 	}
 	if cert == nil {
-		t.Error("getClientCertificate: want non-nil cert, got nil")
+		t.Fatal("getClientCertificate: want non-nil cert, got nil")
 	}
 	if source.cachedCert == nil {
-		t.Error("getClientCertificate: want non-nil cachedCert, got nil")
+		t.Fatal("getClientCertificate: want non-nil cachedCert, got nil")
 	}
 	if !bytes.Equal(cert.Certificate[0], source.cachedCert.Certificate[0]) {
 		t.Error("Cached certificate is different.")

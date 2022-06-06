@@ -58,8 +58,11 @@ func (k *EnterpriseCertSigner) Public(ignored struct{}, publicKey *[]byte) (err 
 		return nil
 	}
 	cert, err := x509.ParseCertificate(k.cert.Certificate[0])
+	if err != nil {
+		return err
+	}
 	*publicKey, err = x509.MarshalPKIXPublicKey(cert.PublicKey)
-	return nil
+	return err
 }
 
 // Sign signs a message by encrypting a message digest.

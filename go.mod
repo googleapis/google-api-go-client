@@ -5,7 +5,7 @@ go 1.15
 require (
 	cloud.google.com/go/compute v1.6.1
 	github.com/google/go-cmp v0.5.8
-	github.com/googleapis/enterprise-certificate-proxy v0.0.0-20220520183353-fd19c99a87aa // indirect
+	github.com/googleapis/enterprise-certificate-proxy v0.0.0-20220520183353-fd19c99a87aa
 	github.com/googleapis/gax-go/v2 v2.4.0
 	go.opencensus.io v0.23.0
 	golang.org/x/net v0.0.0-20220526153639-5463443f8c37

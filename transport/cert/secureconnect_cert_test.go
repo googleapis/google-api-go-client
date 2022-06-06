@@ -44,9 +44,6 @@ func TestSecureConnectSource_GetClientCertificateFailure(t *testing.T) {
 	if err == nil {
 		t.Error("Expecting error.")
 	}
-	if got, want := err.Error(), "x509: malformed certificate"; got != want {
-		t.Errorf("getClientCertificate: want %v err, got %v", want, got)
-	}
 }
 
 func TestSecureConnectSource_ValidateMetadataSuccess(t *testing.T) {

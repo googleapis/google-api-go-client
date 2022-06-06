@@ -18,17 +18,18 @@ import (
 	"time"
 )
 
+// SignArgs encapsulate the parameters for the Sign method.
 type SignArgs struct {
 	Digest []byte
 	Opts   crypto.SignerOpts
 }
 
-// A EnterpriseCertSigner exports RPC methods for signing.
+// EnterpriseCertSigner exports RPC methods for signing.
 type EnterpriseCertSigner struct {
 	cert *tls.Certificate
 }
 
-// A Transport wraps a pair of unidirectional streams as an io.ReadWriteCloser.
+// Transport wraps a pair of unidirectional streams as an io.ReadWriteCloser.
 type Transport struct {
 	io.ReadCloser
 	io.WriteCloser

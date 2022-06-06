@@ -1,6 +1,15 @@
 // Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
+
+// Package cert contains certificate tools for Google API clients.
+// This package is intended to be used with crypto/tls.Config.GetClientCertificate.
+//
+// The certificates can be used to satisfy Google's Endpoint Validation.
+// See https://cloud.google.com/endpoint-verification/docs/overview
+//
+// This package is not intended for use by end developers. Use the
+// google.golang.org/api/option package to configure API clients.
 package cert
 
 import (
@@ -16,7 +25,7 @@ type ecpSource struct {
 }
 
 // NewEnterpriseCertificateProxySource creates a certificate source
-// using the enterprise-certificate-proxy client, which delegates
+// using the Enterprise Certificate Proxy client, which delegates
 // certifcate related operations to an OS-specific "signer binary"
 // that communicates with the native keystore (ex. keychain on MacOS).
 //
@@ -25,11 +34,13 @@ type ecpSource struct {
 // If configFilePath is empty, the client will attempt to load the config from
 // a well-known gcloud location.
 //
-// Return nil for Source and Error if config file is missing.
+// Return nil for Source and Error if config file is missing, which
+// means Enterprise Certificate Proxy is not supported.
 func NewEnterpriseCertificateProxySource(configFilePath string) (Source, error) {
 	key, err := client.Cred(configFilePath)
 	if errors.Is(err, os.ErrNotExist) {
-		// Ignore.
+		// Config file missing means Enterprise Certificate Proxy is not supported,
+		// so this is not a real error.
 		return nil, nil
 	}
 	if err != nil {

@@ -1,6 +1,15 @@
 // Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
+
+// Package cert contains certificate tools for Google API clients.
+// This package is intended to be used with crypto/tls.Config.GetClientCertificate.
+//
+// The certificates can be used to satisfy Google's Endpoint Validation.
+// See https://cloud.google.com/endpoint-verification/docs/overview
+//
+// This package is not intended for use by end developers. Use the
+// google.golang.org/api/option package to configure API clients.
 package cert
 
 import (
@@ -41,12 +50,14 @@ type secureConnectMetadata struct {
 // The configFilePath points to the location of the context aware metadata file.
 // If configFilePath is empty, use the default context aware metadata location.
 //
-// Return nil for Source and Error if config file is missing.
+// Return nil for Source and Error if config file is missing, which
+// means Secure Connect is not supported.
 func NewSecureConnectSource(configFilePath string) (Source, error) {
 	if configFilePath == "" {
 		user, err := user.Current()
 		if err != nil {
-			// Ignore.
+			// Error locating the default config means Secure Connect is not supported,
+			// so this is not a real error.
 			return nil, nil
 		}
 		configFilePath = filepath.Join(user.HomeDir, metadataPath, metadataFile)
@@ -54,7 +65,8 @@ func NewSecureConnectSource(configFilePath string) (Source, error) {
 
 	file, err := ioutil.ReadFile(configFilePath)
 	if errors.Is(err, os.ErrNotExist) {
-		// Ignore.
+		// Config file missing means Secure Connect is not supported,
+		// so this is not a real error.
 		return nil, nil
 	}
 	if err != nil {
@@ -93,7 +105,6 @@ func (s *secureConnectSource) getClientCertificate(info *tls.CertificateRequestI
 	command := s.metadata.Cmd
 	data, err := exec.Command(command[0], command[1:]...).Output()
 	if err != nil {
-		// TODO(cbro): read stderr for error message? Might contain sensitive info.
 		return nil, err
 	}
 	cert, err := tls.X509KeyPair(data, data)

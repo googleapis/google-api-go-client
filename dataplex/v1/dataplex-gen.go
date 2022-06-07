@@ -6515,6 +6515,472 @@ func (c *ProjectsLocationsLakesActionsListCall) Pages(ctx context.Context, f fun
 	}
 }
 
+// method id "dataplex.projects.locations.lakes.content.create":
+
+type ProjectsLocationsLakesContentCreateCall struct {
+	s                            *Service
+	parent                       string
+	googleclouddataplexv1content *GoogleCloudDataplexV1Content
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Create: Create a content.
+//
+// - parent: The resource name of the parent lake:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
+func (r *ProjectsLocationsLakesContentService) Create(parent string, googleclouddataplexv1content *GoogleCloudDataplexV1Content) *ProjectsLocationsLakesContentCreateCall {
+	c := &ProjectsLocationsLakesContentCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddataplexv1content = googleclouddataplexv1content
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Only
+// validate the request, but do not perform mutations. The default is
+// false.
+func (c *ProjectsLocationsLakesContentCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsLakesContentCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsLakesContentCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsLakesContentCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsLakesContentCreateCall) Context(ctx context.Context) *ProjectsLocationsLakesContentCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsLakesContentCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLakesContentCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddataplexv1content)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/content")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.lakes.content.create" call.
+// Exactly one of *GoogleCloudDataplexV1Content or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudDataplexV1Content.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsLakesContentCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1Content, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDataplexV1Content{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a content.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/content",
+	//   "httpMethod": "POST",
+	//   "id": "dataplex.projects.locations.lakes.content.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource name of the parent lake: projects/{project_id}/locations/{location_id}/lakes/{lake_id}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. Only validate the request, but do not perform mutations. The default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/content",
+	//   "request": {
+	//     "$ref": "GoogleCloudDataplexV1Content"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDataplexV1Content"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataplex.projects.locations.lakes.content.delete":
+
+type ProjectsLocationsLakesContentDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a content.
+//
+// - name: The resource name of the content:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
+//   t/{content_id}.
+func (r *ProjectsLocationsLakesContentService) Delete(name string) *ProjectsLocationsLakesContentDeleteCall {
+	c := &ProjectsLocationsLakesContentDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsLakesContentDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsLakesContentDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsLakesContentDeleteCall) Context(ctx context.Context) *ProjectsLocationsLakesContentDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsLakesContentDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLakesContentDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.lakes.content.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsLakesContentDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete a content.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/content/{contentId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dataplex.projects.locations.lakes.content.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the content: projects/{project_id}/locations/{location_id}/lakes/{lake_id}/content/{content_id}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/content/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataplex.projects.locations.lakes.content.get":
+
+type ProjectsLocationsLakesContentGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a content resource.
+//
+// - name: The resource name of the content:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
+//   t/{content_id}.
+func (r *ProjectsLocationsLakesContentService) Get(name string) *ProjectsLocationsLakesContentGetCall {
+	c := &ProjectsLocationsLakesContentGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": Specify content view to make
+// a partial request.
+//
+// Possible values:
+//   "CONTENT_VIEW_UNSPECIFIED" - Content view not specified. Defaults
+// to BASIC. The API will default to the BASIC view.
+//   "BASIC" - Will not return the data_text field.
+//   "FULL" - Returns the complete proto.
+func (c *ProjectsLocationsLakesContentGetCall) View(view string) *ProjectsLocationsLakesContentGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsLakesContentGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsLakesContentGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsLakesContentGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsLakesContentGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsLakesContentGetCall) Context(ctx context.Context) *ProjectsLocationsLakesContentGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsLakesContentGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLakesContentGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.lakes.content.get" call.
+// Exactly one of *GoogleCloudDataplexV1Content or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudDataplexV1Content.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsLakesContentGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1Content, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDataplexV1Content{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a content resource.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/content/{contentId}",
+	//   "httpMethod": "GET",
+	//   "id": "dataplex.projects.locations.lakes.content.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the content: projects/{project_id}/locations/{location_id}/lakes/{lake_id}/content/{content_id}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/content/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Optional. Specify content view to make a partial request.",
+	//       "enum": [
+	//         "CONTENT_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Content view not specified. Defaults to BASIC. The API will default to the BASIC view.",
+	//         "Will not return the data_text field.",
+	//         "Returns the complete proto."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDataplexV1Content"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "dataplex.projects.locations.lakes.content.getIamPolicy":
 
 type ProjectsLocationsLakesContentGetIamPolicyCall struct {
@@ -6526,9 +6992,11 @@ type ProjectsLocationsLakesContentGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource. Returns
-// an empty policy if the resource exists and does not have a policy
-// set.
+// GetIamPolicy: Gets the access control policy for a contentitem
+// resource. A NOT_FOUND error is returned if the resource does not
+// exist. An empty policy is returned if the resource exists but does
+// not have a policy set on it.Caller must have Google IAM
+// dataplex.content.getIamPolicy permission on the resource.
 //
 // - resource: REQUIRED: The resource for which the policy is being
 //   requested. See Resource names
@@ -6657,7 +7125,7 @@ func (c *ProjectsLocationsLakesContentGetIamPolicyCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "description": "Gets the access control policy for a contentitem resource. A NOT_FOUND error is returned if the resource does not exist. An empty policy is returned if the resource exists but does not have a policy set on it.Caller must have Google IAM dataplex.content.getIamPolicy permission on the resource.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/content/{contentId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "dataplex.projects.locations.lakes.content.getIamPolicy",
@@ -6674,7 +7142,7 @@ func (c *ProjectsLocationsLakesContentGetIamPolicyCall) Do(opts ...googleapi.Cal
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/content/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/content/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -6682,6 +7150,390 @@ func (c *ProjectsLocationsLakesContentGetIamPolicyCall) Do(opts ...googleapi.Cal
 	//   "path": "v1/{+resource}:getIamPolicy",
 	//   "response": {
 	//     "$ref": "GoogleIamV1Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataplex.projects.locations.lakes.content.list":
+
+type ProjectsLocationsLakesContentListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List content.
+//
+// - parent: The resource name of the parent lake:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
+func (r *ProjectsLocationsLakesContentService) List(parent string) *ProjectsLocationsLakesContentListCall {
+	c := &ProjectsLocationsLakesContentListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter request. Filters
+// are case-sensitive. The following formats are supported:labels.key1 =
+// "value1" labels:key1 type = "NOTEBOOK" type = "SQL_SCRIPT"These
+// restrictions can be coinjoined with AND, OR and NOT conjunctions.
+func (c *ProjectsLocationsLakesContentListCall) Filter(filter string) *ProjectsLocationsLakesContentListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// content to return. The service may return fewer than this value. If
+// unspecified, at most 10 content will be returned. The maximum value
+// is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsLakesContentListCall) PageSize(pageSize int64) *ProjectsLocationsLakesContentListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous ListContent call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided
+// to ListContent must match the call that provided the page token.
+func (c *ProjectsLocationsLakesContentListCall) PageToken(pageToken string) *ProjectsLocationsLakesContentListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsLakesContentListCall) Fields(s ...googleapi.Field) *ProjectsLocationsLakesContentListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsLakesContentListCall) IfNoneMatch(entityTag string) *ProjectsLocationsLakesContentListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsLakesContentListCall) Context(ctx context.Context) *ProjectsLocationsLakesContentListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsLakesContentListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLakesContentListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/content")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.lakes.content.list" call.
+// Exactly one of *GoogleCloudDataplexV1ListContentResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDataplexV1ListContentResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsLakesContentListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1ListContentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDataplexV1ListContentResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List content.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/content",
+	//   "httpMethod": "GET",
+	//   "id": "dataplex.projects.locations.lakes.content.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter request. Filters are case-sensitive. The following formats are supported:labels.key1 = \"value1\" labels:key1 type = \"NOTEBOOK\" type = \"SQL_SCRIPT\"These restrictions can be coinjoined with AND, OR and NOT conjunctions.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of content to return. The service may return fewer than this value. If unspecified, at most 10 content will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token received from a previous ListContent call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListContent must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the parent lake: projects/{project_id}/locations/{location_id}/lakes/{lake_id}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/content",
+	//   "response": {
+	//     "$ref": "GoogleCloudDataplexV1ListContentResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsLakesContentListCall) Pages(ctx context.Context, f func(*GoogleCloudDataplexV1ListContentResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dataplex.projects.locations.lakes.content.patch":
+
+type ProjectsLocationsLakesContentPatchCall struct {
+	s                            *Service
+	name                         string
+	googleclouddataplexv1content *GoogleCloudDataplexV1Content
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Patch: Update a content. Only supports full resource update.
+//
+// - name: Output only. The relative resource name of the content, of
+//   the form:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
+//   t/{content_id}.
+func (r *ProjectsLocationsLakesContentService) Patch(name string, googleclouddataplexv1content *GoogleCloudDataplexV1Content) *ProjectsLocationsLakesContentPatchCall {
+	c := &ProjectsLocationsLakesContentPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1content = googleclouddataplexv1content
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Mask
+// of fields to update.
+func (c *ProjectsLocationsLakesContentPatchCall) UpdateMask(updateMask string) *ProjectsLocationsLakesContentPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Only
+// validate the request, but do not perform mutations. The default is
+// false.
+func (c *ProjectsLocationsLakesContentPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsLakesContentPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsLakesContentPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsLakesContentPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsLakesContentPatchCall) Context(ctx context.Context) *ProjectsLocationsLakesContentPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsLakesContentPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLakesContentPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddataplexv1content)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.lakes.content.patch" call.
+// Exactly one of *GoogleCloudDataplexV1Content or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudDataplexV1Content.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsLakesContentPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1Content, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDataplexV1Content{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a content. Only supports full resource update.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/content/{contentId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "dataplex.projects.locations.lakes.content.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The relative resource name of the content, of the form: projects/{project_id}/locations/{location_id}/lakes/{lake_id}/content/{content_id}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/content/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Mask of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. Only validate the request, but do not perform mutations. The default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudDataplexV1Content"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDataplexV1Content"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -6702,8 +7554,8 @@ type ProjectsLocationsLakesContentSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any existing policy.Can return NOT_FOUND,
-// INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+// contentitem resource. Replaces any existing policy.Caller must have
+// Google IAM dataplex.content.setIamPolicy permission on the resource.
 //
 // - resource: REQUIRED: The resource for which the policy is being
 //   specified. See Resource names
@@ -6807,7 +7659,7 @@ func (c *ProjectsLocationsLakesContentSetIamPolicyCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.",
+	//   "description": "Sets the access control policy on the specified contentitem resource. Replaces any existing policy.Caller must have Google IAM dataplex.content.setIamPolicy permission on the resource.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/content/{contentId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "dataplex.projects.locations.lakes.content.setIamPolicy",
@@ -6818,7 +7670,7 @@ func (c *ProjectsLocationsLakesContentSetIamPolicyCall) Do(opts ...googleapi.Cal
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/content/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/content/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -6848,9 +7700,10 @@ type ProjectsLocationsLakesContentTestIamPermissionsCall struct {
 	header_                              http.Header
 }
 
-// TestIamPermissions: Returns permissions that a caller has on the
-// specified resource. If the resource does not exist, this will return
-// an empty set of permissions, not a NOT_FOUND error.Note: This
+// TestIamPermissions: Returns the caller's permissions on a resource.
+// If the resource does not exist, an empty set of permissions is
+// returned (a NOT_FOUND error is not returned).A caller is not required
+// to have Google IAM permission to make this request.Note: This
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
@@ -6958,7 +7811,7 @@ func (c *ProjectsLocationsLakesContentTestIamPermissionsCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+	//   "description": "Returns the caller's permissions on a resource. If the resource does not exist, an empty set of permissions is returned (a NOT_FOUND error is not returned).A caller is not required to have Google IAM permission to make this request.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/content/{contentId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "dataplex.projects.locations.lakes.content.testIamPermissions",
@@ -6969,7 +7822,7 @@ func (c *ProjectsLocationsLakesContentTestIamPermissionsCall) Do(opts ...googlea
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/content/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/content/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -7454,6 +8307,183 @@ func (c *ProjectsLocationsLakesContentitemsGetCall) Do(opts ...googleapi.CallOpt
 
 }
 
+// method id "dataplex.projects.locations.lakes.contentitems.getIamPolicy":
+
+type ProjectsLocationsLakesContentitemsGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a contentitem
+// resource. A NOT_FOUND error is returned if the resource does not
+// exist. An empty policy is returned if the resource exists but does
+// not have a policy set on it.Caller must have Google IAM
+// dataplex.content.getIamPolicy permission on the resource.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsLakesContentitemsService) GetIamPolicy(resource string) *ProjectsLocationsLakesContentitemsGetIamPolicyCall {
+	c := &ProjectsLocationsLakesContentitemsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy.Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected.Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset.The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1.To learn which
+// resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsLakesContentitemsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsLakesContentitemsGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsLakesContentitemsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsLakesContentitemsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsLakesContentitemsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsLakesContentitemsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsLakesContentitemsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsLakesContentitemsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsLakesContentitemsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLakesContentitemsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.lakes.contentitems.getIamPolicy" call.
+// Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsLakesContentitemsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a contentitem resource. A NOT_FOUND error is returned if the resource does not exist. An empty policy is returned if the resource exists but does not have a policy set on it.Caller must have Google IAM dataplex.content.getIamPolicy permission on the resource.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/contentitems/{contentitemsId}:getIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "dataplex.projects.locations.lakes.contentitems.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "options.requestedPolicyVersion": {
+	//       "description": "Optional. The maximum policy version that will be used to format the policy.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset.The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/contentitems/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "GoogleIamV1Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "dataplex.projects.locations.lakes.contentitems.list":
 
 type ProjectsLocationsLakesContentitemsListCall struct {
@@ -7830,6 +8860,305 @@ func (c *ProjectsLocationsLakesContentitemsPatchCall) Do(opts ...googleapi.CallO
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDataplexV1Content"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataplex.projects.locations.lakes.contentitems.setIamPolicy":
+
+type ProjectsLocationsLakesContentitemsSetIamPolicyCall struct {
+	s                              *Service
+	resource                       string
+	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// contentitem resource. Replaces any existing policy.Caller must have
+// Google IAM dataplex.content.setIamPolicy permission on the resource.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsLakesContentitemsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsLakesContentitemsSetIamPolicyCall {
+	c := &ProjectsLocationsLakesContentitemsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsLakesContentitemsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsLakesContentitemsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsLakesContentitemsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsLakesContentitemsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsLakesContentitemsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLakesContentitemsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.lakes.contentitems.setIamPolicy" call.
+// Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsLakesContentitemsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified contentitem resource. Replaces any existing policy.Caller must have Google IAM dataplex.content.setIamPolicy permission on the resource.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/contentitems/{contentitemsId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "dataplex.projects.locations.lakes.contentitems.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/contentitems/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "GoogleIamV1SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleIamV1Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataplex.projects.locations.lakes.contentitems.testIamPermissions":
+
+type ProjectsLocationsLakesContentitemsTestIamPermissionsCall struct {
+	s                                    *Service
+	resource                             string
+	googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// TestIamPermissions: Returns the caller's permissions on a resource.
+// If the resource does not exist, an empty set of permissions is
+// returned (a NOT_FOUND error is not returned).A caller is not required
+// to have Google IAM permission to make this request.Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsLakesContentitemsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsLakesContentitemsTestIamPermissionsCall {
+	c := &ProjectsLocationsLakesContentitemsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1testiampermissionsrequest = googleiamv1testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsLakesContentitemsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsLakesContentitemsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsLakesContentitemsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsLakesContentitemsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsLakesContentitemsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLakesContentitemsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.lakes.contentitems.testIamPermissions" call.
+// Exactly one of *GoogleIamV1TestIamPermissionsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleIamV1TestIamPermissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsLakesContentitemsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleIamV1TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the caller's permissions on a resource. If the resource does not exist, an empty set of permissions is returned (a NOT_FOUND error is not returned).A caller is not required to have Google IAM permission to make this request.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/contentitems/{contentitemsId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "dataplex.projects.locations.lakes.contentitems.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/contentitems/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "GoogleIamV1TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleIamV1TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

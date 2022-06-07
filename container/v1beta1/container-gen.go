@@ -295,6 +295,13 @@ type AcceleratorConfig struct {
 	// (https://docs.nvidia.com/datacenter/tesla/mig-user-guide/#partitioning).
 	GpuPartitionSize string `json:"gpuPartitionSize,omitempty"`
 
+	// GpuSharingConfig: The configuration for GPU sharing options.
+	GpuSharingConfig *GPUSharingConfig `json:"gpuSharingConfig,omitempty"`
+
+	// MaxTimeSharedClientsPerGpu: The number of time-shared GPU resources
+	// to expose for each physical GPU.
+	MaxTimeSharedClientsPerGpu int64 `json:"maxTimeSharedClientsPerGpu,omitempty,string"`
+
 	// ForceSendFields is a list of field names (e.g. "AcceleratorCount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2143,6 +2150,45 @@ func (s *Filter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GPUSharingConfig: GPUSharingConfig represents the GPU sharing
+// configuration for Hardware Accelerators.
+type GPUSharingConfig struct {
+	// GpuSharingStrategy: The type of GPU sharing strategy to enable on the
+	// GPU node.
+	//
+	// Possible values:
+	//   "GPU_SHARING_STRATEGY_UNSPECIFIED" - Default value.
+	//   "TIME_SHARING" - GPUs are time-shared between containers.
+	GpuSharingStrategy string `json:"gpuSharingStrategy,omitempty"`
+
+	// MaxSharedClientsPerGpu: The max number of containers that can share a
+	// physical GPU.
+	MaxSharedClientsPerGpu int64 `json:"maxSharedClientsPerGpu,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "GpuSharingStrategy")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GpuSharingStrategy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GPUSharingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GPUSharingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GcePersistentDiskCsiDriverConfig: Configuration for the Compute
 // Engine PD CSI driver.
 type GcePersistentDiskCsiDriverConfig struct {
@@ -3877,9 +3923,9 @@ func (s *NetworkTags) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NodeConfig: Parameters that describe the nodes in a cluster. *Note:*
-// GKE Autopilot clusters do not recognize parameters in `NodeConfig`.
-// Use AutoprovisioningNodePoolDefaults instead.
+// NodeConfig: Parameters that describe the nodes in a cluster. GKE
+// Autopilot clusters do not recognize parameters in `NodeConfig`. Use
+// AutoprovisioningNodePoolDefaults instead.
 type NodeConfig struct {
 	// Accelerators: A list of hardware accelerators to be attached to each
 	// node. See https://cloud.google.com/compute/docs/gpus for more

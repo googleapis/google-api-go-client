@@ -813,8 +813,10 @@ type CancelJobRequest struct {
 // Cluster: Describes the identifying information, config, and status of
 // a Dataproc cluster
 type Cluster struct {
-	// ClusterName: Required. The cluster name. Cluster names within a
-	// project must be unique. Names of deleted clusters can be reused.
+	// ClusterName: Required. The cluster name, which must be unique within
+	// a project. The name must start with a lowercase letter, and can
+	// contain up to 51 lowercase letters, numbers, and hyphens. It cannot
+	// end with a hyphen. The name of a deleted cluster can be reused.
 	ClusterName string `json:"clusterName,omitempty"`
 
 	// ClusterUuid: Output only. A cluster UUID (Unique Universal
@@ -1881,6 +1883,13 @@ type GkeNodeConfig struct {
 	// Accelerators: Optional. A list of hardware accelerators
 	// (https://cloud.google.com/compute/docs/gpus) to attach to each node.
 	Accelerators []*GkeNodePoolAcceleratorConfig `json:"accelerators,omitempty"`
+
+	// BootDiskKmsKey: Optional. The Customer Managed Encryption Key (CMEK)
+	// (https://cloud.google.com/compute/docs/disks/customer-managed-encryption)
+	// used to encrypt the boot disk attached to each node in the node pool.
+	// Specify the key using the following format: projects/KEY_PROJECT_ID
+	// /locations/LOCATION/keyRings/RING_NAME/cryptoKeys/KEY_NAME.
+	BootDiskKmsKey string `json:"bootDiskKmsKey,omitempty"`
 
 	// LocalSsdCount: Optional. The number of local SSD disks to attach to
 	// the node, which is limited by the maximum number of disks allowable
@@ -3633,6 +3642,49 @@ func (s *NodeInitializationAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NodePool: indicating a list of workers of same type
+type NodePool struct {
+	// Id: Required. A unique id of the node pool. Primary and Secondary
+	// workers can be specified using special reserved ids
+	// PRIMARY_WORKER_POOL and SECONDARY_WORKER_POOL respectively. Aux node
+	// pools can be referenced using corresponding pool id.
+	Id string `json:"id,omitempty"`
+
+	// InstanceNames: Name of instances to be repaired. These instances must
+	// belong to specified node pool.
+	InstanceNames []string `json:"instanceNames,omitempty"`
+
+	// RepairAction: Required. Repair action to take on specified resources
+	// of the node pool.
+	//
+	// Possible values:
+	//   "REPAIR_ACTION_UNSPECIFIED" - No action will be taken by default.
+	//   "DELETE" - delete the specified list of nodes.
+	RepairAction string `json:"repairAction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodePool) MarshalJSON() ([]byte, error) {
+	type NoMethod NodePool
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -4237,6 +4289,11 @@ type RepairClusterRequest struct {
 	// fail (with error NOT_FOUND) if a cluster with the specified UUID does
 	// not exist.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
+
+	// NodePools: Optional. Node pools and corresponding repair action to be
+	// taken. All node pools should be unique in this request. i.e. Multiple
+	// entries for the same node pool id are not allowed.
+	NodePools []*NodePool `json:"nodePools,omitempty"`
 
 	// RequestId: Optional. A unique ID used to identify the request. If the
 	// server receives two RepairClusterRequests with the same ID, the

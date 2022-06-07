@@ -191,7 +191,8 @@ type ProjectsLocationsInstancesService struct {
 // Details on interacting with contents of a DatabaseInstance can be
 // found at: https://firebase.google.com/docs/database/rest/start.
 type DatabaseInstance struct {
-	// DatabaseUrl: Immutable. The globally unique hostname of the database.
+	// DatabaseUrl: Output only. Output Only. The globally unique hostname
+	// of the database.
 	DatabaseUrl string `json:"databaseUrl,omitempty"`
 
 	// Name: The fully qualified resource name of the database instance, in
@@ -200,11 +201,11 @@ type DatabaseInstance struct {
 	// -id}`.
 	Name string `json:"name,omitempty"`
 
-	// Project: The resource name of the project this instance belongs to.
-	// For example: `projects/{project-number}`.
+	// Project: Output only. The resource name of the project this instance
+	// belongs to. For example: `projects/{project-number}`.
 	Project string `json:"project,omitempty"`
 
-	// State: The database's lifecycle state. Read-only.
+	// State: Output only. The database's lifecycle state. Read-only.
 	//
 	// Possible values:
 	//   "LIFECYCLE_STATE_UNSPECIFIED" - Unspecified state, likely the
@@ -216,8 +217,8 @@ type DatabaseInstance struct {
 	//   "DELETED" - The database is in a deleted state.
 	State string `json:"state,omitempty"`
 
-	// Type: The database instance type. On creation only USER_DATABASE is
-	// allowed, which is also the default when omitted.
+	// Type: Immutable. The database instance type. On creation only
+	// USER_DATABASE is allowed, which is also the default when omitted.
 	//
 	// Possible values:
 	//   "DATABASE_INSTANCE_TYPE_UNSPECIFIED" - Unknown state, likely the

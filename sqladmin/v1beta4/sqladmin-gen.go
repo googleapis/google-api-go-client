@@ -323,6 +323,9 @@ type ApiWarning struct {
 	// type from Cloud SQL API.
 	//   "REGION_UNREACHABLE" - Warning when one or more regions are not
 	// reachable. The returned result set may be incomplete.
+	//   "MAX_RESULTS_EXCEEDS_LIMIT" - Warning when user provided maxResults
+	// parameter exceeds the limit. The returned result set may be
+	// incomplete.
 	Code string `json:"code,omitempty"`
 
 	// Message: The warning message.
@@ -3679,6 +3682,8 @@ type SqlExternalSyncSettingError struct {
 	// retention setting.
 	//   "UNSUPPORTED_STORAGE_ENGINE" - The primary instance has tables with
 	// unsupported storage engine.
+	//   "LIMITED_SUPPORT_TABLES" - Source has tables with limited support
+	// eg: PostgreSQL tables without primary keys
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
@@ -8116,7 +8121,9 @@ func (c *InstancesListCall) Filter(filter string) *InstancesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of results to return per response.
+// number of instances to return. The service may return fewer than this
+// value. The maximum value is 1000; values above 1000 are coerced to
+// 1000.
 func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -8243,7 +8250,7 @@ func (c *InstancesListCall) Do(opts ...googleapi.CallOption) (*InstancesListResp
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of results to return per response.",
+	//       "description": "The maximum number of instances to return. The service may return fewer than this value. The maximum value is 1000; values above 1000 are coerced to 1000.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"

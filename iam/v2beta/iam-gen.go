@@ -329,6 +329,11 @@ func (s *GoogleIamV1PolicyDelta) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleIamV1betaWorkloadIdentityPoolOperationMetadata: Metadata for
+// long-running WorkloadIdentityPool operations.
+type GoogleIamV1betaWorkloadIdentityPoolOperationMetadata struct {
+}
+
 // GoogleIamV2betaDenyRule: A deny rule in an IAM deny policy.
 type GoogleIamV2betaDenyRule struct {
 	// DenialCondition: The condition that determines whether this deny rule

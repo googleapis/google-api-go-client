@@ -262,6 +262,9 @@ type Backup struct {
 	// CreateTime: Output only. The time the backups was created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// Description: Optional. A short description of the backup.
+	Description string `json:"description,omitempty"`
+
 	// Labels: Optional. Resource labels to represent user provided
 	// metadata.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -289,9 +292,11 @@ type Backup struct {
 	// scheduled.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Backup was manually created.
+	//   "TYPE_UNSPECIFIED" - Backup type not specified.
 	//   "ON_DEMAND" - Backup was manually created.
 	//   "SCHEDULED" - Backup was automatically created.
+	//   "SCHEMA_EXTENSION" - Backup was taken as part of Schema Extension
+	// request.
 	Type string `json:"type,omitempty"`
 
 	// UpdateTime: Output only. Last update time.
@@ -336,8 +341,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -770,6 +775,44 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ExtendSchemaRequest: ExtendSchemaRequest is the request message for
+// ExtendSchema method.
+type ExtendSchemaRequest struct {
+	// Description: Required. Description for Schema Change.
+	Description string `json:"description,omitempty"`
+
+	// FileContents: File uploaded as a byte stream input.
+	FileContents string `json:"fileContents,omitempty"`
+
+	// GcsPath: File stored in Cloud Storage bucket and represented in the
+	// form
+	// projects/{project_id}/buckets/{bucket_name}/objects/{object_name}
+	// File should be in the same project as the domain.
+	GcsPath string `json:"gcsPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExtendSchemaRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtendSchemaRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudManagedidentitiesV1OpMetadata: Represents the metadata of
 // the long-running operation.
 type GoogleCloudManagedidentitiesV1OpMetadata struct {
@@ -926,11 +969,12 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// InstanceType: Optional. The instance_type of this instance of format:
-	// projects/{project_id}/locations/{location_id}/instanceTypes/{instance_
-	// type_id}. Instance Type represents a high-level tier or SKU of the
-	// service that this instance belong to. When enabled(eg: Maintenance
-	// Rollout), Rollout uses 'instance_type' along with 'software_versions'
-	// to determine whether instance needs an update or not.
+	// projects/{project_number}/locations/{location_id}/instanceTypes/{insta
+	// nce_type_id}. Instance Type represents a high-level tier or SKU of
+	// the service that this instance belong to. When enabled(eg:
+	// Maintenance Rollout), Rollout uses 'instance_type' along with
+	// 'software_versions' to determine whether instance needs an update or
+	// not.
 	InstanceType string `json:"instanceType,omitempty"`
 
 	// Labels: Optional. Resource labels to represent user provided
@@ -955,9 +999,11 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	MaintenanceSettings *GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings `json:"maintenanceSettings,omitempty"`
 
 	// Name: Unique name of the resource. It uses the form:
-	// `projects/{project_id|project_number}/locations/{location_id}/instance
-	// s/{instance_id}` Note: Either project_id or project_number can be
-	// used, but keep it consistent with other APIs (e.g. RescheduleUpdate)
+	// `projects/{project_number}/locations/{location_id}/instances/{instance
+	// _id}` Note: This name is passed, stored and logged across the rollout
+	// system. So use of consumer project_id or any other consumer PII in
+	// the name is strongly discouraged for wipeout (go/wipeout) compliance.
+	// See go/elysium/project_ids#storage-guidance for more details.
 	Name string `json:"name,omitempty"`
 
 	// NotificationParameters: Optional. notification_parameter are
@@ -2307,7 +2353,7 @@ func (s *Schedule) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -2382,7 +2428,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -3617,6 +3663,149 @@ func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) Do(opts ...googleapi.Cal
 
 }
 
+// method id "managedidentities.projects.locations.global.domains.extendSchema":
+
+type ProjectsLocationsGlobalDomainsExtendSchemaCall struct {
+	s                   *Service
+	domain              string
+	extendschemarequest *ExtendSchemaRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// ExtendSchema: Extend Schema for Domain
+//
+// - domain: The domain resource name using the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
+func (r *ProjectsLocationsGlobalDomainsService) ExtendSchema(domain string, extendschemarequest *ExtendSchemaRequest) *ProjectsLocationsGlobalDomainsExtendSchemaCall {
+	c := &ProjectsLocationsGlobalDomainsExtendSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.domain = domain
+	c.extendschemarequest = extendschemarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalDomainsExtendSchemaCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalDomainsExtendSchemaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalDomainsExtendSchemaCall) Context(ctx context.Context) *ProjectsLocationsGlobalDomainsExtendSchemaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalDomainsExtendSchemaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalDomainsExtendSchemaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.extendschemarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+domain}:extendSchema")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"domain": c.domain,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedidentities.projects.locations.global.domains.extendSchema" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalDomainsExtendSchemaCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Extend Schema for Domain",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/global/domains/{domainsId}:extendSchema",
+	//   "httpMethod": "POST",
+	//   "id": "managedidentities.projects.locations.global.domains.extendSchema",
+	//   "parameterOrder": [
+	//     "domain"
+	//   ],
+	//   "parameters": {
+	//     "domain": {
+	//       "description": "Required. The domain resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+domain}:extendSchema",
+	//   "request": {
+	//     "$ref": "ExtendSchemaRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "managedidentities.projects.locations.global.domains.get":
 
 type ProjectsLocationsGlobalDomainsGetCall struct {
@@ -3780,8 +3969,9 @@ type ProjectsLocationsGlobalDomainsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGlobalDomainsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalDomainsGetIamPolicyCall {
 	c := &ProjectsLocationsGlobalDomainsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3920,7 +4110,7 @@ func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) Do(opts ...googleapi.Ca
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -4915,8 +5105,9 @@ type ProjectsLocationsGlobalDomainsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGlobalDomainsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalDomainsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalDomainsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5024,7 +5215,7 @@ func (c *ProjectsLocationsGlobalDomainsSetIamPolicyCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -5064,7 +5255,8 @@ type ProjectsLocationsGlobalDomainsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsGlobalDomainsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalDomainsTestIamPermissionsCall {
 	c := &ProjectsLocationsGlobalDomainsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5173,7 +5365,7 @@ func (c *ProjectsLocationsGlobalDomainsTestIamPermissionsCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -5952,8 +6144,9 @@ type ProjectsLocationsGlobalDomainsBackupsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGlobalDomainsBackupsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalDomainsBackupsGetIamPolicyCall {
 	c := &ProjectsLocationsGlobalDomainsBackupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6092,7 +6285,7 @@ func (c *ProjectsLocationsGlobalDomainsBackupsGetIamPolicyCall) Do(opts ...googl
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -6507,8 +6700,9 @@ type ProjectsLocationsGlobalDomainsBackupsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGlobalDomainsBackupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalDomainsBackupsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalDomainsBackupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6616,7 +6810,7 @@ func (c *ProjectsLocationsGlobalDomainsBackupsSetIamPolicyCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -6656,7 +6850,8 @@ type ProjectsLocationsGlobalDomainsBackupsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsGlobalDomainsBackupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalDomainsBackupsTestIamPermissionsCall {
 	c := &ProjectsLocationsGlobalDomainsBackupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6765,7 +6960,7 @@ func (c *ProjectsLocationsGlobalDomainsBackupsTestIamPermissionsCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -8255,8 +8450,9 @@ type ProjectsLocationsGlobalPeeringsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGlobalPeeringsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalPeeringsGetIamPolicyCall {
 	c := &ProjectsLocationsGlobalPeeringsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8395,7 +8591,7 @@ func (c *ProjectsLocationsGlobalPeeringsGetIamPolicyCall) Do(opts ...googleapi.C
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/peerings/[^/]+$",
 	//       "required": true,
@@ -8811,8 +9007,9 @@ type ProjectsLocationsGlobalPeeringsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGlobalPeeringsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalPeeringsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalPeeringsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8920,7 +9117,7 @@ func (c *ProjectsLocationsGlobalPeeringsSetIamPolicyCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/peerings/[^/]+$",
 	//       "required": true,
@@ -8960,7 +9157,8 @@ type ProjectsLocationsGlobalPeeringsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsGlobalPeeringsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalPeeringsTestIamPermissionsCall {
 	c := &ProjectsLocationsGlobalPeeringsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9069,7 +9267,7 @@ func (c *ProjectsLocationsGlobalPeeringsTestIamPermissionsCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/peerings/[^/]+$",
 	//       "required": true,

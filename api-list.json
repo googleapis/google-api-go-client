@@ -573,6 +573,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "baremetalsolution:v1alpha1",
+      "name": "baremetalsolution",
+      "version": "v1alpha1",
+      "title": "Bare Metal Solution API",
+      "description": "Provides ways to manage Bare Metal Solution hardware installed in a regional extension located near a Google Cloud data center.",
+      "discoveryRestUrl": "https://baremetalsolution.googleapis.com/$discovery/rest?version=v1alpha1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/bare-metal",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "baremetalsolution:v1",
       "name": "baremetalsolution",
       "version": "v1",
@@ -817,7 +832,7 @@
       "name": "businessprofileperformance",
       "version": "v1",
       "title": "Business Profile Performance API",
-      "description": "The Business Profile Performance API allows merchants to fetch performance insights about their business profile on Google.",
+      "description": "The Business Profile Performance API allows merchants to fetch performance reports about their business profile on Google.",
       "discoveryRestUrl": "https://businessprofileperformance.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2337,6 +2352,21 @@
       "title": "DoubleClick Bid Manager API",
       "description": "DoubleClick Bid Manager API allows users to manage and create campaigns and reports.",
       "discoveryRestUrl": "https://doubleclickbidmanager.googleapis.com/$discovery/rest?version=v1.1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/bid-manager/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "doubleclickbidmanager:v2",
+      "name": "doubleclickbidmanager",
+      "version": "v2",
+      "title": "DoubleClick Bid Manager API",
+      "description": "DoubleClick Bid Manager API allows users to manage and create campaigns and reports.",
+      "discoveryRestUrl": "https://doubleclickbidmanager.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

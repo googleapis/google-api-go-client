@@ -812,8 +812,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDe
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Subscription: A Subscription
-// resource managed by 3P Partners.
+// GoogleCloudPaymentsResellerSubscriptionV1Subscription: LINT.IfChange
+// A Subscription resource managed by 3P Partners.
 type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// CancellationDetails: Output only. Describes the details of a
 	// cancelled subscription. Only applicable to subscription of state
@@ -1000,8 +1000,11 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetail
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem:
-// Individual line item definition of a subscription. Next id: 5
+// Individual line item definition of a subscription. Next id: 6
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
+	// Description: Output only. Description of this line item.
+	Description string `json:"description,omitempty"`
+
 	// LineItemFreeTrialEndTime: Output only. It is set only if the line
 	// item has its own free trial applied. End time of the line item free
 	// trial period, in ISO 8061 format. For example,
@@ -1036,22 +1039,20 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// deactivated.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "LineItemFreeTrialEndTime") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LineItemFreeTrialEndTime")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

@@ -1377,6 +1377,10 @@ type Rewrite struct {
 	// function name exactly.
 	Function string `json:"function,omitempty"`
 
+	// FunctionRegion: Optional. Specify a Cloud region for rewritten
+	// Functions invocations. If not provided, defaults to us-central1.
+	FunctionRegion string `json:"functionRegion,omitempty"`
+
 	// Glob: The user-supplied glob
 	// (https://firebase.google.com/docs/hosting/full-config#glob_pattern_matching)
 	// to match against the request URL path.

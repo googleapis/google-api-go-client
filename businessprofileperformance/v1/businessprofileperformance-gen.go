@@ -431,8 +431,8 @@ type LocationsGetDailyMetricsTimeSeriesCall struct {
 
 // GetDailyMetricsTimeSeries:  Returns the values for each date from a
 // given time range that are associated with the specific daily metric.
-// Example request: GET
-// https://businessprofileperformance.googleapis.com/v1/locations/12345:getDailyMetricsTimeSeries?dailyMetric=WEBSITE_CLICKS&daily_range.start_date.year=2022&daily_range.start_date.month=1&daily_range.start_date.day=1&daily_range.end_date.year=2022&daily_range.end_date.month=3&daily_range.end_date.day=31
+// Example request: `GET
+// https://businessprofileperformance.googleapis.com/v1/locations/12345:getDailyMetricsTimeSeries?dailyMetric=WEBSITE_CLICKS&daily_range.start_date.year=2022&daily_range.start_date.month=1&daily_range.start_date.day=1&daily_range.end_date.year=2022&daily_range.end_date.month=3&daily_range.end_date.day=31`
 //
 // - name: The location for which the time series should be fetched.
 //   Format: locations/{location_id} where location_id is an
@@ -679,7 +679,7 @@ func (c *LocationsGetDailyMetricsTimeSeriesCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": " Returns the values for each date from a given time range that are associated with the specific daily metric. Example request: GET https://businessprofileperformance.googleapis.com/v1/locations/12345:getDailyMetricsTimeSeries?dailyMetric=WEBSITE_CLICKS\u0026daily_range.start_date.year=2022\u0026daily_range.start_date.month=1\u0026daily_range.start_date.day=1\u0026daily_range.end_date.year=2022\u0026daily_range.end_date.month=3\u0026daily_range.end_date.day=31",
+	//   "description": " Returns the values for each date from a given time range that are associated with the specific daily metric. Example request: `GET https://businessprofileperformance.googleapis.com/v1/locations/12345:getDailyMetricsTimeSeries?dailyMetric=WEBSITE_CLICKS\u0026daily_range.start_date.year=2022\u0026daily_range.start_date.month=1\u0026daily_range.start_date.day=1\u0026daily_range.end_date.year=2022\u0026daily_range.end_date.month=3\u0026daily_range.end_date.day=31`",
 	//   "flatPath": "v1/locations/{locationsId}:getDailyMetricsTimeSeries",
 	//   "httpMethod": "GET",
 	//   "id": "businessprofileperformance.locations.getDailyMetricsTimeSeries",
@@ -832,8 +832,8 @@ type LocationsSearchkeywordsImpressionsMonthlyListCall struct {
 
 // List: Returns the search keywords used to find a business in search
 // or maps. Each search keyword is accompanied by impressions which are
-// aggregated on a monthly basis. Example request: GET
-// https://businessprofileperformance.googleapis.com/v1/locations/12345/searchkeywords/impressions/monthly?monthly_range.start_month.year=2022&monthly_range.start_month.month=1&monthly_range.end_month.year=2022&monthly_range.end_month.month=3
+// aggregated on a monthly basis. Example request: `GET
+// https://businessprofileperformance.googleapis.com/v1/locations/12345/searchkeywords/impressions/monthly?monthly_range.start_month.year=2022&monthly_range.start_month.month=1&monthly_range.end_month.year=2022&monthly_range.end_month.month=3`
 //
 // - parent: The location for which the time series should be fetched.
 //   Format: locations/{location_id} where location_id is an
@@ -1010,7 +1010,7 @@ func (c *LocationsSearchkeywordsImpressionsMonthlyListCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the search keywords used to find a business in search or maps. Each search keyword is accompanied by impressions which are aggregated on a monthly basis. Example request: GET https://businessprofileperformance.googleapis.com/v1/locations/12345/searchkeywords/impressions/monthly?monthly_range.start_month.year=2022\u0026monthly_range.start_month.month=1\u0026monthly_range.end_month.year=2022\u0026monthly_range.end_month.month=3",
+	//   "description": "Returns the search keywords used to find a business in search or maps. Each search keyword is accompanied by impressions which are aggregated on a monthly basis. Example request: `GET https://businessprofileperformance.googleapis.com/v1/locations/12345/searchkeywords/impressions/monthly?monthly_range.start_month.year=2022\u0026monthly_range.start_month.month=1\u0026monthly_range.end_month.year=2022\u0026monthly_range.end_month.month=3`",
 	//   "flatPath": "v1/locations/{locationsId}/searchkeywords/impressions/monthly",
 	//   "httpMethod": "GET",
 	//   "id": "businessprofileperformance.locations.searchkeywords.impressions.monthly.list",

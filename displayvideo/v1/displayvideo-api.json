@@ -8146,7 +8146,7 @@
       }
     }
   },
-  "revision": "20220526",
+  "revision": "20220607",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -13980,7 +13980,7 @@
       "id": "HouseholdIncomeAssignedTargetingOptionDetails",
       "properties": {
         "householdIncome": {
-          "description": "Output only. The household income of the audience.",
+          "description": "The household income of the audience. Output only in v1. Required in v2.",
           "enum": [
             "HOUSEHOLD_INCOME_UNSPECIFIED",
             "HOUSEHOLD_INCOME_UNKNOWN",
@@ -14001,7 +14001,6 @@
             "The audience is in the top 11-20% of U.S. household incomes.",
             "The audience is in the top 10% of U.S. household incomes."
           ],
-          "readOnly": true,
           "type": "string"
         },
         "targetingOptionId": {

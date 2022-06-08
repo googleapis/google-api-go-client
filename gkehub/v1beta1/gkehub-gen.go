@@ -182,6 +182,38 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// ApplianceCluster: ApplianceCluster contains information specific to
+// GDC Edge Appliance Clusters.
+type ApplianceCluster struct {
+	// ResourceLink: Immutable. Self-link of the GCP resource for the
+	// Appliance Cluster. For example:
+	// //transferappliance.googleapis.com/projects/my-project/locations/us-we
+	// st1-a/appliances/my-appliance
+	ResourceLink string `json:"resourceLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceLink") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceLink") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplianceCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplianceCluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -1092,6 +1124,10 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 // contact a Kubernetes API, endpoint and any additional Kubernetes
 // metadata.
 type MembershipEndpoint struct {
+	// ApplianceCluster: Optional. Specific information for a GDC Edge
+	// Appliance cluster.
+	ApplianceCluster *ApplianceCluster `json:"applianceCluster,omitempty"`
+
 	// EdgeCluster: Optional. Specific information for a Google Edge
 	// cluster.
 	EdgeCluster *EdgeCluster `json:"edgeCluster,omitempty"`
@@ -1120,7 +1156,7 @@ type MembershipEndpoint struct {
 	// allowed to use this field, it should have a nil "type" instead.
 	OnPremCluster *OnPremCluster `json:"onPremCluster,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EdgeCluster") to
+	// ForceSendFields is a list of field names (e.g. "ApplianceCluster") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1128,12 +1164,13 @@ type MembershipEndpoint struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EdgeCluster") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApplianceCluster") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

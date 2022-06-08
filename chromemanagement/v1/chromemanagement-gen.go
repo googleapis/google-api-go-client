@@ -3416,6 +3416,13 @@ func (r *CustomersTelemetryDevicesService) Get(name string) *CustomersTelemetryD
 	return c
 }
 
+// ReadMask sets the optional parameter "readMask": Required. Read mask
+// to specify which fields to return.
+func (c *CustomersTelemetryDevicesGetCall) ReadMask(readMask string) *CustomersTelemetryDevicesGetCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3529,6 +3536,12 @@ func (c *CustomersTelemetryDevicesGetCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+/telemetry/devices/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Required. Read mask to specify which fields to return.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

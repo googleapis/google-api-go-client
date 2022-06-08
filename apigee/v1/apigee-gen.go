@@ -5391,7 +5391,8 @@ func (s *GoogleCloudApigeeV1KeyValueEntry) MarshalJSON() ([]byte, error) {
 // GoogleCloudApigeeV1KeyValueMap: Collection of key/value string pairs.
 type GoogleCloudApigeeV1KeyValueMap struct {
 	// Encrypted: Optional. Flag that specifies whether entry values will be
-	// encrypted. Enable to encrypt entry values.
+	// encrypted. You must set this value to `true`. Apigee X and hybrid do
+	// not support unencrytped key value maps.
 	Encrypted bool `json:"encrypted,omitempty"`
 
 	// Name: Required. ID of the key value map.
@@ -16731,15 +16732,16 @@ type OrganizationsApisKeyvaluemapsEntriesCreateCall struct {
 	header_                          http.Header
 }
 
-// Create: Creates key value entries in a org, env or apis scoped key
-// value map.
+// Create: Creates key value entries in a key value map scoped to an
+// organization, environment, or API proxy.
 //
 // - parent: Scope as indicated by the URI in which to create the key
-//   value map entry. Use one of the following formats in your request:
+//   value map entry. Use **one** of the following structures in your
+//   request: *
 //   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
-//   .
+//   . *
 //   `organizations/{organization}/environments/{environment}/keyvaluemap
-//   s/{keyvaluemap}`
+//   s/{keyvaluemap}` *
 //   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
 func (r *OrganizationsApisKeyvaluemapsEntriesService) Create(parent string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsApisKeyvaluemapsEntriesCreateCall {
 	c := &OrganizationsApisKeyvaluemapsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -16839,7 +16841,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesCreateCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates key value entries in a org, env or apis scoped key value map.",
+	//   "description": "Creates key value entries in a key value map scoped to an organization, environment, or API proxy.",
 	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/keyvaluemaps/{keyvaluemapsId}/entries",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.apis.keyvaluemaps.entries.create",
@@ -16848,7 +16850,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesCreateCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Scope as indicated by the URI in which to create the key value map entry. Use one of the following formats in your request: `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "description": "Required. Scope as indicated by the URI in which to create the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/apis/[^/]+/keyvaluemaps/[^/]+$",
 	//       "required": true,
@@ -16879,15 +16881,19 @@ type OrganizationsApisKeyvaluemapsEntriesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a key value entry from an org, environment or apis
-// scoped key value map.
+// Delete: Deletes a key value entry from a key value map scoped to an
+// organization, environment, or API proxy. **Note:** After you delete
+// the key value entry, the policy consuming the entry will continue to
+// function with its cached values for a few minutes. This is expected
+// behavior.
 //
 // - name: Scope as indicated by the URI in which to delete the key
-//   value map entry. Use one of the following formats in your request:
+//   value map entry. Use **one** of the following structures in your
+//   request: *
 //   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/
-//   entries/{entry}`.
+//   entries/{entry}`. *
 //   `organizations/{organization}/environments/{environment}/keyvaluemap
-//   s/{keyvaluemap}/entries/{entry}`
+//   s/{keyvaluemap}/entries/{entry}` *
 //   `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{en
 //   try}`.
 func (r *OrganizationsApisKeyvaluemapsEntriesService) Delete(name string) *OrganizationsApisKeyvaluemapsEntriesDeleteCall {
@@ -16982,7 +16988,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesDeleteCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a key value entry from an org, environment or apis scoped key value map.",
+	//   "description": "Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Note:** After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior.",
 	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.apis.keyvaluemaps.entries.delete",
@@ -16991,7 +16997,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Scope as indicated by the URI in which to delete the key value map entry. Use one of the following formats in your request: `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
+	//       "description": "Required. Scope as indicated by the URI in which to delete the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/apis/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -17024,11 +17030,12 @@ type OrganizationsApisKeyvaluemapsEntriesGetCall struct {
 // value map.
 //
 // - name: Scope as indicated by the URI in which to fetch the key value
-//   map entry/value. Use one of the following formats in your request:
+//   map entry/value. Use **one** of the following structures in your
+//   request: *
 //   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/
-//   entries/{entry}`.
+//   entries/{entry}`. *
 //   `organizations/{organization}/environments/{environment}/keyvaluemap
-//   s/{keyvaluemap}/entries/{entry}`
+//   s/{keyvaluemap}/entries/{entry}` *
 //   `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{en
 //   try}`.
 func (r *OrganizationsApisKeyvaluemapsEntriesService) Get(name string) *OrganizationsApisKeyvaluemapsEntriesGetCall {
@@ -17145,7 +17152,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Scope as indicated by the URI in which to fetch the key value map entry/value. Use one of the following formats in your request: `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
+	//       "description": "Required. Scope as indicated by the URI in which to fetch the key value map entry/value. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/apis/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -17178,11 +17185,11 @@ type OrganizationsApisKeyvaluemapsEntriesListCall struct {
 // organization, environment, or API proxy.
 //
 // - parent: Scope as indicated by the URI in which to list key value
-//   maps. Use one of the following formats in your request:
+//   maps. Use **one** of the following structures in your request: *
 //   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
-//   .
+//   . *
 //   `organizations/{organization}/environments/{environment}/keyvaluemap
-//   s/{keyvaluemap}`
+//   s/{keyvaluemap}` *
 //   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
 func (r *OrganizationsApisKeyvaluemapsEntriesService) List(parent string) *OrganizationsApisKeyvaluemapsEntriesListCall {
 	c := &OrganizationsApisKeyvaluemapsEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -17198,9 +17205,9 @@ func (c *OrganizationsApisKeyvaluemapsEntriesListCall) PageSize(pageSize int64) 
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token, a key
-// value entry returned from a previous call that can use to retrieve
-// the next page.
+// PageToken sets the optional parameter "pageToken": Page token. If
+// provides, must be a valid key value entry returned from a previous
+// call that can be used to retrieve the next page.
 func (c *OrganizationsApisKeyvaluemapsEntriesListCall) PageToken(pageToken string) *OrganizationsApisKeyvaluemapsEntriesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -17322,12 +17329,12 @@ func (c *OrganizationsApisKeyvaluemapsEntriesListCall) Do(opts ...googleapi.Call
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Page token, a key value entry returned from a previous call that can use to retrieve the next page.",
+	//       "description": "Optional. Page token. If provides, must be a valid key value entry returned from a previous call that can be used to retrieve the next page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Scope as indicated by the URI in which to list key value maps. Use one of the following formats in your request: `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "description": "Required. Scope as indicated by the URI in which to list key value maps. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/apis/[^/]+/keyvaluemaps/[^/]+$",
 	//       "required": true,
@@ -27605,7 +27612,9 @@ type OrganizationsEnvironmentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an environment from an organization.
+// Delete: Deletes an environment from an organization. **Note**: You
+// must delete all key value maps and key value entries before you can
+// delete an environment.
 //
 // - name: Name of the environment. Use the following structure in your
 //   request: `organizations/{org}/environments/{env}`.
@@ -27701,7 +27710,7 @@ func (c *OrganizationsEnvironmentsDeleteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an environment from an organization.",
+	//   "description": "Deletes an environment from an organization. **Note**: You must delete all key value maps and key value entries before you can delete an environment.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.environments.delete",
@@ -35629,15 +35638,16 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall struct {
 	header_                          http.Header
 }
 
-// Create: Creates key value entries in a org, env or apis scoped key
-// value map.
+// Create: Creates key value entries in a key value map scoped to an
+// organization, environment, or API proxy.
 //
 // - parent: Scope as indicated by the URI in which to create the key
-//   value map entry. Use one of the following formats in your request:
+//   value map entry. Use **one** of the following structures in your
+//   request: *
 //   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
-//   .
+//   . *
 //   `organizations/{organization}/environments/{environment}/keyvaluemap
-//   s/{keyvaluemap}`
+//   s/{keyvaluemap}` *
 //   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
 func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) Create(parent string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall {
 	c := &OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -35737,7 +35747,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates key value entries in a org, env or apis scoped key value map.",
+	//   "description": "Creates key value entries in a key value map scoped to an organization, environment, or API proxy.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keyvaluemaps/{keyvaluemapsId}/entries",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.environments.keyvaluemaps.entries.create",
@@ -35746,7 +35756,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Scope as indicated by the URI in which to create the key value map entry. Use one of the following formats in your request: `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "description": "Required. Scope as indicated by the URI in which to create the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+/keyvaluemaps/[^/]+$",
 	//       "required": true,
@@ -35777,15 +35787,19 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a key value entry from an org, environment or apis
-// scoped key value map.
+// Delete: Deletes a key value entry from a key value map scoped to an
+// organization, environment, or API proxy. **Note:** After you delete
+// the key value entry, the policy consuming the entry will continue to
+// function with its cached values for a few minutes. This is expected
+// behavior.
 //
 // - name: Scope as indicated by the URI in which to delete the key
-//   value map entry. Use one of the following formats in your request:
+//   value map entry. Use **one** of the following structures in your
+//   request: *
 //   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/
-//   entries/{entry}`.
+//   entries/{entry}`. *
 //   `organizations/{organization}/environments/{environment}/keyvaluemap
-//   s/{keyvaluemap}/entries/{entry}`
+//   s/{keyvaluemap}/entries/{entry}` *
 //   `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{en
 //   try}`.
 func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) Delete(name string) *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall {
@@ -35880,7 +35894,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a key value entry from an org, environment or apis scoped key value map.",
+	//   "description": "Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Note:** After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.environments.keyvaluemaps.entries.delete",
@@ -35889,7 +35903,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Scope as indicated by the URI in which to delete the key value map entry. Use one of the following formats in your request: `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
+	//       "description": "Required. Scope as indicated by the URI in which to delete the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -35922,11 +35936,12 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall struct {
 // value map.
 //
 // - name: Scope as indicated by the URI in which to fetch the key value
-//   map entry/value. Use one of the following formats in your request:
+//   map entry/value. Use **one** of the following structures in your
+//   request: *
 //   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/
-//   entries/{entry}`.
+//   entries/{entry}`. *
 //   `organizations/{organization}/environments/{environment}/keyvaluemap
-//   s/{keyvaluemap}/entries/{entry}`
+//   s/{keyvaluemap}/entries/{entry}` *
 //   `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{en
 //   try}`.
 func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) Get(name string) *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall {
@@ -36043,7 +36058,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Scope as indicated by the URI in which to fetch the key value map entry/value. Use one of the following formats in your request: `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
+	//       "description": "Required. Scope as indicated by the URI in which to fetch the key value map entry/value. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -36076,11 +36091,11 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesListCall struct {
 // organization, environment, or API proxy.
 //
 // - parent: Scope as indicated by the URI in which to list key value
-//   maps. Use one of the following formats in your request:
+//   maps. Use **one** of the following structures in your request: *
 //   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
-//   .
+//   . *
 //   `organizations/{organization}/environments/{environment}/keyvaluemap
-//   s/{keyvaluemap}`
+//   s/{keyvaluemap}` *
 //   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
 func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) List(parent string) *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall {
 	c := &OrganizationsEnvironmentsKeyvaluemapsEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -36096,9 +36111,9 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) PageSize(pageSize
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token, a key
-// value entry returned from a previous call that can use to retrieve
-// the next page.
+// PageToken sets the optional parameter "pageToken": Page token. If
+// provides, must be a valid key value entry returned from a previous
+// call that can be used to retrieve the next page.
 func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) PageToken(pageToken string) *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -36220,12 +36235,12 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) Do(opts ...google
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Page token, a key value entry returned from a previous call that can use to retrieve the next page.",
+	//       "description": "Optional. Page token. If provides, must be a valid key value entry returned from a previous call that can be used to retrieve the next page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Scope as indicated by the URI in which to list key value maps. Use one of the following formats in your request: `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "description": "Required. Scope as indicated by the URI in which to list key value maps. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+/keyvaluemaps/[^/]+$",
 	//       "required": true,
@@ -45418,15 +45433,16 @@ type OrganizationsKeyvaluemapsEntriesCreateCall struct {
 	header_                          http.Header
 }
 
-// Create: Creates key value entries in a org, env or apis scoped key
-// value map.
+// Create: Creates key value entries in a key value map scoped to an
+// organization, environment, or API proxy.
 //
 // - parent: Scope as indicated by the URI in which to create the key
-//   value map entry. Use one of the following formats in your request:
+//   value map entry. Use **one** of the following structures in your
+//   request: *
 //   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
-//   .
+//   . *
 //   `organizations/{organization}/environments/{environment}/keyvaluemap
-//   s/{keyvaluemap}`
+//   s/{keyvaluemap}` *
 //   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
 func (r *OrganizationsKeyvaluemapsEntriesService) Create(parent string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsKeyvaluemapsEntriesCreateCall {
 	c := &OrganizationsKeyvaluemapsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -45526,7 +45542,7 @@ func (c *OrganizationsKeyvaluemapsEntriesCreateCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates key value entries in a org, env or apis scoped key value map.",
+	//   "description": "Creates key value entries in a key value map scoped to an organization, environment, or API proxy.",
 	//   "flatPath": "v1/organizations/{organizationsId}/keyvaluemaps/{keyvaluemapsId}/entries",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.keyvaluemaps.entries.create",
@@ -45535,7 +45551,7 @@ func (c *OrganizationsKeyvaluemapsEntriesCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Scope as indicated by the URI in which to create the key value map entry. Use one of the following formats in your request: `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "description": "Required. Scope as indicated by the URI in which to create the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/keyvaluemaps/[^/]+$",
 	//       "required": true,
@@ -45566,15 +45582,19 @@ type OrganizationsKeyvaluemapsEntriesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a key value entry from an org, environment or apis
-// scoped key value map.
+// Delete: Deletes a key value entry from a key value map scoped to an
+// organization, environment, or API proxy. **Note:** After you delete
+// the key value entry, the policy consuming the entry will continue to
+// function with its cached values for a few minutes. This is expected
+// behavior.
 //
 // - name: Scope as indicated by the URI in which to delete the key
-//   value map entry. Use one of the following formats in your request:
+//   value map entry. Use **one** of the following structures in your
+//   request: *
 //   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/
-//   entries/{entry}`.
+//   entries/{entry}`. *
 //   `organizations/{organization}/environments/{environment}/keyvaluemap
-//   s/{keyvaluemap}/entries/{entry}`
+//   s/{keyvaluemap}/entries/{entry}` *
 //   `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{en
 //   try}`.
 func (r *OrganizationsKeyvaluemapsEntriesService) Delete(name string) *OrganizationsKeyvaluemapsEntriesDeleteCall {
@@ -45669,7 +45689,7 @@ func (c *OrganizationsKeyvaluemapsEntriesDeleteCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a key value entry from an org, environment or apis scoped key value map.",
+	//   "description": "Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Note:** After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior.",
 	//   "flatPath": "v1/organizations/{organizationsId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.keyvaluemaps.entries.delete",
@@ -45678,7 +45698,7 @@ func (c *OrganizationsKeyvaluemapsEntriesDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Scope as indicated by the URI in which to delete the key value map entry. Use one of the following formats in your request: `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
+	//       "description": "Required. Scope as indicated by the URI in which to delete the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -45711,11 +45731,12 @@ type OrganizationsKeyvaluemapsEntriesGetCall struct {
 // value map.
 //
 // - name: Scope as indicated by the URI in which to fetch the key value
-//   map entry/value. Use one of the following formats in your request:
+//   map entry/value. Use **one** of the following structures in your
+//   request: *
 //   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/
-//   entries/{entry}`.
+//   entries/{entry}`. *
 //   `organizations/{organization}/environments/{environment}/keyvaluemap
-//   s/{keyvaluemap}/entries/{entry}`
+//   s/{keyvaluemap}/entries/{entry}` *
 //   `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{en
 //   try}`.
 func (r *OrganizationsKeyvaluemapsEntriesService) Get(name string) *OrganizationsKeyvaluemapsEntriesGetCall {
@@ -45832,7 +45853,7 @@ func (c *OrganizationsKeyvaluemapsEntriesGetCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Scope as indicated by the URI in which to fetch the key value map entry/value. Use one of the following formats in your request: `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
+	//       "description": "Required. Scope as indicated by the URI in which to fetch the key value map entry/value. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -45865,11 +45886,11 @@ type OrganizationsKeyvaluemapsEntriesListCall struct {
 // organization, environment, or API proxy.
 //
 // - parent: Scope as indicated by the URI in which to list key value
-//   maps. Use one of the following formats in your request:
+//   maps. Use **one** of the following structures in your request: *
 //   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
-//   .
+//   . *
 //   `organizations/{organization}/environments/{environment}/keyvaluemap
-//   s/{keyvaluemap}`
+//   s/{keyvaluemap}` *
 //   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
 func (r *OrganizationsKeyvaluemapsEntriesService) List(parent string) *OrganizationsKeyvaluemapsEntriesListCall {
 	c := &OrganizationsKeyvaluemapsEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -45885,9 +45906,9 @@ func (c *OrganizationsKeyvaluemapsEntriesListCall) PageSize(pageSize int64) *Org
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token, a key
-// value entry returned from a previous call that can use to retrieve
-// the next page.
+// PageToken sets the optional parameter "pageToken": Page token. If
+// provides, must be a valid key value entry returned from a previous
+// call that can be used to retrieve the next page.
 func (c *OrganizationsKeyvaluemapsEntriesListCall) PageToken(pageToken string) *OrganizationsKeyvaluemapsEntriesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -46009,12 +46030,12 @@ func (c *OrganizationsKeyvaluemapsEntriesListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Page token, a key value entry returned from a previous call that can use to retrieve the next page.",
+	//       "description": "Optional. Page token. If provides, must be a valid key value entry returned from a previous call that can be used to retrieve the next page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Scope as indicated by the URI in which to list key value maps. Use one of the following formats in your request: `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "description": "Required. Scope as indicated by the URI in which to list key value maps. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/keyvaluemaps/[^/]+$",
 	//       "required": true,

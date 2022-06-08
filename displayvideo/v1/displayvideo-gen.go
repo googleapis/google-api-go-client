@@ -9060,7 +9060,8 @@ func (s *GuaranteedOrderStatus) MarshalJSON() ([]byte, error) {
 // details field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_HOUSEHOLD_INCOME`.
 type HouseholdIncomeAssignedTargetingOptionDetails struct {
-	// HouseholdIncome: Output only. The household income of the audience.
+	// HouseholdIncome: The household income of the audience. Output only in
+	// v1. Required in v2.
 	//
 	// Possible values:
 	//   "HOUSEHOLD_INCOME_UNSPECIFIED" - Default value when household

@@ -3813,6 +3813,46 @@ func (s *HparamTuningTrial) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+type IndexUnusedReason struct {
+	// BaseTable: [Output-only] Specifies the base table involved in the
+	// reason that no search index was used.
+	BaseTable *TableReference `json:"base_table,omitempty"`
+
+	// Code: [Output-only] Specifies the high-level reason for the scenario
+	// when no search index was used.
+	Code string `json:"code,omitempty"`
+
+	// IndexName: [Output-only] Specifies the name of the unused search
+	// index, if available.
+	IndexName string `json:"index_name,omitempty"`
+
+	// Message: [Output-only] Free form human-readable reason for the
+	// scenario when no search index was used.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseTable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseTable") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IndexUnusedReason) MarshalJSON() ([]byte, error) {
+	type NoMethod IndexUnusedReason
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IntArray: An array of int.
 type IntArray struct {
 	// Elements: Elements in the int array.
@@ -5104,6 +5144,9 @@ type JobStatistics2 struct {
 	// Schema: [Output-only] The schema of the results. Present only for
 	// successful dry run of non-legacy SQL queries.
 	Schema *TableSchema `json:"schema,omitempty"`
+
+	// SearchStatistics: [Output-only] Search query specific statistics.
+	SearchStatistics *SearchStatistics `json:"searchStatistics,omitempty"`
 
 	// StatementType: The type of query statement, if valid. Possible values
 	// (new values might be added in the future): "SELECT": SELECT query.
@@ -7234,6 +7277,40 @@ type ScriptStatistics struct {
 
 func (s *ScriptStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod ScriptStatistics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SearchStatistics struct {
+	// IndexUnusedReason: When index_usage_mode is UNUSED or PARTIALLY_USED,
+	// this field explains why index was not used in all or part of the
+	// search query. If index_usage_mode is FULLLY_USED, this field is not
+	// populated.
+	IndexUnusedReason []*IndexUnusedReason `json:"indexUnusedReason,omitempty"`
+
+	// IndexUsageMode: Specifies index usage mode for the query.
+	IndexUsageMode string `json:"indexUsageMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndexUnusedReason")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IndexUnusedReason") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchStatistics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14613,6 +14690,29 @@ func (c *TablesGetCall) SelectedFields(selectedFields string) *TablesGetCall {
 	return c
 }
 
+// View sets the optional parameter "view": Specifies the view that
+// determines which table information is returned. By default, basic
+// table information and storage statistics (STORAGE_STATS) are
+// returned.
+//
+// Possible values:
+//   "BASIC" - Includes basic table information including schema and
+// partitioning specification. This view does not include storage
+// statistics such as numRows or numBytes. This view is significantly
+// more efficient and should be used to support high query rates.
+//   "FULL" - Includes all table information, including storage
+// statistics. It returns same information as STORAGE_STATS view, but
+// may contain additional information in the future.
+//   "STORAGE_STATS" - Includes all information in the BASIC view as
+// well as storage statistics (numBytes, numLongTermBytes, numRows and
+// lastModifiedTime).
+//   "TABLE_METADATA_VIEW_UNSPECIFIED" - The default value. Default to
+// the STORAGE_STATS view.
+func (c *TablesGetCall) View(view string) *TablesGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -14744,6 +14844,23 @@ func (c *TablesGetCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	//       "description": "Table ID of the requested table",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies the view that determines which table information is returned. By default, basic table information and storage statistics (STORAGE_STATS) are returned.",
+	//       "enum": [
+	//         "BASIC",
+	//         "FULL",
+	//         "STORAGE_STATS",
+	//         "TABLE_METADATA_VIEW_UNSPECIFIED"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Includes basic table information including schema and partitioning specification. This view does not include storage statistics such as numRows or numBytes. This view is significantly more efficient and should be used to support high query rates.",
+	//         "Includes all table information, including storage statistics. It returns same information as STORAGE_STATS view, but may contain additional information in the future.",
+	//         "Includes all information in the BASIC view as well as storage statistics (numBytes, numLongTermBytes, numRows and lastModifiedTime).",
+	//         "The default value. Default to the STORAGE_STATS view."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

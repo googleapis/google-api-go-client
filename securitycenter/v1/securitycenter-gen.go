@@ -826,13 +826,14 @@ func (s *BulkMuteFindingsRequest) MarshalJSON() ([]byte, error) {
 // Compliance: Contains compliance information about a security standard
 // indicating unmet recommendations.
 type Compliance struct {
-	// Ids: e.g. A.12.4.1
+	// Ids: Policies within the standard/benchmark e.g. A.12.4.1
 	Ids []string `json:"ids,omitempty"`
 
-	// Standard: e.g. "cis", "pci", "owasp", etc.
+	// Standard: Refers to industry wide standards or benchmarks e.g. "cis",
+	// "pci", "owasp", etc.
 	Standard string `json:"standard,omitempty"`
 
-	// Version: e.g. 1.1
+	// Version: Version of the standard/benchmark e.g. 1.1
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Ids") to
@@ -1175,7 +1176,7 @@ type Empty struct {
 }
 
 // EnvironmentVariable: EnvironmentVariable is a name-value pair to
-// store env variables for Process.
+// store environment variables for Process.
 type EnvironmentVariable struct {
 	// Name: Environment variable name as a JSON encoded string.
 	Name string `json:"name,omitempty"`
@@ -1215,8 +1216,7 @@ type ExfilResource struct {
 	// Storage bucket.
 	Components []string `json:"components,omitempty"`
 
-	// Name: Resource’s URI
-	// (https://google.aip.dev/122#full-resource-names)
+	// Name: Resource's URI (https://google.aip.dev/122#full-resource-names)
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Components") to
@@ -1243,17 +1243,17 @@ func (s *ExfilResource) MarshalJSON() ([]byte, error) {
 }
 
 // Exfiltration: Exfiltration represents a data exfiltration attempt of
-// one or more source(s) to one or more target(s). Source(s) represent
-// the source of data that is exfiltrated, and Target(s) represents the
+// one or more sources to one or more targets. Sources represent the
+// source of data that is exfiltrated, and Targets represents the
 // destination the data was copied to.
 type Exfiltration struct {
 	// Sources: If there are multiple sources, then the data is considered
-	// “joined” between them. For instance, BigQuery can join multiple
+	// "joined" between them. For instance, BigQuery can join multiple
 	// tables, and each table would be considered a source.
 	Sources []*ExfilResource `json:"sources,omitempty"`
 
 	// Targets: If there are multiple targets, each target would get a
-	// complete copy of the “joined” source data.
+	// complete copy of the "joined" source data.
 	Targets []*ExfilResource `json:"targets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Sources") to
@@ -1358,8 +1358,8 @@ type File struct {
 	Path string `json:"path,omitempty"`
 
 	// Sha256: SHA256 hash of the first hashed_size bytes of the file
-	// encoded as a hex string. If hashed_size == size, hash_sha256
-	// represents the SHA256 hash of the entire file.
+	// encoded as a hex string. If hashed_size == size, sha256 represents
+	// the SHA256 hash of the entire file.
 	Sha256 string `json:"sha256,omitempty"`
 
 	// Size: Size of the file in bytes.
@@ -1447,7 +1447,7 @@ type Finding struct {
 	// must not be set to a value greater than the current timestamp.
 	EventTime string `json:"eventTime,omitempty"`
 
-	// Exfiltration: Represents exfiltrations associated with the Finding.
+	// Exfiltration: Represents exfiltration associated with the Finding.
 	Exfiltration *Exfiltration `json:"exfiltration,omitempty"`
 
 	// ExternalSystems: Output only. Third party SIEM/SOAR fields within
@@ -3731,7 +3731,7 @@ type Process struct {
 	// Args: Process arguments as JSON encoded strings.
 	Args []string `json:"args,omitempty"`
 
-	// ArgumentsTruncated: True if arguments is incomplete.
+	// ArgumentsTruncated: True if `args` is incomplete.
 	ArgumentsTruncated bool `json:"argumentsTruncated,omitempty"`
 
 	// Binary: File information for the process executable.
@@ -3740,7 +3740,7 @@ type Process struct {
 	// EnvVariables: Process environment variables.
 	EnvVariables []*EnvironmentVariable `json:"envVariables,omitempty"`
 
-	// EnvVariablesTruncated: True if env_variables is incomplete.
+	// EnvVariablesTruncated: True if `env_variables` is incomplete.
 	EnvVariablesTruncated bool `json:"envVariablesTruncated,omitempty"`
 
 	// Libraries: File information for libraries loaded by the process.
@@ -3753,7 +3753,7 @@ type Process struct {
 	Pid int64 `json:"pid,omitempty,string"`
 
 	// Script: When the process represents the invocation of a script,
-	// binary provides information about the interpreter while script
+	// `binary` provides information about the interpreter while `script`
 	// provides information about the script file provided to the
 	// interpreter.
 	Script *File `json:"script,omitempty"`

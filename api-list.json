@@ -832,7 +832,7 @@
       "name": "businessprofileperformance",
       "version": "v1",
       "title": "Business Profile Performance API",
-      "description": "The Business Profile Performance API allows merchants to fetch performance insights about their business profile on Google.",
+      "description": "The Business Profile Performance API allows merchants to fetch performance reports about their business profile on Google.",
       "discoveryRestUrl": "https://businessprofileperformance.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

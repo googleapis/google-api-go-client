@@ -75,17 +75,14 @@ func main() {
 
 	data, err := ioutil.ReadFile(os.Args[1])
 	if err != nil {
-		log.Fatalf("Error reading certificate: %w", err)
+		log.Fatalf("Error reading certificate: %v", err)
 	}
-	cert, err := tls.X509KeyPair(data, data)
-	if err != nil {
-		log.Printf("Error creating X509 certificate: %w", err)
-	}
+	cert, _ := tls.X509KeyPair(data, data)
 
 	enterpriseCertSigner.cert = &cert
 
 	if err := rpc.Register(enterpriseCertSigner); err != nil {
-		log.Fatalf("Error registering net/rpc: %w", err)
+		log.Fatalf("Error registering net/rpc: %v", err)
 	}
 
 	// If the parent process dies, we should exit.

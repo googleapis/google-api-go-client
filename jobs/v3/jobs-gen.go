@@ -2612,7 +2612,7 @@ type LocationFilter struct {
 	// Possible values:
 	//   "TELECOMMUTE_PREFERENCE_UNSPECIFIED" - Default value if the
 	// telecommute preference is not specified.
-	//   "TELECOMMUTE_EXCLUDED" - DEPRECATED. Ignore telecommute status of
+	//   "TELECOMMUTE_EXCLUDED" - Deprecated: Ignore telecommute status of
 	// jobs. Use TELECOMMUTE_JOBS_EXCLUDED if want to exclude telecommute
 	// jobs.
 	//   "TELECOMMUTE_ALLOWED" - Allow telecommute jobs.
@@ -2785,7 +2785,7 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NamespacedDebugInput: Next ID: 15
+// NamespacedDebugInput: Next ID: 16
 type NamespacedDebugInput struct {
 	// AbsolutelyForcedExpNames: Set of experiment names to be absolutely
 	// forced. These experiments will be forced without evaluating the
@@ -2873,6 +2873,17 @@ type NamespacedDebugInput struct {
 	// ForcedRollouts: Rollouts to force in a particular experiment state.
 	// Map from rollout name to rollout value.
 	ForcedRollouts map[string]bool `json:"forcedRollouts,omitempty"`
+
+	// TestingMode: If set to ALL_OFF, organic selection will be disabled;
+	// if set to ALL_ON, organic selection will be disabled, and only select
+	// launch experiments will receive traffic. See
+	// go/mendel-aoao-runtime-design.
+	//
+	// Possible values:
+	//   "TESTING_MODE_UNSPECIFIED"
+	//   "TESTING_MODE_ALL_OFF"
+	//   "TESTING_MODE_ALL_ON"
+	TestingMode string `json:"testingMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AbsolutelyForcedExpNames") to unconditionally include in API

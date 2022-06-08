@@ -387,6 +387,38 @@ func (s *AppDevExperienceFeatureState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ApplianceCluster: ApplianceCluster contains information specific to
+// GDC Edge Appliance Clusters.
+type ApplianceCluster struct {
+	// ResourceLink: Immutable. Self-link of the GCP resource for the
+	// Appliance Cluster. For example:
+	// //transferappliance.googleapis.com/projects/my-project/locations/us-we
+	// st1-a/appliances/my-appliance
+	ResourceLink string `json:"resourceLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceLink") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceLink") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplianceCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplianceCluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -698,6 +730,9 @@ type ConfigManagementConfigSync struct {
 
 	// Git: Git repo configuration for the cluster.
 	Git *ConfigManagementGitConfig `json:"git,omitempty"`
+
+	// Oci: OCI repo configuration for the cluster
+	Oci *ConfigManagementOciConfig `json:"oci,omitempty"`
 
 	// PreventDrift: Set to true to enable the Config Sync admission webhook
 	// to prevent drifts. If set to `false`, disables the Config Sync
@@ -1365,6 +1400,54 @@ func (s *ConfigManagementMembershipState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConfigManagementOciConfig: OCI repo configuration for a single
+// cluster
+type ConfigManagementOciConfig struct {
+	// GcpServiceAccountEmail: The GCP Service Account Email used for auth
+	// when secret_type is gcpServiceAccount.
+	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
+
+	// PolicyDir: The absolute path of the directory that contains the local
+	// resources. Default: the root directory of the image.
+	PolicyDir string `json:"policyDir,omitempty"`
+
+	// SecretType: Type of secret configured for access to the Git repo.
+	SecretType string `json:"secretType,omitempty"`
+
+	// SyncRepo: The OCI image repository URL for the package to sync from.
+	// e.g.
+	// `LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY_NAME/PACKAGE_NAME`.
+	SyncRepo string `json:"syncRepo,omitempty"`
+
+	// SyncWaitSecs: Period in seconds between consecutive syncs. Default:
+	// 15.
+	SyncWaitSecs int64 `json:"syncWaitSecs,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "GcpServiceAccountEmail") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcpServiceAccountEmail")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConfigManagementOciConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementOciConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ConfigManagementOperatorState: State information for an ACM's
 // Operator
 type ConfigManagementOperatorState struct {
@@ -1427,6 +1510,9 @@ type ConfigManagementPolicyController struct {
 	// LogDeniesEnabled: Logs all denies and dry run failures.
 	LogDeniesEnabled bool `json:"logDeniesEnabled,omitempty"`
 
+	// Monitoring: Monitoring specifies the configuration of monitoring.
+	Monitoring *ConfigManagementPolicyControllerMonitoring `json:"monitoring,omitempty"`
+
 	// ReferentialRulesEnabled: Enables the ability to use Constraint
 	// Templates that reference to objects other than the object currently
 	// being evaluated.
@@ -1457,6 +1543,45 @@ type ConfigManagementPolicyController struct {
 
 func (s *ConfigManagementPolicyController) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigManagementPolicyController
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementPolicyControllerMonitoring:
+// PolicyControllerMonitoring specifies the backends Policy Controller
+// should export metrics to. For example, to specify metrics should be
+// exported to Cloud Monitoring and Prometheus, specify backends:
+// ["cloudmonitoring", "prometheus"]
+type ConfigManagementPolicyControllerMonitoring struct {
+	// Backends: Specifies the list of backends Policy Controller will
+	// export to. An empty list would effectively disable metrics export.
+	//
+	// Possible values:
+	//   "MONITORING_BACKEND_UNSPECIFIED" - Backend cannot be determined
+	//   "PROMETHEUS" - Prometheus backend for monitoring
+	//   "CLOUD_MONITORING" - Stackdriver/Cloud Monitoring backend for
+	// monitoring
+	Backends []string `json:"backends,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backends") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backends") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConfigManagementPolicyControllerMonitoring) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementPolicyControllerMonitoring
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2679,6 +2804,10 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 // contact a Kubernetes API, endpoint and any additional Kubernetes
 // metadata.
 type MembershipEndpoint struct {
+	// ApplianceCluster: Optional. Specific information for a GDC Edge
+	// Appliance cluster.
+	ApplianceCluster *ApplianceCluster `json:"applianceCluster,omitempty"`
+
 	// EdgeCluster: Optional. Specific information for a Google Edge
 	// cluster.
 	EdgeCluster *EdgeCluster `json:"edgeCluster,omitempty"`
@@ -2707,7 +2836,7 @@ type MembershipEndpoint struct {
 	// allowed to use this field, it should have a nil "type" instead.
 	OnPremCluster *OnPremCluster `json:"onPremCluster,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EdgeCluster") to
+	// ForceSendFields is a list of field names (e.g. "ApplianceCluster") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2715,12 +2844,13 @@ type MembershipEndpoint struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EdgeCluster") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApplianceCluster") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

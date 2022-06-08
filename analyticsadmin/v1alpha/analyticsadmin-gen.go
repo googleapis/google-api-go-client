@@ -510,6 +510,105 @@ type GoogleAnalyticsAdminV1alphaArchiveCustomDimensionRequest struct {
 type GoogleAnalyticsAdminV1alphaArchiveCustomMetricRequest struct {
 }
 
+// GoogleAnalyticsAdminV1alphaAttributionSettings: The attribution
+// settings used for a given property. This is a singleton resource.
+type GoogleAnalyticsAdminV1alphaAttributionSettings struct {
+	// AcquisitionConversionEventLookbackWindow: Required. The lookback
+	// window configuration for acquisition conversion events. The default
+	// window size is 30 days.
+	//
+	// Possible values:
+	//   "ACQUISITION_CONVERSION_EVENT_LOOKBACK_WINDOW_UNSPECIFIED" -
+	// Lookback window size unspecified.
+	//   "ACQUISITION_CONVERSION_EVENT_LOOKBACK_WINDOW_7_DAYS" - 7-day
+	// lookback window.
+	//   "ACQUISITION_CONVERSION_EVENT_LOOKBACK_WINDOW_30_DAYS" - 30-day
+	// lookback window.
+	AcquisitionConversionEventLookbackWindow string `json:"acquisitionConversionEventLookbackWindow,omitempty"`
+
+	// Name: Output only. Resource name of this attribution settings
+	// resource. Format: properties/{property_id}/attributionSettings
+	// Example: "properties/1000/attributionSettings"
+	Name string `json:"name,omitempty"`
+
+	// OtherConversionEventLookbackWindow: Required. The lookback window for
+	// all other, non-acquisition conversion events. The default window size
+	// is 90 days.
+	//
+	// Possible values:
+	//   "OTHER_CONVERSION_EVENT_LOOKBACK_WINDOW_UNSPECIFIED" - Lookback
+	// window size unspecified.
+	//   "OTHER_CONVERSION_EVENT_LOOKBACK_WINDOW_30_DAYS" - 30-day lookback
+	// window.
+	//   "OTHER_CONVERSION_EVENT_LOOKBACK_WINDOW_60_DAYS" - 60-day lookback
+	// window.
+	//   "OTHER_CONVERSION_EVENT_LOOKBACK_WINDOW_90_DAYS" - 90-day lookback
+	// window.
+	OtherConversionEventLookbackWindow string `json:"otherConversionEventLookbackWindow,omitempty"`
+
+	// ReportingAttributionModel: Required. The reporting attribution model
+	// used to calculate conversion credit in this property's reports.
+	// Changing the attribution model will apply to both historical and
+	// future data. These changes will be reflected in reports with
+	// conversion and revenue data. User and session data will be
+	// unaffected.
+	//
+	// Possible values:
+	//   "REPORTING_ATTRIBUTION_MODEL_UNSPECIFIED" - Reporting attribution
+	// model unspecified.
+	//   "CROSS_CHANNEL_DATA_DRIVEN" - Data-driven attribution distributes
+	// credit for the conversion based on data for each conversion event.
+	// Each Data-driven model is specific to each advertiser and each
+	// conversion event.
+	//   "CROSS_CHANNEL_LAST_CLICK" - Ignores direct traffic and attributes
+	// 100% of the conversion value to the last channel that the customer
+	// clicked through (or engaged view through for YouTube) before
+	// converting.
+	//   "CROSS_CHANNEL_FIRST_CLICK" - Gives all credit for the conversion
+	// to the first channel that a customer clicked (or engaged view through
+	// for YouTube) before converting.
+	//   "CROSS_CHANNEL_LINEAR" - Distributes the credit for the conversion
+	// equally across all the channels a customer clicked (or engaged view
+	// through for YouTube) before converting.
+	//   "CROSS_CHANNEL_POSITION_BASED" - Attributes 40% credit to the first
+	// and last interaction, and the remaining 20% credit is distributed
+	// evenly to the middle interactions.
+	//   "CROSS_CHANNEL_TIME_DECAY" - Gives more credit to the touchpoints
+	// that happened closer in time to the conversion.
+	//   "ADS_PREFERRED_LAST_CLICK" - Attributes 100% of the conversion
+	// value to the last Google Ads channel that the customer clicked
+	// through before converting.
+	ReportingAttributionModel string `json:"reportingAttributionModel,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AcquisitionConversionEventLookbackWindow") to unconditionally
+	// include in API requests. By default, fields with empty or default
+	// values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AcquisitionConversionEventLookbackWindow") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAttributionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAttributionSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaAuditUserLink: Read-only resource used to
 // summarize a principal's effective roles.
 type GoogleAnalyticsAdminV1alphaAuditUserLink struct {
@@ -887,6 +986,10 @@ func (s *GoogleAnalyticsAdminV1alphaChangeHistoryChange) MarshalJSON() ([]byte, 
 type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct {
 	// Account: A snapshot of an Account resource in change history.
 	Account *GoogleAnalyticsAdminV1alphaAccount `json:"account,omitempty"`
+
+	// AttributionSettings: A snapshot of AttributionSettings resource in
+	// change history.
+	AttributionSettings *GoogleAnalyticsAdminV1alphaAttributionSettings `json:"attributionSettings,omitempty"`
 
 	// ConversionEvent: A snapshot of a ConversionEvent resource in change
 	// history.
@@ -2883,6 +2986,7 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "DISPLAY_VIDEO_360_ADVERTISER_LINK_PROPOSAL" -
 	// DisplayVideo360AdvertiserLinkProposal resource
 	//   "DATA_STREAM" - DataStream resource
+	//   "ATTRIBUTION_SETTINGS" - AttributionSettings resource
 	ResourceType []string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -6447,6 +6551,156 @@ func (c *PropertiesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAd
 
 }
 
+// method id "analyticsadmin.properties.getAttributionSettings":
+
+type PropertiesGetAttributionSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetAttributionSettings: Lookup for a AttributionSettings singleton.
+//
+// - name: The name of the attribution settings to retrieve. Format:
+//   properties/{property}/attributionSettings.
+func (r *PropertiesService) GetAttributionSettings(name string) *PropertiesGetAttributionSettingsCall {
+	c := &PropertiesGetAttributionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesGetAttributionSettingsCall) Fields(s ...googleapi.Field) *PropertiesGetAttributionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesGetAttributionSettingsCall) IfNoneMatch(entityTag string) *PropertiesGetAttributionSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesGetAttributionSettingsCall) Context(ctx context.Context) *PropertiesGetAttributionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesGetAttributionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesGetAttributionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.getAttributionSettings" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaAttributionSettings or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaAttributionSettings.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesGetAttributionSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaAttributionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaAttributionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lookup for a AttributionSettings singleton.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/attributionSettings",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.getAttributionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the attribution settings to retrieve. Format: properties/{property}/attributionSettings",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/attributionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAttributionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "analyticsadmin.properties.getDataRetentionSettings":
 
 type PropertiesGetDataRetentionSettingsCall struct {
@@ -7129,6 +7383,169 @@ func (c *PropertiesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalytics
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaProperty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.updateAttributionSettings":
+
+type PropertiesUpdateAttributionSettingsCall struct {
+	s                                              *Service
+	name                                           string
+	googleanalyticsadminv1alphaattributionsettings *GoogleAnalyticsAdminV1alphaAttributionSettings
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// UpdateAttributionSettings: Updates attribution settings on a
+// property.
+//
+// - name: Output only. Resource name of this attribution settings
+//   resource. Format: properties/{property_id}/attributionSettings
+//   Example: "properties/1000/attributionSettings".
+func (r *PropertiesService) UpdateAttributionSettings(name string, googleanalyticsadminv1alphaattributionsettings *GoogleAnalyticsAdminV1alphaAttributionSettings) *PropertiesUpdateAttributionSettingsCall {
+	c := &PropertiesUpdateAttributionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphaattributionsettings = googleanalyticsadminv1alphaattributionsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
+// replace the entire entity, use one path with the string "*" to match
+// all fields.
+func (c *PropertiesUpdateAttributionSettingsCall) UpdateMask(updateMask string) *PropertiesUpdateAttributionSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesUpdateAttributionSettingsCall) Fields(s ...googleapi.Field) *PropertiesUpdateAttributionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesUpdateAttributionSettingsCall) Context(ctx context.Context) *PropertiesUpdateAttributionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesUpdateAttributionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesUpdateAttributionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaattributionsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.updateAttributionSettings" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaAttributionSettings or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaAttributionSettings.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesUpdateAttributionSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaAttributionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaAttributionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates attribution settings on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/attributionSettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "analyticsadmin.properties.updateAttributionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of this attribution settings resource. Format: properties/{property_id}/attributionSettings Example: \"properties/1000/attributionSettings\"",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/attributionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAttributionSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAttributionSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"

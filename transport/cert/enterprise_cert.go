@@ -33,15 +33,11 @@ type ecpSource struct {
 // such as the certificate issuer and the location of the signer binary.
 // If configFilePath is empty, the client will attempt to load the config from
 // a well-known gcloud location.
-//
-// Return nil for Source and Error if config file is missing, which
-// means Enterprise Certificate Proxy is not supported.
 func NewEnterpriseCertificateProxySource(configFilePath string) (Source, error) {
 	key, err := client.Cred(configFilePath)
 	if errors.Is(err, os.ErrNotExist) {
-		// Config file missing means Enterprise Certificate Proxy is not supported,
-		// so this is not a real error.
-		return nil, nil
+		// Config file missing means Enterprise Certificate Proxy is not supported.
+		return nil, errSourceUnavailable
 	}
 	if err != nil {
 		return nil, err

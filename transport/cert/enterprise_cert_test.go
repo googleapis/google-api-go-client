@@ -4,13 +4,14 @@
 package cert
 
 import (
+	"errors"
 	"testing"
 )
 
 func TestEnterpriseCertificateProxySource_ConfigMissing(t *testing.T) {
 	source, err := NewEnterpriseCertificateProxySource("missing.json")
-	if err != nil {
-		t.Fatal("NewEnterpriseCertificateProxySource: expected nil error returned when config is missing.")
+	if !errors.Is(err, errSourceUnavailable) {
+		t.Fatal("NewEnterpriseCertificateProxySource: expected errSourceUnavailable returned when config is missing.")
 	}
 	if source != nil {
 		t.Error("NewEnterpriseCertificateProxySource: expected nil source returned when config is missing.")
@@ -25,7 +26,7 @@ func TestEnterpriseCertificateProxySource_GetClientCertificateSuccess(t *testing
 	}
 	cert, err := source(nil)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	if cert.Certificate == nil {
 		t.Error("getClientCertificate: want non-nil Certificate, got nil")
@@ -41,7 +42,7 @@ func TestEnterpriseCertificateProxySource_InitializationFailure(t *testing.T) {
 	if err == nil {
 		t.Fatal("Expecting error.")
 	}
-	if got, want := err.Error(), "failed to retrieve certificate chain: unexpected EOF"; got != want {
+	if got, want := err.Error(), "failed to parse public key: asn1: syntax error: sequence truncated"; got != want {
 		t.Errorf("NewEnterpriseCertificateProxySource: want err %v, got %v", want, got)
 	}
 }

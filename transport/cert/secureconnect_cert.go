@@ -49,25 +49,20 @@ type secureConnectMetadata struct {
 //
 // The configFilePath points to the location of the context aware metadata file.
 // If configFilePath is empty, use the default context aware metadata location.
-//
-// Return nil for Source and Error if config file is missing, which
-// means Secure Connect is not supported.
 func NewSecureConnectSource(configFilePath string) (Source, error) {
 	if configFilePath == "" {
 		user, err := user.Current()
 		if err != nil {
-			// Error locating the default config means Secure Connect is not supported,
-			// so this is not a real error.
-			return nil, nil
+			// Error locating the default config means Secure Connect is not supported.
+			return nil, errSourceUnavailable
 		}
 		configFilePath = filepath.Join(user.HomeDir, metadataPath, metadataFile)
 	}
 
 	file, err := ioutil.ReadFile(configFilePath)
 	if errors.Is(err, os.ErrNotExist) {
-		// Config file missing means Secure Connect is not supported,
-		// so this is not a real error.
-		return nil, nil
+		// Config file missing means Secure Connect is not supported.
+		return nil, errSourceUnavailable
 	}
 	if err != nil {
 		return nil, err
@@ -75,10 +70,10 @@ func NewSecureConnectSource(configFilePath string) (Source, error) {
 
 	var metadata secureConnectMetadata
 	if err := json.Unmarshal(file, &metadata); err != nil {
-		return nil, fmt.Errorf("cert: could not parse JSON in %q: %v", configFilePath, err)
+		return nil, fmt.Errorf("cert: could not parse JSON in %q: %w", configFilePath, err)
 	}
 	if err := validateMetadata(metadata); err != nil {
-		return nil, fmt.Errorf("cert: invalid config in %q: %v", configFilePath, err)
+		return nil, fmt.Errorf("cert: invalid config in %q: %w", configFilePath, err)
 	}
 	return (&secureConnectSource{
 		metadata: metadata,

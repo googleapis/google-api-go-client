@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2020 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -14,6 +14,7 @@ package cert
 
 import (
 	"crypto/tls"
+	"errors"
 	"sync"
 )
 
@@ -35,6 +36,9 @@ var (
 // Source is a function that can be passed into crypto/tls.Config.GetClientCertificate.
 type Source func(*tls.CertificateRequestInfo) (*tls.Certificate, error)
 
+// errSourceUnavailable is a sentinel error to indicate certificate source is unavailable.
+var errSourceUnavailable = errors.New("certificate source is unavailable")
+
 // DefaultSource returns a certificate source using the preferred EnterpriseCertificateProxySource.
 // If EnterpriseCertificateProxySource is not available, fall back to the legacy SecureConnectSource.
 //
@@ -43,8 +47,11 @@ type Source func(*tls.CertificateRequestInfo) (*tls.Certificate, error)
 func DefaultSource() (Source, error) {
 	defaultCert.once.Do(func() {
 		defaultCert.source, defaultCert.err = NewEnterpriseCertificateProxySource("")
-		if defaultCert.source == nil && defaultCert.err == nil {
+		if errors.Is(defaultCert.err, errSourceUnavailable) {
 			defaultCert.source, defaultCert.err = NewSecureConnectSource("")
+			if errors.Is(defaultCert.err, errSourceUnavailable) {
+				defaultCert.source, defaultCert.err = nil, nil
+			}
 		}
 	})
 	return defaultCert.source, defaultCert.err

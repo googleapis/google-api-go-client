@@ -29,16 +29,16 @@ type EnterpriseCertSigner struct {
 	cert *tls.Certificate
 }
 
-// Transport wraps a pair of unidirectional streams as an io.ReadWriteCloser.
-type Transport struct {
+// Connection wraps a pair of unidirectional streams as an io.ReadWriteCloser.
+type Connection struct {
 	io.ReadCloser
 	io.WriteCloser
 }
 
-// Close closes t's underlying ReadCloser and WriteCloser.
-func (t *Transport) Close() error {
-	rerr := t.ReadCloser.Close()
-	werr := t.WriteCloser.Close()
+// Close closes c's underlying ReadCloser and WriteCloser.
+func (c *Connection) Close() error {
+	rerr := c.ReadCloser.Close()
+	werr := c.WriteCloser.Close()
 	if rerr != nil {
 		return rerr
 	}
@@ -75,17 +75,17 @@ func main() {
 
 	data, err := ioutil.ReadFile(os.Args[1])
 	if err != nil {
-		log.Fatalf("Error reading certificate: %v", err)
+		log.Fatalf("Error reading certificate: %w", err)
 	}
 	cert, err := tls.X509KeyPair(data, data)
 	if err != nil {
-		log.Fatalf("Error creating X509 certificate: %v", err)
+		log.Printf("Error creating X509 certificate: %w", err)
 	}
 
 	enterpriseCertSigner.cert = &cert
 
 	if err := rpc.Register(enterpriseCertSigner); err != nil {
-		log.Fatalf("Error registering net/rpc: %v", err)
+		log.Fatalf("Error registering net/rpc: %w", err)
 	}
 
 	// If the parent process dies, we should exit.
@@ -100,5 +100,5 @@ func main() {
 		}
 	}()
 
-	rpc.ServeConn(&Transport{os.Stdin, os.Stdout})
+	rpc.ServeConn(&Connection{os.Stdin, os.Stdout})
 }

@@ -5,16 +5,17 @@ package cert
 
 import (
 	"bytes"
+	"errors"
 	"testing"
 )
 
 func TestSecureConnectSource_ConfigMissing(t *testing.T) {
 	source, err := NewSecureConnectSource("missing.json")
-	if err != nil {
-		t.Fatal("NewSecureConnectSource: expected nil error returned when config is missing.")
+	if !errors.Is(err, errSourceUnavailable) {
+		t.Fatal("NewSecureConnectSource: expected errSourceUnavailable returned when config is missing.")
 	}
 	if source != nil {
-		t.Error("NewSecureConnectSource: expected nil source and error returned when config is missing.")
+		t.Error("NewSecureConnectSource: expected nil source returned when config is missing.")
 	}
 }
 

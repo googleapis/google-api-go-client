@@ -1493,6 +1493,11 @@ type GoogleFirestoreAdminV1Field struct {
 	// all fields which do not have their own `Field` index configuration.
 	Name string `json:"name,omitempty"`
 
+	// TtlConfig: The TTL configuration for this `Field`. Setting or
+	// unsetting this will enable or disable the TTL for documents that have
+	// this `Field`.
+	TtlConfig *GoogleFirestoreAdminV1TtlConfig `json:"ttlConfig,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1563,6 +1568,9 @@ type GoogleFirestoreAdminV1FieldOperationMetadata struct {
 	//   "CANCELLED" - Request has finished being cancelled after user
 	// called google.longrunning.Operations.CancelOperation.
 	State string `json:"state,omitempty"`
+
+	// TtlConfigDelta: Describes the deltas of TTL configuration.
+	TtlConfigDelta *GoogleFirestoreAdminV1TtlConfigDelta `json:"ttlConfigDelta,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
@@ -2119,6 +2127,86 @@ func (s *GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1TtlConfig: The TTL (time-to-live) configuration
+// for documents that have this `Field` set. Storing a timestamp value
+// into a TTL-enabled field will be treated as the document's absolute
+// expiration time. Using any other data type or leaving the field
+// absent will disable the TTL for the individual document.
+type GoogleFirestoreAdminV1TtlConfig struct {
+	// State: Output only. The state of the TTL configuration.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unspecified or unknown.
+	//   "CREATING" - The TTL is being applied. There is an active
+	// long-running operation to track the change. Newly written documents
+	// will have TTLs applied as requested. Requested TTLs on existing
+	// documents are still being processed. When TTLs on all existing
+	// documents have been processed, the state will move to 'ACTIVE'.
+	//   "ACTIVE" - The TTL is active for all documents.
+	//   "NEEDS_REPAIR" - The TTL configuration could not be enabled for all
+	// existing documents. Newly written documents will continue to have
+	// their TTL applied. The LRO returned when last attempting to enable
+	// TTL for this `Field` has failed, and may have more details.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1TtlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1TtlConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1TtlConfigDelta: Information about an TTL
+// configuration change.
+type GoogleFirestoreAdminV1TtlConfigDelta struct {
+	// ChangeType: Specifies how the TTL configuration is changing.
+	//
+	// Possible values:
+	//   "CHANGE_TYPE_UNSPECIFIED" - The type of change is not specified or
+	// known.
+	//   "ADD" - The TTL config is being added.
+	//   "REMOVE" - The TTL config is being removed.
+	ChangeType string `json:"changeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChangeType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChangeType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1TtlConfigDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1TtlConfigDelta
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1UpdateDatabaseMetadata: Metadata related to the
 // update database operation.
 type GoogleFirestoreAdminV1UpdateDatabaseMetadata struct {
@@ -2290,6 +2378,10 @@ type ListCollectionIdsRequest struct {
 	// PageToken: A page token. Must be a value from
 	// ListCollectionIdsResponse.
 	PageToken string `json:"pageToken,omitempty"`
+
+	// ReadTime: Reads documents as they were at the given time. This may
+	// not be older than 270 seconds.
+	ReadTime string `json:"readTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with
@@ -2651,6 +2743,10 @@ type PartitionQueryRequest struct {
 	// of parallel queries to be run, or in running a data pipeline job, one
 	// fewer than the number of workers or compute instances available.
 	PartitionCount int64 `json:"partitionCount,omitempty,string"`
+
+	// ReadTime: Reads documents as they were at the given time. This may
+	// not be older than 270 seconds.
+	ReadTime string `json:"readTime,omitempty"`
 
 	// StructuredQuery: A structured query. Query must specify collection
 	// with all descendants and be ordered by name ascending. Other filters,
@@ -3580,6 +3676,179 @@ func (s *WriteResult) MarshalJSON() ([]byte, error) {
 	type NoMethod WriteResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "firestore.projects.databases.create":
+
+type ProjectsDatabasesCreateCall struct {
+	s                              *Service
+	parent                         string
+	googlefirestoreadminv1database *GoogleFirestoreAdminV1Database
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Create: Create a database.
+//
+// - parent: A parent name of the form `projects/{project_id}`.
+func (r *ProjectsDatabasesService) Create(parent string, googlefirestoreadminv1database *GoogleFirestoreAdminV1Database) *ProjectsDatabasesCreateCall {
+	c := &ProjectsDatabasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlefirestoreadminv1database = googlefirestoreadminv1database
+	return c
+}
+
+// DatabaseId sets the optional parameter "databaseId": Required. The ID
+// to use for the database, which will become the final component of the
+// database's resource name. This value should be 4-63 characters. Valid
+// characters are /a-z-/ with first character a letter and the last a
+// letter or a number. Must not be UUID-like
+// /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)" database id
+// is also valid.
+func (c *ProjectsDatabasesCreateCall) DatabaseId(databaseId string) *ProjectsDatabasesCreateCall {
+	c.urlParams_.Set("databaseId", databaseId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the response, but do not actually
+// create the database.
+func (c *ProjectsDatabasesCreateCall) ValidateOnly(validateOnly bool) *ProjectsDatabasesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesCreateCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesCreateCall) Context(ctx context.Context) *ProjectsDatabasesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1database)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databases")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a database.",
+	//   "flatPath": "v1/projects/{projectsId}/databases",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "databaseId": {
+	//       "description": "Required. The ID to use for the database, which will become the final component of the database's resource name. This value should be 4-63 characters. Valid characters are /a-z-/ with first character a letter and the last a letter or a number. Must not be UUID-like /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. \"(default)\" database id is also valid.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. A parent name of the form `projects/{project_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "If set, validate the request and preview the response, but do not actually create the database.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/databases",
+	//   "request": {
+	//     "$ref": "GoogleFirestoreAdminV1Database"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
 }
 
 // method id "firestore.projects.databases.exportDocuments":

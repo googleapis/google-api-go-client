@@ -12,7 +12,7 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/dfareporting/v3.5"
+//   import "google.golang.org/api/dfareporting/v4"
 //   ...
 //   ctx := context.Background()
 //   dfareportingService, err := dfareporting.NewService(ctx)
@@ -39,7 +39,7 @@
 //   dfareportingService, err := dfareporting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
-package dfareporting // import "google.golang.org/api/dfareporting/v3.5"
+package dfareporting // import "google.golang.org/api/dfareporting/v4"
 
 import (
 	"bytes"
@@ -76,9 +76,9 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 
-const apiId = "dfareporting:v3.5"
+const apiId = "dfareporting:v4"
 const apiName = "dfareporting"
-const apiVersion = "v3.5"
+const apiVersion = "v4"
 const basePath = "https://dfareporting.googleapis.com/"
 const mtlsBasePath = "https://dfareporting.mtls.googleapis.com/"
 
@@ -137,8 +137,12 @@ func New(client *http.Client) (*Service, error) {
 	s.Accounts = NewAccountsService(s)
 	s.Ads = NewAdsService(s)
 	s.AdvertiserGroups = NewAdvertiserGroupsService(s)
+	s.AdvertiserInvoices = NewAdvertiserInvoicesService(s)
 	s.AdvertiserLandingPages = NewAdvertiserLandingPagesService(s)
 	s.Advertisers = NewAdvertisersService(s)
+	s.BillingAssignments = NewBillingAssignmentsService(s)
+	s.BillingProfiles = NewBillingProfilesService(s)
+	s.BillingRates = NewBillingRatesService(s)
 	s.Browsers = NewBrowsersService(s)
 	s.CampaignCreativeAssociations = NewCampaignCreativeAssociationsService(s)
 	s.Campaigns = NewCampaignsService(s)
@@ -212,9 +216,17 @@ type Service struct {
 
 	AdvertiserGroups *AdvertiserGroupsService
 
+	AdvertiserInvoices *AdvertiserInvoicesService
+
 	AdvertiserLandingPages *AdvertiserLandingPagesService
 
 	Advertisers *AdvertisersService
+
+	BillingAssignments *BillingAssignmentsService
+
+	BillingProfiles *BillingProfilesService
+
+	BillingRates *BillingRatesService
 
 	Browsers *BrowsersService
 
@@ -389,6 +401,15 @@ type AdvertiserGroupsService struct {
 	s *Service
 }
 
+func NewAdvertiserInvoicesService(s *Service) *AdvertiserInvoicesService {
+	rs := &AdvertiserInvoicesService{s: s}
+	return rs
+}
+
+type AdvertiserInvoicesService struct {
+	s *Service
+}
+
 func NewAdvertiserLandingPagesService(s *Service) *AdvertiserLandingPagesService {
 	rs := &AdvertiserLandingPagesService{s: s}
 	return rs
@@ -404,6 +425,33 @@ func NewAdvertisersService(s *Service) *AdvertisersService {
 }
 
 type AdvertisersService struct {
+	s *Service
+}
+
+func NewBillingAssignmentsService(s *Service) *BillingAssignmentsService {
+	rs := &BillingAssignmentsService{s: s}
+	return rs
+}
+
+type BillingAssignmentsService struct {
+	s *Service
+}
+
+func NewBillingProfilesService(s *Service) *BillingProfilesService {
+	rs := &BillingProfilesService{s: s}
+	return rs
+}
+
+type BillingProfilesService struct {
+	s *Service
+}
+
+func NewBillingRatesService(s *Service) *BillingRatesService {
+	rs := &BillingRatesService{s: s}
+	return rs
+}
+
+type BillingRatesService struct {
 	s *Service
 }
 
@@ -2038,6 +2086,46 @@ func (s *AdvertiserGroupsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AdvertiserInvoicesListResponse: Invoice List Response
+type AdvertiserInvoicesListResponse struct {
+	// Invoices: Invoice collection
+	Invoices []*Invoice `json:"invoices,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#advertiserInvoicesListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Pagination token to be used for the next list
+	// operation.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Invoices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Invoices") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdvertiserInvoicesListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvertiserInvoicesListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AdvertiserLandingPagesListResponse: Landing Page List Response
 type AdvertiserLandingPagesListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -2191,6 +2279,399 @@ type AudienceSegmentGroup struct {
 
 func (s *AudienceSegmentGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod AudienceSegmentGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BillingAssignment: List account, subaccount, advertiser, and campaign
+// associated with a given Billing Profile.
+type BillingAssignment struct {
+	// AccountId: ID of the account associated with the billing
+	// assignment.This is a read-only, auto-generated field.
+	AccountId string `json:"accountId,omitempty"`
+
+	// AdvertiserId: ID of the advertiser associated with the billing
+	// assignment.Wildcard (*) means this assignment is not limited to a
+	// single advertiser
+	AdvertiserId string `json:"advertiserId,omitempty"`
+
+	// CampaignId: ID of the campaign associated with the billing
+	// assignment. Wildcard (*) means this assignment is not limited to a
+	// single campaign
+	CampaignId string `json:"campaignId,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#billingAssignment".
+	Kind string `json:"kind,omitempty"`
+
+	// SubaccountId: ID of the subaccount associated with the billing
+	// assignment.Wildcard (*) means this assignment is not limited to a
+	// single subaccountThis is a read-only, auto-generated field.
+	SubaccountId string `json:"subaccountId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccountId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BillingAssignment) MarshalJSON() ([]byte, error) {
+	type NoMethod BillingAssignment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BillingAssignmentsListResponse: Billing assignment List Response
+type BillingAssignmentsListResponse struct {
+	// BillingAssignments: Billing assignments collection.
+	BillingAssignments []*BillingAssignment `json:"billingAssignments,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#billingAssignmentsListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingAssignments")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillingAssignments") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BillingAssignmentsListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BillingAssignmentsListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BillingProfile: Contains properties of a Campaign Manager Billing
+// Profile.
+type BillingProfile struct {
+	// ConsolidatedInvoice: Consolidated invoice option for this billing
+	// profile. Used to get a single, consolidated invoice across the chosen
+	// invoice level.
+	ConsolidatedInvoice bool `json:"consolidatedInvoice,omitempty"`
+
+	// CountryCode: Country code of this billing profile.This is a read-only
+	// field.
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// CurrencyCode: Billing currency code in ISO 4217 format.This is a
+	// read-only field.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// Id: ID of this billing profile. This is a read-only, auto-generated
+	// field.
+	Id int64 `json:"id,omitempty,string"`
+
+	// InvoiceLevel: Invoice level for this billing profile. Used to group
+	// fees into separate invoices by account, advertiser, or campaign.
+	//
+	// Possible values:
+	//   "ACCOUNT_LEVEL"
+	//   "ADVERTISER_LEVEL"
+	//   "CAMPAIGN_LEVEL"
+	InvoiceLevel string `json:"invoiceLevel,omitempty"`
+
+	// IsDefault: True if the billing profile is the account default
+	// profile. This is a read-only field.
+	IsDefault bool `json:"isDefault,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#billingProfile".
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of this billing profile. This is a required field and must
+	// be less than 256 characters long and must be unique among billing
+	// profile in the same account.
+	Name string `json:"name,omitempty"`
+
+	// PaymentsAccountId: The ID of the payment account the billing profile
+	// belongs to. This is a read-only field.
+	PaymentsAccountId string `json:"paymentsAccountId,omitempty"`
+
+	// PaymentsCustomerId: The ID of the payment customer the billing
+	// profile belongs to. This is a read-only field.
+	PaymentsCustomerId string `json:"paymentsCustomerId,omitempty"`
+
+	// PurchaseOrder: Purchase order (PO) for this billing profile. This PO
+	// number is used in the invoices for all of the advertisers in this
+	// billing profile.
+	PurchaseOrder string `json:"purchaseOrder,omitempty"`
+
+	// SecondaryPaymentsCustomerId: The ID of the secondary payment customer
+	// the billing profile belongs to. This is a read-only field.
+	SecondaryPaymentsCustomerId string `json:"secondaryPaymentsCustomerId,omitempty"`
+
+	// Status: Status of this billing profile.This is a read-only field.
+	//
+	// Possible values:
+	//   "UNDER_REVIEW"
+	//   "ACTIVE"
+	//   "ARCHIVED"
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsolidatedInvoice")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsolidatedInvoice") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BillingProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod BillingProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BillingProfilesListResponse: Billing profile List Response
+type BillingProfilesListResponse struct {
+	// BillingProfiles: Billing profiles collection.
+	BillingProfiles []*BillingProfile `json:"billingProfiles,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#billingProfilesListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Pagination token to be used for the next list
+	// operation.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingProfiles") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillingProfiles") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BillingProfilesListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BillingProfilesListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type BillingRate struct {
+	// CurrencyCode: Billing currency code in ISO 4217 format.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// EndDate: End date of this billing rate.
+	EndDate string `json:"endDate,omitempty"`
+
+	// Id: ID of this billing rate.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: Name of this billing rate. This must be less than 256
+	// characters long.
+	Name string `json:"name,omitempty"`
+
+	// RateInMicros: Flat rate in micros of this billing rate. This cannot
+	// co-exist with tiered rate.
+	RateInMicros int64 `json:"rateInMicros,omitempty,string"`
+
+	// StartDate: Start date of this billing rate.
+	StartDate string `json:"startDate,omitempty"`
+
+	// TieredRates: Tiered rate of this billing rate. This cannot co-exist
+	// with flat rate.
+	TieredRates []*BillingRateTieredRate `json:"tieredRates,omitempty"`
+
+	// Type: Type of this billing rate.
+	//
+	// Possible values:
+	//   "AD_SERVING"
+	//   "CLICKS"
+	//   "MINIMUM_SERVICE"
+	//   "PATH_TO_CONVERSION"
+	//   "RICH_MEDIA_INPAGE"
+	//   "RICH_MEDIA_EXPANDING"
+	//   "RICH_MEDIA_FLOATING"
+	//   "RICH_MEDIA_VIDEO"
+	//   "RICH_MEDIA_TEASER"
+	//   "RICH_MEDIA_VPAID"
+	//   "INSTREAM_VIDEO"
+	//   "PIXEL"
+	//   "TRACKING"
+	//   "TRAFFICKING_FEATURE"
+	//   "CUSTOM_REPORTS"
+	//   "EXPOSURE_TO_CONVERSION"
+	//   "DATA_TRANSFER"
+	//   "DATA_TRANSFER_SETUP"
+	//   "STARTUP"
+	//   "STATEMENT_OF_WORK"
+	//   "PROVIDED_LIST"
+	//   "PROVIDED_LIST_SETUP"
+	//   "ENHANCED_FORMATS"
+	//   "TRACKING_AD_IMPRESSIONS"
+	//   "TRACKING_AD_CLICKS"
+	//   "NIELSEN_DIGITAL_AD_RATINGS_FEE"
+	//   "INSTREAM_VIDEO_REDIRECT"
+	//   "INSTREAM_VIDEO_VPAID"
+	//   "DISPLAY_AD_SERVING"
+	//   "VIDEO_AD_SERVING"
+	//   "AUDIO_AD_SERVING"
+	//   "ADVANCED_DISPLAY_AD_SERVING"
+	Type string `json:"type,omitempty"`
+
+	// UnitOfMeasure: Unit of measure for this billing rate.
+	//
+	// Possible values:
+	//   "CPM"
+	//   "CPC"
+	//   "EA"
+	//   "P2C"
+	UnitOfMeasure string `json:"unitOfMeasure,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BillingRate) MarshalJSON() ([]byte, error) {
+	type NoMethod BillingRate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type BillingRateTieredRate struct {
+	// HighValue: The maximum for this tier range.
+	HighValue int64 `json:"highValue,omitempty,string"`
+
+	// LowValue: The minimum for this tier range.
+	LowValue int64 `json:"lowValue,omitempty,string"`
+
+	// RateInMicros: Rate in micros for this tier.
+	RateInMicros int64 `json:"rateInMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "HighValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HighValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BillingRateTieredRate) MarshalJSON() ([]byte, error) {
+	type NoMethod BillingRateTieredRate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BillingRatesListResponse: Billing Rate List Response
+type BillingRatesListResponse struct {
+	// BillingRates: Billing rates collection.
+	BillingRates []*BillingRate `json:"billingRates,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#billingRatesListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Pagination token to be used for the next list
+	// operation.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingRates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillingRates") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BillingRatesListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BillingRatesListResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2390,18 +2871,11 @@ type Campaign struct {
 	// advertiser.
 	Name string `json:"name,omitempty"`
 
-	// NielsenOcrEnabled: Whether Nielsen reports are enabled for this
-	// campaign.
-	NielsenOcrEnabled bool `json:"nielsenOcrEnabled,omitempty"`
-
 	StartDate string `json:"startDate,omitempty"`
 
 	// SubaccountId: Subaccount ID of this campaign. This is a read-only
 	// field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
-
-	// TraffickerEmails: Campaign trafficker contact emails.
-	TraffickerEmails []string `json:"traffickerEmails,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2508,6 +2982,51 @@ type CampaignCreativeAssociationsListResponse struct {
 
 func (s *CampaignCreativeAssociationsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CampaignCreativeAssociationsListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CampaignSummary: Represents a summarized campaign information
+// associated with this invoice.
+type CampaignSummary struct {
+	// BillingInvoiceCode: Campaign billing invoice code.
+	BillingInvoiceCode string `json:"billingInvoiceCode,omitempty"`
+
+	// CampaignId: Campaign ID.
+	CampaignId int64 `json:"campaignId,omitempty,string"`
+
+	// PreTaxAmountMicros: The pre-tax amount for this campaign, in micros
+	// of the invoice's currency.
+	PreTaxAmountMicros int64 `json:"preTaxAmountMicros,omitempty,string"`
+
+	// TaxAmountMicros: The tax amount for this campaign, in micros of the
+	// invoice's currency.
+	TaxAmountMicros int64 `json:"taxAmountMicros,omitempty,string"`
+
+	// TotalAmountMicros: The total amount of charges for this campaign, in
+	// micros of the invoice's currency.
+	TotalAmountMicros int64 `json:"totalAmountMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingInvoiceCode")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillingInvoiceCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CampaignSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod CampaignSummary
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3279,16 +3798,18 @@ type Conversion struct {
 	CustomVariables []*CustomFloodlightVariable `json:"customVariables,omitempty"`
 
 	// Dclid: The display click ID. This field is mutually exclusive with
-	// encryptedUserId, encryptedUserIdCandidates[], matchId, mobileDeviceId
-	// and gclid. This or encryptedUserId or encryptedUserIdCandidates[] or
-	// matchId or mobileDeviceId or gclid is a required field.
+	// encryptedUserId, encryptedUserIdCandidates[], matchId,
+	// mobileDeviceId, gclid, and impressionId. This or encryptedUserId or
+	// encryptedUserIdCandidates[] or matchId or mobileDeviceId or gclid or
+	// impressionId is a required field.
 	Dclid string `json:"dclid,omitempty"`
 
 	// EncryptedUserId: The alphanumeric encrypted user ID. When set,
 	// encryptionInfo should also be specified. This field is mutually
 	// exclusive with encryptedUserIdCandidates[], matchId, mobileDeviceId,
-	// gclid and dclid. This or encryptedUserIdCandidates[] or matchId or
-	// mobileDeviceId or gclid or dclid is a required field.
+	// gclid, dclid, and impressionId. This or encryptedUserIdCandidates[]
+	// or matchId or mobileDeviceId or gclid or dclid or impressionId is a
+	// required field.
 	EncryptedUserId string `json:"encryptedUserId,omitempty"`
 
 	// EncryptedUserIdCandidates: A list of the alphanumeric encrypted user
@@ -3298,8 +3819,9 @@ type Conversion struct {
 	// set, encryptionInfo should also be specified. This field may only be
 	// used when calling batchinsert; it is not supported by batchupdate.
 	// This field is mutually exclusive with encryptedUserId, matchId,
-	// mobileDeviceId, gclid and dclid. This or encryptedUserId or matchId
-	// or mobileDeviceId or gclid or dclid is a required field.
+	// mobileDeviceId, gclid dclid, and impressionId. This or
+	// encryptedUserId or matchId or mobileDeviceId or gclid or dclid or
+	// impressionId is a required field.
 	EncryptedUserIdCandidates []string `json:"encryptedUserIdCandidates,omitempty"`
 
 	// FloodlightActivityId: Floodlight Activity ID of this conversion. This
@@ -3311,10 +3833,16 @@ type Conversion struct {
 	FloodlightConfigurationId int64 `json:"floodlightConfigurationId,omitempty,string"`
 
 	// Gclid: The Google click ID. This field is mutually exclusive with
-	// encryptedUserId, encryptedUserIdCandidates[], matchId, mobileDeviceId
-	// and dclid. This or encryptedUserId or encryptedUserIdCandidates[] or
-	// matchId or mobileDeviceId or dclid is a required field.
+	// encryptedUserId, encryptedUserIdCandidates[], matchId,
+	// mobileDeviceId, dclid, and impressionId. This or encryptedUserId or
+	// encryptedUserIdCandidates[] or matchId or mobileDeviceId or dclid or
+	// impressionId is a required field.
 	Gclid string `json:"gclid,omitempty"`
+
+	// ImpressionId: The impression ID. This field is mutually exclusive
+	// with encryptedUserId, encryptedUserIdCandidates[], matchId,
+	// mobileDeviceId, and gclid. One of these identifiers must be set.
+	ImpressionId string `json:"impressionId,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#conversion".
@@ -3328,16 +3856,17 @@ type Conversion struct {
 	// MatchId: The match ID field. A match ID is your own first-party
 	// identifier that has been synced with Google using the match ID
 	// feature in Floodlight. This field is mutually exclusive with
-	// encryptedUserId, encryptedUserIdCandidates[],mobileDeviceId, gclid
-	// and dclid. This or encryptedUserId or encryptedUserIdCandidates[] or
-	// mobileDeviceId or gclid or dclid is a required field.
+	// encryptedUserId, encryptedUserIdCandidates[],mobileDeviceId, gclid,
+	// dclid, and impressionId. This or encryptedUserId
+	// orencryptedUserIdCandidates[] or mobileDeviceId or gclid or dclid or
+	// impressionIdis a required field.
 	MatchId string `json:"matchId,omitempty"`
 
 	// MobileDeviceId: The mobile device ID. This field is mutually
 	// exclusive with encryptedUserId, encryptedUserIdCandidates[], matchId,
-	// gclid and dclid. This or encryptedUserId or
-	// encryptedUserIdCandidates[] or matchId or gclid or dclid is a
-	// required field.
+	// gclid, dclid, and impressionId. This or encryptedUserId or
+	// encryptedUserIdCandidates[] or matchId or gclid or dclid or
+	// impressionId is a required field.
 	MobileDeviceId string `json:"mobileDeviceId,omitempty"`
 
 	// NonPersonalizedAd: Whether the conversion was for a non personalized
@@ -7122,6 +7651,7 @@ type File struct {
 	//   "REPORT_AVAILABLE"
 	//   "FAILED"
 	//   "CANCELLED"
+	//   "QUEUED"
 	Status string `json:"status,omitempty"`
 
 	// Urls: The URLs where the completed report file can be downloaded.
@@ -8341,6 +8871,109 @@ func (s *InventoryItemsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Invoice: Contains information about a single invoice
+type Invoice struct {
+	// CampaignSummaries: The list of summarized campaign information
+	// associated with this invoice.
+	CampaignSummaries []*CampaignSummary `json:"campaign_summaries,omitempty"`
+
+	// CorrectedInvoiceId: The originally issued invoice that is being
+	// adjusted by this invoice, if applicable. May appear on invoice PDF as
+	// *Reference invoice number*.
+	CorrectedInvoiceId string `json:"correctedInvoiceId,omitempty"`
+
+	// CurrencyCode: Invoice currency code in ISO 4217 format.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// DueDate: The invoice due date.
+	DueDate string `json:"dueDate,omitempty"`
+
+	// Id: ID of this invoice.
+	Id string `json:"id,omitempty"`
+
+	// InvoiceType: The type of invoice document.
+	//
+	// Possible values:
+	//   "INVOICE_TYPE_UNSPECIFIED"
+	//   "INVOICE_TYPE_CREDIT"
+	//   "INVOICE_TYPE_INVOICE"
+	InvoiceType string `json:"invoiceType,omitempty"`
+
+	// IssueDate: The date when the invoice was issued.
+	IssueDate string `json:"issueDate,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#invoice".
+	Kind string `json:"kind,omitempty"`
+
+	// PaymentsAccountId: The ID of the payments account the invoice belongs
+	// to. Appears on the invoice PDF as *Billing Account Number*.
+	PaymentsAccountId string `json:"paymentsAccountId,omitempty"`
+
+	// PaymentsProfileId: The ID of the payments profile the invoice belongs
+	// to. Appears on the invoice PDF as *Billing ID*.
+	PaymentsProfileId string `json:"paymentsProfileId,omitempty"`
+
+	// PdfUrl: The URL to download a PDF copy of the invoice. Note that this
+	// URL is user specific and requires a valid OAuth 2.0 access token to
+	// access. The access token must be provided in an *Authorization:
+	// Bearer* HTTP header. The URL will only be usable for 7 days from when
+	// the api is called.
+	PdfUrl string `json:"pdfUrl,omitempty"`
+
+	// PurchaseOrderNumber: Purchase order number associated with the
+	// invoice.
+	PurchaseOrderNumber string `json:"purchaseOrderNumber,omitempty"`
+
+	// ReplacedInvoiceIds: The originally issued invoice(s) that is being
+	// cancelled by this invoice, if applicable. May appear on invoice PDF
+	// as *Replaced invoice numbers*. Note: There may be multiple replaced
+	// invoices due to consolidation of multiple invoices into a single
+	// invoice.
+	ReplacedInvoiceIds []string `json:"replacedInvoiceIds,omitempty"`
+
+	// ServiceEndDate: The invoice service end date.
+	ServiceEndDate string `json:"serviceEndDate,omitempty"`
+
+	// ServiceStartDate: The invoice service start date.
+	ServiceStartDate string `json:"serviceStartDate,omitempty"`
+
+	// SubtotalAmountMicros: The pre-tax subtotal amount, in micros of the
+	// invoice's currency.
+	SubtotalAmountMicros int64 `json:"subtotalAmountMicros,omitempty,string"`
+
+	// TotalAmountMicros: The invoice total amount, in micros of the
+	// invoice's currency.
+	TotalAmountMicros int64 `json:"totalAmountMicros,omitempty,string"`
+
+	// TotalTaxAmountMicros: The sum of all taxes in invoice, in micros of
+	// the invoice's currency.
+	TotalTaxAmountMicros int64 `json:"totalTaxAmountMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CampaignSummaries")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CampaignSummaries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Invoice) MarshalJSON() ([]byte, error) {
+	type NoMethod Invoice
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // KeyValueTargetingExpression: Key Value Targeting Expression.
 type KeyValueTargetingExpression struct {
 	// Expression: Keyword expression being targeted by the ad.
@@ -8911,7 +9544,7 @@ type MeasurementPartnerWrappingData struct {
 	//   "NONE"
 	//   "BLOCKING"
 	//   "MONITORING"
-	//   "MONITORING_ONLY"
+	//   "MONITORING_READ_ONLY"
 	//   "VIDEO_PIXEL_MONITORING"
 	//   "TRACKING"
 	//   "VPAID_MONITORING"
@@ -10139,6 +10772,17 @@ type Placement struct {
 	// blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
+	// ActiveStatus: Whether this placement is active, inactive, archived or
+	// permanently archived.
+	//
+	// Possible values:
+	//   "PLACEMENT_STATUS_UNKNOWN"
+	//   "PLACEMENT_STATUS_ACTIVE"
+	//   "PLACEMENT_STATUS_INACTIVE"
+	//   "PLACEMENT_STATUS_ARCHIVED"
+	//   "PLACEMENT_STATUS_PERMANENTLY_ARCHIVED"
+	ActiveStatus string `json:"activeStatus,omitempty"`
+
 	// AdBlockingOptOut: Whether this placement opts out of ad blocking.
 	// When true, ad blocking is disabled for this placement. When false,
 	// the campaign and site settings take effect.
@@ -10156,9 +10800,6 @@ type Placement struct {
 	// AdvertiserIdDimensionValue: Dimension value for the ID of the
 	// advertiser. This is a read-only, auto-generated field.
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
-
-	// Archived: Whether this placement is archived.
-	Archived bool `json:"archived,omitempty"`
 
 	// CampaignId: Campaign ID of this placement. This field is a required
 	// field on insertion.
@@ -10460,6 +11101,17 @@ type PlacementGroup struct {
 	// field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
+	// ActiveStatus: Whether this placement group is active, inactive,
+	// archived or permanently archived.
+	//
+	// Possible values:
+	//   "PLACEMENT_STATUS_UNKNOWN"
+	//   "PLACEMENT_STATUS_ACTIVE"
+	//   "PLACEMENT_STATUS_INACTIVE"
+	//   "PLACEMENT_STATUS_ARCHIVED"
+	//   "PLACEMENT_STATUS_PERMANENTLY_ARCHIVED"
+	ActiveStatus string `json:"activeStatus,omitempty"`
+
 	// AdvertiserId: Advertiser ID of this placement group. This is a
 	// required field on insertion.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
@@ -10467,9 +11119,6 @@ type PlacementGroup struct {
 	// AdvertiserIdDimensionValue: Dimension value for the ID of the
 	// advertiser. This is a read-only, auto-generated field.
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
-
-	// Archived: Whether this placement group is archived.
-	Archived bool `json:"archived,omitempty"`
 
 	// CampaignId: Campaign ID of this placement group. This field is
 	// required on insertion.
@@ -13035,6 +13684,12 @@ type SiteVideoSettings struct {
 	//   "PORTRAIT"
 	Orientation string `json:"orientation,omitempty"`
 
+	// PublisherSpecificationId: Publisher specification ID used to identify
+	// site-associated publisher requirements and automatically populate
+	// transcode settings. If publisher specification ID is specified, it
+	// will take precedence over transcode settings.
+	PublisherSpecificationId int64 `json:"publisherSpecificationId,omitempty,string"`
+
 	// SkippableSettings: Settings for the skippability of video creatives
 	// served to this site. This will act as default for new placements
 	// created under this site.
@@ -14694,6 +15349,10 @@ type VideoSettings struct {
 	//   "PORTRAIT"
 	Orientation string `json:"orientation,omitempty"`
 
+	// PublisherSpecificationId: Publisher specification ID of a video
+	// placement.
+	PublisherSpecificationId int64 `json:"publisherSpecificationId,omitempty,string"`
+
 	// SkippableSettings: Settings for the skippability of video creatives
 	// served to this placement. If this object is provided, the
 	// creative-level skippable settings will be overridden.
@@ -14799,7 +15458,7 @@ func (c *AccountActiveAdSummariesGetCall) doRequest(alt string) (*http.Response,
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accountActiveAdSummaries/{summaryAccountId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accountActiveAdSummaries/{summaryAccountId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -14852,7 +15511,7 @@ func (c *AccountActiveAdSummariesGetCall) Do(opts ...googleapi.CallOption) (*Acc
 	return ret, nil
 	// {
 	//   "description": "Gets the account's active ad summary by account ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accountActiveAdSummaries/{summaryAccountId}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accountActiveAdSummaries/{summaryAccountId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountActiveAdSummaries.get",
 	//   "parameterOrder": [
@@ -14875,7 +15534,7 @@ func (c *AccountActiveAdSummariesGetCall) Do(opts ...googleapi.CallOption) (*Acc
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accountActiveAdSummaries/{summaryAccountId}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accountActiveAdSummaries/{summaryAccountId}",
 	//   "response": {
 	//     "$ref": "AccountActiveAdSummary"
 	//   },
@@ -14957,7 +15616,7 @@ func (c *AccountPermissionGroupsGetCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accountPermissionGroups/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accountPermissionGroups/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -15010,7 +15669,7 @@ func (c *AccountPermissionGroupsGetCall) Do(opts ...googleapi.CallOption) (*Acco
 	return ret, nil
 	// {
 	//   "description": "Gets one account permission group by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accountPermissionGroups/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accountPermissionGroups/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountPermissionGroups.get",
 	//   "parameterOrder": [
@@ -15033,7 +15692,7 @@ func (c *AccountPermissionGroupsGetCall) Do(opts ...googleapi.CallOption) (*Acco
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accountPermissionGroups/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accountPermissionGroups/{id}",
 	//   "response": {
 	//     "$ref": "AccountPermissionGroup"
 	//   },
@@ -15112,7 +15771,7 @@ func (c *AccountPermissionGroupsListCall) doRequest(alt string) (*http.Response,
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accountPermissionGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accountPermissionGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -15165,7 +15824,7 @@ func (c *AccountPermissionGroupsListCall) Do(opts ...googleapi.CallOption) (*Acc
 	return ret, nil
 	// {
 	//   "description": "Retrieves the list of account permission groups.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accountPermissionGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accountPermissionGroups",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountPermissionGroups.list",
 	//   "parameterOrder": [
@@ -15180,7 +15839,7 @@ func (c *AccountPermissionGroupsListCall) Do(opts ...googleapi.CallOption) (*Acc
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accountPermissionGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accountPermissionGroups",
 	//   "response": {
 	//     "$ref": "AccountPermissionGroupsListResponse"
 	//   },
@@ -15262,7 +15921,7 @@ func (c *AccountPermissionsGetCall) doRequest(alt string) (*http.Response, error
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accountPermissions/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accountPermissions/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -15315,7 +15974,7 @@ func (c *AccountPermissionsGetCall) Do(opts ...googleapi.CallOption) (*AccountPe
 	return ret, nil
 	// {
 	//   "description": "Gets one account permission by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accountPermissions/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accountPermissions/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountPermissions.get",
 	//   "parameterOrder": [
@@ -15338,7 +15997,7 @@ func (c *AccountPermissionsGetCall) Do(opts ...googleapi.CallOption) (*AccountPe
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accountPermissions/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accountPermissions/{id}",
 	//   "response": {
 	//     "$ref": "AccountPermission"
 	//   },
@@ -15417,7 +16076,7 @@ func (c *AccountPermissionsListCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accountPermissions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accountPermissions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -15469,7 +16128,7 @@ func (c *AccountPermissionsListCall) Do(opts ...googleapi.CallOption) (*AccountP
 	return ret, nil
 	// {
 	//   "description": "Retrieves the list of account permissions.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accountPermissions",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accountPermissions",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountPermissions.list",
 	//   "parameterOrder": [
@@ -15484,7 +16143,7 @@ func (c *AccountPermissionsListCall) Do(opts ...googleapi.CallOption) (*AccountP
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accountPermissions",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accountPermissions",
 	//   "response": {
 	//     "$ref": "AccountPermissionsListResponse"
 	//   },
@@ -15566,7 +16225,7 @@ func (c *AccountUserProfilesGetCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -15619,7 +16278,7 @@ func (c *AccountUserProfilesGetCall) Do(opts ...googleapi.CallOption) (*AccountU
 	return ret, nil
 	// {
 	//   "description": "Gets one account user profile by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountUserProfiles.get",
 	//   "parameterOrder": [
@@ -15642,7 +16301,7 @@ func (c *AccountUserProfilesGetCall) Do(opts ...googleapi.CallOption) (*AccountU
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles/{id}",
 	//   "response": {
 	//     "$ref": "AccountUserProfile"
 	//   },
@@ -15714,7 +16373,7 @@ func (c *AccountUserProfilesInsertCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -15766,7 +16425,7 @@ func (c *AccountUserProfilesInsertCall) Do(opts ...googleapi.CallOption) (*Accou
 	return ret, nil
 	// {
 	//   "description": "Inserts a new account user profile.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.accountUserProfiles.insert",
 	//   "parameterOrder": [
@@ -15781,7 +16440,7 @@ func (c *AccountUserProfilesInsertCall) Do(opts ...googleapi.CallOption) (*Accou
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles",
 	//   "request": {
 	//     "$ref": "AccountUserProfile"
 	//   },
@@ -15946,7 +16605,7 @@ func (c *AccountUserProfilesListCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -15998,7 +16657,7 @@ func (c *AccountUserProfilesListCall) Do(opts ...googleapi.CallOption) (*Account
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of account user profiles, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountUserProfiles.list",
 	//   "parameterOrder": [
@@ -16084,7 +16743,7 @@ func (c *AccountUserProfilesListCall) Do(opts ...googleapi.CallOption) (*Account
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles",
 	//   "response": {
 	//     "$ref": "AccountUserProfilesListResponse"
 	//   },
@@ -16180,7 +16839,7 @@ func (c *AccountUserProfilesPatchCall) doRequest(alt string) (*http.Response, er
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -16232,7 +16891,7 @@ func (c *AccountUserProfilesPatchCall) Do(opts ...googleapi.CallOption) (*Accoun
 	return ret, nil
 	// {
 	//   "description": "Updates an existing account user profile. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.accountUserProfiles.patch",
 	//   "parameterOrder": [
@@ -16255,7 +16914,7 @@ func (c *AccountUserProfilesPatchCall) Do(opts ...googleapi.CallOption) (*Accoun
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles",
 	//   "request": {
 	//     "$ref": "AccountUserProfile"
 	//   },
@@ -16330,7 +16989,7 @@ func (c *AccountUserProfilesUpdateCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -16382,7 +17041,7 @@ func (c *AccountUserProfilesUpdateCall) Do(opts ...googleapi.CallOption) (*Accou
 	return ret, nil
 	// {
 	//   "description": "Updates an existing account user profile.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.accountUserProfiles.update",
 	//   "parameterOrder": [
@@ -16397,7 +17056,7 @@ func (c *AccountUserProfilesUpdateCall) Do(opts ...googleapi.CallOption) (*Accou
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accountUserProfiles",
 	//   "request": {
 	//     "$ref": "AccountUserProfile"
 	//   },
@@ -16482,7 +17141,7 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accounts/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accounts/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -16535,7 +17194,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one account by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accounts/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accounts/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accounts.get",
 	//   "parameterOrder": [
@@ -16558,7 +17217,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accounts/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accounts/{id}",
 	//   "response": {
 	//     "$ref": "Account"
 	//   },
@@ -16706,7 +17365,7 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accounts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accounts")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -16758,7 +17417,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*AccountsListRespon
 	return ret, nil
 	// {
 	//   "description": "Retrieves the list of accounts, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accounts",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accounts",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accounts.list",
 	//   "parameterOrder": [
@@ -16832,7 +17491,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*AccountsListRespon
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accounts",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accounts",
 	//   "response": {
 	//     "$ref": "AccountsListResponse"
 	//   },
@@ -16928,7 +17587,7 @@ func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accounts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accounts")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -16980,7 +17639,7 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates an existing account. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accounts",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accounts",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.accounts.patch",
 	//   "parameterOrder": [
@@ -17003,7 +17662,7 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accounts",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accounts",
 	//   "request": {
 	//     "$ref": "Account"
 	//   },
@@ -17078,7 +17737,7 @@ func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/accounts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/accounts")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -17130,7 +17789,7 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 	return ret, nil
 	// {
 	//   "description": "Updates an existing account.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/accounts",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/accounts",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.accounts.update",
 	//   "parameterOrder": [
@@ -17145,7 +17804,7 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/accounts",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/accounts",
 	//   "request": {
 	//     "$ref": "Account"
 	//   },
@@ -17230,7 +17889,7 @@ func (c *AdsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/ads/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/ads/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -17283,7 +17942,7 @@ func (c *AdsGetCall) Do(opts ...googleapi.CallOption) (*Ad, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one ad by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/ads/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/ads/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.ads.get",
 	//   "parameterOrder": [
@@ -17306,7 +17965,7 @@ func (c *AdsGetCall) Do(opts ...googleapi.CallOption) (*Ad, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/ads/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/ads/{id}",
 	//   "response": {
 	//     "$ref": "Ad"
 	//   },
@@ -17378,7 +18037,7 @@ func (c *AdsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/ads")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/ads")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -17430,7 +18089,7 @@ func (c *AdsInsertCall) Do(opts ...googleapi.CallOption) (*Ad, error) {
 	return ret, nil
 	// {
 	//   "description": "Inserts a new ad.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/ads",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/ads",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.ads.insert",
 	//   "parameterOrder": [
@@ -17445,7 +18104,7 @@ func (c *AdsInsertCall) Do(opts ...googleapi.CallOption) (*Ad, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/ads",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/ads",
 	//   "request": {
 	//     "$ref": "Ad"
 	//   },
@@ -17763,7 +18422,7 @@ func (c *AdsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/ads")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/ads")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -17815,7 +18474,7 @@ func (c *AdsListCall) Do(opts ...googleapi.CallOption) (*AdsListResponse, error)
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of ads, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/ads",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/ads",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.ads.list",
 	//   "parameterOrder": [
@@ -18018,7 +18677,7 @@ func (c *AdsListCall) Do(opts ...googleapi.CallOption) (*AdsListResponse, error)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/ads",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/ads",
 	//   "response": {
 	//     "$ref": "AdsListResponse"
 	//   },
@@ -18113,7 +18772,7 @@ func (c *AdsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/ads")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/ads")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -18165,7 +18824,7 @@ func (c *AdsPatchCall) Do(opts ...googleapi.CallOption) (*Ad, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates an existing ad. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/ads",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/ads",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.ads.patch",
 	//   "parameterOrder": [
@@ -18188,7 +18847,7 @@ func (c *AdsPatchCall) Do(opts ...googleapi.CallOption) (*Ad, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/ads",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/ads",
 	//   "request": {
 	//     "$ref": "Ad"
 	//   },
@@ -18263,7 +18922,7 @@ func (c *AdsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/ads")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/ads")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -18315,7 +18974,7 @@ func (c *AdsUpdateCall) Do(opts ...googleapi.CallOption) (*Ad, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates an existing ad.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/ads",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/ads",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.ads.update",
 	//   "parameterOrder": [
@@ -18330,7 +18989,7 @@ func (c *AdsUpdateCall) Do(opts ...googleapi.CallOption) (*Ad, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/ads",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/ads",
 	//   "request": {
 	//     "$ref": "Ad"
 	//   },
@@ -18401,7 +19060,7 @@ func (c *AdvertiserGroupsDeleteCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertiserGroups/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -18429,7 +19088,7 @@ func (c *AdvertiserGroupsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing advertiser group.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertiserGroups/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.advertiserGroups.delete",
 	//   "parameterOrder": [
@@ -18452,7 +19111,7 @@ func (c *AdvertiserGroupsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertiserGroups/{id}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfatrafficking"
 	//   ]
@@ -18531,7 +19190,7 @@ func (c *AdvertiserGroupsGetCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertiserGroups/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -18584,7 +19243,7 @@ func (c *AdvertiserGroupsGetCall) Do(opts ...googleapi.CallOption) (*AdvertiserG
 	return ret, nil
 	// {
 	//   "description": "Gets one advertiser group by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertiserGroups/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.advertiserGroups.get",
 	//   "parameterOrder": [
@@ -18607,7 +19266,7 @@ func (c *AdvertiserGroupsGetCall) Do(opts ...googleapi.CallOption) (*AdvertiserG
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertiserGroups/{id}",
 	//   "response": {
 	//     "$ref": "AdvertiserGroup"
 	//   },
@@ -18679,7 +19338,7 @@ func (c *AdvertiserGroupsInsertCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertiserGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -18731,7 +19390,7 @@ func (c *AdvertiserGroupsInsertCall) Do(opts ...googleapi.CallOption) (*Advertis
 	return ret, nil
 	// {
 	//   "description": "Inserts a new advertiser group.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertiserGroups",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.advertiserGroups.insert",
 	//   "parameterOrder": [
@@ -18746,7 +19405,7 @@ func (c *AdvertiserGroupsInsertCall) Do(opts ...googleapi.CallOption) (*Advertis
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertiserGroups",
 	//   "request": {
 	//     "$ref": "AdvertiserGroup"
 	//   },
@@ -18890,7 +19549,7 @@ func (c *AdvertiserGroupsListCall) doRequest(alt string) (*http.Response, error)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertiserGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -18942,7 +19601,7 @@ func (c *AdvertiserGroupsListCall) Do(opts ...googleapi.CallOption) (*Advertiser
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of advertiser groups, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertiserGroups",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.advertiserGroups.list",
 	//   "parameterOrder": [
@@ -19011,7 +19670,7 @@ func (c *AdvertiserGroupsListCall) Do(opts ...googleapi.CallOption) (*Advertiser
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertiserGroups",
 	//   "response": {
 	//     "$ref": "AdvertiserGroupsListResponse"
 	//   },
@@ -19107,7 +19766,7 @@ func (c *AdvertiserGroupsPatchCall) doRequest(alt string) (*http.Response, error
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertiserGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -19159,7 +19818,7 @@ func (c *AdvertiserGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Advertise
 	return ret, nil
 	// {
 	//   "description": "Updates an existing advertiser group. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertiserGroups",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.advertiserGroups.patch",
 	//   "parameterOrder": [
@@ -19182,7 +19841,7 @@ func (c *AdvertiserGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Advertise
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertiserGroups",
 	//   "request": {
 	//     "$ref": "AdvertiserGroup"
 	//   },
@@ -19257,7 +19916,7 @@ func (c *AdvertiserGroupsUpdateCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertiserGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -19309,7 +19968,7 @@ func (c *AdvertiserGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Advertis
 	return ret, nil
 	// {
 	//   "description": "Updates an existing advertiser group.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertiserGroups",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.advertiserGroups.update",
 	//   "parameterOrder": [
@@ -19324,7 +19983,7 @@ func (c *AdvertiserGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Advertis
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertiserGroups",
 	//   "request": {
 	//     "$ref": "AdvertiserGroup"
 	//   },
@@ -19336,6 +19995,227 @@ func (c *AdvertiserGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Advertis
 	//   ]
 	// }
 
+}
+
+// method id "dfareporting.advertiserInvoices.list":
+
+type AdvertiserInvoicesListCall struct {
+	s            *Service
+	profileId    int64
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a list of invoices for a particular issue month. The
+// api only works if the billing profile invoice level is set to either
+// advertiser or campaign non-consolidated invoice level.
+//
+// - advertiserId: Advertiser ID of this invoice.
+// - profileId: User profile ID associated with this request.
+func (r *AdvertiserInvoicesService) List(profileId int64, advertiserId int64) *AdvertiserInvoicesListCall {
+	c := &AdvertiserInvoicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.advertiserId = advertiserId
+	return c
+}
+
+// IssueMonth sets the optional parameter "issueMonth": Month for which
+// invoices are needed in the format YYYYMM. Required field
+func (c *AdvertiserInvoicesListCall) IssueMonth(issueMonth string) *AdvertiserInvoicesListCall {
+	c.urlParams_.Set("issueMonth", issueMonth)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return.
+func (c *AdvertiserInvoicesListCall) MaxResults(maxResults int64) *AdvertiserInvoicesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Value of the
+// nextPageToken from the previous result page.
+func (c *AdvertiserInvoicesListCall) PageToken(pageToken string) *AdvertiserInvoicesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertiserInvoicesListCall) Fields(s ...googleapi.Field) *AdvertiserInvoicesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertiserInvoicesListCall) IfNoneMatch(entityTag string) *AdvertiserInvoicesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertiserInvoicesListCall) Context(ctx context.Context) *AdvertiserInvoicesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertiserInvoicesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertiserInvoicesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertisers/{advertiserId}/invoices")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId":    strconv.FormatInt(c.profileId, 10),
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.advertiserInvoices.list" call.
+// Exactly one of *AdvertiserInvoicesListResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *AdvertiserInvoicesListResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertiserInvoicesListCall) Do(opts ...googleapi.CallOption) (*AdvertiserInvoicesListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AdvertiserInvoicesListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of invoices for a particular issue month. The api only works if the billing profile invoice level is set to either advertiser or campaign non-consolidated invoice level.",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertisers/{advertiserId}/invoices",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.advertiserInvoices.list",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Advertiser ID of this invoice.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "issueMonth": {
+	//       "description": "Month for which invoices are needed in the format YYYYMM. Required field",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "1000",
+	//       "description": "Maximum number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "1000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Value of the nextPageToken from the previous result page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertisers/{advertiserId}/invoices",
+	//   "response": {
+	//     "$ref": "AdvertiserInvoicesListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertiserInvoicesListCall) Pages(ctx context.Context, f func(*AdvertiserInvoicesListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "dfareporting.advertiserLandingPages.get":
@@ -19409,7 +20289,7 @@ func (c *AdvertiserLandingPagesGetCall) doRequest(alt string) (*http.Response, e
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -19462,7 +20342,7 @@ func (c *AdvertiserLandingPagesGetCall) Do(opts ...googleapi.CallOption) (*Landi
 	return ret, nil
 	// {
 	//   "description": "Gets one landing page by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.advertiserLandingPages.get",
 	//   "parameterOrder": [
@@ -19485,7 +20365,7 @@ func (c *AdvertiserLandingPagesGetCall) Do(opts ...googleapi.CallOption) (*Landi
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages/{id}",
 	//   "response": {
 	//     "$ref": "LandingPage"
 	//   },
@@ -19557,7 +20437,7 @@ func (c *AdvertiserLandingPagesInsertCall) doRequest(alt string) (*http.Response
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -19609,7 +20489,7 @@ func (c *AdvertiserLandingPagesInsertCall) Do(opts ...googleapi.CallOption) (*La
 	return ret, nil
 	// {
 	//   "description": "Inserts a new landing page.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.advertiserLandingPages.insert",
 	//   "parameterOrder": [
@@ -19624,7 +20504,7 @@ func (c *AdvertiserLandingPagesInsertCall) Do(opts ...googleapi.CallOption) (*La
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages",
 	//   "request": {
 	//     "$ref": "LandingPage"
 	//   },
@@ -19803,7 +20683,7 @@ func (c *AdvertiserLandingPagesListCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -19856,7 +20736,7 @@ func (c *AdvertiserLandingPagesListCall) Do(opts ...googleapi.CallOption) (*Adve
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of landing pages.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.advertiserLandingPages.list",
 	//   "parameterOrder": [
@@ -19950,7 +20830,7 @@ func (c *AdvertiserLandingPagesListCall) Do(opts ...googleapi.CallOption) (*Adve
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages",
 	//   "response": {
 	//     "$ref": "AdvertiserLandingPagesListResponse"
 	//   },
@@ -20046,7 +20926,7 @@ func (c *AdvertiserLandingPagesPatchCall) doRequest(alt string) (*http.Response,
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -20098,7 +20978,7 @@ func (c *AdvertiserLandingPagesPatchCall) Do(opts ...googleapi.CallOption) (*Lan
 	return ret, nil
 	// {
 	//   "description": "Updates an existing advertiser landing page. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.advertiserLandingPages.patch",
 	//   "parameterOrder": [
@@ -20121,7 +21001,7 @@ func (c *AdvertiserLandingPagesPatchCall) Do(opts ...googleapi.CallOption) (*Lan
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages",
 	//   "request": {
 	//     "$ref": "LandingPage"
 	//   },
@@ -20196,7 +21076,7 @@ func (c *AdvertiserLandingPagesUpdateCall) doRequest(alt string) (*http.Response
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -20248,7 +21128,7 @@ func (c *AdvertiserLandingPagesUpdateCall) Do(opts ...googleapi.CallOption) (*La
 	return ret, nil
 	// {
 	//   "description": "Updates an existing landing page.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.advertiserLandingPages.update",
 	//   "parameterOrder": [
@@ -20263,7 +21143,7 @@ func (c *AdvertiserLandingPagesUpdateCall) Do(opts ...googleapi.CallOption) (*La
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertiserLandingPages",
 	//   "request": {
 	//     "$ref": "LandingPage"
 	//   },
@@ -20348,7 +21228,7 @@ func (c *AdvertisersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertisers/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertisers/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -20401,7 +21281,7 @@ func (c *AdvertisersGetCall) Do(opts ...googleapi.CallOption) (*Advertiser, erro
 	return ret, nil
 	// {
 	//   "description": "Gets one advertiser by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertisers/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertisers/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.advertisers.get",
 	//   "parameterOrder": [
@@ -20424,7 +21304,7 @@ func (c *AdvertisersGetCall) Do(opts ...googleapi.CallOption) (*Advertiser, erro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertisers/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertisers/{id}",
 	//   "response": {
 	//     "$ref": "Advertiser"
 	//   },
@@ -20496,7 +21376,7 @@ func (c *AdvertisersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertisers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertisers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -20548,7 +21428,7 @@ func (c *AdvertisersInsertCall) Do(opts ...googleapi.CallOption) (*Advertiser, e
 	return ret, nil
 	// {
 	//   "description": "Inserts a new advertiser.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertisers",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertisers",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.advertisers.insert",
 	//   "parameterOrder": [
@@ -20563,7 +21443,7 @@ func (c *AdvertisersInsertCall) Do(opts ...googleapi.CallOption) (*Advertiser, e
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertisers",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertisers",
 	//   "request": {
 	//     "$ref": "Advertiser"
 	//   },
@@ -20762,7 +21642,7 @@ func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertisers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertisers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -20814,7 +21694,7 @@ func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*AdvertisersList
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of advertisers, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertisers",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertisers",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.advertisers.list",
 	//   "parameterOrder": [
@@ -20926,7 +21806,7 @@ func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*AdvertisersList
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertisers",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertisers",
 	//   "response": {
 	//     "$ref": "AdvertisersListResponse"
 	//   },
@@ -21022,7 +21902,7 @@ func (c *AdvertisersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertisers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertisers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -21074,7 +21954,7 @@ func (c *AdvertisersPatchCall) Do(opts ...googleapi.CallOption) (*Advertiser, er
 	return ret, nil
 	// {
 	//   "description": "Updates an existing advertiser. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertisers",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertisers",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.advertisers.patch",
 	//   "parameterOrder": [
@@ -21097,7 +21977,7 @@ func (c *AdvertisersPatchCall) Do(opts ...googleapi.CallOption) (*Advertiser, er
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertisers",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertisers",
 	//   "request": {
 	//     "$ref": "Advertiser"
 	//   },
@@ -21172,7 +22052,7 @@ func (c *AdvertisersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/advertisers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/advertisers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -21224,7 +22104,7 @@ func (c *AdvertisersUpdateCall) Do(opts ...googleapi.CallOption) (*Advertiser, e
 	return ret, nil
 	// {
 	//   "description": "Updates an existing advertiser.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/advertisers",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/advertisers",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.advertisers.update",
 	//   "parameterOrder": [
@@ -21239,12 +22119,1140 @@ func (c *AdvertisersUpdateCall) Do(opts ...googleapi.CallOption) (*Advertiser, e
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/advertisers",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/advertisers",
 	//   "request": {
 	//     "$ref": "Advertiser"
 	//   },
 	//   "response": {
 	//     "$ref": "Advertiser"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.billingAssignments.insert":
+
+type BillingAssignmentsInsertCall struct {
+	s                 *Service
+	profileId         int64
+	billingProfileId  int64
+	billingassignment *BillingAssignment
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Insert: Inserts a new billing assignment and returns the new
+// assignment. Only one of advertiser_id or campaign_id is support per
+// request. If the new assignment has no effect (assigning a campaign to
+// the parent advertiser billing profile or assigning an advertiser to
+// the account billing profile), no assignment will be returned.
+//
+// - billingProfileId: Billing profile ID of this billing assignment.
+// - profileId: User profile ID associated with this request.
+func (r *BillingAssignmentsService) Insert(profileId int64, billingProfileId int64, billingassignment *BillingAssignment) *BillingAssignmentsInsertCall {
+	c := &BillingAssignmentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.billingProfileId = billingProfileId
+	c.billingassignment = billingassignment
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAssignmentsInsertCall) Fields(s ...googleapi.Field) *BillingAssignmentsInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAssignmentsInsertCall) Context(ctx context.Context) *BillingAssignmentsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAssignmentsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAssignmentsInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.billingassignment)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/billingProfiles/{billingProfileId}/billingAssignments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId":        strconv.FormatInt(c.profileId, 10),
+		"billingProfileId": strconv.FormatInt(c.billingProfileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.billingAssignments.insert" call.
+// Exactly one of *BillingAssignment or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *BillingAssignment.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingAssignmentsInsertCall) Do(opts ...googleapi.CallOption) (*BillingAssignment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BillingAssignment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a new billing assignment and returns the new assignment. Only one of advertiser_id or campaign_id is support per request. If the new assignment has no effect (assigning a campaign to the parent advertiser billing profile or assigning an advertiser to the account billing profile), no assignment will be returned.",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/billingProfiles/{billingProfileId}/billingAssignments",
+	//   "httpMethod": "POST",
+	//   "id": "dfareporting.billingAssignments.insert",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "billingProfileId"
+	//   ],
+	//   "parameters": {
+	//     "billingProfileId": {
+	//       "description": "Billing profile ID of this billing assignment.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/billingProfiles/{billingProfileId}/billingAssignments",
+	//   "request": {
+	//     "$ref": "BillingAssignment"
+	//   },
+	//   "response": {
+	//     "$ref": "BillingAssignment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.billingAssignments.list":
+
+type BillingAssignmentsListCall struct {
+	s                *Service
+	profileId        int64
+	billingProfileId int64
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// List: Retrieves a list of billing assignments.
+//
+// - billingProfileId: Billing profile ID of this billing assignment.
+// - profileId: User profile ID associated with this request.
+func (r *BillingAssignmentsService) List(profileId int64, billingProfileId int64) *BillingAssignmentsListCall {
+	c := &BillingAssignmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.billingProfileId = billingProfileId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAssignmentsListCall) Fields(s ...googleapi.Field) *BillingAssignmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAssignmentsListCall) IfNoneMatch(entityTag string) *BillingAssignmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAssignmentsListCall) Context(ctx context.Context) *BillingAssignmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAssignmentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/billingProfiles/{billingProfileId}/billingAssignments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId":        strconv.FormatInt(c.profileId, 10),
+		"billingProfileId": strconv.FormatInt(c.billingProfileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.billingAssignments.list" call.
+// Exactly one of *BillingAssignmentsListResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BillingAssignmentsListResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingAssignmentsListCall) Do(opts ...googleapi.CallOption) (*BillingAssignmentsListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BillingAssignmentsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of billing assignments.",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/billingProfiles/{billingProfileId}/billingAssignments",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.billingAssignments.list",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "billingProfileId"
+	//   ],
+	//   "parameters": {
+	//     "billingProfileId": {
+	//       "description": "Billing profile ID of this billing assignment.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/billingProfiles/{billingProfileId}/billingAssignments",
+	//   "response": {
+	//     "$ref": "BillingAssignmentsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.billingProfiles.get":
+
+type BillingProfilesGetCall struct {
+	s            *Service
+	profileId    int64
+	id           int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets one billing profile by ID.
+//
+// - id: Billing Profile ID.
+// - profileId: User profile ID associated with this request.
+func (r *BillingProfilesService) Get(profileId int64, id int64) *BillingProfilesGetCall {
+	c := &BillingProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingProfilesGetCall) Fields(s ...googleapi.Field) *BillingProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingProfilesGetCall) IfNoneMatch(entityTag string) *BillingProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingProfilesGetCall) Context(ctx context.Context) *BillingProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/billingProfiles/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"id":        strconv.FormatInt(c.id, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.billingProfiles.get" call.
+// Exactly one of *BillingProfile or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *BillingProfile.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingProfilesGetCall) Do(opts ...googleapi.CallOption) (*BillingProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BillingProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets one billing profile by ID.",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/billingProfiles/{id}",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.billingProfiles.get",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "Billing Profile ID.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/billingProfiles/{id}",
+	//   "response": {
+	//     "$ref": "BillingProfile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.billingProfiles.list":
+
+type BillingProfilesListCall struct {
+	s            *Service
+	profileId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a list of billing profiles, possibly filtered. This
+// method supports paging.
+//
+// - profileId: User profile ID associated with this request.
+func (r *BillingProfilesService) List(profileId int64) *BillingProfilesListCall {
+	c := &BillingProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	return c
+}
+
+// CurrencyCode sets the optional parameter "currency_code": Select only
+// billing profile with currency.
+func (c *BillingProfilesListCall) CurrencyCode(currencyCode string) *BillingProfilesListCall {
+	c.urlParams_.Set("currency_code", currencyCode)
+	return c
+}
+
+// Ids sets the optional parameter "ids": Select only billing profile
+// with these IDs.
+func (c *BillingProfilesListCall) Ids(ids ...int64) *BillingProfilesListCall {
+	var ids_ []string
+	for _, v := range ids {
+		ids_ = append(ids_, fmt.Sprint(v))
+	}
+	c.urlParams_.SetMulti("ids", ids_)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return.
+func (c *BillingProfilesListCall) MaxResults(maxResults int64) *BillingProfilesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// Name sets the optional parameter "name": Allows searching for billing
+// profiles by name. Wildcards (*) are allowed. For example,
+// "profile*2020" will return objects with names like "profile June
+// 2020", "profile April 2020", or simply "profile 2020". Most of the
+// searches also add wildcards implicitly at the start and the end of
+// the search string. For example, a search string of "profile" will
+// match objects with name "my profile", "profile 2021", or simply
+// "profile".
+func (c *BillingProfilesListCall) Name(name string) *BillingProfilesListCall {
+	c.urlParams_.Set("name", name)
+	return c
+}
+
+// OnlySuggestion sets the optional parameter "onlySuggestion": Select
+// only billing profile which is suggested for the currency_code &
+// subaccount_id using the Billing Suggestion API.
+func (c *BillingProfilesListCall) OnlySuggestion(onlySuggestion bool) *BillingProfilesListCall {
+	c.urlParams_.Set("onlySuggestion", fmt.Sprint(onlySuggestion))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Value of the
+// nextPageToken from the previous result page.
+func (c *BillingProfilesListCall) PageToken(pageToken string) *BillingProfilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
+//
+// Possible values:
+//   "ID" (default)
+//   "NAME"
+func (c *BillingProfilesListCall) SortField(sortField string) *BillingProfilesListCall {
+	c.urlParams_.Set("sortField", sortField)
+	return c
+}
+
+// SortOrder sets the optional parameter "sortOrder": Order of sorted
+// results.
+//
+// Possible values:
+//   "ASCENDING" (default)
+//   "DESCENDING"
+func (c *BillingProfilesListCall) SortOrder(sortOrder string) *BillingProfilesListCall {
+	c.urlParams_.Set("sortOrder", sortOrder)
+	return c
+}
+
+// Status sets the optional parameter "status": Select only billing
+// profile with the specified status.
+//
+// Possible values:
+//   "UNDER_REVIEW"
+//   "ACTIVE"
+//   "ARCHIVED"
+func (c *BillingProfilesListCall) Status(status ...string) *BillingProfilesListCall {
+	c.urlParams_.SetMulti("status", append([]string{}, status...))
+	return c
+}
+
+// SubaccountIds sets the optional parameter "subaccountIds": Select
+// only billing profile with the specified subaccount.When
+// only_suggestion is true, only a single subaccount_id is supported.
+func (c *BillingProfilesListCall) SubaccountIds(subaccountIds ...int64) *BillingProfilesListCall {
+	var subaccountIds_ []string
+	for _, v := range subaccountIds {
+		subaccountIds_ = append(subaccountIds_, fmt.Sprint(v))
+	}
+	c.urlParams_.SetMulti("subaccountIds", subaccountIds_)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingProfilesListCall) Fields(s ...googleapi.Field) *BillingProfilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingProfilesListCall) IfNoneMatch(entityTag string) *BillingProfilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingProfilesListCall) Context(ctx context.Context) *BillingProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingProfilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/billingProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.billingProfiles.list" call.
+// Exactly one of *BillingProfilesListResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BillingProfilesListResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingProfilesListCall) Do(opts ...googleapi.CallOption) (*BillingProfilesListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BillingProfilesListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of billing profiles, possibly filtered. This method supports paging.",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/billingProfiles",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.billingProfiles.list",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "currency_code": {
+	//       "description": "Select only billing profile with currency.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "ids": {
+	//       "description": "Select only billing profile with these IDs.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "1000",
+	//       "description": "Maximum number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "1000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "name": {
+	//       "description": "Allows searching for billing profiles by name. Wildcards (*) are allowed. For example, \"profile*2020\" will return objects with names like \"profile June 2020\", \"profile April 2020\", or simply \"profile 2020\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"profile\" will match objects with name \"my profile\", \"profile 2021\", or simply \"profile\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "onlySuggestion": {
+	//       "description": "Select only billing profile which is suggested for the currency_code \u0026 subaccount_id using the Billing Suggestion API.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "pageToken": {
+	//       "description": "Value of the nextPageToken from the previous result page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sortField": {
+	//       "default": "ID",
+	//       "description": "Field by which to sort the list.",
+	//       "enum": [
+	//         "ID",
+	//         "NAME"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sortOrder": {
+	//       "default": "ASCENDING",
+	//       "description": "Order of sorted results.",
+	//       "enum": [
+	//         "ASCENDING",
+	//         "DESCENDING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "status": {
+	//       "description": "Select only billing profile with the specified status.",
+	//       "enum": [
+	//         "UNDER_REVIEW",
+	//         "ACTIVE",
+	//         "ARCHIVED"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "subaccountIds": {
+	//       "description": "Select only billing profile with the specified subaccount.When only_suggestion is true, only a single subaccount_id is supported.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/billingProfiles",
+	//   "response": {
+	//     "$ref": "BillingProfilesListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BillingProfilesListCall) Pages(ctx context.Context, f func(*BillingProfilesListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dfareporting.billingProfiles.update":
+
+type BillingProfilesUpdateCall struct {
+	s              *Service
+	profileId      int64
+	billingprofile *BillingProfile
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Update: Updates an existing billing profile.
+//
+// - profileId: User profile ID associated with this request.
+func (r *BillingProfilesService) Update(profileId int64, billingprofile *BillingProfile) *BillingProfilesUpdateCall {
+	c := &BillingProfilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.billingprofile = billingprofile
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingProfilesUpdateCall) Fields(s ...googleapi.Field) *BillingProfilesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingProfilesUpdateCall) Context(ctx context.Context) *BillingProfilesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingProfilesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingProfilesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.billingprofile)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/billingProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.billingProfiles.update" call.
+// Exactly one of *BillingProfile or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *BillingProfile.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingProfilesUpdateCall) Do(opts ...googleapi.CallOption) (*BillingProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BillingProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing billing profile.",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/billingProfiles",
+	//   "httpMethod": "PUT",
+	//   "id": "dfareporting.billingProfiles.update",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/billingProfiles",
+	//   "request": {
+	//     "$ref": "BillingProfile"
+	//   },
+	//   "response": {
+	//     "$ref": "BillingProfile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.billingRates.list":
+
+type BillingRatesListCall struct {
+	s                *Service
+	profileId        int64
+	billingProfileId int64
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// List: Retrieves a list of billing rates. This method supports paging.
+//
+// - billingProfileId: Billing profile ID of this billing rate.
+// - profileId: User profile ID associated with this request.
+func (r *BillingRatesService) List(profileId int64, billingProfileId int64) *BillingRatesListCall {
+	c := &BillingRatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.billingProfileId = billingProfileId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingRatesListCall) Fields(s ...googleapi.Field) *BillingRatesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingRatesListCall) IfNoneMatch(entityTag string) *BillingRatesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingRatesListCall) Context(ctx context.Context) *BillingRatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingRatesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingRatesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/billingProfiles/{billingProfileId}/billingRates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId":        strconv.FormatInt(c.profileId, 10),
+		"billingProfileId": strconv.FormatInt(c.billingProfileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.billingRates.list" call.
+// Exactly one of *BillingRatesListResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BillingRatesListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingRatesListCall) Do(opts ...googleapi.CallOption) (*BillingRatesListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BillingRatesListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of billing rates. This method supports paging.",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/billingProfiles/{billingProfileId}/billingRates",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.billingRates.list",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "billingProfileId"
+	//   ],
+	//   "parameters": {
+	//     "billingProfileId": {
+	//       "description": "Billing profile ID of this billing rate.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/billingProfiles/{billingProfileId}/billingRates",
+	//   "response": {
+	//     "$ref": "BillingRatesListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfatrafficking"
@@ -21321,7 +23329,7 @@ func (c *BrowsersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/browsers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/browsers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -21373,7 +23381,7 @@ func (c *BrowsersListCall) Do(opts ...googleapi.CallOption) (*BrowsersListRespon
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of browsers.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/browsers",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/browsers",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.browsers.list",
 	//   "parameterOrder": [
@@ -21388,7 +23396,7 @@ func (c *BrowsersListCall) Do(opts ...googleapi.CallOption) (*BrowsersListRespon
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/browsers",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/browsers",
 	//   "response": {
 	//     "$ref": "BrowsersListResponse"
 	//   },
@@ -21465,7 +23473,7 @@ func (c *CampaignCreativeAssociationsInsertCall) doRequest(alt string) (*http.Re
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -21518,7 +23526,7 @@ func (c *CampaignCreativeAssociationsInsertCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 	// {
 	//   "description": "Associates a creative with the specified campaign. This method creates a default ad with dimensions matching the creative in the campaign if such a default ad does not exist already.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.campaignCreativeAssociations.insert",
 	//   "parameterOrder": [
@@ -21541,7 +23549,7 @@ func (c *CampaignCreativeAssociationsInsertCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations",
 	//   "request": {
 	//     "$ref": "CampaignCreativeAssociation"
 	//   },
@@ -21652,7 +23660,7 @@ func (c *CampaignCreativeAssociationsListCall) doRequest(alt string) (*http.Resp
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -21707,7 +23715,7 @@ func (c *CampaignCreativeAssociationsListCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 	// {
 	//   "description": "Retrieves the list of creative IDs associated with the specified campaign. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.campaignCreativeAssociations.list",
 	//   "parameterOrder": [
@@ -21758,7 +23766,7 @@ func (c *CampaignCreativeAssociationsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations",
 	//   "response": {
 	//     "$ref": "CampaignCreativeAssociationsListResponse"
 	//   },
@@ -21861,7 +23869,7 @@ func (c *CampaignsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/campaigns/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/campaigns/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -21914,7 +23922,7 @@ func (c *CampaignsGetCall) Do(opts ...googleapi.CallOption) (*Campaign, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one campaign by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/campaigns/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/campaigns/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.campaigns.get",
 	//   "parameterOrder": [
@@ -21937,7 +23945,7 @@ func (c *CampaignsGetCall) Do(opts ...googleapi.CallOption) (*Campaign, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/campaigns/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/campaigns/{id}",
 	//   "response": {
 	//     "$ref": "Campaign"
 	//   },
@@ -22009,7 +24017,7 @@ func (c *CampaignsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/campaigns")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/campaigns")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -22061,7 +24069,7 @@ func (c *CampaignsInsertCall) Do(opts ...googleapi.CallOption) (*Campaign, error
 	return ret, nil
 	// {
 	//   "description": "Inserts a new campaign.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/campaigns",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/campaigns",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.campaigns.insert",
 	//   "parameterOrder": [
@@ -22076,7 +24084,7 @@ func (c *CampaignsInsertCall) Do(opts ...googleapi.CallOption) (*Campaign, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/campaigns",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/campaigns",
 	//   "request": {
 	//     "$ref": "Campaign"
 	//   },
@@ -22284,7 +24292,7 @@ func (c *CampaignsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/campaigns")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/campaigns")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -22336,7 +24344,7 @@ func (c *CampaignsListCall) Do(opts ...googleapi.CallOption) (*CampaignsListResp
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of campaigns, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/campaigns",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/campaigns",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.campaigns.list",
 	//   "parameterOrder": [
@@ -22448,7 +24456,7 @@ func (c *CampaignsListCall) Do(opts ...googleapi.CallOption) (*CampaignsListResp
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/campaigns",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/campaigns",
 	//   "response": {
 	//     "$ref": "CampaignsListResponse"
 	//   },
@@ -22544,7 +24552,7 @@ func (c *CampaignsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/campaigns")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/campaigns")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -22596,7 +24604,7 @@ func (c *CampaignsPatchCall) Do(opts ...googleapi.CallOption) (*Campaign, error)
 	return ret, nil
 	// {
 	//   "description": "Updates an existing campaign. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/campaigns",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/campaigns",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.campaigns.patch",
 	//   "parameterOrder": [
@@ -22619,7 +24627,7 @@ func (c *CampaignsPatchCall) Do(opts ...googleapi.CallOption) (*Campaign, error)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/campaigns",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/campaigns",
 	//   "request": {
 	//     "$ref": "Campaign"
 	//   },
@@ -22694,7 +24702,7 @@ func (c *CampaignsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/campaigns")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/campaigns")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -22746,7 +24754,7 @@ func (c *CampaignsUpdateCall) Do(opts ...googleapi.CallOption) (*Campaign, error
 	return ret, nil
 	// {
 	//   "description": "Updates an existing campaign.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/campaigns",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/campaigns",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.campaigns.update",
 	//   "parameterOrder": [
@@ -22761,7 +24769,7 @@ func (c *CampaignsUpdateCall) Do(opts ...googleapi.CallOption) (*Campaign, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/campaigns",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/campaigns",
 	//   "request": {
 	//     "$ref": "Campaign"
 	//   },
@@ -22846,7 +24854,7 @@ func (c *ChangeLogsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/changeLogs/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/changeLogs/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -22899,7 +24907,7 @@ func (c *ChangeLogsGetCall) Do(opts ...googleapi.CallOption) (*ChangeLog, error)
 	return ret, nil
 	// {
 	//   "description": "Gets one change log by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/changeLogs/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/changeLogs/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.changeLogs.get",
 	//   "parameterOrder": [
@@ -22922,7 +24930,7 @@ func (c *ChangeLogsGetCall) Do(opts ...googleapi.CallOption) (*ChangeLog, error)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/changeLogs/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/changeLogs/{id}",
 	//   "response": {
 	//     "$ref": "ChangeLog"
 	//   },
@@ -23160,7 +25168,7 @@ func (c *ChangeLogsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/changeLogs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/changeLogs")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -23212,7 +25220,7 @@ func (c *ChangeLogsListCall) Do(opts ...googleapi.CallOption) (*ChangeLogsListRe
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of change logs. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/changeLogs",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/changeLogs",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.changeLogs.list",
 	//   "parameterOrder": [
@@ -23415,7 +25423,7 @@ func (c *ChangeLogsListCall) Do(opts ...googleapi.CallOption) (*ChangeLogsListRe
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/changeLogs",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/changeLogs",
 	//   "response": {
 	//     "$ref": "ChangeLogsListResponse"
 	//   },
@@ -23555,7 +25563,7 @@ func (c *CitiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/cities")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/cities")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -23607,7 +25615,7 @@ func (c *CitiesListCall) Do(opts ...googleapi.CallOption) (*CitiesListResponse, 
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of cities, possibly filtered.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/cities",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/cities",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.cities.list",
 	//   "parameterOrder": [
@@ -23648,7 +25656,7 @@ func (c *CitiesListCall) Do(opts ...googleapi.CallOption) (*CitiesListResponse, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/cities",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/cities",
 	//   "response": {
 	//     "$ref": "CitiesListResponse"
 	//   },
@@ -23730,7 +25738,7 @@ func (c *ConnectionTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/connectionTypes/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/connectionTypes/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -23783,7 +25791,7 @@ func (c *ConnectionTypesGetCall) Do(opts ...googleapi.CallOption) (*ConnectionTy
 	return ret, nil
 	// {
 	//   "description": "Gets one connection type by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/connectionTypes/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/connectionTypes/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.connectionTypes.get",
 	//   "parameterOrder": [
@@ -23806,7 +25814,7 @@ func (c *ConnectionTypesGetCall) Do(opts ...googleapi.CallOption) (*ConnectionTy
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/connectionTypes/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/connectionTypes/{id}",
 	//   "response": {
 	//     "$ref": "ConnectionType"
 	//   },
@@ -23885,7 +25893,7 @@ func (c *ConnectionTypesListCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/connectionTypes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/connectionTypes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -23937,7 +25945,7 @@ func (c *ConnectionTypesListCall) Do(opts ...googleapi.CallOption) (*ConnectionT
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of connection types.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/connectionTypes",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/connectionTypes",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.connectionTypes.list",
 	//   "parameterOrder": [
@@ -23952,7 +25960,7 @@ func (c *ConnectionTypesListCall) Do(opts ...googleapi.CallOption) (*ConnectionT
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/connectionTypes",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/connectionTypes",
 	//   "response": {
 	//     "$ref": "ConnectionTypesListResponse"
 	//   },
@@ -24020,7 +26028,7 @@ func (c *ContentCategoriesDeleteCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/contentCategories/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/contentCategories/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -24048,7 +26056,7 @@ func (c *ContentCategoriesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing content category.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/contentCategories/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/contentCategories/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.contentCategories.delete",
 	//   "parameterOrder": [
@@ -24071,7 +26079,7 @@ func (c *ContentCategoriesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/contentCategories/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/contentCategories/{id}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfatrafficking"
 	//   ]
@@ -24150,7 +26158,7 @@ func (c *ContentCategoriesGetCall) doRequest(alt string) (*http.Response, error)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/contentCategories/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/contentCategories/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -24203,7 +26211,7 @@ func (c *ContentCategoriesGetCall) Do(opts ...googleapi.CallOption) (*ContentCat
 	return ret, nil
 	// {
 	//   "description": "Gets one content category by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/contentCategories/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/contentCategories/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.contentCategories.get",
 	//   "parameterOrder": [
@@ -24226,7 +26234,7 @@ func (c *ContentCategoriesGetCall) Do(opts ...googleapi.CallOption) (*ContentCat
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/contentCategories/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/contentCategories/{id}",
 	//   "response": {
 	//     "$ref": "ContentCategory"
 	//   },
@@ -24298,7 +26306,7 @@ func (c *ContentCategoriesInsertCall) doRequest(alt string) (*http.Response, err
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/contentCategories")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/contentCategories")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -24350,7 +26358,7 @@ func (c *ContentCategoriesInsertCall) Do(opts ...googleapi.CallOption) (*Content
 	return ret, nil
 	// {
 	//   "description": "Inserts a new content category.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/contentCategories",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/contentCategories",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.contentCategories.insert",
 	//   "parameterOrder": [
@@ -24365,7 +26373,7 @@ func (c *ContentCategoriesInsertCall) Do(opts ...googleapi.CallOption) (*Content
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/contentCategories",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/contentCategories",
 	//   "request": {
 	//     "$ref": "ContentCategory"
 	//   },
@@ -24509,7 +26517,7 @@ func (c *ContentCategoriesListCall) doRequest(alt string) (*http.Response, error
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/contentCategories")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/contentCategories")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -24561,7 +26569,7 @@ func (c *ContentCategoriesListCall) Do(opts ...googleapi.CallOption) (*ContentCa
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of content categories, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/contentCategories",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/contentCategories",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.contentCategories.list",
 	//   "parameterOrder": [
@@ -24630,7 +26638,7 @@ func (c *ContentCategoriesListCall) Do(opts ...googleapi.CallOption) (*ContentCa
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/contentCategories",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/contentCategories",
 	//   "response": {
 	//     "$ref": "ContentCategoriesListResponse"
 	//   },
@@ -24726,7 +26734,7 @@ func (c *ContentCategoriesPatchCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/contentCategories")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/contentCategories")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -24778,7 +26786,7 @@ func (c *ContentCategoriesPatchCall) Do(opts ...googleapi.CallOption) (*ContentC
 	return ret, nil
 	// {
 	//   "description": "Updates an existing content category. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/contentCategories",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/contentCategories",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.contentCategories.patch",
 	//   "parameterOrder": [
@@ -24801,7 +26809,7 @@ func (c *ContentCategoriesPatchCall) Do(opts ...googleapi.CallOption) (*ContentC
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/contentCategories",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/contentCategories",
 	//   "request": {
 	//     "$ref": "ContentCategory"
 	//   },
@@ -24876,7 +26884,7 @@ func (c *ContentCategoriesUpdateCall) doRequest(alt string) (*http.Response, err
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/contentCategories")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/contentCategories")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -24928,7 +26936,7 @@ func (c *ContentCategoriesUpdateCall) Do(opts ...googleapi.CallOption) (*Content
 	return ret, nil
 	// {
 	//   "description": "Updates an existing content category.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/contentCategories",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/contentCategories",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.contentCategories.update",
 	//   "parameterOrder": [
@@ -24943,7 +26951,7 @@ func (c *ContentCategoriesUpdateCall) Do(opts ...googleapi.CallOption) (*Content
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/contentCategories",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/contentCategories",
 	//   "request": {
 	//     "$ref": "ContentCategory"
 	//   },
@@ -25018,7 +27026,7 @@ func (c *ConversionsBatchinsertCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/conversions/batchinsert")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/conversions/batchinsert")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -25070,7 +27078,7 @@ func (c *ConversionsBatchinsertCall) Do(opts ...googleapi.CallOption) (*Conversi
 	return ret, nil
 	// {
 	//   "description": "Inserts conversions.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/conversions/batchinsert",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/conversions/batchinsert",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.conversions.batchinsert",
 	//   "parameterOrder": [
@@ -25085,7 +27093,7 @@ func (c *ConversionsBatchinsertCall) Do(opts ...googleapi.CallOption) (*Conversi
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/conversions/batchinsert",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/conversions/batchinsert",
 	//   "request": {
 	//     "$ref": "ConversionsBatchInsertRequest"
 	//   },
@@ -25160,7 +27168,7 @@ func (c *ConversionsBatchupdateCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/conversions/batchupdate")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/conversions/batchupdate")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -25212,7 +27220,7 @@ func (c *ConversionsBatchupdateCall) Do(opts ...googleapi.CallOption) (*Conversi
 	return ret, nil
 	// {
 	//   "description": "Updates existing conversions.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/conversions/batchupdate",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/conversions/batchupdate",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.conversions.batchupdate",
 	//   "parameterOrder": [
@@ -25227,7 +27235,7 @@ func (c *ConversionsBatchupdateCall) Do(opts ...googleapi.CallOption) (*Conversi
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/conversions/batchupdate",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/conversions/batchupdate",
 	//   "request": {
 	//     "$ref": "ConversionsBatchUpdateRequest"
 	//   },
@@ -25312,7 +27320,7 @@ func (c *CountriesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/countries/{dartId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/countries/{dartId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -25365,7 +27373,7 @@ func (c *CountriesGetCall) Do(opts ...googleapi.CallOption) (*Country, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one country by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/countries/{dartId}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/countries/{dartId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.countries.get",
 	//   "parameterOrder": [
@@ -25388,7 +27396,7 @@ func (c *CountriesGetCall) Do(opts ...googleapi.CallOption) (*Country, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/countries/{dartId}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/countries/{dartId}",
 	//   "response": {
 	//     "$ref": "Country"
 	//   },
@@ -25467,7 +27475,7 @@ func (c *CountriesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/countries")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/countries")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -25519,7 +27527,7 @@ func (c *CountriesListCall) Do(opts ...googleapi.CallOption) (*CountriesListResp
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of countries.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/countries",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/countries",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.countries.list",
 	//   "parameterOrder": [
@@ -25534,7 +27542,7 @@ func (c *CountriesListCall) Do(opts ...googleapi.CallOption) (*CountriesListResp
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/countries",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/countries",
 	//   "response": {
 	//     "$ref": "CountriesListResponse"
 	//   },
@@ -25650,9 +27658,9 @@ func (c *CreativeAssetsInsertCall) doRequest(alt string) (*http.Response, error)
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets")
 	if c.mediaInfo_ != nil {
-		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/dfareporting/v3.5/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets")
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/dfareporting/v4/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets")
 		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
 	}
 	if body == nil {
@@ -25731,7 +27739,7 @@ func (c *CreativeAssetsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeAs
 	return ret, nil
 	// {
 	//   "description": "Inserts a new creative asset.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.creativeAssets.insert",
 	//   "mediaUpload": {
@@ -25742,7 +27750,7 @@ func (c *CreativeAssetsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeAs
 	//     "protocols": {
 	//       "simple": {
 	//         "multipart": true,
-	//         "path": "/upload/dfareporting/v3.5/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
+	//         "path": "/upload/dfareporting/v4/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
 	//       }
 	//     }
 	//   },
@@ -25766,7 +27774,7 @@ func (c *CreativeAssetsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeAs
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets",
 	//   "request": {
 	//     "$ref": "CreativeAssetMetadata"
 	//   },
@@ -25841,7 +27849,7 @@ func (c *CreativeFieldValuesDeleteCall) doRequest(alt string) (*http.Response, e
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -25870,7 +27878,7 @@ func (c *CreativeFieldValuesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing creative field value.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.creativeFieldValues.delete",
 	//   "parameterOrder": [
@@ -25901,7 +27909,7 @@ func (c *CreativeFieldValuesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfatrafficking"
 	//   ]
@@ -25983,7 +27991,7 @@ func (c *CreativeFieldValuesGetCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -26037,7 +28045,7 @@ func (c *CreativeFieldValuesGetCall) Do(opts ...googleapi.CallOption) (*Creative
 	return ret, nil
 	// {
 	//   "description": "Gets one creative field value by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creativeFieldValues.get",
 	//   "parameterOrder": [
@@ -26068,7 +28076,7 @@ func (c *CreativeFieldValuesGetCall) Do(opts ...googleapi.CallOption) (*Creative
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}",
 	//   "response": {
 	//     "$ref": "CreativeFieldValue"
 	//   },
@@ -26143,7 +28151,7 @@ func (c *CreativeFieldValuesInsertCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -26196,7 +28204,7 @@ func (c *CreativeFieldValuesInsertCall) Do(opts ...googleapi.CallOption) (*Creat
 	return ret, nil
 	// {
 	//   "description": "Inserts a new creative field value.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.creativeFieldValues.insert",
 	//   "parameterOrder": [
@@ -26219,7 +28227,7 @@ func (c *CreativeFieldValuesInsertCall) Do(opts ...googleapi.CallOption) (*Creat
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
 	//   "request": {
 	//     "$ref": "CreativeFieldValue"
 	//   },
@@ -26360,7 +28368,7 @@ func (c *CreativeFieldValuesListCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -26413,7 +28421,7 @@ func (c *CreativeFieldValuesListCall) Do(opts ...googleapi.CallOption) (*Creativ
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of creative field values, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creativeFieldValues.list",
 	//   "parameterOrder": [
@@ -26490,7 +28498,7 @@ func (c *CreativeFieldValuesListCall) Do(opts ...googleapi.CallOption) (*Creativ
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
 	//   "response": {
 	//     "$ref": "CreativeFieldValuesListResponse"
 	//   },
@@ -26589,7 +28597,7 @@ func (c *CreativeFieldValuesPatchCall) doRequest(alt string) (*http.Response, er
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -26642,7 +28650,7 @@ func (c *CreativeFieldValuesPatchCall) Do(opts ...googleapi.CallOption) (*Creati
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative field value. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.creativeFieldValues.patch",
 	//   "parameterOrder": [
@@ -26673,7 +28681,7 @@ func (c *CreativeFieldValuesPatchCall) Do(opts ...googleapi.CallOption) (*Creati
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
 	//   "request": {
 	//     "$ref": "CreativeFieldValue"
 	//   },
@@ -26751,7 +28759,7 @@ func (c *CreativeFieldValuesUpdateCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -26804,7 +28812,7 @@ func (c *CreativeFieldValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Creat
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative field value.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.creativeFieldValues.update",
 	//   "parameterOrder": [
@@ -26827,7 +28835,7 @@ func (c *CreativeFieldValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Creat
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
 	//   "request": {
 	//     "$ref": "CreativeFieldValue"
 	//   },
@@ -26898,7 +28906,7 @@ func (c *CreativeFieldsDeleteCall) doRequest(alt string) (*http.Response, error)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeFields/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -26926,7 +28934,7 @@ func (c *CreativeFieldsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing creative field.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.creativeFields.delete",
 	//   "parameterOrder": [
@@ -26949,7 +28957,7 @@ func (c *CreativeFieldsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{id}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfatrafficking"
 	//   ]
@@ -27028,7 +29036,7 @@ func (c *CreativeFieldsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeFields/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -27081,7 +29089,7 @@ func (c *CreativeFieldsGetCall) Do(opts ...googleapi.CallOption) (*CreativeField
 	return ret, nil
 	// {
 	//   "description": "Gets one creative field by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creativeFields.get",
 	//   "parameterOrder": [
@@ -27104,7 +29112,7 @@ func (c *CreativeFieldsGetCall) Do(opts ...googleapi.CallOption) (*CreativeField
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeFields/{id}",
 	//   "response": {
 	//     "$ref": "CreativeField"
 	//   },
@@ -27176,7 +29184,7 @@ func (c *CreativeFieldsInsertCall) doRequest(alt string) (*http.Response, error)
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeFields")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeFields")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -27228,7 +29236,7 @@ func (c *CreativeFieldsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeFi
 	return ret, nil
 	// {
 	//   "description": "Inserts a new creative field.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeFields",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.creativeFields.insert",
 	//   "parameterOrder": [
@@ -27243,7 +29251,7 @@ func (c *CreativeFieldsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeFi
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeFields",
 	//   "request": {
 	//     "$ref": "CreativeField"
 	//   },
@@ -27398,7 +29406,7 @@ func (c *CreativeFieldsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeFields")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeFields")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -27450,7 +29458,7 @@ func (c *CreativeFieldsListCall) Do(opts ...googleapi.CallOption) (*CreativeFiel
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of creative fields, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeFields",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creativeFields.list",
 	//   "parameterOrder": [
@@ -27526,7 +29534,7 @@ func (c *CreativeFieldsListCall) Do(opts ...googleapi.CallOption) (*CreativeFiel
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeFields",
 	//   "response": {
 	//     "$ref": "CreativeFieldsListResponse"
 	//   },
@@ -27622,7 +29630,7 @@ func (c *CreativeFieldsPatchCall) doRequest(alt string) (*http.Response, error) 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeFields")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeFields")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -27674,7 +29682,7 @@ func (c *CreativeFieldsPatchCall) Do(opts ...googleapi.CallOption) (*CreativeFie
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative field. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeFields",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.creativeFields.patch",
 	//   "parameterOrder": [
@@ -27697,7 +29705,7 @@ func (c *CreativeFieldsPatchCall) Do(opts ...googleapi.CallOption) (*CreativeFie
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeFields",
 	//   "request": {
 	//     "$ref": "CreativeField"
 	//   },
@@ -27772,7 +29780,7 @@ func (c *CreativeFieldsUpdateCall) doRequest(alt string) (*http.Response, error)
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeFields")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeFields")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -27824,7 +29832,7 @@ func (c *CreativeFieldsUpdateCall) Do(opts ...googleapi.CallOption) (*CreativeFi
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative field.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeFields",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.creativeFields.update",
 	//   "parameterOrder": [
@@ -27839,7 +29847,7 @@ func (c *CreativeFieldsUpdateCall) Do(opts ...googleapi.CallOption) (*CreativeFi
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeFields",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeFields",
 	//   "request": {
 	//     "$ref": "CreativeField"
 	//   },
@@ -27924,7 +29932,7 @@ func (c *CreativeGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeGroups/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -27977,7 +29985,7 @@ func (c *CreativeGroupsGetCall) Do(opts ...googleapi.CallOption) (*CreativeGroup
 	return ret, nil
 	// {
 	//   "description": "Gets one creative group by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeGroups/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creativeGroups.get",
 	//   "parameterOrder": [
@@ -28000,7 +30008,7 @@ func (c *CreativeGroupsGetCall) Do(opts ...googleapi.CallOption) (*CreativeGroup
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeGroups/{id}",
 	//   "response": {
 	//     "$ref": "CreativeGroup"
 	//   },
@@ -28072,7 +30080,7 @@ func (c *CreativeGroupsInsertCall) doRequest(alt string) (*http.Response, error)
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -28124,7 +30132,7 @@ func (c *CreativeGroupsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeGr
 	return ret, nil
 	// {
 	//   "description": "Inserts a new creative group.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeGroups",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.creativeGroups.insert",
 	//   "parameterOrder": [
@@ -28139,7 +30147,7 @@ func (c *CreativeGroupsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeGr
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeGroups",
 	//   "request": {
 	//     "$ref": "CreativeGroup"
 	//   },
@@ -28301,7 +30309,7 @@ func (c *CreativeGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -28353,7 +30361,7 @@ func (c *CreativeGroupsListCall) Do(opts ...googleapi.CallOption) (*CreativeGrou
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of creative groups, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeGroups",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creativeGroups.list",
 	//   "parameterOrder": [
@@ -28437,7 +30445,7 @@ func (c *CreativeGroupsListCall) Do(opts ...googleapi.CallOption) (*CreativeGrou
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeGroups",
 	//   "response": {
 	//     "$ref": "CreativeGroupsListResponse"
 	//   },
@@ -28533,7 +30541,7 @@ func (c *CreativeGroupsPatchCall) doRequest(alt string) (*http.Response, error) 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -28585,7 +30593,7 @@ func (c *CreativeGroupsPatchCall) Do(opts ...googleapi.CallOption) (*CreativeGro
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative group. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeGroups",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.creativeGroups.patch",
 	//   "parameterOrder": [
@@ -28608,7 +30616,7 @@ func (c *CreativeGroupsPatchCall) Do(opts ...googleapi.CallOption) (*CreativeGro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeGroups",
 	//   "request": {
 	//     "$ref": "CreativeGroup"
 	//   },
@@ -28683,7 +30691,7 @@ func (c *CreativeGroupsUpdateCall) doRequest(alt string) (*http.Response, error)
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creativeGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -28735,7 +30743,7 @@ func (c *CreativeGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*CreativeGr
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative group.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creativeGroups",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.creativeGroups.update",
 	//   "parameterOrder": [
@@ -28750,7 +30758,7 @@ func (c *CreativeGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*CreativeGr
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creativeGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creativeGroups",
 	//   "request": {
 	//     "$ref": "CreativeGroup"
 	//   },
@@ -28835,7 +30843,7 @@ func (c *CreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creatives/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creatives/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -28888,7 +30896,7 @@ func (c *CreativesGetCall) Do(opts ...googleapi.CallOption) (*Creative, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one creative by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creatives/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creatives/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creatives.get",
 	//   "parameterOrder": [
@@ -28911,7 +30919,7 @@ func (c *CreativesGetCall) Do(opts ...googleapi.CallOption) (*Creative, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creatives/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creatives/{id}",
 	//   "response": {
 	//     "$ref": "Creative"
 	//   },
@@ -28983,7 +30991,7 @@ func (c *CreativesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creatives")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creatives")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -29035,7 +31043,7 @@ func (c *CreativesInsertCall) Do(opts ...googleapi.CallOption) (*Creative, error
 	return ret, nil
 	// {
 	//   "description": "Inserts a new creative.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creatives",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creatives",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.creatives.insert",
 	//   "parameterOrder": [
@@ -29050,7 +31058,7 @@ func (c *CreativesInsertCall) Do(opts ...googleapi.CallOption) (*Creative, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creatives",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creatives",
 	//   "request": {
 	//     "$ref": "Creative"
 	//   },
@@ -29307,7 +31315,7 @@ func (c *CreativesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creatives")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creatives")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -29359,7 +31367,7 @@ func (c *CreativesListCall) Do(opts ...googleapi.CallOption) (*CreativesListResp
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of creatives, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creatives",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creatives",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creatives.list",
 	//   "parameterOrder": [
@@ -29544,7 +31552,7 @@ func (c *CreativesListCall) Do(opts ...googleapi.CallOption) (*CreativesListResp
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creatives",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creatives",
 	//   "response": {
 	//     "$ref": "CreativesListResponse"
 	//   },
@@ -29640,7 +31648,7 @@ func (c *CreativesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creatives")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creatives")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -29692,7 +31700,7 @@ func (c *CreativesPatchCall) Do(opts ...googleapi.CallOption) (*Creative, error)
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creatives",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creatives",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.creatives.patch",
 	//   "parameterOrder": [
@@ -29715,7 +31723,7 @@ func (c *CreativesPatchCall) Do(opts ...googleapi.CallOption) (*Creative, error)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creatives",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creatives",
 	//   "request": {
 	//     "$ref": "Creative"
 	//   },
@@ -29790,7 +31798,7 @@ func (c *CreativesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/creatives")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/creatives")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -29842,7 +31850,7 @@ func (c *CreativesUpdateCall) Do(opts ...googleapi.CallOption) (*Creative, error
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/creatives",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/creatives",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.creatives.update",
 	//   "parameterOrder": [
@@ -29857,7 +31865,7 @@ func (c *CreativesUpdateCall) Do(opts ...googleapi.CallOption) (*Creative, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/creatives",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/creatives",
 	//   "request": {
 	//     "$ref": "Creative"
 	//   },
@@ -29947,7 +31955,7 @@ func (c *DimensionValuesQueryCall) doRequest(alt string) (*http.Response, error)
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/dimensionvalues/query")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/dimensionvalues/query")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -29999,7 +32007,7 @@ func (c *DimensionValuesQueryCall) Do(opts ...googleapi.CallOption) (*DimensionV
 	return ret, nil
 	// {
 	//   "description": "Retrieves list of report dimension values for a list of filters.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/dimensionvalues/query",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/dimensionvalues/query",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.dimensionValues.query",
 	//   "parameterOrder": [
@@ -30028,7 +32036,7 @@ func (c *DimensionValuesQueryCall) Do(opts ...googleapi.CallOption) (*DimensionV
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/dimensionvalues/query",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/dimensionvalues/query",
 	//   "request": {
 	//     "$ref": "DimensionValueRequest"
 	//   },
@@ -30134,7 +32142,7 @@ func (c *DirectorySitesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/directorySites/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/directorySites/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -30187,7 +32195,7 @@ func (c *DirectorySitesGetCall) Do(opts ...googleapi.CallOption) (*DirectorySite
 	return ret, nil
 	// {
 	//   "description": "Gets one directory site by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/directorySites/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/directorySites/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.directorySites.get",
 	//   "parameterOrder": [
@@ -30210,7 +32218,7 @@ func (c *DirectorySitesGetCall) Do(opts ...googleapi.CallOption) (*DirectorySite
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/directorySites/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/directorySites/{id}",
 	//   "response": {
 	//     "$ref": "DirectorySite"
 	//   },
@@ -30282,7 +32290,7 @@ func (c *DirectorySitesInsertCall) doRequest(alt string) (*http.Response, error)
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/directorySites")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/directorySites")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -30334,7 +32342,7 @@ func (c *DirectorySitesInsertCall) Do(opts ...googleapi.CallOption) (*DirectoryS
 	return ret, nil
 	// {
 	//   "description": "Inserts a new directory site.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/directorySites",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/directorySites",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.directorySites.insert",
 	//   "parameterOrder": [
@@ -30349,7 +32357,7 @@ func (c *DirectorySitesInsertCall) Do(opts ...googleapi.CallOption) (*DirectoryS
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/directorySites",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/directorySites",
 	//   "request": {
 	//     "$ref": "DirectorySite"
 	//   },
@@ -30532,7 +32540,7 @@ func (c *DirectorySitesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/directorySites")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/directorySites")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -30584,7 +32592,7 @@ func (c *DirectorySitesListCall) Do(opts ...googleapi.CallOption) (*DirectorySit
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of directory sites, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/directorySites",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/directorySites",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.directorySites.list",
 	//   "parameterOrder": [
@@ -30678,7 +32686,7 @@ func (c *DirectorySitesListCall) Do(opts ...googleapi.CallOption) (*DirectorySit
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/directorySites",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/directorySites",
 	//   "response": {
 	//     "$ref": "DirectorySitesListResponse"
 	//   },
@@ -30775,7 +32783,7 @@ func (c *DynamicTargetingKeysDeleteCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/dynamicTargetingKeys/{objectId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/dynamicTargetingKeys/{objectId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -30803,7 +32811,7 @@ func (c *DynamicTargetingKeysDeleteCall) Do(opts ...googleapi.CallOption) error 
 	return nil
 	// {
 	//   "description": "Deletes an existing dynamic targeting key.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/dynamicTargetingKeys/{objectId}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/dynamicTargetingKeys/{objectId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.dynamicTargetingKeys.delete",
 	//   "parameterOrder": [
@@ -30852,7 +32860,7 @@ func (c *DynamicTargetingKeysDeleteCall) Do(opts ...googleapi.CallOption) error 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/dynamicTargetingKeys/{objectId}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/dynamicTargetingKeys/{objectId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfatrafficking"
 	//   ]
@@ -30925,7 +32933,7 @@ func (c *DynamicTargetingKeysInsertCall) doRequest(alt string) (*http.Response, 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/dynamicTargetingKeys")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/dynamicTargetingKeys")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -30977,7 +32985,7 @@ func (c *DynamicTargetingKeysInsertCall) Do(opts ...googleapi.CallOption) (*Dyna
 	return ret, nil
 	// {
 	//   "description": "Inserts a new dynamic targeting key. Keys must be created at the advertiser level before being assigned to the advertiser's ads, creatives, or placements. There is a maximum of 1000 keys per advertiser, out of which a maximum of 20 keys can be assigned per ad, creative, or placement.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/dynamicTargetingKeys",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/dynamicTargetingKeys",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.dynamicTargetingKeys.insert",
 	//   "parameterOrder": [
@@ -30992,7 +33000,7 @@ func (c *DynamicTargetingKeysInsertCall) Do(opts ...googleapi.CallOption) (*Dyna
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/dynamicTargetingKeys",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/dynamicTargetingKeys",
 	//   "request": {
 	//     "$ref": "DynamicTargetingKey"
 	//   },
@@ -31108,7 +33116,7 @@ func (c *DynamicTargetingKeysListCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/dynamicTargetingKeys")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/dynamicTargetingKeys")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -31160,7 +33168,7 @@ func (c *DynamicTargetingKeysListCall) Do(opts ...googleapi.CallOption) (*Dynami
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of dynamic targeting keys.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/dynamicTargetingKeys",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/dynamicTargetingKeys",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.dynamicTargetingKeys.list",
 	//   "parameterOrder": [
@@ -31210,7 +33218,7 @@ func (c *DynamicTargetingKeysListCall) Do(opts ...googleapi.CallOption) (*Dynami
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/dynamicTargetingKeys",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/dynamicTargetingKeys",
 	//   "response": {
 	//     "$ref": "DynamicTargetingKeysListResponse"
 	//   },
@@ -31278,7 +33286,7 @@ func (c *EventTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/eventTags/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/eventTags/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -31306,7 +33314,7 @@ func (c *EventTagsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing event tag.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/eventTags/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/eventTags/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.eventTags.delete",
 	//   "parameterOrder": [
@@ -31329,7 +33337,7 @@ func (c *EventTagsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/eventTags/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/eventTags/{id}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfatrafficking"
 	//   ]
@@ -31408,7 +33416,7 @@ func (c *EventTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/eventTags/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/eventTags/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -31461,7 +33469,7 @@ func (c *EventTagsGetCall) Do(opts ...googleapi.CallOption) (*EventTag, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one event tag by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/eventTags/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/eventTags/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.eventTags.get",
 	//   "parameterOrder": [
@@ -31484,7 +33492,7 @@ func (c *EventTagsGetCall) Do(opts ...googleapi.CallOption) (*EventTag, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/eventTags/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/eventTags/{id}",
 	//   "response": {
 	//     "$ref": "EventTag"
 	//   },
@@ -31556,7 +33564,7 @@ func (c *EventTagsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/eventTags")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/eventTags")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -31608,7 +33616,7 @@ func (c *EventTagsInsertCall) Do(opts ...googleapi.CallOption) (*EventTag, error
 	return ret, nil
 	// {
 	//   "description": "Inserts a new event tag.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/eventTags",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/eventTags",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.eventTags.insert",
 	//   "parameterOrder": [
@@ -31623,7 +33631,7 @@ func (c *EventTagsInsertCall) Do(opts ...googleapi.CallOption) (*EventTag, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/eventTags",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/eventTags",
 	//   "request": {
 	//     "$ref": "EventTag"
 	//   },
@@ -31813,7 +33821,7 @@ func (c *EventTagsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/eventTags")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/eventTags")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -31865,7 +33873,7 @@ func (c *EventTagsListCall) Do(opts ...googleapi.CallOption) (*EventTagsListResp
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of event tags, possibly filtered.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/eventTags",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/eventTags",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.eventTags.list",
 	//   "parameterOrder": [
@@ -31964,7 +33972,7 @@ func (c *EventTagsListCall) Do(opts ...googleapi.CallOption) (*EventTagsListResp
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/eventTags",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/eventTags",
 	//   "response": {
 	//     "$ref": "EventTagsListResponse"
 	//   },
@@ -32039,7 +34047,7 @@ func (c *EventTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/eventTags")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/eventTags")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -32091,7 +34099,7 @@ func (c *EventTagsPatchCall) Do(opts ...googleapi.CallOption) (*EventTag, error)
 	return ret, nil
 	// {
 	//   "description": "Updates an existing event tag. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/eventTags",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/eventTags",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.eventTags.patch",
 	//   "parameterOrder": [
@@ -32114,7 +34122,7 @@ func (c *EventTagsPatchCall) Do(opts ...googleapi.CallOption) (*EventTag, error)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/eventTags",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/eventTags",
 	//   "request": {
 	//     "$ref": "EventTag"
 	//   },
@@ -32189,7 +34197,7 @@ func (c *EventTagsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/eventTags")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/eventTags")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -32241,7 +34249,7 @@ func (c *EventTagsUpdateCall) Do(opts ...googleapi.CallOption) (*EventTag, error
 	return ret, nil
 	// {
 	//   "description": "Updates an existing event tag.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/eventTags",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/eventTags",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.eventTags.update",
 	//   "parameterOrder": [
@@ -32256,7 +34264,7 @@ func (c *EventTagsUpdateCall) Do(opts ...googleapi.CallOption) (*EventTag, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/eventTags",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/eventTags",
 	//   "request": {
 	//     "$ref": "EventTag"
 	//   },
@@ -32342,7 +34350,7 @@ func (c *FilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/reports/{reportId}/files/{fileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/reports/{reportId}/files/{fileId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -32411,7 +34419,7 @@ func (c *FilesGetCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	return ret, nil
 	// {
 	//   "description": "Retrieves a report file by its report ID and file ID. This method supports media download.",
-	//   "flatPath": "dfareporting/v3.5/reports/{reportId}/files/{fileId}",
+	//   "flatPath": "dfareporting/v4/reports/{reportId}/files/{fileId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.files.get",
 	//   "parameterOrder": [
@@ -32434,7 +34442,7 @@ func (c *FilesGetCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/reports/{reportId}/files/{fileId}",
+	//   "path": "dfareporting/v4/reports/{reportId}/files/{fileId}",
 	//   "response": {
 	//     "$ref": "File"
 	//   },
@@ -32562,7 +34570,7 @@ func (c *FilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/files")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/files")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -32614,7 +34622,7 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	return ret, nil
 	// {
 	//   "description": "Lists files for a user profile.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/files",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/files",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.files.list",
 	//   "parameterOrder": [
@@ -32687,7 +34695,7 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/files",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/files",
 	//   "response": {
 	//     "$ref": "FileList"
 	//   },
@@ -32776,7 +34784,7 @@ func (c *FloodlightActivitiesDeleteCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightActivities/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -32804,7 +34812,7 @@ func (c *FloodlightActivitiesDeleteCall) Do(opts ...googleapi.CallOption) error 
 	return nil
 	// {
 	//   "description": "Deletes an existing floodlight activity.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.floodlightActivities.delete",
 	//   "parameterOrder": [
@@ -32827,7 +34835,7 @@ func (c *FloodlightActivitiesDeleteCall) Do(opts ...googleapi.CallOption) error 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities/{id}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfatrafficking"
 	//   ]
@@ -32897,7 +34905,7 @@ func (c *FloodlightActivitiesGeneratetagCall) doRequest(alt string) (*http.Respo
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities/generatetag")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightActivities/generatetag")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -32950,7 +34958,7 @@ func (c *FloodlightActivitiesGeneratetagCall) Do(opts ...googleapi.CallOption) (
 	return ret, nil
 	// {
 	//   "description": "Generates a tag for a floodlight activity.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities/generatetag",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities/generatetag",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.floodlightActivities.generatetag",
 	//   "parameterOrder": [
@@ -32971,7 +34979,7 @@ func (c *FloodlightActivitiesGeneratetagCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities/generatetag",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities/generatetag",
 	//   "response": {
 	//     "$ref": "FloodlightActivitiesGenerateTagResponse"
 	//   },
@@ -33053,7 +35061,7 @@ func (c *FloodlightActivitiesGetCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightActivities/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -33106,7 +35114,7 @@ func (c *FloodlightActivitiesGetCall) Do(opts ...googleapi.CallOption) (*Floodli
 	return ret, nil
 	// {
 	//   "description": "Gets one floodlight activity by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.floodlightActivities.get",
 	//   "parameterOrder": [
@@ -33129,7 +35137,7 @@ func (c *FloodlightActivitiesGetCall) Do(opts ...googleapi.CallOption) (*Floodli
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities/{id}",
 	//   "response": {
 	//     "$ref": "FloodlightActivity"
 	//   },
@@ -33201,7 +35209,7 @@ func (c *FloodlightActivitiesInsertCall) doRequest(alt string) (*http.Response, 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightActivities")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -33253,7 +35261,7 @@ func (c *FloodlightActivitiesInsertCall) Do(opts ...googleapi.CallOption) (*Floo
 	return ret, nil
 	// {
 	//   "description": "Inserts a new floodlight activity.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.floodlightActivities.insert",
 	//   "parameterOrder": [
@@ -33268,7 +35276,7 @@ func (c *FloodlightActivitiesInsertCall) Do(opts ...googleapi.CallOption) (*Floo
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities",
 	//   "request": {
 	//     "$ref": "FloodlightActivity"
 	//   },
@@ -33478,7 +35486,7 @@ func (c *FloodlightActivitiesListCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightActivities")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -33530,7 +35538,7 @@ func (c *FloodlightActivitiesListCall) Do(opts ...googleapi.CallOption) (*Floodl
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of floodlight activities, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.floodlightActivities.list",
 	//   "parameterOrder": [
@@ -33646,7 +35654,7 @@ func (c *FloodlightActivitiesListCall) Do(opts ...googleapi.CallOption) (*Floodl
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities",
 	//   "response": {
 	//     "$ref": "FloodlightActivitiesListResponse"
 	//   },
@@ -33742,7 +35750,7 @@ func (c *FloodlightActivitiesPatchCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightActivities")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -33794,7 +35802,7 @@ func (c *FloodlightActivitiesPatchCall) Do(opts ...googleapi.CallOption) (*Flood
 	return ret, nil
 	// {
 	//   "description": "Updates an existing floodlight activity. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.floodlightActivities.patch",
 	//   "parameterOrder": [
@@ -33817,7 +35825,7 @@ func (c *FloodlightActivitiesPatchCall) Do(opts ...googleapi.CallOption) (*Flood
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities",
 	//   "request": {
 	//     "$ref": "FloodlightActivity"
 	//   },
@@ -33892,7 +35900,7 @@ func (c *FloodlightActivitiesUpdateCall) doRequest(alt string) (*http.Response, 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightActivities")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -33944,7 +35952,7 @@ func (c *FloodlightActivitiesUpdateCall) Do(opts ...googleapi.CallOption) (*Floo
 	return ret, nil
 	// {
 	//   "description": "Updates an existing floodlight activity.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.floodlightActivities.update",
 	//   "parameterOrder": [
@@ -33959,7 +35967,7 @@ func (c *FloodlightActivitiesUpdateCall) Do(opts ...googleapi.CallOption) (*Floo
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightActivities",
 	//   "request": {
 	//     "$ref": "FloodlightActivity"
 	//   },
@@ -34044,7 +36052,7 @@ func (c *FloodlightActivityGroupsGetCall) doRequest(alt string) (*http.Response,
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -34097,7 +36105,7 @@ func (c *FloodlightActivityGroupsGetCall) Do(opts ...googleapi.CallOption) (*Flo
 	return ret, nil
 	// {
 	//   "description": "Gets one floodlight activity group by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.floodlightActivityGroups.get",
 	//   "parameterOrder": [
@@ -34120,7 +36128,7 @@ func (c *FloodlightActivityGroupsGetCall) Do(opts ...googleapi.CallOption) (*Flo
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups/{id}",
 	//   "response": {
 	//     "$ref": "FloodlightActivityGroup"
 	//   },
@@ -34192,7 +36200,7 @@ func (c *FloodlightActivityGroupsInsertCall) doRequest(alt string) (*http.Respon
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -34244,7 +36252,7 @@ func (c *FloodlightActivityGroupsInsertCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Inserts a new floodlight activity group.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.floodlightActivityGroups.insert",
 	//   "parameterOrder": [
@@ -34259,7 +36267,7 @@ func (c *FloodlightActivityGroupsInsertCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups",
 	//   "request": {
 	//     "$ref": "FloodlightActivityGroup"
 	//   },
@@ -34434,7 +36442,7 @@ func (c *FloodlightActivityGroupsListCall) doRequest(alt string) (*http.Response
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -34487,7 +36495,7 @@ func (c *FloodlightActivityGroupsListCall) Do(opts ...googleapi.CallOption) (*Fl
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of floodlight activity groups, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.floodlightActivityGroups.list",
 	//   "parameterOrder": [
@@ -34581,7 +36589,7 @@ func (c *FloodlightActivityGroupsListCall) Do(opts ...googleapi.CallOption) (*Fl
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups",
 	//   "response": {
 	//     "$ref": "FloodlightActivityGroupsListResponse"
 	//   },
@@ -34677,7 +36685,7 @@ func (c *FloodlightActivityGroupsPatchCall) doRequest(alt string) (*http.Respons
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -34729,7 +36737,7 @@ func (c *FloodlightActivityGroupsPatchCall) Do(opts ...googleapi.CallOption) (*F
 	return ret, nil
 	// {
 	//   "description": "Updates an existing floodlight activity group. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.floodlightActivityGroups.patch",
 	//   "parameterOrder": [
@@ -34752,7 +36760,7 @@ func (c *FloodlightActivityGroupsPatchCall) Do(opts ...googleapi.CallOption) (*F
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups",
 	//   "request": {
 	//     "$ref": "FloodlightActivityGroup"
 	//   },
@@ -34827,7 +36835,7 @@ func (c *FloodlightActivityGroupsUpdateCall) doRequest(alt string) (*http.Respon
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -34879,7 +36887,7 @@ func (c *FloodlightActivityGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Updates an existing floodlight activity group.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.floodlightActivityGroups.update",
 	//   "parameterOrder": [
@@ -34894,7 +36902,7 @@ func (c *FloodlightActivityGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightActivityGroups",
 	//   "request": {
 	//     "$ref": "FloodlightActivityGroup"
 	//   },
@@ -34979,7 +36987,7 @@ func (c *FloodlightConfigurationsGetCall) doRequest(alt string) (*http.Response,
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightConfigurations/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -35032,7 +37040,7 @@ func (c *FloodlightConfigurationsGetCall) Do(opts ...googleapi.CallOption) (*Flo
 	return ret, nil
 	// {
 	//   "description": "Gets one floodlight configuration by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightConfigurations/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.floodlightConfigurations.get",
 	//   "parameterOrder": [
@@ -35055,7 +37063,7 @@ func (c *FloodlightConfigurationsGetCall) Do(opts ...googleapi.CallOption) (*Flo
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightConfigurations/{id}",
 	//   "response": {
 	//     "$ref": "FloodlightConfiguration"
 	//   },
@@ -35147,7 +37155,7 @@ func (c *FloodlightConfigurationsListCall) doRequest(alt string) (*http.Response
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightConfigurations")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -35200,7 +37208,7 @@ func (c *FloodlightConfigurationsListCall) Do(opts ...googleapi.CallOption) (*Fl
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of floodlight configurations, possibly filtered.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightConfigurations",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.floodlightConfigurations.list",
 	//   "parameterOrder": [
@@ -35222,7 +37230,7 @@ func (c *FloodlightConfigurationsListCall) Do(opts ...googleapi.CallOption) (*Fl
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightConfigurations",
 	//   "response": {
 	//     "$ref": "FloodlightConfigurationsListResponse"
 	//   },
@@ -35297,7 +37305,7 @@ func (c *FloodlightConfigurationsPatchCall) doRequest(alt string) (*http.Respons
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightConfigurations")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -35349,7 +37357,7 @@ func (c *FloodlightConfigurationsPatchCall) Do(opts ...googleapi.CallOption) (*F
 	return ret, nil
 	// {
 	//   "description": "Updates an existing floodlight configuration. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightConfigurations",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.floodlightConfigurations.patch",
 	//   "parameterOrder": [
@@ -35372,7 +37380,7 @@ func (c *FloodlightConfigurationsPatchCall) Do(opts ...googleapi.CallOption) (*F
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightConfigurations",
 	//   "request": {
 	//     "$ref": "FloodlightConfiguration"
 	//   },
@@ -35447,7 +37455,7 @@ func (c *FloodlightConfigurationsUpdateCall) doRequest(alt string) (*http.Respon
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/floodlightConfigurations")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -35499,7 +37507,7 @@ func (c *FloodlightConfigurationsUpdateCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Updates an existing floodlight configuration.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/floodlightConfigurations",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.floodlightConfigurations.update",
 	//   "parameterOrder": [
@@ -35514,7 +37522,7 @@ func (c *FloodlightConfigurationsUpdateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/floodlightConfigurations",
 	//   "request": {
 	//     "$ref": "FloodlightConfiguration"
 	//   },
@@ -35602,7 +37610,7 @@ func (c *InventoryItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/inventoryItems/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/inventoryItems/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -35656,7 +37664,7 @@ func (c *InventoryItemsGetCall) Do(opts ...googleapi.CallOption) (*InventoryItem
 	return ret, nil
 	// {
 	//   "description": "Gets one inventory item by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/inventoryItems/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/inventoryItems/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.inventoryItems.get",
 	//   "parameterOrder": [
@@ -35687,7 +37695,7 @@ func (c *InventoryItemsGetCall) Do(opts ...googleapi.CallOption) (*InventoryItem
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/inventoryItems/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/inventoryItems/{id}",
 	//   "response": {
 	//     "$ref": "InventoryItem"
 	//   },
@@ -35857,7 +37865,7 @@ func (c *InventoryItemsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/inventoryItems")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/inventoryItems")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -35910,7 +37918,7 @@ func (c *InventoryItemsListCall) Do(opts ...googleapi.CallOption) (*InventoryIte
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of inventory items, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/inventoryItems",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/inventoryItems",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.inventoryItems.list",
 	//   "parameterOrder": [
@@ -36014,7 +38022,7 @@ func (c *InventoryItemsListCall) Do(opts ...googleapi.CallOption) (*InventoryIte
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/inventoryItems",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/inventoryItems",
 	//   "response": {
 	//     "$ref": "InventoryItemsListResponse"
 	//   },
@@ -36114,7 +38122,7 @@ func (c *LanguagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/languages")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/languages")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -36166,7 +38174,7 @@ func (c *LanguagesListCall) Do(opts ...googleapi.CallOption) (*LanguagesListResp
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of languages.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/languages",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/languages",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.languages.list",
 	//   "parameterOrder": [
@@ -36181,7 +38189,7 @@ func (c *LanguagesListCall) Do(opts ...googleapi.CallOption) (*LanguagesListResp
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/languages",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/languages",
 	//   "response": {
 	//     "$ref": "LanguagesListResponse"
 	//   },
@@ -36260,7 +38268,7 @@ func (c *MetrosListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/metros")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/metros")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -36312,7 +38320,7 @@ func (c *MetrosListCall) Do(opts ...googleapi.CallOption) (*MetrosListResponse, 
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of metros.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/metros",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/metros",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.metros.list",
 	//   "parameterOrder": [
@@ -36327,7 +38335,7 @@ func (c *MetrosListCall) Do(opts ...googleapi.CallOption) (*MetrosListResponse, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/metros",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/metros",
 	//   "response": {
 	//     "$ref": "MetrosListResponse"
 	//   },
@@ -36409,7 +38417,7 @@ func (c *MobileAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/mobileApps/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/mobileApps/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -36462,7 +38470,7 @@ func (c *MobileAppsGetCall) Do(opts ...googleapi.CallOption) (*MobileApp, error)
 	return ret, nil
 	// {
 	//   "description": "Gets one mobile app by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/mobileApps/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/mobileApps/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.mobileApps.get",
 	//   "parameterOrder": [
@@ -36484,7 +38492,7 @@ func (c *MobileAppsGetCall) Do(opts ...googleapi.CallOption) (*MobileApp, error)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/mobileApps/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/mobileApps/{id}",
 	//   "response": {
 	//     "$ref": "MobileApp"
 	//   },
@@ -36616,7 +38624,7 @@ func (c *MobileAppsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/mobileApps")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/mobileApps")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -36668,7 +38676,7 @@ func (c *MobileAppsListCall) Do(opts ...googleapi.CallOption) (*MobileAppsListRe
 	return ret, nil
 	// {
 	//   "description": "Retrieves list of available mobile apps.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/mobileApps",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/mobileApps",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.mobileApps.list",
 	//   "parameterOrder": [
@@ -36740,7 +38748,7 @@ func (c *MobileAppsListCall) Do(opts ...googleapi.CallOption) (*MobileAppsListRe
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/mobileApps",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/mobileApps",
 	//   "response": {
 	//     "$ref": "MobileAppsListResponse"
 	//   },
@@ -36843,7 +38851,7 @@ func (c *MobileCarriersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/mobileCarriers/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/mobileCarriers/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -36896,7 +38904,7 @@ func (c *MobileCarriersGetCall) Do(opts ...googleapi.CallOption) (*MobileCarrier
 	return ret, nil
 	// {
 	//   "description": "Gets one mobile carrier by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/mobileCarriers/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/mobileCarriers/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.mobileCarriers.get",
 	//   "parameterOrder": [
@@ -36919,7 +38927,7 @@ func (c *MobileCarriersGetCall) Do(opts ...googleapi.CallOption) (*MobileCarrier
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/mobileCarriers/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/mobileCarriers/{id}",
 	//   "response": {
 	//     "$ref": "MobileCarrier"
 	//   },
@@ -36998,7 +39006,7 @@ func (c *MobileCarriersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/mobileCarriers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/mobileCarriers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -37050,7 +39058,7 @@ func (c *MobileCarriersListCall) Do(opts ...googleapi.CallOption) (*MobileCarrie
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of mobile carriers.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/mobileCarriers",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/mobileCarriers",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.mobileCarriers.list",
 	//   "parameterOrder": [
@@ -37065,7 +39073,7 @@ func (c *MobileCarriersListCall) Do(opts ...googleapi.CallOption) (*MobileCarrie
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/mobileCarriers",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/mobileCarriers",
 	//   "response": {
 	//     "$ref": "MobileCarriersListResponse"
 	//   },
@@ -37147,7 +39155,7 @@ func (c *OperatingSystemVersionsGetCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/operatingSystemVersions/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/operatingSystemVersions/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -37200,7 +39208,7 @@ func (c *OperatingSystemVersionsGetCall) Do(opts ...googleapi.CallOption) (*Oper
 	return ret, nil
 	// {
 	//   "description": "Gets one operating system version by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/operatingSystemVersions/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/operatingSystemVersions/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.operatingSystemVersions.get",
 	//   "parameterOrder": [
@@ -37223,7 +39231,7 @@ func (c *OperatingSystemVersionsGetCall) Do(opts ...googleapi.CallOption) (*Oper
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/operatingSystemVersions/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/operatingSystemVersions/{id}",
 	//   "response": {
 	//     "$ref": "OperatingSystemVersion"
 	//   },
@@ -37302,7 +39310,7 @@ func (c *OperatingSystemVersionsListCall) doRequest(alt string) (*http.Response,
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/operatingSystemVersions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/operatingSystemVersions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -37355,7 +39363,7 @@ func (c *OperatingSystemVersionsListCall) Do(opts ...googleapi.CallOption) (*Ope
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of operating system versions.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/operatingSystemVersions",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/operatingSystemVersions",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.operatingSystemVersions.list",
 	//   "parameterOrder": [
@@ -37370,7 +39378,7 @@ func (c *OperatingSystemVersionsListCall) Do(opts ...googleapi.CallOption) (*Ope
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/operatingSystemVersions",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/operatingSystemVersions",
 	//   "response": {
 	//     "$ref": "OperatingSystemVersionsListResponse"
 	//   },
@@ -37452,7 +39460,7 @@ func (c *OperatingSystemsGetCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/operatingSystems/{dartId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/operatingSystems/{dartId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -37505,7 +39513,7 @@ func (c *OperatingSystemsGetCall) Do(opts ...googleapi.CallOption) (*OperatingSy
 	return ret, nil
 	// {
 	//   "description": "Gets one operating system by DART ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/operatingSystems/{dartId}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/operatingSystems/{dartId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.operatingSystems.get",
 	//   "parameterOrder": [
@@ -37528,7 +39536,7 @@ func (c *OperatingSystemsGetCall) Do(opts ...googleapi.CallOption) (*OperatingSy
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/operatingSystems/{dartId}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/operatingSystems/{dartId}",
 	//   "response": {
 	//     "$ref": "OperatingSystem"
 	//   },
@@ -37607,7 +39615,7 @@ func (c *OperatingSystemsListCall) doRequest(alt string) (*http.Response, error)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/operatingSystems")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/operatingSystems")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -37659,7 +39667,7 @@ func (c *OperatingSystemsListCall) Do(opts ...googleapi.CallOption) (*OperatingS
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of operating systems.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/operatingSystems",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/operatingSystems",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.operatingSystems.list",
 	//   "parameterOrder": [
@@ -37674,7 +39682,7 @@ func (c *OperatingSystemsListCall) Do(opts ...googleapi.CallOption) (*OperatingS
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/operatingSystems",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/operatingSystems",
 	//   "response": {
 	//     "$ref": "OperatingSystemsListResponse"
 	//   },
@@ -37759,7 +39767,7 @@ func (c *OrderDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orderDocuments/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/orderDocuments/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -37813,7 +39821,7 @@ func (c *OrderDocumentsGetCall) Do(opts ...googleapi.CallOption) (*OrderDocument
 	return ret, nil
 	// {
 	//   "description": "Gets one order document by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orderDocuments/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/orderDocuments/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.orderDocuments.get",
 	//   "parameterOrder": [
@@ -37844,7 +39852,7 @@ func (c *OrderDocumentsGetCall) Do(opts ...googleapi.CallOption) (*OrderDocument
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orderDocuments/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/orderDocuments/{id}",
 	//   "response": {
 	//     "$ref": "OrderDocument"
 	//   },
@@ -38017,7 +40025,7 @@ func (c *OrderDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orderDocuments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/orderDocuments")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -38070,7 +40078,7 @@ func (c *OrderDocumentsListCall) Do(opts ...googleapi.CallOption) (*OrderDocumen
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of order documents, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orderDocuments",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/orderDocuments",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.orderDocuments.list",
 	//   "parameterOrder": [
@@ -38166,7 +40174,7 @@ func (c *OrderDocumentsListCall) Do(opts ...googleapi.CallOption) (*OrderDocumen
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orderDocuments",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/orderDocuments",
 	//   "response": {
 	//     "$ref": "OrderDocumentsListResponse"
 	//   },
@@ -38272,7 +40280,7 @@ func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orders/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/orders/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -38326,7 +40334,7 @@ func (c *OrdersGetCall) Do(opts ...googleapi.CallOption) (*Order, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one order by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orders/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/orders/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.orders.get",
 	//   "parameterOrder": [
@@ -38357,7 +40365,7 @@ func (c *OrdersGetCall) Do(opts ...googleapi.CallOption) (*Order, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orders/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/orders/{id}",
 	//   "response": {
 	//     "$ref": "Order"
 	//   },
@@ -38510,7 +40518,7 @@ func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orders")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/orders")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -38563,7 +40571,7 @@ func (c *OrdersListCall) Do(opts ...googleapi.CallOption) (*OrdersListResponse, 
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of orders, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orders",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/orders",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.orders.list",
 	//   "parameterOrder": [
@@ -38647,7 +40655,7 @@ func (c *OrdersListCall) Do(opts ...googleapi.CallOption) (*OrdersListResponse, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orders",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/projects/{projectId}/orders",
 	//   "response": {
 	//     "$ref": "OrdersListResponse"
 	//   },
@@ -38750,7 +40758,7 @@ func (c *PlacementGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placementGroups/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placementGroups/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -38803,7 +40811,7 @@ func (c *PlacementGroupsGetCall) Do(opts ...googleapi.CallOption) (*PlacementGro
 	return ret, nil
 	// {
 	//   "description": "Gets one placement group by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placementGroups/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placementGroups/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.placementGroups.get",
 	//   "parameterOrder": [
@@ -38826,7 +40834,7 @@ func (c *PlacementGroupsGetCall) Do(opts ...googleapi.CallOption) (*PlacementGro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placementGroups/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placementGroups/{id}",
 	//   "response": {
 	//     "$ref": "PlacementGroup"
 	//   },
@@ -38898,7 +40906,7 @@ func (c *PlacementGroupsInsertCall) doRequest(alt string) (*http.Response, error
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placementGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placementGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -38950,7 +40958,7 @@ func (c *PlacementGroupsInsertCall) Do(opts ...googleapi.CallOption) (*Placement
 	return ret, nil
 	// {
 	//   "description": "Inserts a new placement group.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placementGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placementGroups",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.placementGroups.insert",
 	//   "parameterOrder": [
@@ -38965,7 +40973,7 @@ func (c *PlacementGroupsInsertCall) Do(opts ...googleapi.CallOption) (*Placement
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placementGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placementGroups",
 	//   "request": {
 	//     "$ref": "PlacementGroup"
 	//   },
@@ -39000,6 +41008,20 @@ func (r *PlacementGroupsService) List(profileId int64) *PlacementGroupsListCall 
 	return c
 }
 
+// ActiveStatus sets the optional parameter "activeStatus": Select only
+// placements with these active statuses.
+//
+// Possible values:
+//   "PLACEMENT_STATUS_UNKNOWN"
+//   "PLACEMENT_STATUS_ACTIVE"
+//   "PLACEMENT_STATUS_INACTIVE"
+//   "PLACEMENT_STATUS_ARCHIVED"
+//   "PLACEMENT_STATUS_PERMANENTLY_ARCHIVED"
+func (c *PlacementGroupsListCall) ActiveStatus(activeStatus ...string) *PlacementGroupsListCall {
+	c.urlParams_.SetMulti("activeStatus", append([]string{}, activeStatus...))
+	return c
+}
+
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only placement groups that belong to these advertisers.
 func (c *PlacementGroupsListCall) AdvertiserIds(advertiserIds ...int64) *PlacementGroupsListCall {
@@ -39008,14 +41030,6 @@ func (c *PlacementGroupsListCall) AdvertiserIds(advertiserIds ...int64) *Placeme
 		advertiserIds_ = append(advertiserIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("advertiserIds", advertiserIds_)
-	return c
-}
-
-// Archived sets the optional parameter "archived": Select only archived
-// placements. Don't set this field to select both archived and
-// non-archived placements.
-func (c *PlacementGroupsListCall) Archived(archived bool) *PlacementGroupsListCall {
-	c.urlParams_.Set("archived", fmt.Sprint(archived))
 	return c
 }
 
@@ -39249,7 +41263,7 @@ func (c *PlacementGroupsListCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placementGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placementGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -39301,24 +41315,39 @@ func (c *PlacementGroupsListCall) Do(opts ...googleapi.CallOption) (*PlacementGr
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of placement groups, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placementGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placementGroups",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.placementGroups.list",
 	//   "parameterOrder": [
 	//     "profileId"
 	//   ],
 	//   "parameters": {
+	//     "activeStatus": {
+	//       "description": "Select only placements with these active statuses.",
+	//       "enum": [
+	//         "PLACEMENT_STATUS_UNKNOWN",
+	//         "PLACEMENT_STATUS_ACTIVE",
+	//         "PLACEMENT_STATUS_INACTIVE",
+	//         "PLACEMENT_STATUS_ARCHIVED",
+	//         "PLACEMENT_STATUS_PERMANENTLY_ARCHIVED"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "advertiserIds": {
 	//       "description": "Select only placement groups that belong to these advertisers.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
-	//     },
-	//     "archived": {
-	//       "description": "Select only archived placements. Don't set this field to select both archived and non-archived placements.",
-	//       "location": "query",
-	//       "type": "boolean"
 	//     },
 	//     "campaignIds": {
 	//       "description": "Select only placement groups that belong to these campaigns.",
@@ -39472,7 +41501,7 @@ func (c *PlacementGroupsListCall) Do(opts ...googleapi.CallOption) (*PlacementGr
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placementGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placementGroups",
 	//   "response": {
 	//     "$ref": "PlacementGroupsListResponse"
 	//   },
@@ -39568,7 +41597,7 @@ func (c *PlacementGroupsPatchCall) doRequest(alt string) (*http.Response, error)
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placementGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placementGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -39620,7 +41649,7 @@ func (c *PlacementGroupsPatchCall) Do(opts ...googleapi.CallOption) (*PlacementG
 	return ret, nil
 	// {
 	//   "description": "Updates an existing placement group. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placementGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placementGroups",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.placementGroups.patch",
 	//   "parameterOrder": [
@@ -39643,7 +41672,7 @@ func (c *PlacementGroupsPatchCall) Do(opts ...googleapi.CallOption) (*PlacementG
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placementGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placementGroups",
 	//   "request": {
 	//     "$ref": "PlacementGroup"
 	//   },
@@ -39718,7 +41747,7 @@ func (c *PlacementGroupsUpdateCall) doRequest(alt string) (*http.Response, error
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placementGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placementGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -39770,7 +41799,7 @@ func (c *PlacementGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Placement
 	return ret, nil
 	// {
 	//   "description": "Updates an existing placement group.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placementGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placementGroups",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.placementGroups.update",
 	//   "parameterOrder": [
@@ -39785,7 +41814,7 @@ func (c *PlacementGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Placement
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placementGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placementGroups",
 	//   "request": {
 	//     "$ref": "PlacementGroup"
 	//   },
@@ -39856,7 +41885,7 @@ func (c *PlacementStrategiesDeleteCall) doRequest(alt string) (*http.Response, e
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placementStrategies/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -39884,7 +41913,7 @@ func (c *PlacementStrategiesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing placement strategy.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placementStrategies/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.placementStrategies.delete",
 	//   "parameterOrder": [
@@ -39907,7 +41936,7 @@ func (c *PlacementStrategiesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placementStrategies/{id}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfatrafficking"
 	//   ]
@@ -39986,7 +42015,7 @@ func (c *PlacementStrategiesGetCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placementStrategies/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -40039,7 +42068,7 @@ func (c *PlacementStrategiesGetCall) Do(opts ...googleapi.CallOption) (*Placemen
 	return ret, nil
 	// {
 	//   "description": "Gets one placement strategy by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placementStrategies/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.placementStrategies.get",
 	//   "parameterOrder": [
@@ -40062,7 +42091,7 @@ func (c *PlacementStrategiesGetCall) Do(opts ...googleapi.CallOption) (*Placemen
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placementStrategies/{id}",
 	//   "response": {
 	//     "$ref": "PlacementStrategy"
 	//   },
@@ -40134,7 +42163,7 @@ func (c *PlacementStrategiesInsertCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placementStrategies")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -40186,7 +42215,7 @@ func (c *PlacementStrategiesInsertCall) Do(opts ...googleapi.CallOption) (*Place
 	return ret, nil
 	// {
 	//   "description": "Inserts a new placement strategy.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placementStrategies",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.placementStrategies.insert",
 	//   "parameterOrder": [
@@ -40201,7 +42230,7 @@ func (c *PlacementStrategiesInsertCall) Do(opts ...googleapi.CallOption) (*Place
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placementStrategies",
 	//   "request": {
 	//     "$ref": "PlacementStrategy"
 	//   },
@@ -40345,7 +42374,7 @@ func (c *PlacementStrategiesListCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placementStrategies")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -40397,7 +42426,7 @@ func (c *PlacementStrategiesListCall) Do(opts ...googleapi.CallOption) (*Placeme
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of placement strategies, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placementStrategies",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.placementStrategies.list",
 	//   "parameterOrder": [
@@ -40466,7 +42495,7 @@ func (c *PlacementStrategiesListCall) Do(opts ...googleapi.CallOption) (*Placeme
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placementStrategies",
 	//   "response": {
 	//     "$ref": "PlacementStrategiesListResponse"
 	//   },
@@ -40562,7 +42591,7 @@ func (c *PlacementStrategiesPatchCall) doRequest(alt string) (*http.Response, er
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placementStrategies")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -40614,7 +42643,7 @@ func (c *PlacementStrategiesPatchCall) Do(opts ...googleapi.CallOption) (*Placem
 	return ret, nil
 	// {
 	//   "description": "Updates an existing placement strategy. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placementStrategies",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.placementStrategies.patch",
 	//   "parameterOrder": [
@@ -40637,7 +42666,7 @@ func (c *PlacementStrategiesPatchCall) Do(opts ...googleapi.CallOption) (*Placem
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placementStrategies",
 	//   "request": {
 	//     "$ref": "PlacementStrategy"
 	//   },
@@ -40712,7 +42741,7 @@ func (c *PlacementStrategiesUpdateCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placementStrategies")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -40764,7 +42793,7 @@ func (c *PlacementStrategiesUpdateCall) Do(opts ...googleapi.CallOption) (*Place
 	return ret, nil
 	// {
 	//   "description": "Updates an existing placement strategy.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placementStrategies",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.placementStrategies.update",
 	//   "parameterOrder": [
@@ -40779,7 +42808,7 @@ func (c *PlacementStrategiesUpdateCall) Do(opts ...googleapi.CallOption) (*Place
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placementStrategies",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placementStrategies",
 	//   "request": {
 	//     "$ref": "PlacementStrategy"
 	//   },
@@ -40895,7 +42924,7 @@ func (c *PlacementsGeneratetagsCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placements/generatetags")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placements/generatetags")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -40947,7 +42976,7 @@ func (c *PlacementsGeneratetagsCall) Do(opts ...googleapi.CallOption) (*Placemen
 	return ret, nil
 	// {
 	//   "description": "Generates tags for a placement.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placements/generatetags",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placements/generatetags",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.placements.generatetags",
 	//   "parameterOrder": [
@@ -41025,7 +43054,7 @@ func (c *PlacementsGeneratetagsCall) Do(opts ...googleapi.CallOption) (*Placemen
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placements/generatetags",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placements/generatetags",
 	//   "response": {
 	//     "$ref": "PlacementsGenerateTagsResponse"
 	//   },
@@ -41107,7 +43136,7 @@ func (c *PlacementsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placements/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placements/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -41160,7 +43189,7 @@ func (c *PlacementsGetCall) Do(opts ...googleapi.CallOption) (*Placement, error)
 	return ret, nil
 	// {
 	//   "description": "Gets one placement by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placements/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placements/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.placements.get",
 	//   "parameterOrder": [
@@ -41183,7 +43212,7 @@ func (c *PlacementsGetCall) Do(opts ...googleapi.CallOption) (*Placement, error)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placements/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placements/{id}",
 	//   "response": {
 	//     "$ref": "Placement"
 	//   },
@@ -41255,7 +43284,7 @@ func (c *PlacementsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placements")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placements")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -41307,7 +43336,7 @@ func (c *PlacementsInsertCall) Do(opts ...googleapi.CallOption) (*Placement, err
 	return ret, nil
 	// {
 	//   "description": "Inserts a new placement.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placements",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placements",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.placements.insert",
 	//   "parameterOrder": [
@@ -41322,7 +43351,7 @@ func (c *PlacementsInsertCall) Do(opts ...googleapi.CallOption) (*Placement, err
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placements",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placements",
 	//   "request": {
 	//     "$ref": "Placement"
 	//   },
@@ -41357,6 +43386,20 @@ func (r *PlacementsService) List(profileId int64) *PlacementsListCall {
 	return c
 }
 
+// ActiveStatus sets the optional parameter "activeStatus": Select only
+// placements with these active statuses.
+//
+// Possible values:
+//   "PLACEMENT_STATUS_UNKNOWN"
+//   "PLACEMENT_STATUS_ACTIVE"
+//   "PLACEMENT_STATUS_INACTIVE"
+//   "PLACEMENT_STATUS_ARCHIVED"
+//   "PLACEMENT_STATUS_PERMANENTLY_ARCHIVED"
+func (c *PlacementsListCall) ActiveStatus(activeStatus ...string) *PlacementsListCall {
+	c.urlParams_.SetMulti("activeStatus", append([]string{}, activeStatus...))
+	return c
+}
+
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only placements that belong to these advertisers.
 func (c *PlacementsListCall) AdvertiserIds(advertiserIds ...int64) *PlacementsListCall {
@@ -41365,14 +43408,6 @@ func (c *PlacementsListCall) AdvertiserIds(advertiserIds ...int64) *PlacementsLi
 		advertiserIds_ = append(advertiserIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("advertiserIds", advertiserIds_)
-	return c
-}
-
-// Archived sets the optional parameter "archived": Select only archived
-// placements. Don't set this field to select both archived and
-// non-archived placements.
-func (c *PlacementsListCall) Archived(archived bool) *PlacementsListCall {
-	c.urlParams_.Set("archived", fmt.Sprint(archived))
 	return c
 }
 
@@ -41642,7 +43677,7 @@ func (c *PlacementsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placements")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placements")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -41694,24 +43729,39 @@ func (c *PlacementsListCall) Do(opts ...googleapi.CallOption) (*PlacementsListRe
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of placements, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placements",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placements",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.placements.list",
 	//   "parameterOrder": [
 	//     "profileId"
 	//   ],
 	//   "parameters": {
+	//     "activeStatus": {
+	//       "description": "Select only placements with these active statuses.",
+	//       "enum": [
+	//         "PLACEMENT_STATUS_UNKNOWN",
+	//         "PLACEMENT_STATUS_ACTIVE",
+	//         "PLACEMENT_STATUS_INACTIVE",
+	//         "PLACEMENT_STATUS_ARCHIVED",
+	//         "PLACEMENT_STATUS_PERMANENTLY_ARCHIVED"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "advertiserIds": {
 	//       "description": "Select only placements that belong to these advertisers.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
-	//     },
-	//     "archived": {
-	//       "description": "Select only archived placements. Don't set this field to select both archived and non-archived placements.",
-	//       "location": "query",
-	//       "type": "boolean"
 	//     },
 	//     "campaignIds": {
 	//       "description": "Select only placements that belong to these campaigns.",
@@ -41901,7 +43951,7 @@ func (c *PlacementsListCall) Do(opts ...googleapi.CallOption) (*PlacementsListRe
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placements",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placements",
 	//   "response": {
 	//     "$ref": "PlacementsListResponse"
 	//   },
@@ -41997,7 +44047,7 @@ func (c *PlacementsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placements")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placements")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -42049,7 +44099,7 @@ func (c *PlacementsPatchCall) Do(opts ...googleapi.CallOption) (*Placement, erro
 	return ret, nil
 	// {
 	//   "description": "Updates an existing placement. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placements",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placements",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.placements.patch",
 	//   "parameterOrder": [
@@ -42072,7 +44122,7 @@ func (c *PlacementsPatchCall) Do(opts ...googleapi.CallOption) (*Placement, erro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placements",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placements",
 	//   "request": {
 	//     "$ref": "Placement"
 	//   },
@@ -42147,7 +44197,7 @@ func (c *PlacementsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/placements")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/placements")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -42199,7 +44249,7 @@ func (c *PlacementsUpdateCall) Do(opts ...googleapi.CallOption) (*Placement, err
 	return ret, nil
 	// {
 	//   "description": "Updates an existing placement.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/placements",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/placements",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.placements.update",
 	//   "parameterOrder": [
@@ -42214,7 +44264,7 @@ func (c *PlacementsUpdateCall) Do(opts ...googleapi.CallOption) (*Placement, err
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/placements",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/placements",
 	//   "request": {
 	//     "$ref": "Placement"
 	//   },
@@ -42299,7 +44349,7 @@ func (c *PlatformTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/platformTypes/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/platformTypes/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -42352,7 +44402,7 @@ func (c *PlatformTypesGetCall) Do(opts ...googleapi.CallOption) (*PlatformType, 
 	return ret, nil
 	// {
 	//   "description": "Gets one platform type by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/platformTypes/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/platformTypes/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.platformTypes.get",
 	//   "parameterOrder": [
@@ -42375,7 +44425,7 @@ func (c *PlatformTypesGetCall) Do(opts ...googleapi.CallOption) (*PlatformType, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/platformTypes/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/platformTypes/{id}",
 	//   "response": {
 	//     "$ref": "PlatformType"
 	//   },
@@ -42454,7 +44504,7 @@ func (c *PlatformTypesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/platformTypes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/platformTypes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -42506,7 +44556,7 @@ func (c *PlatformTypesListCall) Do(opts ...googleapi.CallOption) (*PlatformTypes
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of platform types.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/platformTypes",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/platformTypes",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.platformTypes.list",
 	//   "parameterOrder": [
@@ -42521,7 +44571,7 @@ func (c *PlatformTypesListCall) Do(opts ...googleapi.CallOption) (*PlatformTypes
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/platformTypes",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/platformTypes",
 	//   "response": {
 	//     "$ref": "PlatformTypesListResponse"
 	//   },
@@ -42603,7 +44653,7 @@ func (c *PostalCodesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/postalCodes/{code}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/postalCodes/{code}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -42656,7 +44706,7 @@ func (c *PostalCodesGetCall) Do(opts ...googleapi.CallOption) (*PostalCode, erro
 	return ret, nil
 	// {
 	//   "description": "Gets one postal code by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/postalCodes/{code}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/postalCodes/{code}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.postalCodes.get",
 	//   "parameterOrder": [
@@ -42678,7 +44728,7 @@ func (c *PostalCodesGetCall) Do(opts ...googleapi.CallOption) (*PostalCode, erro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/postalCodes/{code}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/postalCodes/{code}",
 	//   "response": {
 	//     "$ref": "PostalCode"
 	//   },
@@ -42757,7 +44807,7 @@ func (c *PostalCodesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/postalCodes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/postalCodes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -42809,7 +44859,7 @@ func (c *PostalCodesListCall) Do(opts ...googleapi.CallOption) (*PostalCodesList
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of postal codes.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/postalCodes",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/postalCodes",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.postalCodes.list",
 	//   "parameterOrder": [
@@ -42824,7 +44874,7 @@ func (c *PostalCodesListCall) Do(opts ...googleapi.CallOption) (*PostalCodesList
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/postalCodes",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/postalCodes",
 	//   "response": {
 	//     "$ref": "PostalCodesListResponse"
 	//   },
@@ -42906,7 +44956,7 @@ func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/projects/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/projects/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -42959,7 +45009,7 @@ func (c *ProjectsGetCall) Do(opts ...googleapi.CallOption) (*Project, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one project by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/projects/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/projects/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.projects.get",
 	//   "parameterOrder": [
@@ -42982,7 +45032,7 @@ func (c *ProjectsGetCall) Do(opts ...googleapi.CallOption) (*Project, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/projects/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/projects/{id}",
 	//   "response": {
 	//     "$ref": "Project"
 	//   },
@@ -43133,7 +45183,7 @@ func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/projects")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/projects")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -43185,7 +45235,7 @@ func (c *ProjectsListCall) Do(opts ...googleapi.CallOption) (*ProjectsListRespon
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of projects, possibly filtered. This method supports paging .",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/projects",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/projects",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.projects.list",
 	//   "parameterOrder": [
@@ -43261,7 +45311,7 @@ func (c *ProjectsListCall) Do(opts ...googleapi.CallOption) (*ProjectsListRespon
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/projects",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/projects",
 	//   "response": {
 	//     "$ref": "ProjectsListResponse"
 	//   },
@@ -43361,7 +45411,7 @@ func (c *RegionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/regions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/regions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -43413,7 +45463,7 @@ func (c *RegionsListCall) Do(opts ...googleapi.CallOption) (*RegionsListResponse
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of regions.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/regions",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/regions",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.regions.list",
 	//   "parameterOrder": [
@@ -43428,7 +45478,7 @@ func (c *RegionsListCall) Do(opts ...googleapi.CallOption) (*RegionsListResponse
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/regions",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/regions",
 	//   "response": {
 	//     "$ref": "RegionsListResponse"
 	//   },
@@ -43510,7 +45560,7 @@ func (c *RemarketingListSharesGetCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/remarketingListShares/{remarketingListId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/remarketingListShares/{remarketingListId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -43563,7 +45613,7 @@ func (c *RemarketingListSharesGetCall) Do(opts ...googleapi.CallOption) (*Remark
 	return ret, nil
 	// {
 	//   "description": "Gets one remarketing list share by remarketing list ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/remarketingListShares/{remarketingListId}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/remarketingListShares/{remarketingListId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.remarketingListShares.get",
 	//   "parameterOrder": [
@@ -43586,7 +45636,7 @@ func (c *RemarketingListSharesGetCall) Do(opts ...googleapi.CallOption) (*Remark
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/remarketingListShares/{remarketingListId}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/remarketingListShares/{remarketingListId}",
 	//   "response": {
 	//     "$ref": "RemarketingListShare"
 	//   },
@@ -43661,7 +45711,7 @@ func (c *RemarketingListSharesPatchCall) doRequest(alt string) (*http.Response, 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/remarketingListShares")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/remarketingListShares")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -43713,7 +45763,7 @@ func (c *RemarketingListSharesPatchCall) Do(opts ...googleapi.CallOption) (*Rema
 	return ret, nil
 	// {
 	//   "description": "Updates an existing remarketing list share. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/remarketingListShares",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/remarketingListShares",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.remarketingListShares.patch",
 	//   "parameterOrder": [
@@ -43736,7 +45786,7 @@ func (c *RemarketingListSharesPatchCall) Do(opts ...googleapi.CallOption) (*Rema
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/remarketingListShares",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/remarketingListShares",
 	//   "request": {
 	//     "$ref": "RemarketingListShare"
 	//   },
@@ -43811,7 +45861,7 @@ func (c *RemarketingListSharesUpdateCall) doRequest(alt string) (*http.Response,
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/remarketingListShares")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/remarketingListShares")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -43863,7 +45913,7 @@ func (c *RemarketingListSharesUpdateCall) Do(opts ...googleapi.CallOption) (*Rem
 	return ret, nil
 	// {
 	//   "description": "Updates an existing remarketing list share.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/remarketingListShares",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/remarketingListShares",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.remarketingListShares.update",
 	//   "parameterOrder": [
@@ -43878,7 +45928,7 @@ func (c *RemarketingListSharesUpdateCall) Do(opts ...googleapi.CallOption) (*Rem
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/remarketingListShares",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/remarketingListShares",
 	//   "request": {
 	//     "$ref": "RemarketingListShare"
 	//   },
@@ -43963,7 +46013,7 @@ func (c *RemarketingListsGetCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/remarketingLists/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -44016,7 +46066,7 @@ func (c *RemarketingListsGetCall) Do(opts ...googleapi.CallOption) (*Remarketing
 	return ret, nil
 	// {
 	//   "description": "Gets one remarketing list by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/remarketingLists/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.remarketingLists.get",
 	//   "parameterOrder": [
@@ -44039,7 +46089,7 @@ func (c *RemarketingListsGetCall) Do(opts ...googleapi.CallOption) (*Remarketing
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/remarketingLists/{id}",
 	//   "response": {
 	//     "$ref": "RemarketingList"
 	//   },
@@ -44111,7 +46161,7 @@ func (c *RemarketingListsInsertCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/remarketingLists")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -44163,7 +46213,7 @@ func (c *RemarketingListsInsertCall) Do(opts ...googleapi.CallOption) (*Remarket
 	return ret, nil
 	// {
 	//   "description": "Inserts a new remarketing list.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/remarketingLists",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.remarketingLists.insert",
 	//   "parameterOrder": [
@@ -44178,7 +46228,7 @@ func (c *RemarketingListsInsertCall) Do(opts ...googleapi.CallOption) (*Remarket
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/remarketingLists",
 	//   "request": {
 	//     "$ref": "RemarketingList"
 	//   },
@@ -44328,7 +46378,7 @@ func (c *RemarketingListsListCall) doRequest(alt string) (*http.Response, error)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/remarketingLists")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -44380,7 +46430,7 @@ func (c *RemarketingListsListCall) Do(opts ...googleapi.CallOption) (*Remarketin
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of remarketing lists, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/remarketingLists",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.remarketingLists.list",
 	//   "parameterOrder": [
@@ -44461,7 +46511,7 @@ func (c *RemarketingListsListCall) Do(opts ...googleapi.CallOption) (*Remarketin
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/remarketingLists",
 	//   "response": {
 	//     "$ref": "RemarketingListsListResponse"
 	//   },
@@ -44557,7 +46607,7 @@ func (c *RemarketingListsPatchCall) doRequest(alt string) (*http.Response, error
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/remarketingLists")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -44609,7 +46659,7 @@ func (c *RemarketingListsPatchCall) Do(opts ...googleapi.CallOption) (*Remarketi
 	return ret, nil
 	// {
 	//   "description": "Updates an existing remarketing list. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/remarketingLists",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.remarketingLists.patch",
 	//   "parameterOrder": [
@@ -44632,7 +46682,7 @@ func (c *RemarketingListsPatchCall) Do(opts ...googleapi.CallOption) (*Remarketi
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/remarketingLists",
 	//   "request": {
 	//     "$ref": "RemarketingList"
 	//   },
@@ -44707,7 +46757,7 @@ func (c *RemarketingListsUpdateCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/remarketingLists")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -44759,7 +46809,7 @@ func (c *RemarketingListsUpdateCall) Do(opts ...googleapi.CallOption) (*Remarket
 	return ret, nil
 	// {
 	//   "description": "Updates an existing remarketing list.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/remarketingLists",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.remarketingLists.update",
 	//   "parameterOrder": [
@@ -44774,7 +46824,7 @@ func (c *RemarketingListsUpdateCall) Do(opts ...googleapi.CallOption) (*Remarket
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/remarketingLists",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/remarketingLists",
 	//   "request": {
 	//     "$ref": "RemarketingList"
 	//   },
@@ -44845,7 +46895,7 @@ func (c *ReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -44873,7 +46923,7 @@ func (c *ReportsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes a report by its ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.reports.delete",
 	//   "parameterOrder": [
@@ -44896,7 +46946,7 @@ func (c *ReportsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfareporting"
 	//   ]
@@ -44975,7 +47025,7 @@ func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -45028,7 +47078,7 @@ func (c *ReportsGetCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	return ret, nil
 	// {
 	//   "description": "Retrieves a report by its ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.reports.get",
 	//   "parameterOrder": [
@@ -45051,7 +47101,7 @@ func (c *ReportsGetCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}",
 	//   "response": {
 	//     "$ref": "Report"
 	//   },
@@ -45123,7 +47173,7 @@ func (c *ReportsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/reports")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/reports")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -45175,7 +47225,7 @@ func (c *ReportsInsertCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	return ret, nil
 	// {
 	//   "description": "Creates a report.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/reports",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/reports",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.reports.insert",
 	//   "parameterOrder": [
@@ -45190,7 +47240,7 @@ func (c *ReportsInsertCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/reports",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/reports",
 	//   "request": {
 	//     "$ref": "Report"
 	//   },
@@ -45320,7 +47370,7 @@ func (c *ReportsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/reports")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/reports")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -45372,7 +47422,7 @@ func (c *ReportsListCall) Do(opts ...googleapi.CallOption) (*ReportList, error) 
 	return ret, nil
 	// {
 	//   "description": "Retrieves list of reports.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/reports",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/reports",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.reports.list",
 	//   "parameterOrder": [
@@ -45445,7 +47495,7 @@ func (c *ReportsListCall) Do(opts ...googleapi.CallOption) (*ReportList, error) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/reports",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/reports",
 	//   "response": {
 	//     "$ref": "ReportList"
 	//   },
@@ -45542,7 +47592,7 @@ func (c *ReportsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -45595,7 +47645,7 @@ func (c *ReportsPatchCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates an existing report. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.reports.patch",
 	//   "parameterOrder": [
@@ -45618,7 +47668,7 @@ func (c *ReportsPatchCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}",
 	//   "request": {
 	//     "$ref": "Report"
 	//   },
@@ -45696,7 +47746,7 @@ func (c *ReportsRunCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}/run")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}/run")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -45749,7 +47799,7 @@ func (c *ReportsRunCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	return ret, nil
 	// {
 	//   "description": "Runs a report.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}/run",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}/run",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.reports.run",
 	//   "parameterOrder": [
@@ -45778,7 +47828,7 @@ func (c *ReportsRunCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//       "type": "boolean"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}/run",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}/run",
 	//   "response": {
 	//     "$ref": "File"
 	//   },
@@ -45853,7 +47903,7 @@ func (c *ReportsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -45906,7 +47956,7 @@ func (c *ReportsUpdateCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates a report.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.reports.update",
 	//   "parameterOrder": [
@@ -45929,7 +47979,7 @@ func (c *ReportsUpdateCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}",
 	//   "request": {
 	//     "$ref": "Report"
 	//   },
@@ -46006,7 +48056,7 @@ func (c *ReportsCompatibleFieldsQueryCall) doRequest(alt string) (*http.Response
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/reports/compatiblefields/query")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/reports/compatiblefields/query")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -46058,7 +48108,7 @@ func (c *ReportsCompatibleFieldsQueryCall) Do(opts ...googleapi.CallOption) (*Co
 	return ret, nil
 	// {
 	//   "description": "Returns the fields that are compatible to be selected in the respective sections of a report criteria, given the fields already selected in the input report and user permissions.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/reports/compatiblefields/query",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/reports/compatiblefields/query",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.reports.compatibleFields.query",
 	//   "parameterOrder": [
@@ -46073,7 +48123,7 @@ func (c *ReportsCompatibleFieldsQueryCall) Do(opts ...googleapi.CallOption) (*Co
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/reports/compatiblefields/query",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/reports/compatiblefields/query",
 	//   "request": {
 	//     "$ref": "Report"
 	//   },
@@ -46162,7 +48212,7 @@ func (c *ReportsFilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}/files/{fileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}/files/{fileId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -46232,7 +48282,7 @@ func (c *ReportsFilesGetCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	return ret, nil
 	// {
 	//   "description": "Retrieves a report file by its report ID and file ID. This method supports media download.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}/files/{fileId}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}/files/{fileId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.reports.files.get",
 	//   "parameterOrder": [
@@ -46263,7 +48313,7 @@ func (c *ReportsFilesGetCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}/files/{fileId}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}/files/{fileId}",
 	//   "response": {
 	//     "$ref": "File"
 	//   },
@@ -46382,7 +48432,7 @@ func (c *ReportsFilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}/files")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}/files")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -46435,7 +48485,7 @@ func (c *ReportsFilesListCall) Do(opts ...googleapi.CallOption) (*FileList, erro
 	return ret, nil
 	// {
 	//   "description": "Lists files for a report.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}/files",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}/files",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.reports.files.list",
 	//   "parameterOrder": [
@@ -46500,7 +48550,7 @@ func (c *ReportsFilesListCall) Do(opts ...googleapi.CallOption) (*FileList, erro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}/files",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/reports/{reportId}/files",
 	//   "response": {
 	//     "$ref": "FileList"
 	//   },
@@ -46603,7 +48653,7 @@ func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/sites/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/sites/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -46656,7 +48706,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one site by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/sites/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/sites/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.sites.get",
 	//   "parameterOrder": [
@@ -46679,7 +48729,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/sites/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/sites/{id}",
 	//   "response": {
 	//     "$ref": "Site"
 	//   },
@@ -46751,7 +48801,7 @@ func (c *SitesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/sites")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/sites")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -46803,7 +48853,7 @@ func (c *SitesInsertCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	return ret, nil
 	// {
 	//   "description": "Inserts a new site.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/sites",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/sites",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.sites.insert",
 	//   "parameterOrder": [
@@ -46818,7 +48868,7 @@ func (c *SitesInsertCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/sites",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/sites",
 	//   "request": {
 	//     "$ref": "Site"
 	//   },
@@ -47034,7 +49084,7 @@ func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/sites")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/sites")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -47086,7 +49136,7 @@ func (c *SitesListCall) Do(opts ...googleapi.CallOption) (*SitesListResponse, er
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of sites, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/sites",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/sites",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.sites.list",
 	//   "parameterOrder": [
@@ -47205,7 +49255,7 @@ func (c *SitesListCall) Do(opts ...googleapi.CallOption) (*SitesListResponse, er
 	//       "type": "boolean"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/sites",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/sites",
 	//   "response": {
 	//     "$ref": "SitesListResponse"
 	//   },
@@ -47301,7 +49351,7 @@ func (c *SitesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/sites")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/sites")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -47353,7 +49403,7 @@ func (c *SitesPatchCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates an existing site. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/sites",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/sites",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.sites.patch",
 	//   "parameterOrder": [
@@ -47376,7 +49426,7 @@ func (c *SitesPatchCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/sites",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/sites",
 	//   "request": {
 	//     "$ref": "Site"
 	//   },
@@ -47451,7 +49501,7 @@ func (c *SitesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/sites")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/sites")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -47503,7 +49553,7 @@ func (c *SitesUpdateCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates an existing site.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/sites",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/sites",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.sites.update",
 	//   "parameterOrder": [
@@ -47518,7 +49568,7 @@ func (c *SitesUpdateCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/sites",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/sites",
 	//   "request": {
 	//     "$ref": "Site"
 	//   },
@@ -47603,7 +49653,7 @@ func (c *SizesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/sizes/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/sizes/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -47656,7 +49706,7 @@ func (c *SizesGetCall) Do(opts ...googleapi.CallOption) (*Size, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one size by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/sizes/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/sizes/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.sizes.get",
 	//   "parameterOrder": [
@@ -47679,7 +49729,7 @@ func (c *SizesGetCall) Do(opts ...googleapi.CallOption) (*Size, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/sizes/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/sizes/{id}",
 	//   "response": {
 	//     "$ref": "Size"
 	//   },
@@ -47751,7 +49801,7 @@ func (c *SizesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/sizes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/sizes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -47803,7 +49853,7 @@ func (c *SizesInsertCall) Do(opts ...googleapi.CallOption) (*Size, error) {
 	return ret, nil
 	// {
 	//   "description": "Inserts a new size.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/sizes",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/sizes",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.sizes.insert",
 	//   "parameterOrder": [
@@ -47818,7 +49868,7 @@ func (c *SizesInsertCall) Do(opts ...googleapi.CallOption) (*Size, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/sizes",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/sizes",
 	//   "request": {
 	//     "$ref": "Size"
 	//   },
@@ -47935,7 +49985,7 @@ func (c *SizesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/sizes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/sizes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -47987,7 +50037,7 @@ func (c *SizesListCall) Do(opts ...googleapi.CallOption) (*SizesListResponse, er
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of sizes, possibly filtered. Retrieved sizes are globally unique and may include values not currently in use by your account. Due to this, the list of sizes returned by this method may differ from the list seen in the Trafficking UI.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/sizes",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/sizes",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.sizes.list",
 	//   "parameterOrder": [
@@ -48030,7 +50080,7 @@ func (c *SizesListCall) Do(opts ...googleapi.CallOption) (*SizesListResponse, er
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/sizes",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/sizes",
 	//   "response": {
 	//     "$ref": "SizesListResponse"
 	//   },
@@ -48112,7 +50162,7 @@ func (c *SubaccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/subaccounts/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/subaccounts/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -48165,7 +50215,7 @@ func (c *SubaccountsGetCall) Do(opts ...googleapi.CallOption) (*Subaccount, erro
 	return ret, nil
 	// {
 	//   "description": "Gets one subaccount by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/subaccounts/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/subaccounts/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.subaccounts.get",
 	//   "parameterOrder": [
@@ -48188,7 +50238,7 @@ func (c *SubaccountsGetCall) Do(opts ...googleapi.CallOption) (*Subaccount, erro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/subaccounts/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/subaccounts/{id}",
 	//   "response": {
 	//     "$ref": "Subaccount"
 	//   },
@@ -48260,7 +50310,7 @@ func (c *SubaccountsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/subaccounts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/subaccounts")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -48312,7 +50362,7 @@ func (c *SubaccountsInsertCall) Do(opts ...googleapi.CallOption) (*Subaccount, e
 	return ret, nil
 	// {
 	//   "description": "Inserts a new subaccount.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/subaccounts",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/subaccounts",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.subaccounts.insert",
 	//   "parameterOrder": [
@@ -48327,7 +50377,7 @@ func (c *SubaccountsInsertCall) Do(opts ...googleapi.CallOption) (*Subaccount, e
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/subaccounts",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/subaccounts",
 	//   "request": {
 	//     "$ref": "Subaccount"
 	//   },
@@ -48470,7 +50520,7 @@ func (c *SubaccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/subaccounts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/subaccounts")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -48522,7 +50572,7 @@ func (c *SubaccountsListCall) Do(opts ...googleapi.CallOption) (*SubaccountsList
 	return ret, nil
 	// {
 	//   "description": "Gets a list of subaccounts, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/subaccounts",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/subaccounts",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.subaccounts.list",
 	//   "parameterOrder": [
@@ -48591,7 +50641,7 @@ func (c *SubaccountsListCall) Do(opts ...googleapi.CallOption) (*SubaccountsList
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/subaccounts",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/subaccounts",
 	//   "response": {
 	//     "$ref": "SubaccountsListResponse"
 	//   },
@@ -48687,7 +50737,7 @@ func (c *SubaccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/subaccounts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/subaccounts")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -48739,7 +50789,7 @@ func (c *SubaccountsPatchCall) Do(opts ...googleapi.CallOption) (*Subaccount, er
 	return ret, nil
 	// {
 	//   "description": "Updates an existing subaccount. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/subaccounts",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/subaccounts",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.subaccounts.patch",
 	//   "parameterOrder": [
@@ -48762,7 +50812,7 @@ func (c *SubaccountsPatchCall) Do(opts ...googleapi.CallOption) (*Subaccount, er
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/subaccounts",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/subaccounts",
 	//   "request": {
 	//     "$ref": "Subaccount"
 	//   },
@@ -48837,7 +50887,7 @@ func (c *SubaccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/subaccounts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/subaccounts")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -48889,7 +50939,7 @@ func (c *SubaccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Subaccount, e
 	return ret, nil
 	// {
 	//   "description": "Updates an existing subaccount.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/subaccounts",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/subaccounts",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.subaccounts.update",
 	//   "parameterOrder": [
@@ -48904,7 +50954,7 @@ func (c *SubaccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Subaccount, e
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/subaccounts",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/subaccounts",
 	//   "request": {
 	//     "$ref": "Subaccount"
 	//   },
@@ -48989,7 +51039,7 @@ func (c *TargetableRemarketingListsGetCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/targetableRemarketingLists/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/targetableRemarketingLists/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -49042,7 +51092,7 @@ func (c *TargetableRemarketingListsGetCall) Do(opts ...googleapi.CallOption) (*T
 	return ret, nil
 	// {
 	//   "description": "Gets one remarketing list by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/targetableRemarketingLists/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/targetableRemarketingLists/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.targetableRemarketingLists.get",
 	//   "parameterOrder": [
@@ -49065,7 +51115,7 @@ func (c *TargetableRemarketingListsGetCall) Do(opts ...googleapi.CallOption) (*T
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/targetableRemarketingLists/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/targetableRemarketingLists/{id}",
 	//   "response": {
 	//     "$ref": "TargetableRemarketingList"
 	//   },
@@ -49204,7 +51254,7 @@ func (c *TargetableRemarketingListsListCall) doRequest(alt string) (*http.Respon
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/targetableRemarketingLists")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/targetableRemarketingLists")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -49257,7 +51307,7 @@ func (c *TargetableRemarketingListsListCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of targetable remarketing lists, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/targetableRemarketingLists",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/targetableRemarketingLists",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.targetableRemarketingLists.list",
 	//   "parameterOrder": [
@@ -49332,7 +51382,7 @@ func (c *TargetableRemarketingListsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/targetableRemarketingLists",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/targetableRemarketingLists",
 	//   "response": {
 	//     "$ref": "TargetableRemarketingListsListResponse"
 	//   },
@@ -49435,7 +51485,7 @@ func (c *TargetingTemplatesGetCall) doRequest(alt string) (*http.Response, error
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/targetingTemplates/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -49488,7 +51538,7 @@ func (c *TargetingTemplatesGetCall) Do(opts ...googleapi.CallOption) (*Targeting
 	return ret, nil
 	// {
 	//   "description": "Gets one targeting template by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/targetingTemplates/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.targetingTemplates.get",
 	//   "parameterOrder": [
@@ -49511,7 +51561,7 @@ func (c *TargetingTemplatesGetCall) Do(opts ...googleapi.CallOption) (*Targeting
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/targetingTemplates/{id}",
 	//   "response": {
 	//     "$ref": "TargetingTemplate"
 	//   },
@@ -49583,7 +51633,7 @@ func (c *TargetingTemplatesInsertCall) doRequest(alt string) (*http.Response, er
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/targetingTemplates")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -49635,7 +51685,7 @@ func (c *TargetingTemplatesInsertCall) Do(opts ...googleapi.CallOption) (*Target
 	return ret, nil
 	// {
 	//   "description": "Inserts a new targeting template.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/targetingTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.targetingTemplates.insert",
 	//   "parameterOrder": [
@@ -49650,7 +51700,7 @@ func (c *TargetingTemplatesInsertCall) Do(opts ...googleapi.CallOption) (*Target
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/targetingTemplates",
 	//   "request": {
 	//     "$ref": "TargetingTemplate"
 	//   },
@@ -49800,7 +51850,7 @@ func (c *TargetingTemplatesListCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/targetingTemplates")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -49852,7 +51902,7 @@ func (c *TargetingTemplatesListCall) Do(opts ...googleapi.CallOption) (*Targetin
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of targeting templates, optionally filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/targetingTemplates",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.targetingTemplates.list",
 	//   "parameterOrder": [
@@ -49927,7 +51977,7 @@ func (c *TargetingTemplatesListCall) Do(opts ...googleapi.CallOption) (*Targetin
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/targetingTemplates",
 	//   "response": {
 	//     "$ref": "TargetingTemplatesListResponse"
 	//   },
@@ -50023,7 +52073,7 @@ func (c *TargetingTemplatesPatchCall) doRequest(alt string) (*http.Response, err
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/targetingTemplates")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -50075,7 +52125,7 @@ func (c *TargetingTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*Targeti
 	return ret, nil
 	// {
 	//   "description": "Updates an existing targeting template. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/targetingTemplates",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.targetingTemplates.patch",
 	//   "parameterOrder": [
@@ -50098,7 +52148,7 @@ func (c *TargetingTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*Targeti
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/targetingTemplates",
 	//   "request": {
 	//     "$ref": "TargetingTemplate"
 	//   },
@@ -50173,7 +52223,7 @@ func (c *TargetingTemplatesUpdateCall) doRequest(alt string) (*http.Response, er
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/targetingTemplates")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -50225,7 +52275,7 @@ func (c *TargetingTemplatesUpdateCall) Do(opts ...googleapi.CallOption) (*Target
 	return ret, nil
 	// {
 	//   "description": "Updates an existing targeting template.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/targetingTemplates",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.targetingTemplates.update",
 	//   "parameterOrder": [
@@ -50240,7 +52290,7 @@ func (c *TargetingTemplatesUpdateCall) Do(opts ...googleapi.CallOption) (*Target
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/targetingTemplates",
 	//   "request": {
 	//     "$ref": "TargetingTemplate"
 	//   },
@@ -50322,7 +52372,7 @@ func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -50374,7 +52424,7 @@ func (c *UserProfilesGetCall) Do(opts ...googleapi.CallOption) (*UserProfile, er
 	return ret, nil
 	// {
 	//   "description": "Gets one user profile by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userProfiles.get",
 	//   "parameterOrder": [
@@ -50389,7 +52439,7 @@ func (c *UserProfilesGetCall) Do(opts ...googleapi.CallOption) (*UserProfile, er
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}",
 	//   "response": {
 	//     "$ref": "UserProfile"
 	//   },
@@ -50466,7 +52516,7 @@ func (c *UserProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -50515,12 +52565,12 @@ func (c *UserProfilesListCall) Do(opts ...googleapi.CallOption) (*UserProfileLis
 	return ret, nil
 	// {
 	//   "description": "Retrieves list of user profiles for a user.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles",
+	//   "flatPath": "dfareporting/v4/userprofiles",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userProfiles.list",
 	//   "parameterOrder": [],
 	//   "parameters": {},
-	//   "path": "dfareporting/v3.5/userprofiles",
+	//   "path": "dfareporting/v4/userprofiles",
 	//   "response": {
 	//     "$ref": "UserProfileList"
 	//   },
@@ -50604,7 +52654,7 @@ func (c *UserRolePermissionGroupsGetCall) doRequest(alt string) (*http.Response,
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/userRolePermissionGroups/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/userRolePermissionGroups/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -50657,7 +52707,7 @@ func (c *UserRolePermissionGroupsGetCall) Do(opts ...googleapi.CallOption) (*Use
 	return ret, nil
 	// {
 	//   "description": "Gets one user role permission group by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/userRolePermissionGroups/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/userRolePermissionGroups/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userRolePermissionGroups.get",
 	//   "parameterOrder": [
@@ -50680,7 +52730,7 @@ func (c *UserRolePermissionGroupsGetCall) Do(opts ...googleapi.CallOption) (*Use
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/userRolePermissionGroups/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/userRolePermissionGroups/{id}",
 	//   "response": {
 	//     "$ref": "UserRolePermissionGroup"
 	//   },
@@ -50759,7 +52809,7 @@ func (c *UserRolePermissionGroupsListCall) doRequest(alt string) (*http.Response
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/userRolePermissionGroups")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/userRolePermissionGroups")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -50812,7 +52862,7 @@ func (c *UserRolePermissionGroupsListCall) Do(opts ...googleapi.CallOption) (*Us
 	return ret, nil
 	// {
 	//   "description": "Gets a list of all supported user role permission groups.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/userRolePermissionGroups",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/userRolePermissionGroups",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userRolePermissionGroups.list",
 	//   "parameterOrder": [
@@ -50827,7 +52877,7 @@ func (c *UserRolePermissionGroupsListCall) Do(opts ...googleapi.CallOption) (*Us
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/userRolePermissionGroups",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/userRolePermissionGroups",
 	//   "response": {
 	//     "$ref": "UserRolePermissionGroupsListResponse"
 	//   },
@@ -50909,7 +52959,7 @@ func (c *UserRolePermissionsGetCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/userRolePermissions/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/userRolePermissions/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -50962,7 +53012,7 @@ func (c *UserRolePermissionsGetCall) Do(opts ...googleapi.CallOption) (*UserRole
 	return ret, nil
 	// {
 	//   "description": "Gets one user role permission by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/userRolePermissions/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/userRolePermissions/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userRolePermissions.get",
 	//   "parameterOrder": [
@@ -50985,7 +53035,7 @@ func (c *UserRolePermissionsGetCall) Do(opts ...googleapi.CallOption) (*UserRole
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/userRolePermissions/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/userRolePermissions/{id}",
 	//   "response": {
 	//     "$ref": "UserRolePermission"
 	//   },
@@ -51075,7 +53125,7 @@ func (c *UserRolePermissionsListCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/userRolePermissions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/userRolePermissions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -51127,7 +53177,7 @@ func (c *UserRolePermissionsListCall) Do(opts ...googleapi.CallOption) (*UserRol
 	return ret, nil
 	// {
 	//   "description": "Gets a list of user role permissions, possibly filtered.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/userRolePermissions",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/userRolePermissions",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userRolePermissions.list",
 	//   "parameterOrder": [
@@ -51149,7 +53199,7 @@ func (c *UserRolePermissionsListCall) Do(opts ...googleapi.CallOption) (*UserRol
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/userRolePermissions",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/userRolePermissions",
 	//   "response": {
 	//     "$ref": "UserRolePermissionsListResponse"
 	//   },
@@ -51217,7 +53267,7 @@ func (c *UserRolesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/userRoles/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/userRoles/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -51245,7 +53295,7 @@ func (c *UserRolesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing user role.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/userRoles/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/userRoles/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.userRoles.delete",
 	//   "parameterOrder": [
@@ -51268,7 +53318,7 @@ func (c *UserRolesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/userRoles/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/userRoles/{id}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfatrafficking"
 	//   ]
@@ -51347,7 +53397,7 @@ func (c *UserRolesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/userRoles/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/userRoles/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -51400,7 +53450,7 @@ func (c *UserRolesGetCall) Do(opts ...googleapi.CallOption) (*UserRole, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one user role by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/userRoles/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/userRoles/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userRoles.get",
 	//   "parameterOrder": [
@@ -51423,7 +53473,7 @@ func (c *UserRolesGetCall) Do(opts ...googleapi.CallOption) (*UserRole, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/userRoles/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/userRoles/{id}",
 	//   "response": {
 	//     "$ref": "UserRole"
 	//   },
@@ -51495,7 +53545,7 @@ func (c *UserRolesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/userRoles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/userRoles")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -51547,7 +53597,7 @@ func (c *UserRolesInsertCall) Do(opts ...googleapi.CallOption) (*UserRole, error
 	return ret, nil
 	// {
 	//   "description": "Inserts a new user role.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/userRoles",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/userRoles",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.userRoles.insert",
 	//   "parameterOrder": [
@@ -51562,7 +53612,7 @@ func (c *UserRolesInsertCall) Do(opts ...googleapi.CallOption) (*UserRole, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/userRoles",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/userRoles",
 	//   "request": {
 	//     "$ref": "UserRole"
 	//   },
@@ -51720,7 +53770,7 @@ func (c *UserRolesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/userRoles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/userRoles")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -51772,7 +53822,7 @@ func (c *UserRolesListCall) Do(opts ...googleapi.CallOption) (*UserRolesListResp
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of user roles, possibly filtered. This method supports paging.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/userRoles",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/userRoles",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userRoles.list",
 	//   "parameterOrder": [
@@ -51852,7 +53902,7 @@ func (c *UserRolesListCall) Do(opts ...googleapi.CallOption) (*UserRolesListResp
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/userRoles",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/userRoles",
 	//   "response": {
 	//     "$ref": "UserRolesListResponse"
 	//   },
@@ -51948,7 +53998,7 @@ func (c *UserRolesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/userRoles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/userRoles")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -52000,7 +54050,7 @@ func (c *UserRolesPatchCall) Do(opts ...googleapi.CallOption) (*UserRole, error)
 	return ret, nil
 	// {
 	//   "description": "Updates an existing user role. This method supports patch semantics.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/userRoles",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/userRoles",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.userRoles.patch",
 	//   "parameterOrder": [
@@ -52023,7 +54073,7 @@ func (c *UserRolesPatchCall) Do(opts ...googleapi.CallOption) (*UserRole, error)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/userRoles",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/userRoles",
 	//   "request": {
 	//     "$ref": "UserRole"
 	//   },
@@ -52098,7 +54148,7 @@ func (c *UserRolesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/userRoles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/userRoles")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -52150,7 +54200,7 @@ func (c *UserRolesUpdateCall) Do(opts ...googleapi.CallOption) (*UserRole, error
 	return ret, nil
 	// {
 	//   "description": "Updates an existing user role.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/userRoles",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/userRoles",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.userRoles.update",
 	//   "parameterOrder": [
@@ -52165,7 +54215,7 @@ func (c *UserRolesUpdateCall) Do(opts ...googleapi.CallOption) (*UserRole, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/userRoles",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/userRoles",
 	//   "request": {
 	//     "$ref": "UserRole"
 	//   },
@@ -52250,7 +54300,7 @@ func (c *VideoFormatsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/videoFormats/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/videoFormats/{id}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -52303,7 +54353,7 @@ func (c *VideoFormatsGetCall) Do(opts ...googleapi.CallOption) (*VideoFormat, er
 	return ret, nil
 	// {
 	//   "description": "Gets one video format by ID.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/videoFormats/{id}",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/videoFormats/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.videoFormats.get",
 	//   "parameterOrder": [
@@ -52326,7 +54376,7 @@ func (c *VideoFormatsGetCall) Do(opts ...googleapi.CallOption) (*VideoFormat, er
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/videoFormats/{id}",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/videoFormats/{id}",
 	//   "response": {
 	//     "$ref": "VideoFormat"
 	//   },
@@ -52405,7 +54455,7 @@ func (c *VideoFormatsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v3.5/userprofiles/{profileId}/videoFormats")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dfareporting/v4/userprofiles/{profileId}/videoFormats")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -52457,7 +54507,7 @@ func (c *VideoFormatsListCall) Do(opts ...googleapi.CallOption) (*VideoFormatsLi
 	return ret, nil
 	// {
 	//   "description": "Lists available video formats.",
-	//   "flatPath": "dfareporting/v3.5/userprofiles/{profileId}/videoFormats",
+	//   "flatPath": "dfareporting/v4/userprofiles/{profileId}/videoFormats",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.videoFormats.list",
 	//   "parameterOrder": [
@@ -52472,7 +54522,7 @@ func (c *VideoFormatsListCall) Do(opts ...googleapi.CallOption) (*VideoFormatsLi
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dfareporting/v3.5/userprofiles/{profileId}/videoFormats",
+	//   "path": "dfareporting/v4/userprofiles/{profileId}/videoFormats",
 	//   "response": {
 	//     "$ref": "VideoFormatsListResponse"
 	//   },

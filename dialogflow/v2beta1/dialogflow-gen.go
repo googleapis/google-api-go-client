@@ -11376,6 +11376,20 @@ type GoogleCloudDialogflowV2beta1AnalyzeContentRequest struct {
 	// AssistQueryParams: Parameters for a human assist query.
 	AssistQueryParams *GoogleCloudDialogflowV2beta1AssistQueryParameters `json:"assistQueryParams,omitempty"`
 
+	// AudioInput: The natural language speech audio to be processed.
+	AudioInput *GoogleCloudDialogflowV2beta1AudioInput `json:"audioInput,omitempty"`
+
+	// CxCurrentPage: The unique identifier of the CX page to override the
+	// `current_page` in the session. Format:
+	// `projects//locations//agents//flows//pages/`. If `cx_current_page` is
+	// specified, the previous state of the session will be ignored by
+	// Dialogflow CX, including the previous page and the previous session
+	// parameters. In most cases, `cx_current_page` and `cx_parameters`
+	// should be configured together to direct a session to a specific
+	// state. Note: this field should only be used if you are connecting to
+	// a Dialogflow CX agent.
+	CxCurrentPage string `json:"cxCurrentPage,omitempty"`
+
 	// CxParameters: Additional parameters to be put into Dialogflow CX
 	// session parameters. To remove a parameter from the session, clients
 	// should explicitly set the parameter value to null. Note: this field
@@ -11756,6 +11770,41 @@ type GoogleCloudDialogflowV2beta1AssistQueryParameters struct {
 
 func (s *GoogleCloudDialogflowV2beta1AssistQueryParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AssistQueryParameters
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1AudioInput: Represents the natural
+// language speech audio to be processed.
+type GoogleCloudDialogflowV2beta1AudioInput struct {
+	// Audio: Required. The natural language speech audio to be processed. A
+	// single request can contain up to 1 minute of speech audio data. The
+	// transcribed text cannot contain more than 256 bytes.
+	Audio string `json:"audio,omitempty"`
+
+	// Config: Required. Instructs the speech recognizer how to process the
+	// speech audio.
+	Config *GoogleCloudDialogflowV2beta1InputAudioConfig `json:"config,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Audio") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Audio") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1AudioInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AudioInput
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

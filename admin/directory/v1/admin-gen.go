@@ -10979,11 +10979,12 @@ func (r *GroupsService) List() *GroupsListCall {
 
 // Customer sets the optional parameter "customer": The unique ID for
 // the customer's Google Workspace account. In case of a multi-domain
-// account, to fetch all groups for a customer, fill this field instead
-// of domain. As an account administrator, you can also use the
-// `my_customer` alias to represent your account's `customerId`. The
-// `customerId` is also returned as part of the Users
-// (/admin-sdk/directory/v1/reference/users)
+// account, to fetch all groups for a customer, fill in this field
+// instead of `domain`. You can also use the `my_customer` alias to
+// represent your account's `customerId`. The `customerId` is also
+// returned as part of the Users
+// (/admin-sdk/directory/v1/reference/users) resource. Either the
+// `customer` or the `domain` parameter must be provided.
 func (c *GroupsListCall) Customer(customer string) *GroupsListCall {
 	c.urlParams_.Set("customer", customer)
 	return c
@@ -11153,7 +11154,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, fill this field instead of domain. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users)",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, fill in this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. Either the `customer` or the `domain` parameter must be provided.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

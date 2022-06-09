@@ -3950,7 +3950,7 @@ type GoogleCloudDialogflowCxV3beta1Agent struct {
 	// for the agent. Please use agent.advanced_settings instead.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
 
-	// Locked: Indiciates whether the agent is locked for changes. If the
+	// Locked: Indicates whether the agent is locked for changes. If the
 	// agent is locked, modifications to the agent will be rejected except
 	// for RestoreAgent.
 	Locked bool `json:"locked,omitempty"`

@@ -756,8 +756,8 @@ type BucketLifecycleRuleAction struct {
 	// action is SetStorageClass.
 	StorageClass string `json:"storageClass,omitempty"`
 
-	// Type: Type of the action. Currently, only Delete and SetStorageClass
-	// are supported.
+	// Type: Type of the action. Currently, only Delete, SetStorageClass,
+	// and AbortIncompleteMultipartUpload are supported.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "StorageClass") to

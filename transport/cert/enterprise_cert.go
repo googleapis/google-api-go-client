@@ -35,11 +35,11 @@ type ecpSource struct {
 // a well-known gcloud location.
 func NewEnterpriseCertificateProxySource(configFilePath string) (Source, error) {
 	key, err := client.Cred(configFilePath)
-	if errors.Is(err, os.ErrNotExist) {
-		// Config file missing means Enterprise Certificate Proxy is not supported.
-		return nil, errSourceUnavailable
-	}
 	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			// Config file missing means Enterprise Certificate Proxy is not supported.
+			return nil, errSourceUnavailable
+		}
 		return nil, err
 	}
 

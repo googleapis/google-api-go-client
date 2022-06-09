@@ -10,11 +10,11 @@ import (
 
 func TestEnterpriseCertificateProxySource_ConfigMissing(t *testing.T) {
 	source, err := NewEnterpriseCertificateProxySource("missing.json")
-	if !errors.Is(err, errSourceUnavailable) {
-		t.Fatal("NewEnterpriseCertificateProxySource: expected errSourceUnavailable returned when config is missing.")
+	if got, want := err, errSourceUnavailable; !errors.Is(err, errSourceUnavailable) {
+		t.Fatalf("NewEnterpriseCertificateProxySource: with missing config; got %v, want %v err", got, want)
 	}
 	if source != nil {
-		t.Error("NewEnterpriseCertificateProxySource: expected nil source returned when config is missing.")
+		t.Errorf("NewEnterpriseCertificateProxySource: with missing config; got %v, want nil source", source)
 	}
 }
 
@@ -29,10 +29,10 @@ func TestEnterpriseCertificateProxySource_GetClientCertificateSuccess(t *testing
 		t.Fatal(err)
 	}
 	if cert.Certificate == nil {
-		t.Error("getClientCertificate: want non-nil Certificate, got nil")
+		t.Error("getClientCertificate: got nil, want non-nil Certificate")
 	}
 	if cert.PrivateKey == nil {
-		t.Error("getClientCertificate: want non-nil PrivateKey, got nil")
+		t.Error("getClientCertificate: got nil, want non-nil PrivateKey")
 	}
 }
 
@@ -40,9 +40,6 @@ func TestEnterpriseCertificateProxySource_GetClientCertificateSuccess(t *testing
 func TestEnterpriseCertificateProxySource_InitializationFailure(t *testing.T) {
 	_, err := NewEnterpriseCertificateProxySource("testdata/enterprise_certificate_config_invalid_pem.json")
 	if err == nil {
-		t.Fatal("Expecting error.")
-	}
-	if got, want := err.Error(), "failed to parse public key: asn1: syntax error: sequence truncated"; got != want {
-		t.Errorf("NewEnterpriseCertificateProxySource: want err %v, got %v", want, got)
+		t.Error("NewEnterpriseCertificateProxySource: got nil, want non-nil err")
 	}
 }

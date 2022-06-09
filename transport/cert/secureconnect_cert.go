@@ -60,11 +60,11 @@ func NewSecureConnectSource(configFilePath string) (Source, error) {
 	}
 
 	file, err := ioutil.ReadFile(configFilePath)
-	if errors.Is(err, os.ErrNotExist) {
-		// Config file missing means Secure Connect is not supported.
-		return nil, errSourceUnavailable
-	}
 	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			// Config file missing means Secure Connect is not supported.
+			return nil, errSourceUnavailable
+		}
 		return nil, err
 	}
 

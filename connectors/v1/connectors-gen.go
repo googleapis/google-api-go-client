@@ -377,6 +377,7 @@ type AuthConfig struct {
 	// Authorization Grant based authentication
 	//   "OAUTH2_CLIENT_CREDENTIALS" - Oauth 2.0 Client Credentials Grant
 	// Authentication
+	//   "SSH_PUBLIC_KEY" - SSH Public Key Authentication
 	AuthType string `json:"authType,omitempty"`
 
 	// Oauth2ClientCredentials: Oauth2ClientCredentials.
@@ -384,6 +385,9 @@ type AuthConfig struct {
 
 	// Oauth2JwtBearer: Oauth2JwtBearer.
 	Oauth2JwtBearer *Oauth2JwtBearer `json:"oauth2JwtBearer,omitempty"`
+
+	// SshPublicKey: SSH Public Key.
+	SshPublicKey *SshPublicKey `json:"sshPublicKey,omitempty"`
 
 	// UserPassword: UserPassword.
 	UserPassword *UserPassword `json:"userPassword,omitempty"`
@@ -424,6 +428,7 @@ type AuthConfigTemplate struct {
 	// Authorization Grant based authentication
 	//   "OAUTH2_CLIENT_CREDENTIALS" - Oauth 2.0 Client Credentials Grant
 	// Authentication
+	//   "SSH_PUBLIC_KEY" - SSH Public Key Authentication
 	AuthType string `json:"authType,omitempty"`
 
 	// ConfigVariableTemplates: Config variables to describe an `AuthConfig`
@@ -653,10 +658,6 @@ type Connection struct {
 
 	// Description: Optional. Description of the resource.
 	Description string `json:"description,omitempty"`
-
-	// EgressBackends: Output only. Outbound domains/hosts needs to be
-	// allowlisted.
-	EgressBackends []string `json:"egressBackends,omitempty"`
 
 	// EnvoyImageLocation: Output only. GCR location where the envoy image
 	// is stored. formatted like: gcr.io/{bucketName}/{imageName}
@@ -2388,6 +2389,10 @@ type RuntimeConfig struct {
 	// "us-west1".
 	LocationId string `json:"locationId,omitempty"`
 
+	// Name: Output only. Resource name of the form:
+	// `projects/*/locations/*/runtimeConfig`
+	Name string `json:"name,omitempty"`
+
 	// RuntimeEndpoint: Output only. The endpoint of the connectors runtime
 	// ingress.
 	RuntimeEndpoint string `json:"runtimeEndpoint,omitempty"`
@@ -2568,6 +2573,44 @@ type Source struct {
 
 func (s *Source) MarshalJSON() ([]byte, error) {
 	type NoMethod Source
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SshPublicKey struct {
+	// CertType: Format of SSH Client cert.
+	CertType string `json:"certType,omitempty"`
+
+	// Password: This is an optional field used in case client has enabled
+	// multi-factor authentication
+	Password *Secret `json:"password,omitempty"`
+
+	// SshClientCert: SSH Client Cert. It should contain both public and
+	// private key.
+	SshClientCert *Secret `json:"sshClientCert,omitempty"`
+
+	// Username: The user account used to authenticate.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CertType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SshPublicKey) MarshalJSON() ([]byte, error) {
+	type NoMethod SshPublicKey
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4309,12 +4352,12 @@ func (r *ProjectsLocationsConnectionsService) Patch(name string, connection *Con
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Field mask is
-// used to specify the fields to be overwritten in the Connection
-// resource by the update. The fields specified in the update_mask are
-// relative to the resource, not the full request. A field will be
-// overwritten if it is in the mask. If the user does not provide a mask
-// then all fields will be overwritten.
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// Connection resource by the update. The fields specified in the
+// update_mask are relative to the resource, not the full request. A
+// field will be overwritten if it is in the mask. If the user does not
+// provide a mask then all fields will be overwritten.
 func (c *ProjectsLocationsConnectionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsConnectionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4427,7 +4470,7 @@ func (c *ProjectsLocationsConnectionsPatchCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Field mask is used to specify the fields to be overwritten in the Connection resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the Connection resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

@@ -204,6 +204,7 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	// Support controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
+	//   "ITAR" - International Traffic in Arms Regulations
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -307,6 +308,7 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	// Support controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
+	//   "ITAR" - International Traffic in Arms Regulations
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
@@ -612,6 +614,7 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	// Support controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
+	//   "ITAR" - International Traffic in Arms Regulations
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -686,6 +689,7 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// Support controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
+	//   "ITAR" - International Traffic in Arms Regulations
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
@@ -1117,6 +1121,7 @@ type GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMetadata 
 	// Support controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
+	//   "ITAR" - International Traffic in Arms Regulations
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -1191,6 +1196,7 @@ type GoogleCloudAssuredworkloadsVersioningV1mainWorkload struct {
 	// Support controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
+	//   "ITAR" - International Traffic in Arms Regulations
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.

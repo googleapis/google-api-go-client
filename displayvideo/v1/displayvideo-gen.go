@@ -1189,7 +1189,7 @@ type AgeRangeAssignedTargetingOptionDetails struct {
 	// in this field can be 1) targeted solely, or, 2) part of a larger
 	// continuous age range. The reach of a continuous age range targeting
 	// can be expanded by also targeting an audience of an unknown age.
-	// Output only in v1.
+	// Output only in v1. Required in v2.
 	//
 	// Possible values:
 	//   "AGE_RANGE_UNSPECIFIED" - Default value when age range is not
@@ -2206,7 +2206,8 @@ func (s *AudienceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, err
 // is not supported. Remove all audio content type targeting options to
 // achieve this effect.
 type AudioContentTypeAssignedTargetingOptionDetails struct {
-	// AudioContentType: The audio content type. Output only in v1.
+	// AudioContentType: The audio content type. Output only in v1. Required
+	// in v2.
 	//
 	// Possible values:
 	//   "AUDIO_CONTENT_TYPE_UNSPECIFIED" - Audio content type is not
@@ -4598,7 +4599,7 @@ type ContentInstreamPositionAssignedTargetingOptionDetails struct {
 	AdType string `json:"adType,omitempty"`
 
 	// ContentInstreamPosition: The content instream position for video or
-	// audio ads. Output only in v1.
+	// audio ads. Output only in v1. Required in v2.
 	//
 	// Possible values:
 	//   "CONTENT_INSTREAM_POSITION_UNSPECIFIED" - Content instream position
@@ -4712,7 +4713,7 @@ type ContentOutstreamPositionAssignedTargetingOptionDetails struct {
 	AdType string `json:"adType,omitempty"`
 
 	// ContentOutstreamPosition: The content outstream position. Output only
-	// in v1.
+	// in v1. Required in v2.
 	//
 	// Possible values:
 	//   "CONTENT_OUTSTREAM_POSITION_UNSPECIFIED" - Content outstream
@@ -6509,6 +6510,7 @@ func (s *DeviceMakeModelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_DEVICE_TYPE`.
 type DeviceTypeAssignedTargetingOptionDetails struct {
 	// DeviceType: The display name of the device type. Output only in v1.
+	// Required in v2.
 	//
 	// Possible values:
 	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
@@ -7351,7 +7353,8 @@ type Empty struct {
 // of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_ENVIRONMENT`.
 type EnvironmentAssignedTargetingOptionDetails struct {
-	// Environment: The serving environment. Output only in v1.
+	// Environment: The serving environment. Output only in v1. Required in
+	// v2.
 	//
 	// Possible values:
 	//   "ENVIRONMENT_UNSPECIFIED" - Default value when environment is not
@@ -8268,7 +8271,7 @@ func (s *FloodlightGroup) MarshalJSON() ([]byte, error) {
 type FrequencyCap struct {
 	// MaxImpressions: The maximum number of times a user may be shown the
 	// same ad during this period. Must be greater than 0. Required when
-	// unlimited is `false`.
+	// unlimited is `false` and max_views is not set.
 	MaxImpressions int64 `json:"maxImpressions,omitempty"`
 
 	// TimeUnit: The time unit in which the frequency cap will be applied.
@@ -8334,7 +8337,8 @@ func (s *FrequencyCap) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_GENDER`.
 type GenderAssignedTargetingOptionDetails struct {
-	// Gender: The gender of the audience. Output only in v1.
+	// Gender: The gender of the audience. Output only in v1. Required in
+	// v2.
 	//
 	// Possible values:
 	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified
@@ -12498,7 +12502,8 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // Explicitly targeting all options is not supported. Remove all native
 // content position targeting options to achieve this effect.
 type NativeContentPositionAssignedTargetingOptionDetails struct {
-	// ContentPosition: The content position. Output only in v1.
+	// ContentPosition: The content position. Output only in v1. Required in
+	// v2.
 	//
 	// Possible values:
 	//   "NATIVE_CONTENT_POSITION_UNSPECIFIED" - Native content position is
@@ -12797,7 +12802,7 @@ func (s *ObaIcon) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_OMID`.
 type OmidAssignedTargetingOptionDetails struct {
 	// Omid: The type of Open Measurement enabled inventory. Output only in
-	// v1.
+	// v1. Required in v2.
 	//
 	// Possible values:
 	//   "OMID_UNSPECIFIED" - Default value when omid targeting is not
@@ -15952,7 +15957,8 @@ type VideoPlayerSizeAssignedTargetingOptionDetails struct {
 	// targeting_type is `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
-	// VideoPlayerSize: The video player size. Output only in v1.
+	// VideoPlayerSize: The video player size. Output only in v1. Required
+	// in v2.
 	//
 	// Possible values:
 	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not
@@ -16053,6 +16059,7 @@ type ViewabilityAssignedTargetingOptionDetails struct {
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// Viewability: The predicted viewability percentage. Output only in v1.
+	// Required in v2.
 	//
 	// Possible values:
 	//   "VIEWABILITY_UNSPECIFIED" - Default value when viewability is not
@@ -21708,7 +21715,7 @@ func (r *AdvertisersCreativesService) List(advertiserId int64) *AdvertisersCreat
 // `lineItemIds` * The operator must be `GREATER THAN OR EQUAL TO (>=)`
 // or `LESS THAN OR EQUAL TO (<=)` for the following fields: -
 // `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) *
-// For `entityStatus`, `minDuration`, `maxDuration`, `updateTime`, `and
+// For `entityStatus`, `minDuration`, `maxDuration`, `updateTime`, and
 // `dynamic`, there may be at most one restriction. * For `dimensions`,
 // the value is in the form of "{width}x{height}". * For
 // `exchangeReviewStatus`, the value is in the form of
@@ -21888,7 +21895,7 @@ func (c *AdvertisersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCr
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by creative properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restriction for the same field must be combined by `OR`. * Restriction for different fields must be combined by `AND`. * Between `(` and `)` there can only be restrictions combined by `OR` for the same field. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)` for the following fields: - `entityStatus` - `creativeType`. - `dimensions` - `minDuration` - `maxDuration` - `approvalStatus` - `exchangeReviewStatus` - `dynamic` - `creativeId` * The operator must be `HAS (:)` for the following fields: - `lineItemIds` * The operator must be `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)` for the following fields: - `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) * For `entityStatus`, `minDuration`, `maxDuration`, `updateTime`, `and `dynamic`, there may be at most one restriction. * For `dimensions`, the value is in the form of `\"{width}x{height}\"`. * For `exchangeReviewStatus`, the value is in the form of `{exchange}-{reviewStatus}`. * For `minDuration` and `maxDuration`, the value is in the form of `\"{duration}s\"`. Only seconds are supported with millisecond granularity. * For `updateTime`, a creative resource's field value reflects the last time that a creative has been updated, which includes updates made by the system (e.g. creative review updates). * There may be multiple `lineItemIds` restrictions in order to search against multiple possible line item IDs. * There may be multiple `creativeId` restrictions in order to search against multiple possible creative IDs. Examples: * All native creatives: `creativeType=\"CREATIVE_TYPE_NATIVE\"` * All active creatives with 300x400 or 50x100 dimensions: `entityStatus=\"ENTITY_STATUS_ACTIVE\" AND (dimensions=\"300x400\" OR dimensions=\"50x100\")` * All dynamic creatives that are approved by AdX or AppNexus, with a minimum duration of 5 seconds and 200ms. `dynamic=\"true\" AND minDuration=\"5.2s\" AND (exchangeReviewStatus=\"EXCHANGE_GOOGLE_AD_MANAGER-REVIEW_STATUS_APPROVED\" OR exchangeReviewStatus=\"EXCHANGE_APPNEXUS-REVIEW_STATUS_APPROVED\")` * All video creatives that are associated with line item ID 1 or 2: `creativeType=\"CREATIVE_TYPE_VIDEO\" AND (lineItemIds:1 OR lineItemIds:2)` * Find creatives by multiple creative IDs: `creativeId=1 OR creativeId=2` * All creatives with an update time greater than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by creative properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restriction for the same field must be combined by `OR`. * Restriction for different fields must be combined by `AND`. * Between `(` and `)` there can only be restrictions combined by `OR` for the same field. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)` for the following fields: - `entityStatus` - `creativeType`. - `dimensions` - `minDuration` - `maxDuration` - `approvalStatus` - `exchangeReviewStatus` - `dynamic` - `creativeId` * The operator must be `HAS (:)` for the following fields: - `lineItemIds` * The operator must be `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)` for the following fields: - `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) * For `entityStatus`, `minDuration`, `maxDuration`, `updateTime`, and `dynamic`, there may be at most one restriction. * For `dimensions`, the value is in the form of `\"{width}x{height}\"`. * For `exchangeReviewStatus`, the value is in the form of `{exchange}-{reviewStatus}`. * For `minDuration` and `maxDuration`, the value is in the form of `\"{duration}s\"`. Only seconds are supported with millisecond granularity. * For `updateTime`, a creative resource's field value reflects the last time that a creative has been updated, which includes updates made by the system (e.g. creative review updates). * There may be multiple `lineItemIds` restrictions in order to search against multiple possible line item IDs. * There may be multiple `creativeId` restrictions in order to search against multiple possible creative IDs. Examples: * All native creatives: `creativeType=\"CREATIVE_TYPE_NATIVE\"` * All active creatives with 300x400 or 50x100 dimensions: `entityStatus=\"ENTITY_STATUS_ACTIVE\" AND (dimensions=\"300x400\" OR dimensions=\"50x100\")` * All dynamic creatives that are approved by AdX or AppNexus, with a minimum duration of 5 seconds and 200ms. `dynamic=\"true\" AND minDuration=\"5.2s\" AND (exchangeReviewStatus=\"EXCHANGE_GOOGLE_AD_MANAGER-REVIEW_STATUS_APPROVED\" OR exchangeReviewStatus=\"EXCHANGE_APPNEXUS-REVIEW_STATUS_APPROVED\")` * All video creatives that are associated with line item ID 1 or 2: `creativeType=\"CREATIVE_TYPE_VIDEO\" AND (lineItemIds:1 OR lineItemIds:2)` * Find creatives by multiple creative IDs: `creativeId=1 OR creativeId=2` * All creatives with an update time greater than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

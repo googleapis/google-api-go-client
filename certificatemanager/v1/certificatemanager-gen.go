@@ -604,12 +604,14 @@ type GclbTarget struct {
 	// Certificate Map is serving.
 	IpConfigs []*IpConfig `json:"ipConfigs,omitempty"`
 
-	// TargetHttpsProxy: A name must be in the format
-	// `projects/*/locations/*/targetHttpsProxies/*`.
+	// TargetHttpsProxy: This field returns the resource name in the
+	// following format:
+	// `//compute.googleapis.com/projects/*/global/targetHttpsProxies/*`.
 	TargetHttpsProxy string `json:"targetHttpsProxy,omitempty"`
 
-	// TargetSslProxy: A name must be in the format
-	// `projects/*/locations/*/targetSslProxies/*`.
+	// TargetSslProxy: This field returns the resource name in the following
+	// format:
+	// `//compute.googleapis.com/projects/*/global/targetSslProxies/*`.
 	TargetSslProxy string `json:"targetSslProxy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpConfigs") to

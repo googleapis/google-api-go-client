@@ -8122,8 +8122,8 @@ func (c *InstancesListCall) Filter(filter string) *InstancesListCall {
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of instances to return. The service may return fewer than this
-// value. The maximum value is 1000; values above 1000 are coerced to
-// 1000.
+// value. If unspecified, at most 500 instances are returned. The
+// maximum value is 1000; values above 1000 are coerced to 1000.
 func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -8250,7 +8250,7 @@ func (c *InstancesListCall) Do(opts ...googleapi.CallOption) (*InstancesListResp
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of instances to return. The service may return fewer than this value. The maximum value is 1000; values above 1000 are coerced to 1000.",
+	//       "description": "The maximum number of instances to return. The service may return fewer than this value. If unspecified, at most 500 instances are returned. The maximum value is 1000; values above 1000 are coerced to 1000.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"

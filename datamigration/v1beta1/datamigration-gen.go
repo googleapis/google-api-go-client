@@ -1180,6 +1180,8 @@ type MigrationJobVerificationError struct {
 	//   "UNSUPPORTED_DEFINER" - The definer is not supported.
 	//   "CANT_RESTART_RUNNING_MIGRATION" - Migration is already running at
 	// the time of restart request.
+	//   "TABLES_WITH_LIMITED_SUPPORT" - The source has tables with limited
+	// support. E.g. PostgreSQL tables without primary keys.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorDetailMessage: Output only. A specific detailed error message,

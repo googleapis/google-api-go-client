@@ -3448,7 +3448,13 @@ type BiddersCreativesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists creatives.
+// List: Lists creatives as they are at the time of the initial request.
+// This call may take multiple hours to complete. For large, paginated
+// requests, this method returns a snapshot of creatives at the time of
+// request for the first page. `lastStatusUpdate` and
+// `creativeServingDecision` may be outdated for creatives on sequential
+// pages. We recommend Google Cloud Pub/Sub
+// (//cloud.google.com/pubsub/docs/overview) to view the latest status.
 //
 // - parent: Name of the parent buyer that owns the creatives. The
 //   pattern for this resource is either `buyers/{buyerAccountId}` or
@@ -3617,7 +3623,7 @@ func (c *BiddersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreati
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists creatives.",
+	//   "description": "Lists creatives as they are at the time of the initial request. This call may take multiple hours to complete. For large, paginated requests, this method returns a snapshot of creatives at the time of request for the first page. `lastStatusUpdate` and `creativeServingDecision` may be outdated for creatives on sequential pages. We recommend [Google Cloud Pub/Sub](//cloud.google.com/pubsub/docs/overview) to view the latest status.",
 	//   "flatPath": "v1/bidders/{biddersId}/creatives",
 	//   "httpMethod": "GET",
 	//   "id": "realtimebidding.bidders.creatives.list",
@@ -7772,7 +7778,13 @@ type BuyersCreativesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists creatives.
+// List: Lists creatives as they are at the time of the initial request.
+// This call may take multiple hours to complete. For large, paginated
+// requests, this method returns a snapshot of creatives at the time of
+// request for the first page. `lastStatusUpdate` and
+// `creativeServingDecision` may be outdated for creatives on sequential
+// pages. We recommend Google Cloud Pub/Sub
+// (//cloud.google.com/pubsub/docs/overview) to view the latest status.
 //
 // - parent: Name of the parent buyer that owns the creatives. The
 //   pattern for this resource is either `buyers/{buyerAccountId}` or
@@ -7941,7 +7953,7 @@ func (c *BuyersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreativ
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists creatives.",
+	//   "description": "Lists creatives as they are at the time of the initial request. This call may take multiple hours to complete. For large, paginated requests, this method returns a snapshot of creatives at the time of request for the first page. `lastStatusUpdate` and `creativeServingDecision` may be outdated for creatives on sequential pages. We recommend [Google Cloud Pub/Sub](//cloud.google.com/pubsub/docs/overview) to view the latest status.",
 	//   "flatPath": "v1/buyers/{buyersId}/creatives",
 	//   "httpMethod": "GET",
 	//   "id": "realtimebidding.buyers.creatives.list",

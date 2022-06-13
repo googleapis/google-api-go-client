@@ -2386,7 +2386,7 @@ type Campaign struct {
 	MeasurementPartnerLink *MeasurementPartnerCampaignLink `json:"measurementPartnerLink,omitempty"`
 
 	// Name: Name of this campaign. This is a required field and must be
-	// less than 256 characters long and unique among campaigns of the same
+	// less than 512 characters long and unique among campaigns of the same
 	// advertiser.
 	Name string `json:"name,omitempty"`
 
@@ -3782,6 +3782,7 @@ type Creative struct {
 	//   "CREATIVE_AUTHORING_SOURCE_DBM"
 	//   "CREATIVE_AUTHORING_SOURCE_STUDIO"
 	//   "CREATIVE_AUTHORING_SOURCE_GWD"
+	//   "CREATIVE_AUTHORING_SOURCE_ACS"
 	AuthoringSource string `json:"authoringSource,omitempty"`
 
 	// AuthoringTool: Authoring tool for HTML5 banner creatives. This is a
@@ -4930,6 +4931,7 @@ type CreativeAssetMetadata struct {
 	//   "CLICK_TAG_HARD_CODED"
 	//   "SVG_INVALID"
 	//   "CLICK_TAG_IN_RICH_MEDIA"
+	//   "MISSING_ENABLER_REFERENCE"
 	WarnedValidationRules []string `json:"warnedValidationRules,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8801,6 +8803,7 @@ type MeasurementPartnerAdvertiserLink struct {
 	// Possible values:
 	//   "NONE"
 	//   "INTEGRAL_AD_SCIENCE"
+	//   "DOUBLE_VERIFY"
 	MeasurementPartner string `json:"measurementPartner,omitempty"`
 
 	// PartnerAdvertiserId: .
@@ -8848,6 +8851,7 @@ type MeasurementPartnerCampaignLink struct {
 	// Possible values:
 	//   "NONE"
 	//   "INTEGRAL_AD_SCIENCE"
+	//   "DOUBLE_VERIFY"
 	MeasurementPartner string `json:"measurementPartner,omitempty"`
 
 	// PartnerCampaignId: Partner campaign ID needed for establishing
@@ -8898,6 +8902,7 @@ type MeasurementPartnerWrappingData struct {
 	// Possible values:
 	//   "NONE"
 	//   "INTEGRAL_AD_SCIENCE"
+	//   "DOUBLE_VERIFY"
 	MeasurementPartner string `json:"measurementPartner,omitempty"`
 
 	// TagWrappingMode: Measurement mode for the wrapped placement.
@@ -8909,7 +8914,14 @@ type MeasurementPartnerWrappingData struct {
 	//   "MONITORING_ONLY"
 	//   "VIDEO_PIXEL_MONITORING"
 	//   "TRACKING"
+	//   "VPAID_MONITORING"
+	//   "VPAID_BLOCKING"
 	//   "NON_VPAID_MONITORING"
+	//   "VPAID_ONLY_MONITORING"
+	//   "VPAID_ONLY_BLOCKING"
+	//   "VPAID_ONLY_FILTERING"
+	//   "VPAID_FILTERING"
+	//   "NON_VPAID_FILTERING"
 	TagWrappingMode string `json:"tagWrappingMode,omitempty"`
 
 	// WrappedTag: Tag provided by the measurement partner during wrapping.
@@ -9066,6 +9078,14 @@ type MobileApp struct {
 	//   "UNKNOWN"
 	//   "APPLE_APP_STORE"
 	//   "GOOGLE_PLAY_STORE"
+	//   "ROKU_APP_STORE"
+	//   "AMAZON_FIRETV_APP_STORE"
+	//   "PLAYSTATION_APP_STORE"
+	//   "APPLE_TV_APP_STORE"
+	//   "XBOX_APP_STORE"
+	//   "SAMSUNG_TV_APP_STORE"
+	//   "ANDROID_TV_APP_STORE"
+	//   "GENERIC_CTV_APP_STORE"
 	Directory string `json:"directory,omitempty"`
 
 	// Id: ID of this mobile app.
@@ -10212,7 +10232,7 @@ type Placement struct {
 	LookbackConfiguration *LookbackConfiguration `json:"lookbackConfiguration,omitempty"`
 
 	// Name: Name of this placement.This is a required field and must be
-	// less than or equal to 256 characters long.
+	// less than or equal to 512 characters long.
 	Name string `json:"name,omitempty"`
 
 	// PartnerWrappingData: Measurement partner provided settings for a
@@ -23058,6 +23078,9 @@ func (c *ChangeLogsListCall) ObjectIds(objectIds ...int64) *ChangeLogsListCall {
 //   "OBJECT_TARGETING_TEMPLATE"
 //   "OBJECT_SEARCH_LIFT_STUDY"
 //   "OBJECT_FLOODLIGHT_DV360_LINK"
+//   "OBJECT_ADVERTISER_CUSTOMER_LINK"
+//   "OBJECT_CREATIVE_PROJECT"
+//   "OBJECT_ACCOUNT_CAMPAIGN_CREATIVE_PROJECT_LINK"
 func (c *ChangeLogsListCall) ObjectType(objectType string) *ChangeLogsListCall {
 	c.urlParams_.Set("objectType", objectType)
 	return c
@@ -23314,9 +23337,15 @@ func (c *ChangeLogsListCall) Do(opts ...googleapi.CallOption) (*ChangeLogsListRe
 	//         "OBJECT_PLAYSTORE_LINK",
 	//         "OBJECT_TARGETING_TEMPLATE",
 	//         "OBJECT_SEARCH_LIFT_STUDY",
-	//         "OBJECT_FLOODLIGHT_DV360_LINK"
+	//         "OBJECT_FLOODLIGHT_DV360_LINK",
+	//         "OBJECT_ADVERTISER_CUSTOMER_LINK",
+	//         "OBJECT_CREATIVE_PROJECT",
+	//         "OBJECT_ACCOUNT_CAMPAIGN_CREATIVE_PROJECT_LINK"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -36493,6 +36522,14 @@ func (r *MobileAppsService) List(profileId int64) *MobileAppsListCall {
 //   "UNKNOWN"
 //   "APPLE_APP_STORE"
 //   "GOOGLE_PLAY_STORE"
+//   "ROKU_APP_STORE"
+//   "AMAZON_FIRETV_APP_STORE"
+//   "PLAYSTATION_APP_STORE"
+//   "APPLE_TV_APP_STORE"
+//   "XBOX_APP_STORE"
+//   "SAMSUNG_TV_APP_STORE"
+//   "ANDROID_TV_APP_STORE"
+//   "GENERIC_CTV_APP_STORE"
 func (c *MobileAppsListCall) Directories(directories ...string) *MobileAppsListCall {
 	c.urlParams_.SetMulti("directories", append([]string{}, directories...))
 	return c
@@ -36643,9 +36680,25 @@ func (c *MobileAppsListCall) Do(opts ...googleapi.CallOption) (*MobileAppsListRe
 	//       "enum": [
 	//         "UNKNOWN",
 	//         "APPLE_APP_STORE",
-	//         "GOOGLE_PLAY_STORE"
+	//         "GOOGLE_PLAY_STORE",
+	//         "ROKU_APP_STORE",
+	//         "AMAZON_FIRETV_APP_STORE",
+	//         "PLAYSTATION_APP_STORE",
+	//         "APPLE_TV_APP_STORE",
+	//         "XBOX_APP_STORE",
+	//         "SAMSUNG_TV_APP_STORE",
+	//         "ANDROID_TV_APP_STORE",
+	//         "GENERIC_CTV_APP_STORE"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
 	//         "",
 	//         "",
 	//         ""

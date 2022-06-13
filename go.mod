@@ -9,11 +9,11 @@ require (
 	github.com/googleapis/gax-go/v2 v2.4.0
 	go.opencensus.io v0.23.0
 	golang.org/x/net v0.0.0-20220607020251-c690dde0001d
-	golang.org/x/oauth2 v0.0.0-20220524215830-622c5d57e401
+	golang.org/x/oauth2 v0.0.0-20220608161450-d0670ef3b1eb
 	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f
-	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a
-	golang.org/x/xerrors v0.0.0-20220517211312-f3a8303e98df
+	golang.org/x/sys v0.0.0-20220610221304-9f5ed59c137d
+	golang.org/x/xerrors v0.0.0-20220609144429-65e65417b02f
 	google.golang.org/appengine v1.6.7
-	google.golang.org/genproto v0.0.0-20220602131408-e326c6e8e9c8
+	google.golang.org/genproto v0.0.0-20220608133413-ed9918b62aac
 	google.golang.org/grpc v1.47.0
 )

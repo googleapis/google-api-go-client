@@ -2936,6 +2936,24 @@ func (s *FhirOutput) MarshalJSON() ([]byte, error) {
 
 // FhirStore: Represents a FHIR store.
 type FhirStore struct {
+	// ComplexDataTypeReferenceParsing: Enable parsing of references within
+	// complex FHIR data types such as Extensions. If this value is set to
+	// ENABLED, then features like referential integrity and Bundle
+	// reference rewriting apply to all references. If this flag has not
+	// been specified the behavior of the FHIR store will not change,
+	// references in complex data types will not be parsed. New stores will
+	// have this value set to ENABLED after a notification period. Warning:
+	// turning on this flag causes processing existing resources to fail if
+	// they contain references to non-existent resources.
+	//
+	// Possible values:
+	//   "COMPLEX_DATA_TYPE_REFERENCE_PARSING_UNSPECIFIED" - No parsing
+	// behavior specified. This is the same as DISABLED for backwards
+	// compatibility.
+	//   "DISABLED" - References in complex data types are ignored.
+	//   "ENABLED" - References in complex data types are parsed.
+	ComplexDataTypeReferenceParsing string `json:"complexDataTypeReferenceParsing,omitempty"`
+
 	// DefaultSearchHandlingStrict: If true, overrides the default search
 	// behavior for this FHIR store to `handling=strict` which returns an
 	// error for unrecognized search parameters. If false, uses the FHIR
@@ -3047,7 +3065,7 @@ type FhirStore struct {
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "DefaultSearchHandlingStrict") to unconditionally include in API
+	// "ComplexDataTypeReferenceParsing") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -3056,8 +3074,8 @@ type FhirStore struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "DefaultSearchHandlingStrict") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
+	// "ComplexDataTypeReferenceParsing") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
 	// from API requests. However, any field with an empty value appearing
 	// in NullFields will be sent to the server as null. It is an error if a
 	// field in this list has a non-empty value. This may be used to include
@@ -4106,8 +4124,8 @@ type Hl7V2Store struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Resource name of the HL7v2 store, of the form
-	// `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_
-	// id}`.
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/h
+	// l7V2Stores/{hl7v2_store_id}`.
 	Name string `json:"name,omitempty"`
 
 	// NotificationConfig: The notification destination all messages (both
@@ -4306,7 +4324,10 @@ type ImageConfig struct {
 	//   "TEXT_REDACTION_MODE_UNSPECIFIED" - No text redaction specified.
 	// Same as REDACT_NO_TEXT.
 	//   "REDACT_ALL_TEXT" - Redact all text.
-	//   "REDACT_SENSITIVE_TEXT" - Redact sensitive text.
+	//   "REDACT_SENSITIVE_TEXT" - Redact sensitive text. Uses the set of
+	// [Default DICOM
+	// InfoTypes](https://cloud.google.com/healthcare-api/docs/how-tos/dicom-
+	// deidentify#default_dicom_infotypes).
 	//   "REDACT_NO_TEXT" - Do not redact text.
 	TextRedactionMode string `json:"textRedactionMode,omitempty"`
 
@@ -4665,7 +4686,9 @@ func (s *IngestMessageResponse) MarshalJSON() ([]byte, error) {
 // (https://cloud.google.com/dlp/docs/create-wrapped-key).
 type KmsWrappedCryptoKey struct {
 	// CryptoKey: Required. The resource name of the KMS CryptoKey to use
-	// for unwrapping.
+	// for unwrapping. For example,
+	// `projects/{project_id}/locations/{location_id}/keyRings/{keyring}/cryp
+	// toKeys/{key}`.
 	CryptoKey string `json:"cryptoKey,omitempty"`
 
 	// WrappedKey: Required. The wrapped data crypto key.
@@ -5365,8 +5388,9 @@ type Message struct {
 	MessageType string `json:"messageType,omitempty"`
 
 	// Name: Resource name of the Message, of the form
-	// `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store
-	// _id}/messages/{message_id}`. Assigned by the server.
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/h
+	// l7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the
+	// server.
 	Name string `json:"name,omitempty"`
 
 	// ParsedData: Output only. The parsed version of the raw message data.
@@ -28109,8 +28133,8 @@ type ProjectsLocationsDatasetsHl7V2StoresPatchCall struct {
 // Patch: Updates the HL7v2 store.
 //
 // - name: Resource name of the HL7v2 store, of the form
-//   `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_stor
-//   e_id}`.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /hl7V2Stores/{hl7v2_store_id}`.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Patch(name string, hl7v2store *Hl7V2Store) *ProjectsLocationsDatasetsHl7V2StoresPatchCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28226,7 +28250,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the HL7v2 store, of the form `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
+	//       "description": "Resource name of the HL7v2 store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -29699,8 +29723,9 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall struct {
 // updated.
 //
 // - name: Resource name of the Message, of the form
-//   `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_sto
-//   re_id}/messages/{message_id}`. Assigned by the server.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by
+//   the server.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Patch(name string, message *Message) *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29816,7 +29841,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the Message, of the form `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the server.",
+	//       "description": "Resource name of the Message, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the server.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+/messages/[^/]+$",
 	//       "required": true,

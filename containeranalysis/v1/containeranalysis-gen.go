@@ -2920,9 +2920,8 @@ type Digest struct {
 	// Algo: `SHA1`, `SHA512` etc.
 	Algo string `json:"algo,omitempty"`
 
-	// DigestValue: Value of the digest encoded. For example: SHA512 -
-	// base64 encoding, SHA1 - hex encoding.
-	DigestValue string `json:"digestValue,omitempty"`
+	// DigestBytes: Value of the digest.
+	DigestBytes string `json:"digestBytes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Algo") to
 	// unconditionally include in API requests. By default, fields with

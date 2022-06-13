@@ -404,8 +404,8 @@ func (s *CommitResponse) MarshalJSON() ([]byte, error) {
 // CompositeFilter: A filter that merges multiple other filters using
 // the given operator.
 type CompositeFilter struct {
-	// Filters: The list of filters to combine. Must contain at least one
-	// filter.
+	// Filters: The list of filters to combine. Requires: * At least one
+	// filter is present.
 	Filters []*Filter `json:"filters,omitempty"`
 
 	// Op: The operator for combining multiple filters.

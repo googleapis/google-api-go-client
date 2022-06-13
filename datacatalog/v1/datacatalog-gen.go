@@ -963,8 +963,8 @@ func (s *GoogleCloudDatacatalogV1DataSourceConnectionSpec) MarshalJSON() ([]byte
 // GoogleCloudDatacatalogV1DatabaseTableSpec: Specification that applies
 // to a table resource. Valid only for entries with the `TABLE` type.
 type GoogleCloudDatacatalogV1DatabaseTableSpec struct {
-	// DataplexTable: Fields specific to a Dataplex table and present only
-	// in the Dataplex table entries.
+	// DataplexTable: Output only. Fields specific to a Dataplex table and
+	// present only in the Dataplex table entries.
 	DataplexTable *GoogleCloudDatacatalogV1DataplexTableSpec `json:"dataplexTable,omitempty"`
 
 	// Type: Type of this table.
@@ -1168,14 +1168,14 @@ func (s *GoogleCloudDatacatalogV1DataplexTableSpec) MarshalJSON() ([]byte, error
 // resource details, for example, its schema. Additionally, you can
 // attach flexible metadata to an entry in the form of a Tag.
 type GoogleCloudDatacatalogV1Entry struct {
-	// BigqueryDateShardedSpec: Specification for a group of BigQuery tables
-	// with the `[prefix]YYYYMMDD` name pattern. For more information, see
-	// [Introduction to partitioned tables]
+	// BigqueryDateShardedSpec: Output only. Specification for a group of
+	// BigQuery tables with the `[prefix]YYYYMMDD` name pattern. For more
+	// information, see [Introduction to partitioned tables]
 	// (https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding).
 	BigqueryDateShardedSpec *GoogleCloudDatacatalogV1BigQueryDateShardedSpec `json:"bigqueryDateShardedSpec,omitempty"`
 
-	// BigqueryTableSpec: Specification that applies to a BigQuery table.
-	// Valid only for entries with the `TABLE` type.
+	// BigqueryTableSpec: Output only. Specification that applies to a
+	// BigQuery table. Valid only for entries with the `TABLE` type.
 	BigqueryTableSpec *GoogleCloudDatacatalogV1BigQueryTableSpec `json:"bigqueryTableSpec,omitempty"`
 
 	// BusinessContext: Business Context of the entry. Not supported for
@@ -1292,8 +1292,8 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//
 	// Possible values:
 	//   "ENTRY_TYPE_UNSPECIFIED" - Default unknown type.
-	//   "TABLE" - Output only. The entry type that has a GoogleSQL schema,
-	// including logical views.
+	//   "TABLE" - The entry type that has a GoogleSQL schema, including
+	// logical views.
 	//   "MODEL" - Output only. The type of models. For more information,
 	// see [Supported models in BigQuery ML]
 	// (https://cloud.google.com/bigquery-ml/docs/introduction#supported_models_in).

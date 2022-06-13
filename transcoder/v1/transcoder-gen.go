@@ -1350,7 +1350,8 @@ type JobConfig struct {
 	// PubsubDestination: Destination on Pub/Sub.
 	PubsubDestination *PubsubDestination `json:"pubsubDestination,omitempty"`
 
-	// SpriteSheets: List of output sprite sheets.
+	// SpriteSheets: List of output sprite sheets. Spritesheets require at
+	// least one VideoStream in the Jobconfig.
 	SpriteSheets []*SpriteSheet `json:"spriteSheets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdBreaks") to

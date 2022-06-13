@@ -798,13 +798,16 @@ func (s *GoogleCloudRunV2Execution) MarshalJSON() ([]byte, error) {
 // /Executions.GetExecution with the given name to get full execution
 // including the latest status.
 type GoogleCloudRunV2ExecutionReference struct {
+	// CompletionTime: Creation timestamp of the execution.
+	CompletionTime string `json:"completionTime,omitempty"`
+
 	// CreateTime: Creation timestamp of the execution.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Name: Name of the execution.
 	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "CompletionTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -812,12 +815,13 @@ type GoogleCloudRunV2ExecutionReference struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CompletionTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

@@ -1,5 +1,13 @@
 # Changes
 
+## [0.84.0](https://github.com/googleapis/google-api-go-client/compare/v0.83.0...v0.84.0) (2022-06-14)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1584](https://github.com/googleapis/google-api-go-client/issues/1584) [#1581](https://github.com/googleapis/google-api-go-client/issues/1581) [#1580](https://github.com/googleapis/google-api-go-client/issues/1580) [#1576](https://github.com/googleapis/google-api-go-client/issues/1576) [#1574](https://github.com/googleapis/google-api-go-client/issues/1574)
+* **transport:** Integrate with enterprise certificate proxy ([#1570](https://github.com/googleapis/google-api-go-client/issues/1570)) ([1d5389b](https://github.com/googleapis/google-api-go-client/commit/1d5389b15d7a4669049cc446eba90285c67a554f))
+
 ## [0.83.0](https://github.com/googleapis/google-api-go-client/compare/v0.82.0...v0.83.0) (2022-06-07)
 
 

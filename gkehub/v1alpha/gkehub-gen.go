@@ -4449,6 +4449,53 @@ func (s *ServiceMeshControlPlaneManagement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ServiceMeshDataPlaneManagement: Status of data plane management. Only
+// reported per-member.
+type ServiceMeshDataPlaneManagement struct {
+	// Details: Explanation of the status.
+	Details []*ServiceMeshStatusDetails `json:"details,omitempty"`
+
+	// State: Lifecycle status of data plane management.
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - Unspecified
+	//   "DISABLED" - DISABLED means that the component is not enabled.
+	//   "FAILED_PRECONDITION" - FAILED_PRECONDITION means that provisioning
+	// cannot proceed because of some characteristic of the member cluster.
+	//   "PROVISIONING" - PROVISIONING means that provisioning is in
+	// progress.
+	//   "ACTIVE" - ACTIVE means that the component is ready for use.
+	//   "STALLED" - STALLED means that provisioning could not be done.
+	//   "NEEDS_ATTENTION" - NEEDS_ATTENTION means that the component is
+	// ready, but some user intervention is required. (For example that the
+	// user should migrate workloads to a new control plane revision.)
+	//   "DEGRADED" - DEGRADED means that the component is ready, but
+	// operating in a degraded state.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceMeshDataPlaneManagement) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshDataPlaneManagement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ServiceMeshFeatureState: **Service Mesh**: State for the whole Hub,
 // as analyzed by the Service Mesh Hub Controller.
 type ServiceMeshFeatureState struct {
@@ -4546,6 +4593,9 @@ type ServiceMeshMembershipState struct {
 	// ControlPlaneManagement: Output only. Status of control plane
 	// management
 	ControlPlaneManagement *ServiceMeshControlPlaneManagement `json:"controlPlaneManagement,omitempty"`
+
+	// DataPlaneManagement: Output only. Status of data plane management.
+	DataPlaneManagement *ServiceMeshDataPlaneManagement `json:"dataPlaneManagement,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisMessages") to
 	// unconditionally include in API requests. By default, fields with

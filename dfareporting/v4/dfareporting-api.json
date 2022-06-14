@@ -2633,13 +2633,9 @@
                 "OBJECT_TARGETING_TEMPLATE",
                 "OBJECT_SEARCH_LIFT_STUDY",
                 "OBJECT_FLOODLIGHT_DV360_LINK",
-                "OBJECT_ADVERTISER_CUSTOMER_LINK",
-                "OBJECT_CREATIVE_PROJECT",
-                "OBJECT_ACCOUNT_CAMPAIGN_CREATIVE_PROJECT_LINK"
+                "OBJECT_ADVERTISER_CUSTOMER_LINK"
               ],
               "enumDescriptions": [
-                "",
-                "",
                 "",
                 "",
                 "",
@@ -10036,7 +10032,7 @@
       }
     }
   },
-  "revision": "20220607",
+  "revision": "20220611",
   "rootUrl": "https://dfareporting.googleapis.com/",
   "schemas": {
     "Account": {

@@ -849,10 +849,10 @@ type GoogleChromePolicyV1ResolveRequest struct {
 	// example: chrome.users.ShowLogoutButton Wildcards are supported, but
 	// only in the leaf portion of the schema name. Wildcards cannot be used
 	// in namespace directly. Please read
-	// https://developers.google.com/chrome/chrome-management/guides/policyapi
-	// for details on schema namepsaces. For example: Valid:
-	// "chrome.users.*", "chrome.users.apps.*", "chrome.printers.*" Invalid:
-	// "*", "*.users", "chrome.*", "chrome.*.apps.*"
+	// https://developers.google.com/chrome/policy/guides/policy-schemas for
+	// details on schema namepsaces. For example: Valid: "chrome.users.*",
+	// "chrome.users.apps.*", "chrome.printers.*" Invalid: "*", "*.users",
+	// "chrome.*", "chrome.*.apps.*"
 	PolicySchemaFilter string `json:"policySchemaFilter,omitempty"`
 
 	// PolicyTargetKey: Required. The key of the target resource on which

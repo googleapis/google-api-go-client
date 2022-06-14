@@ -3155,7 +3155,7 @@
           },
           "path": "youtube/v3/thirdPartyLinks",
           "response": {
-            "$ref": "ThirdPartyLink"
+            "$ref": "ThirdPartyLinkListResponse"
           }
         },
         "update": {
@@ -3868,7 +3868,7 @@
       }
     }
   },
-  "revision": "20220608",
+  "revision": "20220612",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -10267,6 +10267,27 @@
         "status": {
           "$ref": "ThirdPartyLinkStatus",
           "description": "The status object contains information about the status of the link."
+        }
+      },
+      "type": "object"
+    },
+    "ThirdPartyLinkListResponse": {
+      "id": "ThirdPartyLinkListResponse",
+      "properties": {
+        "etag": {
+          "description": "Etag of this resource.",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "ThirdPartyLink"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "youtube#thirdPartyLinkListResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#thirdPartyLinkListResponse\".",
+          "type": "string"
         }
       },
       "type": "object"

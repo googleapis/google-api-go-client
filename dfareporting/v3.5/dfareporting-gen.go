@@ -23079,8 +23079,6 @@ func (c *ChangeLogsListCall) ObjectIds(objectIds ...int64) *ChangeLogsListCall {
 //   "OBJECT_SEARCH_LIFT_STUDY"
 //   "OBJECT_FLOODLIGHT_DV360_LINK"
 //   "OBJECT_ADVERTISER_CUSTOMER_LINK"
-//   "OBJECT_CREATIVE_PROJECT"
-//   "OBJECT_ACCOUNT_CAMPAIGN_CREATIVE_PROJECT_LINK"
 func (c *ChangeLogsListCall) ObjectType(objectType string) *ChangeLogsListCall {
 	c.urlParams_.Set("objectType", objectType)
 	return c
@@ -23338,13 +23336,9 @@ func (c *ChangeLogsListCall) Do(opts ...googleapi.CallOption) (*ChangeLogsListRe
 	//         "OBJECT_TARGETING_TEMPLATE",
 	//         "OBJECT_SEARCH_LIFT_STUDY",
 	//         "OBJECT_FLOODLIGHT_DV360_LINK",
-	//         "OBJECT_ADVERTISER_CUSTOMER_LINK",
-	//         "OBJECT_CREATIVE_PROJECT",
-	//         "OBJECT_ACCOUNT_CAMPAIGN_CREATIVE_PROJECT_LINK"
+	//         "OBJECT_ADVERTISER_CUSTOMER_LINK"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
-	//         "",
 	//         "",
 	//         "",
 	//         "",

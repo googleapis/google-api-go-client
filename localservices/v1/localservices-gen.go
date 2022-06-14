@@ -80,7 +80,7 @@ const mtlsBasePath = "https://localservices.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your AdWords campaigns
+	// See, edit, create, and delete your Google Ads accounts and data.
 	AdwordsScope = "https://www.googleapis.com/auth/adwords"
 )
 

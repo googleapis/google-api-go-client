@@ -1,0 +1,519 @@
+{
+   "title": "Takeout API",
+   "discoveryVersion": "v1",
+   "ownerName": "Google",
+   "version_module": true,
+   "resources": {
+      "exports": {
+         "methods": {
+            "get": {
+               "flatPath": "v2/{service}/exports/{exportId}",
+               "path": "v2/{service}/exports/{exportId}",
+               "id": "takeout_pa.exports.get",
+               "description": "Gets the status of a single export job.",
+               "response": {
+                  "$ref": "GetExportResponse"
+               },
+               "parameterOrder": ["service", "exportId"],
+               "httpMethod": "GET",
+               "scopes": ["https://www.googleapis.com/auth/drive.readonly"],
+               "parameters": {
+                  "service": {
+                     "location": "path",
+                     "description": "The Takeout service, from jcg/dataliberation/common/model/Service.java.",
+                     "required": true,
+                     "type": "string"
+                  },
+                  "exportId": {
+                     "location": "path",
+                     "description": "The ID of the export to get.",
+                     "required": true,
+                     "type": "string"
+                  }
+               }
+            },
+            "create": {
+               "request": {
+                  "$ref": "ExportRequest"
+               },
+               "description": "Creates a new Export Job for the user.  This will return immediately,\nthe ID in the response can then be used to poll GetExport to tell when\nthe job is done.",
+               "response": {
+                  "$ref": "CreateExportResponse"
+               },
+               "parameterOrder": ["service"],
+               "httpMethod": "POST",
+               "scopes": ["https://www.googleapis.com/auth/drive.readonly"],
+               "parameters": {
+                  "service": {
+                     "location": "path",
+                     "description": "The Takeout service, from jcg/dataliberation/common/model/Service.java.",
+                     "required": true,
+                     "type": "string"
+                  }
+               },
+               "flatPath": "v2/{service}/exports",
+               "path": "v2/{service}/exports",
+               "id": "takeout_pa.exports.create"
+            },
+            "cancel": {
+               "path": "v2/{service}/exports/{exportId}:cancel",
+               "id": "takeout_pa.exports.cancel",
+               "description": "Cancels a running export job.",
+               "response": {
+                  "$ref": "CancelExportResponse"
+               },
+               "parameterOrder": ["service", "exportId"],
+               "httpMethod": "POST",
+               "scopes": ["https://www.googleapis.com/auth/drive.readonly"],
+               "parameters": {
+                  "exportId": {
+                     "location": "path",
+                     "description": "The ID of the export to cancel.",
+                     "required": true,
+                     "type": "string"
+                  },
+                  "service": {
+                     "required": true,
+                     "type": "string",
+                     "location": "path",
+                     "description": "The Takeout service, from jcg/dataliberation/common/model/Service.java."
+                  }
+               },
+               "flatPath": "v2/{service}/exports/{exportId}:cancel"
+            }
+         }
+      }
+   },
+   "parameters": {
+      "key": {
+         "location": "query",
+         "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+         "type": "string"
+      },
+      "access_token": {
+         "location": "query",
+         "description": "OAuth access token.",
+         "type": "string"
+      },
+      "upload_protocol": {
+         "type": "string",
+         "location": "query",
+         "description": "Upload protocol for media (e.g. \"raw\", \"multipart\")."
+      },
+      "prettyPrint": {
+         "type": "boolean",
+         "default": "true",
+         "location": "query",
+         "description": "Returns response with indentations and line breaks."
+      },
+      "quotaUser": {
+         "location": "query",
+         "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+         "type": "string"
+      },
+      "fields": {
+         "location": "query",
+         "description": "Selector specifying which fields to include in a partial response.",
+         "type": "string"
+      },
+      "uploadType": {
+         "location": "query",
+         "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+         "type": "string"
+      },
+      "$.xgafv": {
+         "location": "query",
+         "enum": ["1", "2"],
+         "description": "V1 error format.",
+         "type": "string",
+         "enumDescriptions": ["v1 error format", "v2 error format"]
+      },
+      "oauth_token": {
+         "type": "string",
+         "location": "query",
+         "description": "OAuth 2.0 token for the current user."
+      },
+      "callback": {
+         "location": "query",
+         "description": "JSONP",
+         "type": "string"
+      },
+      "alt": {
+         "enumDescriptions": [
+            "Responses with Content-Type of application/json",
+            "Media download with context-dependent Content-Type",
+            "Responses with Content-Type of application/x-protobuf"
+         ],
+         "location": "query",
+         "description": "Data format for response.",
+         "default": "json",
+         "enum": ["json", "media", "proto"],
+         "type": "string"
+      }
+   },
+   "schemas": {
+      "ErrorProto": {
+         "description": "Describes one specific error.",
+         "type": "object",
+         "properties": {
+            "location": {
+               "type": "string",
+               "description": "Location of the error, as specified by the location type.\n\nIf location_type is PATH, this should be a path to a field that's\nrelative to the request, using FieldPath notation\n(net/proto2/util/public/field_path.h).\n\nExamples:\n  authenticated_user.gaia_id\n  resource.address[2].country"
+            },
+            "debugInfo": {
+               "description": "Debugging information, which should not be\nshared externally.",
+               "type": "string"
+            },
+            "code": {
+               "description": "Error code in the error domain. This should correspond to\na value of the enum type whose name is in domain. See\nthe core error domain in error_domain.proto.",
+               "type": "string"
+            },
+            "locationType": {
+               "type": "string",
+               "enumDescriptions": [
+                  "location is an xpath-like path pointing\nto the request field that caused the error.",
+                  "other location type which can safely be shared\nexternally.",
+                  "Location is request paramater. This maps to the {@link PARAMETERS} in\n{@link MessageLocation}."
+               ],
+               "enum": ["PATH", "OTHER", "PARAMETER"]
+            },
+            "argument": {
+               "description": "Error arguments, to be used when building user-friendly error messages\ngiven the error domain and code.  Different error codes require different\narguments.",
+               "type": "array",
+               "items": {
+                  "type": "string"
+               }
+            },
+            "externalErrorMessage": {
+               "description": "A short explanation for the error, which can be shared outside Google.\n\nPlease set domain, code and arguments whenever possible instead of this\nerror message so that external APIs can build safe error messages\nthemselves.\n\nExternal messages built in a RoSy interface will most likely refer to\ninformation and concepts that are not available externally and should not\nbe exposed. It is safer if external APIs can understand the errors and\ndecide what the error message should look like.",
+               "type": "string"
+            },
+            "domain": {
+               "type": "string",
+               "description": "Error domain. RoSy services can define their own\ndomain and error codes. This should normally be\nthe name of an enum type, such as: gdata.CoreErrorDomain"
+            }
+         },
+         "id": "ErrorProto"
+      },
+      "Errors": {
+         "description": "Request Error information.\n\nThe presence of an error field signals that the operation\nhas failed.",
+         "type": "object",
+         "properties": {
+            "error": {
+               "description": "Specific error description and codes",
+               "type": "array",
+               "items": {
+                  "$ref": "ErrorProto"
+               }
+            },
+            "code": {
+               "description": "Global error code. Deprecated and ignored.\nSet custom error codes in ErrorProto.domain and ErrorProto.code\ninstead.",
+               "type": "string",
+               "enumDescriptions": ["", "", "", "", "", "", "", ""],
+               "enum": [
+                  "BAD_REQUEST",
+                  "FORBIDDEN",
+                  "NOT_FOUND",
+                  "CONFLICT",
+                  "GONE",
+                  "PRECONDITION_FAILED",
+                  "INTERNAL_ERROR",
+                  "SERVICE_UNAVAILABLE"
+               ]
+            },
+            "requestId": {
+               "type": "string",
+               "description": "Request identifier generated by the service, which can be\nused to identify the error in the logs"
+            }
+         },
+         "id": "Errors"
+      },
+      "ExportJob": {
+         "type": "object",
+         "properties": {
+            "failedItemInfos": {
+               "description": "The set of items that couldn't be included in the archive.\nIf a directory was specified in ExportRequest.items and items in that\ndirectory failed, each individual file that failed will have an entry in\nfailed_item_infos.",
+               "type": "array",
+               "items": {
+                  "$ref": "FailedItemInfo"
+               }
+            },
+            "status": {
+               "enumDescriptions": [
+                  "The export is in an unknown state, this value should never be set\nif received it may indicate you client doesn't have the latest set\nof enum values.",
+                  "The export has been submitted but an archiver hasn't started working\non it yet.",
+                  "An archiver is working on this export, it is currently enumerating\nall the resources so we know how much work there is to do.",
+                  "The export is currently in the process of being built.",
+                  "The export is finished and completed successfully.  This will be\nthe result even if some individual files failed. failed_items will\nbe populated with id of any items that failed to be included in the\narchive.",
+                  "The export is finished and failed.  This represents a catastrophic\nfailure in the infrastructure and not a failure to fetch individual\nitems. failed_items will not be populated in this case.\ndebug_failure_info will contain more info about the failure."
+               ],
+               "enum": [
+                  "UNKNOWN",
+                  "QUEUED",
+                  "COUNTING",
+                  "BUILDING",
+                  "SUCCEEDED",
+                  "FAILED"
+               ],
+               "description": "The current status of this export job.",
+               "type": "string"
+            },
+            "failedItems": {
+               "description": "Use failed_item_info instead.",
+               "type": "array",
+               "items": {
+                  "type": "string"
+               }
+            },
+            "debugFailureInfo": {
+               "description": "Detailed information about what failed in the case status = FAILED.\nThis information is for internal debugging only and should not be shared\nwith user.",
+               "type": "string"
+            },
+            "archives": {
+               "type": "array",
+               "items": {
+                  "$ref": "Archive"
+               },
+               "description": "A set of records that contain information about the completed archives\ncreated by this job.  This will only be present if status = SUCCEEDED."
+            },
+            "items": {
+               "type": "array",
+               "items": {
+                  "$ref": "TakeoutItem"
+               },
+               "description": "The items being exported. If a directory is present all\nitems under that directory will be included."
+            },
+            "id": {
+               "description": "The ID of this job. Can be used to get or cancel this job.",
+               "type": "string"
+            }
+         },
+         "id": "ExportJob",
+         "description": "The representation of an export job.  Used for creating new jobs\nand reporting the state of existing jobs."
+      },
+      "ExportRequest": {
+         "type": "object",
+         "properties": {
+            "locale": {
+               "type": "string",
+               "description": "Allows the client to specify a locale for the request.\nThe format of the string is an IETF\nlanguage tag, such as \"en-US\", as defined in\nBCP 47 (http://tools.ietf.org/html/bcp47). More practically, the content\nof the string should be one that is appropriate for creating a java\nLocale object.  Defaults to \"en-US\" if not specified."
+            },
+            "items": {
+               "description": "The requested items to export. If a directory is specified, all\nitems under that directory will be exported, but only top-level\nitems are captured in this field.",
+               "type": "array",
+               "items": {
+                  "$ref": "TakeoutItem"
+               }
+            },
+            "initiatingClientService": {
+               "enum": [
+                  "UNKNOWN_SERVICE",
+                  "ACCOUNT_CENTRAL",
+                  "LIS",
+                  "DASHER",
+                  "PATRONUS",
+                  "PROBATE",
+                  "DRIVE_SERVICE",
+                  "TAKEDOWN",
+                  "DASHER_SUPPLEMENTAL",
+                  "LRTOOL_SOCIAL_RETENTION",
+                  "ACCOUNT_MIGRATION_UI",
+                  "NEST_SERVICE",
+                  "ACCOUNT_CENTRAL_SCHEDULED",
+                  "TRANSFER",
+                  "PHOTOS_DOWNLOAD_SERVICE",
+                  "TAKEOUT_INTERNAL"
+               ],
+               "type": "string",
+               "enumDescriptions": [
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "Used for Dasher Russia and China Flume jobs",
+                  "Used for legal removal of social data / long term retention exports",
+                  "",
+                  "",
+                  "Used to differentiate scheduled jobs that come from the UI",
+                  "DTP Jobs",
+                  "",
+                  "Used by takeout for troubleshooting"
+               ]
+            },
+            "archivePrefix": {
+               "description": "Optional prefix for the archive filename. Will be followed by a '-'\n& an ISO standard timestamp in yyyyMMdd'T'HHmmssZ format. Prefix\ndefaults to \"takeout\" if none specified, resulting in an archive\nname like \"takeout-20150924T221439Z.zip\".",
+               "type": "string"
+            },
+            "service": {
+               "type": "string",
+               "description": "The Takeout service, from jcg/dataliberation/common/model/Service.java."
+            }
+         },
+         "id": "ExportRequest",
+         "description": "A request to create a new export."
+      },
+      "CreateExportResponse": {
+         "id": "CreateExportResponse",
+         "description": "The result of a request to create a new export.",
+         "type": "object",
+         "properties": {
+            "exportJob": {
+               "$ref": "ExportJob",
+               "description": "Details about the created export."
+            },
+            "errors": {
+               "description": "If present provides details on any errors that occurred.",
+               "$ref": "Errors"
+            }
+         }
+      },
+      "FailedItemInfo": {
+         "id": "FailedItemInfo",
+         "description": "Info about a failed item (file or folder) in an export.",
+         "type": "object",
+         "properties": {
+            "title": {
+               "description": "The user visible title of the item that failed, empty if the failure was\ndue to permissions.",
+               "type": "string"
+            },
+            "cause": {
+               "enumDescriptions": [
+                  "The default value for the enum, isn't expected in production.",
+                  "A failure that we weren't able to assign a specific cause to.",
+                  "The specified ID was not found.",
+                  "This item was marked as prevent colaborators from downloading.",
+                  "This item failed the virus check."
+               ],
+               "enum": [
+                  "UNKNOWN",
+                  "GENERIC",
+                  "ITEM_NOT_FOUND",
+                  "DOWNLOAD_PROHIBITED",
+                  "CONTAINS_VIRUS"
+               ],
+               "description": "The cause of the failure, if known.",
+               "type": "string"
+            },
+            "relativePath": {
+               "description": "The path to the failed item from one of the root items specified when\nstarting the export.  The path includes the file name.\nIf this item is reachable via multiple paths (e.g. the individual item\nwas selected as well as the parent folder or the item is multi-included\nin several folders) it is undefined (and non-deterministic) which root\nnode this path will be relative to.",
+               "type": "string"
+            },
+            "docId": {
+               "description": "The document ID of the item that failed.",
+               "type": "string"
+            },
+            "mediaType": {
+               "type": "string",
+               "description": "The mime type of the file."
+            }
+         }
+      },
+      "Archive": {
+         "description": "A completed archive file (e.g. zip or tgz).",
+         "type": "object",
+         "properties": {
+            "storagePath": {
+               "description": "The downloadable url of the completed archive.",
+               "type": "string"
+            },
+            "compressedSize": {
+               "description": "The size, in bytes, of the compressed archive.",
+               "format": "uint64",
+               "type": "string"
+            },
+            "fileName": {
+               "description": "The full name of the archive file, including extension (but not\nincluding path).",
+               "type": "string"
+            },
+            "sizeOfContents": {
+               "description": "The size, in bytes, of all the items in the archive.",
+               "format": "uint64",
+               "type": "string"
+            }
+         },
+         "id": "Archive"
+      },
+      "GetExportResponse": {
+         "id": "GetExportResponse",
+         "description": "Details about a given export.",
+         "type": "object",
+         "properties": {
+            "exportJob": {
+               "$ref": "ExportJob",
+               "description": "Details on the requested export."
+            },
+            "percentDone": {
+               "description": "Percent done (# completed files) / (# total files).\nIncluded for BUILDING exports only.",
+               "format": "int32",
+               "type": "integer"
+            },
+            "numFetchedFiles": {
+               "type": "integer",
+               "description": "Total number of fetched files. Set for completed exports only.\nIf a folder containing 2 files was downloaded, num_fetched_files = 2.",
+               "format": "int32"
+            },
+            "errors": {
+               "$ref": "Errors",
+               "description": "If present provides details on any errors that occurred."
+            }
+         }
+      },
+      "TakeoutItem": {
+         "description": "Represents an item (file/folder/album) in the product.",
+         "type": "object",
+         "properties": {
+            "id": {
+               "description": "The ID of the item, must line up with the id that that service's\nTakeout integration produces.",
+               "type": "string"
+            }
+         },
+         "id": "TakeoutItem"
+      },
+      "CancelExportResponse": {
+         "id": "CancelExportResponse",
+         "description": "The result of a request to cancel a given export.",
+         "type": "object",
+         "properties": {
+            "errors": {
+               "description": "If present provides details on any errors that occurred.",
+               "$ref": "Errors"
+            },
+            "succeeded": {
+               "description": "Whether the export was successfully cancelled",
+               "type": "boolean"
+            }
+         }
+      }
+   },
+   "icons": {
+      "x32": "http://www.google.com/images/icons/product/search-32.gif",
+      "x16": "http://www.google.com/images/icons/product/search-16.gif"
+   },
+   "protocol": "rest",
+   "version": "v2",
+   "baseUrl": "https://takeout-pa.googleapis.com/",
+   "auth": {
+      "oauth2": {
+         "scopes": {
+            "https://www.googleapis.com/auth/drive.readonly": {
+               "description": "See and download all your Google Drive files"
+            }
+         }
+      }
+   },
+   "description": "",
+   "servicePath": "",
+   "kind": "discovery#restDescription",
+   "rootUrl": "https://takeout-pa.googleapis.com/",
+   "basePath": "",
+   "ownerDomain": "google.com",
+   "name": "takeout_pa",
+   "batchPath": "batch",
+   "revision": "20191219",
+   "documentationLink": "",
+   "id": "takeout_pa:v2"
+}

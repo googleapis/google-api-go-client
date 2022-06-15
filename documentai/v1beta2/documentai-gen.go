@@ -1746,9 +1746,21 @@ func (s *GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata) MarshalJSON() (
 // GoogleCloudDocumentaiV1ReviewDocumentResponse: Response message for
 // review document method.
 type GoogleCloudDocumentaiV1ReviewDocumentResponse struct {
-	// GcsDestination: The Cloud Storage uri for the human reviewed
-	// document.
+	// GcsDestination: The Cloud Storage uri for the human reviewed document
+	// if the review is succeeded.
 	GcsDestination string `json:"gcsDestination,omitempty"`
+
+	// RejectionReason: The reason why the review is rejected by reviewer.
+	RejectionReason string `json:"rejectionReason,omitempty"`
+
+	// State: The state of the review operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value is used if the
+	// state is omitted.
+	//   "REJECTED" - The review operation is rejected by the reviewer.
+	//   "SUCCEEDED" - The review operation is succeeded.
+	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
@@ -6623,9 +6635,21 @@ func (s *GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata) MarshalJSO
 // GoogleCloudDocumentaiV1beta3ReviewDocumentResponse: Response message
 // for review document method.
 type GoogleCloudDocumentaiV1beta3ReviewDocumentResponse struct {
-	// GcsDestination: The Cloud Storage uri for the human reviewed
-	// document.
+	// GcsDestination: The Cloud Storage uri for the human reviewed document
+	// if the review is succeeded.
 	GcsDestination string `json:"gcsDestination,omitempty"`
+
+	// RejectionReason: The reason why the review is rejected by reviewer.
+	RejectionReason string `json:"rejectionReason,omitempty"`
+
+	// State: The state of the review operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value is used if the
+	// state is omitted.
+	//   "REJECTED" - The review operation is rejected by the reviewer.
+	//   "SUCCEEDED" - The review operation is succeeded.
+	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with

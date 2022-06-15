@@ -4166,6 +4166,12 @@ type GoogleCloudApigeeV1Environment struct {
 	// DisplayName: Optional. Display name for this environment.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// ForwardProxyUri: Optional. Url of the forward proxy to be applied to
+	// the runtime instances in this environment. Must be in the format of
+	// {scheme}://{hostname}:{port}. Note that scheme must be one of "http"
+	// or "https", and port must be supplied.
+	ForwardProxyUri string `json:"forwardProxyUri,omitempty"`
+
 	// LastModifiedAt: Output only. Last modification time of this
 	// environment as milliseconds since epoch.
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
@@ -4242,6 +4248,11 @@ type GoogleCloudApigeeV1EnvironmentConfig struct {
 
 	// Flowhooks: List of flow hooks in the environment.
 	Flowhooks []*GoogleCloudApigeeV1FlowHookConfig `json:"flowhooks,omitempty"`
+
+	// ForwardProxyUri: The forward proxy's url to be used by the runtime.
+	// When set, runtime will send requests to the target via the given
+	// forward proxy. This is only used by programmable gateways.
+	ForwardProxyUri string `json:"forwardProxyUri,omitempty"`
 
 	// GatewayConfigLocation: The location for the gateway config blob as a
 	// URI, e.g. a Cloud Storage URI. This is only used by Envoy-based

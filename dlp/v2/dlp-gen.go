@@ -1107,7 +1107,15 @@ type GooglePrivacyDlpV2CharacterMaskConfig struct {
 
 	// NumberToMask: Number of characters to mask. If not set, all matching
 	// chars will be masked. Skipped characters do not count towards this
-	// tally.
+	// tally. If `number_to_mask` is negative, this denotes inverse masking.
+	// Cloud DLP masks all but a number of characters. For example, suppose
+	// you have the following values: - `masking_character` is `*` -
+	// `number_to_mask` is `-4` - `reverse_order` is `false` -
+	// `CharsToIgnore` includes `-` - Input string is `1234-5678-9012-3456`
+	// The resulting de-identified string is `****-****-****-3456`. Cloud
+	// DLP masks all but the last four characters. If `reverse_order` is
+	// `true`, all but the first four characters are masked as
+	// `1234-****-****-****`.
 	NumberToMask int64 `json:"numberToMask,omitempty"`
 
 	// ReverseOrder: Mask characters in reverse order. For example, if
@@ -4220,8 +4228,122 @@ func (s *GooglePrivacyDlpV2InfoType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2InfoTypeCategory: Classification of infoTypes to
+// organize them according to geographic location, industry, and data
+// type.
+type GooglePrivacyDlpV2InfoTypeCategory struct {
+	// IndustryCategory: The group of relevant businesses where this
+	// infoType is commonly used
+	//
+	// Possible values:
+	//   "INDUSTRY_UNSPECIFIED" - Unused industry
+	//   "FINANCE" - The infoType is typically used in the finance industry.
+	//   "HEALTH" - The infoType is typically used in the health industry.
+	//   "TELECOMMUNICATIONS" - The infoType is typically used in the
+	// telecommunications industry.
+	IndustryCategory string `json:"industryCategory,omitempty"`
+
+	// LocationCategory: The region or country that issued the ID or
+	// document represented by the infoType.
+	//
+	// Possible values:
+	//   "LOCATION_UNSPECIFIED" - Unused location
+	//   "GLOBAL" - The infoType is not issued by or tied to a specific
+	// region, but is used almost everywhere.
+	//   "ARGENTINA" - The infoType is typically used in Argentina.
+	//   "AUSTRALIA" - The infoType is typically used in Australia.
+	//   "BELGIUM" - The infoType is typically used in Belgium.
+	//   "BRAZIL" - The infoType is typically used in Brazil.
+	//   "CANADA" - The infoType is typically used in Canada.
+	//   "CHILE" - The infoType is typically used in Chile.
+	//   "CHINA" - The infoType is typically used in China.
+	//   "COLOMBIA" - The infoType is typically used in Colombia.
+	//   "DENMARK" - The infoType is typically used in Denmark.
+	//   "FRANCE" - The infoType is typically used in France.
+	//   "FINLAND" - The infoType is typically used in Finland.
+	//   "GERMANY" - The infoType is typically used in Germany.
+	//   "HONG_KONG" - The infoType is typically used in Hong Kong.
+	//   "INDIA" - The infoType is typically used in India.
+	//   "INDONESIA" - The infoType is typically used in Indonesia.
+	//   "IRELAND" - The infoType is typically used in Ireland.
+	//   "ISRAEL" - The infoType is typically used in Israel.
+	//   "ITALY" - The infoType is typically used in Italy.
+	//   "JAPAN" - The infoType is typically used in Japan.
+	//   "KOREA" - The infoType is typically used in Korea.
+	//   "MEXICO" - The infoType is typically used in Mexico.
+	//   "THE_NETHERLANDS" - The infoType is typically used in the
+	// Netherlands.
+	//   "NORWAY" - The infoType is typically used in Norway.
+	//   "PARAGUAY" - The infoType is typically used in Paraguay.
+	//   "PERU" - The infoType is typically used in Peru.
+	//   "POLAND" - The infoType is typically used in Poland.
+	//   "PORTUGAL" - The infoType is typically used in Portugal.
+	//   "SINGAPORE" - The infoType is typically used in Singapore.
+	//   "SOUTH_AFRICA" - The infoType is typically used in South Africa.
+	//   "SPAIN" - The infoType is typically used in Spain.
+	//   "SWEDEN" - The infoType is typically used in Sweden.
+	//   "TAIWAN" - The infoType is typically used in Taiwan.
+	//   "THAILAND" - The infoType is typically used in Thailand.
+	//   "TURKEY" - The infoType is typically used in Turkey.
+	//   "UNITED_KINGDOM" - The infoType is typically used in the United
+	// Kingdom.
+	//   "UNITED_STATES" - The infoType is typically used in the United
+	// States.
+	//   "URUGUAY" - The infoType is typically used in Uruguay.
+	//   "VENEZUELA" - The infoType is typically used in Venezuela.
+	//   "INTERNAL" - The infoType is typically used in Google internally.
+	LocationCategory string `json:"locationCategory,omitempty"`
+
+	// TypeCategory: The class of identifiers where this infoType belongs
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unused type
+	//   "PII" - Personally identifiable information, for example, a name or
+	// phone number
+	//   "SPII" - Personally identifiable information that is especially
+	// sensitive, for example, a passport number.
+	//   "DEMOGRAPHIC" - Attributes that can partially identify someone,
+	// especially in combination with other attributes, like age, height,
+	// and gender.
+	//   "CREDENTIAL" - Confidential or secret information, for example, a
+	// password.
+	//   "GOVERNMENT_ID" - An identification document issued by a
+	// government.
+	//   "DOCUMENT" - A document, for example, a resume or source code.
+	//   "CONTEXTUAL_INFORMATION" - Information that is not sensitive on its
+	// own, but provides details about the circumstances surrounding an
+	// entity or an event.
+	TypeCategory string `json:"typeCategory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndustryCategory") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IndustryCategory") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2InfoTypeCategory) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2InfoTypeCategory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2InfoTypeDescription: InfoType description.
 type GooglePrivacyDlpV2InfoTypeDescription struct {
+	// Categories: The category of the infoType.
+	Categories []*GooglePrivacyDlpV2InfoTypeCategory `json:"categories,omitempty"`
+
 	// Description: Description of the infotype. Translated when language is
 	// provided in the request.
 	Description string `json:"description,omitempty"`
@@ -4240,7 +4362,7 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 	//   "RISK_ANALYSIS" - Supported by the risk analysis operations.
 	SupportedBy []string `json:"supportedBy,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// ForceSendFields is a list of field names (e.g. "Categories") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4248,10 +4370,10 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Categories") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

@@ -812,8 +812,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDe
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Subscription: LINT.IfChange
-// A Subscription resource managed by 3P Partners.
+// GoogleCloudPaymentsResellerSubscriptionV1Subscription: A Subscription
+// resource managed by 3P Partners.
 type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// CancellationDetails: Output only. Describes the details of a
 	// cancelled subscription. Only applicable to subscription of state

@@ -1778,6 +1778,36 @@ func (s *Jwt) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LanguagePackageDependency: Indicates a language package available
+// between this package and the customer's resource artifact.
+type LanguagePackageDependency struct {
+	Package string `json:"package,omitempty"`
+
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Package") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Package") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LanguagePackageDependency) MarshalJSON() ([]byte, error) {
+	type NoMethod LanguagePackageDependency
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Layer: Layer holds metadata specific to a layer of a Docker image.
 type Layer struct {
 	// Arguments: The recovered arguments to the Dockerfile directive.
@@ -2247,6 +2277,12 @@ type PackageData struct {
 	// manifest. Examples include distro or storage location for vulnerable
 	// jar.
 	CpeUri string `json:"cpeUri,omitempty"`
+
+	// DependencyChain: The dependency chain between this package and the
+	// user's artifact. List in order from the customer's package under
+	// review first, to the current package last. Inclusive of the original
+	// package and the current package.
+	DependencyChain []*LanguagePackageDependency `json:"dependencyChain,omitempty"`
 
 	// FileLocation: The path to the jar file / go binary file.
 	FileLocation []*FileLocation `json:"fileLocation,omitempty"`

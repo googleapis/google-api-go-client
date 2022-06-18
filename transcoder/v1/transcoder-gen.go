@@ -1252,6 +1252,10 @@ type Job struct {
 	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
 	InputUri string `json:"inputUri,omitempty"`
 
+	// Labels: The labels associated with this job. You can use these to
+	// organize and group your jobs.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Name: The resource name of the job. Format:
 	// `projects/{project_number}/locations/{location}/jobs/{job}`
 	Name string `json:"name,omitempty"`
@@ -1381,6 +1385,10 @@ func (s *JobConfig) MarshalJSON() ([]byte, error) {
 type JobTemplate struct {
 	// Config: The configuration for this template.
 	Config *JobConfig `json:"config,omitempty"`
+
+	// Labels: The labels associated with this job template. You can use
+	// these to organize and group your job templates.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The resource name of the job template. Format:
 	// `projects/{project_number}/locations/{location}/jobTemplates/{job_temp

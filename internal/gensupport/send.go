@@ -115,7 +115,7 @@ func sendAndRetry(ctx context.Context, client *http.Client, req *http.Request, r
 			}
 			return resp, err
 		}
-		invocationHeader := fmt.Sprintf("gccl-invocation-id/%v gccl-attempt-count/%v", invocationID, attempts)
+		invocationHeader := fmt.Sprintf("gccl-invocation-id/%s gccl-attempt-count/%d", invocationID, attempts)
 		xGoogHeader := strings.Join([]string{invocationHeader, baseXGoogHeader}, " ")
 		req.Header.Set("X-Goog-Api-Client", xGoogHeader)
 

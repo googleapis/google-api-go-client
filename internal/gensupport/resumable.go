@@ -82,7 +82,7 @@ func (rx *ResumableUpload) doUploadRequest(ctx context.Context, data io.Reader, 
 	req.Header.Set("User-Agent", rx.UserAgent)
 
 	baseXGoogHeader := "gl-go/" + GoVersion() + " gdcl/" + internal.Version
-	invocationHeader := fmt.Sprintf("gccl-invocation-id/%v gccl-attempt-count/%v", rx.invocationID, rx.attempts)
+	invocationHeader := fmt.Sprintf("gccl-invocation-id/%s gccl-attempt-count/%d", rx.invocationID, rx.attempts)
 	req.Header.Set("X-Goog-Api-Client", strings.Join([]string{baseXGoogHeader, invocationHeader}, " "))
 
 	// Google's upload endpoint uses status code 308 for a

@@ -3843,7 +3843,8 @@ func (s *RegionalTaxRateInfo) MarshalJSON() ([]byte, error) {
 // the specified resource.
 type RegionsVersion struct {
 	// Version: Required. A string representing version of the available
-	// regions being used for the specified resource.
+	// regions being used for the specified resource. The current version is
+	// 2022/01.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Version") to
@@ -15057,7 +15058,8 @@ func (c *MonetizationSubscriptionsCreateCall) ProductId(productId string) *Monet
 
 // RegionsVersionVersion sets the optional parameter
 // "regionsVersion.version": Required. A string representing version of
-// the available regions being used for the specified resource.
+// the available regions being used for the specified resource. The
+// current version is 2022/01.
 func (c *MonetizationSubscriptionsCreateCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsCreateCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -15174,7 +15176,7 @@ func (c *MonetizationSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "regionsVersion.version": {
-	//       "description": "Required. A string representing version of the available regions being used for the specified resource.",
+	//       "description": "Required. A string representing version of the available regions being used for the specified resource. The current version is 2022/01.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15706,7 +15708,8 @@ func (r *MonetizationSubscriptionsService) Patch(packageName string, productId s
 
 // RegionsVersionVersion sets the optional parameter
 // "regionsVersion.version": Required. A string representing version of
-// the available regions being used for the specified resource.
+// the available regions being used for the specified resource. The
+// current version is 2022/01.
 func (c *MonetizationSubscriptionsPatchCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsPatchCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -15833,7 +15836,7 @@ func (c *MonetizationSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "regionsVersion.version": {
-	//       "description": "Required. A string representing version of the available regions being used for the specified resource.",
+	//       "description": "Required. A string representing version of the available regions being used for the specified resource. The current version is 2022/01.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16711,7 +16714,8 @@ func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) OfferId(offerId str
 
 // RegionsVersionVersion sets the optional parameter
 // "regionsVersion.version": Required. A string representing version of
-// the available regions being used for the specified resource.
+// the available regions being used for the specified resource. The
+// current version is 2022/01.
 func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsBasePlansOffersCreateCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -16844,7 +16848,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "regionsVersion.version": {
-	//       "description": "Required. A string representing version of the available regions being used for the specified resource.",
+	//       "description": "Required. A string representing version of the available regions being used for the specified resource. The current version is 2022/01.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -17613,7 +17617,8 @@ func (r *MonetizationSubscriptionsBasePlansOffersService) Patch(packageName stri
 
 // RegionsVersionVersion sets the optional parameter
 // "regionsVersion.version": Required. A string representing version of
-// the available regions being used for the specified resource.
+// the available regions being used for the specified resource. The
+// current version is 2022/01.
 func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsBasePlansOffersPatchCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -17756,7 +17761,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "regionsVersion.version": {
-	//       "description": "Required. A string representing version of the available regions being used for the specified resource.",
+	//       "description": "Required. A string representing version of the available regions being used for the specified resource. The current version is 2022/01.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

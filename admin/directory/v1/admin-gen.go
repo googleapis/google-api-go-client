@@ -4045,7 +4045,10 @@ func (s *RoleRolePrivileges) MarshalJSON() ([]byte, error) {
 
 // RoleAssignment: Defines an assignment of a role.
 type RoleAssignment struct {
-	// AssignedTo: The unique ID of the user this role is assigned to.
+	// AssignedTo: The unique ID of the entity this role is assigned
+	// to—either the `user_id` of a user or the `uniqueId` of a service
+	// account, as defined in Identity and Access Management (IAM)
+	// (https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts).
 	AssignedTo string `json:"assignedTo,omitempty"`
 
 	// Etag: ETag of the resource.

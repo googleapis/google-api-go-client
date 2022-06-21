@@ -5855,8 +5855,8 @@ func (s *GoogleCloudRetailV2betaSearchRequestFacetSpec) MarshalJSON() ([]byte, e
 // GoogleCloudRetailV2betaSearchRequestFacetSpecFacetKey: Specifies how
 // a facet is computed.
 type GoogleCloudRetailV2betaSearchRequestFacetSpecFacetKey struct {
-	// CaseInsensitive: Whether to make facet keys case insensitive when
-	// getting faceting values with prefixes or contains.
+	// CaseInsensitive: True to make facet keys case insensitive when
+	// getting faceting values with prefixes or contains; false otherwise.
 	CaseInsensitive bool `json:"caseInsensitive,omitempty"`
 
 	// Contains: Only get facet values that contains the given strings. For
@@ -12477,13 +12477,18 @@ type ProjectsLocationsCatalogsPlacementsPredictCall struct {
 // Predict: Makes a recommendation prediction.
 //
 // - placement: Full resource name of the format:
-//   `{name=projects/*/locations/global/catalogs/default_catalog/placemen
-//   ts/*}` The ID of the Recommendations AI placement. Before you can
-//   request predictions from your model, you must create at least one
-//   placement for it. For more information, see Managing placements
-//   (https://cloud.google.com/retail/recommendations-ai/docs/manage-placements).
-//   The full list of available placements can be seen at
-//   https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements.
+//   {placement=projects/*/locations/global/catalogs/default_catalog/serv
+//   ingConfigs/*} or
+//   {placement=projects/*/locations/global/catalogs/default_catalog/plac
+//   ements/*}. We recommend using the `servingConfigs` resource.
+//   `placements` is a legacy resource. The ID of the Recommendations AI
+//   serving config or placement. Before you can request predictions
+//   from your model, you must create at least one serving config or
+//   placement for it. For more information, see [Managing serving
+//   configurations]
+//   (https://cloud.google.com/retail/docs/manage-configs). The full
+//   list of available serving configs can be seen at
+//   https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
 func (r *ProjectsLocationsCatalogsPlacementsService) Predict(placement string, googlecloudretailv2betapredictrequest *GoogleCloudRetailV2betaPredictRequest) *ProjectsLocationsCatalogsPlacementsPredictCall {
 	c := &ProjectsLocationsCatalogsPlacementsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -12592,7 +12597,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. Full resource name of the format: `{name=projects/*/locations/global/catalogs/default_catalog/placements/*}` The ID of the Recommendations AI placement. Before you can request predictions from your model, you must create at least one placement for it. For more information, see [Managing placements](https://cloud.google.com/retail/recommendations-ai/docs/manage-placements). The full list of available placements can be seen at https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements",
+	//       "description": "Required. Full resource name of the format: {placement=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*} or {placement=projects/*/locations/global/catalogs/default_catalog/placements/*}. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Managing serving configurations] (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -12628,8 +12633,11 @@ type ProjectsLocationsCatalogsPlacementsSearchCall struct {
 // who have Retail Search enabled. Please enable Retail Search on Cloud
 // Console before using this feature.
 //
-// - placement: The resource name of the search engine placement, such
-//   as
+// - placement: The resource name of the Retail Search serving config,
+//   such as
+//   `projects/*/locations/global/catalogs/default_catalog/servingConfigs
+//   /default_serving_config` or the name of the legacy placement
+//   resource, such as
 //   `projects/*/locations/global/catalogs/default_catalog/placements/def
 //   ault_search`. This field is used to identify the serving
 //   configuration name and the set of models that will be used to make
@@ -12742,7 +12750,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. The resource name of the search engine placement, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
+	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -13738,6 +13746,161 @@ func (c *ProjectsLocationsCatalogsServingConfigsPatchCall) Do(opts ...googleapi.
 
 }
 
+// method id "retail.projects.locations.catalogs.servingConfigs.predict":
+
+type ProjectsLocationsCatalogsServingConfigsPredictCall struct {
+	s                                     *Service
+	placement                             string
+	googlecloudretailv2betapredictrequest *GoogleCloudRetailV2betaPredictRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Predict: Makes a recommendation prediction.
+//
+// - placement: Full resource name of the format:
+//   {placement=projects/*/locations/global/catalogs/default_catalog/serv
+//   ingConfigs/*} or
+//   {placement=projects/*/locations/global/catalogs/default_catalog/plac
+//   ements/*}. We recommend using the `servingConfigs` resource.
+//   `placements` is a legacy resource. The ID of the Recommendations AI
+//   serving config or placement. Before you can request predictions
+//   from your model, you must create at least one serving config or
+//   placement for it. For more information, see [Managing serving
+//   configurations]
+//   (https://cloud.google.com/retail/docs/manage-configs). The full
+//   list of available serving configs can be seen at
+//   https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
+func (r *ProjectsLocationsCatalogsServingConfigsService) Predict(placement string, googlecloudretailv2betapredictrequest *GoogleCloudRetailV2betaPredictRequest) *ProjectsLocationsCatalogsServingConfigsPredictCall {
+	c := &ProjectsLocationsCatalogsServingConfigsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.placement = placement
+	c.googlecloudretailv2betapredictrequest = googlecloudretailv2betapredictrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsServingConfigsPredictCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) Context(ctx context.Context) *ProjectsLocationsCatalogsServingConfigsPredictCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betapredictrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+placement}:predict")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"placement": c.placement,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.servingConfigs.predict" call.
+// Exactly one of *GoogleCloudRetailV2betaPredictResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudRetailV2betaPredictResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2betaPredictResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRetailV2betaPredictResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Makes a recommendation prediction.",
+	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/servingConfigs/{servingConfigsId}:predict",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.locations.catalogs.servingConfigs.predict",
+	//   "parameterOrder": [
+	//     "placement"
+	//   ],
+	//   "parameters": {
+	//     "placement": {
+	//       "description": "Required. Full resource name of the format: {placement=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*} or {placement=projects/*/locations/global/catalogs/default_catalog/placements/*}. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Managing serving configurations] (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/servingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta/{+placement}:predict",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2betaPredictRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRetailV2betaPredictResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "retail.projects.locations.catalogs.servingConfigs.removeControl":
 
 type ProjectsLocationsCatalogsServingConfigsRemoveControlCall struct {
@@ -13883,6 +14046,180 @@ func (c *ProjectsLocationsCatalogsServingConfigsRemoveControlCall) Do(opts ...go
 	//   ]
 	// }
 
+}
+
+// method id "retail.projects.locations.catalogs.servingConfigs.search":
+
+type ProjectsLocationsCatalogsServingConfigsSearchCall struct {
+	s                                    *Service
+	placement                            string
+	googlecloudretailv2betasearchrequest *GoogleCloudRetailV2betaSearchRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Search: Performs a search. This feature is only available for users
+// who have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
+//
+// - placement: The resource name of the Retail Search serving config,
+//   such as
+//   `projects/*/locations/global/catalogs/default_catalog/servingConfigs
+//   /default_serving_config` or the name of the legacy placement
+//   resource, such as
+//   `projects/*/locations/global/catalogs/default_catalog/placements/def
+//   ault_search`. This field is used to identify the serving
+//   configuration name and the set of models that will be used to make
+//   the search.
+func (r *ProjectsLocationsCatalogsServingConfigsService) Search(placement string, googlecloudretailv2betasearchrequest *GoogleCloudRetailV2betaSearchRequest) *ProjectsLocationsCatalogsServingConfigsSearchCall {
+	c := &ProjectsLocationsCatalogsServingConfigsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.placement = placement
+	c.googlecloudretailv2betasearchrequest = googlecloudretailv2betasearchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsServingConfigsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Context(ctx context.Context) *ProjectsLocationsCatalogsServingConfigsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betasearchrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+placement}:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"placement": c.placement,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.servingConfigs.search" call.
+// Exactly one of *GoogleCloudRetailV2betaSearchResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudRetailV2betaSearchResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2betaSearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRetailV2betaSearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
+	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/servingConfigs/{servingConfigsId}:search",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.locations.catalogs.servingConfigs.search",
+	//   "parameterOrder": [
+	//     "placement"
+	//   ],
+	//   "parameters": {
+	//     "placement": {
+	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/servingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta/{+placement}:search",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2betaSearchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRetailV2betaSearchResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudRetailV2betaSearchResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googlecloudretailv2betasearchrequest.PageToken = pt }(c.googlecloudretailv2betasearchrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googlecloudretailv2betasearchrequest.PageToken = x.NextPageToken
+	}
 }
 
 // method id "retail.projects.locations.catalogs.userEvents.collect":

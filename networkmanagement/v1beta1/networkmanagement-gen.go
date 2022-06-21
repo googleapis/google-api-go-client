@@ -1111,11 +1111,12 @@ type FirewallInfo struct {
 	// details, see [Implied
 	// rules](https://cloud.google.com/vpc/docs/firewalls#default_firewall_ru
 	// les).
-	//   "SERVICE_MANAGED_FIREWALL_RULE" - Implicit firewall rules that are
-	// created by services, such as [VPC connector's implicit
-	// rule](https://cloud.google.com/functions/docs/networking/connecting-vp
-	// c#restrict-access) for allowing ingress access. These rules are
-	// managed by services and not visible in the Google Cloud console.
+	//   "SERVERLESS_VPC_ACCESS_MANAGED_FIREWALL_RULE" - Implicit firewall
+	// rules that are managed by serverless VPC access to allow ingress
+	// access. They are not visible in the Google Cloud console. For
+	// details, see [VPC connector's implicit
+	// rules](https://cloud.google.com/functions/docs/networking/connecting-v
+	// pc#restrict-access).
 	FirewallRuleType string `json:"firewallRuleType,omitempty"`
 
 	// NetworkUri: The URI of the VPC network that the firewall rule is

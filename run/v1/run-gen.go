@@ -1415,13 +1415,16 @@ func (s *Execution) MarshalJSON() ([]byte, error) {
 // /Executions.GetExecution with the given name to get full execution
 // including the latest status.
 type ExecutionReference struct {
+	// CompletionTimestamp: Optional. Completion timestamp of the execution.
+	CompletionTimestamp string `json:"completionTimestamp,omitempty"`
+
 	// CreationTimestamp: Optional. Creation timestamp of the execution.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Name: Optional. Name of the execution.
 	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CreationTimestamp")
+	// ForceSendFields is a list of field names (e.g. "CompletionTimestamp")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1429,7 +1432,7 @@ type ExecutionReference struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreationTimestamp") to
+	// NullFields is a list of field names (e.g. "CompletionTimestamp") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

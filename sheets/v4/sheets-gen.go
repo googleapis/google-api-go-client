@@ -2515,7 +2515,7 @@ func (s *BooleanRule) MarshalJSON() ([]byte, error) {
 
 // Border: A border along a cell.
 type Border struct {
-	// Color: The color of the border. Deprecated: Use [color_style].
+	// Color: The color of the border. Deprecated: Use color_style.
 	Color *Color `json:"color,omitempty"`
 
 	// ColorStyle: The color of the border. If color is also set, this field
@@ -2965,7 +2965,7 @@ type CellFormat struct {
 	//   "RIGHT" - The text is explicitly aligned to the right of the cell.
 	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
 
-	// HyperlinkDisplayType: How a hyperlink, if it exists, should be
+	// HyperlinkDisplayType: If one exists, how a hyperlink should be
 	// displayed in the cell.
 	//
 	// Possible values:
@@ -2994,12 +2994,12 @@ type CellFormat struct {
 	TextDirection string `json:"textDirection,omitempty"`
 
 	// TextFormat: The format of the text in the cell (unless overridden by
-	// a format run). Setting a cell-level link here will clear the cell's
-	// existing links. Setting the link field in a TextFormatRun will take
+	// a format run). Setting a cell-level link here clears the cell's
+	// existing links. Setting the link field in a TextFormatRun takes
 	// precedence over the cell-level link.
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
 
-	// TextRotation: The rotation applied to text in a cell
+	// TextRotation: The rotation applied to text in the cell.
 	TextRotation *TextRotation `json:"textRotation,omitempty"`
 
 	// VerticalAlignment: The vertical alignment of the value in the cell.

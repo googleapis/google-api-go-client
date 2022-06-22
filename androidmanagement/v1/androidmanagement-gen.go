@@ -241,6 +241,42 @@ type SignupUrlsService struct {
 	s *Service
 }
 
+// AdbShellCommandEvent: A shell command was issued over ADB via “adb
+// shell command”.
+type AdbShellCommandEvent struct {
+	// ShellCmd: Shell command that was issued over ADB via "adb shell
+	// command". Redacted to empty string on organization-owned managed
+	// profile devices.
+	ShellCmd string `json:"shellCmd,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ShellCmd") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ShellCmd") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdbShellCommandEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod AdbShellCommandEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdbShellInteractiveEvent: An ADB interactive shell was opened via
+// “adb shell”. Intentionally empty.
+type AdbShellInteractiveEvent struct {
+}
+
 // AdvancedSecurityOverrides: Security policies set to secure values by
 // default. To maintain the security posture of a device, we don't
 // recommend overriding any of the default values.
@@ -397,6 +433,87 @@ type ApiLevelCondition struct {
 
 func (s *ApiLevelCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiLevelCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppProcessInfo: Information about a process. It contains process
+// name, start time, app Uid, app Pid, seinfo tag, hash of the base APK.
+type AppProcessInfo struct {
+	// ApkSha256Hash: SHA-256 hash of the base APK, in hexadecimal format.
+	ApkSha256Hash string `json:"apkSha256Hash,omitempty"`
+
+	// PackageNames: Package names of all packages that are associated with
+	// the particular user id. In most cases, this will be a single package
+	// name, the package that has been assigned that user id. If multiple
+	// application share a uid then all packages sharing uid will be
+	// included.
+	PackageNames []string `json:"packageNames,omitempty"`
+
+	// Pid: Process ID.
+	Pid int64 `json:"pid,omitempty"`
+
+	// ProcessName: Process name.
+	ProcessName string `json:"processName,omitempty"`
+
+	// Seinfo: SELinux policy info.
+	Seinfo string `json:"seinfo,omitempty"`
+
+	// StartTime: Process start time.
+	StartTime string `json:"startTime,omitempty"`
+
+	// Uid: UID of the package.
+	Uid int64 `json:"uid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApkSha256Hash") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApkSha256Hash") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppProcessInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AppProcessInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppProcessStartEvent: An app process was started. This is available
+// device-wide on fully managed devices and within the work profile on
+// organization-owned devices with a work profile.
+type AppProcessStartEvent struct {
+	// ProcessInfo: Information about a process.
+	ProcessInfo *AppProcessInfo `json:"processInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProcessInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProcessInfo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppProcessStartEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod AppProcessStartEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1000,6 +1117,47 @@ func (s *ApplicationReportingSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchUsageLogEvents: Batched event logs of events from the device.
+type BatchUsageLogEvents struct {
+	// Device: The name of the device in the form
+	// ‘enterprises/{enterpriseId}/devices/{deviceId}’
+	Device string `json:"device,omitempty"`
+
+	// RetrievalTime: The device timestamp when the batch of events were
+	// collected from the device.
+	RetrievalTime string `json:"retrievalTime,omitempty"`
+
+	// UsageLogEvents: The list of UsageLogEvent that were reported by the
+	// device, sorted chronologically by the event time.
+	UsageLogEvents []*UsageLogEvent `json:"usageLogEvents,omitempty"`
+
+	// User: The resource name of the user that owns this device in the form
+	// ‘enterprises/{enterpriseId}/users/{userId}’.
+	User string `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Device") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Device") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUsageLogEvents) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUsageLogEvents
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BlockAction: An action to block access to apps and data on a fully
 // managed device or in a work profile. This action also triggers a
 // device or work profile to displays a user-facing notification with
@@ -1043,6 +1201,114 @@ type BlockAction struct {
 
 func (s *BlockAction) MarshalJSON() ([]byte, error) {
 	type NoMethod BlockAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CertAuthorityInstalledEvent: A new root certificate was installed
+// into the system's trusted credential storage. This is available
+// device-wide on fully managed devices and within the work profile on
+// organization-owned devices with a work profile.
+type CertAuthorityInstalledEvent struct {
+	// Certificate: Subject of the certificate.
+	Certificate string `json:"certificate,omitempty"`
+
+	// Success: Whether the installation event succeeded.
+	Success bool `json:"success,omitempty"`
+
+	// UserId: The user in which the certificate install event happened.
+	// Only available for devices running Android 11 and above.
+	UserId int64 `json:"userId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Certificate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Certificate") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CertAuthorityInstalledEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod CertAuthorityInstalledEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CertAuthorityRemovedEvent: A root certificate was removed from the
+// system's trusted credential storage. This is available device-wide on
+// fully managed devices and within the work profile on
+// organization-owned devices with a work profile.
+type CertAuthorityRemovedEvent struct {
+	// Certificate: Subject of the certificate.
+	Certificate string `json:"certificate,omitempty"`
+
+	// Success: Whether the removal succeeded.
+	Success bool `json:"success,omitempty"`
+
+	// UserId: The user in which the certificate removal event occurred.
+	// Only available for devices running Android 11 and above.
+	UserId int64 `json:"userId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Certificate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Certificate") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CertAuthorityRemovedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod CertAuthorityRemovedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CertValidationFailureEvent: An X.509v3 certificate failed to
+// validate, currently this validation is performed on the Wi-FI access
+// point and failure may be due to a mismatch upon server certificate
+// validation. However it may in the future include other validation
+// events of an X.509v3 certificate.
+type CertValidationFailureEvent struct {
+	// FailureReason: The reason why certification validation failed.
+	FailureReason string `json:"failureReason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FailureReason") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailureReason") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CertValidationFailureEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod CertValidationFailureEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1363,6 +1629,44 @@ func (s *ComplianceRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConnectEvent: A TCP connect event was initiated through the standard
+// network stack.
+type ConnectEvent struct {
+	// DestinationIpAddress: The destination IP address of the connect call.
+	DestinationIpAddress string `json:"destinationIpAddress,omitempty"`
+
+	// DestinationPort: The destination port of the connect call.
+	DestinationPort int64 `json:"destinationPort,omitempty"`
+
+	// PackageName: The package name of the UID that performed the connect
+	// call.
+	PackageName string `json:"packageName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DestinationIpAddress") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationIpAddress") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ContactInfo: Contact details for managed Google Play enterprises.
 type ContactInfo struct {
 	// ContactEmail: Email address for a point of contact, which will be
@@ -1522,6 +1826,36 @@ type CrossProfilePolicies struct {
 
 func (s *CrossProfilePolicies) MarshalJSON() ([]byte, error) {
 	type NoMethod CrossProfilePolicies
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CryptoSelfTestCompletedEvent: Validates whether Android’s built-in
+// cryptographic library (BoringSSL) is valid. Should always succeed on
+// device boot, if it fails, the device should be considered untrusted.
+type CryptoSelfTestCompletedEvent struct {
+	// Success: Whether the test succeeded.
+	Success bool `json:"success,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Success") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Success") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CryptoSelfTestCompletedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod CryptoSelfTestCompletedEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1917,6 +2251,48 @@ func (s *Display) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DnsEvent: A DNS lookup event was initiated through the standard
+// network stack.
+type DnsEvent struct {
+	// Hostname: The hostname that was looked up.
+	Hostname string `json:"hostname,omitempty"`
+
+	// IpAddresses: The (possibly truncated) list of the IP addresses
+	// returned for DNS lookup (max 10 IPv4 or IPv6 addresses).
+	IpAddresses []string `json:"ipAddresses,omitempty"`
+
+	// PackageName: The package name of the UID that performed the DNS
+	// lookup.
+	PackageName string `json:"packageName,omitempty"`
+
+	// TotalIpAddressesReturned: The number of IP addresses returned from
+	// the DNS lookup event. May be higher than the amount of ip_addresses
+	// if there were too many addresses to log.
+	TotalIpAddressesReturned int64 `json:"totalIpAddressesReturned,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Hostname") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hostname") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DnsEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -2199,6 +2575,62 @@ func (s *ExternalData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FilePulledEvent: A file was downloaded from the device.
+type FilePulledEvent struct {
+	// FilePath: The path of the file being pulled.
+	FilePath string `json:"filePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilePath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilePath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FilePulledEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod FilePulledEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FilePushedEvent: A file was uploaded onto the device.
+type FilePushedEvent struct {
+	// FilePath: The path of the file being pushed.
+	FilePath string `json:"filePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilePath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilePath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FilePushedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod FilePushedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FreezePeriod: A system freeze period. When a device’s clock is
 // within the freeze period, all incoming system updates (including
 // security patches) are blocked and won’t be installed. When a device
@@ -2394,6 +2826,160 @@ func (s *HardwareStatus) MarshalJSON() ([]byte, error) {
 type IssueCommandResponse struct {
 }
 
+// KeyDestructionEvent: A cryptographic key including user installed,
+// admin installed and system maintained private key is removed from the
+// device either by the user or management. This is available
+// device-wide on fully managed devices and within the work profile on
+// organization-owned devices with a work profile.
+type KeyDestructionEvent struct {
+	// ApplicationUid: UID of the application which owns the key.
+	ApplicationUid int64 `json:"applicationUid,omitempty"`
+
+	// KeyAlias: Alias of the key.
+	KeyAlias string `json:"keyAlias,omitempty"`
+
+	// Success: Whether the operation was successful.
+	Success bool `json:"success,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationUid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationUid") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyDestructionEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyDestructionEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyGeneratedEvent: A cryptographic key including user installed,
+// admin installed and system maintained private key is installed on the
+// device either by the user or management.This is available device-wide
+// on fully managed devices and within the work profile on
+// organization-owned devices with a work profile.
+type KeyGeneratedEvent struct {
+	// ApplicationUid: UID of the application which generated the key.
+	ApplicationUid int64 `json:"applicationUid,omitempty"`
+
+	// KeyAlias: Alias of the key.
+	KeyAlias string `json:"keyAlias,omitempty"`
+
+	// Success: Whether the operation was successful.
+	Success bool `json:"success,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationUid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationUid") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyGeneratedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyGeneratedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyImportEvent: A cryptographic key including user installed, admin
+// installed and system maintained private key is imported on the device
+// either by the user or management. This is available device-wide on
+// fully managed devices and within the work profile on
+// organization-owned devices with a work profile.
+type KeyImportEvent struct {
+	// ApplicationUid: UID of the application which imported the key
+	ApplicationUid int64 `json:"applicationUid,omitempty"`
+
+	// KeyAlias: Alias of the key.
+	KeyAlias string `json:"keyAlias,omitempty"`
+
+	// Success: Whether the operation was successful.
+	Success bool `json:"success,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationUid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationUid") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyImportEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyImportEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyIntegrityViolationEvent: A cryptographic key including user
+// installed, admin installed and system maintained private key is
+// determined to be corrupted due to storage corruption, hardware
+// failure or some OS issue. This is available device-wide on fully
+// managed devices and within the work profile on organization-owned
+// devices with a work profile.
+type KeyIntegrityViolationEvent struct {
+	// ApplicationUid: UID of the application which owns the key
+	ApplicationUid int64 `json:"applicationUid,omitempty"`
+
+	// KeyAlias: Alias of the key.
+	KeyAlias string `json:"keyAlias,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationUid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationUid") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyIntegrityViolationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyIntegrityViolationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // KeyedAppState: Keyed app state reported by the app.
 type KeyedAppState struct {
 	// CreateTime: The creation time of the app state on the device.
@@ -2450,6 +3036,51 @@ func (s *KeyedAppState) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyedAppState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyguardDismissAuthAttemptEvent: An attempt was made to unlock the
+// device.
+type KeyguardDismissAuthAttemptEvent struct {
+	// StrongAuthMethodUsed: Whether a strong form of authentication
+	// (password, PIN, or pattern) was used to unlock device.
+	StrongAuthMethodUsed bool `json:"strongAuthMethodUsed,omitempty"`
+
+	// Success: Whether the unlock attempt was successful.
+	Success bool `json:"success,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "StrongAuthMethodUsed") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StrongAuthMethodUsed") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyguardDismissAuthAttemptEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyguardDismissAuthAttemptEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyguardDismissedEvent: The keyguard was dismissed. Intentionally
+// empty.
+type KeyguardDismissedEvent struct {
+}
+
+// KeyguardSecuredEvent: The device was locked either by user or
+// timeout. Intentionally empty.
+type KeyguardSecuredEvent struct {
 }
 
 // KioskCustomization: Settings controlling the behavior of a device in
@@ -2798,6 +3429,22 @@ func (s *ListWebAppsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LogBufferSizeCriticalEvent: The usageLog buffer on the device has
+// reached 90% of its capacity, therefore older events may be dropped.
+// Intentionally empty.
+type LogBufferSizeCriticalEvent struct {
+}
+
+// LoggingStartedEvent: usageLog policy has been enabled. Intentionally
+// empty.
+type LoggingStartedEvent struct {
+}
+
+// LoggingStoppedEvent: usageLog policy has been disabled. Intentionally
+// empty.
+type LoggingStoppedEvent struct {
+}
+
 // ManagedConfigurationTemplate: The managed configurations template for
 // the app, saved from the managed configurations iframe.
 type ManagedConfigurationTemplate struct {
@@ -2925,6 +3572,70 @@ type ManagedPropertyEntry struct {
 
 func (s *ManagedPropertyEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedPropertyEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MediaMountEvent: Removable media was mounted.
+type MediaMountEvent struct {
+	// MountPoint: Mount point.
+	MountPoint string `json:"mountPoint,omitempty"`
+
+	// VolumeLabel: Volume label. Redacted to empty string on
+	// organization-owned managed profile devices.
+	VolumeLabel string `json:"volumeLabel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MountPoint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MountPoint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MediaMountEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod MediaMountEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MediaUnmountEvent: Removable media was unmounted.
+type MediaUnmountEvent struct {
+	// MountPoint: Mount point.
+	MountPoint string `json:"mountPoint,omitempty"`
+
+	// VolumeLabel: Volume label. Redacted to empty string on
+	// organization-owned managed profile devices.
+	VolumeLabel string `json:"volumeLabel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MountPoint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MountPoint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MediaUnmountEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod MediaUnmountEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3372,6 +4083,60 @@ type Operation struct {
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OsShutdownEvent: Device was shutdown. Intentionally empty.
+type OsShutdownEvent struct {
+}
+
+// OsStartupEvent: Device was started.
+type OsStartupEvent struct {
+	// VerifiedBootState: Verified Boot state.
+	//
+	// Possible values:
+	//   "VERIFIED_BOOT_STATE_UNSPECIFIED" - Unknown value.
+	//   "GREEN" - Indicates that there is a full chain of trust extending
+	// from the bootloader to verified partitions including the bootloader,
+	// boot partition, and all verified partitions.
+	//   "YELLOW" - Indicates that the boot partition has been verified
+	// using the embedded certificate and the signature is valid.
+	//   "ORANGE" - Indicates that the device may be freely modified. Device
+	// integrity is left to the user to verify out-of-band.
+	VerifiedBootState string `json:"verifiedBootState,omitempty"`
+
+	// VerityMode: dm-verity mode.
+	//
+	// Possible values:
+	//   "DM_VERITY_MODE_UNSPECIFIED" - Unknown value.
+	//   "ENFORCING" - Indicates that the device will be restarted when
+	// corruption is detected.
+	//   "IO_ERROR" - Indicates that an I/O error will be returned for an
+	// attempt to read corrupted data blocks (also known as eio boot state).
+	//   "DISABLED" - Indicates that dm-verity is disabled on device.
+	VerityMode string `json:"verityMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VerifiedBootState")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VerifiedBootState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OsStartupEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod OsStartupEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4623,6 +5388,44 @@ func (s *ProxyInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RemoteLockEvent: The device or profile has been remotely locked via
+// the LOCK command.
+type RemoteLockEvent struct {
+	// AdminPackageName: Package name of the admin app requesting the
+	// change.
+	AdminPackageName string `json:"adminPackageName,omitempty"`
+
+	// AdminUserId: User ID of the admin app from the which the change was
+	// requested.
+	AdminUserId int64 `json:"adminUserId,omitempty"`
+
+	// TargetUserId: User ID in which the change was requested in.
+	TargetUserId int64 `json:"targetUserId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdminPackageName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdminPackageName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoteLockEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteLockEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SecurityPosture: The security posture of the device, as determined by
 // the current device state and the policies applied.
 type SecurityPosture struct {
@@ -5216,13 +6019,13 @@ type UsageLog struct {
 	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
 	//   "SECURITY_LOGS" - Enable logging of on-device security events, like
 	// when the device password is incorrectly entered or removable storage
-	// is mounted. See event for a complete description of the logged
-	// security events. Supported for fully managed devices on Android 7 and
-	// above. Supported for company-owned devices with a work profile on
-	// Android 12 and above, on which only security events from the work
-	// profile are logged.
+	// is mounted. See UsageLogEvent for a complete description of the
+	// logged security events. Supported for fully managed devices on
+	// Android 7 and above. Supported for company-owned devices with a work
+	// profile on Android 12 and above, on which only security events from
+	// the work profile are logged.
 	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network
-	// events, like DNS lookups and TCP connections. See event for a
+	// events, like DNS lookups and TCP connections. See UsageLogEvent for a
 	// complete description of the logged network events. Supported for
 	// fully managed devices on Android 8 and above. Supported for
 	// company-owned devices with a work profile on Android 12 and above, on
@@ -5237,13 +6040,13 @@ type UsageLog struct {
 	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
 	//   "SECURITY_LOGS" - Enable logging of on-device security events, like
 	// when the device password is incorrectly entered or removable storage
-	// is mounted. See event for a complete description of the logged
-	// security events. Supported for fully managed devices on Android 7 and
-	// above. Supported for company-owned devices with a work profile on
-	// Android 12 and above, on which only security events from the work
-	// profile are logged.
+	// is mounted. See UsageLogEvent for a complete description of the
+	// logged security events. Supported for fully managed devices on
+	// Android 7 and above. Supported for company-owned devices with a work
+	// profile on Android 12 and above, on which only security events from
+	// the work profile are logged.
 	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network
-	// events, like DNS lookups and TCP connections. See event for a
+	// events, like DNS lookups and TCP connections. See UsageLogEvent for a
 	// complete description of the logged network events. Supported for
 	// fully managed devices on Android 8 and above. Supported for
 	// company-owned devices with a work profile on Android 12 and above, on
@@ -5270,6 +6073,201 @@ type UsageLog struct {
 
 func (s *UsageLog) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageLog
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UsageLogEvent: An event logged on the device.
+type UsageLogEvent struct {
+	// AdbShellCommandEvent: A shell command was issued over ADB via “adb
+	// shell command”. Part of SECURITY_LOGS.
+	AdbShellCommandEvent *AdbShellCommandEvent `json:"adbShellCommandEvent,omitempty"`
+
+	// AdbShellInteractiveEvent: An ADB interactive shell was opened via
+	// “adb shell”. Part of SECURITY_LOGS.
+	AdbShellInteractiveEvent *AdbShellInteractiveEvent `json:"adbShellInteractiveEvent,omitempty"`
+
+	// AppProcessStartEvent: An app process was started. Part of
+	// SECURITY_LOGS.
+	AppProcessStartEvent *AppProcessStartEvent `json:"appProcessStartEvent,omitempty"`
+
+	// CertAuthorityInstalledEvent: A new root certificate was installed
+	// into the system's trusted credential storage. Part of SECURITY_LOGS.
+	CertAuthorityInstalledEvent *CertAuthorityInstalledEvent `json:"certAuthorityInstalledEvent,omitempty"`
+
+	// CertAuthorityRemovedEvent: A root certificate was removed from the
+	// system's trusted credential storage. Part of SECURITY_LOGS.
+	CertAuthorityRemovedEvent *CertAuthorityRemovedEvent `json:"certAuthorityRemovedEvent,omitempty"`
+
+	// CertValidationFailureEvent: An X.509v3 certificate failed to
+	// validate, currently this validation is performed on the Wi-FI access
+	// point and failure may be due to a mismatch upon server certificate
+	// validation. However it may in the future include other validation
+	// events of an X.509v3 certificate. Part of SECURITY_LOGS.
+	CertValidationFailureEvent *CertValidationFailureEvent `json:"certValidationFailureEvent,omitempty"`
+
+	// ConnectEvent: A TCP connect event was initiated through the standard
+	// network stack. Part of NETWORK_LOGS.
+	ConnectEvent *ConnectEvent `json:"connectEvent,omitempty"`
+
+	// CryptoSelfTestCompletedEvent: Validates whether Android’s built-in
+	// cryptographic library (BoringSSL) is valid. Should always succeed on
+	// device boot, if it fails, the device should be considered untrusted.
+	// Part of SECURITY_LOGS.
+	CryptoSelfTestCompletedEvent *CryptoSelfTestCompletedEvent `json:"cryptoSelfTestCompletedEvent,omitempty"`
+
+	// DnsEvent: A DNS lookup event was initiated through the standard
+	// network stack. Part of NETWORK_LOGS.
+	DnsEvent *DnsEvent `json:"dnsEvent,omitempty"`
+
+	// EventId: Unique id of the event.
+	EventId int64 `json:"eventId,omitempty,string"`
+
+	// EventTime: Device timestamp when the event was logged.
+	EventTime string `json:"eventTime,omitempty"`
+
+	// EventType: The particular usage log event type that was reported on
+	// the device. Use this to determine which event field to access.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - This value is not used
+	//   "ADB_SHELL_COMMAND" - Indicates adb_shell_command_event has been
+	// set.
+	//   "ADB_SHELL_INTERACTIVE" - Indicates adb_shell_interactive_event has
+	// been set.
+	//   "APP_PROCESS_START" - Indicates app_process_start_event has been
+	// set.
+	//   "KEYGUARD_DISMISSED" - Indicates keyguard_dismissed_event has been
+	// set.
+	//   "KEYGUARD_DISMISS_AUTH_ATTEMPT" - Indicates
+	// keyguard_dismiss_auth_attempt_event has been set.
+	//   "KEYGUARD_SECURED" - Indicates keyguard_secured_event has been set.
+	//   "FILE_PULLED" - Indicates file_pulled_event has been set.
+	//   "FILE_PUSHED" - Indicates file_pushed_event has been set.
+	//   "CERT_AUTHORITY_INSTALLED" - Indicates
+	// cert_authority_installed_event has been set.
+	//   "CERT_AUTHORITY_REMOVED" - Indicates cert_authority_removed_event
+	// has been set.
+	//   "CERT_VALIDATION_FAILURE" - Indicates cert_validation_failure_event
+	// has been set.
+	//   "CRYPTO_SELF_TEST_COMPLETED" - Indicates
+	// crypto_self_test_completed_event has been set.
+	//   "KEY_DESTRUCTION" - Indicates key_destruction_event has been set.
+	//   "KEY_GENERATED" - Indicates key_generated_event has been set.
+	//   "KEY_IMPORT" - Indicates key_import_event has been set.
+	//   "KEY_INTEGRITY_VIOLATION" - Indicates key_integrity_violation_event
+	// has been set.
+	//   "LOGGING_STARTED" - Indicates logging_started_event has been set.
+	//   "LOGGING_STOPPED" - Indicates logging_stopped_event has been set.
+	//   "LOG_BUFFER_SIZE_CRITICAL" - Indicates
+	// log_buffer_size_critical_event has been set.
+	//   "MEDIA_MOUNT" - Indicates media_mount_event has been set.
+	//   "MEDIA_UNMOUNT" - Indicates media_unmount_event has been set.
+	//   "OS_SHUTDOWN" - Indicates os_shutdown_event has been set.
+	//   "OS_STARTUP" - Indicates os_startup_event has been set.
+	//   "REMOTE_LOCK" - Indicates remote_lock_event has been set.
+	//   "WIPE_FAILURE" - Indicates wipe_failure_event has been set.
+	//   "CONNECT" - Indicates connect_event has been set.
+	//   "DNS" - Indicates dns_event has been set.
+	EventType string `json:"eventType,omitempty"`
+
+	// FilePulledEvent: A file was downloaded from the device. Part of
+	// SECURITY_LOGS.
+	FilePulledEvent *FilePulledEvent `json:"filePulledEvent,omitempty"`
+
+	// FilePushedEvent: A file was uploaded onto the device. Part of
+	// SECURITY_LOGS.
+	FilePushedEvent *FilePushedEvent `json:"filePushedEvent,omitempty"`
+
+	// KeyDestructionEvent: A cryptographic key including user installed,
+	// admin installed and system maintained private key is removed from the
+	// device either by the user or management. Part of SECURITY_LOGS.
+	KeyDestructionEvent *KeyDestructionEvent `json:"keyDestructionEvent,omitempty"`
+
+	// KeyGeneratedEvent: A cryptographic key including user installed,
+	// admin installed and system maintained private key is installed on the
+	// device either by the user or management. Part of SECURITY_LOGS.
+	KeyGeneratedEvent *KeyGeneratedEvent `json:"keyGeneratedEvent,omitempty"`
+
+	// KeyImportEvent: A cryptographic key including user installed, admin
+	// installed and system maintained private key is imported on the device
+	// either by the user or management. Part of SECURITY_LOGS.
+	KeyImportEvent *KeyImportEvent `json:"keyImportEvent,omitempty"`
+
+	// KeyIntegrityViolationEvent: A cryptographic key including user
+	// installed, admin installed and system maintained private key is
+	// determined to be corrupted due to storage corruption, hardware
+	// failure or some OS issue. Part of SECURITY_LOGS.
+	KeyIntegrityViolationEvent *KeyIntegrityViolationEvent `json:"keyIntegrityViolationEvent,omitempty"`
+
+	// KeyguardDismissAuthAttemptEvent: An attempt was made to unlock the
+	// device. Part of SECURITY_LOGS.
+	KeyguardDismissAuthAttemptEvent *KeyguardDismissAuthAttemptEvent `json:"keyguardDismissAuthAttemptEvent,omitempty"`
+
+	// KeyguardDismissedEvent: The keyguard was dismissed. Part of
+	// SECURITY_LOGS.
+	KeyguardDismissedEvent *KeyguardDismissedEvent `json:"keyguardDismissedEvent,omitempty"`
+
+	// KeyguardSecuredEvent: The device was locked either by user or
+	// timeout. Part of SECURITY_LOGS.
+	KeyguardSecuredEvent *KeyguardSecuredEvent `json:"keyguardSecuredEvent,omitempty"`
+
+	// LogBufferSizeCriticalEvent: The audit log buffer has reached 90% of
+	// its capacity, therefore older events may be dropped. Part of
+	// SECURITY_LOGS.
+	LogBufferSizeCriticalEvent *LogBufferSizeCriticalEvent `json:"logBufferSizeCriticalEvent,omitempty"`
+
+	// LoggingStartedEvent: usageLog policy has been enabled. Part of
+	// SECURITY_LOGS.
+	LoggingStartedEvent *LoggingStartedEvent `json:"loggingStartedEvent,omitempty"`
+
+	// LoggingStoppedEvent: usageLog policy has been disabled. Part of
+	// SECURITY_LOGS.
+	LoggingStoppedEvent *LoggingStoppedEvent `json:"loggingStoppedEvent,omitempty"`
+
+	// MediaMountEvent: Removable media was mounted. Part of SECURITY_LOGS.
+	MediaMountEvent *MediaMountEvent `json:"mediaMountEvent,omitempty"`
+
+	// MediaUnmountEvent: Removable media was unmounted. Part of
+	// SECURITY_LOGS.
+	MediaUnmountEvent *MediaUnmountEvent `json:"mediaUnmountEvent,omitempty"`
+
+	// OsShutdownEvent: Device was shutdown. Part of SECURITY_LOGS.
+	OsShutdownEvent *OsShutdownEvent `json:"osShutdownEvent,omitempty"`
+
+	// OsStartupEvent: Device was started. Part of SECURITY_LOGS.
+	OsStartupEvent *OsStartupEvent `json:"osStartupEvent,omitempty"`
+
+	// RemoteLockEvent: The device or profile has been remotely locked via
+	// the LOCK command. Part of SECURITY_LOGS.
+	RemoteLockEvent *RemoteLockEvent `json:"remoteLockEvent,omitempty"`
+
+	// WipeFailureEvent: The work profile or company-owned device failed to
+	// wipe when when requested. This could be user initiated or admin
+	// initiated e.g. delete was received. Part of SECURITY_LOGS.
+	WipeFailureEvent *WipeFailureEvent `json:"wipeFailureEvent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdbShellCommandEvent") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdbShellCommandEvent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsageLogEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod UsageLogEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5556,6 +6554,12 @@ func (s *WipeAction) MarshalJSON() ([]byte, error) {
 	type NoMethod WipeAction
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WipeFailureEvent: The work profile or company-owned device failed to
+// wipe when when requested. This could be user initiated or admin
+// initiated e.g. delete was received. Intentionally empty.
+type WipeFailureEvent struct {
 }
 
 // method id "androidmanagement.enterprises.create":

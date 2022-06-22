@@ -4632,6 +4632,9 @@ type Person struct {
 	// PersonNames: The person's name
 	PersonNames []*Name `json:"personNames,omitempty"`
 
+	// PhoneNumbers: The person's phone numbers
+	PhoneNumbers []*PhoneNumber `json:"phoneNumbers,omitempty"`
+
 	// Photos: A person's read-only photo. A picture shown next to the
 	// person's name to help others recognize the person in search results.
 	Photos []*Photo `json:"photos,omitempty"`
@@ -4656,6 +4659,40 @@ type Person struct {
 
 func (s *Person) MarshalJSON() ([]byte, error) {
 	type NoMethod Person
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PhoneNumber: A person's Phone Number
+type PhoneNumber struct {
+	// PhoneNumber: The phone number of the person.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+
+	// Possible values:
+	//   "OTHER"
+	//   "MOBILE"
+	//   "OFFICE"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PhoneNumber") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PhoneNumber") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PhoneNumber) MarshalJSON() ([]byte, error) {
+	type NoMethod PhoneNumber
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

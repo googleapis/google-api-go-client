@@ -659,6 +659,10 @@ type Connection struct {
 	// Description: Optional. Description of the resource.
 	Description string `json:"description,omitempty"`
 
+	// EgressBackends: Output only. Outbound domains/hosts needs to be
+	// allowlisted.
+	EgressBackends []string `json:"egressBackends,omitempty"`
+
 	// EnvoyImageLocation: Output only. GCR location where the envoy image
 	// is stored. formatted like: gcr.io/{bucketName}/{imageName}
 	EnvoyImageLocation string `json:"envoyImageLocation,omitempty"`
@@ -2389,10 +2393,6 @@ type RuntimeConfig struct {
 	// "us-west1".
 	LocationId string `json:"locationId,omitempty"`
 
-	// Name: Output only. Resource name of the form:
-	// `projects/*/locations/*/runtimeConfig`
-	Name string `json:"name,omitempty"`
-
 	// RuntimeEndpoint: Output only. The endpoint of the connectors runtime
 	// ingress.
 	RuntimeEndpoint string `json:"runtimeEndpoint,omitempty"`
@@ -2577,6 +2577,7 @@ func (s *Source) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SshPublicKey: Parameters to support Ssh public key Authentication.
 type SshPublicKey struct {
 	// CertType: Format of SSH Client cert.
 	CertType string `json:"certType,omitempty"`
@@ -4352,12 +4353,12 @@ func (r *ProjectsLocationsConnectionsService) Patch(name string, connection *Con
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field
-// mask is used to specify the fields to be overwritten in the
-// Connection resource by the update. The fields specified in the
-// update_mask are relative to the resource, not the full request. A
-// field will be overwritten if it is in the mask. If the user does not
-// provide a mask then all fields will be overwritten.
+// UpdateMask sets the optional parameter "updateMask": Field mask is
+// used to specify the fields to be overwritten in the Connection
+// resource by the update. The fields specified in the update_mask are
+// relative to the resource, not the full request. A field will be
+// overwritten if it is in the mask. If the user does not provide a mask
+// then all fields will be overwritten.
 func (c *ProjectsLocationsConnectionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsConnectionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4470,7 +4471,7 @@ func (c *ProjectsLocationsConnectionsPatchCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the Connection resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "description": "Field mask is used to specify the fields to be overwritten in the Connection resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

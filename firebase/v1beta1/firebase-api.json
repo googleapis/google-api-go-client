@@ -1121,7 +1121,7 @@
       }
     }
   },
-  "revision": "20220602",
+  "revision": "20220621",
   "rootUrl": "https://firebase.googleapis.com/",
   "schemas": {
     "AddFirebaseRequest": {
@@ -1217,7 +1217,8 @@
           "type": "string"
         },
         "appId": {
-          "description": "Immutable. The globally unique, Firebase-assigned identifier for the `AndroidApp`. This identifier should be treated as an opaque token, as the data format is not specified.",
+          "description": "Output only. Immutable. The globally unique, Firebase-assigned identifier for the `AndroidApp`. This identifier should be treated as an opaque token, as the data format is not specified.",
+          "readOnly": true,
           "type": "string"
         },
         "displayName": {
@@ -1233,7 +1234,8 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Immutable. A user-assigned unique identifier of the parent FirebaseProject for the `AndroidApp`.",
+          "description": "Output only. Immutable. A user-assigned unique identifier of the parent FirebaseProject for the `AndroidApp`.",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -1387,7 +1389,8 @@
           "type": "string"
         },
         "appId": {
-          "description": "Immutable. The globally unique, Firebase-assigned identifier for the `IosApp`. This identifier should be treated as an opaque token, as the data format is not specified.",
+          "description": "Output only. Immutable. The globally unique, Firebase-assigned identifier for the `IosApp`. This identifier should be treated as an opaque token, as the data format is not specified.",
+          "readOnly": true,
           "type": "string"
         },
         "appStoreId": {
@@ -1407,7 +1410,8 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Immutable. A user-assigned unique identifier of the parent FirebaseProject for the `IosApp`.",
+          "description": "Output only. Immutable. A user-assigned unique identifier of the parent FirebaseProject for the `IosApp`.",
+          "readOnly": true,
           "type": "string"
         },
         "teamId": {

@@ -1235,6 +1235,17 @@ type Secret struct {
 	// Ttl: Input only. The TTL for the Secret.
 	Ttl string `json:"ttl,omitempty"`
 
+	// VersionAliases: Optional. Mapping from version alias to version name.
+	// A version alias is a string with a maximum length of 63 characters
+	// and can contain uppercase and lowercase letters, numerals, and the
+	// hyphen (`-`) and underscore ('_') characters. An alias string must
+	// start with a letter and cannot be the string 'latest' or 'NEW'. No
+	// more than 50 aliases can be assigned to a given secret. Version-Alias
+	// pairs will be viewable via GetSecret and modifiable via UpdateSecret.
+	// At launch Access by Allias will only be supported on GetSecretVersion
+	// and AccessSecretVersion.
+	VersionAliases map[string]string `json:"versionAliases,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

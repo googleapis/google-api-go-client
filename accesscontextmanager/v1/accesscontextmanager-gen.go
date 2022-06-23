@@ -937,8 +937,12 @@ func (s *EgressPolicy) MarshalJSON() ([]byte, error) {
 // in order to be allowed egress out of the perimeter.
 type EgressTo struct {
 	// ExternalResources: A list of external resources that are allowed to
-	// be accessed. A request matches if it contains an external resource in
-	// this list (Example: s3://bucket/path). Currently '*' is not allowed.
+	// be accessed. Only AWS and Azure resources are supported. For Amazon
+	// S3, the supported format is s3://BUCKET_NAME. For Azure Storage, the
+	// supported format is
+	// azure://myaccount.blob.core.windows.net/CONTAINER_NAME. A request
+	// matches if it contains an external resource in this list (Example:
+	// s3://bucket/path). Currently '*' is not allowed.
 	ExternalResources []string `json:"externalResources,omitempty"`
 
 	// Operations: A list of ApiOperations allowed to be performed by the

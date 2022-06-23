@@ -475,9 +475,9 @@ type AndroidApp struct {
 	// to an empty value in update requests.
 	ApiKeyId string `json:"apiKeyId,omitempty"`
 
-	// AppId: Immutable. The globally unique, Firebase-assigned identifier
-	// for the `AndroidApp`. This identifier should be treated as an opaque
-	// token, as the data format is not specified.
+	// AppId: Output only. Immutable. The globally unique, Firebase-assigned
+	// identifier for the `AndroidApp`. This identifier should be treated as
+	// an opaque token, as the data format is not specified.
 	AppId string `json:"appId,omitempty"`
 
 	// DisplayName: The user-assigned display name for the `AndroidApp`.
@@ -500,8 +500,8 @@ type AndroidApp struct {
 	// as would appear in the Google Play Developer Console.
 	PackageName string `json:"packageName,omitempty"`
 
-	// ProjectId: Immutable. A user-assigned unique identifier of the parent
-	// FirebaseProject for the `AndroidApp`.
+	// ProjectId: Output only. Immutable. A user-assigned unique identifier
+	// of the parent FirebaseProject for the `AndroidApp`.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -820,9 +820,9 @@ type IosApp struct {
 	// to an empty value in update requests.
 	ApiKeyId string `json:"apiKeyId,omitempty"`
 
-	// AppId: Immutable. The globally unique, Firebase-assigned identifier
-	// for the `IosApp`. This identifier should be treated as an opaque
-	// token, as the data format is not specified.
+	// AppId: Output only. Immutable. The globally unique, Firebase-assigned
+	// identifier for the `IosApp`. This identifier should be treated as an
+	// opaque token, as the data format is not specified.
 	AppId string `json:"appId,omitempty"`
 
 	// AppStoreId: The automatically generated Apple ID assigned to the iOS
@@ -849,8 +849,8 @@ type IosApp struct {
 	// (see `appId` (../projects.iosApps#IosApp.FIELDS.app_id)).
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: Immutable. A user-assigned unique identifier of the parent
-	// FirebaseProject for the `IosApp`.
+	// ProjectId: Output only. Immutable. A user-assigned unique identifier
+	// of the parent FirebaseProject for the `IosApp`.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// TeamId: The Apple Developer Team ID associated with the App in the

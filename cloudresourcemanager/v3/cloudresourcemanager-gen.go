@@ -2205,7 +2205,7 @@ type TagKey struct {
 	// corresponding purpose_data should be set for the network the tag is
 	// intended for. The key should be 'network' and the value should be in
 	// the format of the network url id string:
-	// http://compute.googleapis.com/v1/projects/{project_number}/global/networks/{network_id}
+	// https://compute.googleapis.com/v1/projects/{project_number}/global/networks/{network_id}
 	Purpose string `json:"purpose,omitempty"`
 
 	// PurposeData: Optional. Purpose data corresponds to the policy system
@@ -8252,7 +8252,7 @@ type TagKeysCreateCall struct {
 
 // Create: Creates a new TagKey. If another request with the same
 // parameters is sent while the original request is in process, the
-// second request will receive an error. A maximum of 300 TagKeys can
+// second request will receive an error. A maximum of 1000 TagKeys can
 // exist under a parent at any given time.
 func (r *TagKeysService) Create(tagkey *TagKey) *TagKeysCreateCall {
 	c := &TagKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8356,7 +8356,7 @@ func (c *TagKeysCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new TagKey. If another request with the same parameters is sent while the original request is in process, the second request will receive an error. A maximum of 300 TagKeys can exist under a parent at any given time.",
+	//   "description": "Creates a new TagKey. If another request with the same parameters is sent while the original request is in process, the second request will receive an error. A maximum of 1000 TagKeys can exist under a parent at any given time.",
 	//   "flatPath": "v3/tagKeys",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.tagKeys.create",
@@ -9519,7 +9519,7 @@ type TagValuesCreateCall struct {
 // Create: Creates a TagValue as a child of the specified TagKey. If a
 // another request with the same parameters is sent while the original
 // request is in process the second request will receive an error. A
-// maximum of 300 TagValues can exist under a TagKey at any given time.
+// maximum of 1000 TagValues can exist under a TagKey at any given time.
 func (r *TagValuesService) Create(tagvalue *TagValue) *TagValuesCreateCall {
 	c := &TagValuesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tagvalue = tagvalue
@@ -9622,7 +9622,7 @@ func (c *TagValuesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a TagValue as a child of the specified TagKey. If a another request with the same parameters is sent while the original request is in process the second request will receive an error. A maximum of 300 TagValues can exist under a TagKey at any given time.",
+	//   "description": "Creates a TagValue as a child of the specified TagKey. If a another request with the same parameters is sent while the original request is in process the second request will receive an error. A maximum of 1000 TagValues can exist under a TagKey at any given time.",
 	//   "flatPath": "v3/tagValues",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.tagValues.create",

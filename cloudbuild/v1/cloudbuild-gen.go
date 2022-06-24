@@ -11052,7 +11052,11 @@ type ProjectsLocationsTriggersRunCall struct {
 	header_                http.Header
 }
 
-// Run: Runs a `BuildTrigger` at a particular source revision.
+// Run: Runs a `BuildTrigger` at a particular source revision. To run a
+// regional or global trigger, use the POST request that includes the
+// location endpoint in the path. The POST request that does not include
+// the location endpoint in the path can only be used when running
+// global triggers.
 //
 // - name: The name of the `Trigger` to run. Format:
 //   `projects/{project}/locations/{location}/triggers/{trigger}`.
@@ -11154,7 +11158,7 @@ func (c *ProjectsLocationsTriggersRunCall) Do(opts ...googleapi.CallOption) (*Op
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a `BuildTrigger` at a particular source revision.",
+	//   "description": "Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path. The POST request that does not include the location endpoint in the path can only be used when running global triggers.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.locations.triggers.run",
@@ -13068,7 +13072,11 @@ type ProjectsTriggersRunCall struct {
 	header_    http.Header
 }
 
-// Run: Runs a `BuildTrigger` at a particular source revision.
+// Run: Runs a `BuildTrigger` at a particular source revision. To run a
+// regional or global trigger, use the POST request that includes the
+// location endpoint in the path. The POST request that does not include
+// the location endpoint in the path can only be used when running
+// global triggers.
 //
 // - projectId: ID of the project.
 // - triggerId: ID of the trigger.
@@ -13180,7 +13188,7 @@ func (c *ProjectsTriggersRunCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a `BuildTrigger` at a particular source revision.",
+	//   "description": "Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path. The POST request that does not include the location endpoint in the path can only be used when running global triggers.",
 	//   "flatPath": "v1/projects/{projectId}/triggers/{triggerId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.triggers.run",

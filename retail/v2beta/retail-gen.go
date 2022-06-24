@@ -2038,6 +2038,22 @@ type GoogleCloudRetailV2betaCatalogAttribute struct {
 	// `attributes.custom_attribute`, such as `attributes.xyz`.
 	Key string `json:"key,omitempty"`
 
+	// RecommendationsFilteringOption: When
+	// AttributesConfig.attribute_config_level is
+	// CATALOG_LEVEL_ATTRIBUTE_CONFIG, if RECOMMENDATIONS_FILTERING_ENABLED,
+	// attribute values are filterable for recommendations. This option
+	// works for categorical features only, does not work for numerical
+	// features, inventory filtering.
+	//
+	// Possible values:
+	//   "RECOMMENDATIONS_FILTERING_OPTION_UNSPECIFIED" - Value used when
+	// unset. Defaults to RECOMMENDATIONS_FILTERING_DISABLED.
+	//   "RECOMMENDATIONS_FILTERING_DISABLED" - Recommendation filtering is
+	// disabled.
+	//   "RECOMMENDATIONS_FILTERING_ENABLED" - Recommendation filtering is
+	// enabled.
+	RecommendationsFilteringOption string `json:"recommendationsFilteringOption,omitempty"`
+
 	// SearchableOption: When AttributesConfig.attribute_config_level is
 	// CATALOG_LEVEL_ATTRIBUTE_CONFIG, if SEARCHABLE_ENABLED, attribute
 	// values are searchable by text queries in SearchService.Search. If
@@ -2275,14 +2291,14 @@ type GoogleCloudRetailV2betaCompletionConfig struct {
 	// uploaded by the customer.
 	DenylistInputConfig *GoogleCloudRetailV2betaCompletionDataInputConfig `json:"denylistInputConfig,omitempty"`
 
-	// LastAllowlistImportOperation: Output only. LRO corresponding to the
-	// latest allowlist import. Can use GetOperation API to retrieve the
-	// latest state of the Long Running Operation.
+	// LastAllowlistImportOperation: Output only. Name of the LRO
+	// corresponding to the latest allowlist import. Can use GetOperation
+	// API to retrieve the latest state of the Long Running Operation.
 	LastAllowlistImportOperation string `json:"lastAllowlistImportOperation,omitempty"`
 
-	// LastDenylistImportOperation: Output only. LRO corresponding to the
-	// latest denylist import. Can use GetOperation API to retrieve the
-	// latest state of the Long Running Operation.
+	// LastDenylistImportOperation: Output only. Name of the LRO
+	// corresponding to the latest denylist import. Can use GetOperation API
+	// to retrieve the latest state of the Long Running Operation.
 	LastDenylistImportOperation string `json:"lastDenylistImportOperation,omitempty"`
 
 	// LastSuggestionsImportOperation: Output only. Name of the LRO
@@ -3695,6 +3711,11 @@ type GoogleCloudRetailV2betaPredictRequest struct {
 	// `strictFiltering` to True in `PredictRequest.params` to receive empty
 	// results instead. Note that the API will never return items with
 	// storageStatus of "EXPIRED" or "DELETED" regardless of filter choices.
+	// If `filterSyntaxV2` is set to true under the `params` field, then
+	// attribute based expressions are expected instead of the above
+	// described tag-based syntax. Examples: * (colors: ANY("Red", "Blue"))
+	// AND NOT (categories: ANY("Phones")) * (availability: ANY("IN_STOCK"))
+	// AND (colors: ANY("Red") OR categories: ANY("Phones"))
 	Filter string `json:"filter,omitempty"`
 
 	// Labels: The labels applied to a resource must meet the following
@@ -3740,7 +3761,10 @@ type GoogleCloudRetailV2betaPredictRequest struct {
 	// String. Default empty. If set to be non-empty, then it needs to be
 	// one of {'no-diversity', 'low-diversity', 'medium-diversity',
 	// 'high-diversity', 'auto-diversity'}. This gives request-level control
-	// and adjusts prediction results based on product category.
+	// and adjusts prediction results based on product category. *
+	// `filterSyntaxV2`: Boolean. False by default. If set to true, the
+	// `filter` field will be interpreteted according to the new,
+	// attribute-based syntax.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// UserEvent: Required. Context about the user, what they are looking at

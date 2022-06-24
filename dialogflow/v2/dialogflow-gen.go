@@ -3839,7 +3839,9 @@ func (s *GoogleCloudDialogflowCxV3WebhookGenericWebService) MarshalJSON() ([]byt
 
 // GoogleCloudDialogflowCxV3WebhookRequest: The request message for a
 // webhook call. The request is sent as a JSON object and the field
-// names will be presented in camel cases.
+// names will be presented in camel cases. You may see undocumented
+// fields in an actual request. These fields are used internally by
+// Dialogflow and should be ignored.
 type GoogleCloudDialogflowCxV3WebhookRequest struct {
 	// DetectIntentResponseId: Always present. The unique identifier of the
 	// DetectIntentResponse that will be returned to the API caller.
@@ -7251,7 +7253,9 @@ func (s *GoogleCloudDialogflowCxV3beta1WebhookGenericWebService) MarshalJSON() (
 
 // GoogleCloudDialogflowCxV3beta1WebhookRequest: The request message for
 // a webhook call. The request is sent as a JSON object and the field
-// names will be presented in camel cases.
+// names will be presented in camel cases. You may see undocumented
+// fields in an actual request. These fields are used internally by
+// Dialogflow and should be ignored.
 type GoogleCloudDialogflowCxV3beta1WebhookRequest struct {
 	// DetectIntentResponseId: Always present. The unique identifier of the
 	// DetectIntentResponse that will be returned to the API caller.
@@ -14571,7 +14575,9 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	AllRequiredParamsPresent bool `json:"allRequiredParamsPresent,omitempty"`
 
 	// CancelsSlotFilling: Indicates whether the conversational query
-	// triggers a cancellation for slot filling.
+	// triggers a cancellation for slot filling. For more information, see
+	// the cancel slot filling documentation
+	// (https://cloud.google.com/dialogflow/es/docs/intents-actions-parameters#cancel).
 	CancelsSlotFilling bool `json:"cancelsSlotFilling,omitempty"`
 
 	// DiagnosticInfo: Free-form diagnostic information for the associated
@@ -15836,8 +15842,10 @@ func (s *GoogleCloudDialogflowV2SynthesizeSpeechConfig) UnmarshalJSON(data []byt
 	return nil
 }
 
-// GoogleCloudDialogflowV2TextInput: Represents the natural language
-// text to be processed.
+// GoogleCloudDialogflowV2TextInput:
+// ======================================================================
+// ====== Auxiliary proto messages. Represents the natural language text
+// to be processed.
 type GoogleCloudDialogflowV2TextInput struct {
 	// LanguageCode: Required. The language of this conversational query.
 	// See Language Support
@@ -19338,7 +19346,9 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	AllRequiredParamsPresent bool `json:"allRequiredParamsPresent,omitempty"`
 
 	// CancelsSlotFilling: Indicates whether the conversational query
-	// triggers a cancellation for slot filling.
+	// triggers a cancellation for slot filling. For more information, see
+	// the cancel slot filling documentation
+	// (https://cloud.google.com/dialogflow/es/docs/intents-actions-parameters#cancel).
 	CancelsSlotFilling bool `json:"cancelsSlotFilling,omitempty"`
 
 	// DiagnosticInfo: Free-form diagnostic information for the associated

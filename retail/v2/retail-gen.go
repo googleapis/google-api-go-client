@@ -1908,6 +1908,11 @@ type GoogleCloudRetailV2PredictRequest struct {
 	// `strictFiltering` to True in `PredictRequest.params` to receive empty
 	// results instead. Note that the API will never return items with
 	// storageStatus of "EXPIRED" or "DELETED" regardless of filter choices.
+	// If `filterSyntaxV2` is set to true under the `params` field, then
+	// attribute based expressions are expected instead of the above
+	// described tag-based syntax. Examples: * (colors: ANY("Red", "Blue"))
+	// AND NOT (categories: ANY("Phones")) * (availability: ANY("IN_STOCK"))
+	// AND (colors: ANY("Red") OR categories: ANY("Phones"))
 	Filter string `json:"filter,omitempty"`
 
 	// Labels: The labels applied to a resource must meet the following
@@ -1953,7 +1958,10 @@ type GoogleCloudRetailV2PredictRequest struct {
 	// String. Default empty. If set to be non-empty, then it needs to be
 	// one of {'no-diversity', 'low-diversity', 'medium-diversity',
 	// 'high-diversity', 'auto-diversity'}. This gives request-level control
-	// and adjusts prediction results based on product category.
+	// and adjusts prediction results based on product category. *
+	// `filterSyntaxV2`: Boolean. False by default. If set to true, the
+	// `filter` field will be interpreteted according to the new,
+	// attribute-based syntax.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// UserEvent: Required. Context about the user, what they are looking at

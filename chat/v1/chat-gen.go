@@ -1380,6 +1380,44 @@ func (s *GoogleAppsCardV1ActionParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1AppUri: Represents the platform specific uri/intent
+// to open for each client.
+type GoogleAppsCardV1AppUri struct {
+	// AndroidIntent: An intent object to be opened in the corresponding
+	// android hosting app.
+	AndroidIntent *GoogleAppsCardV1Intent `json:"androidIntent,omitempty"`
+
+	// CompanionUri: A companion uri string to be opened in the chat
+	// companion window. on the web.
+	CompanionUri string `json:"companionUri,omitempty"`
+
+	// IosUri: A uri string to be opened in the corresponding iOS hosting
+	// app.
+	IosUri string `json:"iosUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AndroidIntent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AndroidIntent") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1AppUri) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1AppUri
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCardV1BorderStyle: Represents the complete border style
 // applied to widgets.
 type GoogleAppsCardV1BorderStyle struct {
@@ -1821,6 +1859,38 @@ func (s *GoogleAppsCardV1DecoratedText) MarshalJSON() ([]byte, error) {
 type GoogleAppsCardV1Divider struct {
 }
 
+// GoogleAppsCardV1ExtraData: Extra data for an android intent. Valid
+// keys are defined in the hosting app contract.
+type GoogleAppsCardV1ExtraData struct {
+	// Key: A key for the intent extra data.
+	Key string `json:"key,omitempty"`
+
+	// Value: Value for the given extra data key.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1ExtraData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1ExtraData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCardV1Grid: Represents a Grid widget that displays items in
 // a configurable grid layout.
 type GoogleAppsCardV1Grid struct {
@@ -2097,6 +2167,42 @@ func (s *GoogleAppsCardV1ImageCropStyle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleAppsCardV1Intent: Android intent.
+type GoogleAppsCardV1Intent struct {
+	// ExtraData: A list of extra data for the android intent. For example,
+	// for a calendar event edit intent, the event title information can be
+	// passed as extra data.
+	ExtraData []*GoogleAppsCardV1ExtraData `json:"extraData,omitempty"`
+
+	// IntentAction: An android intent action string for the {@link
+	// android.content.Intent} object. For example: for the view intent
+	// action type, a valid value will be
+	// android.content.Intent.ACTION_VIEW.
+	IntentAction string `json:"intentAction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExtraData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExtraData") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1Intent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Intent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCardV1OnClick: Represents the response to an `onClick`
 // event.
 type GoogleAppsCardV1OnClick struct {
@@ -2143,6 +2249,15 @@ func (s *GoogleAppsCardV1OnClick) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1OpenLink: Represents an `onClick` event that opens a
 // hyperlink.
 type GoogleAppsCardV1OpenLink struct {
+	// AppUri: Represents the platform specific uri/intent to open on each
+	// client. For example: A companion_url will open in a companion window
+	// on the web. An iOS URL and android intent will open in the
+	// corresponding hosting apps. If these platform specific URLs can't be
+	// handled correctly, i.e. if the companion isn't supported on web and
+	// the hosting apps aren't available on the mobile platforms then the
+	// `uri` will open in a new browser window on all the platforms.
+	AppUri *GoogleAppsCardV1AppUri `json:"appUri,omitempty"`
+
 	// OnClose: Whether the client forgets about a link after opening it, or
 	// observes it until the window closes. Not supported by Chat apps.
 	//
@@ -2167,7 +2282,7 @@ type GoogleAppsCardV1OpenLink struct {
 	// Url: The URL to open.
 	Url string `json:"url,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OnClose") to
+	// ForceSendFields is a list of field names (e.g. "AppUri") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2175,8 +2290,8 @@ type GoogleAppsCardV1OpenLink struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OnClose") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "AppUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

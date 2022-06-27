@@ -647,12 +647,11 @@ type BinaryAuthorization struct {
 	// unspecified, defaults to DISABLED.
 	//
 	// Possible values:
-	//   "EVALUATION_MODE_UNSPECIFIED" - Default value, equivalent to
-	// DISABLED.
+	//   "EVALUATION_MODE_UNSPECIFIED" - Default value
 	//   "DISABLED" - Disable BinaryAuthorization
-	//   "PROJECT_SINGLETON_POLICY_ENFORCE" - If enabled, enforce Kubernetes
-	// admission requests with BinAuthz using the project's singleton
-	// policy. Equivalent to bool enabled=true.
+	//   "PROJECT_SINGLETON_POLICY_ENFORCE" - Enforce Kubernetes admission
+	// requests with BinaryAuthorization using the project's singleton
+	// policy. This is equivalent to setting the enabled boolean to true.
 	EvaluationMode string `json:"evaluationMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enabled") to

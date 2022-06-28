@@ -6699,7 +6699,8 @@ func (s *MerchantRejectionReason) MarshalJSON() ([]byte, error) {
 // requested explicitly in the request's search query.
 type Metrics struct {
 	// Aos: Average order size - the average number of items in an order.
-	// **This metric cannot be segmented by product dimensions.**
+	// **This metric cannot be segmented by product dimensions and
+	// customer_country_code.**
 	Aos float64 `json:"aos,omitempty"`
 
 	// AovMicros: Average order value - the average value (total price of
@@ -6708,7 +6709,8 @@ type Metrics struct {
 	// 'segments.currency_code' is automatically added to the SELECT clause
 	// in the search query (unless it is explicitly selected by the user)
 	// and the currency_code segment is populated in the response. **This
-	// metric cannot be segmented by product dimensions.**
+	// metric cannot be segmented by product dimensions and
+	// customer_country_code.**
 	AovMicros float64 `json:"aovMicros,omitempty"`
 
 	// Clicks: Number of clicks.
@@ -6744,20 +6746,23 @@ type Metrics struct {
 
 	// DaysToShip: Average number of days between an order being placed and
 	// the order being fully shipped, reported on the last shipment date.
-	// **This metric cannot be segmented by product dimensions.**
+	// **This metric cannot be segmented by product dimensions and
+	// customer_country_code.**
 	DaysToShip float64 `json:"daysToShip,omitempty"`
 
 	// Impressions: Number of times merchant's products are shown.
 	Impressions int64 `json:"impressions,omitempty,string"`
 
 	// ItemDaysToShip: Average number of days between an item being ordered
-	// and the item being
+	// and the item being **This metric cannot be segmented by
+	// customer_country_code.**
 	ItemDaysToShip float64 `json:"itemDaysToShip,omitempty"`
 
 	// ItemFillRate: Percentage of shipped items in relation to all
 	// finalized items (shipped or rejected by the merchant; unshipped items
 	// are not taken into account), reported on the order date. Item fill
-	// rate is lowered by merchant rejections.
+	// rate is lowered by merchant rejections. **This metric cannot be
+	// segmented by customer_country_code.**
 	ItemFillRate float64 `json:"itemFillRate,omitempty"`
 
 	// OrderedItemSalesMicros: Total price of ordered items. Excludes
@@ -6767,20 +6772,23 @@ type Metrics struct {
 	// selected, 'segments.currency_code' is automatically added to the
 	// SELECT clause in the search query (unless it is explicitly selected
 	// by the user) and the currency_code segment is populated in the
-	// response.
+	// response. **This metric cannot be segmented by
+	// customer_country_code.**
 	OrderedItemSalesMicros int64 `json:"orderedItemSalesMicros,omitempty,string"`
 
 	// OrderedItems: Number of ordered items. Excludes customer
 	// cancellations that happened within 30 minutes of placing the order.
+	// **This metric cannot be segmented by customer_country_code.**
 	OrderedItems int64 `json:"orderedItems,omitempty,string"`
 
 	// Orders: Number of placed orders. Excludes customer cancellations that
 	// happened within 30 minutes of placing the order. **This metric cannot
-	// be segmented by product dimensions.**
+	// be segmented by product dimensions and customer_country_code.**
 	Orders int64 `json:"orders,omitempty,string"`
 
 	// RejectedItems: Number of ordered items canceled by the merchant,
-	// reported on the order date.
+	// reported on the order date. **This metric cannot be segmented by
+	// customer_country_code.**
 	RejectedItems int64 `json:"rejectedItems,omitempty,string"`
 
 	// ReturnRate: Total price of returned items divided by the total price
@@ -6788,11 +6796,13 @@ type Metrics struct {
 	// selected, 'segments.currency_code' is automatically added to the
 	// SELECT clause in the search query (unless it is explicitly selected
 	// by the user) and the currency_code segment is populated in the
-	// response.
+	// response. **This metric cannot be segmented by
+	// customer_country_code.**
 	ReturnRate float64 `json:"returnRate,omitempty"`
 
 	// ReturnedItems: Number of ordered items sent back for return, reported
-	// on the date when the merchant accepted the return.
+	// on the date when the merchant accepted the return. **This metric
+	// cannot be segmented by customer_country_code.**
 	ReturnedItems int64 `json:"returnedItems,omitempty,string"`
 
 	// ReturnsMicros: Total price of ordered items sent back for return,
@@ -6801,7 +6811,8 @@ type Metrics struct {
 	// segment. If this metric is selected, 'segments.currency_code' is
 	// automatically added to the SELECT clause in the search query (unless
 	// it is explicitly selected by the user) and the currency_code segment
-	// is populated in the response.
+	// is populated in the response. **This metric cannot be segmented by
+	// customer_country_code.**
 	ReturnsMicros int64 `json:"returnsMicros,omitempty,string"`
 
 	// ShippedItemSalesMicros: Total price of shipped items, reported on the
@@ -6810,28 +6821,32 @@ type Metrics struct {
 	// metric is selected, 'segments.currency_code' is automatically added
 	// to the SELECT clause in the search query (unless it is explicitly
 	// selected by the user) and the currency_code segment is populated in
-	// the response.
+	// the response. **This metric cannot be segmented by
+	// customer_country_code.**
 	ShippedItemSalesMicros int64 `json:"shippedItemSalesMicros,omitempty,string"`
 
 	// ShippedItems: Number of shipped items, reported on the shipment date.
+	// **This metric cannot be segmented by customer_country_code.**
 	ShippedItems int64 `json:"shippedItems,omitempty,string"`
 
 	// ShippedOrders: Number of fully shipped orders, reported on the last
 	// shipment date. **This metric cannot be segmented by product
-	// dimensions.**
+	// dimensions and customer_country_code.**
 	ShippedOrders int64 `json:"shippedOrders,omitempty,string"`
 
 	// UnshippedItems: Number of ordered items not shipped up until the end
 	// of the queried day. If a multi-day period is specified in the search
 	// query, the returned value is the average number of unshipped items
-	// over the days in the queried period.
+	// over the days in the queried period. **This metric cannot be
+	// segmented by customer_country_code.**
 	UnshippedItems float64 `json:"unshippedItems,omitempty"`
 
 	// UnshippedOrders: Number of orders not shipped or partially shipped up
 	// until the end of the queried day. If a multi-day period is specified
 	// in the search query, the returned value is the average number of
 	// unshipped orders over the days in the queried period. **This metric
-	// cannot be segmented by product dimensions.**
+	// cannot be segmented by product dimensions and
+	// customer_country_code.**
 	UnshippedOrders float64 `json:"unshippedOrders,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Aos") to
@@ -13532,10 +13547,8 @@ func (s *ProductstatusesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Promotion: The Promotions feature is available for `AU`, `CA`, `DE`,
-// `FR`, `GB`, `IN` and `US` target countries, and `en` content
-// language. Represents a promotion. See the following articles for more
-// details. * Promotions feed specification
+// Promotion: Represents a promotion. See the following articles for
+// more details. * Promotions feed specification
 // (https://support.google.com/merchants/answer/2906014) * Local
 // promotions feed specification
 // (https://support.google.com/merchants/answer/10146130) * Promotions
@@ -13549,7 +13562,10 @@ type Promotion struct {
 	BrandExclusion []string `json:"brandExclusion,omitempty"`
 
 	// ContentLanguage: Required. The content language used as part of the
-	// unique identifier. Currently only `en` value is supported.
+	// unique identifier. `en` content language is available for all target
+	// countries. `fr` content language is available for `CA` and `FR`
+	// target countries, and `de` content language is available for `DE`
+	// target country.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// CouponValueType: Required. Coupon value type for the promotion.
@@ -16245,6 +16261,12 @@ type Segments struct {
 
 	// CustomLabel4: Custom label 4 for custom grouping of products.
 	CustomLabel4 string `json:"customLabel4,omitempty"`
+
+	// CustomerCountryCode: Code of the country where the customer is
+	// located at the time of the event. Represented in the ISO 3166 format.
+	// If the customer country cannot be determined, a special 'ZZ' code is
+	// returned.
+	CustomerCountryCode string `json:"customerCountryCode,omitempty"`
 
 	// Date: Date in the merchant timezone to which metrics apply.
 	Date *Date `json:"date,omitempty"`

@@ -1311,7 +1311,8 @@ type Proto2FileDescriptorProto struct {
 	Package string `json:"package,omitempty"`
 
 	// Syntax: The syntax of the proto file. The supported values are
-	// "proto2" and "proto3".
+	// "proto2", "proto3", and "editions". If `edition` is present, this
+	// value must be "editions".
 	Syntax string `json:"syntax,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EnumType") to

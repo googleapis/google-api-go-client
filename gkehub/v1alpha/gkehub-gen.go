@@ -3993,6 +3993,9 @@ type PolicyControllerHubConfig struct {
 	// LogDeniesEnabled: Logs all denies and dry run failures.
 	LogDeniesEnabled bool `json:"logDeniesEnabled,omitempty"`
 
+	// Monitoring: Monitoring specifies the configuration of monitoring.
+	Monitoring *PolicyControllerMonitoringConfig `json:"monitoring,omitempty"`
+
 	// MutationEnabled: Enables the ability to mutate resources using Policy
 	// Controller.
 	MutationEnabled bool `json:"mutationEnabled,omitempty"`
@@ -4207,6 +4210,44 @@ type PolicyControllerMembershipState struct {
 
 func (s *PolicyControllerMembershipState) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyControllerMembershipState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerMonitoringConfig: MonitoringConfig specifies the
+// backends Policy Controller should export metrics to. For example, to
+// specify metrics should be exported to Cloud Monitoring and
+// Prometheus, specify backends: ["cloudmonitoring", "prometheus"]
+type PolicyControllerMonitoringConfig struct {
+	// Backends: Specifies the list of backends Policy Controller will
+	// export to. An empty list would effectively disable metrics export.
+	//
+	// Possible values:
+	//   "MONITORING_BACKEND_UNSPECIFIED" - Backend cannot be determined
+	//   "PROMETHEUS" - Prometheus backend for monitoring
+	//   "CLOUD_MONITORING" - Stackdriver/Cloud Monitoring backend for
+	// monitoring
+	Backends []string `json:"backends,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backends") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backends") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyControllerMonitoringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerMonitoringConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

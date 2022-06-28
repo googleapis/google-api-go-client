@@ -705,12 +705,11 @@ type BinaryAuthorization struct {
 	// unspecified, defaults to DISABLED.
 	//
 	// Possible values:
-	//   "EVALUATION_MODE_UNSPECIFIED" - Default value, equivalent to
-	// DISABLED.
+	//   "EVALUATION_MODE_UNSPECIFIED" - Default value
 	//   "DISABLED" - Disable BinaryAuthorization
-	//   "PROJECT_SINGLETON_POLICY_ENFORCE" - If enabled, enforce Kubernetes
-	// admission requests with BinAuthz using the project's singleton
-	// policy. Equivalent to bool enabled=true.
+	//   "PROJECT_SINGLETON_POLICY_ENFORCE" - Enforce Kubernetes admission
+	// requests with BinaryAuthorization using the project's singleton
+	// policy. This is equivalent to setting the enabled boolean to true.
 	EvaluationMode string `json:"evaluationMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enabled") to
@@ -922,6 +921,10 @@ type Cluster struct {
 	// ConfidentialNodes: Configuration of Confidential Nodes. All the nodes
 	// in the cluster will be Confidential VM once enabled.
 	ConfidentialNodes *ConfidentialNodes `json:"confidentialNodes,omitempty"`
+
+	// CostManagementConfig: Configuration for the fine-grained cost
+	// management feature.
+	CostManagementConfig *CostManagementConfig `json:"costManagementConfig,omitempty"`
 
 	// CreateTime: [Output only] The time the cluster was created, in
 	// RFC3339 (https://www.ietf.org/rfc/rfc3339.txt) text format.
@@ -1394,6 +1397,10 @@ type ClusterUpdate struct {
 	// cluster.
 	DesiredClusterTelemetry *ClusterTelemetry `json:"desiredClusterTelemetry,omitempty"`
 
+	// DesiredCostManagementConfig: The desired configuration for the
+	// fine-grained cost management feature.
+	DesiredCostManagementConfig *CostManagementConfig `json:"desiredCostManagementConfig,omitempty"`
+
 	// DesiredDatabaseEncryption: Configuration of etcd encryption.
 	DesiredDatabaseEncryption *DatabaseEncryption `json:"desiredDatabaseEncryption,omitempty"`
 
@@ -1740,6 +1747,35 @@ type ConsumptionMeteringConfig struct {
 
 func (s *ConsumptionMeteringConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ConsumptionMeteringConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CostManagementConfig: Configuration for fine-grained cost management
+// feature.
+type CostManagementConfig struct {
+	// Enabled: Whether the feature is enabled or not.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CostManagementConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CostManagementConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -154,6 +154,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.AppConnections = NewProjectsLocationsAppConnectionsService(s)
 	rs.AppConnectors = NewProjectsLocationsAppConnectorsService(s)
 	rs.AppGateways = NewProjectsLocationsAppGatewaysService(s)
+	rs.Applications = NewProjectsLocationsApplicationsService(s)
 	rs.ClientConnectorServices = NewProjectsLocationsClientConnectorServicesService(s)
 	rs.ClientGateways = NewProjectsLocationsClientGatewaysService(s)
 	rs.Connections = NewProjectsLocationsConnectionsService(s)
@@ -170,6 +171,8 @@ type ProjectsLocationsService struct {
 	AppConnectors *ProjectsLocationsAppConnectorsService
 
 	AppGateways *ProjectsLocationsAppGatewaysService
+
+	Applications *ProjectsLocationsApplicationsService
 
 	ClientConnectorServices *ProjectsLocationsClientConnectorServicesService
 
@@ -206,6 +209,15 @@ func NewProjectsLocationsAppGatewaysService(s *Service) *ProjectsLocationsAppGat
 }
 
 type ProjectsLocationsAppGatewaysService struct {
+	s *Service
+}
+
+func NewProjectsLocationsApplicationsService(s *Service) *ProjectsLocationsApplicationsService {
+	rs := &ProjectsLocationsApplicationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsApplicationsService struct {
 	s *Service
 }
 
@@ -1976,15 +1988,58 @@ func (s *GoogleCloudBeyondcorpAppconnectorsV1alphaAppConnectorPrincipalInfoServi
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBeyondcorpAppconnectorsV1alphaContainerHealthDetails:
+// ContainerHealthDetails reflects the health details of a container.
+type GoogleCloudBeyondcorpAppconnectorsV1alphaContainerHealthDetails struct {
+	// CurrentConfigVersion: The version of the current config.
+	CurrentConfigVersion string `json:"currentConfigVersion,omitempty"`
+
+	// ErrorMsg: The latest error message.
+	ErrorMsg string `json:"errorMsg,omitempty"`
+
+	// ExpectedConfigVersion: The version of the expected config.
+	ExpectedConfigVersion string `json:"expectedConfigVersion,omitempty"`
+
+	// ExtendedStatus: The extended status. Such as ExitCode, StartedAt,
+	// FinishedAt, etc.
+	ExtendedStatus map[string]string `json:"extendedStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CurrentConfigVersion") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentConfigVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpAppconnectorsV1alphaContainerHealthDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1alphaContainerHealthDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudBeyondcorpAppconnectorsV1alphaImageConfig: ImageConfig
 // defines the control plane images to run.
 type GoogleCloudBeyondcorpAppconnectorsV1alphaImageConfig struct {
 	// StableImage: The stable image that the remote agent will fallback to
-	// if the target image fails.
+	// if the target image fails. Format would be a gcr image path, e.g.:
+	// gcr.io/PROJECT-ID/my-image:tag1
 	StableImage string `json:"stableImage,omitempty"`
 
 	// TargetImage: The initial image the remote agent will attempt to run
-	// for the control plane.
+	// for the control plane. Format would be a gcr image path, e.g.:
+	// gcr.io/PROJECT-ID/my-image:tag1
 	TargetImage string `json:"targetImage,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "StableImage") to
@@ -2053,8 +2108,8 @@ func (s *GoogleCloudBeyondcorpAppconnectorsV1alphaListAppConnectorsResponse) Mar
 // GoogleCloudBeyondcorpAppconnectorsV1alphaNotificationConfig:
 // NotificationConfig defines the mechanisms to notify instance agent.
 type GoogleCloudBeyondcorpAppconnectorsV1alphaNotificationConfig struct {
-	// PubsubNotification: Pub/Sub topic for AppConnector to subscribe and
-	// receive notifications from `projects/{project}/topics/{pubsub_topic}`
+	// PubsubNotification: Cloud Pub/Sub Configuration to receive
+	// notifications.
 	PubsubNotification *GoogleCloudBeyondcorpAppconnectorsV1alphaNotificationConfigCloudPubSubNotificationConfig `json:"pubsubNotification,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PubsubNotification")
@@ -2111,6 +2166,11 @@ func (s *GoogleCloudBeyondcorpAppconnectorsV1alphaNotificationConfigCloudPubSubN
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1alphaNotificationConfigCloudPubSubNotificationConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpAppconnectorsV1alphaRemoteAgentDetails:
+// RemoteAgentDetails reflects the details of a remote agent.
+type GoogleCloudBeyondcorpAppconnectorsV1alphaRemoteAgentDetails struct {
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1alphaReportStatusRequest: Request
@@ -2215,7 +2275,7 @@ type GoogleCloudBeyondcorpAppconnectorsV1alphaResourceInfo struct {
 	//   "HEALTHY" - The resource is healthy.
 	//   "UNHEALTHY" - The resource is unhealthy.
 	//   "UNRESPONSIVE" - The resource is unresponsive.
-	//   "DEGRADED" - The resource is some sub-resources are UNHEALTHY.
+	//   "DEGRADED" - Some sub-resources are UNHEALTHY.
 	Status string `json:"status,omitempty"`
 
 	// Sub: List of Info for the sub level resources.
@@ -2244,6 +2304,55 @@ type GoogleCloudBeyondcorpAppconnectorsV1alphaResourceInfo struct {
 
 func (s *GoogleCloudBeyondcorpAppconnectorsV1alphaResourceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1alphaResourceInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpApplicationsV1alphaApplicationOperationMetadata:
+// Represents the metadata of the long-running operation.
+type GoogleCloudBeyondcorpApplicationsV1alphaApplicationOperationMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have been
+	// cancelled successfully have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+
+	// StatusMessage: Output only. Human-readable status of the operation,
+	// if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// Target: Output only. Server-defined resource path for the target of
+	// the operation.
+	Target string `json:"target,omitempty"`
+
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpApplicationsV1alphaApplicationOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpApplicationsV1alphaApplicationOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3428,7 +3537,7 @@ type ResourceInfo struct {
 	//   "HEALTHY" - The resource is healthy.
 	//   "UNHEALTHY" - The resource is unhealthy.
 	//   "UNRESPONSIVE" - The resource is unresponsive.
-	//   "DEGRADED" - The resource is some sub-resources are UNHEALTHY.
+	//   "DEGRADED" - Some sub-resources are UNHEALTHY.
 	Status string `json:"status,omitempty"`
 
 	// Sub: List of Info for the sub level resources.
@@ -3951,7 +4060,7 @@ func (r *ProjectsLocationsAppConnectionsService) Create(parent string, googleclo
 
 // AppConnectionId sets the optional parameter "appConnectionId":
 // User-settable AppConnection resource ID. * Must start with a letter.
-// * Must contain between 4-63 characters from (/a-z-/). * Must end with
+// * Must contain between 4-63 characters from `/a-z-/`. * Must end with
 // a number or a letter.
 func (c *ProjectsLocationsAppConnectionsCreateCall) AppConnectionId(appConnectionId string) *ProjectsLocationsAppConnectionsCreateCall {
 	c.urlParams_.Set("appConnectionId", appConnectionId)
@@ -4084,7 +4193,7 @@ func (c *ProjectsLocationsAppConnectionsCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "appConnectionId": {
-	//       "description": "Optional. User-settable AppConnection resource ID. * Must start with a letter. * Must contain between 4-63 characters from (/a-z-/). * Must end with a number or a letter.",
+	//       "description": "Optional. User-settable AppConnection resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or a letter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5590,7 +5699,7 @@ func (r *ProjectsLocationsAppConnectorsService) Create(parent string, googleclou
 
 // AppConnectorId sets the optional parameter "appConnectorId":
 // User-settable AppConnector resource ID. * Must start with a letter. *
-// Must contain between 4-63 characters from (/a-z-/). * Must end with a
+// Must contain between 4-63 characters from `/a-z-/`. * Must end with a
 // number or a letter.
 func (c *ProjectsLocationsAppConnectorsCreateCall) AppConnectorId(appConnectorId string) *ProjectsLocationsAppConnectorsCreateCall {
 	c.urlParams_.Set("appConnectorId", appConnectorId)
@@ -5723,7 +5832,7 @@ func (c *ProjectsLocationsAppConnectorsCreateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "appConnectorId": {
-	//       "description": "Optional. User-settable AppConnector resource ID. * Must start with a letter. * Must contain between 4-63 characters from (/a-z-/). * Must end with a number or a letter.",
+	//       "description": "Optional. User-settable AppConnector resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or a letter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7295,7 +7404,7 @@ func (r *ProjectsLocationsAppGatewaysService) Create(parent string, appgateway *
 
 // AppGatewayId sets the optional parameter "appGatewayId":
 // User-settable AppGateway resource ID. * Must start with a letter. *
-// Must contain between 4-63 characters from (/a-z-/). * Must end with a
+// Must contain between 4-63 characters from `/a-z-/`. * Must end with a
 // number or a letter.
 func (c *ProjectsLocationsAppGatewaysCreateCall) AppGatewayId(appGatewayId string) *ProjectsLocationsAppGatewaysCreateCall {
 	c.urlParams_.Set("appGatewayId", appGatewayId)
@@ -7428,7 +7537,7 @@ func (c *ProjectsLocationsAppGatewaysCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "appGatewayId": {
-	//       "description": "Optional. User-settable AppGateway resource ID. * Must start with a letter. * Must contain between 4-63 characters from (/a-z-/). * Must end with a number or a letter.",
+	//       "description": "Optional. User-settable AppGateway resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or a letter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8479,6 +8588,479 @@ func (c *ProjectsLocationsAppGatewaysTestIamPermissionsCall) Do(opts ...googleap
 
 }
 
+// method id "beyondcorp.projects.locations.applications.getIamPolicy":
+
+type ProjectsLocationsApplicationsGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
+// set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsApplicationsService) GetIamPolicy(resource string) *ProjectsLocationsApplicationsGetIamPolicyCall {
+	c := &ProjectsLocationsApplicationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsApplicationsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsApplicationsGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsApplicationsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsApplicationsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsApplicationsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsApplicationsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsApplicationsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsApplicationsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.applications.getIamPolicy" call.
+// Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}:getIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "beyondcorp.projects.locations.applications.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "options.requestedPolicyVersion": {
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "GoogleIamV1Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "beyondcorp.projects.locations.applications.setIamPolicy":
+
+type ProjectsLocationsApplicationsSetIamPolicyCall struct {
+	s                              *Service
+	resource                       string
+	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsApplicationsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsApplicationsSetIamPolicyCall {
+	c := &ProjectsLocationsApplicationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsApplicationsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsApplicationsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsApplicationsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsApplicationsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.applications.setIamPolicy" call.
+// Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "beyondcorp.projects.locations.applications.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "GoogleIamV1SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleIamV1Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "beyondcorp.projects.locations.applications.testIamPermissions":
+
+type ProjectsLocationsApplicationsTestIamPermissionsCall struct {
+	s                                    *Service
+	resource                             string
+	googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsApplicationsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsApplicationsTestIamPermissionsCall {
+	c := &ProjectsLocationsApplicationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1testiampermissionsrequest = googleiamv1testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsApplicationsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsApplicationsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsApplicationsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsApplicationsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.applications.testIamPermissions" call.
+// Exactly one of *GoogleIamV1TestIamPermissionsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleIamV1TestIamPermissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleIamV1TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "beyondcorp.projects.locations.applications.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "GoogleIamV1TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleIamV1TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "beyondcorp.projects.locations.clientConnectorServices.create":
 
 type ProjectsLocationsClientConnectorServicesCreateCall struct {
@@ -8504,7 +9086,7 @@ func (r *ProjectsLocationsClientConnectorServicesService) Create(parent string, 
 // ClientConnectorServiceId sets the optional parameter
 // "clientConnectorServiceId": User-settable client connector service
 // resource ID. * Must start with a letter. * Must contain between 4-63
-// characters from (/a-z-/). * Must end with a number or a letter. A
+// characters from `/a-z-/`. * Must end with a number or a letter. A
 // random system generated name will be assigned if not specified by the
 // user.
 func (c *ProjectsLocationsClientConnectorServicesCreateCall) ClientConnectorServiceId(clientConnectorServiceId string) *ProjectsLocationsClientConnectorServicesCreateCall {
@@ -8638,7 +9220,7 @@ func (c *ProjectsLocationsClientConnectorServicesCreateCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "clientConnectorServiceId": {
-	//       "description": "Optional. User-settable client connector service resource ID. * Must start with a letter. * Must contain between 4-63 characters from (/a-z-/). * Must end with a number or a letter. A random system generated name will be assigned if not specified by the user.",
+	//       "description": "Optional. User-settable client connector service resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or a letter. A random system generated name will be assigned if not specified by the user.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9909,7 +10491,7 @@ func (r *ProjectsLocationsClientGatewaysService) Create(parent string, clientgat
 
 // ClientGatewayId sets the optional parameter "clientGatewayId":
 // User-settable client gateway resource ID. * Must start with a letter.
-// * Must contain between 4-63 characters from (/a-z-/). * Must end with
+// * Must contain between 4-63 characters from `/a-z-/`. * Must end with
 // a number or a letter.
 func (c *ProjectsLocationsClientGatewaysCreateCall) ClientGatewayId(clientGatewayId string) *ProjectsLocationsClientGatewaysCreateCall {
 	c.urlParams_.Set("clientGatewayId", clientGatewayId)
@@ -10042,7 +10624,7 @@ func (c *ProjectsLocationsClientGatewaysCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "clientGatewayId": {
-	//       "description": "Optional. User-settable client gateway resource ID. * Must start with a letter. * Must contain between 4-63 characters from (/a-z-/). * Must end with a number or a letter.",
+	//       "description": "Optional. User-settable client gateway resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or a letter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11105,7 +11687,7 @@ func (r *ProjectsLocationsConnectionsService) Create(parent string, connection *
 
 // ConnectionId sets the optional parameter "connectionId":
 // User-settable connection resource ID. * Must start with a letter. *
-// Must contain between 4-63 characters from (/a-z-/). * Must end with a
+// Must contain between 4-63 characters from `/a-z-/`. * Must end with a
 // number or a letter.
 func (c *ProjectsLocationsConnectionsCreateCall) ConnectionId(connectionId string) *ProjectsLocationsConnectionsCreateCall {
 	c.urlParams_.Set("connectionId", connectionId)
@@ -11238,7 +11820,7 @@ func (c *ProjectsLocationsConnectionsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "connectionId": {
-	//       "description": "Optional. User-settable connection resource ID. * Must start with a letter. * Must contain between 4-63 characters from (/a-z-/). * Must end with a number or a letter.",
+	//       "description": "Optional. User-settable connection resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or a letter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12735,7 +13317,7 @@ func (r *ProjectsLocationsConnectorsService) Create(parent string, connector *Co
 
 // ConnectorId sets the optional parameter "connectorId": User-settable
 // connector resource ID. * Must start with a letter. * Must contain
-// between 4-63 characters from (/a-z-/). * Must end with a number or a
+// between 4-63 characters from `/a-z-/`. * Must end with a number or a
 // letter.
 func (c *ProjectsLocationsConnectorsCreateCall) ConnectorId(connectorId string) *ProjectsLocationsConnectorsCreateCall {
 	c.urlParams_.Set("connectorId", connectorId)
@@ -12868,7 +13450,7 @@ func (c *ProjectsLocationsConnectorsCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "connectorId": {
-	//       "description": "Optional. User-settable connector resource ID. * Must start with a letter. * Must contain between 4-63 characters from (/a-z-/). * Must end with a number or a letter.",
+	//       "description": "Optional. User-settable connector resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or a letter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

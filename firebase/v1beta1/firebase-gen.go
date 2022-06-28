@@ -504,6 +504,14 @@ type AndroidApp struct {
 	// of the parent FirebaseProject for the `AndroidApp`.
 	ProjectId string `json:"projectId,omitempty"`
 
+	// State: Output only. The lifecycle state of the App.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "ACTIVE" - The normal and active state.
+	//   "DELETED" - The app has been soft deleted.
+	State string `json:"state,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -708,6 +716,14 @@ type FirebaseAppInfo struct {
 	//   "WEB" - The Firebase App is associated with web.
 	Platform string `json:"platform,omitempty"`
 
+	// State: Output only. The lifecycle state of the App.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "ACTIVE" - The normal and active state.
+	//   "DELETED" - The app has been soft deleted.
+	State string `json:"state,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AppId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -852,6 +868,14 @@ type IosApp struct {
 	// ProjectId: Output only. Immutable. A user-assigned unique identifier
 	// of the parent FirebaseProject for the `IosApp`.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// State: Output only. The lifecycle state of the App.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "ACTIVE" - The normal and active state.
+	//   "DELETED" - The app has been soft deleted.
+	State string `json:"state,omitempty"`
 
 	// TeamId: The Apple Developer Team ID associated with the App in the
 	// App Store.
@@ -1672,6 +1696,14 @@ type WebApp struct {
 	// ProjectId: Output only. Immutable. A user-assigned unique identifier
 	// of the parent FirebaseProject for the `WebApp`.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// State: Output only. The lifecycle state of the App.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "ACTIVE" - The normal and active state.
+	//   "DELETED" - The app has been soft deleted.
+	State string `json:"state,omitempty"`
 
 	// WebId: Output only. Immutable. A unique, Firebase-assigned identifier
 	// for the `WebApp`. This identifier is only used to populate the
@@ -3540,6 +3572,14 @@ func (c *ProjectsSearchAppsCall) PageToken(pageToken string) *ProjectsSearchApps
 	return c
 }
 
+// ShowDeleted sets the optional parameter "showDeleted": Controls
+// whether Apps in the DELETED state should be returned. Defaults to
+// false.
+func (c *ProjectsSearchAppsCall) ShowDeleted(showDeleted bool) *ProjectsSearchAppsCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3669,6 +3709,11 @@ func (c *ProjectsSearchAppsCall) Do(opts ...googleapi.CallOption) (*SearchFireba
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Controls whether Apps in the DELETED state should be returned. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+parent}:searchApps",
@@ -4213,6 +4258,14 @@ func (c *ProjectsAndroidAppsListCall) PageToken(pageToken string) *ProjectsAndro
 	return c
 }
 
+// ShowDeleted sets the optional parameter "showDeleted": Controls
+// whether Apps in the DELETED state should be returned. Defaults to
+// false.
+func (c *ProjectsAndroidAppsListCall) ShowDeleted(showDeleted bool) *ProjectsAndroidAppsListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4337,6 +4390,11 @@ func (c *ProjectsAndroidAppsListCall) Do(opts ...googleapi.CallOption) (*ListAnd
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Controls whether Apps in the DELETED state should be returned. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+parent}/androidApps",
@@ -4408,7 +4466,7 @@ func (r *ProjectsAndroidAppsService) Patch(nameid string, androidapp *AndroidApp
 
 // UpdateMask sets the optional parameter "updateMask": Specifies which
 // fields to update. Note that the fields `name`, `app_id`,
-// `project_id`, and `package_name` are all immutable.
+// `project_id`, `package_name`, and `state` are all immutable.
 func (c *ProjectsAndroidAppsPatchCall) UpdateMask(updateMask string) *ProjectsAndroidAppsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4521,7 +4579,7 @@ func (c *ProjectsAndroidAppsPatchCall) Do(opts ...googleapi.CallOption) (*Androi
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Specifies which fields to update. Note that the fields `name`, `app_id`, `project_id`, and `package_name` are all immutable.",
+	//       "description": "Specifies which fields to update. Note that the fields `name`, `app_id`, `project_id`, `package_name`, and `state` are all immutable.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5894,6 +5952,14 @@ func (c *ProjectsIosAppsListCall) PageToken(pageToken string) *ProjectsIosAppsLi
 	return c
 }
 
+// ShowDeleted sets the optional parameter "showDeleted": Controls
+// whether Apps in the DELETED state should be returned. Defaults to
+// false.
+func (c *ProjectsIosAppsListCall) ShowDeleted(showDeleted bool) *ProjectsIosAppsListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6018,6 +6084,11 @@ func (c *ProjectsIosAppsListCall) Do(opts ...googleapi.CallOption) (*ListIosApps
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Controls whether Apps in the DELETED state should be returned. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+parent}/iosApps",
@@ -6088,7 +6159,7 @@ func (r *ProjectsIosAppsService) Patch(nameid string, iosapp *IosApp) *ProjectsI
 
 // UpdateMask sets the optional parameter "updateMask": Specifies which
 // fields to update. Note that the fields `name`, `appId`, `projectId`,
-// and `bundleId` are all immutable.
+// `bundleId`, and `state` are all immutable
 func (c *ProjectsIosAppsPatchCall) UpdateMask(updateMask string) *ProjectsIosAppsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6201,7 +6272,7 @@ func (c *ProjectsIosAppsPatchCall) Do(opts ...googleapi.CallOption) (*IosApp, er
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Specifies which fields to update. Note that the fields `name`, `appId`, `projectId`, and `bundleId` are all immutable.",
+	//       "description": "Specifies which fields to update. Note that the fields `name`, `appId`, `projectId`, `bundleId`, and `state` are all immutable",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6728,6 +6799,14 @@ func (c *ProjectsWebAppsListCall) PageToken(pageToken string) *ProjectsWebAppsLi
 	return c
 }
 
+// ShowDeleted sets the optional parameter "showDeleted": Controls
+// whether Apps in the DELETED state should be returned. Defaults to
+// false.
+func (c *ProjectsWebAppsListCall) ShowDeleted(showDeleted bool) *ProjectsWebAppsListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6852,6 +6931,11 @@ func (c *ProjectsWebAppsListCall) Do(opts ...googleapi.CallOption) (*ListWebApps
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Controls whether Apps in the DELETED state should be returned. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+parent}/webApps",
@@ -6921,8 +7005,8 @@ func (r *ProjectsWebAppsService) Patch(nameid string, webapp *WebApp) *ProjectsW
 }
 
 // UpdateMask sets the optional parameter "updateMask": Specifies which
-// fields to update. Note that the fields `name`, `appId`, and
-// `projectId` are all immutable.
+// fields to update. Note that the fields `name`, `appId`, `projectId`
+// and `state` are all immutable
 func (c *ProjectsWebAppsPatchCall) UpdateMask(updateMask string) *ProjectsWebAppsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7035,7 +7119,7 @@ func (c *ProjectsWebAppsPatchCall) Do(opts ...googleapi.CallOption) (*WebApp, er
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Specifies which fields to update. Note that the fields `name`, `appId`, and `projectId` are all immutable.",
+	//       "description": "Specifies which fields to update. Note that the fields `name`, `appId`, `projectId` and `state` are all immutable",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

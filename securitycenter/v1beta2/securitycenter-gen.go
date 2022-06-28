@@ -147,6 +147,7 @@ func NewFoldersService(s *Service) *FoldersService {
 	rs := &FoldersService{s: s}
 	rs.ContainerThreatDetectionSettings = NewFoldersContainerThreatDetectionSettingsService(s)
 	rs.EventThreatDetectionSettings = NewFoldersEventThreatDetectionSettingsService(s)
+	rs.RapidVulnerabilityDetectionSettings = NewFoldersRapidVulnerabilityDetectionSettingsService(s)
 	rs.SecurityHealthAnalyticsSettings = NewFoldersSecurityHealthAnalyticsSettingsService(s)
 	rs.VirtualMachineThreatDetectionSettings = NewFoldersVirtualMachineThreatDetectionSettingsService(s)
 	rs.WebSecurityScannerSettings = NewFoldersWebSecurityScannerSettingsService(s)
@@ -159,6 +160,8 @@ type FoldersService struct {
 	ContainerThreatDetectionSettings *FoldersContainerThreatDetectionSettingsService
 
 	EventThreatDetectionSettings *FoldersEventThreatDetectionSettingsService
+
+	RapidVulnerabilityDetectionSettings *FoldersRapidVulnerabilityDetectionSettingsService
 
 	SecurityHealthAnalyticsSettings *FoldersSecurityHealthAnalyticsSettingsService
 
@@ -182,6 +185,15 @@ func NewFoldersEventThreatDetectionSettingsService(s *Service) *FoldersEventThre
 }
 
 type FoldersEventThreatDetectionSettingsService struct {
+	s *Service
+}
+
+func NewFoldersRapidVulnerabilityDetectionSettingsService(s *Service) *FoldersRapidVulnerabilityDetectionSettingsService {
+	rs := &FoldersRapidVulnerabilityDetectionSettingsService{s: s}
+	return rs
+}
+
+type FoldersRapidVulnerabilityDetectionSettingsService struct {
 	s *Service
 }
 
@@ -216,6 +228,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs := &OrganizationsService{s: s}
 	rs.ContainerThreatDetectionSettings = NewOrganizationsContainerThreatDetectionSettingsService(s)
 	rs.EventThreatDetectionSettings = NewOrganizationsEventThreatDetectionSettingsService(s)
+	rs.RapidVulnerabilityDetectionSettings = NewOrganizationsRapidVulnerabilityDetectionSettingsService(s)
 	rs.SecurityHealthAnalyticsSettings = NewOrganizationsSecurityHealthAnalyticsSettingsService(s)
 	rs.VirtualMachineThreatDetectionSettings = NewOrganizationsVirtualMachineThreatDetectionSettingsService(s)
 	rs.WebSecurityScannerSettings = NewOrganizationsWebSecurityScannerSettingsService(s)
@@ -228,6 +241,8 @@ type OrganizationsService struct {
 	ContainerThreatDetectionSettings *OrganizationsContainerThreatDetectionSettingsService
 
 	EventThreatDetectionSettings *OrganizationsEventThreatDetectionSettingsService
+
+	RapidVulnerabilityDetectionSettings *OrganizationsRapidVulnerabilityDetectionSettingsService
 
 	SecurityHealthAnalyticsSettings *OrganizationsSecurityHealthAnalyticsSettingsService
 
@@ -251,6 +266,15 @@ func NewOrganizationsEventThreatDetectionSettingsService(s *Service) *Organizati
 }
 
 type OrganizationsEventThreatDetectionSettingsService struct {
+	s *Service
+}
+
+func NewOrganizationsRapidVulnerabilityDetectionSettingsService(s *Service) *OrganizationsRapidVulnerabilityDetectionSettingsService {
+	rs := &OrganizationsRapidVulnerabilityDetectionSettingsService{s: s}
+	return rs
+}
+
+type OrganizationsRapidVulnerabilityDetectionSettingsService struct {
 	s *Service
 }
 
@@ -286,6 +310,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs.ContainerThreatDetectionSettings = NewProjectsContainerThreatDetectionSettingsService(s)
 	rs.EventThreatDetectionSettings = NewProjectsEventThreatDetectionSettingsService(s)
 	rs.Locations = NewProjectsLocationsService(s)
+	rs.RapidVulnerabilityDetectionSettings = NewProjectsRapidVulnerabilityDetectionSettingsService(s)
 	rs.SecurityHealthAnalyticsSettings = NewProjectsSecurityHealthAnalyticsSettingsService(s)
 	rs.VirtualMachineThreatDetectionSettings = NewProjectsVirtualMachineThreatDetectionSettingsService(s)
 	rs.WebSecurityScannerSettings = NewProjectsWebSecurityScannerSettingsService(s)
@@ -300,6 +325,8 @@ type ProjectsService struct {
 	EventThreatDetectionSettings *ProjectsEventThreatDetectionSettingsService
 
 	Locations *ProjectsLocationsService
+
+	RapidVulnerabilityDetectionSettings *ProjectsRapidVulnerabilityDetectionSettingsService
 
 	SecurityHealthAnalyticsSettings *ProjectsSecurityHealthAnalyticsSettingsService
 
@@ -356,6 +383,15 @@ func NewProjectsLocationsClustersContainerThreatDetectionSettingsService(s *Serv
 }
 
 type ProjectsLocationsClustersContainerThreatDetectionSettingsService struct {
+	s *Service
+}
+
+func NewProjectsRapidVulnerabilityDetectionSettingsService(s *Service) *ProjectsRapidVulnerabilityDetectionSettingsService {
+	rs := &ProjectsRapidVulnerabilityDetectionSettingsService{s: s}
+	return rs
+}
+
+type ProjectsRapidVulnerabilityDetectionSettingsService struct {
 	s *Service
 }
 
@@ -2601,6 +2637,63 @@ func (s *ProcessSignature) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RapidVulnerabilityDetectionSettings: Resource capturing the settings
+// for the Rapid Vulnerability Detection service.
+type RapidVulnerabilityDetectionSettings struct {
+	// Modules: The configurations including the state of enablement for the
+	// service's different modules. The absence of a module in the map
+	// implies its configuration is inherited from its parent's.
+	Modules map[string]Config `json:"modules,omitempty"`
+
+	// Name: The resource name of the RapidVulnerabilityDetectionSettings.
+	// Formats: *
+	// organizations/{organization}/rapidVulnerabilityDetectionSettings *
+	// folders/{folder}/rapidVulnerabilityDetectionSettings *
+	// projects/{project}/rapidVulnerabilityDetectionSettings
+	Name string `json:"name,omitempty"`
+
+	// ServiceEnablementState: The state of enablement for the service at
+	// its level of the resource hierarchy. A DISABLED state will override
+	// all module enablement_states to DISABLED.
+	//
+	// Possible values:
+	//   "ENABLEMENT_STATE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "INHERITED" - State is inherited from the parent resource.
+	//   "ENABLED" - State is enabled.
+	//   "DISABLED" - State is disabled.
+	ServiceEnablementState string `json:"serviceEnablementState,omitempty"`
+
+	// UpdateTime: Output only. The time the settings were last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Modules") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Modules") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RapidVulnerabilityDetectionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod RapidVulnerabilityDetectionSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Reference: Additional Links
 type Reference struct {
 	// Source: Source of the reference e.g. NVD
@@ -3471,6 +3564,158 @@ func (c *FoldersGetOnboardingStateCall) Do(opts ...googleapi.CallOption) (*Onboa
 	//   "path": "v1beta2/{+name}",
 	//   "response": {
 	//     "$ref": "OnboardingState"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.getRapidVulnerabilityDetectionSettings":
+
+type FoldersGetRapidVulnerabilityDetectionSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetRapidVulnerabilityDetectionSettings: Get the
+// RapidVulnerabilityDetectionSettings resource.
+//
+// - name: The name of the RapidVulnerabilityDetectionSettings to
+//   retrieve. Formats: *
+//   organizations/{organization}/rapidVulnerabilityDetectionSettings *
+//   folders/{folder}/rapidVulnerabilityDetectionSettings *
+//   projects/{project}/rapidVulnerabilityDetectionSettings.
+func (r *FoldersService) GetRapidVulnerabilityDetectionSettings(name string) *FoldersGetRapidVulnerabilityDetectionSettingsCall {
+	c := &FoldersGetRapidVulnerabilityDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersGetRapidVulnerabilityDetectionSettingsCall) Fields(s ...googleapi.Field) *FoldersGetRapidVulnerabilityDetectionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersGetRapidVulnerabilityDetectionSettingsCall) IfNoneMatch(entityTag string) *FoldersGetRapidVulnerabilityDetectionSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersGetRapidVulnerabilityDetectionSettingsCall) Context(ctx context.Context) *FoldersGetRapidVulnerabilityDetectionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersGetRapidVulnerabilityDetectionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersGetRapidVulnerabilityDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.getRapidVulnerabilityDetectionSettings" call.
+// Exactly one of *RapidVulnerabilityDetectionSettings or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RapidVulnerabilityDetectionSettings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersGetRapidVulnerabilityDetectionSettingsCall) Do(opts ...googleapi.CallOption) (*RapidVulnerabilityDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RapidVulnerabilityDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the RapidVulnerabilityDetectionSettings resource.",
+	//   "flatPath": "v1beta2/folders/{foldersId}/rapidVulnerabilityDetectionSettings",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.getRapidVulnerabilityDetectionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the RapidVulnerabilityDetectionSettings to retrieve. Formats: * organizations/{organization}/rapidVulnerabilityDetectionSettings * folders/{folder}/rapidVulnerabilityDetectionSettings * projects/{project}/rapidVulnerabilityDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/rapidVulnerabilityDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "RapidVulnerabilityDetectionSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -4403,6 +4648,167 @@ func (c *FoldersUpdateEventThreatDetectionSettingsCall) Do(opts ...googleapi.Cal
 
 }
 
+// method id "securitycenter.folders.updateRapidVulnerabilityDetectionSettings":
+
+type FoldersUpdateRapidVulnerabilityDetectionSettingsCall struct {
+	s                                   *Service
+	name                                string
+	rapidvulnerabilitydetectionsettings *RapidVulnerabilityDetectionSettings
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// UpdateRapidVulnerabilityDetectionSettings: Update the
+// RapidVulnerabilityDetectionSettings resource.
+//
+// - name: The resource name of the RapidVulnerabilityDetectionSettings.
+//   Formats: *
+//   organizations/{organization}/rapidVulnerabilityDetectionSettings *
+//   folders/{folder}/rapidVulnerabilityDetectionSettings *
+//   projects/{project}/rapidVulnerabilityDetectionSettings.
+func (r *FoldersService) UpdateRapidVulnerabilityDetectionSettings(name string, rapidvulnerabilitydetectionsettings *RapidVulnerabilityDetectionSettings) *FoldersUpdateRapidVulnerabilityDetectionSettingsCall {
+	c := &FoldersUpdateRapidVulnerabilityDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rapidvulnerabilitydetectionsettings = rapidvulnerabilitydetectionsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *FoldersUpdateRapidVulnerabilityDetectionSettingsCall) UpdateMask(updateMask string) *FoldersUpdateRapidVulnerabilityDetectionSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersUpdateRapidVulnerabilityDetectionSettingsCall) Fields(s ...googleapi.Field) *FoldersUpdateRapidVulnerabilityDetectionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersUpdateRapidVulnerabilityDetectionSettingsCall) Context(ctx context.Context) *FoldersUpdateRapidVulnerabilityDetectionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersUpdateRapidVulnerabilityDetectionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersUpdateRapidVulnerabilityDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rapidvulnerabilitydetectionsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.updateRapidVulnerabilityDetectionSettings" call.
+// Exactly one of *RapidVulnerabilityDetectionSettings or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RapidVulnerabilityDetectionSettings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersUpdateRapidVulnerabilityDetectionSettingsCall) Do(opts ...googleapi.CallOption) (*RapidVulnerabilityDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RapidVulnerabilityDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the RapidVulnerabilityDetectionSettings resource.",
+	//   "flatPath": "v1beta2/folders/{foldersId}/rapidVulnerabilityDetectionSettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.folders.updateRapidVulnerabilityDetectionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the RapidVulnerabilityDetectionSettings. Formats: * organizations/{organization}/rapidVulnerabilityDetectionSettings * folders/{folder}/rapidVulnerabilityDetectionSettings * projects/{project}/rapidVulnerabilityDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/rapidVulnerabilityDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "request": {
+	//     "$ref": "RapidVulnerabilityDetectionSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "RapidVulnerabilityDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.folders.updateSecurityHealthAnalyticsSettings":
 
 type FoldersUpdateSecurityHealthAnalyticsSettingsCall struct {
@@ -5179,6 +5585,159 @@ func (c *FoldersEventThreatDetectionSettingsCalculateCall) Do(opts ...googleapi.
 	//   "path": "v1beta2/{+name}:calculate",
 	//   "response": {
 	//     "$ref": "EventThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.rapidVulnerabilityDetectionSettings.calculate":
+
+type FoldersRapidVulnerabilityDetectionSettingsCalculateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Calculate: Calculates the effective
+// RapidVulnerabilityDetectionSettings based on its level in the
+// resource hierarchy and its settings.
+//
+// - name: The name of the RapidVulnerabilityDetectionSettings to
+//   calculate. Formats: *
+//   organizations/{organization}/rapidVulnerabilityDetectionSettings *
+//   folders/{folder}/rapidVulnerabilityDetectionSettings *
+//   projects/{project}/rapidVulnerabilityDetectionSettings.
+func (r *FoldersRapidVulnerabilityDetectionSettingsService) Calculate(name string) *FoldersRapidVulnerabilityDetectionSettingsCalculateCall {
+	c := &FoldersRapidVulnerabilityDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersRapidVulnerabilityDetectionSettingsCalculateCall) Fields(s ...googleapi.Field) *FoldersRapidVulnerabilityDetectionSettingsCalculateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersRapidVulnerabilityDetectionSettingsCalculateCall) IfNoneMatch(entityTag string) *FoldersRapidVulnerabilityDetectionSettingsCalculateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersRapidVulnerabilityDetectionSettingsCalculateCall) Context(ctx context.Context) *FoldersRapidVulnerabilityDetectionSettingsCalculateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersRapidVulnerabilityDetectionSettingsCalculateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersRapidVulnerabilityDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}:calculate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.rapidVulnerabilityDetectionSettings.calculate" call.
+// Exactly one of *RapidVulnerabilityDetectionSettings or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RapidVulnerabilityDetectionSettings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersRapidVulnerabilityDetectionSettingsCalculateCall) Do(opts ...googleapi.CallOption) (*RapidVulnerabilityDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RapidVulnerabilityDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Calculates the effective RapidVulnerabilityDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "flatPath": "v1beta2/folders/{foldersId}/rapidVulnerabilityDetectionSettings:calculate",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.rapidVulnerabilityDetectionSettings.calculate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the RapidVulnerabilityDetectionSettings to calculate. Formats: * organizations/{organization}/rapidVulnerabilityDetectionSettings * folders/{folder}/rapidVulnerabilityDetectionSettings * projects/{project}/rapidVulnerabilityDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/rapidVulnerabilityDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}:calculate",
+	//   "response": {
+	//     "$ref": "RapidVulnerabilityDetectionSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -6086,6 +6645,158 @@ func (c *OrganizationsGetOnboardingStateCall) Do(opts ...googleapi.CallOption) (
 	//   "path": "v1beta2/{+name}",
 	//   "response": {
 	//     "$ref": "OnboardingState"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.getRapidVulnerabilityDetectionSettings":
+
+type OrganizationsGetRapidVulnerabilityDetectionSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetRapidVulnerabilityDetectionSettings: Get the
+// RapidVulnerabilityDetectionSettings resource.
+//
+// - name: The name of the RapidVulnerabilityDetectionSettings to
+//   retrieve. Formats: *
+//   organizations/{organization}/rapidVulnerabilityDetectionSettings *
+//   folders/{folder}/rapidVulnerabilityDetectionSettings *
+//   projects/{project}/rapidVulnerabilityDetectionSettings.
+func (r *OrganizationsService) GetRapidVulnerabilityDetectionSettings(name string) *OrganizationsGetRapidVulnerabilityDetectionSettingsCall {
+	c := &OrganizationsGetRapidVulnerabilityDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsGetRapidVulnerabilityDetectionSettingsCall) Fields(s ...googleapi.Field) *OrganizationsGetRapidVulnerabilityDetectionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsGetRapidVulnerabilityDetectionSettingsCall) IfNoneMatch(entityTag string) *OrganizationsGetRapidVulnerabilityDetectionSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsGetRapidVulnerabilityDetectionSettingsCall) Context(ctx context.Context) *OrganizationsGetRapidVulnerabilityDetectionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsGetRapidVulnerabilityDetectionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetRapidVulnerabilityDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.getRapidVulnerabilityDetectionSettings" call.
+// Exactly one of *RapidVulnerabilityDetectionSettings or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RapidVulnerabilityDetectionSettings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsGetRapidVulnerabilityDetectionSettingsCall) Do(opts ...googleapi.CallOption) (*RapidVulnerabilityDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RapidVulnerabilityDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the RapidVulnerabilityDetectionSettings resource.",
+	//   "flatPath": "v1beta2/organizations/{organizationsId}/rapidVulnerabilityDetectionSettings",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.getRapidVulnerabilityDetectionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the RapidVulnerabilityDetectionSettings to retrieve. Formats: * organizations/{organization}/rapidVulnerabilityDetectionSettings * folders/{folder}/rapidVulnerabilityDetectionSettings * projects/{project}/rapidVulnerabilityDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/rapidVulnerabilityDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "RapidVulnerabilityDetectionSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -7165,6 +7876,167 @@ func (c *OrganizationsUpdateEventThreatDetectionSettingsCall) Do(opts ...googlea
 
 }
 
+// method id "securitycenter.organizations.updateRapidVulnerabilityDetectionSettings":
+
+type OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall struct {
+	s                                   *Service
+	name                                string
+	rapidvulnerabilitydetectionsettings *RapidVulnerabilityDetectionSettings
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// UpdateRapidVulnerabilityDetectionSettings: Update the
+// RapidVulnerabilityDetectionSettings resource.
+//
+// - name: The resource name of the RapidVulnerabilityDetectionSettings.
+//   Formats: *
+//   organizations/{organization}/rapidVulnerabilityDetectionSettings *
+//   folders/{folder}/rapidVulnerabilityDetectionSettings *
+//   projects/{project}/rapidVulnerabilityDetectionSettings.
+func (r *OrganizationsService) UpdateRapidVulnerabilityDetectionSettings(name string, rapidvulnerabilitydetectionsettings *RapidVulnerabilityDetectionSettings) *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall {
+	c := &OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rapidvulnerabilitydetectionsettings = rapidvulnerabilitydetectionsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall) UpdateMask(updateMask string) *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall) Fields(s ...googleapi.Field) *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall) Context(ctx context.Context) *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rapidvulnerabilitydetectionsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.updateRapidVulnerabilityDetectionSettings" call.
+// Exactly one of *RapidVulnerabilityDetectionSettings or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RapidVulnerabilityDetectionSettings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall) Do(opts ...googleapi.CallOption) (*RapidVulnerabilityDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RapidVulnerabilityDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the RapidVulnerabilityDetectionSettings resource.",
+	//   "flatPath": "v1beta2/organizations/{organizationsId}/rapidVulnerabilityDetectionSettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.organizations.updateRapidVulnerabilityDetectionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the RapidVulnerabilityDetectionSettings. Formats: * organizations/{organization}/rapidVulnerabilityDetectionSettings * folders/{folder}/rapidVulnerabilityDetectionSettings * projects/{project}/rapidVulnerabilityDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/rapidVulnerabilityDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "request": {
+	//     "$ref": "RapidVulnerabilityDetectionSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "RapidVulnerabilityDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.organizations.updateSecurityHealthAnalyticsSettings":
 
 type OrganizationsUpdateSecurityHealthAnalyticsSettingsCall struct {
@@ -7941,6 +8813,159 @@ func (c *OrganizationsEventThreatDetectionSettingsCalculateCall) Do(opts ...goog
 	//   "path": "v1beta2/{+name}:calculate",
 	//   "response": {
 	//     "$ref": "EventThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.rapidVulnerabilityDetectionSettings.calculate":
+
+type OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Calculate: Calculates the effective
+// RapidVulnerabilityDetectionSettings based on its level in the
+// resource hierarchy and its settings.
+//
+// - name: The name of the RapidVulnerabilityDetectionSettings to
+//   calculate. Formats: *
+//   organizations/{organization}/rapidVulnerabilityDetectionSettings *
+//   folders/{folder}/rapidVulnerabilityDetectionSettings *
+//   projects/{project}/rapidVulnerabilityDetectionSettings.
+func (r *OrganizationsRapidVulnerabilityDetectionSettingsService) Calculate(name string) *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall {
+	c := &OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall) Fields(s ...googleapi.Field) *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall) IfNoneMatch(entityTag string) *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall) Context(ctx context.Context) *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}:calculate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.rapidVulnerabilityDetectionSettings.calculate" call.
+// Exactly one of *RapidVulnerabilityDetectionSettings or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RapidVulnerabilityDetectionSettings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall) Do(opts ...googleapi.CallOption) (*RapidVulnerabilityDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RapidVulnerabilityDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Calculates the effective RapidVulnerabilityDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "flatPath": "v1beta2/organizations/{organizationsId}/rapidVulnerabilityDetectionSettings:calculate",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.rapidVulnerabilityDetectionSettings.calculate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the RapidVulnerabilityDetectionSettings to calculate. Formats: * organizations/{organization}/rapidVulnerabilityDetectionSettings * folders/{folder}/rapidVulnerabilityDetectionSettings * projects/{project}/rapidVulnerabilityDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/rapidVulnerabilityDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}:calculate",
+	//   "response": {
+	//     "$ref": "RapidVulnerabilityDetectionSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -8848,6 +9873,158 @@ func (c *ProjectsGetOnboardingStateCall) Do(opts ...googleapi.CallOption) (*Onbo
 	//   "path": "v1beta2/{+name}",
 	//   "response": {
 	//     "$ref": "OnboardingState"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.getRapidVulnerabilityDetectionSettings":
+
+type ProjectsGetRapidVulnerabilityDetectionSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetRapidVulnerabilityDetectionSettings: Get the
+// RapidVulnerabilityDetectionSettings resource.
+//
+// - name: The name of the RapidVulnerabilityDetectionSettings to
+//   retrieve. Formats: *
+//   organizations/{organization}/rapidVulnerabilityDetectionSettings *
+//   folders/{folder}/rapidVulnerabilityDetectionSettings *
+//   projects/{project}/rapidVulnerabilityDetectionSettings.
+func (r *ProjectsService) GetRapidVulnerabilityDetectionSettings(name string) *ProjectsGetRapidVulnerabilityDetectionSettingsCall {
+	c := &ProjectsGetRapidVulnerabilityDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetRapidVulnerabilityDetectionSettingsCall) Fields(s ...googleapi.Field) *ProjectsGetRapidVulnerabilityDetectionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetRapidVulnerabilityDetectionSettingsCall) IfNoneMatch(entityTag string) *ProjectsGetRapidVulnerabilityDetectionSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetRapidVulnerabilityDetectionSettingsCall) Context(ctx context.Context) *ProjectsGetRapidVulnerabilityDetectionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetRapidVulnerabilityDetectionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetRapidVulnerabilityDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.getRapidVulnerabilityDetectionSettings" call.
+// Exactly one of *RapidVulnerabilityDetectionSettings or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RapidVulnerabilityDetectionSettings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsGetRapidVulnerabilityDetectionSettingsCall) Do(opts ...googleapi.CallOption) (*RapidVulnerabilityDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RapidVulnerabilityDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the RapidVulnerabilityDetectionSettings resource.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/rapidVulnerabilityDetectionSettings",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.getRapidVulnerabilityDetectionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the RapidVulnerabilityDetectionSettings to retrieve. Formats: * organizations/{organization}/rapidVulnerabilityDetectionSettings * folders/{folder}/rapidVulnerabilityDetectionSettings * projects/{project}/rapidVulnerabilityDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/rapidVulnerabilityDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "RapidVulnerabilityDetectionSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -9772,6 +10949,167 @@ func (c *ProjectsUpdateEventThreatDetectionSettingsCall) Do(opts ...googleapi.Ca
 	//   },
 	//   "response": {
 	//     "$ref": "EventThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.updateRapidVulnerabilityDetectionSettings":
+
+type ProjectsUpdateRapidVulnerabilityDetectionSettingsCall struct {
+	s                                   *Service
+	name                                string
+	rapidvulnerabilitydetectionsettings *RapidVulnerabilityDetectionSettings
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// UpdateRapidVulnerabilityDetectionSettings: Update the
+// RapidVulnerabilityDetectionSettings resource.
+//
+// - name: The resource name of the RapidVulnerabilityDetectionSettings.
+//   Formats: *
+//   organizations/{organization}/rapidVulnerabilityDetectionSettings *
+//   folders/{folder}/rapidVulnerabilityDetectionSettings *
+//   projects/{project}/rapidVulnerabilityDetectionSettings.
+func (r *ProjectsService) UpdateRapidVulnerabilityDetectionSettings(name string, rapidvulnerabilitydetectionsettings *RapidVulnerabilityDetectionSettings) *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall {
+	c := &ProjectsUpdateRapidVulnerabilityDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rapidvulnerabilitydetectionsettings = rapidvulnerabilitydetectionsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall) UpdateMask(updateMask string) *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall) Fields(s ...googleapi.Field) *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall) Context(ctx context.Context) *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rapidvulnerabilitydetectionsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.updateRapidVulnerabilityDetectionSettings" call.
+// Exactly one of *RapidVulnerabilityDetectionSettings or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RapidVulnerabilityDetectionSettings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall) Do(opts ...googleapi.CallOption) (*RapidVulnerabilityDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RapidVulnerabilityDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the RapidVulnerabilityDetectionSettings resource.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/rapidVulnerabilityDetectionSettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.projects.updateRapidVulnerabilityDetectionSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the RapidVulnerabilityDetectionSettings. Formats: * organizations/{organization}/rapidVulnerabilityDetectionSettings * folders/{folder}/rapidVulnerabilityDetectionSettings * projects/{project}/rapidVulnerabilityDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/rapidVulnerabilityDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "request": {
+	//     "$ref": "RapidVulnerabilityDetectionSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "RapidVulnerabilityDetectionSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -11024,6 +12362,159 @@ func (c *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall)
 	//   "path": "v1beta2/{+name}:calculate",
 	//   "response": {
 	//     "$ref": "ContainerThreatDetectionSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.rapidVulnerabilityDetectionSettings.calculate":
+
+type ProjectsRapidVulnerabilityDetectionSettingsCalculateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Calculate: Calculates the effective
+// RapidVulnerabilityDetectionSettings based on its level in the
+// resource hierarchy and its settings.
+//
+// - name: The name of the RapidVulnerabilityDetectionSettings to
+//   calculate. Formats: *
+//   organizations/{organization}/rapidVulnerabilityDetectionSettings *
+//   folders/{folder}/rapidVulnerabilityDetectionSettings *
+//   projects/{project}/rapidVulnerabilityDetectionSettings.
+func (r *ProjectsRapidVulnerabilityDetectionSettingsService) Calculate(name string) *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall {
+	c := &ProjectsRapidVulnerabilityDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall) Fields(s ...googleapi.Field) *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall) IfNoneMatch(entityTag string) *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall) Context(ctx context.Context) *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}:calculate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.rapidVulnerabilityDetectionSettings.calculate" call.
+// Exactly one of *RapidVulnerabilityDetectionSettings or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RapidVulnerabilityDetectionSettings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall) Do(opts ...googleapi.CallOption) (*RapidVulnerabilityDetectionSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RapidVulnerabilityDetectionSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Calculates the effective RapidVulnerabilityDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/rapidVulnerabilityDetectionSettings:calculate",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.rapidVulnerabilityDetectionSettings.calculate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the RapidVulnerabilityDetectionSettings to calculate. Formats: * organizations/{organization}/rapidVulnerabilityDetectionSettings * folders/{folder}/rapidVulnerabilityDetectionSettings * projects/{project}/rapidVulnerabilityDetectionSettings",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/rapidVulnerabilityDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}:calculate",
+	//   "response": {
+	//     "$ref": "RapidVulnerabilityDetectionSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

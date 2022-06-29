@@ -533,7 +533,7 @@
       }
     }
   },
-  "revision": "20220623",
+  "revision": "20220628",
   "rootUrl": "https://streetviewpublish.googleapis.com/",
   "schemas": {
     "BatchDeletePhotosRequest": {
@@ -1097,6 +1097,11 @@
           "description": "Altitude of the pose in meters above WGS84 ellipsoid. NaN indicates an unmeasured quantity.",
           "format": "double",
           "type": "number"
+        },
+        "gpsRecordTimestampUnixEpoch": {
+          "description": "Time of the GPS record since UTC epoch.",
+          "format": "google-datetime",
+          "type": "string"
         },
         "heading": {
           "description": "The following pose parameters pertain to the center of the photo. They match https://developers.google.com/streetview/spherical-metadata. Compass heading, measured at the center of the photo in degrees clockwise from North. Value must be \u003e=0 and \u003c360. NaN indicates an unmeasured quantity.",

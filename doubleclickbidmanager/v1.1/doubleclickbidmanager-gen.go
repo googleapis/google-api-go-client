@@ -552,6 +552,7 @@ type FilterPair struct {
 	//   "FILTER_MEDIA_TYPE"
 	//   "FILTER_AUDIO_FEED_TYPE_NAME"
 	//   "FILTER_TRUEVIEW_TARGETING_EXPANSION"
+	//   "FILTER_PUBLISHER_TRAFFIC_SOURCE"
 	Type string `json:"type,omitempty"`
 
 	// Value: Filter value.
@@ -995,6 +996,7 @@ type Parameters struct {
 	//   "FILTER_MEDIA_TYPE"
 	//   "FILTER_AUDIO_FEED_TYPE_NAME"
 	//   "FILTER_TRUEVIEW_TARGETING_EXPANSION"
+	//   "FILTER_PUBLISHER_TRAFFIC_SOURCE"
 	GroupBys []string `json:"groupBys,omitempty"`
 
 	// IncludeInviteData: Deprecated. This field is no longer in use.
@@ -1946,6 +1948,7 @@ type PathQueryOptionsFilter struct {
 	//   "FILTER_MEDIA_TYPE"
 	//   "FILTER_AUDIO_FEED_TYPE_NAME"
 	//   "FILTER_TRUEVIEW_TARGETING_EXPANSION"
+	//   "FILTER_PUBLISHER_TRAFFIC_SOURCE"
 	Filter string `json:"filter,omitempty"`
 
 	// Match: Indicates how the filter should be matched to the value.

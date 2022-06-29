@@ -6606,6 +6606,12 @@ type QueryTimelineSample struct {
 	// ElapsedMs: Milliseconds elapsed since the start of query execution.
 	ElapsedMs int64 `json:"elapsedMs,omitempty,string"`
 
+	// EstimatedRunnableUnits: Units of work that can be scheduled
+	// immediately. Providing additional slots for these units of work will
+	// speed up the query, provided no other query in the reservation needs
+	// additional slots.
+	EstimatedRunnableUnits int64 `json:"estimatedRunnableUnits,omitempty,string"`
+
 	// PendingUnits: Total parallel units of work remaining for the active
 	// stages.
 	PendingUnits int64 `json:"pendingUnits,omitempty,string"`
@@ -7708,6 +7714,11 @@ type Table struct {
 
 	// MaterializedView: [Optional] Materialized view definition.
 	MaterializedView *MaterializedViewDefinition `json:"materializedView,omitempty"`
+
+	// MaxStaleness: [Optional] Max staleness of data that could be returned
+	// when table or materialized view is queried (formatted as Google SQL
+	// Interval type).
+	MaxStaleness string `json:"maxStaleness,omitempty"`
 
 	// Model: [Output-only, Beta] Present iff this table represents a ML
 	// model. Describes the training information for the model, and it is
@@ -8897,6 +8908,11 @@ type TrainingOptions struct {
 	// MaxParallelTrials: Maximum number of trials to run in parallel.
 	MaxParallelTrials int64 `json:"maxParallelTrials,omitempty,string"`
 
+	// MaxTimeSeriesLength: Get truncated length by last n points in time
+	// series. Use separately from time_series_length_fraction and
+	// min_time_series_length.
+	MaxTimeSeriesLength int64 `json:"maxTimeSeriesLength,omitempty,string"`
+
 	// MaxTreeDepth: Maximum depth of a tree for boosted tree models.
 	MaxTreeDepth int64 `json:"maxTreeDepth,omitempty,string"`
 
@@ -8907,6 +8923,10 @@ type TrainingOptions struct {
 
 	// MinSplitLoss: Minimum split loss for boosted tree models.
 	MinSplitLoss float64 `json:"minSplitLoss,omitempty"`
+
+	// MinTimeSeriesLength: Set fast trend ARIMA_PLUS model minimum training
+	// length. Use in pair with time_series_length_fraction.
+	MinTimeSeriesLength int64 `json:"minTimeSeriesLength,omitempty,string"`
 
 	// MinTreeChildWeight: Minimum sum of instance weight needed in a child
 	// for boosted tree models.
@@ -8971,6 +8991,10 @@ type TrainingOptions struct {
 	// ARIMA model training.
 	TimeSeriesIdColumns []string `json:"timeSeriesIdColumns,omitempty"`
 
+	// TimeSeriesLengthFraction: Get truncated length by fraction in time
+	// series.
+	TimeSeriesLengthFraction float64 `json:"timeSeriesLengthFraction,omitempty"`
+
 	// TimeSeriesTimestampColumn: Column to be designated as time series
 	// timestamp for ARIMA model.
 	TimeSeriesTimestampColumn string `json:"timeSeriesTimestampColumn,omitempty"`
@@ -8985,6 +9009,10 @@ type TrainingOptions struct {
 	// gradient histogram.
 	//   "HIST" - Fast histogram optimized approximate greedy algorithm.
 	TreeMethod string `json:"treeMethod,omitempty"`
+
+	// TrendSmoothingWindowSize: The smoothing window size for the trend
+	// component of the time series.
+	TrendSmoothingWindowSize int64 `json:"trendSmoothingWindowSize,omitempty,string"`
 
 	// UserColumn: User column specified for matrix factorization models.
 	UserColumn string `json:"userColumn,omitempty"`
@@ -9023,19 +9051,20 @@ func (s *TrainingOptions) MarshalJSON() ([]byte, error) {
 func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 	type NoMethod TrainingOptions
 	var s1 struct {
-		ColsampleBylevel      gensupport.JSONFloat64 `json:"colsampleBylevel"`
-		ColsampleBynode       gensupport.JSONFloat64 `json:"colsampleBynode"`
-		ColsampleBytree       gensupport.JSONFloat64 `json:"colsampleBytree"`
-		DataSplitEvalFraction gensupport.JSONFloat64 `json:"dataSplitEvalFraction"`
-		Dropout               gensupport.JSONFloat64 `json:"dropout"`
-		InitialLearnRate      gensupport.JSONFloat64 `json:"initialLearnRate"`
-		L1Regularization      gensupport.JSONFloat64 `json:"l1Regularization"`
-		L2Regularization      gensupport.JSONFloat64 `json:"l2Regularization"`
-		LearnRate             gensupport.JSONFloat64 `json:"learnRate"`
-		MinRelativeProgress   gensupport.JSONFloat64 `json:"minRelativeProgress"`
-		MinSplitLoss          gensupport.JSONFloat64 `json:"minSplitLoss"`
-		Subsample             gensupport.JSONFloat64 `json:"subsample"`
-		WalsAlpha             gensupport.JSONFloat64 `json:"walsAlpha"`
+		ColsampleBylevel         gensupport.JSONFloat64 `json:"colsampleBylevel"`
+		ColsampleBynode          gensupport.JSONFloat64 `json:"colsampleBynode"`
+		ColsampleBytree          gensupport.JSONFloat64 `json:"colsampleBytree"`
+		DataSplitEvalFraction    gensupport.JSONFloat64 `json:"dataSplitEvalFraction"`
+		Dropout                  gensupport.JSONFloat64 `json:"dropout"`
+		InitialLearnRate         gensupport.JSONFloat64 `json:"initialLearnRate"`
+		L1Regularization         gensupport.JSONFloat64 `json:"l1Regularization"`
+		L2Regularization         gensupport.JSONFloat64 `json:"l2Regularization"`
+		LearnRate                gensupport.JSONFloat64 `json:"learnRate"`
+		MinRelativeProgress      gensupport.JSONFloat64 `json:"minRelativeProgress"`
+		MinSplitLoss             gensupport.JSONFloat64 `json:"minSplitLoss"`
+		Subsample                gensupport.JSONFloat64 `json:"subsample"`
+		TimeSeriesLengthFraction gensupport.JSONFloat64 `json:"timeSeriesLengthFraction"`
+		WalsAlpha                gensupport.JSONFloat64 `json:"walsAlpha"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -9054,6 +9083,7 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 	s.MinRelativeProgress = float64(s1.MinRelativeProgress)
 	s.MinSplitLoss = float64(s1.MinSplitLoss)
 	s.Subsample = float64(s1.Subsample)
+	s.TimeSeriesLengthFraction = float64(s1.TimeSeriesLengthFraction)
 	s.WalsAlpha = float64(s1.WalsAlpha)
 	return nil
 }

@@ -1113,6 +1113,9 @@ type Pose struct {
 	// indicates an unmeasured quantity.
 	Altitude float64 `json:"altitude,omitempty"`
 
+	// GpsRecordTimestampUnixEpoch: Time of the GPS record since UTC epoch.
+	GpsRecordTimestampUnixEpoch string `json:"gpsRecordTimestampUnixEpoch,omitempty"`
+
 	// Heading: The following pose parameters pertain to the center of the
 	// photo. They match
 	// https://developers.google.com/streetview/spherical-metadata. Compass

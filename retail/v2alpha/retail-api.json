@@ -1803,7 +1803,7 @@
       }
     }
   },
-  "revision": "20220617",
+  "revision": "20220623",
   "rootUrl": "https://retail.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -2416,7 +2416,7 @@
           "type": "string"
         },
         "key": {
-          "description": "Required. Attribute name. For example: `color`, `brands`, `attributes.custom_attribute`, such as `attributes.xyz`.",
+          "description": "Required. Attribute name. For example: `color`, `brands`, `attributes.custom_attribute`, such as `attributes.xyz`. To be indexable, the attribute name can contain only alpha-numeric characters and underscores. For example, an attribute named `attributes.abc_xyz` can be indexed, but an attribute named `attributes.abc-xyz` cannot be indexed.",
           "type": "string"
         },
         "recommendationsFilteringOption": {

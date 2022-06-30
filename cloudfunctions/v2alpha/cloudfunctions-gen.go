@@ -620,8 +620,8 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 }
 
 // Function: Describes a Cloud Function that contains user computation
-// executed in response to an event. It encapsulate function and
-// triggers configurations.
+// executed in response to an event. It encapsulates function and
+// trigger configurations.
 type Function struct {
 	// BuildConfig: Describes the Build step of the function that builds a
 	// container from the given source.

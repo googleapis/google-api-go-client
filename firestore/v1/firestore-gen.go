@@ -3711,14 +3711,6 @@ func (c *ProjectsDatabasesCreateCall) DatabaseId(databaseId string) *ProjectsDat
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": If set,
-// validate the request and preview the response, but do not actually
-// create the database.
-func (c *ProjectsDatabasesCreateCall) ValidateOnly(validateOnly bool) *ProjectsDatabasesCreateCall {
-	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3829,11 +3821,6 @@ func (c *ProjectsDatabasesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleL
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "validateOnly": {
-	//       "description": "If set, validate the request and preview the response, but do not actually create the database.",
-	//       "location": "query",
-	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1/{+parent}/databases",

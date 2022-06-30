@@ -3,7 +3,7 @@
   "baseUrl": "https://chat.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Hangouts Chat",
-  "description": "Enables apps to fetch information and perform actions in Google Chat. Authentication using a service account is a prerequisite for using the Google Chat REST API.",
+  "description": "Enables apps to fetch information and perform actions in Google Chat. Authentication is a prerequisite for using the Google Chat REST API.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/hangouts/chat",
   "fullyEncodeReservedExpansion": true,
@@ -365,7 +365,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Required. Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
+              "description": "Required. Resource name of the space, in the form \"spaces/*\". Format: spaces/{space}",
               "location": "path",
               "pattern": "^spaces/[^/]+$",
               "required": true,
@@ -450,7 +450,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the membership to be retrieved, in the form \"spaces/*/members/*\". Example: spaces/AAAAAAAAAAAA/members/111111111111111111111",
+                  "description": "Required. Resource name of the membership to retrieve. Format: spaces/{space}/members/{member}",
                   "location": "path",
                   "pattern": "^spaces/[^/]+/members/[^/]+$",
                   "required": true,
@@ -483,7 +483,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The resource name of the space for which membership list is to be fetched, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
+                  "description": "Required. The resource name of the space for which to fetch a membership list. Format: spaces/{space}",
                   "location": "path",
                   "pattern": "^spaces/[^/]+$",
                   "required": true,
@@ -642,7 +642,7 @@
       }
     }
   },
-  "revision": "20220415",
+  "revision": "20220619",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -945,7 +945,7 @@
       "id": "ChatAppLogEntry",
       "properties": {
         "deployment": {
-          "description": "The deployment that caused the error. For Chat bots built in Apps Script, this is the deployment ID defined by Apps Script.",
+          "description": "The deployment that caused the error. For Chat apps built in Apps Script, this is the deployment ID defined by Apps Script.",
           "type": "string"
         },
         "deploymentFunction": {
@@ -1287,6 +1287,25 @@
       },
       "type": "object"
     },
+    "GoogleAppsCardV1AppUri": {
+      "description": "Represents the platform specific uri/intent to open for each client.",
+      "id": "GoogleAppsCardV1AppUri",
+      "properties": {
+        "androidIntent": {
+          "$ref": "GoogleAppsCardV1Intent",
+          "description": "An intent object to be opened in the corresponding android hosting app."
+        },
+        "companionUri": {
+          "description": "A companion uri string to be opened in the chat companion window. on the web.",
+          "type": "string"
+        },
+        "iosUri": {
+          "description": "A uri string to be opened in the corresponding iOS hosting app.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleAppsCardV1BorderStyle": {
       "description": "Represents the complete border style applied to widgets.",
       "id": "GoogleAppsCardV1BorderStyle",
@@ -1574,6 +1593,21 @@
       "properties": {},
       "type": "object"
     },
+    "GoogleAppsCardV1ExtraData": {
+      "description": "Extra data for an android intent. Valid keys are defined in the hosting app contract.",
+      "id": "GoogleAppsCardV1ExtraData",
+      "properties": {
+        "key": {
+          "description": "A key for the intent extra data.",
+          "type": "string"
+        },
+        "value": {
+          "description": "Value for the given extra data key.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleAppsCardV1Grid": {
       "description": "Represents a Grid widget that displays items in a configurable grid layout.",
       "id": "GoogleAppsCardV1Grid",
@@ -1760,6 +1794,24 @@
       },
       "type": "object"
     },
+    "GoogleAppsCardV1Intent": {
+      "description": "Android intent.",
+      "id": "GoogleAppsCardV1Intent",
+      "properties": {
+        "extraData": {
+          "description": "A list of extra data for the android intent. For example, for a calendar event edit intent, the event title information can be passed as extra data.",
+          "items": {
+            "$ref": "GoogleAppsCardV1ExtraData"
+          },
+          "type": "array"
+        },
+        "intentAction": {
+          "description": "An android intent action string for the {@link android.content.Intent} object. For example: for the view intent action type, a valid value will be android.content.Intent.ACTION_VIEW.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleAppsCardV1OnClick": {
       "description": "Represents the response to an `onClick` event.",
       "id": "GoogleAppsCardV1OnClick",
@@ -1787,6 +1839,10 @@
       "description": "Represents an `onClick` event that opens a hyperlink.",
       "id": "GoogleAppsCardV1OpenLink",
       "properties": {
+        "appUri": {
+          "$ref": "GoogleAppsCardV1AppUri",
+          "description": "Represents the platform specific uri/intent to open on each client. For example: A companion_url will open in a companion window on the web. An iOS URL and android intent will open in the corresponding hosting apps. If these platform specific URLs can't be handled correctly, i.e. if the companion isn't supported on web and the hosting apps aren't available on the mobile platforms then the `uri` will open in a new browser window on all the platforms."
+        },
         "onClose": {
           "description": "Whether the client forgets about a link after opening it, or observes it until the window closes. Not supported by Chat apps.",
           "enum": [
@@ -2357,7 +2413,7 @@
       "type": "object"
     },
     "MatchedUrl": {
-      "description": "A matched url in a Chat message. Chat apps can unfurl matched URLs. For more information, refer to [Unfurl links](https://developers.google.com/chat/how-tos/link-unfurling).",
+      "description": "A matched url in a Chat message. Chat apps can preview matched URLs. For more information, refer to [Preview links](https://developers.google.com/chat/how-tos/preview-links).",
       "id": "MatchedUrl",
       "properties": {
         "url": {
@@ -2380,21 +2436,21 @@
       "type": "object"
     },
     "Membership": {
-      "description": "Represents a membership relation in Google Chat.",
+      "description": "Represents a membership relation in Google Chat, such as whether a user or Chat app is invited to, part of, or absent from a space.",
       "id": "Membership",
       "properties": {
         "createTime": {
-          "description": "Output only. The creation time of the membership a.k.a. the time at which the member joined the space, if applicable.",
+          "description": "Output only. The creation time of the membership, such as when a member joined or was invited to join a space.",
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
         },
         "member": {
           "$ref": "User",
-          "description": "Output only. A user in Google Chat. Represents a [person](https://developers.google.com/people/api/rest/v1/people) in the People API or a [user](https://developers.google.com/admin-sdk/directory/reference/rest/v1/users) in the Admin SDK Directory API. Format: `users/{user}`",
-          "readOnly": true
+          "description": "A Google Chat user or app. Format: `users/{user}` or `users/app` When `users/{user}`, represents a [person](https://developers.google.com/people/api/rest/v1/people) in the People API or a [user](https://developers.google.com/admin-sdk/directory/reference/rest/v1/users) in the Admin SDK Directory API. When `users/app`, represents a Chat app creating membership for itself."
         },
         "name": {
+          "description": "Resource name of the membership. Format: spaces/{space}/members/{member}",
           "type": "string"
         },
         "state": {
@@ -2462,14 +2518,14 @@
           "type": "string"
         },
         "lastUpdateTime": {
-          "description": "Output only. The time at which the message was last updated in Google Chat server. If the message was never updated, this field will be same as create_time.",
+          "description": "Output only. The time at which the message was last updated. If the message was never updated, this field matches `create_time`.",
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
         },
         "matchedUrl": {
           "$ref": "MatchedUrl",
-          "description": "Output only. A URL in `spaces.messages.text` that matches a link unfurling pattern. For more information, refer to [Unfurl links](https://developers.google.com/chat/how-tos/link-unfurling).",
+          "description": "Output only. A URL in `spaces.messages.text` that matches a link preview pattern. For more information, refer to [Preview links](https://developers.google.com/chat/how-tos/preview-links).",
           "readOnly": true
         },
         "name": {
@@ -2604,7 +2660,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
+          "description": "Resource name of the space. Format: spaces/{space}",
           "type": "string"
         },
         "singleUserBotDm": {
@@ -2613,12 +2669,12 @@
           "type": "boolean"
         },
         "threaded": {
-          "description": "Output only. Output only. Whether the messages are threaded in this space.",
+          "description": "Output only. Whether messages are threaded in this space.",
           "readOnly": true,
           "type": "boolean"
         },
         "type": {
-          "description": "Output only. Deprecated: Use `single_user_bot_dm` instead. Output only. The type of a space.",
+          "description": "Output only. Deprecated: Use `single_user_bot_dm` or `space_type` (developer preview) instead. The type of a space.",
           "enum": [
             "TYPE_UNSPECIFIED",
             "ROOM",

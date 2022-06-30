@@ -331,8 +331,8 @@ func (s *Api) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -1561,6 +1561,10 @@ func (s *DocumentationRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EnableServiceResponse: Operation payload for EnableService method.
+type EnableServiceResponse struct {
+}
+
 // Endpoint: `Endpoint` describes a network address of a service that
 // serves a set of APIs. It is commonly known as a service endpoint. A
 // service may expose any number of service endpoints, and all service
@@ -2662,8 +2666,8 @@ type ManagedService struct {
 	ProducerProjectId string `json:"producerProjectId,omitempty"`
 
 	// ServiceName: The name of the service. See the overview
-	// (https://cloud.google.com/service-management/overview) for naming
-	// requirements.
+	// (https://cloud.google.com/service-infrastructure/docs/overview) for
+	// naming requirements.
 	ServiceName string `json:"serviceName,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5913,8 +5917,9 @@ type ServicesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ServicesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ServicesGetIamPolicyCall {
 	c := &ServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6022,7 +6027,7 @@ func (c *ServicesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,
@@ -6074,7 +6079,7 @@ func (c *ServicesListCall) ConsumerId(consumerId string) *ServicesListCall {
 
 // PageSize sets the optional parameter "pageSize": The max number of
 // items to include in the response list. Page size is 50 if not
-// specified. Maximum value is 100.
+// specified. Maximum value is 500.
 func (c *ServicesListCall) PageSize(pageSize int64) *ServicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -6202,7 +6207,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The max number of items to include in the response list. Page size is 50 if not specified. Maximum value is 100.",
+	//       "description": "The max number of items to include in the response list. Page size is 50 if not specified. Maximum value is 500.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6269,8 +6274,9 @@ type ServicesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ServicesSetIamPolicyCall {
 	c := &ServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6378,7 +6384,7 @@ func (c *ServicesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,
@@ -6419,7 +6425,8 @@ type ServicesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ServicesTestIamPermissionsCall {
 	c := &ServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6528,7 +6535,7 @@ func (c *ServicesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Test
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,
@@ -7393,8 +7400,9 @@ type ServicesConsumersGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ServicesConsumersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ServicesConsumersGetIamPolicyCall {
 	c := &ServicesConsumersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7502,7 +7510,7 @@ func (c *ServicesConsumersGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/consumers/[^/]+$",
 	//       "required": true,
@@ -7542,8 +7550,9 @@ type ServicesConsumersSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ServicesConsumersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ServicesConsumersSetIamPolicyCall {
 	c := &ServicesConsumersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7651,7 +7660,7 @@ func (c *ServicesConsumersSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/consumers/[^/]+$",
 	//       "required": true,
@@ -7692,7 +7701,8 @@ type ServicesConsumersTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ServicesConsumersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ServicesConsumersTestIamPermissionsCall {
 	c := &ServicesConsumersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7801,7 +7811,7 @@ func (c *ServicesConsumersTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/consumers/[^/]+$",
 	//       "required": true,

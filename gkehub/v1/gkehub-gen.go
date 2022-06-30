@@ -194,6 +194,164 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// AnthosVMMembershipSpec: AnthosVMMembershipSpec contains the AnthosVM
+// feature configuration for a membership/cluster.
+type AnthosVMMembershipSpec struct {
+	// SubfeaturesSpec: List of configurations of the Anthos For VM
+	// subfeatures that are to be enabled
+	SubfeaturesSpec []*AnthosVMSubFeatureSpec `json:"subfeaturesSpec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SubfeaturesSpec") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SubfeaturesSpec") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnthosVMMembershipSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod AnthosVMMembershipSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnthosVMMembershipState: AnthosVMFeatureState contains the state of
+// the AnthosVM feature. It represents the actual state in the cluster,
+// while the AnthosVMMembershipSpec represents the desired state.
+type AnthosVMMembershipState struct {
+	// LocalControllerState: State of the local PE-controller inside the
+	// cluster
+	LocalControllerState *LocalControllerState `json:"localControllerState,omitempty"`
+
+	// SubfeatureState: List of AnthosVM subfeature states
+	SubfeatureState []*AnthosVMSubFeatureState `json:"subfeatureState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LocalControllerState") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocalControllerState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnthosVMMembershipState) MarshalJSON() ([]byte, error) {
+	type NoMethod AnthosVMMembershipState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnthosVMSubFeatureSpec: AnthosVMSubFeatureSpec contains the
+// subfeature configuration for a membership/cluster.
+type AnthosVMSubFeatureSpec struct {
+	// Enabled: Indicates whether the subfeature should be enabled on the
+	// cluster or not. If set to true, the subfeature's control plane and
+	// resources will be installed in the cluster. If set to false, the
+	// oneof spec if present will be ignored and nothing will be installed
+	// in the cluster.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// MigrateSpec: MigrateSpec repsents the configuration for Migrate
+	// subfeature.
+	MigrateSpec *MigrateSpec `json:"migrateSpec,omitempty"`
+
+	// ServiceMeshSpec: ServiceMeshSpec repsents the configuration for
+	// Service Mesh subfeature.
+	ServiceMeshSpec *ServiceMeshSpec `json:"serviceMeshSpec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnthosVMSubFeatureSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod AnthosVMSubFeatureSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnthosVMSubFeatureState: AnthosVMSubFeatureState contains the state
+// of the AnthosVM subfeatures.
+type AnthosVMSubFeatureState struct {
+	// Description: Description represents human readable description of the
+	// subfeature state. If the deployment failed, this should also contain
+	// the reason for the failure.
+	Description string `json:"description,omitempty"`
+
+	// InstallationState: InstallationState represents the state of
+	// installation of the subfeature in the cluster.
+	//
+	// Possible values:
+	//   "INSTALLATION_STATE_UNSPECIFIED" - state of installation is unknown
+	//   "INSTALLATION_STATE_NOT_INSTALLED" - component is not installed
+	//   "INSTALLATION_STATE_INSTALLED" - component is successfully
+	// installed
+	//   "INSTALLATION_STATE_FAILED" - installation failed
+	InstallationState string `json:"installationState,omitempty"`
+
+	// MigrateState: MigrateState represents the state of the Migrate
+	// subfeature.
+	MigrateState *MigrateState `json:"migrateState,omitempty"`
+
+	// ServiceMeshState: ServiceMeshState represents the state of the
+	// Service Mesh subfeature.
+	ServiceMeshState *ServiceMeshState `json:"serviceMeshState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnthosVMSubFeatureState) MarshalJSON() ([]byte, error) {
+	type NoMethod AnthosVMSubFeatureState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AppDevExperienceFeatureSpec: Spec for App Dev Experience Feature.
 type AppDevExperienceFeatureSpec struct {
 }
@@ -229,6 +387,38 @@ func (s *AppDevExperienceFeatureState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ApplianceCluster: ApplianceCluster contains information specific to
+// GDC Edge Appliance Clusters.
+type ApplianceCluster struct {
+	// ResourceLink: Immutable. Self-link of the GCP resource for the
+	// Appliance Cluster. For example:
+	// //transferappliance.googleapis.com/projects/my-project/locations/us-we
+	// st1-a/appliances/my-appliance
+	ResourceLink string `json:"resourceLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceLink") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceLink") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplianceCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplianceCluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -245,8 +435,8 @@ func (s *AppDevExperienceFeatureState) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -540,6 +730,9 @@ type ConfigManagementConfigSync struct {
 
 	// Git: Git repo configuration for the cluster.
 	Git *ConfigManagementGitConfig `json:"git,omitempty"`
+
+	// Oci: OCI repo configuration for the cluster
+	Oci *ConfigManagementOciConfig `json:"oci,omitempty"`
 
 	// PreventDrift: Set to true to enable the Config Sync admission webhook
 	// to prevent drifts. If set to `false`, disables the Config Sync
@@ -1207,6 +1400,54 @@ func (s *ConfigManagementMembershipState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConfigManagementOciConfig: OCI repo configuration for a single
+// cluster
+type ConfigManagementOciConfig struct {
+	// GcpServiceAccountEmail: The GCP Service Account Email used for auth
+	// when secret_type is gcpServiceAccount.
+	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
+
+	// PolicyDir: The absolute path of the directory that contains the local
+	// resources. Default: the root directory of the image.
+	PolicyDir string `json:"policyDir,omitempty"`
+
+	// SecretType: Type of secret configured for access to the Git repo.
+	SecretType string `json:"secretType,omitempty"`
+
+	// SyncRepo: The OCI image repository URL for the package to sync from.
+	// e.g.
+	// `LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY_NAME/PACKAGE_NAME`.
+	SyncRepo string `json:"syncRepo,omitempty"`
+
+	// SyncWaitSecs: Period in seconds between consecutive syncs. Default:
+	// 15.
+	SyncWaitSecs int64 `json:"syncWaitSecs,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "GcpServiceAccountEmail") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcpServiceAccountEmail")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConfigManagementOciConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementOciConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ConfigManagementOperatorState: State information for an ACM's
 // Operator
 type ConfigManagementOperatorState struct {
@@ -1269,6 +1510,9 @@ type ConfigManagementPolicyController struct {
 	// LogDeniesEnabled: Logs all denies and dry run failures.
 	LogDeniesEnabled bool `json:"logDeniesEnabled,omitempty"`
 
+	// Monitoring: Monitoring specifies the configuration of monitoring.
+	Monitoring *ConfigManagementPolicyControllerMonitoring `json:"monitoring,omitempty"`
+
 	// ReferentialRulesEnabled: Enables the ability to use Constraint
 	// Templates that reference to objects other than the object currently
 	// being evaluated.
@@ -1299,6 +1543,45 @@ type ConfigManagementPolicyController struct {
 
 func (s *ConfigManagementPolicyController) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigManagementPolicyController
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementPolicyControllerMonitoring:
+// PolicyControllerMonitoring specifies the backends Policy Controller
+// should export metrics to. For example, to specify metrics should be
+// exported to Cloud Monitoring and Prometheus, specify backends:
+// ["cloudmonitoring", "prometheus"]
+type ConfigManagementPolicyControllerMonitoring struct {
+	// Backends: Specifies the list of backends Policy Controller will
+	// export to. An empty list would effectively disable metrics export.
+	//
+	// Possible values:
+	//   "MONITORING_BACKEND_UNSPECIFIED" - Backend cannot be determined
+	//   "PROMETHEUS" - Prometheus backend for monitoring
+	//   "CLOUD_MONITORING" - Stackdriver/Cloud Monitoring backend for
+	// monitoring
+	Backends []string `json:"backends,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backends") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backends") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConfigManagementPolicyControllerMonitoring) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementPolicyControllerMonitoring
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1889,6 +2172,186 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IdentityServiceAuthMethod: Configuration of an auth method for a
+// member/cluster. Only one authentication method (e.g., OIDC and LDAP)
+// can be set per AuthMethod.
+type IdentityServiceAuthMethod struct {
+	// Name: Identifier for auth config.
+	Name string `json:"name,omitempty"`
+
+	// OidcConfig: OIDC specific configuration.
+	OidcConfig *IdentityServiceOidcConfig `json:"oidcConfig,omitempty"`
+
+	// Proxy: Proxy server address to use for auth method.
+	Proxy string `json:"proxy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceAuthMethod) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceAuthMethod
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceMembershipSpec: **Anthos Identity Service**:
+// Configuration for a single Membership.
+type IdentityServiceMembershipSpec struct {
+	// AuthMethods: A member may support multiple auth methods.
+	AuthMethods []*IdentityServiceAuthMethod `json:"authMethods,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthMethods") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthMethods") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceMembershipSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceMembershipSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceMembershipState: **Anthos Identity Service**: State
+// for a single Membership.
+type IdentityServiceMembershipState struct {
+	// FailureReason: The reason of the failure.
+	FailureReason string `json:"failureReason,omitempty"`
+
+	// InstalledVersion: Installed AIS version. This is the AIS version
+	// installed on this member. The values makes sense iff state is OK.
+	InstalledVersion string `json:"installedVersion,omitempty"`
+
+	// MemberConfig: Last reconciled membership configuration
+	MemberConfig *IdentityServiceMembershipSpec `json:"memberConfig,omitempty"`
+
+	// State: Deployment state on this member
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Unspecified state
+	//   "OK" - deployment succeeds
+	//   "ERROR" - Failure with error.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FailureReason") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailureReason") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceMembershipState) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceMembershipState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceOidcConfig: Configuration for OIDC Auth flow.
+type IdentityServiceOidcConfig struct {
+	// CertificateAuthorityData: PEM-encoded CA for OIDC provider.
+	CertificateAuthorityData string `json:"certificateAuthorityData,omitempty"`
+
+	// ClientId: ID for OIDC client application.
+	ClientId string `json:"clientId,omitempty"`
+
+	// ClientSecret: Input only. Unencrypted OIDC client secret will be
+	// passed to the GKE Hub CLH.
+	ClientSecret string `json:"clientSecret,omitempty"`
+
+	// DeployCloudConsoleProxy: Flag to denote if reverse proxy is used to
+	// connect to auth provider. This flag should be set to true when
+	// provider is not reachable by Google Cloud Console.
+	DeployCloudConsoleProxy bool `json:"deployCloudConsoleProxy,omitempty"`
+
+	// EncryptedClientSecret: Output only. Encrypted OIDC Client secret
+	EncryptedClientSecret string `json:"encryptedClientSecret,omitempty"`
+
+	// ExtraParams: Comma-separated list of key-value pairs.
+	ExtraParams string `json:"extraParams,omitempty"`
+
+	// GroupPrefix: Prefix to prepend to group name.
+	GroupPrefix string `json:"groupPrefix,omitempty"`
+
+	// GroupsClaim: Claim in OIDC ID token that holds group information.
+	GroupsClaim string `json:"groupsClaim,omitempty"`
+
+	// IssuerUri: URI for the OIDC provider. This should point to the level
+	// below .well-known/openid-configuration.
+	IssuerUri string `json:"issuerUri,omitempty"`
+
+	// KubectlRedirectUri: Registered redirect uri to redirect users going
+	// through OAuth flow using kubectl plugin.
+	KubectlRedirectUri string `json:"kubectlRedirectUri,omitempty"`
+
+	// Scopes: Comma-separated list of identifiers.
+	Scopes string `json:"scopes,omitempty"`
+
+	// UserClaim: Claim in OIDC ID token that holds username.
+	UserClaim string `json:"userClaim,omitempty"`
+
+	// UserPrefix: Prefix to prepend to user name.
+	UserPrefix string `json:"userPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificateAuthorityData") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertificateAuthorityData")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceOidcConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceOidcConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // KubernetesMetadata: KubernetesMetadata provides informational
 // metadata for Memberships representing Kubernetes clusters.
 type KubernetesMetadata struct {
@@ -2159,6 +2622,47 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LocalControllerState: LocalControllerState contains the state of the
+// local controller deployed in the cluster.
+type LocalControllerState struct {
+	// Description: Description represents the human readable description of
+	// the current state of the local PE controller
+	Description string `json:"description,omitempty"`
+
+	// InstallationState: InstallationState represents the state of
+	// deployment of the local PE controller in the cluster.
+	//
+	// Possible values:
+	//   "INSTALLATION_STATE_UNSPECIFIED" - state of installation is unknown
+	//   "INSTALLATION_STATE_NOT_INSTALLED" - component is not installed
+	//   "INSTALLATION_STATE_INSTALLED" - component is successfully
+	// installed
+	//   "INSTALLATION_STATE_FAILED" - installation failed
+	InstallationState string `json:"installationState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LocalControllerState) MarshalJSON() ([]byte, error) {
+	type NoMethod LocalControllerState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Location: A resource that represents Google Cloud Platform location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
@@ -2300,6 +2804,10 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 // contact a Kubernetes API, endpoint and any additional Kubernetes
 // metadata.
 type MembershipEndpoint struct {
+	// ApplianceCluster: Optional. Specific information for a GDC Edge
+	// Appliance cluster.
+	ApplianceCluster *ApplianceCluster `json:"applianceCluster,omitempty"`
+
 	// EdgeCluster: Optional. Specific information for a Google Edge
 	// cluster.
 	EdgeCluster *EdgeCluster `json:"edgeCluster,omitempty"`
@@ -2328,7 +2836,7 @@ type MembershipEndpoint struct {
 	// allowed to use this field, it should have a nil "type" instead.
 	OnPremCluster *OnPremCluster `json:"onPremCluster,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EdgeCluster") to
+	// ForceSendFields is a list of field names (e.g. "ApplianceCluster") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2336,12 +2844,13 @@ type MembershipEndpoint struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EdgeCluster") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApplianceCluster") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2354,13 +2863,19 @@ func (s *MembershipEndpoint) MarshalJSON() ([]byte, error) {
 // MembershipFeatureSpec: MembershipFeatureSpec contains configuration
 // information for a single Membership.
 type MembershipFeatureSpec struct {
+	// Anthosvm: AnthosVM spec.
+	Anthosvm *AnthosVMMembershipSpec `json:"anthosvm,omitempty"`
+
 	// Configmanagement: Config Management-specific spec.
 	Configmanagement *ConfigManagementMembershipSpec `json:"configmanagement,omitempty"`
+
+	// Identityservice: Identity Service-specific spec.
+	Identityservice *IdentityServiceMembershipSpec `json:"identityservice,omitempty"`
 
 	// Mesh: Anthos Service Mesh-specific spec
 	Mesh *ServiceMeshMembershipSpec `json:"mesh,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Configmanagement") to
+	// ForceSendFields is a list of field names (e.g. "Anthosvm") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2368,13 +2883,12 @@ type MembershipFeatureSpec struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Configmanagement") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Anthosvm") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2387,11 +2901,17 @@ func (s *MembershipFeatureSpec) MarshalJSON() ([]byte, error) {
 // MembershipFeatureState: MembershipFeatureState contains Feature
 // status information for a single Membership.
 type MembershipFeatureState struct {
+	// Anthosvm: AnthosVM state.
+	Anthosvm *AnthosVMMembershipState `json:"anthosvm,omitempty"`
+
 	// Appdevexperience: Appdevexperience specific state.
 	Appdevexperience *AppDevExperienceFeatureState `json:"appdevexperience,omitempty"`
 
 	// Configmanagement: Config Management-specific state.
 	Configmanagement *ConfigManagementMembershipState `json:"configmanagement,omitempty"`
+
+	// Identityservice: Identity Service-specific state.
+	Identityservice *IdentityServiceMembershipState `json:"identityservice,omitempty"`
 
 	// Servicemesh: Service Mesh-specific state.
 	Servicemesh *ServiceMeshMembershipState `json:"servicemesh,omitempty"`
@@ -2399,7 +2919,7 @@ type MembershipFeatureState struct {
 	// State: The high-level state of this Feature for a single membership.
 	State *FeatureState `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
+	// ForceSendFields is a list of field names (e.g. "Anthosvm") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2407,13 +2927,12 @@ type MembershipFeatureState struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Appdevexperience") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Anthosvm") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2459,6 +2978,15 @@ func (s *MembershipState) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MigrateSpec: MigrateSpec contains the migrate subfeature
+// configuration.
+type MigrateSpec struct {
+}
+
+// MigrateState: MigrateState contains the state of Migrate subfeature
+type MigrateState struct {
 }
 
 // MultiCloudCluster: MultiCloudCluster contains information specific to
@@ -2543,6 +3071,16 @@ type OnPremCluster struct {
 	// denotes that API(gkeonprem.googleapis.com) resource for this GKE
 	// On-Prem cluster no longer exists.
 	ClusterMissing bool `json:"clusterMissing,omitempty"`
+
+	// ClusterType: Immutable. The on prem cluster's type.
+	//
+	// Possible values:
+	//   "CLUSTERTYPE_UNSPECIFIED" - The ClusterType is not set.
+	//   "BOOTSTRAP" - The ClusterType is bootstrap cluster.
+	//   "HYBRID" - The ClusterType is baremetal hybrid cluster.
+	//   "STANDALONE" - The ClusterType is baremetal standalone cluster.
+	//   "USER" - The ClusterType is user cluster.
+	ClusterType string `json:"clusterType,omitempty"`
 
 	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
 	// On-Prem cluster. For example:
@@ -2994,6 +3532,16 @@ func (s *ServiceMeshMembershipState) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceMeshMembershipState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshSpec: ServiceMeshSpec contains the serviceMesh subfeature
+// configuration.
+type ServiceMeshSpec struct {
+}
+
+// ServiceMeshState: ServiceMeshState contains the state of Service Mesh
+// subfeature
+type ServiceMeshState struct {
 }
 
 // ServiceMeshStatusDetails: Structured and human-readable details for a
@@ -4070,8 +4618,9 @@ type ProjectsLocationsFeaturesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsFeaturesService) GetIamPolicy(resource string) *ProjectsLocationsFeaturesGetIamPolicyCall {
 	c := &ProjectsLocationsFeaturesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4210,7 +4759,7 @@ func (c *ProjectsLocationsFeaturesGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/features/[^/]+$",
 	//       "required": true,
@@ -4647,8 +5196,9 @@ type ProjectsLocationsFeaturesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsFeaturesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsFeaturesSetIamPolicyCall {
 	c := &ProjectsLocationsFeaturesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4756,7 +5306,7 @@ func (c *ProjectsLocationsFeaturesSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/features/[^/]+$",
 	//       "required": true,
@@ -4796,7 +5346,8 @@ type ProjectsLocationsFeaturesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsFeaturesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsFeaturesTestIamPermissionsCall {
 	c := &ProjectsLocationsFeaturesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4905,7 +5456,7 @@ func (c *ProjectsLocationsFeaturesTestIamPermissionsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/features/[^/]+$",
 	//       "required": true,
@@ -5665,8 +6216,9 @@ type ProjectsLocationsMembershipsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsMembershipsService) GetIamPolicy(resource string) *ProjectsLocationsMembershipsGetIamPolicyCall {
 	c := &ProjectsLocationsMembershipsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5805,7 +6357,7 @@ func (c *ProjectsLocationsMembershipsGetIamPolicyCall) Do(opts ...googleapi.Call
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/memberships/[^/]+$",
 	//       "required": true,
@@ -6243,8 +6795,9 @@ type ProjectsLocationsMembershipsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsMembershipsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsMembershipsSetIamPolicyCall {
 	c := &ProjectsLocationsMembershipsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6352,7 +6905,7 @@ func (c *ProjectsLocationsMembershipsSetIamPolicyCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/memberships/[^/]+$",
 	//       "required": true,
@@ -6392,7 +6945,8 @@ type ProjectsLocationsMembershipsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsMembershipsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsMembershipsTestIamPermissionsCall {
 	c := &ProjectsLocationsMembershipsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6501,7 +7055,7 @@ func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/memberships/[^/]+$",
 	//       "required": true,

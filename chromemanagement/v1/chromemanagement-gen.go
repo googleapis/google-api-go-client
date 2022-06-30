@@ -651,7 +651,7 @@ type GoogleChromeManagementV1BrowserVersion struct {
 	//   "SYSTEM_OTHER" - Other operating system.
 	//   "SYSTEM_ANDROID" - Android operating system.
 	//   "SYSTEM_IOS" - Apple iOS operating system.
-	//   "SYSTEM_CROS" - Chrome OS operating system.
+	//   "SYSTEM_CROS" - ChromeOS operating system.
 	//   "SYSTEM_WINDOWS" - Microsoft Windows operating system.
 	//   "SYSTEM_MAC" - Apple macOS operating system.
 	//   "SYSTEM_LINUX" - Linux operating system.
@@ -696,14 +696,14 @@ type GoogleChromeManagementV1ChromeAppInfo struct {
 	IsCwsHosted bool `json:"isCwsHosted,omitempty"`
 
 	// IsKioskOnly: Output only. Whether the app is only for Kiosk mode on
-	// Chrome OS devices
+	// ChromeOS devices
 	IsKioskOnly bool `json:"isKioskOnly,omitempty"`
 
 	// IsTheme: Output only. Whether the app or extension is a theme.
 	IsTheme bool `json:"isTheme,omitempty"`
 
 	// KioskEnabled: Output only. Whether this app is enabled for Kiosk mode
-	// on Chrome OS devices
+	// on ChromeOS devices
 	KioskEnabled bool `json:"kioskEnabled,omitempty"`
 
 	// MinUserCount: Output only. The minimum number of users using this
@@ -1758,7 +1758,7 @@ func (s *GoogleChromeManagementV1StorageInfoDiskVolume) MarshalJSON() ([]byte, e
 
 // GoogleChromeManagementV1StorageStatusReport: Status data for storage.
 type GoogleChromeManagementV1StorageStatusReport struct {
-	// Disk: Output only. Reports on disk
+	// Disk: Output only. Reports on disk.
 	Disk []*GoogleChromeManagementV1DiskInfo `json:"disk,omitempty"`
 
 	// ReportTime: Output only. Timestamp of when the sample was collected
@@ -1816,7 +1816,7 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 
 	// DeviceId: Output only. The unique Directory API ID of the device.
 	// This value is the same as the Admin Console's Directory API ID in the
-	// Chrome OS Devices tab
+	// ChromeOS Devices tab
 	DeviceId string `json:"deviceId,omitempty"`
 
 	// GraphicsInfo: Output only. Contains information regarding Graphic
@@ -1850,7 +1850,7 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	OsUpdateStatus []*GoogleChromeManagementV1OsUpdateStatus `json:"osUpdateStatus,omitempty"`
 
 	// SerialNumber: Output only. Device serial number. This value is the
-	// same as the Admin Console's Serial Number in the Chrome OS Devices
+	// same as the Admin Console's Serial Number in the ChromeOS Devices
 	// tab.
 	SerialNumber string `json:"serialNumber,omitempty"`
 
@@ -1861,6 +1861,10 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	// StorageStatusReport: Output only. Storage reports collected
 	// periodically.
 	StorageStatusReport []*GoogleChromeManagementV1StorageStatusReport `json:"storageStatusReport,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "AudioStatusReport")
 	// to unconditionally include in API requests. By default, fields with
@@ -3392,6 +3396,166 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Pages(ctx context.Context,
 	}
 }
 
+// method id "chromemanagement.customers.telemetry.devices.get":
+
+type CustomersTelemetryDevicesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get telemetry device.
+//
+// - name: Name of the `TelemetryDevice` to return.
+func (r *CustomersTelemetryDevicesService) Get(name string) *CustomersTelemetryDevicesGetCall {
+	c := &CustomersTelemetryDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Required. Read mask
+// to specify which fields to return.
+func (c *CustomersTelemetryDevicesGetCall) ReadMask(readMask string) *CustomersTelemetryDevicesGetCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersTelemetryDevicesGetCall) Fields(s ...googleapi.Field) *CustomersTelemetryDevicesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersTelemetryDevicesGetCall) IfNoneMatch(entityTag string) *CustomersTelemetryDevicesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersTelemetryDevicesGetCall) Context(ctx context.Context) *CustomersTelemetryDevicesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersTelemetryDevicesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersTelemetryDevicesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.telemetry.devices.get" call.
+// Exactly one of *GoogleChromeManagementV1TelemetryDevice or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleChromeManagementV1TelemetryDevice.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersTelemetryDevicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1TelemetryDevice, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleChromeManagementV1TelemetryDevice{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get telemetry device.",
+	//   "flatPath": "v1/customers/{customersId}/telemetry/devices/{devicesId}",
+	//   "httpMethod": "GET",
+	//   "id": "chromemanagement.customers.telemetry.devices.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the `TelemetryDevice` to return.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/telemetry/devices/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Required. Read mask to specify which fields to return.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleChromeManagementV1TelemetryDevice"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.telemetry.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "chromemanagement.customers.telemetry.devices.list":
 
 type CustomersTelemetryDevicesListCall struct {
@@ -3422,7 +3586,7 @@ func (c *CustomersTelemetryDevicesListCall) Filter(filter string) *CustomersTele
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// results to return. Default value is 100. Maximum value is 200.
+// results to return. Default value is 100. Maximum value is 1000.
 func (c *CustomersTelemetryDevicesListCall) PageSize(pageSize int64) *CustomersTelemetryDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3557,7 +3721,7 @@ func (c *CustomersTelemetryDevicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Maximum number of results to return. Default value is 100. Maximum value is 200.",
+	//       "description": "Maximum number of results to return. Default value is 100. Maximum value is 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

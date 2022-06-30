@@ -604,12 +604,14 @@ type GclbTarget struct {
 	// Certificate Map is serving.
 	IpConfigs []*IpConfig `json:"ipConfigs,omitempty"`
 
-	// TargetHttpsProxy: A name must be in the format
-	// `projects/*/locations/*/targetHttpsProxies/*`.
+	// TargetHttpsProxy: This field returns the resource name in the
+	// following format:
+	// `//compute.googleapis.com/projects/*/global/targetHttpsProxies/*`.
 	TargetHttpsProxy string `json:"targetHttpsProxy,omitempty"`
 
-	// TargetSslProxy: A name must be in the format
-	// `projects/*/locations/*/targetSslProxies/*`.
+	// TargetSslProxy: This field returns the resource name in the following
+	// format:
+	// `//compute.googleapis.com/projects/*/global/targetSslProxies/*`.
 	TargetSslProxy string `json:"targetSslProxy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpConfigs") to
@@ -1181,6 +1183,9 @@ func (s *ProvisioningIssue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ResourcesCount: ResourcesCount represents the resource that stores
+// aggregated project's info in the given location, e.g.: total number
+// of certificates assigned to the project.
 type ResourcesCount struct {
 	// Certificates: The count of certificates.
 	Certificates uint64 `json:"certificates,omitempty,string"`

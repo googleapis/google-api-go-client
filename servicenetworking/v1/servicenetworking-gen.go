@@ -472,6 +472,19 @@ type AddSubnetworkRequest struct {
 	// 'servicenetworking.services.use' permission or not.
 	CheckServiceNetworkingUsePermission bool `json:"checkServiceNetworkingUsePermission,omitempty"`
 
+	// ComputeIdempotencyWindow: Optional. Specifies a custom time bucket
+	// for Arcus subnetwork request idempotency. If two equivalent
+	// concurrent requests are made, Arcus will know to ignore the request
+	// if it has already been completed or is in progress. Only requests
+	// with matching compute_idempotency_window have guaranteed idempotency.
+	// Changing this time window between requests results in undefined
+	// behavior. Zero (or empty) value with
+	// custom_compute_idempotency_window=true specifies no idempotency (i.e.
+	// no request ID is provided to Arcus). Maximum value of 14 days
+	// (enforced by Arcus limit). For more information on how to use, see:
+	// go/revisit-sn-idempotency-window
+	ComputeIdempotencyWindow string `json:"computeIdempotencyWindow,omitempty"`
+
 	// Consumer: Required. A resource that represents the service consumer,
 	// such as `projects/123456`. The project number can be different from
 	// the value in the consumer network parameter. For example, the network
@@ -549,8 +562,17 @@ type AddSubnetworkRequest struct {
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// SubnetworkUsers: A list of members that are granted the
-	// `compute.networkUser` role on the subnet.
+	// `roles/servicenetworking.subnetworkAdmin` role on the subnet.
 	SubnetworkUsers []string `json:"subnetworkUsers,omitempty"`
+
+	// UseCustomComputeIdempotencyWindow: Optional. Specifies if Service
+	// Networking should use a custom time bucket for Arcus idempotency. If
+	// false, Service Networking uses a 300 second (5 minute) Arcus
+	// idempotency window. If true, Service Networking uses a custom
+	// idempotency window provided by the user in field
+	// compute_idempotency_window. For more information on how to use, see:
+	// go/revisit-sn-idempotency-window
+	UseCustomComputeIdempotencyWindow bool `json:"useCustomComputeIdempotencyWindow,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CheckServiceNetworkingUsePermission") to unconditionally include in
@@ -1201,6 +1223,10 @@ type ConsumerConfig struct {
 	// ReservedRanges: Output only. The reserved ranges associated with this
 	// private service access connection.
 	ReservedRanges []*GoogleCloudServicenetworkingV1ConsumerConfigReservedRange `json:"reservedRanges,omitempty"`
+
+	// UsedIpRanges: Output only. The IP ranges already in use by consumer
+	// or producer
+	UsedIpRanges []string `json:"usedIpRanges,omitempty"`
 
 	// VpcScReferenceArchitectureEnabled: Output only. Indicates whether the
 	// VPC Service Controls reference architecture is configured for the
@@ -7782,6 +7808,17 @@ func (r *ServicesProjectsGlobalNetworksService) Get(name string) *ServicesProjec
 	return c
 }
 
+// IncludeUsedIpRanges sets the optional parameter
+// "includeUsedIpRanges": When true, include the used IP ranges as part
+// of the GetConsumerConfig output. This includes routes created inside
+// the service networking network, consumer network, peers of the
+// consumer network, and reserved ranges inside the service networking
+// network. By default, this is false
+func (c *ServicesProjectsGlobalNetworksGetCall) IncludeUsedIpRanges(includeUsedIpRanges bool) *ServicesProjectsGlobalNetworksGetCall {
+	c.urlParams_.Set("includeUsedIpRanges", fmt.Sprint(includeUsedIpRanges))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7889,6 +7926,11 @@ func (c *ServicesProjectsGlobalNetworksGetCall) Do(opts ...googleapi.CallOption)
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "includeUsedIpRanges": {
+	//       "description": "Optional. When true, include the used IP ranges as part of the GetConsumerConfig output. This includes routes created inside the service networking network, consumer network, peers of the consumer network, and reserved ranges inside the service networking network. By default, this is false",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. Name of the consumer config to retrieve in the format: `services/{service}/projects/{project}/global/networks/{network}`. {service} is the peering service that is managing connectivity for the service producer's organization. For Google services that support this functionality, this value is `servicenetworking.googleapis.com`. {project} is a project number e.g. `12345` that contains the service consumer's VPC network. {network} is the name of the service consumer's VPC network.",
 	//       "location": "path",

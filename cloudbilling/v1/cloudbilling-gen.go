@@ -266,8 +266,8 @@ func (s *AggregationInfo) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -1688,8 +1688,9 @@ type BillingAccountsGetIamPolicyCall struct {
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *BillingAccountsService) GetIamPolicy(resource string) *BillingAccountsGetIamPolicyCall {
 	c := &BillingAccountsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1828,7 +1829,7 @@ func (c *BillingAccountsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -2227,8 +2228,9 @@ type BillingAccountsSetIamPolicyCall struct {
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *BillingAccountsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *BillingAccountsSetIamPolicyCall {
 	c := &BillingAccountsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2336,7 +2338,7 @@ func (c *BillingAccountsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -2375,7 +2377,8 @@ type BillingAccountsTestIamPermissionsCall struct {
 // is allowed for that resource.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *BillingAccountsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *BillingAccountsTestIamPermissionsCall {
 	c := &BillingAccountsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2484,7 +2487,7 @@ func (c *BillingAccountsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,

@@ -163,6 +163,7 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsNamespacesService(s *APIService) *ProjectsLocationsNamespacesService {
 	rs := &ProjectsLocationsNamespacesService{s: s}
+	rs.ServiceWorkloads = NewProjectsLocationsNamespacesServiceWorkloadsService(s)
 	rs.Services = NewProjectsLocationsNamespacesServicesService(s)
 	return rs
 }
@@ -170,7 +171,18 @@ func NewProjectsLocationsNamespacesService(s *APIService) *ProjectsLocationsName
 type ProjectsLocationsNamespacesService struct {
 	s *APIService
 
+	ServiceWorkloads *ProjectsLocationsNamespacesServiceWorkloadsService
+
 	Services *ProjectsLocationsNamespacesServicesService
+}
+
+func NewProjectsLocationsNamespacesServiceWorkloadsService(s *APIService) *ProjectsLocationsNamespacesServiceWorkloadsService {
+	rs := &ProjectsLocationsNamespacesServiceWorkloadsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNamespacesServiceWorkloadsService struct {
+	s *APIService
 }
 
 func NewProjectsLocationsNamespacesServicesService(s *APIService) *ProjectsLocationsNamespacesServicesService {
@@ -854,7 +866,10 @@ type ResolveServiceRequest struct {
 	// `name>projects/my-project/locations/us-east1/namespaces/my-namespace/s
 	// ervices/my-service/endpoints/endpoint-c` returns endpoints that have
 	// name that is alphabetically later than the string, so "endpoint-e" is
-	// returned but "endpoint-a" is not * `metadata.owner!=sd AND
+	// returned but "endpoint-a" is not *
+	// `name=projects/my-project/locations/us-central1/namespaces/my-namespac
+	// e/services/my-service/endpoints/ep-1` returns the endpoint that has
+	// an endpoint_id equal to `ep-1` * `metadata.owner!=sd AND
 	// metadata.foo=bar` returns endpoints that have `owner` in annotation
 	// key but value is not `sd` AND have key/value `foo=bar` *
 	// `doesnotexist.foo=bar` returns an empty list. Note that endpoint
@@ -1897,8 +1912,9 @@ type ProjectsLocationsNamespacesGetIamPolicyCall struct {
 // service only).
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsNamespacesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsNamespacesGetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2006,7 +2022,7 @@ func (c *ProjectsLocationsNamespacesGetIamPolicyCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+$",
 	//       "required": true,
@@ -2049,14 +2065,14 @@ func (r *ProjectsLocationsNamespacesService) List(parent string) *ProjectsLocati
 }
 
 // Filter sets the optional parameter "filter": The filter to list
-// results by. General `filter` string syntax: ` ()` * `` can be `name`
-// or `labels.` for map field * `` can be `<`, `>`, `<=`, `>=`, `!=`,
-// `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` *
-// `` must be the same data type as field * `` can be `AND`, `OR`, `NOT`
-// Examples of valid filters: * `labels.owner` returns namespaces that
-// have a label with the key `owner`, this is the same as `labels:owner`
-// * `labels.owner=sd` returns namespaces that have key/value `owner=sd`
-// *
+// results by. General `filter` string syntax: ` ()` * `` can be `name`,
+// `labels.` for map field, or `attributes.` for attributes field * ``
+// can be `<`, `>`, `<=`, `>=`, `!=`, `=`, `:`. Of which `:` means
+// `HAS`, and is roughly the same as `=` * `` must be the same data type
+// as field * `` can be `AND`, `OR`, `NOT` Examples of valid filters: *
+// `labels.owner` returns namespaces that have a label with the key
+// `owner`, this is the same as `labels:owner` * `labels.owner=sd`
+// returns namespaces that have key/value `owner=sd` *
 // `name>projects/my-project/locations/us-east1/namespaces/namespace-c`
 // returns namespaces that have name that is alphabetically later than
 // the string, so "namespace-e" is returned but "namespace-a" is not *
@@ -2064,8 +2080,10 @@ func (r *ProjectsLocationsNamespacesService) List(parent string) *ProjectsLocati
 // `owner` in label key but value is not `sd` AND have key/value
 // `foo=bar` * `doesnotexist.foo=bar` returns an empty list. Note that
 // namespace doesn't have a field called "doesnotexist". Since the
-// filter does not match any namespaces, it returns no results For more
-// information about filtering, see API Filtering (https://aip.dev/160).
+// filter does not match any namespaces, it returns no results *
+// `attributes.managed_registration=true` returns namespaces that are
+// managed by a GCP product or service For more information about
+// filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsLocationsNamespacesListCall) Filter(filter string) *ProjectsLocationsNamespacesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2204,7 +2222,7 @@ func (c *ProjectsLocationsNamespacesListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter to list results by. General `filter` string syntax: ` ()` * `` can be `name` or `labels.` for map field * `` can be `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` * `` must be the same data type as field * `` can be `AND`, `OR`, `NOT` Examples of valid filters: * `labels.owner` returns namespaces that have a label with the key `owner`, this is the same as `labels:owner` * `labels.owner=sd` returns namespaces that have key/value `owner=sd` * `name\u003eprojects/my-project/locations/us-east1/namespaces/namespace-c` returns namespaces that have name that is alphabetically later than the string, so \"namespace-e\" is returned but \"namespace-a\" is not * `labels.owner!=sd AND labels.foo=bar` returns namespaces that have `owner` in label key but value is not `sd` AND have key/value `foo=bar` * `doesnotexist.foo=bar` returns an empty list. Note that namespace doesn't have a field called \"doesnotexist\". Since the filter does not match any namespaces, it returns no results For more information about filtering, see [API Filtering](https://aip.dev/160).",
+	//       "description": "Optional. The filter to list results by. General `filter` string syntax: ` ()` * `` can be `name`, `labels.` for map field, or `attributes.` for attributes field * `` can be `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` * `` must be the same data type as field * `` can be `AND`, `OR`, `NOT` Examples of valid filters: * `labels.owner` returns namespaces that have a label with the key `owner`, this is the same as `labels:owner` * `labels.owner=sd` returns namespaces that have key/value `owner=sd` * `name\u003eprojects/my-project/locations/us-east1/namespaces/namespace-c` returns namespaces that have name that is alphabetically later than the string, so \"namespace-e\" is returned but \"namespace-a\" is not * `labels.owner!=sd AND labels.foo=bar` returns namespaces that have `owner` in label key but value is not `sd` AND have key/value `foo=bar` * `doesnotexist.foo=bar` returns an empty list. Note that namespace doesn't have a field called \"doesnotexist\". Since the filter does not match any namespaces, it returns no results * `attributes.managed_registration=true` returns namespaces that are managed by a GCP product or service For more information about filtering, see [API Filtering](https://aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2435,8 +2453,9 @@ type ProjectsLocationsNamespacesSetIamPolicyCall struct {
 // service only).
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsNamespacesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsNamespacesSetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2544,7 +2563,7 @@ func (c *ProjectsLocationsNamespacesSetIamPolicyCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+$",
 	//       "required": true,
@@ -2576,11 +2595,12 @@ type ProjectsLocationsNamespacesTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Tests IAM permissions for a resource (namespace
-// or service only).
+// TestIamPermissions: Tests IAM permissions for a resource (namespace,
+// service or service workload only).
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsNamespacesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsNamespacesTestIamPermissionsCall {
 	c := &ProjectsLocationsNamespacesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2680,7 +2700,7 @@ func (c *ProjectsLocationsNamespacesTestIamPermissionsCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Tests IAM permissions for a resource (namespace or service only).",
+	//   "description": "Tests IAM permissions for a resource (namespace, service or service workload only).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "servicedirectory.projects.locations.namespaces.testIamPermissions",
@@ -2689,9 +2709,447 @@ func (c *ProjectsLocationsNamespacesTestIamPermissionsCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "servicedirectory.projects.locations.namespaces.serviceWorkloads.getIamPolicy":
+
+type ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall struct {
+	s                   *APIService
+	resource            string
+	getiampolicyrequest *GetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// GetIamPolicy: Gets the IAM Policy for a resource (namespace or
+// service only).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsNamespacesServiceWorkloadsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall {
+	c := &ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.getiampolicyrequest = getiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "servicedirectory.projects.locations.namespaces.serviceWorkloads.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the IAM Policy for a resource (namespace or service only).",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/serviceWorkloads/{serviceWorkloadsId}:getIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "servicedirectory.projects.locations.namespaces.serviceWorkloads.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/serviceWorkloads/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+resource}:getIamPolicy",
+	//   "request": {
+	//     "$ref": "GetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "servicedirectory.projects.locations.namespaces.serviceWorkloads.setIamPolicy":
+
+type ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall struct {
+	s                   *APIService
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the IAM Policy for a resource (namespace or
+// service only).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsNamespacesServiceWorkloadsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall {
+	c := &ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "servicedirectory.projects.locations.namespaces.serviceWorkloads.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the IAM Policy for a resource (namespace or service only).",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/serviceWorkloads/{serviceWorkloadsId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "servicedirectory.projects.locations.namespaces.serviceWorkloads.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/serviceWorkloads/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "servicedirectory.projects.locations.namespaces.serviceWorkloads.testIamPermissions":
+
+type ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall struct {
+	s                         *APIService
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Tests IAM permissions for a resource (namespace,
+// service or service workload only).
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsNamespacesServiceWorkloadsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall {
+	c := &ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "servicedirectory.projects.locations.namespaces.serviceWorkloads.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Tests IAM permissions for a resource (namespace, service or service workload only).",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/serviceWorkloads/{serviceWorkloadsId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "servicedirectory.projects.locations.namespaces.serviceWorkloads.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/serviceWorkloads/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3164,8 +3622,9 @@ type ProjectsLocationsNamespacesServicesGetIamPolicyCall struct {
 // service only).
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsNamespacesServicesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsNamespacesServicesGetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3273,7 +3732,7 @@ func (c *ProjectsLocationsNamespacesServicesGetIamPolicyCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -3332,8 +3791,9 @@ func (r *ProjectsLocationsNamespacesServicesService) List(parent string) *Projec
 // `sd` AND have key/value `foo=bar` * `doesnotexist.foo=bar` returns an
 // empty list. Note that service doesn't have a field called
 // "doesnotexist". Since the filter does not match any services, it
-// returns no results For more information about filtering, see API
-// Filtering (https://aip.dev/160).
+// returns no results * `attributes.managed_registration=true` returns
+// services that are managed by a GCP product or service For more
+// information about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsLocationsNamespacesServicesListCall) Filter(filter string) *ProjectsLocationsNamespacesServicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3472,7 +3932,7 @@ func (c *ProjectsLocationsNamespacesServicesListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter to list results by. General `filter` string syntax: ` ()` * `` can be `name` or `metadata.` for map field * `` can be `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` * `` must be the same data type as field * `` can be `AND`, `OR`, `NOT` Examples of valid filters: * `metadata.owner` returns services that have a metadata with the key `owner`, this is the same as `metadata:owner` * `metadata.protocol=gRPC` returns services that have key/value `protocol=gRPC` * `name\u003eprojects/my-project/locations/us-east1/namespaces/my-namespace/services/service-c` returns services that have name that is alphabetically later than the string, so \"service-e\" is returned but \"service-a\" is not * `metadata.owner!=sd AND metadata.foo=bar` returns services that have `owner` in metadata key but value is not `sd` AND have key/value `foo=bar` * `doesnotexist.foo=bar` returns an empty list. Note that service doesn't have a field called \"doesnotexist\". Since the filter does not match any services, it returns no results For more information about filtering, see [API Filtering](https://aip.dev/160).",
+	//       "description": "Optional. The filter to list results by. General `filter` string syntax: ` ()` * `` can be `name` or `metadata.` for map field * `` can be `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` * `` must be the same data type as field * `` can be `AND`, `OR`, `NOT` Examples of valid filters: * `metadata.owner` returns services that have a metadata with the key `owner`, this is the same as `metadata:owner` * `metadata.protocol=gRPC` returns services that have key/value `protocol=gRPC` * `name\u003eprojects/my-project/locations/us-east1/namespaces/my-namespace/services/service-c` returns services that have name that is alphabetically later than the string, so \"service-e\" is returned but \"service-a\" is not * `metadata.owner!=sd AND metadata.foo=bar` returns services that have `owner` in metadata key but value is not `sd` AND have key/value `foo=bar` * `doesnotexist.foo=bar` returns an empty list. Note that service doesn't have a field called \"doesnotexist\". Since the filter does not match any services, it returns no results * `attributes.managed_registration=true` returns services that are managed by a GCP product or service For more information about filtering, see [API Filtering](https://aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3846,8 +4306,9 @@ type ProjectsLocationsNamespacesServicesSetIamPolicyCall struct {
 // service only).
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsNamespacesServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsNamespacesServicesSetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3955,7 +4416,7 @@ func (c *ProjectsLocationsNamespacesServicesSetIamPolicyCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -3987,11 +4448,12 @@ type ProjectsLocationsNamespacesServicesTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Tests IAM permissions for a resource (namespace
-// or service only).
+// TestIamPermissions: Tests IAM permissions for a resource (namespace,
+// service or service workload only).
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsNamespacesServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsNamespacesServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsNamespacesServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4091,7 +4553,7 @@ func (c *ProjectsLocationsNamespacesServicesTestIamPermissionsCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Tests IAM permissions for a resource (namespace or service only).",
+	//   "description": "Tests IAM permissions for a resource (namespace, service or service workload only).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/services/{servicesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "servicedirectory.projects.locations.namespaces.services.testIamPermissions",
@@ -4100,7 +4562,7 @@ func (c *ProjectsLocationsNamespacesServicesTestIamPermissionsCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -4582,16 +5044,16 @@ func (r *ProjectsLocationsNamespacesServicesEndpointsService) List(parent string
 
 // Filter sets the optional parameter "filter": The filter to list
 // results by. General `filter` string syntax: ` ()` * `` can be `name`,
-// `address`, `port`, or `metadata.` for map field * `` can be `<`, `>`,
-// `<=`, `>=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly
-// the same as `=` * `` must be the same data type as field * `` can be
-// `AND`, `OR`, `NOT` Examples of valid filters: * `metadata.owner`
-// returns endpoints that have a metadata with the key `owner`, this is
-// the same as `metadata:owner` * `metadata.protocol=gRPC` returns
-// endpoints that have key/value `protocol=gRPC` *
-// `address=192.108.1.105` returns endpoints that have this address *
-// `port>8080` returns endpoints that have port number larger than 8080
-// *
+// `address`, `port`, `metadata.` for map field, or `attributes.` for
+// attributes field * `` can be `<`, `>`, `<=`, `>=`, `!=`, `=`, `:`. Of
+// which `:` means `HAS`, and is roughly the same as `=` * `` must be
+// the same data type as field * `` can be `AND`, `OR`, `NOT` Examples
+// of valid filters: * `metadata.owner` returns endpoints that have a
+// metadata with the key `owner`, this is the same as `metadata:owner` *
+// `metadata.protocol=gRPC` returns endpoints that have key/value
+// `protocol=gRPC` * `address=192.108.1.105` returns endpoints that have
+// this address * `port>8080` returns endpoints that have port number
+// larger than 8080 *
 // `name>projects/my-project/locations/us-east1/namespaces/my-namespace/s
 // ervices/my-service/endpoints/endpoint-c` returns endpoints that have
 // name that is alphabetically later than the string, so "endpoint-e" is
@@ -4600,8 +5062,11 @@ func (r *ProjectsLocationsNamespacesServicesEndpointsService) List(parent string
 // but value is not `sd` AND have key/value `foo=bar` *
 // `doesnotexist.foo=bar` returns an empty list. Note that endpoint
 // doesn't have a field called "doesnotexist". Since the filter does not
-// match any endpoints, it returns no results For more information about
-// filtering, see API Filtering (https://aip.dev/160).
+// match any endpoints, it returns no results *
+// `attributes.kubernetes_resource_type=KUBERNETES_RESOURCE_TYPE_CLUSTER_
+//  IP` returns endpoints with the corresponding
+// kubernetes_resource_type For more information about filtering, see
+// API Filtering (https://aip.dev/160).
 func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) Filter(filter string) *ProjectsLocationsNamespacesServicesEndpointsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4740,7 +5205,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter to list results by. General `filter` string syntax: ` ()` * `` can be `name`, `address`, `port`, or `metadata.` for map field * `` can be `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` * `` must be the same data type as field * `` can be `AND`, `OR`, `NOT` Examples of valid filters: * `metadata.owner` returns endpoints that have a metadata with the key `owner`, this is the same as `metadata:owner` * `metadata.protocol=gRPC` returns endpoints that have key/value `protocol=gRPC` * `address=192.108.1.105` returns endpoints that have this address * `port\u003e8080` returns endpoints that have port number larger than 8080 * `name\u003eprojects/my-project/locations/us-east1/namespaces/my-namespace/services/my-service/endpoints/endpoint-c` returns endpoints that have name that is alphabetically later than the string, so \"endpoint-e\" is returned but \"endpoint-a\" is not * `metadata.owner!=sd AND metadata.foo=bar` returns endpoints that have `owner` in metadata key but value is not `sd` AND have key/value `foo=bar` * `doesnotexist.foo=bar` returns an empty list. Note that endpoint doesn't have a field called \"doesnotexist\". Since the filter does not match any endpoints, it returns no results For more information about filtering, see [API Filtering](https://aip.dev/160).",
+	//       "description": "Optional. The filter to list results by. General `filter` string syntax: ` ()` * `` can be `name`, `address`, `port`, `metadata.` for map field, or `attributes.` for attributes field * `` can be `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` * `` must be the same data type as field * `` can be `AND`, `OR`, `NOT` Examples of valid filters: * `metadata.owner` returns endpoints that have a metadata with the key `owner`, this is the same as `metadata:owner` * `metadata.protocol=gRPC` returns endpoints that have key/value `protocol=gRPC` * `address=192.108.1.105` returns endpoints that have this address * `port\u003e8080` returns endpoints that have port number larger than 8080 * `name\u003eprojects/my-project/locations/us-east1/namespaces/my-namespace/services/my-service/endpoints/endpoint-c` returns endpoints that have name that is alphabetically later than the string, so \"endpoint-e\" is returned but \"endpoint-a\" is not * `metadata.owner!=sd AND metadata.foo=bar` returns endpoints that have `owner` in metadata key but value is not `sd` AND have key/value `foo=bar` * `doesnotexist.foo=bar` returns an empty list. Note that endpoint doesn't have a field called \"doesnotexist\". Since the filter does not match any endpoints, it returns no results * `attributes.kubernetes_resource_type=KUBERNETES_RESOURCE_TYPE_CLUSTER_ IP` returns endpoints with the corresponding kubernetes_resource_type For more information about filtering, see [API Filtering](https://aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

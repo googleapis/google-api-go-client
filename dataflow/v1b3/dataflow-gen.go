@@ -2108,10 +2108,13 @@ type FlexTemplateRuntimeEnvironment struct {
 	// DiskSizeGb: Worker disk size, in gigabytes.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
 
-	// DumpHeapOnOom: If true, save a heap dump before killing a thread or
-	// process which is GC thrashing or out of memory. The location of the
-	// heap file will either be echoed back to the user, or the user will be
-	// given the opportunity to download the heap file.
+	// DumpHeapOnOom: If true, when processing time is spent almost entirely
+	// on garbage collection (GC), saves a heap dump before ending the
+	// thread or process. If false, ends the thread or process without
+	// saving a heap dump. Does not save a heap dump when the Java Virtual
+	// Machine (JVM) has an out of memory error during processing. The
+	// location of the heap file is either echoed back to the user, or the
+	// user is given the opportunity to download the heap file.
 	DumpHeapOnOom bool `json:"dumpHeapOnOom,omitempty"`
 
 	// EnableStreamingEngine: Whether to enable Streaming Engine for the
@@ -2161,8 +2164,8 @@ type FlexTemplateRuntimeEnvironment struct {
 	NumWorkers int64 `json:"numWorkers,omitempty"`
 
 	// SaveHeapDumpsToGcsPath: Cloud Storage bucket (directory) to upload
-	// heap dumps to the given location. Enabling this implies that heap
-	// dumps should be generated on OOM (dump_heap_on_oom is set to true).
+	// heap dumps to. Enabling this field implies that `dump_heap_on_oom` is
+	// set to true.
 	SaveHeapDumpsToGcsPath string `json:"saveHeapDumpsToGcsPath,omitempty"`
 
 	// SdkContainerImage: Docker registry location of container image to use

@@ -602,8 +602,9 @@ type GoogleChromePolicyV1PolicySchemaFieldDescription struct {
 	// description.
 	Field string `json:"field,omitempty"`
 
-	// FieldDependencies: Output only. Provides a list of fields and the
-	// values they must have for this field to be allowed to be set.
+	// FieldDependencies: Output only. Provides a list of fields and values.
+	// At least one of the fields must have the corresponding value in order
+	// for this field to be allowed to be set.
 	FieldDependencies []*GoogleChromePolicyV1PolicySchemaFieldDependencies `json:"fieldDependencies,omitempty"`
 
 	// InputConstraint: Output only. Any input constraints associated on the
@@ -848,10 +849,10 @@ type GoogleChromePolicyV1ResolveRequest struct {
 	// example: chrome.users.ShowLogoutButton Wildcards are supported, but
 	// only in the leaf portion of the schema name. Wildcards cannot be used
 	// in namespace directly. Please read
-	// https://developers.google.com/chrome/chrome-management/guides/policyapi
-	// for details on schema namepsaces. For example: Valid:
-	// "chrome.users.*", "chrome.users.apps.*", "chrome.printers.*" Invalid:
-	// "*", "*.users", "chrome.*", "chrome.*.apps.*"
+	// https://developers.google.com/chrome/policy/guides/policy-schemas for
+	// details on schema namepsaces. For example: Valid: "chrome.users.*",
+	// "chrome.users.apps.*", "chrome.printers.*" Invalid: "*", "*.users",
+	// "chrome.*", "chrome.*.apps.*"
 	PolicySchemaFilter string `json:"policySchemaFilter,omitempty"`
 
 	// PolicyTargetKey: Required. The key of the target resource on which
@@ -1310,7 +1311,8 @@ type Proto2FileDescriptorProto struct {
 	Package string `json:"package,omitempty"`
 
 	// Syntax: The syntax of the proto file. The supported values are
-	// "proto2" and "proto3".
+	// "proto2", "proto3", and "editions". If `edition` is present, this
+	// value must be "editions".
 	Syntax string `json:"syntax,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EnumType") to

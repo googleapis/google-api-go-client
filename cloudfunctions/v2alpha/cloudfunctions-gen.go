@@ -210,8 +210,8 @@ type ProjectsLocationsRuntimesService struct {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -484,6 +484,13 @@ func (s *EventFilter) MarshalJSON() ([]byte, error) {
 // EventTrigger: Describes EventTrigger, used to request events to be
 // sent from another service.
 type EventTrigger struct {
+	// Channel: Optional. The name of the channel associated with the
+	// trigger in
+	// `projects/{project}/locations/{location}/channels/{channel}` format.
+	// You must provide a channel to receive events from Eventarc SaaS
+	// partners.
+	Channel string `json:"channel,omitempty"`
+
 	// EventFilters: Criteria used to filter events.
 	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
 
@@ -529,7 +536,7 @@ type EventTrigger struct {
 	// the function.
 	TriggerRegion string `json:"triggerRegion,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EventFilters") to
+	// ForceSendFields is a list of field names (e.g. "Channel") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -537,10 +544,10 @@ type EventTrigger struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EventFilters") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Channel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -613,8 +620,8 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 }
 
 // Function: Describes a Cloud Function that contains user computation
-// executed in response to an event. It encapsulate function and
-// triggers configurations.
+// executed in response to an event. It encapsulates function and
+// trigger configurations.
 type Function struct {
 	// BuildConfig: Describes the Build step of the function that builds a
 	// container from the given source.
@@ -1639,8 +1646,8 @@ type SecretEnvVar struct {
 
 	// ProjectId: Project identifier (preferably project number but can also
 	// be the project ID) of the project that contains the secret. If not
-	// set, it will be populated with the function's project assuming that
-	// the secret exists in the same project as of the function.
+	// set, it is assumed that the secret is in the same project as the
+	// function.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Secret: Name of the secret in secret manager (not the full resource
@@ -1672,6 +1679,93 @@ type SecretEnvVar struct {
 
 func (s *SecretEnvVar) MarshalJSON() ([]byte, error) {
 	type NoMethod SecretEnvVar
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SecretVersion: Configuration for a single version.
+type SecretVersion struct {
+	// Path: Relative path of the file under the mount path where the secret
+	// value for this version will be fetched and made available. For
+	// example, setting the mount_path as '/etc/secrets' and path as
+	// `secret_foo` would mount the secret value file at
+	// `/etc/secrets/secret_foo`.
+	Path string `json:"path,omitempty"`
+
+	// Version: Version of the secret (version number or the string
+	// 'latest'). It is preferable to use `latest` version with secret
+	// volumes as secret value changes are reflected immediately.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecretVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SecretVolume: Configuration for a secret volume. It has the
+// information necessary to fetch the secret value from secret manager
+// and make it available as files mounted at the requested paths within
+// the application container.
+type SecretVolume struct {
+	// MountPath: The path within the container to mount the secret volume.
+	// For example, setting the mount_path as `/etc/secrets` would mount the
+	// secret value files under the `/etc/secrets` directory. This directory
+	// will also be completely shadowed and unavailable to mount any other
+	// secrets. Recommended mount path: /etc/secrets
+	MountPath string `json:"mountPath,omitempty"`
+
+	// ProjectId: Project identifier (preferably project number but can also
+	// be the project ID) of the project that contains the secret. If not
+	// set, it is assumed that the secret is in the same project as the
+	// function.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// Secret: Name of the secret in secret manager (not the full resource
+	// name).
+	Secret string `json:"secret,omitempty"`
+
+	// Versions: List of secret versions to mount for this secret. If empty,
+	// the `latest` version of the secret will be made available in a file
+	// named after the secret under the mount point.
+	Versions []*SecretVersion `json:"versions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MountPath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MountPath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecretVolume) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretVolume
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1736,6 +1830,9 @@ type ServiceConfig struct {
 	// SecretEnvironmentVariables: Secret environment variables
 	// configuration.
 	SecretEnvironmentVariables []*SecretEnvVar `json:"secretEnvironmentVariables,omitempty"`
+
+	// SecretVolumes: Secret volumes configuration.
+	SecretVolumes []*SecretVolume `json:"secretVolumes,omitempty"`
 
 	// Service: Output only. Name of the service associated with a Function.
 	// The format of this field is
@@ -3021,8 +3118,9 @@ type ProjectsLocationsFunctionsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsFunctionsService) GetIamPolicy(resource string) *ProjectsLocationsFunctionsGetIamPolicyCall {
 	c := &ProjectsLocationsFunctionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3161,7 +3259,7 @@ func (c *ProjectsLocationsFunctionsGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,
@@ -3581,8 +3679,9 @@ type ProjectsLocationsFunctionsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsFunctionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsFunctionsSetIamPolicyCall {
 	c := &ProjectsLocationsFunctionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3690,7 +3789,7 @@ func (c *ProjectsLocationsFunctionsSetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,
@@ -3730,7 +3829,8 @@ type ProjectsLocationsFunctionsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsFunctionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsFunctionsTestIamPermissionsCall {
 	c := &ProjectsLocationsFunctionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3839,7 +3939,7 @@ func (c *ProjectsLocationsFunctionsTestIamPermissionsCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,

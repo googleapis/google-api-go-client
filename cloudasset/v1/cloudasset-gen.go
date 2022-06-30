@@ -442,8 +442,8 @@ type Asset struct {
 	// resource hierarchy. Therefore, the effectively policy is the union of
 	// both the policy set on this resource and each policy set on all of
 	// the resource's ancestry resource levels in the hierarchy. See this
-	// topic (https://cloud.google.com/iam/docs/policies#inheritance) for
-	// more information.
+	// topic (https://cloud.google.com/iam/help/allow-policies/inheritance)
+	// for more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:
@@ -465,7 +465,12 @@ type Asset struct {
 	// for more information.
 	OsInventory *Inventory `json:"osInventory,omitempty"`
 
-	// RelatedAssets: The related assets of the asset of one relationship
+	// RelatedAsset: One related asset of the current asset.
+	RelatedAsset *RelatedAsset `json:"relatedAsset,omitempty"`
+
+	// RelatedAssets: DEPRECATED. This field only presents for the purpose
+	// of backward-compatibility. The server will never generate responses
+	// with this field. The related assets of the asset of one relationship
 	// type. One asset only represents one type of relationship.
 	RelatedAssets *RelatedAssets `json:"relatedAssets,omitempty"`
 
@@ -559,8 +564,8 @@ func (s *AttachedResource) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -1804,8 +1809,8 @@ type GoogleCloudAssetV1p7beta1Asset struct {
 	// resource hierarchy. Therefore, the effectively policy is the union of
 	// both the policy set on this resource and each policy set on all of
 	// the resource's ancestry resource levels in the hierarchy. See this
-	// topic (https://cloud.google.com/iam/docs/policies#inheritance) for
-	// more information.
+	// topic (https://cloud.google.com/iam/help/allow-policies/inheritance)
+	// for more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:
@@ -2808,6 +2813,15 @@ func (s *GoogleIdentityAccesscontextmanagerV1EgressPolicy) MarshalJSON() ([]byte
 // to succeed. The request must match `operations` AND `resources`
 // fields in order to be allowed egress out of the perimeter.
 type GoogleIdentityAccesscontextmanagerV1EgressTo struct {
+	// ExternalResources: A list of external resources that are allowed to
+	// be accessed. Only AWS and Azure resources are supported. For Amazon
+	// S3, the supported format is s3://BUCKET_NAME. For Azure Storage, the
+	// supported format is
+	// azure://myaccount.blob.core.windows.net/CONTAINER_NAME. A request
+	// matches if it contains an external resource in this list (Example:
+	// s3://bucket/path). Currently '*' is not allowed.
+	ExternalResources []string `json:"externalResources,omitempty"`
+
 	// Operations: A list of ApiOperations allowed to be performed by the
 	// sources specified in the corresponding EgressFrom. A request matches
 	// if it uses an operation/service in this list.
@@ -2821,20 +2835,21 @@ type GoogleIdentityAccesscontextmanagerV1EgressTo struct {
 	// perimeter.
 	Resources []string `json:"resources,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Operations") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ExternalResources")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Operations") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExternalResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4590,6 +4605,10 @@ type RelatedAsset struct {
 	// for more information.
 	AssetType string `json:"assetType,omitempty"`
 
+	// RelationshipType: The unique identifier of the relationship type.
+	// Example: `INSTANCE_TO_INSTANCEGROUP`
+	RelationshipType string `json:"relationshipType,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Ancestors") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4613,7 +4632,9 @@ func (s *RelatedAsset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RelatedAssets: The detailed related assets with the
+// RelatedAssets: DEPRECATED. This message only presents for the purpose
+// of backward-compatibility. The server will never populate this
+// message in responses. The detailed related assets with the
 // `relationship_type`.
 type RelatedAssets struct {
 	// Assets: The peer resources of the relationship.
@@ -4710,7 +4731,9 @@ func (s *RelatedResources) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RelationshipAttributes: The relationship attributes which include
+// RelationshipAttributes: DEPRECATED. This message only presents for
+// the purpose of backward-compatibility. The server will never populate
+// this message in responses. The relationship attributes which include
 // `type`, `source_resource_type`, `target_resource_type` and `action`.
 type RelationshipAttributes struct {
 	// Action: The detail of the relationship, e.g. `contains`, `attaches`
@@ -4819,7 +4842,7 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 }
 
 // ResourceSearchResult: A result of Resource Search, containing
-// information of a cloud resource.
+// information of a cloud resource. Next ID: 28
 type ResourceSearchResult struct {
 	// AdditionalAttributes: The additional searchable attributes of this
 	// resource. The attributes may vary from one resource type to another.
@@ -4989,7 +5012,7 @@ type ResourceSearchResult struct {
 
 	// TagKeys: TagKey namespaced names, in the format of
 	// {ORG_ID}/{TAG_KEY_SHORT_NAME}. To search against the `tagKeys`: * use
-	// a field query. Example: - `tagKeys:"123456789/e*" -
+	// a field query. Example: - `tagKeys:"123456789/env*" -
 	// `tagKeys="123456789/env" - `tagKeys:"env" * use a free text query.
 	// Example: - `env`
 	TagKeys []string `json:"tagKeys,omitempty"`
@@ -5004,8 +5027,8 @@ type ResourceSearchResult struct {
 	// {ORG_ID}/{TAG_KEY_SHORT_NAME}/{TAG_VALUE_SHORT_NAME}. To search
 	// against the `tagValues`: * use a field query. Example: -
 	// `tagValues:"env" - `tagValues:"env/prod" -
-	// `tagValues:"123456789/env/pr*" - `tagValues="123456789/env/prod" *
-	// use a free text query. Example: - `prod`
+	// `tagValues:"123456789/env/prod*" - `tagValues="123456789/env/prod"
+	// * use a free text query. Example: - `prod`
 	TagValues []string `json:"tagValues,omitempty"`
 
 	// UpdateTime: The last update timestamp of this resource, at which the
@@ -9214,22 +9237,24 @@ func (c *V1SearchAllIamPoliciesCall) PageToken(pageToken string) *V1SearchAllIam
 // string is compared against each Cloud IAM policy binding, including
 // its principals, roles, and Cloud IAM conditions. The returned Cloud
 // IAM policies will only contain the bindings that match your query. To
-// learn more about the IAM policy structure, see IAM policy doc
-// (https://cloud.google.com/iam/docs/policies#structure). Examples: *
-// `policy:amy@gmail.com` to find IAM policy bindings that specify user
-// "amy@gmail.com". * `policy:roles/compute.admin` to find IAM policy
-// bindings that specify the Compute Admin role. * `policy:comp*` to
-// find IAM policy bindings that contain "comp" as a prefix of any word
-// in the binding. * `policy.role.permissions:storage.buckets.update` to
-// find IAM policy bindings that specify a role containing
-// "storage.buckets.update" permission. Note that if callers don't have
-// `iam.roles.get` access to a role's included permissions, policy
-// bindings that specify this role will be dropped from the search
-// results. * `policy.role.permissions:upd*` to find IAM policy bindings
-// that specify a role containing "upd" as a prefix of any word in the
-// role permission. Note that if callers don't have `iam.roles.get`
-// access to a role's included permissions, policy bindings that specify
-// this role will be dropped from the search results. *
+// learn more about the IAM policy structure, see the IAM policy
+// documentation
+// (https://cloud.google.com/iam/help/allow-policies/structure).
+// Examples: * `policy:amy@gmail.com` to find IAM policy bindings that
+// specify user "amy@gmail.com". * `policy:roles/compute.admin` to find
+// IAM policy bindings that specify the Compute Admin role. *
+// `policy:comp*` to find IAM policy bindings that contain "comp" as a
+// prefix of any word in the binding. *
+// `policy.role.permissions:storage.buckets.update` to find IAM policy
+// bindings that specify a role containing "storage.buckets.update"
+// permission. Note that if callers don't have `iam.roles.get` access to
+// a role's included permissions, policy bindings that specify this role
+// will be dropped from the search results. *
+// `policy.role.permissions:upd*` to find IAM policy bindings that
+// specify a role containing "upd" as a prefix of any word in the role
+// permission. Note that if callers don't have `iam.roles.get` access to
+// a role's included permissions, policy bindings that specify this role
+// will be dropped from the search results. *
 // `resource:organizations/123456` to find IAM policy bindings that are
 // set on "organizations/123456". *
 // `resource=//cloudresourcemanager.googleapis.com/projects/myproject`
@@ -9377,7 +9402,7 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its principals, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see [IAM policy doc](https://cloud.google.com/iam/docs/policies#structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy:comp*` to find IAM policy bindings that contain \"comp\" as a prefix of any word in the binding. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `policy.role.permissions:upd*` to find IAM policy bindings that specify a role containing \"upd\" as a prefix of any word in the role permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\". * `roles:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `memberTypes:user` to find IAM policy bindings that contain the principal type \"user\".",
+	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its principals, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see the [IAM policy documentation](https://cloud.google.com/iam/help/allow-policies/structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy:comp*` to find IAM policy bindings that contain \"comp\" as a prefix of any word in the binding. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `policy.role.permissions:upd*` to find IAM policy bindings that specify a role containing \"upd\" as a prefix of any word in the role permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\". * `roles:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `memberTypes:user` to find IAM policy bindings that contain the principal type \"user\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9521,7 +9546,15 @@ func (c *V1SearchAllResourcesCall) PageToken(pageToken string) *V1SearchAllResou
 // a label "env" and its value is "prod". * `labels.env:*` to find Cloud
 // resources that have a label "env". * `kmsKey:key` to find Cloud
 // resources encrypted with a customer-managed encryption key whose name
-// contains the word "key". * `state:ACTIVE` to find Cloud resources
+// contains the word "key". * `relationships:instance-group-1` to find
+// Cloud resources that have relationships with "instance-group-1" in
+// the related resource name. *
+// `relationships:INSTANCE_TO_INSTANCEGROUP` to find compute instances
+// that have relationships of type "INSTANCE_TO_INSTANCEGROUP". *
+// `relationships.INSTANCE_TO_INSTANCEGROUP:instance-group-1` to find
+// compute instances that have relationships with "instance-group-1" in
+// the compute instance group resource name, for relationship type
+// "INSTANCE_TO_INSTANCEGROUP". * `state:ACTIVE` to find Cloud resources
 // whose state contains "ACTIVE" as a word. * `NOT state:ACTIVE` to find
 // Cloud resources whose state doesn't contain "ACTIVE" as a word. *
 // `createTime<1609459200` to find Cloud resources that were created
@@ -9690,7 +9723,7 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query) for more information. If not specified or empty, it will search all the resources within the specified `scope`. Examples: * `name:Important` to find Cloud resources whose name contains \"Important\" as a word. * `name=Important` to find the Cloud resource whose name is exactly \"Important\". * `displayName:Impor*` to find Cloud resources whose display name contains \"Impor\" as a prefix of any word in the field. * `location:us-west*` to find Cloud resources whose location contains both \"us\" and \"west\" as prefixes. * `labels:prod` to find Cloud resources whose labels contain \"prod\" as a key or value. * `labels.env:prod` to find Cloud resources that have a label \"env\" and its value is \"prod\". * `labels.env:*` to find Cloud resources that have a label \"env\". * `kmsKey:key` to find Cloud resources encrypted with a customer-managed encryption key whose name contains the word \"key\". * `state:ACTIVE` to find Cloud resources whose state contains \"ACTIVE\" as a word. * `NOT state:ACTIVE` to find Cloud resources whose state doesn't contain \"ACTIVE\" as a word. * `createTime\u003c1609459200` to find Cloud resources that were created before \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `updateTime\u003e1609459200` to find Cloud resources that were updated after \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `Important` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields. * `Impor*` to find Cloud resources that contain \"Impor\" as a prefix of any word in any of the searchable fields. * `Important location:(us-west1 OR global)` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields and are also located in the \"us-west1\" region or the \"global\" location.",
+	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query) for more information. If not specified or empty, it will search all the resources within the specified `scope`. Examples: * `name:Important` to find Cloud resources whose name contains \"Important\" as a word. * `name=Important` to find the Cloud resource whose name is exactly \"Important\". * `displayName:Impor*` to find Cloud resources whose display name contains \"Impor\" as a prefix of any word in the field. * `location:us-west*` to find Cloud resources whose location contains both \"us\" and \"west\" as prefixes. * `labels:prod` to find Cloud resources whose labels contain \"prod\" as a key or value. * `labels.env:prod` to find Cloud resources that have a label \"env\" and its value is \"prod\". * `labels.env:*` to find Cloud resources that have a label \"env\". * `kmsKey:key` to find Cloud resources encrypted with a customer-managed encryption key whose name contains the word \"key\". * `relationships:instance-group-1` to find Cloud resources that have relationships with \"instance-group-1\" in the related resource name. * `relationships:INSTANCE_TO_INSTANCEGROUP` to find compute instances that have relationships of type \"INSTANCE_TO_INSTANCEGROUP\". * `relationships.INSTANCE_TO_INSTANCEGROUP:instance-group-1` to find compute instances that have relationships with \"instance-group-1\" in the compute instance group resource name, for relationship type \"INSTANCE_TO_INSTANCEGROUP\". * `state:ACTIVE` to find Cloud resources whose state contains \"ACTIVE\" as a word. * `NOT state:ACTIVE` to find Cloud resources whose state doesn't contain \"ACTIVE\" as a word. * `createTime\u003c1609459200` to find Cloud resources that were created before \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `updateTime\u003e1609459200` to find Cloud resources that were updated after \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `Important` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields. * `Impor*` to find Cloud resources that contain \"Impor\" as a prefix of any word in any of the searchable fields. * `Important location:(us-west1 OR global)` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields and are also located in the \"us-west1\" region or the \"global\" location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

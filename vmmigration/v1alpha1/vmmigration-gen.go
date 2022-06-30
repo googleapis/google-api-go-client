@@ -219,6 +219,7 @@ func NewProjectsLocationsSourcesMigratingVmsService(s *Service) *ProjectsLocatio
 	rs := &ProjectsLocationsSourcesMigratingVmsService{s: s}
 	rs.CloneJobs = NewProjectsLocationsSourcesMigratingVmsCloneJobsService(s)
 	rs.CutoverJobs = NewProjectsLocationsSourcesMigratingVmsCutoverJobsService(s)
+	rs.ReplicationCycles = NewProjectsLocationsSourcesMigratingVmsReplicationCyclesService(s)
 	return rs
 }
 
@@ -228,6 +229,8 @@ type ProjectsLocationsSourcesMigratingVmsService struct {
 	CloneJobs *ProjectsLocationsSourcesMigratingVmsCloneJobsService
 
 	CutoverJobs *ProjectsLocationsSourcesMigratingVmsCutoverJobsService
+
+	ReplicationCycles *ProjectsLocationsSourcesMigratingVmsReplicationCyclesService
 }
 
 func NewProjectsLocationsSourcesMigratingVmsCloneJobsService(s *Service) *ProjectsLocationsSourcesMigratingVmsCloneJobsService {
@@ -248,6 +251,15 @@ type ProjectsLocationsSourcesMigratingVmsCutoverJobsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsSourcesMigratingVmsReplicationCyclesService(s *Service) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesService {
+	rs := &ProjectsLocationsSourcesMigratingVmsReplicationCyclesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSourcesMigratingVmsReplicationCyclesService struct {
+	s *Service
+}
+
 func NewProjectsLocationsSourcesUtilizationReportsService(s *Service) *ProjectsLocationsSourcesUtilizationReportsService {
 	rs := &ProjectsLocationsSourcesUtilizationReportsService{s: s}
 	return rs
@@ -264,6 +276,10 @@ func NewProjectsLocationsTargetProjectsService(s *Service) *ProjectsLocationsTar
 
 type ProjectsLocationsTargetProjectsService struct {
 	s *Service
+}
+
+// AdaptingOSStep: AdaptingOSStep contains specific step details.
+type AdaptingOSStep struct {
 }
 
 // AddGroupMigrationRequest: Request message for 'AddGroupMigration'
@@ -410,6 +426,10 @@ func (s *AvailableUpdates) MarshalJSON() ([]byte, error) {
 
 // AwsSourceVmDetails: Represent the source AWS VM details.
 type AwsSourceVmDetails struct {
+	// CommittedStorageBytes: The total size of the disks being migrated in
+	// bytes.
+	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
+
 	// Firmware: The firmware type of the source VM.
 	//
 	// Possible values:
@@ -418,20 +438,22 @@ type AwsSourceVmDetails struct {
 	//   "BIOS" - The firmware is BIOS.
 	Firmware string `json:"firmware,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Firmware") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "CommittedStorageBytes") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Firmware") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CommittedStorageBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -478,6 +500,9 @@ type CloneJob struct {
 	// API call, not when it was actually created in the target).
 	CreateTime string `json:"createTime,omitempty"`
 
+	// EndTime: Output only. The time the clone job was ended.
+	EndTime string `json:"endTime,omitempty"`
+
 	// Error: Output only. Provides details for the errors that led to the
 	// Clone Job's state.
 	Error *Status `json:"error,omitempty"`
@@ -502,6 +527,9 @@ type CloneJob struct {
 
 	// StateTime: Output only. The time the state was last updated.
 	StateTime string `json:"stateTime,omitempty"`
+
+	// Steps: Output only. The clone steps list representing its progress.
+	Steps []*CloneStep `json:"steps,omitempty"`
 
 	// TargetDetails: Output only. Details of the VM to create as the target
 	// of this clone job. Deprecated: Use compute_engine_target_details
@@ -533,6 +561,46 @@ type CloneJob struct {
 
 func (s *CloneJob) MarshalJSON() ([]byte, error) {
 	type NoMethod CloneJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloneStep: CloneStep holds information about the clone step progress.
+type CloneStep struct {
+	// AdaptingOs: Adapting OS step.
+	AdaptingOs *AdaptingOSStep `json:"adaptingOs,omitempty"`
+
+	// EndTime: The time the step has ended.
+	EndTime string `json:"endTime,omitempty"`
+
+	// InstantiatingMigratedVm: Instantiating migrated VM step.
+	InstantiatingMigratedVm *InstantiatingMigratedVMStep `json:"instantiatingMigratedVm,omitempty"`
+
+	// PreparingVmDisks: Preparing VM disks step.
+	PreparingVmDisks *PreparingVMDisksStep `json:"preparingVmDisks,omitempty"`
+
+	// StartTime: The time the step has started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdaptingOs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdaptingOs") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloneStep) MarshalJSON() ([]byte, error) {
+	type NoMethod CloneStep
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -571,6 +639,9 @@ type ComputeEngineTargetDefaults struct {
 	//   "COMPUTE_ENGINE_DISK_TYPE_BALANCED" - An alternative to SSD
 	// persistent disks that balance performance and cost.
 	DiskType string `json:"diskType,omitempty"`
+
+	// Hostname: The hostname to assign to the VM.
+	Hostname string `json:"hostname,omitempty"`
 
 	// Labels: A map of labels to associate with the VM.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -677,6 +748,9 @@ type ComputeEngineTargetDetails struct {
 	//   "COMPUTE_ENGINE_DISK_TYPE_BALANCED" - An alternative to SSD
 	// persistent disks that balance performance and cost.
 	DiskType string `json:"diskType,omitempty"`
+
+	// Hostname: The hostname to assign to the VM.
+	Hostname string `json:"hostname,omitempty"`
 
 	// Labels: A map of labels to associate with the VM.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -831,6 +905,9 @@ type CutoverJob struct {
 	// API call, not when it was actually created in the target).
 	CreateTime string `json:"createTime,omitempty"`
 
+	// EndTime: Output only. The time the cutover job had finished.
+	EndTime string `json:"endTime,omitempty"`
+
 	// Error: Output only. Provides details for the errors that led to the
 	// Cutover Job's state.
 	Error *Status `json:"error,omitempty"`
@@ -868,6 +945,9 @@ type CutoverJob struct {
 	// StateTime: Output only. The time the state was last updated.
 	StateTime string `json:"stateTime,omitempty"`
 
+	// Steps: Output only. The cutover steps list representing its progress.
+	Steps []*CutoverStep `json:"steps,omitempty"`
+
 	// TargetDetails: Output only. Details of the VM to create as the target
 	// of this cutover job. Deprecated: Use compute_engine_target_details
 	// instead.
@@ -902,7 +982,54 @@ func (s *CutoverJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CycleStep: CycleStep hold information about a step progress.
+// CutoverStep: CutoverStep holds information about the cutover step
+// progress.
+type CutoverStep struct {
+	// EndTime: The time the step has ended.
+	EndTime string `json:"endTime,omitempty"`
+
+	// FinalSync: Final sync step.
+	FinalSync *ReplicationCycle `json:"finalSync,omitempty"`
+
+	// InstantiatingMigratedVm: Instantiating migrated VM step.
+	InstantiatingMigratedVm *InstantiatingMigratedVMStep `json:"instantiatingMigratedVm,omitempty"`
+
+	// PreparingVmDisks: Preparing VM disks step.
+	PreparingVmDisks *PreparingVMDisksStep `json:"preparingVmDisks,omitempty"`
+
+	// PreviousReplicationCycle: A replication cycle prior cutover step.
+	PreviousReplicationCycle *ReplicationCycle `json:"previousReplicationCycle,omitempty"`
+
+	// ShuttingDownSourceVm: Shutting down VM step.
+	ShuttingDownSourceVm *ShuttingDownSourceVMStep `json:"shuttingDownSourceVm,omitempty"`
+
+	// StartTime: The time the step has started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CutoverStep) MarshalJSON() ([]byte, error) {
+	type NoMethod CutoverStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CycleStep: CycleStep holds information about a step progress.
 type CycleStep struct {
 	// EndTime: The time the cycle step has ended.
 	EndTime string `json:"endTime,omitempty"`
@@ -1060,6 +1187,11 @@ type Empty struct {
 
 // FetchInventoryResponse: Response message for fetchInventory.
 type FetchInventoryResponse struct {
+	// NextPageToken: Output only. A token, which can be sent as
+	// `page_token` to retrieve the next page. If this field is omitted,
+	// there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	// UpdateTime: Output only. The timestamp when the source was last
 	// queried (if the result is from the cache).
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1071,7 +1203,7 @@ type FetchInventoryResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "UpdateTime") to
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1079,10 +1211,10 @@ type FetchInventoryResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UpdateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1148,6 +1280,11 @@ func (s *Group) MarshalJSON() ([]byte, error) {
 // InitializingReplicationStep: InitializingReplicationStep contains
 // specific step details.
 type InitializingReplicationStep struct {
+}
+
+// InstantiatingMigratedVMStep: InstantiatingMigratedVMStep contains
+// specific step details.
+type InstantiatingMigratedVMStep struct {
 }
 
 // Link: Describes a URL link.
@@ -1456,6 +1593,48 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListReplicationCyclesResponse: Response message for
+// 'ListReplicationCycles' request.
+type ListReplicationCyclesResponse struct {
+	// NextPageToken: Output only. A token, which can be sent as
+	// `page_token` to retrieve the next page. If this field is omitted,
+	// there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ReplicationCycles: Output only. The list of replication cycles
+	// response.
+	ReplicationCycles []*ReplicationCycle `json:"replicationCycles,omitempty"`
+
+	// Unreachable: Output only. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListReplicationCyclesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListReplicationCyclesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2032,6 +2211,11 @@ type PauseMigrationRequest struct {
 type PostProcessingStep struct {
 }
 
+// PreparingVMDisksStep: PreparingVMDisksStep contains specific step
+// details.
+type PreparingVMDisksStep struct {
+}
+
 // RemoveGroupMigrationRequest: Request message for 'RemoveMigration'
 // request.
 type RemoveGroupMigrationRequest struct {
@@ -2105,6 +2289,12 @@ func (s *ReplicatingStep) MarshalJSON() ([]byte, error) {
 // ReplicationCycle: ReplicationCycle contains information about the
 // current replication cycle status.
 type ReplicationCycle struct {
+	// EndTime: The time the replication cycle has ended.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Name: The identifier of the ReplicationCycle.
+	Name string `json:"name,omitempty"`
+
 	// Progress: The current progress in percentage of this cycle.
 	Progress int64 `json:"progress,omitempty"`
 
@@ -2121,7 +2311,11 @@ type ReplicationCycle struct {
 	// was paused.
 	TotalPauseDuration string `json:"totalPauseDuration,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Progress") to
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2129,7 +2323,7 @@ type ReplicationCycle struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Progress") to include in
+	// NullFields is a list of field names (e.g. "EndTime") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -2255,6 +2449,11 @@ func (s *SchedulingNodeAffinity) MarshalJSON() ([]byte, error) {
 	type NoMethod SchedulingNodeAffinity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ShuttingDownSourceVMStep: ShuttingDownSourceVMStep contains specific
+// step details.
+type ShuttingDownSourceVMStep struct {
 }
 
 // Source: Source message describes a specific vm migration Source
@@ -5485,6 +5684,27 @@ func (c *ProjectsLocationsSourcesFetchInventoryCall) ForceRefresh(forceRefresh b
 	return c
 }
 
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of VMs to return. The service may return fewer than this value. For
+// AWS source: If unspecified, at most 500 VMs will be returned. The
+// maximum value is 1000; values above 1000 will be coerced to 1000. For
+// VMWare source: If unspecified, all VMs will be returned. There is no
+// limit for maximum value.
+func (c *ProjectsLocationsSourcesFetchInventoryCall) PageSize(pageSize int64) *ProjectsLocationsSourcesFetchInventoryCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `FetchInventory` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `FetchInventory` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsSourcesFetchInventoryCall) PageToken(pageToken string) *ProjectsLocationsSourcesFetchInventoryCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5597,6 +5817,17 @@ func (c *ProjectsLocationsSourcesFetchInventoryCall) Do(opts ...googleapi.CallOp
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of VMs to return. The service may return fewer than this value. For AWS source: If unspecified, at most 500 VMs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000. For VMWare source: If unspecified, all VMs will be returned. There is no limit for maximum value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `FetchInventory` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `FetchInventory` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "source": {
 	//       "description": "Required. The name of the Source.",
 	//       "location": "path",
@@ -5614,6 +5845,27 @@ func (c *ProjectsLocationsSourcesFetchInventoryCall) Do(opts ...googleapi.CallOp
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSourcesFetchInventoryCall) Pages(ctx context.Context, f func(*FetchInventoryResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "vmmigration.projects.locations.sources.get":
@@ -9851,6 +10103,374 @@ func (c *ProjectsLocationsSourcesMigratingVmsCutoverJobsListCall) Do(opts ...goo
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsSourcesMigratingVmsCutoverJobsListCall) Pages(ctx context.Context, f func(*ListCutoverJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "vmmigration.projects.locations.sources.migratingVms.replicationCycles.get":
+
+type ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single ReplicationCycle.
+//
+// - name: The name of the ReplicationCycle.
+func (r *ProjectsLocationsSourcesMigratingVmsReplicationCyclesService) Get(name string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall {
+	c := &ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) Context(ctx context.Context) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.migratingVms.replicationCycles.get" call.
+// Exactly one of *ReplicationCycle or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ReplicationCycle.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) Do(opts ...googleapi.CallOption) (*ReplicationCycle, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ReplicationCycle{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single ReplicationCycle.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/sources/{sourcesId}/migratingVms/{migratingVmsId}/replicationCycles/{replicationCyclesId}",
+	//   "httpMethod": "GET",
+	//   "id": "vmmigration.projects.locations.sources.migratingVms.replicationCycles.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the ReplicationCycle.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/sources/[^/]+/migratingVms/[^/]+/replicationCycles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+name}",
+	//   "response": {
+	//     "$ref": "ReplicationCycle"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmmigration.projects.locations.sources.migratingVms.replicationCycles.list":
+
+type ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists ReplicationCycles in a given MigratingVM.
+//
+// - parent: The parent, which owns this collection of
+//   ReplicationCycles.
+func (r *ProjectsLocationsSourcesMigratingVmsReplicationCyclesService) List(parent string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
+	c := &ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter request.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Filter(filter string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": the order by fields
+// for the result.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) OrderBy(orderBy string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of replication cycles to return. The service may return fewer than
+// this value. If unspecified, at most 100 migrating VMs will be
+// returned. The maximum value is 100; values above 100 will be coerced
+// to 100.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) PageSize(pageSize int64) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Required. A page
+// token, received from a previous `ListReplicationCycles` call. Provide
+// this to retrieve the subsequent page. When paginating, all other
+// parameters provided to `ListReplicationCycles` must match the call
+// that provided the page token.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) PageToken(pageToken string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Context(ctx context.Context) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/replicationCycles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.migratingVms.replicationCycles.list" call.
+// Exactly one of *ListReplicationCyclesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListReplicationCyclesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Do(opts ...googleapi.CallOption) (*ListReplicationCyclesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListReplicationCyclesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists ReplicationCycles in a given MigratingVM.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/sources/{sourcesId}/migratingVms/{migratingVmsId}/replicationCycles",
+	//   "httpMethod": "GET",
+	//   "id": "vmmigration.projects.locations.sources.migratingVms.replicationCycles.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. The filter request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. the order by fields for the result.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of replication cycles to return. The service may return fewer than this value. If unspecified, at most 100 migrating VMs will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Required. A page token, received from a previous `ListReplicationCycles` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListReplicationCycles` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent, which owns this collection of ReplicationCycles.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/sources/[^/]+/migratingVms/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+parent}/replicationCycles",
+	//   "response": {
+	//     "$ref": "ListReplicationCyclesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Pages(ctx context.Context, f func(*ListReplicationCyclesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

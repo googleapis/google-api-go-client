@@ -1061,8 +1061,11 @@ type Filter struct {
 	// BetweenFilter: A filter for two values.
 	BetweenFilter *BetweenFilter `json:"betweenFilter,omitempty"`
 
-	// FieldName: The dimension name or metric name. Must be a name defined
-	// in dimensions or metrics.
+	// FieldName: The dimension name or metric name. In most methods,
+	// dimensions & metrics can be used for the first time in this field.
+	// However in a RunPivotReportRequest, this field must be additionally
+	// specified by name in the RunPivotReportRequest's dimensions or
+	// metrics.
 	FieldName string `json:"fieldName,omitempty"`
 
 	// InListFilter: A filter for in list values.
@@ -2281,9 +2284,8 @@ func (s *RunPivotReportResponse) MarshalJSON() ([]byte, error) {
 
 // RunRealtimeReportRequest: The request to generate a realtime report.
 type RunRealtimeReportRequest struct {
-	// DimensionFilter: The filter clause of dimensions. Dimensions must be
-	// requested to be used in this filter. Metrics cannot be used in this
-	// filter.
+	// DimensionFilter: The filter clause of dimensions. Metrics cannot be
+	// used in this filter.
 	DimensionFilter *FilterExpression `json:"dimensionFilter,omitempty"`
 
 	// Dimensions: The dimensions requested and displayed.
@@ -2312,9 +2314,8 @@ type RunRealtimeReportRequest struct {
 	MetricAggregations []string `json:"metricAggregations,omitempty"`
 
 	// MetricFilter: The filter clause of metrics. Applied at post
-	// aggregation phase, similar to SQL having-clause. Metrics must be
-	// requested to be used in this filter. Dimensions cannot be used in
-	// this filter.
+	// aggregation phase, similar to SQL having-clause. Dimensions cannot be
+	// used in this filter.
 	MetricFilter *FilterExpression `json:"metricFilter,omitempty"`
 
 	// Metrics: The metrics requested and displayed.
@@ -3483,11 +3484,13 @@ type PropertiesRunRealtimeReportCall struct {
 	header_                  http.Header
 }
 
-// RunRealtimeReport: The Google Analytics Realtime API returns a
-// customized report of realtime event data for your property. These
-// reports show events and usage from the last 30 minutes. For a guide
-// to constructing realtime requests & understanding responses, see
-// Creating a Realtime Report
+// RunRealtimeReport: Returns a customized report of realtime event data
+// for your property. Events appear in realtime reports seconds after
+// they have been sent to the Google Analytics. Realtime reports show
+// events and usage data for the periods of time ranging from the
+// present moment to 30 minutes ago (up to 60 minutes for Google
+// Analytics 360 properties). For a guide to constructing realtime
+// requests & understanding responses, see Creating a Realtime Report
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics).
 //
 // - property: A Google Analytics GA4 property identifier whose events
@@ -3593,7 +3596,7 @@ func (c *PropertiesRunRealtimeReportCall) Do(opts ...googleapi.CallOption) (*Run
 	}
 	return ret, nil
 	// {
-	//   "description": "The Google Analytics Realtime API returns a customized report of realtime event data for your property. These reports show events and usage from the last 30 minutes. For a guide to constructing realtime requests \u0026 understanding responses, see [Creating a Realtime Report](https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics).",
+	//   "description": "Returns a customized report of realtime event data for your property. Events appear in realtime reports seconds after they have been sent to the Google Analytics. Realtime reports show events and usage data for the periods of time ranging from the present moment to 30 minutes ago (up to 60 minutes for Google Analytics 360 properties). For a guide to constructing realtime requests \u0026 understanding responses, see [Creating a Realtime Report](https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics).",
 	//   "flatPath": "v1beta/properties/{propertiesId}:runRealtimeReport",
 	//   "httpMethod": "POST",
 	//   "id": "analyticsdata.properties.runRealtimeReport",

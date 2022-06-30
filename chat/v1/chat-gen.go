@@ -741,7 +741,7 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 // API is enabled, these error messages are logged to Google Cloud
 // Logging (https://cloud.google.com/logging/docs).
 type ChatAppLogEntry struct {
-	// Deployment: The deployment that caused the error. For Chat bots built
+	// Deployment: The deployment that caused the error. For Chat apps built
 	// in Apps Script, this is the deployment ID defined by Apps Script.
 	Deployment string `json:"deployment,omitempty"`
 
@@ -1380,6 +1380,44 @@ func (s *GoogleAppsCardV1ActionParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1AppUri: Represents the platform specific uri/intent
+// to open for each client.
+type GoogleAppsCardV1AppUri struct {
+	// AndroidIntent: An intent object to be opened in the corresponding
+	// android hosting app.
+	AndroidIntent *GoogleAppsCardV1Intent `json:"androidIntent,omitempty"`
+
+	// CompanionUri: A companion uri string to be opened in the chat
+	// companion window. on the web.
+	CompanionUri string `json:"companionUri,omitempty"`
+
+	// IosUri: A uri string to be opened in the corresponding iOS hosting
+	// app.
+	IosUri string `json:"iosUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AndroidIntent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AndroidIntent") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1AppUri) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1AppUri
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCardV1BorderStyle: Represents the complete border style
 // applied to widgets.
 type GoogleAppsCardV1BorderStyle struct {
@@ -1821,6 +1859,38 @@ func (s *GoogleAppsCardV1DecoratedText) MarshalJSON() ([]byte, error) {
 type GoogleAppsCardV1Divider struct {
 }
 
+// GoogleAppsCardV1ExtraData: Extra data for an android intent. Valid
+// keys are defined in the hosting app contract.
+type GoogleAppsCardV1ExtraData struct {
+	// Key: A key for the intent extra data.
+	Key string `json:"key,omitempty"`
+
+	// Value: Value for the given extra data key.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1ExtraData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1ExtraData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCardV1Grid: Represents a Grid widget that displays items in
 // a configurable grid layout.
 type GoogleAppsCardV1Grid struct {
@@ -2097,6 +2167,42 @@ func (s *GoogleAppsCardV1ImageCropStyle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleAppsCardV1Intent: Android intent.
+type GoogleAppsCardV1Intent struct {
+	// ExtraData: A list of extra data for the android intent. For example,
+	// for a calendar event edit intent, the event title information can be
+	// passed as extra data.
+	ExtraData []*GoogleAppsCardV1ExtraData `json:"extraData,omitempty"`
+
+	// IntentAction: An android intent action string for the {@link
+	// android.content.Intent} object. For example: for the view intent
+	// action type, a valid value will be
+	// android.content.Intent.ACTION_VIEW.
+	IntentAction string `json:"intentAction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExtraData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExtraData") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1Intent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Intent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCardV1OnClick: Represents the response to an `onClick`
 // event.
 type GoogleAppsCardV1OnClick struct {
@@ -2143,6 +2249,15 @@ func (s *GoogleAppsCardV1OnClick) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1OpenLink: Represents an `onClick` event that opens a
 // hyperlink.
 type GoogleAppsCardV1OpenLink struct {
+	// AppUri: Represents the platform specific uri/intent to open on each
+	// client. For example: A companion_url will open in a companion window
+	// on the web. An iOS URL and android intent will open in the
+	// corresponding hosting apps. If these platform specific URLs can't be
+	// handled correctly, i.e. if the companion isn't supported on web and
+	// the hosting apps aren't available on the mobile platforms then the
+	// `uri` will open in a new browser window on all the platforms.
+	AppUri *GoogleAppsCardV1AppUri `json:"appUri,omitempty"`
+
 	// OnClose: Whether the client forgets about a link after opening it, or
 	// observes it until the window closes. Not supported by Chat apps.
 	//
@@ -2167,7 +2282,7 @@ type GoogleAppsCardV1OpenLink struct {
 	// Url: The URL to open.
 	Url string `json:"url,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OnClose") to
+	// ForceSendFields is a list of field names (e.g. "AppUri") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2175,8 +2290,8 @@ type GoogleAppsCardV1OpenLink struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OnClose") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "AppUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2948,9 +3063,9 @@ func (s *ListSpacesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MatchedUrl: A matched url in a Chat message. Chat apps can unfurl
-// matched URLs. For more information, refer to Unfurl links
-// (https://developers.google.com/chat/how-tos/link-unfurling).
+// MatchedUrl: A matched url in a Chat message. Chat apps can preview
+// matched URLs. For more information, refer to Preview links
+// (https://developers.google.com/chat/how-tos/preview-links).
 type MatchedUrl struct {
 	// Url: Output only. The url that was matched.
 	Url string `json:"url,omitempty"`
@@ -3010,19 +3125,25 @@ func (s *Media) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Membership: Represents a membership relation in Google Chat.
+// Membership: Represents a membership relation in Google Chat, such as
+// whether a user or Chat app is invited to, part of, or absent from a
+// space.
 type Membership struct {
-	// CreateTime: Output only. The creation time of the membership a.k.a.
-	// the time at which the member joined the space, if applicable.
+	// CreateTime: Output only. The creation time of the membership, such as
+	// when a member joined or was invited to join a space.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Member: Output only. A user in Google Chat. Represents a person
+	// Member: A Google Chat user or app. Format: `users/{user}` or
+	// `users/app` When `users/{user}`, represents a person
 	// (https://developers.google.com/people/api/rest/v1/people) in the
 	// People API or a user
 	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
-	// in the Admin SDK Directory API. Format: `users/{user}`
+	// in the Admin SDK Directory API. When `users/app`, represents a Chat
+	// app creating membership for itself.
 	Member *User `json:"member,omitempty"`
 
+	// Name: Resource name of the membership. Format:
+	// spaces/{space}/members/{member}
 	Name string `json:"name,omitempty"`
 
 	// State: Output only. State of the membership.
@@ -3096,13 +3217,13 @@ type Message struct {
 	FallbackText string `json:"fallbackText,omitempty"`
 
 	// LastUpdateTime: Output only. The time at which the message was last
-	// updated in Google Chat server. If the message was never updated, this
-	// field will be same as create_time.
+	// updated. If the message was never updated, this field matches
+	// `create_time`.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 
 	// MatchedUrl: Output only. A URL in `spaces.messages.text` that matches
-	// a link unfurling pattern. For more information, refer to Unfurl links
-	// (https://developers.google.com/chat/how-tos/link-unfurling).
+	// a link preview pattern. For more information, refer to Preview links
+	// (https://developers.google.com/chat/how-tos/preview-links).
 	MatchedUrl *MatchedUrl `json:"matchedUrl,omitempty"`
 
 	// Name: Resource name in the form `spaces/*/messages/*`. Example:
@@ -3328,20 +3449,18 @@ type Space struct {
 	// humans, this field might be empty.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Resource name of the space, in the form "spaces/*". Example:
-	// spaces/AAAAAAAAAAAA
+	// Name: Resource name of the space. Format: spaces/{space}
 	Name string `json:"name,omitempty"`
 
 	// SingleUserBotDm: Output only. Whether the space is a DM between a
 	// Chat app and a single human.
 	SingleUserBotDm bool `json:"singleUserBotDm,omitempty"`
 
-	// Threaded: Output only. Output only. Whether the messages are threaded
-	// in this space.
+	// Threaded: Output only. Whether messages are threaded in this space.
 	Threaded bool `json:"threaded,omitempty"`
 
-	// Type: Output only. Deprecated: Use `single_user_bot_dm` instead.
-	// Output only. The type of a space.
+	// Type: Output only. Deprecated: Use `single_user_bot_dm` or
+	// `space_type` (developer preview) instead. The type of a space.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED"
@@ -4926,8 +5045,8 @@ type SpacesGetCall struct {
 // Get: Returns a space. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: Resource name of the space, in the form "spaces/*". Example:
-//   spaces/AAAAAAAAAAAA.
+// - name: Resource name of the space, in the form "spaces/*". Format:
+//   spaces/{space}.
 func (r *SpacesService) Get(name string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5042,7 +5161,7 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
+	//       "description": "Required. Resource name of the space, in the form \"spaces/*\". Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -5417,9 +5536,8 @@ type SpacesMembersGetCall struct {
 // Get: Returns a membership. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: Resource name of the membership to be retrieved, in the form
-//   "spaces/*/members/*". Example:
-//   spaces/AAAAAAAAAAAA/members/111111111111111111111.
+// - name: Resource name of the membership to retrieve. Format:
+//   spaces/{space}/members/{member}.
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	c := &SpacesMembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5534,7 +5652,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the membership to be retrieved, in the form \"spaces/*/members/*\". Example: spaces/AAAAAAAAAAAA/members/111111111111111111111",
+	//       "description": "Required. Resource name of the membership to retrieve. Format: spaces/{space}/members/{member}",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/members/[^/]+$",
 	//       "required": true,
@@ -5564,8 +5682,8 @@ type SpacesMembersListCall struct {
 // authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - parent: The resource name of the space for which membership list is
-//   to be fetched, in the form "spaces/*". Example: spaces/AAAAAAAAAAAA.
+// - parent: The resource name of the space for which to fetch a
+//   membership list. Format: spaces/{space}.
 func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 	c := &SpacesMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5706,7 +5824,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the space for which membership list is to be fetched, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
+	//       "description": "Required. The resource name of the space for which to fetch a membership list. Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,

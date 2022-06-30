@@ -3951,6 +3951,14 @@ type ParagraphStyle struct {
 	//   "HEADING_6" - Heading 6.
 	NamedStyleType string `json:"namedStyleType,omitempty"`
 
+	// PageBreakBefore: Whether the current paragraph should always start at
+	// the beginning of a page. If unset, the value is inherited from the
+	// parent. Attempting to update page_break_before for paragraphs in
+	// unsupported regions, including Table, Header, Footer and Footnote,
+	// can result in an invalid document state which returns a 400 bad
+	// request error.
+	PageBreakBefore bool `json:"pageBreakBefore,omitempty"`
+
 	// Shading: The shading of the paragraph. If unset, the value is
 	// inherited from the parent.
 	Shading *Shading `json:"shading,omitempty"`
@@ -4083,6 +4091,10 @@ type ParagraphStyleSuggestionState struct {
 	// named_style_type.
 	NamedStyleTypeSuggested bool `json:"namedStyleTypeSuggested,omitempty"`
 
+	// PageBreakBeforeSuggested: Indicates if there was a suggested change
+	// to page_break_before.
+	PageBreakBeforeSuggested bool `json:"pageBreakBeforeSuggested,omitempty"`
+
 	// ShadingSuggestionState: A mask that indicates which of the fields in
 	// shading have been changed in this suggestion.
 	ShadingSuggestionState *ShadingSuggestionState `json:"shadingSuggestionState,omitempty"`
@@ -4206,6 +4218,42 @@ type PersonProperties struct {
 
 func (s *PersonProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod PersonProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PinTableHeaderRowsRequest: Updates the number of pinned table header
+// rows in a table.
+type PinTableHeaderRowsRequest struct {
+	// PinnedHeaderRowsCount: The number of table rows to pin, where 0
+	// implies that all rows are unpinned.
+	PinnedHeaderRowsCount int64 `json:"pinnedHeaderRowsCount,omitempty"`
+
+	// TableStartLocation: The location where the table starts in the
+	// document.
+	TableStartLocation *Location `json:"tableStartLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PinnedHeaderRowsCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PinnedHeaderRowsCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PinTableHeaderRowsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PinTableHeaderRowsRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4686,6 +4734,10 @@ type Request struct {
 
 	// MergeTableCells: Merges cells in a table.
 	MergeTableCells *MergeTableCellsRequest `json:"mergeTableCells,omitempty"`
+
+	// PinTableHeaderRows: Updates the number of pinned header rows in a
+	// table.
+	PinTableHeaderRows *PinTableHeaderRowsRequest `json:"pinTableHeaderRows,omitempty"`
 
 	// ReplaceAllText: Replaces all instances of the specified text.
 	ReplaceAllText *ReplaceAllTextRequest `json:"replaceAllText,omitempty"`
@@ -5653,8 +5705,8 @@ func (s *SuggestedNamedStyles) MarshalJSON() ([]byte, error) {
 type SuggestedParagraphStyle struct {
 	// ParagraphStyle: A ParagraphStyle that only includes the changes made
 	// in this suggestion. This can be used along with the
-	// paragraph_suggestion_state to see which fields have changed and their
-	// new values.
+	// paragraph_style_suggestion_state to see which fields have changed and
+	// their new values.
 	ParagraphStyle *ParagraphStyle `json:"paragraphStyle,omitempty"`
 
 	// ParagraphStyleSuggestionState: A mask that indicates which of the
@@ -6391,6 +6443,13 @@ type TableRowStyle struct {
 	// order to show all the content in the row's cells.
 	MinRowHeight *Dimension `json:"minRowHeight,omitempty"`
 
+	// PreventOverflow: Whether the row cannot overflow across page or
+	// column boundaries.
+	PreventOverflow bool `json:"preventOverflow,omitempty"`
+
+	// TableHeader: Whether the row is a table header.
+	TableHeader bool `json:"tableHeader,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "MinRowHeight") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -6782,7 +6841,8 @@ func (s *UpdateDocumentStyleRequest) MarshalJSON() ([]byte, error) {
 type UpdateParagraphStyleRequest struct {
 	// Fields: The fields that should be updated. At least one field must be
 	// specified. The root `paragraph_style` is implied and should not be
-	// specified. For example, to update the paragraph style's alignment
+	// specified. A single "*" can be used as short-hand for listing every
+	// field. For example, to update the paragraph style's alignment
 	// property, set `fields` to "alignment". To reset a property to its
 	// default value, include its field name in the field mask but leave the
 	// field itself unset.

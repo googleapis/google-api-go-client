@@ -446,6 +446,90 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Extension) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest struct {
+	// Filter: Optional. Specifies the filters for the promotion results.
+	// The syntax defined in the EBNF grammar:
+	// https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will
+	// be thrown if any specified parameter is not supported. Currently, it
+	// can only be used by Youtube partners. Allowed parameters are: -
+	// regionCodes - zipCode - eligibilityId - applicableProducts Multiple
+	// parameters can be specified, for example: "regionCodes=US
+	// zipCode=94043 eligibilityId=2022H1Campaign", or
+	// "applicableProducts=partners/p1/products/product2"
+	Filter string `json:"filter,omitempty"`
+
+	// PageSize: Optional. The maximum number of promotions to return. The
+	// service may return fewer than this value. If unspecified, at most 50
+	// products will be returned. The maximum value is 1000; values above
+	// 1000 will be coerced to 1000.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Optional. A page token, received from a previous
+	// `ListPromotions` call. Provide this to retrieve the subsequent page.
+	// When paginating, all other parameters provided to `ListPromotions`
+	// must match the call that provided the page token.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRespons
+// e: Response containing the found promotions for the current user.
+type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Promotions: The promotions for the current user.
+	Promotions []*GoogleCloudPaymentsResellerSubscriptionV1Promotion `json:"promotions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve
 	// the next page. If this field is empty, there are no subsequent pages.
@@ -754,6 +838,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// the same as createTime if no free trial promotion is specified.
 	FreeTrialEndTime string `json:"freeTrialEndTime,omitempty"`
 
+	// LineItems: Required. The line items of the subscription.
+	LineItems []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem `json:"lineItems,omitempty"`
+
 	// Name: Output only. Response only. Resource name of the subscription.
 	// It will have the format of
 	// "partners/{partner_id}/subscriptions/{subscription_id}"
@@ -777,15 +864,23 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	//   "PROCESSING_STATE_RECURRING" - The subscription is recurring.
 	ProcessingState string `json:"processingState,omitempty"`
 
-	// Products: Required. Required. Resource name that identifies the
-	// purchased products. The format will be
+	// Products: Required. Deprecated: consider using `line_items` as the
+	// input. Required. Resource name that identifies the purchased
+	// products. The format will be
 	// 'partners/{partner_id}/products/{product_id}'.
 	Products []string `json:"products,omitempty"`
 
-	// Promotions: Optional. Optional. Resource name that identifies one or
-	// more promotions that can be applied on the product. A typical
-	// promotion for a subscription is Free trial. The format will be
-	// 'partners/{partner_id}/promotions/{promotion_id}'.
+	// PromotionSpecs: Optional. Subscription-level promotions. Only free
+	// trial is supported on this level. It determines the first renewal
+	// time of the subscription to be the end of the free trial period.
+	// Specify the promotion resource name only when used as input.
+	PromotionSpecs []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec `json:"promotionSpecs,omitempty"`
+
+	// Promotions: Optional. Deprecated: consider using the top-level
+	// `promotion_specs` as the input. Optional. Resource name that
+	// identifies one or more promotions that can be applied on the product.
+	// A typical promotion for a subscription is Free trial. The format will
+	// be 'partners/{partner_id}/promotions/{promotion_id}'.
 	Promotions []string `json:"promotions,omitempty"`
 
 	// RedirectUri: Output only. The place where partners should redirect
@@ -900,6 +995,119 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails st
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem:
+// Individual line item definition of a subscription. Next id: 6
+type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
+	// Description: Output only. Description of this line item.
+	Description string `json:"description,omitempty"`
+
+	// LineItemFreeTrialEndTime: Output only. It is set only if the line
+	// item has its own free trial applied. End time of the line item free
+	// trial period, in ISO 8061 format. For example,
+	// "2019-08-31T17:28:54.564Z". It will be set the same as createTime if
+	// no free trial promotion is specified.
+	LineItemFreeTrialEndTime string `json:"lineItemFreeTrialEndTime,omitempty"`
+
+	// LineItemPromotionSpecs: Optional. The promotions applied on the line
+	// item. It can be: - a free trial promotion, which overrides the
+	// subscription-level free trial promotion. - an introductory pricing
+	// promotion. When used as input in Create or Provision API, specify its
+	// resource name only.
+	LineItemPromotionSpecs []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec `json:"lineItemPromotionSpecs,omitempty"`
+
+	// Product: Required. Product resource name that identifies one the line
+	// item The format is 'partners/{partner_id}/products/{product_id}'.
+	Product string `json:"product,omitempty"`
+
+	// State: Output only. The state of the line item.
+	//
+	// Possible values:
+	//   "LINE_ITEM_STATE_UNSPECIFIED" - Unspecified state.
+	//   "LINE_ITEM_STATE_ACTIVE" - The line item is in ACTIVE state.
+	//   "LINE_ITEM_STATE_INACTIVE" - The line item is in INACTIVE state.
+	//   "LINE_ITEM_STATE_NEW" - The line item is new, and is not activated
+	// or charged yet.
+	//   "LINE_ITEM_STATE_ACTIVATING" - The line item is being activated in
+	// order to be charged. If a free trial applies to the line item, the
+	// line item is pending a prorated charge at the end of the free trial
+	// period, as indicated by `line_item_free_trial_end_time`.
+	//   "LINE_ITEM_STATE_DEACTIVATING" - The line item is being
+	// deactivated.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec:
+// Describes the spec for one promotion.
+type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec struct {
+	// FreeTrialDuration: Output only. The duration of the free trial if the
+	// promotion is of type FREE_TRIAL.
+	FreeTrialDuration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"freeTrialDuration,omitempty"`
+
+	// IntroductoryPricingDetails: Output only. The details of the
+	// introductory pricing spec if the promotion is of type
+	// INTRODUCTORY_PRICING.
+	IntroductoryPricingDetails *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails `json:"introductoryPricingDetails,omitempty"`
+
+	// Promotion: Required. Promotion resource name that identifies a
+	// promotion. The format is
+	// 'partners/{partner_id}/promotions/{promotion_id}'.
+	Promotion string `json:"promotion,omitempty"`
+
+	// Type: Output only. The type of the promotion for the spec.
+	//
+	// Possible values:
+	//   "PROMOTION_TYPE_UNSPECIFIED" - The promotion type is unspecified.
+	//   "PROMOTION_TYPE_FREE_TRIAL" - The promotion is a free trial.
+	//   "PROMOTION_TYPE_INTRODUCTORY_PRICING" - The promotion is a reduced
+	// introductory pricing.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FreeTrialDuration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FreeTrialDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1034,15 +1242,27 @@ type PartnersProductsListCall struct {
 	header_      http.Header
 }
 
-// List: Used by partners to list products that can be resold to their
-// customers. It should be called directly by the partner using service
-// accounts.
+// List: To retrieve the products that can be resold by the partner. It
+// should be autenticated with a service account.
 //
 // - parent: The parent, the partner that can resell. Format:
 //   partners/{partner}.
 func (r *PartnersProductsService) List(parent string) *PartnersProductsListCall {
 	c := &PartnersProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Specifies the filters
+// for the products results. The syntax defined in the EBNF grammar:
+// https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will
+// be thrown if any specified parameter is not supported. Currently, it
+// can only be used by Youtube partners. Allowed parameters are: -
+// regionCodes - zipCode - eligibilityId Multiple parameters can be
+// specified, for example: "regionCodes=US zipCode=94043
+// eligibilityId=2022H1Campaign"
+func (c *PartnersProductsListCall) Filter(filter string) *PartnersProductsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -1167,7 +1387,7 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	}
 	return ret, nil
 	// {
-	//   "description": "Used by partners to list products that can be resold to their customers. It should be called directly by the partner using service accounts.",
+	//   "description": "To retrieve the products that can be resold by the partner. It should be autenticated with a service account.",
 	//   "flatPath": "v1/partners/{partnersId}/products",
 	//   "httpMethod": "GET",
 	//   "id": "paymentsresellersubscription.partners.products.list",
@@ -1175,6 +1395,11 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Specifies the filters for the products results. The syntax defined in the EBNF grammar: https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will be thrown if any specified parameter is not supported. Currently, it can only be used by Youtube partners. Allowed parameters are: - regionCodes - zipCode - eligibilityId Multiple parameters can be specified, for example: \"regionCodes=US zipCode=94043 eligibilityId=2022H1Campaign\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The maximum number of products to return. The service may return fewer than this value. If unspecified, at most 50 products will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
 	//       "format": "int32",
@@ -1223,6 +1448,174 @@ func (c *PartnersProductsListCall) Pages(ctx context.Context, f func(*GoogleClou
 	}
 }
 
+// method id "paymentsresellersubscription.partners.promotions.findEligible":
+
+type PartnersPromotionsFindEligibleCall struct {
+	s                                                                      *Service
+	parent                                                                 string
+	googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
+	urlParams_                                                             gensupport.URLParams
+	ctx_                                                                   context.Context
+	header_                                                                http.Header
+}
+
+// FindEligible: To find eligible promotions for the current user. The
+// API requires user authorization via OAuth. The user is inferred from
+// the authenticated OAuth credential.
+//
+// - parent: The parent, the partner that can resell. Format:
+//   partners/{partner}.
+func (r *PartnersPromotionsService) FindEligible(parent string, googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest) *PartnersPromotionsFindEligibleCall {
+	c := &PartnersPromotionsFindEligibleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest = googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersPromotionsFindEligibleCall) Fields(s ...googleapi.Field) *PartnersPromotionsFindEligibleCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersPromotionsFindEligibleCall) Context(ctx context.Context) *PartnersPromotionsFindEligibleCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersPromotionsFindEligibleCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersPromotionsFindEligibleCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/promotions:findEligible")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "paymentsresellersubscription.partners.promotions.findEligible" call.
+// Exactly one of
+// *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRespon
+// se or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRespon
+// se.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "To find eligible promotions for the current user. The API requires user authorization via OAuth. The user is inferred from the authenticated OAuth credential.",
+	//   "flatPath": "v1/partners/{partnersId}/promotions:findEligible",
+	//   "httpMethod": "POST",
+	//   "id": "paymentsresellersubscription.partners.promotions.findEligible",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent, the partner that can resell. Format: partners/{partner}",
+	//       "location": "path",
+	//       "pattern": "^partners/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/promotions:findEligible",
+	//   "request": {
+	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PartnersPromotionsFindEligibleCall) Pages(ctx context.Context, f func(*GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) {
+		c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest.PageToken = pt
+	}(c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "paymentsresellersubscription.partners.promotions.list":
 
 type PartnersPromotionsListCall struct {
@@ -1234,9 +1627,9 @@ type PartnersPromotionsListCall struct {
 	header_      http.Header
 }
 
-// List: Used by partners to list promotions, such as free trial, that
-// can be applied on subscriptions. It should be called directly by the
-// partner using service accounts.
+// List: To retrieve the promotions, such as free trial, that can be
+// used by the partner. It should be autenticated with a service
+// account.
 //
 // - parent: The parent, the partner that can resell. Format:
 //   partners/{partner}.
@@ -1248,9 +1641,12 @@ func (r *PartnersPromotionsService) List(parent string) *PartnersPromotionsListC
 
 // Filter sets the optional parameter "filter": Specifies the filters
 // for the promotion results. The syntax defined in the EBNF grammar:
-// https://google.aip.dev/assets/misc/ebnf-filtering.txt. Examples: -
-// applicable_products: "sku1" - region_codes: "US" -
-// applicable_products: "sku1" AND region_codes: "US"
+// https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will
+// be thrown if the specified parameter(s) is not supported. Currently,
+// it can only be used by Youtube partners. Allowed parameters are: -
+// region_codes: "US" - zip_code: "94043" - eligibility_id:
+// "2022H1Campaign" Multiple parameters can be specified, for example:
+// "region_codes=US zip_code=94043 eligibility_id=2022H1Campaign"
 func (c *PartnersPromotionsListCall) Filter(filter string) *PartnersPromotionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1377,7 +1773,7 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	}
 	return ret, nil
 	// {
-	//   "description": "Used by partners to list promotions, such as free trial, that can be applied on subscriptions. It should be called directly by the partner using service accounts.",
+	//   "description": "To retrieve the promotions, such as free trial, that can be used by the partner. It should be autenticated with a service account.",
 	//   "flatPath": "v1/partners/{partnersId}/promotions",
 	//   "httpMethod": "GET",
 	//   "id": "paymentsresellersubscription.partners.promotions.list",
@@ -1386,7 +1782,7 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the filters for the promotion results. The syntax defined in the EBNF grammar: https://google.aip.dev/assets/misc/ebnf-filtering.txt. Examples: - applicable_products: \"sku1\" - region_codes: \"US\" - applicable_products: \"sku1\" AND region_codes: \"US\"",
+	//       "description": "Optional. Specifies the filters for the promotion results. The syntax defined in the EBNF grammar: https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will be thrown if the specified parameter(s) is not supported. Currently, it can only be used by Youtube partners. Allowed parameters are: - region_codes: \"US\" - zip_code: \"94043\" - eligibility_id: \"2022H1Campaign\" Multiple parameters can be specified, for example: \"region_codes=US zip_code=94043 eligibility_id=2022H1Campaign\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

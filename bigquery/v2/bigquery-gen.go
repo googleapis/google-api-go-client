@@ -817,8 +817,8 @@ func (s *ArimaSingleModelForecastingMetrics) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -1331,8 +1331,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -2131,8 +2131,8 @@ type Dataset struct {
 	// travel for all tables in the dataset.
 	MaxTimeTravelHours int64 `json:"maxTimeTravelHours,omitempty,string"`
 
-	// SatisfiesPZS: [Output-only] Reserved for future use.
-	SatisfiesPZS bool `json:"satisfiesPZS,omitempty"`
+	// SatisfiesPzs: [Output-only] Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// SelfLink: [Output-only] A URL that can be used to access the resource
 	// again. You can use this URL in Get or Update requests to the
@@ -3813,6 +3813,46 @@ func (s *HparamTuningTrial) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+type IndexUnusedReason struct {
+	// BaseTable: [Output-only] Specifies the base table involved in the
+	// reason that no search index was used.
+	BaseTable *TableReference `json:"base_table,omitempty"`
+
+	// Code: [Output-only] Specifies the high-level reason for the scenario
+	// when no search index was used.
+	Code string `json:"code,omitempty"`
+
+	// IndexName: [Output-only] Specifies the name of the unused search
+	// index, if available.
+	IndexName string `json:"index_name,omitempty"`
+
+	// Message: [Output-only] Free form human-readable reason for the
+	// scenario when no search index was used.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseTable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseTable") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IndexUnusedReason) MarshalJSON() ([]byte, error) {
+	type NoMethod IndexUnusedReason
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IntArray: An array of int.
 type IntArray struct {
 	// Elements: Elements in the int array.
@@ -5105,6 +5145,9 @@ type JobStatistics2 struct {
 	// successful dry run of non-legacy SQL queries.
 	Schema *TableSchema `json:"schema,omitempty"`
 
+	// SearchStatistics: [Output-only] Search query specific statistics.
+	SearchStatistics *SearchStatistics `json:"searchStatistics,omitempty"`
+
 	// StatementType: The type of query statement, if valid. Possible values
 	// (new values might be added in the future): "SELECT": SELECT query.
 	// "INSERT": INSERT query; see
@@ -5518,6 +5561,11 @@ type MaterializedViewDefinition struct {
 	// LastRefreshTime: [Output-only] [TrustedTester] The time when this
 	// materialized view was last modified, in milliseconds since the epoch.
 	LastRefreshTime int64 `json:"lastRefreshTime,omitempty,string"`
+
+	// MaxStaleness: [Optional] Max staleness of data that could be returned
+	// when materizlized view is queried (formatted as Google SQL Interval
+	// type).
+	MaxStaleness string `json:"maxStaleness,omitempty"`
 
 	// Query: [Required] A query whose result is persisted.
 	Query string `json:"query,omitempty"`
@@ -6558,6 +6606,12 @@ type QueryTimelineSample struct {
 	// ElapsedMs: Milliseconds elapsed since the start of query execution.
 	ElapsedMs int64 `json:"elapsedMs,omitempty,string"`
 
+	// EstimatedRunnableUnits: Units of work that can be scheduled
+	// immediately. Providing additional slots for these units of work will
+	// speed up the query, provided no other query in the reservation needs
+	// additional slots.
+	EstimatedRunnableUnits int64 `json:"estimatedRunnableUnits,omitempty,string"`
+
 	// PendingUnits: Total parallel units of work remaining for the active
 	// stages.
 	PendingUnits int64 `json:"pendingUnits,omitempty,string"`
@@ -6790,6 +6844,52 @@ func (s *RegressionMetrics) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// RemoteFunctionOptions: Options for a remote user-defined function.
+type RemoteFunctionOptions struct {
+	// Connection: Fully qualified name of the user-provided connection
+	// object which holds the authentication information to send requests to
+	// the remote service.
+	// projects/{project_id}/locations/{location_id}/connections/{connection_
+	// id}
+	Connection string `json:"connection,omitempty"`
+
+	// Endpoint: Endpoint of the user-provided remote service (e.g. a
+	// function url in Google Cloud Functions).
+	Endpoint string `json:"endpoint,omitempty"`
+
+	// MaxBatchingRows: Max number of rows in each batch sent to the remote
+	// service. If absent or if 0, it means no limit.
+	MaxBatchingRows int64 `json:"maxBatchingRows,omitempty,string"`
+
+	// UserDefinedContext: User-defined context as a set of key/value pairs,
+	// which will be sent as function invocation context together with
+	// batched arguments in the requests to the remote service. The total
+	// number of bytes of keys and values must be less than 8KB.
+	UserDefinedContext map[string]string `json:"userDefinedContext,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Connection") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Connection") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoteFunctionOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteFunctionOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Routine: A user-defined function or a stored procedure.
 type Routine struct {
 	// Arguments: Optional.
@@ -6845,6 +6945,9 @@ type Routine struct {
 	// LastModifiedTime: Output only. The time when this routine was last
 	// modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
+
+	// RemoteFunctionOptions: Optional. Remote function specific options.
+	RemoteFunctionOptions *RemoteFunctionOptions `json:"remoteFunctionOptions,omitempty"`
 
 	// ReturnTableType: Optional. Can be set only if routine_type =
 	// "TABLE_VALUED_FUNCTION". If absent, the return table type is inferred
@@ -7184,6 +7287,40 @@ func (s *ScriptStatistics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type SearchStatistics struct {
+	// IndexUnusedReason: When index_usage_mode is UNUSED or PARTIALLY_USED,
+	// this field explains why index was not used in all or part of the
+	// search query. If index_usage_mode is FULLLY_USED, this field is not
+	// populated.
+	IndexUnusedReason []*IndexUnusedReason `json:"indexUnusedReason,omitempty"`
+
+	// IndexUsageMode: Specifies index usage mode for the query.
+	IndexUsageMode string `json:"indexUsageMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndexUnusedReason")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IndexUnusedReason") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchStatistics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type SessionInfo struct {
 	// SessionId: [Output-only] // [Preview] Id of the session.
 	SessionId string `json:"sessionId,omitempty"`
@@ -7215,7 +7352,7 @@ func (s *SessionInfo) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -7578,6 +7715,11 @@ type Table struct {
 	// MaterializedView: [Optional] Materialized view definition.
 	MaterializedView *MaterializedViewDefinition `json:"materializedView,omitempty"`
 
+	// MaxStaleness: [Optional] Max staleness of data that could be returned
+	// when table or materialized view is queried (formatted as Google SQL
+	// Interval type).
+	MaxStaleness string `json:"maxStaleness,omitempty"`
+
 	// Model: [Output-only, Beta] Present iff this table represents a ML
 	// model. Describes the training information for the model, and it is
 	// required to run 'PREDICT' queries.
@@ -7937,9 +8079,20 @@ type TableFieldSchema struct {
 	// for field-level access control.
 	Categories *TableFieldSchemaCategories `json:"categories,omitempty"`
 
-	// CollationSpec: Optional. Collation specification of the field. It
-	// only can be set on string type field.
-	CollationSpec string `json:"collationSpec,omitempty"`
+	// Collation: Optional. Collation specification of the field. It only
+	// can be set on string type field.
+	Collation string `json:"collation,omitempty"`
+
+	// DefaultValueExpression: Optional. A SQL expression to specify the
+	// default value for this field. It can only be set for top level fields
+	// (columns). You can use struct or array expression to specify default
+	// value for the entire struct or array. The valid SQL expressions are:
+	// - Literals for all data types, including STRUCT and ARRAY. -
+	// Following functions: - CURRENT_TIMESTAMP - CURRENT_TIME -
+	// CURRENT_DATE - CURRENT_DATETIME - GENERATE_UUID - RAND - SESSION_USER
+	// - ST_GEOGPOINT - Struct or array composed with the above allowed
+	// functions, for example, [CURRENT_DATE(), DATE '2020-01-01']
+	DefaultValueExpression string `json:"defaultValueExpression,omitempty"`
 
 	// Description: [Optional] The field description. The maximum length is
 	// 1,024 characters.
@@ -8318,7 +8471,7 @@ func (s *TableSchema) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -8755,6 +8908,11 @@ type TrainingOptions struct {
 	// MaxParallelTrials: Maximum number of trials to run in parallel.
 	MaxParallelTrials int64 `json:"maxParallelTrials,omitempty,string"`
 
+	// MaxTimeSeriesLength: Get truncated length by last n points in time
+	// series. Use separately from time_series_length_fraction and
+	// min_time_series_length.
+	MaxTimeSeriesLength int64 `json:"maxTimeSeriesLength,omitempty,string"`
+
 	// MaxTreeDepth: Maximum depth of a tree for boosted tree models.
 	MaxTreeDepth int64 `json:"maxTreeDepth,omitempty,string"`
 
@@ -8765,6 +8923,10 @@ type TrainingOptions struct {
 
 	// MinSplitLoss: Minimum split loss for boosted tree models.
 	MinSplitLoss float64 `json:"minSplitLoss,omitempty"`
+
+	// MinTimeSeriesLength: Set fast trend ARIMA_PLUS model minimum training
+	// length. Use in pair with time_series_length_fraction.
+	MinTimeSeriesLength int64 `json:"minTimeSeriesLength,omitempty,string"`
 
 	// MinTreeChildWeight: Minimum sum of instance weight needed in a child
 	// for boosted tree models.
@@ -8829,6 +8991,10 @@ type TrainingOptions struct {
 	// ARIMA model training.
 	TimeSeriesIdColumns []string `json:"timeSeriesIdColumns,omitempty"`
 
+	// TimeSeriesLengthFraction: Get truncated length by fraction in time
+	// series.
+	TimeSeriesLengthFraction float64 `json:"timeSeriesLengthFraction,omitempty"`
+
 	// TimeSeriesTimestampColumn: Column to be designated as time series
 	// timestamp for ARIMA model.
 	TimeSeriesTimestampColumn string `json:"timeSeriesTimestampColumn,omitempty"`
@@ -8843,6 +9009,10 @@ type TrainingOptions struct {
 	// gradient histogram.
 	//   "HIST" - Fast histogram optimized approximate greedy algorithm.
 	TreeMethod string `json:"treeMethod,omitempty"`
+
+	// TrendSmoothingWindowSize: The smoothing window size for the trend
+	// component of the time series.
+	TrendSmoothingWindowSize int64 `json:"trendSmoothingWindowSize,omitempty,string"`
 
 	// UserColumn: User column specified for matrix factorization models.
 	UserColumn string `json:"userColumn,omitempty"`
@@ -8881,19 +9051,20 @@ func (s *TrainingOptions) MarshalJSON() ([]byte, error) {
 func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 	type NoMethod TrainingOptions
 	var s1 struct {
-		ColsampleBylevel      gensupport.JSONFloat64 `json:"colsampleBylevel"`
-		ColsampleBynode       gensupport.JSONFloat64 `json:"colsampleBynode"`
-		ColsampleBytree       gensupport.JSONFloat64 `json:"colsampleBytree"`
-		DataSplitEvalFraction gensupport.JSONFloat64 `json:"dataSplitEvalFraction"`
-		Dropout               gensupport.JSONFloat64 `json:"dropout"`
-		InitialLearnRate      gensupport.JSONFloat64 `json:"initialLearnRate"`
-		L1Regularization      gensupport.JSONFloat64 `json:"l1Regularization"`
-		L2Regularization      gensupport.JSONFloat64 `json:"l2Regularization"`
-		LearnRate             gensupport.JSONFloat64 `json:"learnRate"`
-		MinRelativeProgress   gensupport.JSONFloat64 `json:"minRelativeProgress"`
-		MinSplitLoss          gensupport.JSONFloat64 `json:"minSplitLoss"`
-		Subsample             gensupport.JSONFloat64 `json:"subsample"`
-		WalsAlpha             gensupport.JSONFloat64 `json:"walsAlpha"`
+		ColsampleBylevel         gensupport.JSONFloat64 `json:"colsampleBylevel"`
+		ColsampleBynode          gensupport.JSONFloat64 `json:"colsampleBynode"`
+		ColsampleBytree          gensupport.JSONFloat64 `json:"colsampleBytree"`
+		DataSplitEvalFraction    gensupport.JSONFloat64 `json:"dataSplitEvalFraction"`
+		Dropout                  gensupport.JSONFloat64 `json:"dropout"`
+		InitialLearnRate         gensupport.JSONFloat64 `json:"initialLearnRate"`
+		L1Regularization         gensupport.JSONFloat64 `json:"l1Regularization"`
+		L2Regularization         gensupport.JSONFloat64 `json:"l2Regularization"`
+		LearnRate                gensupport.JSONFloat64 `json:"learnRate"`
+		MinRelativeProgress      gensupport.JSONFloat64 `json:"minRelativeProgress"`
+		MinSplitLoss             gensupport.JSONFloat64 `json:"minSplitLoss"`
+		Subsample                gensupport.JSONFloat64 `json:"subsample"`
+		TimeSeriesLengthFraction gensupport.JSONFloat64 `json:"timeSeriesLengthFraction"`
+		WalsAlpha                gensupport.JSONFloat64 `json:"walsAlpha"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -8912,6 +9083,7 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 	s.MinRelativeProgress = float64(s1.MinRelativeProgress)
 	s.MinSplitLoss = float64(s1.MinSplitLoss)
 	s.Subsample = float64(s1.Subsample)
+	s.TimeSeriesLengthFraction = float64(s1.TimeSeriesLengthFraction)
 	s.WalsAlpha = float64(s1.WalsAlpha)
 	return nil
 }
@@ -13328,8 +13500,9 @@ type RowAccessPoliciesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *RowAccessPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *RowAccessPoliciesGetIamPolicyCall {
 	c := &RowAccessPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13437,7 +13610,7 @@ func (c *RowAccessPoliciesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+/rowAccessPolicies/[^/]+$",
 	//       "required": true,
@@ -13695,8 +13868,9 @@ type RowAccessPoliciesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *RowAccessPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *RowAccessPoliciesSetIamPolicyCall {
 	c := &RowAccessPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13804,7 +13978,7 @@ func (c *RowAccessPoliciesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+/rowAccessPolicies/[^/]+$",
 	//       "required": true,
@@ -13845,7 +14019,8 @@ type RowAccessPoliciesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *RowAccessPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *RowAccessPoliciesTestIamPermissionsCall {
 	c := &RowAccessPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13954,7 +14129,7 @@ func (c *RowAccessPoliciesTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+/rowAccessPolicies/[^/]+$",
 	//       "required": true,
@@ -14545,6 +14720,29 @@ func (c *TablesGetCall) SelectedFields(selectedFields string) *TablesGetCall {
 	return c
 }
 
+// View sets the optional parameter "view": Specifies the view that
+// determines which table information is returned. By default, basic
+// table information and storage statistics (STORAGE_STATS) are
+// returned.
+//
+// Possible values:
+//   "BASIC" - Includes basic table information including schema and
+// partitioning specification. This view does not include storage
+// statistics such as numRows or numBytes. This view is significantly
+// more efficient and should be used to support high query rates.
+//   "FULL" - Includes all table information, including storage
+// statistics. It returns same information as STORAGE_STATS view, but
+// may contain additional information in the future.
+//   "STORAGE_STATS" - Includes all information in the BASIC view as
+// well as storage statistics (numBytes, numLongTermBytes, numRows and
+// lastModifiedTime).
+//   "TABLE_METADATA_VIEW_UNSPECIFIED" - The default value. Default to
+// the STORAGE_STATS view.
+func (c *TablesGetCall) View(view string) *TablesGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -14677,6 +14875,23 @@ func (c *TablesGetCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies the view that determines which table information is returned. By default, basic table information and storage statistics (STORAGE_STATS) are returned.",
+	//       "enum": [
+	//         "BASIC",
+	//         "FULL",
+	//         "STORAGE_STATS",
+	//         "TABLE_METADATA_VIEW_UNSPECIFIED"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Includes basic table information including schema and partitioning specification. This view does not include storage statistics such as numRows or numBytes. This view is significantly more efficient and should be used to support high query rates.",
+	//         "Includes all table information, including storage statistics. It returns same information as STORAGE_STATS view, but may contain additional information in the future.",
+	//         "Includes all information in the BASIC view as well as storage statistics (numBytes, numLongTermBytes, numRows and lastModifiedTime).",
+	//         "The default value. Default to the STORAGE_STATS view."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}",
@@ -14708,8 +14923,9 @@ type TablesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *TablesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TablesGetIamPolicyCall {
 	c := &TablesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14817,7 +15033,7 @@ func (c *TablesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, erro
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -15390,8 +15606,9 @@ type TablesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *TablesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TablesSetIamPolicyCall {
 	c := &TablesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15499,7 +15716,7 @@ func (c *TablesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, erro
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -15540,7 +15757,8 @@ type TablesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *TablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TablesTestIamPermissionsCall {
 	c := &TablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15649,7 +15867,7 @@ func (c *TablesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIa
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+$",
 	//       "required": true,

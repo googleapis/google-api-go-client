@@ -264,8 +264,8 @@ func (s *AddSecretVersionRequest) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -1234,6 +1234,17 @@ type Secret struct {
 
 	// Ttl: Input only. The TTL for the Secret.
 	Ttl string `json:"ttl,omitempty"`
+
+	// VersionAliases: Optional. Mapping from version alias to version name.
+	// A version alias is a string with a maximum length of 63 characters
+	// and can contain uppercase and lowercase letters, numerals, and the
+	// hyphen (`-`) and underscore ('_') characters. An alias string must
+	// start with a letter and cannot be the string 'latest' or 'NEW'. No
+	// more than 50 aliases can be assigned to a given secret. Version-Alias
+	// pairs will be viewable via GetSecret and modifiable via UpdateSecret.
+	// At launch Access by Allias will only be supported on GetSecretVersion
+	// and AccessSecretVersion.
+	VersionAliases map[string]string `json:"versionAliases,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2535,8 +2546,9 @@ type ProjectsSecretsGetIamPolicyCall struct {
 // empty policy if the secret exists and does not have a policy set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsSecretsService) GetIamPolicy(resource string) *ProjectsSecretsGetIamPolicyCall {
 	c := &ProjectsSecretsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2675,7 +2687,7 @@ func (c *ProjectsSecretsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+$",
 	//       "required": true,
@@ -3075,8 +3087,9 @@ type ProjectsSecretsSetIamPolicyCall struct {
 // enforced according to the policy set on the associated Secret.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsSecretsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSecretsSetIamPolicyCall {
 	c := &ProjectsSecretsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3184,7 +3197,7 @@ func (c *ProjectsSecretsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+$",
 	//       "required": true,
@@ -3224,7 +3237,8 @@ type ProjectsSecretsTestIamPermissionsCall struct {
 // may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsSecretsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSecretsTestIamPermissionsCall {
 	c := &ProjectsSecretsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3333,7 +3347,7 @@ func (c *ProjectsSecretsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+$",
 	//       "required": true,

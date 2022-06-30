@@ -515,8 +515,8 @@ func (s *AsymmetricSignResponse) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -1340,9 +1340,9 @@ type EkmConnection struct {
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Etag: This checksum is computed by the server based on the value of
-	// other fields, and may be sent on update requests to ensure the client
-	// has an up-to-date value before proceeding.
+	// Etag: Optional. This checksum is computed by the server based on the
+	// value of other fields, and may be sent on update requests to ensure
+	// the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
 	// Name: Output only. The resource name for the EkmConnection in the
@@ -1807,9 +1807,10 @@ type ImportCryptoKeyVersionRequest struct {
 	// this key material.
 	ImportJob string `json:"importJob,omitempty"`
 
-	// RsaAesWrappedKey: Wrapped key material produced with
-	// RSA_OAEP_3072_SHA1_AES_256 or RSA_OAEP_4096_SHA1_AES_256. This field
-	// contains the concatenation of two wrapped keys: 1. An ephemeral
+	// RsaAesWrappedKey: Optional. Wrapped key material produced with
+	// RSA_OAEP_3072_SHA1_AES_256 or RSA_OAEP_4096_SHA1_AES_256 or
+	// RSA_OAEP_3072_SHA256_AES_256 or RSA_OAEP_4096_SHA256_AES_256. This
+	// field contains the concatenation of two wrapped keys: 1. An ephemeral
 	// AES-256 wrapping key wrapped with the public_key using RSAES-OAEP
 	// with SHA-1/SHA-256, MGF1 with SHA-1/SHA-256, and an empty label. 2.
 	// The key to be imported, wrapped with the ephemeral AES-256 key using
@@ -1820,6 +1821,24 @@ type ImportCryptoKeyVersionRequest struct {
 	// 5208). This format is the same as the format produced by PKCS#11
 	// mechanism CKM_RSA_AES_KEY_WRAP.
 	RsaAesWrappedKey string `json:"rsaAesWrappedKey,omitempty"`
+
+	// WrappedKey: Optional. Wrapped key material produced with
+	// (RSA_OAEP_3072_SHA1_AES_256 or RSA_OAEP_4096_SHA1_AES_256 or
+	// RSA_OAEP_3072_SHA256_AES_256 or RSA_OAEP_4096_SHA256_AES_256) for
+	// which, this field contains the concatenation of: 1. An ephemeral
+	// AES-256 wrapping key wrapped with the public_key using RSAES-OAEP
+	// with SHA-1/SHA-256, MGF1 with SHA-1/SHA-256, and an empty label. 2.
+	// The key to be imported, wrapped with the ephemeral AES-256 key using
+	// AES-KWP (RFC 5649), or (RSA_OAEP_3072_SHA256 or RSA_OAEP_4096_SHA256)
+	// for which, this field contains the key to be imported, wrapped with
+	// the public_key using RSAES-OAEP with SHA-256, MGF1 with SHA-256, and
+	// an empty label. If importing symmetric key material, it is expected
+	// that the unwrapped key contains plain bytes. If importing asymmetric
+	// key material, it is expected that the unwrapped key is in
+	// PKCS#8-encoded DER format (the PrivateKeyInfo structure from RFC
+	// 5208). This format is the same as the format produced by PKCS#11
+	// mechanism CKM_RSA_AES_KEY_WRAP.
+	WrappedKey string `json:"wrappedKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Algorithm") to
 	// unconditionally include in API requests. By default, fields with
@@ -1907,6 +1926,28 @@ type ImportJob struct {
 	// RSA key. For more details, see [RSA AES key wrap
 	// mechanism](http://docs.oasis-open.org/pkcs11/pkcs11-curr/v2.40/cos01/p
 	// kcs11-curr-v2.40-cos01.html#_Toc408226908).
+	//   "RSA_OAEP_3072_SHA256_AES_256" - This ImportMethod represents the
+	// CKM_RSA_AES_KEY_WRAP key wrapping scheme defined in the PKCS #11
+	// standard. In summary, this involves wrapping the raw key with an
+	// ephemeral AES key, and wrapping the ephemeral AES key with a 3072 bit
+	// RSA key. For more details, see [RSA AES key wrap
+	// mechanism](http://docs.oasis-open.org/pkcs11/pkcs11-curr/v2.40/cos01/p
+	// kcs11-curr-v2.40-cos01.html#_Toc408226908).
+	//   "RSA_OAEP_4096_SHA256_AES_256" - This ImportMethod represents the
+	// CKM_RSA_AES_KEY_WRAP key wrapping scheme defined in the PKCS #11
+	// standard. In summary, this involves wrapping the raw key with an
+	// ephemeral AES key, and wrapping the ephemeral AES key with a 4096 bit
+	// RSA key. For more details, see [RSA AES key wrap
+	// mechanism](http://docs.oasis-open.org/pkcs11/pkcs11-curr/v2.40/cos01/p
+	// kcs11-curr-v2.40-cos01.html#_Toc408226908).
+	//   "RSA_OAEP_3072_SHA256" - This ImportMethod represents RSAES-OAEP
+	// with a 3072 bit RSA key. The key material to be imported is wrapped
+	// directly with the RSA key. Due to technical limitations of RSA
+	// wrapping, this method cannot be used to wrap RSA keys for import.
+	//   "RSA_OAEP_4096_SHA256" - This ImportMethod represents RSAES-OAEP
+	// with a 4096 bit RSA key. The key material to be imported is wrapped
+	// directly with the RSA key. Due to technical limitations of RSA
+	// wrapping, this method cannot be used to wrap RSA keys for import.
 	ImportMethod string `json:"importMethod,omitempty"`
 
 	// Name: Output only. The resource name for this ImportJob in the format
@@ -3921,8 +3962,9 @@ type ProjectsLocationsEkmConnectionsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsEkmConnectionsService) GetIamPolicy(resource string) *ProjectsLocationsEkmConnectionsGetIamPolicyCall {
 	c := &ProjectsLocationsEkmConnectionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4061,7 +4103,7 @@ func (c *ProjectsLocationsEkmConnectionsGetIamPolicyCall) Do(opts ...googleapi.C
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/ekmConnections/[^/]+$",
 	//       "required": true,
@@ -4480,8 +4522,9 @@ type ProjectsLocationsEkmConnectionsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsEkmConnectionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsEkmConnectionsSetIamPolicyCall {
 	c := &ProjectsLocationsEkmConnectionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4589,7 +4632,7 @@ func (c *ProjectsLocationsEkmConnectionsSetIamPolicyCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/ekmConnections/[^/]+$",
 	//       "required": true,
@@ -4630,7 +4673,8 @@ type ProjectsLocationsEkmConnectionsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsEkmConnectionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsEkmConnectionsTestIamPermissionsCall {
 	c := &ProjectsLocationsEkmConnectionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4739,7 +4783,7 @@ func (c *ProjectsLocationsEkmConnectionsTestIamPermissionsCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/ekmConnections/[^/]+$",
 	//       "required": true,
@@ -5081,8 +5125,9 @@ type ProjectsLocationsKeyRingsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsService) GetIamPolicy(resource string) *ProjectsLocationsKeyRingsGetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5221,7 +5266,7 @@ func (c *ProjectsLocationsKeyRingsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+$",
 	//       "required": true,
@@ -5483,8 +5528,9 @@ type ProjectsLocationsKeyRingsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKeyRingsSetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5592,7 +5638,7 @@ func (c *ProjectsLocationsKeyRingsSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+$",
 	//       "required": true,
@@ -5633,7 +5679,8 @@ type ProjectsLocationsKeyRingsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKeyRingsTestIamPermissionsCall {
 	c := &ProjectsLocationsKeyRingsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5742,7 +5789,7 @@ func (c *ProjectsLocationsKeyRingsTestIamPermissionsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+$",
 	//       "required": true,
@@ -6391,8 +6438,9 @@ type ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) GetIamPolicy(resource string) *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6531,7 +6579,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall) Do(opts ...googlea
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$",
 	//       "required": true,
@@ -6976,8 +7024,9 @@ type ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7085,7 +7134,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$",
 	//       "required": true,
@@ -7126,7 +7175,8 @@ type ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7235,7 +7285,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$",
 	//       "required": true,
@@ -9604,8 +9654,9 @@ type ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsImportJobsService) GetIamPolicy(resource string) *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9744,7 +9795,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall) Do(opts ...googlea
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/importJobs/[^/]+$",
 	//       "required": true,
@@ -10006,8 +10057,9 @@ type ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsImportJobsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10115,7 +10167,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/importJobs/[^/]+$",
 	//       "required": true,
@@ -10156,7 +10208,8 @@ type ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsImportJobsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall {
 	c := &ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10265,7 +10318,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/importJobs/[^/]+$",
 	//       "required": true,

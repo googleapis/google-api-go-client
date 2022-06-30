@@ -2387,6 +2387,17 @@ type Network struct {
 	// App Engine flexible environment.
 	ForwardedPorts []string `json:"forwardedPorts,omitempty"`
 
+	// InstanceIpMode: The IP mode for instances. Only applicable in the App
+	// Engine flexible environment.
+	//
+	// Possible values:
+	//   "INSTANCE_IP_MODE_UNSPECIFIED" - Unspecified is treated as
+	// EXTERNAL.
+	//   "EXTERNAL" - Instances are created with both internal and external
+	// IP addresses.
+	//   "INTERNAL" - Instances are created with internal IP addresses only.
+	InstanceIpMode string `json:"instanceIpMode,omitempty"`
+
 	// InstanceTag: Tag to apply to the instance during creation. Only
 	// applicable in the App Engine flexible environment.
 	InstanceTag string `json:"instanceTag,omitempty"`
@@ -3466,8 +3477,8 @@ type Version struct {
 	// returned in GET requests if view=FULL is set.
 	ApiConfig *ApiConfigHandler `json:"apiConfig,omitempty"`
 
-	// AppEngineApis: app_engine_apis allows second generation runtimes to
-	// access the App Engine APIs.
+	// AppEngineApis: Allows App Engine second generation runtimes to access
+	// the legacy bundled services.
 	AppEngineApis bool `json:"appEngineApis,omitempty"`
 
 	// AutomaticScaling: Automatic scaling is based on request rate,

@@ -1895,12 +1895,17 @@ type EventAttendee struct {
 
 	// ResponseStatus: The attendee's response status. Possible values are:
 	//
-	// - "needsAction" - The attendee has not responded to the invitation.
-	//
+	// - "needsAction" - The attendee has not responded to the invitation
+	// (recommended for new events).
 	// - "declined" - The attendee has declined the invitation.
 	// - "tentative" - The attendee has tentatively accepted the invitation.
 	//
-	// - "accepted" - The attendee has accepted the invitation.
+	// - "accepted" - The attendee has accepted the invitation.  Warning: If
+	// you add an event using the values declined, tentative, or accepted,
+	// attendees with the "Add invitations to my calendar" setting set to
+	// "When I respond to invitation in email" won't see an event on their
+	// calendar unless they choose to change their invitation response in
+	// the event invitation email.
 	ResponseStatus string `json:"responseStatus,omitempty"`
 
 	// Self: Whether this entry represents the calendar on which this copy
@@ -6985,8 +6990,8 @@ func (c *EventsListCall) PrivateExtendedProperty(privateExtendedProperty ...stri
 }
 
 // Q sets the optional parameter "q": Free text search terms to find
-// events that match these terms in any field, except for extended
-// properties.
+// events that match these terms in the following fields: summary,
+// description, location, attendee's displayName, attendee's email.
 func (c *EventsListCall) Q(q string) *EventsListCall {
 	c.urlParams_.Set("q", q)
 	return c
@@ -7259,7 +7264,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "q": {
-	//       "description": "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
+	//       "description": "Free text search terms to find events that match these terms in the following fields: summary, description, location, attendee's displayName, attendee's email. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8361,8 +8366,8 @@ func (c *EventsWatchCall) PrivateExtendedProperty(privateExtendedProperty ...str
 }
 
 // Q sets the optional parameter "q": Free text search terms to find
-// events that match these terms in any field, except for extended
-// properties.
+// events that match these terms in the following fields: summary,
+// description, location, attendee's displayName, attendee's email.
 func (c *EventsWatchCall) Q(q string) *EventsWatchCall {
 	c.urlParams_.Set("q", q)
 	return c
@@ -8627,7 +8632,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "q": {
-	//       "description": "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
+	//       "description": "Free text search terms to find events that match these terms in the following fields: summary, description, location, attendee's displayName, attendee's email. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

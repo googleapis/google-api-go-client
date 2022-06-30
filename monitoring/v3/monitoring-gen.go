@@ -714,10 +714,9 @@ type AlertPolicy struct {
 	// Name: Required if the policy exists. The resource name for this
 	// policy. The format is:
 	// projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
-	// [ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the
-	// policy is created. When calling the alertPolicies.create method, do
-	// not include the name field in the alerting policy passed as part of
-	// the request.
+	// [ALERT_POLICY_ID] is assigned by Cloud Monitoring when the policy is
+	// created. When calling the alertPolicies.create method, do not include
+	// the name field in the alerting policy passed as part of the request.
 	Name string `json:"name,omitempty"`
 
 	// NotificationChannels: Identifies the notification channels to which
@@ -810,8 +809,8 @@ func (s *AlertStrategy) MarshalJSON() ([]byte, error) {
 type AppEngine struct {
 	// ModuleId: The ID of the App Engine module underlying this service.
 	// Corresponds to the module_id resource label in the gae_app monitored
-	// resource:
-	// https://cloud.google.com/monitoring/api/resources#tag_gae_app
+	// resource
+	// (https://cloud.google.com/monitoring/api/resources#tag_gae_app).
 	ModuleId string `json:"moduleId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ModuleId") to
@@ -991,8 +990,8 @@ func (s *BucketOptions) MarshalJSON() ([]byte, error) {
 type CloudEndpoints struct {
 	// Service: The name of the Cloud Endpoints service underlying this
 	// service. Corresponds to the service resource label in the api
-	// monitored resource:
-	// https://cloud.google.com/monitoring/api/resources#tag_api
+	// monitored resource
+	// (https://cloud.google.com/monitoring/api/resources#tag_api).
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Service") to
@@ -1014,6 +1013,43 @@ type CloudEndpoints struct {
 
 func (s *CloudEndpoints) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudEndpoints
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudRun: Cloud Run service. Learn more at
+// https://cloud.google.com/run.
+type CloudRun struct {
+	// Location: The location the service is run. Corresponds to the
+	// location resource label in the cloud_run_revision monitored resource
+	// (https://cloud.google.com/monitoring/api/resources#tag_cloud_run_revision).
+	Location string `json:"location,omitempty"`
+
+	// ServiceName: The name of the Cloud Run service. Corresponds to the
+	// service_name resource label in the cloud_run_revision monitored
+	// resource
+	// (https://cloud.google.com/monitoring/api/resources#tag_cloud_run_revision).
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Location") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudRun) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudRun
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1267,19 +1303,19 @@ type Condition struct {
 	// Name: Required if the condition exists. The unique resource name for
 	// this condition. Its format is:
 	// projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[POLICY_ID]/conditions/[
-	// CONDITION_ID] [CONDITION_ID] is assigned by Stackdriver Monitoring
-	// when the condition is created as part of a new or updated alerting
-	// policy.When calling the alertPolicies.create method, do not include
-	// the name field in the conditions of the requested alerting policy.
-	// Stackdriver Monitoring creates the condition identifiers and includes
-	// them in the new policy.When calling the alertPolicies.update method
-	// to update a policy, including a condition name causes the existing
-	// condition to be updated. Conditions without names are added to the
-	// updated policy. Existing conditions are deleted if they are not
-	// updated.Best practice is to preserve [CONDITION_ID] if you make only
-	// small changes, such as those to condition thresholds, durations, or
-	// trigger values. Otherwise, treat the change as a new condition and
-	// let the existing condition be deleted.
+	// CONDITION_ID] [CONDITION_ID] is assigned by Cloud Monitoring when the
+	// condition is created as part of a new or updated alerting policy.When
+	// calling the alertPolicies.create method, do not include the name
+	// field in the conditions of the requested alerting policy. Cloud
+	// Monitoring creates the condition identifiers and includes them in the
+	// new policy.When calling the alertPolicies.update method to update a
+	// policy, including a condition name causes the existing condition to
+	// be updated. Conditions without names are added to the updated policy.
+	// Existing conditions are deleted if they are not updated.Best practice
+	// is to preserve [CONDITION_ID] if you make only small changes, such as
+	// those to condition thresholds, durations, or trigger values.
+	// Otherwise, treat the change as a new condition and let the existing
+	// condition be deleted.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConditionAbsent") to
@@ -1317,6 +1353,10 @@ type ContentMatcher struct {
 	// performed.
 	Content string `json:"content,omitempty"`
 
+	// JsonPathMatcher: Matcher information for MATCHES_JSON_PATH and
+	// NOT_MATCHES_JSON_PATH
+	JsonPathMatcher *JsonPathMatcher `json:"jsonPathMatcher,omitempty"`
+
 	// Matcher: The type of content matcher that will be applied to the
 	// server output, compared to the content string when the check is run.
 	//
@@ -1338,6 +1378,13 @@ type ContentMatcher struct {
 	// matching. The match succeeds if the output does NOT match the regular
 	// expression specified in the content string. Regex matching is only
 	// supported for HTTP/HTTPS checks.
+	//   "MATCHES_JSON_PATH" - Selects JSONPath matching. See
+	// JsonPathMatcher for details on when the match succeeds. JSONPath
+	// matching is only supported for HTTP/HTTPS checks.
+	//   "NOT_MATCHES_JSON_PATH" - Selects JSONPath matching. See
+	// JsonPathMatcher for details on when the match succeeds. Succeeds when
+	// output does NOT match as specified. JSONPath is only supported for
+	// HTTP/HTTPS checks.
 	Matcher string `json:"matcher,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -2096,6 +2143,145 @@ func (s *GetNotificationChannelVerificationCodeResponse) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GkeNamespace: GKE Namespace. The field names correspond to the
+// resource metadata labels on monitored resources that fall under a
+// namespace (for example, k8s_container or k8s_pod).
+type GkeNamespace struct {
+	// ClusterName: The name of the parent cluster.
+	ClusterName string `json:"clusterName,omitempty"`
+
+	// Location: The location of the parent cluster. This may be a zone or
+	// region.
+	Location string `json:"location,omitempty"`
+
+	// NamespaceName: The name of this namespace.
+	NamespaceName string `json:"namespaceName,omitempty"`
+
+	// ProjectId: Output only. The project this resource lives in. For
+	// legacy services migrated from the Custom type, this may be a distinct
+	// project from the one parenting the service itself.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GkeNamespace) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeNamespace
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GkeService: GKE Service. The "service" here represents a Kubernetes
+// service object
+// (https://kubernetes.io/docs/concepts/services-networking/service).
+// The field names correspond to the resource labels on k8s_service
+// monitored resources
+// (https://cloud.google.com/monitoring/api/resources#tag_k8s_service).
+type GkeService struct {
+	// ClusterName: The name of the parent cluster.
+	ClusterName string `json:"clusterName,omitempty"`
+
+	// Location: The location of the parent cluster. This may be a zone or
+	// region.
+	Location string `json:"location,omitempty"`
+
+	// NamespaceName: The name of the parent namespace.
+	NamespaceName string `json:"namespaceName,omitempty"`
+
+	// ProjectId: Output only. The project this resource lives in. For
+	// legacy services migrated from the Custom type, this may be a distinct
+	// project from the one parenting the service itself.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ServiceName: The name of this service.
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GkeService) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeService
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GkeWorkload: A GKE Workload (Deployment, StatefulSet, etc). The field
+// names correspond to the metadata labels on monitored resources that
+// fall under a workload (for example, k8s_container or k8s_pod).
+type GkeWorkload struct {
+	// ClusterName: The name of the parent cluster.
+	ClusterName string `json:"clusterName,omitempty"`
+
+	// Location: The location of the parent cluster. This may be a zone or
+	// region.
+	Location string `json:"location,omitempty"`
+
+	// NamespaceName: The name of the parent namespace.
+	NamespaceName string `json:"namespaceName,omitempty"`
+
+	// ProjectId: Output only. The project this resource lives in. For
+	// legacy services migrated from the Custom type, this may be a distinct
+	// project from the one parenting the service itself.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// TopLevelControllerName: The name of this workload.
+	TopLevelControllerName string `json:"topLevelControllerName,omitempty"`
+
+	// TopLevelControllerType: The type of this workload (for example,
+	// "Deployment" or "DaemonSet")
+	TopLevelControllerType string `json:"topLevelControllerType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GkeWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleMonitoringV3Range: Range of numerical values within min and
 // max.
 type GoogleMonitoringV3Range struct {
@@ -2328,8 +2514,8 @@ func (s *HttpCheck) MarshalJSON() ([]byte, error) {
 // private/internal GCP resources.
 type InternalChecker struct {
 	// DisplayName: The checker's human-readable name. The display name
-	// should be unique within a Stackdriver Workspace in order to make it
-	// easier to identify; however, uniqueness is not enforced.
+	// should be unique within a Cloud Monitoring Metrics Scope in order to
+	// make it easier to identify; however, uniqueness is not enforced.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// GcpZone: The GCP zone the Uptime check should egress from. Only
@@ -2339,8 +2525,8 @@ type InternalChecker struct {
 
 	// Name: A unique resource name for this InternalChecker. The format is:
 	// projects/[PROJECT_ID_OR_NUMBER]/internalCheckers/[INTERNAL_CHECKER_ID]
-	//  [PROJECT_ID_OR_NUMBER] is the Stackdriver Workspace project for the
-	// Uptime check config associated with the internal checker.
+	//  [PROJECT_ID_OR_NUMBER] is the Cloud Monitoring Metrics Scope project
+	// for the Uptime check config associated with the internal checker.
 	Name string `json:"name,omitempty"`
 
 	// Network: The GCP VPC network (https://cloud.google.com/vpc/docs/vpc)
@@ -2348,7 +2534,7 @@ type InternalChecker struct {
 	Network string `json:"network,omitempty"`
 
 	// PeerProjectId: The GCP project ID where the internal checker lives.
-	// Not necessary the same as the Workspace project.
+	// Not necessary the same as the Metrics Scope project.
 	PeerProjectId string `json:"peerProjectId,omitempty"`
 
 	// State: The current operational state of the internal checker.
@@ -2434,6 +2620,51 @@ type IstioCanonicalService struct {
 
 func (s *IstioCanonicalService) MarshalJSON() ([]byte, error) {
 	type NoMethod IstioCanonicalService
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// JsonPathMatcher: Information needed to perform a JSONPath content
+// match. Used for ContentMatcherOption::MATCHES_JSON_PATH and
+// ContentMatcherOption::NOT_MATCHES_JSON_PATH.
+type JsonPathMatcher struct {
+	// JsonMatcher: The type of JSONPath match that will be applied to the
+	// JSON output (ContentMatcher.content)
+	//
+	// Possible values:
+	//   "JSON_PATH_MATCHER_OPTION_UNSPECIFIED" - No JSONPath matcher type
+	// specified (not valid).
+	//   "EXACT_MATCH" - Selects 'exact string' matching. The match succeeds
+	// if the content at the json_path within the output is exactly the same
+	// as the content string.
+	//   "REGEX_MATCH" - Selects regular-expression matching. The match
+	// succeeds if the content at the json_path within the output matches
+	// the regular expression specified in the content string.
+	JsonMatcher string `json:"jsonMatcher,omitempty"`
+
+	// JsonPath: JSONPath within the response output pointing to the
+	// expected ContentMatcher::content to match against.
+	JsonPath string `json:"jsonPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JsonMatcher") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JsonMatcher") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JsonPathMatcher) MarshalJSON() ([]byte, error) {
+	type NoMethod JsonPathMatcher
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4218,16 +4449,16 @@ type NotificationChannelDescriptor struct {
 	// Possible values:
 	//   "SERVICE_TIER_UNSPECIFIED" - An invalid sentinel value, used to
 	// indicate that a tier has not been provided explicitly.
-	//   "SERVICE_TIER_BASIC" - The Stackdriver Basic tier, a free tier of
-	// service that provides basic features, a moderate allotment of logs,
-	// and access to built-in metrics. A number of features are not
+	//   "SERVICE_TIER_BASIC" - The Cloud Monitoring Basic tier, a free tier
+	// of service that provides basic features, a moderate allotment of
+	// logs, and access to built-in metrics. A number of features are not
 	// available in this tier. For more details, see the service tiers
 	// documentation (https://cloud.google.com/monitoring/workspaces/tiers).
-	//   "SERVICE_TIER_PREMIUM" - The Stackdriver Premium tier, a higher,
-	// more expensive tier of service that provides access to all
-	// Stackdriver features, lets you use Stackdriver with AWS accounts, and
-	// has a larger allotments for logs and metrics. For more details, see
-	// the service tiers documentation
+	//   "SERVICE_TIER_PREMIUM" - The Cloud Monitoring Premium tier, a
+	// higher, more expensive tier of service that provides access to all
+	// Cloud Monitoring features, lets you use Cloud Monitoring with AWS
+	// accounts, and has a larger allotments for logs and metrics. For more
+	// details, see the service tiers documentation
 	// (https://cloud.google.com/monitoring/workspaces/tiers).
 	SupportedTiers []string `json:"supportedTiers,omitempty"`
 
@@ -4726,6 +4957,9 @@ type MService struct {
 	// CloudEndpoints: Type used for Cloud Endpoints services.
 	CloudEndpoints *CloudEndpoints `json:"cloudEndpoints,omitempty"`
 
+	// CloudRun: Type used for Cloud Run services.
+	CloudRun *CloudRun `json:"cloudRun,omitempty"`
+
 	// ClusterIstio: Type used for Istio services that live in a Kubernetes
 	// cluster.
 	ClusterIstio *ClusterIstio `json:"clusterIstio,omitempty"`
@@ -4735,6 +4969,16 @@ type MService struct {
 
 	// DisplayName: Name used for UI elements listing this Service.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// GkeNamespace: Type used for GKE Namespaces.
+	GkeNamespace *GkeNamespace `json:"gkeNamespace,omitempty"`
+
+	// GkeService: Type used for GKE Services (the Kubernetes concept of a
+	// service).
+	GkeService *GkeService `json:"gkeService,omitempty"`
+
+	// GkeWorkload: Type used for GKE Workloads.
+	GkeWorkload *GkeWorkload `json:"gkeWorkload,omitempty"`
 
 	// IstioCanonicalService: Type used for canonical services scoped to an
 	// Istio mesh. Metrics for Istio are documented here
@@ -5574,9 +5818,9 @@ type UptimeCheckConfig struct {
 	ContentMatchers []*ContentMatcher `json:"contentMatchers,omitempty"`
 
 	// DisplayName: A human-friendly name for the Uptime check
-	// configuration. The display name should be unique within a Stackdriver
-	// Workspace in order to make it easier to identify; however, uniqueness
-	// is not enforced. Required.
+	// configuration. The display name should be unique within a Cloud
+	// Monitoring Workspace in order to make it easier to identify; however,
+	// uniqueness is not enforced. Required.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// HttpCheck: Contains information needed to make an HTTP or HTTPS
@@ -7811,7 +8055,7 @@ type ProjectsAlertPoliciesCreateCall struct {
 //   projects/[PROJECT_ID_OR_NUMBER] Note that this field names the
 //   parent container in which the alerting policy will be written, not
 //   the name of the created policy. |name| must be a host project of a
-//   workspace, otherwise INVALID_ARGUMENT error will return. The
+//   Metrics Scope, otherwise INVALID_ARGUMENT error will return. The
 //   alerting policy that is returned will have a name that contains a
 //   normalized representation of this name as a prefix but adds a
 //   suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying
@@ -7923,7 +8167,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Ale
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) in which to create the alerting policy. The format is: projects/[PROJECT_ID_OR_NUMBER] Note that this field names the parent container in which the alerting policy will be written, not the name of the created policy. |name| must be a host project of a workspace, otherwise INVALID_ARGUMENT error will return. The alerting policy that is returned will have a name that contains a normalized representation of this name as a prefix but adds a suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying the policy in the container.",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) in which to create the alerting policy. The format is: projects/[PROJECT_ID_OR_NUMBER] Note that this field names the parent container in which the alerting policy will be written, not the name of the created policy. |name| must be a host project of a Metrics Scope, otherwise INVALID_ARGUMENT error will return. The alerting policy that is returned will have a name that contains a normalized representation of this name as a prefix but adds a suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying the policy in the container.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -8480,10 +8724,10 @@ type ProjectsAlertPoliciesPatchCall struct {
 // - name: Required if the policy exists. The resource name for this
 //   policy. The format is:
 //   projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
-//   [ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the
-//   policy is created. When calling the alertPolicies.create method, do
-//   not include the name field in the alerting policy passed as part of
-//   the request.
+//   [ALERT_POLICY_ID] is assigned by Cloud Monitoring when the policy
+//   is created. When calling the alertPolicies.create method, do not
+//   include the name field in the alerting policy passed as part of the
+//   request.
 func (r *ProjectsAlertPoliciesService) Patch(name string, alertpolicy *AlertPolicy) *ProjectsAlertPoliciesPatchCall {
 	c := &ProjectsAlertPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8614,7 +8858,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Aler
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required if the policy exists. The resource name for this policy. The format is: projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID] [ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the policy is created. When calling the alertPolicies.create method, do not include the name field in the alerting policy passed as part of the request.",
+	//       "description": "Required if the policy exists. The resource name for this policy. The format is: projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID] [ALERT_POLICY_ID] is assigned by Cloud Monitoring when the policy is created. When calling the alertPolicies.create method, do not include the name field in the alerting policy passed as part of the request.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/alertPolicies/[^/]+$",
 	//       "required": true,
@@ -8653,9 +8897,9 @@ type ProjectsCollectdTimeSeriesCreateCall struct {
 	header_                         http.Header
 }
 
-// Create: Stackdriver Monitoring Agent only: Creates a new time
-// series.This method is only for use by the Stackdriver Monitoring
-// Agent. Use projects.timeSeries.create instead.
+// Create: Cloud Monitoring Agent only: Creates a new time series.This
+// method is only for use by the Cloud Monitoring Agent. Use
+// projects.timeSeries.create instead.
 //
 // - name: The project
 //   (https://cloud.google.com/monitoring/api/v3#project_name) in which
@@ -8759,7 +9003,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Stackdriver Monitoring Agent only: Creates a new time series.This method is only for use by the Stackdriver Monitoring Agent. Use projects.timeSeries.create instead.",
+	//   "description": "Cloud Monitoring Agent only: Creates a new time series.This method is only for use by the Cloud Monitoring Agent. Use projects.timeSeries.create instead.",
 	//   "flatPath": "v3/projects/{projectsId}/collectdTimeSeries",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.collectdTimeSeries.create",
@@ -14837,7 +15081,8 @@ type ServicesCreateCall struct {
 //
 // - parent: Resource name
 //   (https://cloud.google.com/monitoring/api/v3#project_name) of the
-//   parent workspace. The format is: projects/[PROJECT_ID_OR_NUMBER].
+//   parent Metrics Scope. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ServicesService) Create(parent string, service *MService) *ServicesCreateCall {
 	c := &ServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14953,7 +15198,7 @@ func (c *ServicesCreateCall) Do(opts ...googleapi.CallOption) (*MService, error)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name (https://cloud.google.com/monitoring/api/v3#project_name) of the parent workspace. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. Resource name (https://cloud.google.com/monitoring/api/v3#project_name) of the parent Metrics Scope. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -15274,12 +15519,12 @@ type ServicesListCall struct {
 	header_      http.Header
 }
 
-// List: List Services for this workspace.
+// List: List Services for this Metrics Scope.
 //
 // - parent: Resource name of the parent containing the listed services,
 //   either a project
 //   (https://cloud.google.com/monitoring/api/v3#project_name) or a
-//   Monitoring Workspace. The formats are:
+//   Monitoring Metrics Scope. The formats are:
 //   projects/[PROJECT_ID_OR_NUMBER]
 //   workspaces/[HOST_PROJECT_ID_OR_NUMBER].
 func (r *ServicesService) List(parent string) *ServicesListCall {
@@ -15289,19 +15534,22 @@ func (r *ServicesService) List(parent string) *ServicesListCall {
 }
 
 // Filter sets the optional parameter "filter": A filter specifying what
-// Services to return. The filter currently supports the following
-// fields: - `identifier_case` - `app_engine.module_id` -
-// `cloud_endpoints.service` (reserved for future use) -
-// `mesh_istio.mesh_uid` - `mesh_istio.service_namespace` -
-// `mesh_istio.service_name` - `cluster_istio.location` (deprecated) -
-// `cluster_istio.cluster_name` (deprecated) -
-// `cluster_istio.service_namespace` (deprecated) -
-// `cluster_istio.service_name` (deprecated) identifier_case refers to
-// which option in the identifier oneof is populated. For example, the
+// Services to return. The filter supports filtering on a particular
+// service-identifier type or one of its attributes.To filter on a
+// particular service-identifier type, the identifier_case refers to
+// which option in the identifier field is populated. For example, the
 // filter identifier_case = "CUSTOM" would match all services with a
-// value for the custom field. Valid options are "CUSTOM", "APP_ENGINE",
-// "MESH_ISTIO", plus "CLUSTER_ISTIO" (deprecated) and "CLOUD_ENDPOINTS"
-// (reserved for future use).
+// value for the custom field. Valid options include "CUSTOM",
+// "APP_ENGINE", "MESH_ISTIO", and the other options listed at
+// https://cloud.google.com/monitoring/api/ref_v3/rest/v3/services#ServiceTo
+// filter on an attribute of a service-identifier type, apply the filter
+// name by using the snake case of the service-identifier type and the
+// attribute of that service-identifier type, and join the two with a
+// period. For example, to filter by the meshUid field of the MeshIstio
+// service-identifier type, you must filter on mesh_istio.mesh_uid =
+// "123" to match all services with mesh UID "123". Service-identifier
+// types and their attributes are described at
+// https://cloud.google.com/monitoring/api/ref_v3/rest/v3/services#Service
 func (c *ServicesListCall) Filter(filter string) *ServicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -15423,7 +15671,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "List Services for this workspace.",
+	//   "description": "List Services for this Metrics Scope.",
 	//   "flatPath": "v3/{v3Id}/{v3Id1}/services",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.services.list",
@@ -15432,7 +15680,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter specifying what Services to return. The filter currently supports the following fields: - `identifier_case` - `app_engine.module_id` - `cloud_endpoints.service` (reserved for future use) - `mesh_istio.mesh_uid` - `mesh_istio.service_namespace` - `mesh_istio.service_name` - `cluster_istio.location` (deprecated) - `cluster_istio.cluster_name` (deprecated) - `cluster_istio.service_namespace` (deprecated) - `cluster_istio.service_name` (deprecated) identifier_case refers to which option in the identifier oneof is populated. For example, the filter identifier_case = \"CUSTOM\" would match all services with a value for the custom field. Valid options are \"CUSTOM\", \"APP_ENGINE\", \"MESH_ISTIO\", plus \"CLUSTER_ISTIO\" (deprecated) and \"CLOUD_ENDPOINTS\" (reserved for future use).",
+	//       "description": "A filter specifying what Services to return. The filter supports filtering on a particular service-identifier type or one of its attributes.To filter on a particular service-identifier type, the identifier_case refers to which option in the identifier field is populated. For example, the filter identifier_case = \"CUSTOM\" would match all services with a value for the custom field. Valid options include \"CUSTOM\", \"APP_ENGINE\", \"MESH_ISTIO\", and the other options listed at https://cloud.google.com/monitoring/api/ref_v3/rest/v3/services#ServiceTo filter on an attribute of a service-identifier type, apply the filter name by using the snake case of the service-identifier type and the attribute of that service-identifier type, and join the two with a period. For example, to filter by the meshUid field of the MeshIstio service-identifier type, you must filter on mesh_istio.mesh_uid = \"123\" to match all services with mesh UID \"123\". Service-identifier types and their attributes are described at https://cloud.google.com/monitoring/api/ref_v3/rest/v3/services#Service",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15448,7 +15696,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent containing the listed services, either a project (https://cloud.google.com/monitoring/api/v3#project_name) or a Monitoring Workspace. The formats are: projects/[PROJECT_ID_OR_NUMBER] workspaces/[HOST_PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. Resource name of the parent containing the listed services, either a project (https://cloud.google.com/monitoring/api/v3#project_name) or a Monitoring Metrics Scope. The formats are: projects/[PROJECT_ID_OR_NUMBER] workspaces/[HOST_PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -16141,7 +16389,7 @@ type ServicesServiceLevelObjectivesListCall struct {
 // List: List the ServiceLevelObjectives for the given Service.
 //
 // - parent: Resource name of the parent containing the listed SLOs,
-//   either a project or a Monitoring Workspace. The formats are:
+//   either a project or a Monitoring Metrics Scope. The formats are:
 //   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
 //   workspaces/[HOST_PROJECT_ID_OR_NUMBER]/services/-.
 func (r *ServicesServiceLevelObjectivesService) List(parent string) *ServicesServiceLevelObjectivesListCall {
@@ -16320,7 +16568,7 @@ func (c *ServicesServiceLevelObjectivesListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent containing the listed SLOs, either a project or a Monitoring Workspace. The formats are: projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID] workspaces/[HOST_PROJECT_ID_OR_NUMBER]/services/- ",
+	//       "description": "Required. Resource name of the parent containing the listed SLOs, either a project or a Monitoring Metrics Scope. The formats are: projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID] workspaces/[HOST_PROJECT_ID_OR_NUMBER]/services/- ",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
 	//       "required": true,

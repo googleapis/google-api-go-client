@@ -177,12 +177,14 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.Envgroups = NewOrganizationsEnvgroupsService(s)
 	rs.Environments = NewOrganizationsEnvironmentsService(s)
 	rs.HostQueries = NewOrganizationsHostQueriesService(s)
+	rs.HostSecurityReports = NewOrganizationsHostSecurityReportsService(s)
 	rs.HostStats = NewOrganizationsHostStatsService(s)
 	rs.Instances = NewOrganizationsInstancesService(s)
 	rs.Keyvaluemaps = NewOrganizationsKeyvaluemapsService(s)
 	rs.Operations = NewOrganizationsOperationsService(s)
 	rs.OptimizedHostStats = NewOrganizationsOptimizedHostStatsService(s)
 	rs.Reports = NewOrganizationsReportsService(s)
+	rs.SecurityProfiles = NewOrganizationsSecurityProfilesService(s)
 	rs.Sharedflows = NewOrganizationsSharedflowsService(s)
 	rs.Sites = NewOrganizationsSitesService(s)
 	return rs
@@ -213,6 +215,8 @@ type OrganizationsService struct {
 
 	HostQueries *OrganizationsHostQueriesService
 
+	HostSecurityReports *OrganizationsHostSecurityReportsService
+
 	HostStats *OrganizationsHostStatsService
 
 	Instances *OrganizationsInstancesService
@@ -224,6 +228,8 @@ type OrganizationsService struct {
 	OptimizedHostStats *OrganizationsOptimizedHostStatsService
 
 	Reports *OrganizationsReportsService
+
+	SecurityProfiles *OrganizationsSecurityProfilesService
 
 	Sharedflows *OrganizationsSharedflowsService
 
@@ -313,10 +319,22 @@ type OrganizationsApisDeploymentsService struct {
 
 func NewOrganizationsApisKeyvaluemapsService(s *Service) *OrganizationsApisKeyvaluemapsService {
 	rs := &OrganizationsApisKeyvaluemapsService{s: s}
+	rs.Entries = NewOrganizationsApisKeyvaluemapsEntriesService(s)
 	return rs
 }
 
 type OrganizationsApisKeyvaluemapsService struct {
+	s *Service
+
+	Entries *OrganizationsApisKeyvaluemapsEntriesService
+}
+
+func NewOrganizationsApisKeyvaluemapsEntriesService(s *Service) *OrganizationsApisKeyvaluemapsEntriesService {
+	rs := &OrganizationsApisKeyvaluemapsEntriesService{s: s}
+	return rs
+}
+
+type OrganizationsApisKeyvaluemapsEntriesService struct {
 	s *Service
 }
 
@@ -517,6 +535,7 @@ func NewOrganizationsEnvironmentsService(s *Service) *OrganizationsEnvironmentsS
 	rs.Queries = NewOrganizationsEnvironmentsQueriesService(s)
 	rs.References = NewOrganizationsEnvironmentsReferencesService(s)
 	rs.Resourcefiles = NewOrganizationsEnvironmentsResourcefilesService(s)
+	rs.SecurityReports = NewOrganizationsEnvironmentsSecurityReportsService(s)
 	rs.Sharedflows = NewOrganizationsEnvironmentsSharedflowsService(s)
 	rs.Stats = NewOrganizationsEnvironmentsStatsService(s)
 	rs.Targetservers = NewOrganizationsEnvironmentsTargetserversService(s)
@@ -550,6 +569,8 @@ type OrganizationsEnvironmentsService struct {
 	References *OrganizationsEnvironmentsReferencesService
 
 	Resourcefiles *OrganizationsEnvironmentsResourcefilesService
+
+	SecurityReports *OrganizationsEnvironmentsSecurityReportsService
 
 	Sharedflows *OrganizationsEnvironmentsSharedflowsService
 
@@ -721,10 +742,22 @@ type OrganizationsEnvironmentsKeystoresAliasesService struct {
 
 func NewOrganizationsEnvironmentsKeyvaluemapsService(s *Service) *OrganizationsEnvironmentsKeyvaluemapsService {
 	rs := &OrganizationsEnvironmentsKeyvaluemapsService{s: s}
+	rs.Entries = NewOrganizationsEnvironmentsKeyvaluemapsEntriesService(s)
 	return rs
 }
 
 type OrganizationsEnvironmentsKeyvaluemapsService struct {
+	s *Service
+
+	Entries *OrganizationsEnvironmentsKeyvaluemapsEntriesService
+}
+
+func NewOrganizationsEnvironmentsKeyvaluemapsEntriesService(s *Service) *OrganizationsEnvironmentsKeyvaluemapsEntriesService {
+	rs := &OrganizationsEnvironmentsKeyvaluemapsEntriesService{s: s}
+	return rs
+}
+
+type OrganizationsEnvironmentsKeyvaluemapsEntriesService struct {
 	s *Service
 }
 
@@ -761,6 +794,15 @@ func NewOrganizationsEnvironmentsResourcefilesService(s *Service) *Organizations
 }
 
 type OrganizationsEnvironmentsResourcefilesService struct {
+	s *Service
+}
+
+func NewOrganizationsEnvironmentsSecurityReportsService(s *Service) *OrganizationsEnvironmentsSecurityReportsService {
+	rs := &OrganizationsEnvironmentsSecurityReportsService{s: s}
+	return rs
+}
+
+type OrganizationsEnvironmentsSecurityReportsService struct {
 	s *Service
 }
 
@@ -845,6 +887,15 @@ type OrganizationsHostQueriesService struct {
 	s *Service
 }
 
+func NewOrganizationsHostSecurityReportsService(s *Service) *OrganizationsHostSecurityReportsService {
+	rs := &OrganizationsHostSecurityReportsService{s: s}
+	return rs
+}
+
+type OrganizationsHostSecurityReportsService struct {
+	s *Service
+}
+
 func NewOrganizationsHostStatsService(s *Service) *OrganizationsHostStatsService {
 	rs := &OrganizationsHostStatsService{s: s}
 	return rs
@@ -901,10 +952,22 @@ type OrganizationsInstancesNatAddressesService struct {
 
 func NewOrganizationsKeyvaluemapsService(s *Service) *OrganizationsKeyvaluemapsService {
 	rs := &OrganizationsKeyvaluemapsService{s: s}
+	rs.Entries = NewOrganizationsKeyvaluemapsEntriesService(s)
 	return rs
 }
 
 type OrganizationsKeyvaluemapsService struct {
+	s *Service
+
+	Entries *OrganizationsKeyvaluemapsEntriesService
+}
+
+func NewOrganizationsKeyvaluemapsEntriesService(s *Service) *OrganizationsKeyvaluemapsEntriesService {
+	rs := &OrganizationsKeyvaluemapsEntriesService{s: s}
+	return rs
+}
+
+type OrganizationsKeyvaluemapsEntriesService struct {
 	s *Service
 }
 
@@ -932,6 +995,27 @@ func NewOrganizationsReportsService(s *Service) *OrganizationsReportsService {
 }
 
 type OrganizationsReportsService struct {
+	s *Service
+}
+
+func NewOrganizationsSecurityProfilesService(s *Service) *OrganizationsSecurityProfilesService {
+	rs := &OrganizationsSecurityProfilesService{s: s}
+	rs.Environments = NewOrganizationsSecurityProfilesEnvironmentsService(s)
+	return rs
+}
+
+type OrganizationsSecurityProfilesService struct {
+	s *Service
+
+	Environments *OrganizationsSecurityProfilesEnvironmentsService
+}
+
+func NewOrganizationsSecurityProfilesEnvironmentsService(s *Service) *OrganizationsSecurityProfilesEnvironmentsService {
+	rs := &OrganizationsSecurityProfilesEnvironmentsService{s: s}
+	return rs
+}
+
+type OrganizationsSecurityProfilesEnvironmentsService struct {
 	s *Service
 }
 
@@ -1262,6 +1346,9 @@ type GoogleCloudApigeeV1ActivateNatAddressRequest struct {
 type GoogleCloudApigeeV1AddonsConfig struct {
 	// AdvancedApiOpsConfig: Configuration for the Advanced API Ops add-on.
 	AdvancedApiOpsConfig *GoogleCloudApigeeV1AdvancedApiOpsConfig `json:"advancedApiOpsConfig,omitempty"`
+
+	// ApiSecurityConfig: Configuration for the API Security add-on.
+	ApiSecurityConfig *GoogleCloudApigeeV1ApiSecurityConfig `json:"apiSecurityConfig,omitempty"`
 
 	// ConnectorsPlatformConfig: Configuration for the Connectors Platform
 	// add-on.
@@ -1946,6 +2033,41 @@ func (s *GoogleCloudApigeeV1ApiResponseWrapper) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ApiSecurityConfig: Configurations of the API
+// Security add-on.
+type GoogleCloudApigeeV1ApiSecurityConfig struct {
+	// Enabled: Flag that specifies whether the API security add-on is
+	// enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ExpiresAt: Output only. Time at which the API Security add-on expires
+	// in in milliseconds since epoch. If unspecified, the add-on will never
+	// expire.
+	ExpiresAt int64 `json:"expiresAt,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ApiSecurityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ApiSecurityConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudApigeeV1App struct {
 	// ApiProducts: List of API products associated with the app.
 	ApiProducts []*GoogleCloudApigeeV1ApiProductRef `json:"apiProducts,omitempty"`
@@ -2528,6 +2650,129 @@ type GoogleCloudApigeeV1CommonNameConfig struct {
 
 func (s *GoogleCloudApigeeV1CommonNameConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1CommonNameConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ComputeEnvironmentScoresRequest: Request for
+// ComputeEnvironmentScores.
+type GoogleCloudApigeeV1ComputeEnvironmentScoresRequest struct {
+	// Filters: Optional. Filters are used to filter scored components.
+	// Return all the components if no filter is mentioned. Example: [{
+	// "scorePath":
+	// "/org@myorg/envgroup@myenvgroup/env@myenv/proxies/proxy@myproxy/source
+	// " }, { "scorePath":
+	// "/org@myorg/envgroup@myenvgroup/env@myenv/proxies/proxy@myproxy/target
+	// ", }] This will return components with path:
+	// "/org@myorg/envgroup@myenvgroup/env@myenv/proxies/proxy@myproxy/source
+	// " OR
+	// "/org@myorg/envgroup@myenvgroup/env@myenv/proxies/proxy@myproxy/target
+	// "
+	Filters []*GoogleCloudApigeeV1ComputeEnvironmentScoresRequestFilter `json:"filters,omitempty"`
+
+	// PageSize: Optional. The maximum number of subcomponents to be
+	// returned in a single page. The service may return fewer than this
+	// value. If unspecified, at most 100 subcomponents will be returned in
+	// a single page.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Optional. A token that can be sent as `page_token` to
+	// retrieve the next page. If this field is omitted, there are no
+	// subsequent pages.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// TimeRange: Required. Time range for score calculation. At most 14
+	// days of scores will be returned.
+	TimeRange *GoogleTypeInterval `json:"timeRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filters") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ComputeEnvironmentScoresRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ComputeEnvironmentScoresRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ComputeEnvironmentScoresRequestFilter: Filter
+// scores by component path. Used custom filter instead of AIP-160 as
+// the use cases are highly constrained and predictable.
+type GoogleCloudApigeeV1ComputeEnvironmentScoresRequestFilter struct {
+	// ScorePath: Optional. Return scores for this component. Example:
+	// "/org@myorg/envgroup@myenvgroup/env@myenv/proxies/proxy@myproxy/source
+	// "
+	ScorePath string `json:"scorePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ScorePath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ScorePath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ComputeEnvironmentScoresRequestFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ComputeEnvironmentScoresRequestFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ComputeEnvironmentScoresResponse: Response for
+// ComputeEnvironmentScores.
+type GoogleCloudApigeeV1ComputeEnvironmentScoresResponse struct {
+	// NextPageToken: A page token, received from a previous `ComputeScore`
+	// call. Provide this to retrieve the subsequent page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Scores: List of scores. One score per day.
+	Scores []*GoogleCloudApigeeV1Score `json:"scores,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ComputeEnvironmentScoresResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ComputeEnvironmentScoresResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3265,17 +3510,17 @@ type GoogleCloudApigeeV1Deployment struct {
 	Environment string `json:"environment,omitempty"`
 
 	// Errors: Errors reported for this deployment. Populated only when
-	// state == ERROR. This field is not populated in List APIs.
+	// state == ERROR. **Note**: This field is displayed only when viewing
+	// deployment status.
 	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
 
-	// Instances: Status reported by each runtime instance. This field is
-	// not populated in List APIs.
+	// Instances: Status reported by each runtime instance. **Note**: This
+	// field is displayed only when viewing deployment status.
 	Instances []*GoogleCloudApigeeV1InstanceDeploymentStatus `json:"instances,omitempty"`
 
-	// Pods: Status reported by runtime pods. This field is not populated
-	// for List APIs. **Note**: **This field is deprecated**. Runtime
-	// versions 1.3 and above report instance level status rather than pod
-	// status.
+	// Pods: Status reported by runtime pods. **Note**: **This field is
+	// deprecated**. Runtime versions 1.3 and above report instance level
+	// status rather than pod status.
 	Pods []*GoogleCloudApigeeV1PodStatus `json:"pods,omitempty"`
 
 	// Revision: API proxy revision.
@@ -3286,7 +3531,8 @@ type GoogleCloudApigeeV1Deployment struct {
 	// it will mean that some of the deployment's base paths are not routed
 	// to its environment. If the conflicts change, the state will
 	// transition to `PROGRESSING` until the latest configuration is rolled
-	// out to all instances. This field is not populated in List APIs.
+	// out to all instances. **Note**: This field is displayed only when
+	// viewing deployment status.
 	RouteConflicts []*GoogleCloudApigeeV1DeploymentChangeReportRoutingConflict `json:"routeConflicts,omitempty"`
 
 	// ServiceAccount: The full resource name of Cloud IAM Service Account
@@ -3294,8 +3540,8 @@ type GoogleCloudApigeeV1Deployment struct {
 	// `projects/-/serviceAccounts/{email}`.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
-	// State: Current state of the deployment. This field is not populated
-	// in List APIs.
+	// State: Current state of the deployment. **Note**: This field is
+	// displayed only when viewing deployment status.
 	//
 	// Possible values:
 	//   "RUNTIME_STATE_UNSPECIFIED" - This value should never be returned.
@@ -4129,6 +4375,12 @@ type GoogleCloudApigeeV1Environment struct {
 	// DisplayName: Optional. Display name for this environment.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// ForwardProxyUri: Optional. Url of the forward proxy to be applied to
+	// the runtime instances in this environment. Must be in the format of
+	// {scheme}://{hostname}:{port}. Note that scheme must be one of "http"
+	// or "https", and port must be supplied.
+	ForwardProxyUri string `json:"forwardProxyUri,omitempty"`
+
 	// LastModifiedAt: Output only. Last modification time of this
 	// environment as milliseconds since epoch.
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
@@ -4205,6 +4457,11 @@ type GoogleCloudApigeeV1EnvironmentConfig struct {
 
 	// Flowhooks: List of flow hooks in the environment.
 	Flowhooks []*GoogleCloudApigeeV1FlowHookConfig `json:"flowhooks,omitempty"`
+
+	// ForwardProxyUri: The forward proxy's url to be used by the runtime.
+	// When set, runtime will send requests to the target via the given
+	// forward proxy. This is only used by programmable gateways.
+	ForwardProxyUri string `json:"forwardProxyUri,omitempty"`
 
 	// GatewayConfigLocation: The location for the gateway config blob as a
 	// URI, e.g. a Cloud Storage URI. This is only used by Envoy-based
@@ -5313,10 +5570,49 @@ func (s *GoogleCloudApigeeV1KeyAliasReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1KeyValueEntry: Key value map pair where the value
+// represents the data associated with the corresponding key.
+type GoogleCloudApigeeV1KeyValueEntry struct {
+	// Name: Resource URI that can be used to identify the scope of the key
+	// value map entries.
+	Name string `json:"name,omitempty"`
+
+	// Value: Required. Data or payload that is being retrieved and
+	// associated with the unique key.
+	Value string `json:"value,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1KeyValueEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1KeyValueEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1KeyValueMap: Collection of key/value string pairs.
 type GoogleCloudApigeeV1KeyValueMap struct {
 	// Encrypted: Optional. Flag that specifies whether entry values will be
-	// encrypted. Enable to encrypt entry values.
+	// encrypted. You must set this value to `true`. Apigee X and hybrid do
+	// not support unencrytped key value maps.
 	Encrypted bool `json:"encrypted,omitempty"`
 
 	// Name: Required. ID of the key value map.
@@ -6161,6 +6457,45 @@ func (s *GoogleCloudApigeeV1ListInstancesResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ListKeyValueEntriesResponse: The request structure
+// for listing Key value map keys and its corrresponding values.
+type GoogleCloudApigeeV1ListKeyValueEntriesResponse struct {
+	// KeyValueEntries: One or more key value map keys and values.
+	KeyValueEntries []*GoogleCloudApigeeV1KeyValueEntry `json:"keyValueEntries,omitempty"`
+
+	// NextPageToken: Token that can be sent as `next_page_token` to
+	// retrieve the next page. If this field is omitted, there are no
+	// subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "KeyValueEntries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KeyValueEntries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ListKeyValueEntriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListKeyValueEntriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1ListNatAddressesResponse: Response for
 // ListNatAddresses.
 type GoogleCloudApigeeV1ListNatAddressesResponse struct {
@@ -6295,6 +6630,125 @@ type GoogleCloudApigeeV1ListRatePlansResponse struct {
 
 func (s *GoogleCloudApigeeV1ListRatePlansResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListRatePlansResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse: Response for
+// ListSecurityProfileRevisions.
+type GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityProfiles: List of security profile revisions. The revisions
+	// may be attached or unattached to any environment.
+	SecurityProfiles []*GoogleCloudApigeeV1SecurityProfile `json:"securityProfiles,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ListSecurityProfilesResponse: Response for
+// ListSecurityProfiles.
+type GoogleCloudApigeeV1ListSecurityProfilesResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityProfiles: List of security profiles in the organization. The
+	// profiles may be attached or unattached to any environment. This will
+	// return latest revision of each profile.
+	SecurityProfiles []*GoogleCloudApigeeV1SecurityProfile `json:"securityProfiles,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ListSecurityProfilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListSecurityProfilesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ListSecurityReportsResponse: The response for
+// SecurityReports.
+type GoogleCloudApigeeV1ListSecurityReportsResponse struct {
+	// NextPageToken: If the number of security reports exceeded the page
+	// size requested, the token can be used to fetch the next page in a
+	// subsequent call. If the response is the last page and there are no
+	// more reports to return this field is left empty.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityReports: The security reports belong to requested resource
+	// name.
+	SecurityReports []*GoogleCloudApigeeV1SecurityReport `json:"securityReports,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ListSecurityReportsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListSecurityReportsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6859,6 +7313,11 @@ type GoogleCloudApigeeV1Organization struct {
 	// (https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).
 	AnalyticsRegion string `json:"analyticsRegion,omitempty"`
 
+	// ApigeeProjectId: Output only. Apigee Project ID associated with the
+	// organization. Use this project to allowlist Apigee in the Service
+	// Attachment when using private service connect with Apigee.
+	ApigeeProjectId string `json:"apigeeProjectId,omitempty"`
+
 	// Attributes: Not used by Apigee.
 	Attributes []string `json:"attributes,omitempty"`
 
@@ -7015,6 +7474,11 @@ func (s *GoogleCloudApigeeV1Organization) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudApigeeV1OrganizationProjectMapping struct {
+	// Location: Output only. The Google Cloud region where control plane
+	// data is located. For more information, see
+	// https://cloud.google.com/about/locations/.
+	Location string `json:"location,omitempty"`
+
 	// Organization: Name of the Apigee organization.
 	Organization string `json:"organization,omitempty"`
 
@@ -7025,7 +7489,11 @@ type GoogleCloudApigeeV1OrganizationProjectMapping struct {
 	// mapped to a single project.
 	ProjectIds []string `json:"projectIds,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Organization") to
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Location") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -7033,10 +7501,10 @@ type GoogleCloudApigeeV1OrganizationProjectMapping struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Organization") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Location") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -8523,6 +8991,704 @@ func (s *GoogleCloudApigeeV1SchemaSchemaProperty) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1Score: Represents Security Score.
+type GoogleCloudApigeeV1Score struct {
+	// Component: Component containing score, recommendations and actions.
+	Component *GoogleCloudApigeeV1ScoreComponent `json:"component,omitempty"`
+
+	// Subcomponents: List of all the drilldown score components.
+	Subcomponents []*GoogleCloudApigeeV1ScoreComponent `json:"subcomponents,omitempty"`
+
+	// TimeRange: Start and end time for the score.
+	TimeRange *GoogleTypeInterval `json:"timeRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Component") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Component") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1Score) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1Score
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ScoreComponent: Component is an individual
+// security element that is scored.
+type GoogleCloudApigeeV1ScoreComponent struct {
+	// CalculateTime: Time when score was calculated.
+	CalculateTime string `json:"calculateTime,omitempty"`
+
+	// DataCaptureTime: Time in the requested time period when data was last
+	// captured to compute the score.
+	DataCaptureTime string `json:"dataCaptureTime,omitempty"`
+
+	// DrilldownPaths: List of paths for next components.
+	DrilldownPaths []string `json:"drilldownPaths,omitempty"`
+
+	// Recommendations: List of recommendations to improve API security.
+	Recommendations []*GoogleCloudApigeeV1ScoreComponentRecommendation `json:"recommendations,omitempty"`
+
+	// Score: Score for the component.
+	Score int64 `json:"score,omitempty"`
+
+	// ScorePath: Path of the component. Example:
+	// /org@myorg/envgroup@myenvgroup/proxies/proxy@myproxy
+	ScorePath string `json:"scorePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CalculateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CalculateTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ScoreComponent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ScoreComponent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ScoreComponentRecommendation: Recommendation based
+// on security concerns and score.
+type GoogleCloudApigeeV1ScoreComponentRecommendation struct {
+	// Actions: Actions for the recommendation to improve the security
+	// score.
+	Actions []*GoogleCloudApigeeV1ScoreComponentRecommendationAction `json:"actions,omitempty"`
+
+	// Description: Description of the recommendation.
+	Description string `json:"description,omitempty"`
+
+	// Impact: Potential impact of this recommendation on the overall score.
+	// This denotes how important this recommendation is to improve the
+	// score.
+	Impact int64 `json:"impact,omitempty"`
+
+	// Title: Title represents recommendation title.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Actions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Actions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ScoreComponentRecommendation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ScoreComponentRecommendation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ScoreComponentRecommendationAction: Action to
+// improve security score.
+type GoogleCloudApigeeV1ScoreComponentRecommendationAction struct {
+	// ActionContext: Action context for the action.
+	ActionContext *GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext `json:"actionContext,omitempty"`
+
+	// Description: Description of the action.
+	Description string `json:"description,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionContext") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionContext") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ScoreComponentRecommendationAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ScoreComponentRecommendationAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext:
+// Action context are all the relevant details for the action.
+type GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext struct {
+	// DocumentationLink: Documentation link for the action.
+	DocumentationLink string `json:"documentationLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentationLink")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentationLink") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityProfile: Represents a SecurityProfile
+// resource.
+type GoogleCloudApigeeV1SecurityProfile struct {
+	// DisplayName: Display name of the security profile.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Environments: List of environments attached to security profile.
+	Environments []*GoogleCloudApigeeV1SecurityProfileEnvironment `json:"environments,omitempty"`
+
+	// MaxScore: Output only. Maximum security score that can be generated
+	// by this profile.
+	MaxScore int64 `json:"maxScore,omitempty"`
+
+	// MinScore: Output only. Minimum security score that can be generated
+	// by this profile.
+	MinScore int64 `json:"minScore,omitempty"`
+
+	// Name: Immutable. Name of the security profile resource. Format:
+	// organizations/{org}/securityProfiles/{profile}
+	Name string `json:"name,omitempty"`
+
+	// RevisionCreateTime: Output only. The time when revision was created.
+	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
+
+	// RevisionId: Output only. Revision ID of the security profile.
+	RevisionId int64 `json:"revisionId,omitempty,string"`
+
+	// RevisionPublishTime: Output only. The time when revision was
+	// published. Once published, the security profile revision cannot be
+	// updated further and can be attached to environments.
+	RevisionPublishTime string `json:"revisionPublishTime,omitempty"`
+
+	// RevisionUpdateTime: Output only. The time when revision was updated.
+	RevisionUpdateTime string `json:"revisionUpdateTime,omitempty"`
+
+	// ScoringConfigs: List of profile scoring configs in this revision.
+	ScoringConfigs []*GoogleCloudApigeeV1SecurityProfileScoringConfig `json:"scoringConfigs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityProfileEnvironment: Environment
+// information of attached environments. Scoring an environment is
+// enabled only if it is attached to a security profile.
+type GoogleCloudApigeeV1SecurityProfileEnvironment struct {
+	// AttachTime: Output only. Time at which environment was attached to
+	// the security profile.
+	AttachTime string `json:"attachTime,omitempty"`
+
+	// Environment: Output only. Name of the environment.
+	Environment string `json:"environment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttachTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttachTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityProfileEnvironment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityProfileEnvironment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation: Represents
+// a SecurityProfileEnvironmentAssociation resource.
+type GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation struct {
+	// AttachTime: Output only. The time when environment was attached to
+	// the security profile.
+	AttachTime string `json:"attachTime,omitempty"`
+
+	// Name: Immutable. Name of the profile-environment association
+	// resource. Format:
+	// organizations/{org}/securityProfiles/{profile}/environments/{env}
+	Name string `json:"name,omitempty"`
+
+	// SecurityProfileRevisionId: Revision ID of the security profile.
+	SecurityProfileRevisionId int64 `json:"securityProfileRevisionId,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AttachTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttachTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityProfileScoringConfig: Security
+// configurations to manage scoring.
+type GoogleCloudApigeeV1SecurityProfileScoringConfig struct {
+	// Description: Description of the config.
+	Description string `json:"description,omitempty"`
+
+	// ScorePath: Path of the component config used for scoring.
+	ScorePath string `json:"scorePath,omitempty"`
+
+	// Title: Title of the config.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityProfileScoringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityProfileScoringConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityReport: SecurityReport saves all the
+// information about the created security report.
+type GoogleCloudApigeeV1SecurityReport struct {
+	// Created: Creation time of the query.
+	Created string `json:"created,omitempty"`
+
+	// DisplayName: Display Name specified by the user.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EnvgroupHostname: Hostname is available only when query is executed
+	// at host level.
+	EnvgroupHostname string `json:"envgroupHostname,omitempty"`
+
+	// Error: Error is set when query fails.
+	Error string `json:"error,omitempty"`
+
+	// ExecutionTime: ExecutionTime is available only after the query is
+	// completed.
+	ExecutionTime string `json:"executionTime,omitempty"`
+
+	// QueryParams: Contains information like metrics, dimenstions etc of
+	// the Security Report.
+	QueryParams *GoogleCloudApigeeV1SecurityReportMetadata `json:"queryParams,omitempty"`
+
+	// ReportDefinitionId: Report Definition ID.
+	ReportDefinitionId string `json:"reportDefinitionId,omitempty"`
+
+	// Result: Result is available only after the query is completed.
+	Result *GoogleCloudApigeeV1SecurityReportResultMetadata `json:"result,omitempty"`
+
+	// ResultFileSize: ResultFileSize is available only after the query is
+	// completed.
+	ResultFileSize string `json:"resultFileSize,omitempty"`
+
+	// ResultRows: ResultRows is available only after the query is
+	// completed.
+	ResultRows int64 `json:"resultRows,omitempty,string"`
+
+	// Self: Self link of the query. Example:
+	// `/organizations/myorg/environments/myenv/securityReports/9cfc0d85-0f30
+	// -46d6-ae6f-318d0cb961bd` or following format if query is running at
+	// host level:
+	// `/organizations/myorg/hostSecurityReports/9cfc0d85-0f30-46d6-ae6f-318d
+	// 0cb961bd`
+	Self string `json:"self,omitempty"`
+
+	// State: Query state could be "enqueued", "running", "completed",
+	// "failed".
+	State string `json:"state,omitempty"`
+
+	// Updated: Output only. Last updated timestamp for the query.
+	Updated string `json:"updated,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Created") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Created") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityReportMetadata: Metadata for the security
+// report.
+type GoogleCloudApigeeV1SecurityReportMetadata struct {
+	// Dimensions: Dimensions of the SecurityReport.
+	Dimensions []string `json:"dimensions,omitempty"`
+
+	// EndTimestamp: End timestamp of the query range.
+	EndTimestamp string `json:"endTimestamp,omitempty"`
+
+	// Metrics: Metrics of the SecurityReport. Example:
+	// ["name:bot_count,func:sum,alias:sum_bot_count"]
+	Metrics []string `json:"metrics,omitempty"`
+
+	// MimeType: MIME type / Output format.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// StartTimestamp: Start timestamp of the query range.
+	StartTimestamp string `json:"startTimestamp,omitempty"`
+
+	// TimeUnit: Query GroupBy time unit. Example: "seconds", "minute",
+	// "hour"
+	TimeUnit string `json:"timeUnit,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dimensions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityReportMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityReportMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityReportQuery: Body structure when user
+// makes a request to create a security report.
+type GoogleCloudApigeeV1SecurityReportQuery struct {
+	// CsvDelimiter: Delimiter used in the CSV file, if `outputFormat` is
+	// set to `csv`. Defaults to the `,` (comma) character. Supported
+	// delimiter characters include comma (`,`), pipe (`|`), and tab (`\t`).
+	CsvDelimiter string `json:"csvDelimiter,omitempty"`
+
+	// Dimensions: A list of dimensions.
+	// https://docs.apigee.com/api-platform/analytics/analytics-reference#dimensions
+	Dimensions []string `json:"dimensions,omitempty"`
+
+	// DisplayName: Security Report display name which users can specify.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EnvgroupHostname: Hostname needs to be specified if query intends to
+	// run at host level. This field is only allowed when query is submitted
+	// by CreateHostSecurityReport where analytics data will be grouped by
+	// organization and hostname.
+	EnvgroupHostname string `json:"envgroupHostname,omitempty"`
+
+	// Filter: Boolean expression that can be used to filter data. Filter
+	// expressions can be combined using AND/OR terms and should be fully
+	// parenthesized to avoid ambiguity. See Analytics metrics, dimensions,
+	// and filters reference
+	// https://docs.apigee.com/api-platform/analytics/analytics-reference
+	// for more information on the fields available to filter on. For more
+	// information on the tokens that you use to build filter expressions,
+	// see Filter expression syntax.
+	// https://docs.apigee.com/api-platform/analytics/asynch-reports-api#filter-expression-syntax
+	Filter string `json:"filter,omitempty"`
+
+	// GroupByTimeUnit: Time unit used to group the result set. Valid values
+	// include: second, minute, hour, day, week, or month. If a query
+	// includes groupByTimeUnit, then the result is an aggregation based on
+	// the specified time unit and the resultant timestamp does not include
+	// milliseconds precision. If a query omits groupByTimeUnit, then the
+	// resultant timestamp includes milliseconds precision.
+	GroupByTimeUnit string `json:"groupByTimeUnit,omitempty"`
+
+	// Limit: Maximum number of rows that can be returned in the result.
+	Limit int64 `json:"limit,omitempty"`
+
+	// Metrics: A list of Metrics.
+	Metrics []*GoogleCloudApigeeV1SecurityReportQueryMetric `json:"metrics,omitempty"`
+
+	// MimeType: Valid values include: `csv` or `json`. Defaults to `json`.
+	// Note: Configure the delimiter for CSV output using the csvDelimiter
+	// property.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ReportDefinitionId: Report Definition ID.
+	ReportDefinitionId string `json:"reportDefinitionId,omitempty"`
+
+	// TimeRange: Required. Time range for the query. Can use the following
+	// predefined strings to specify the time range: `last60minutes`
+	// `last24hours` `last7days` Or, specify the timeRange as a structure
+	// describing start and end timestamps in the ISO format:
+	// yyyy-mm-ddThh:mm:ssZ. Example: "timeRange": { "start":
+	// "2018-07-29T00:13:00Z", "end": "2018-08-01T00:18:00Z" }
+	TimeRange interface{} `json:"timeRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CsvDelimiter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CsvDelimiter") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityReportQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityReportQuery
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityReportQueryMetric: Metric of the Query
+type GoogleCloudApigeeV1SecurityReportQueryMetric struct {
+	// AggregationFunction: Aggregation function: avg, min, max, or sum.
+	AggregationFunction string `json:"aggregationFunction,omitempty"`
+
+	// Alias: Alias for the metric. Alias will be used to replace metric
+	// name in query results.
+	Alias string `json:"alias,omitempty"`
+
+	// Name: Required. Metric name.
+	Name string `json:"name,omitempty"`
+
+	// Operator: One of `+`, `-`, `/`, `%`, `*`.
+	Operator string `json:"operator,omitempty"`
+
+	// Value: Operand value should be provided when operator is set.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregationFunction")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregationFunction") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityReportQueryMetric) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityReportQueryMetric
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityReportResultMetadata: Contains
+// informations about the security report results.
+type GoogleCloudApigeeV1SecurityReportResultMetadata struct {
+	// Expires: Output only. Expire_time is set to 7 days after report
+	// creation. Query result will be unaccessable after this time. Example:
+	// "2021-05-04T13:38:52-07:00"
+	Expires string `json:"expires,omitempty"`
+
+	// Self: Self link of the query results. Example:
+	// `/organizations/myorg/environments/myenv/securityReports/9cfc0d85-0f30
+	// -46d6-ae6f-318d0cb961bd/result` or following format if query is
+	// running at host level:
+	// `/organizations/myorg/hostSecurityReports/9cfc0d85-0f30-46d6-ae6f-318d
+	// 0cb961bd/result`
+	Self string `json:"self,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Expires") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Expires") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityReportResultMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityReportResultMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityReportResultView: The response for
+// security report result view APIs.
+type GoogleCloudApigeeV1SecurityReportResultView struct {
+	// Code: Error code when there is a failure.
+	Code int64 `json:"code,omitempty"`
+
+	// Error: Error message when there is a failure.
+	Error string `json:"error,omitempty"`
+
+	// Metadata: Metadata contains information like metrics, dimenstions etc
+	// of the security report.
+	Metadata *GoogleCloudApigeeV1SecurityReportMetadata `json:"metadata,omitempty"`
+
+	// Rows: Rows of security report result. Each row is a JSON object.
+	// Example: {sum(message_count): 1, developer_app: "(not set)",…}
+	Rows []interface{} `json:"rows,omitempty"`
+
+	// State: State of retrieving ResultView.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityReportResultView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityReportResultView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudApigeeV1ServiceIssuersMapping struct {
 	// EmailIds: List of trusted issuer email ids.
 	EmailIds []string `json:"emailIds,omitempty"`
@@ -9571,8 +10737,8 @@ func (s *GoogleCloudApigeeV1UpdateError) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type GoogleIamV1AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -10227,6 +11393,44 @@ func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleTypeInterval: Represents a time interval, encoded as a
+// Timestamp start (inclusive) and a Timestamp end (exclusive). The
+// start must be less than or equal to the end. When the start equals
+// the end, the interval is empty (matches no time). When both start and
+// end are unspecified, the interval matches any time.
+type GoogleTypeInterval struct {
+	// EndTime: Optional. Exclusive end of the interval. If specified, a
+	// Timestamp matching this interval will have to be before the end.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Optional. Inclusive start of the interval. If specified, a
+	// Timestamp matching this interval will have to be the same or after
+	// the start.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleTypeInterval) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeInterval
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleTypeMoney: Represents an amount of money with its currency
 // type.
 type GoogleTypeMoney struct {
@@ -10571,14 +11775,35 @@ type OrganizationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete an Apigee organization. Only supported for
-// SubscriptionType TRIAL.
+// Delete: Delete an Apigee organization. For organizations with
+// BillingType EVALUATION, an immediate deletion is performed. For paid
+// organizations, a soft-deletion is performed. The organization can be
+// restored within the soft-deletion period - which can be controlled
+// using the retention field in the request.
 //
 // - name: Name of the organization. Use the following structure in your
 //   request: `organizations/{org}`.
 func (r *OrganizationsService) Delete(name string) *OrganizationsDeleteCall {
 	c := &OrganizationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Retention sets the optional parameter "retention": This setting is
+// only applicable for organizations that are soft-deleted (i.e.
+// BillingType is not EVALUATION). It controls how long Organization
+// data will be retained after the initial delete operation completes.
+// During this period, the Organization may be restored to its last
+// known state. After this period, the Organization will no longer be
+// able to be restored.
+//
+// Possible values:
+//   "DELETION_RETENTION_UNSPECIFIED" - Default data retention settings
+// will be applied.
+//   "MINIMUM" - Organization data will be retained for the minimum
+// period of 24 hours.
+func (c *OrganizationsDeleteCall) Retention(retention string) *OrganizationsDeleteCall {
+	c.urlParams_.Set("retention", retention)
 	return c
 }
 
@@ -10668,7 +11893,7 @@ func (c *OrganizationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete an Apigee organization. Only supported for SubscriptionType TRIAL.",
+	//   "description": "Delete an Apigee organization. For organizations with BillingType EVALUATION, an immediate deletion is performed. For paid organizations, a soft-deletion is performed. The organization can be restored within the soft-deletion period - which can be controlled using the retention field in the request.",
 	//   "flatPath": "v1/organizations/{organizationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.delete",
@@ -10681,6 +11906,19 @@ func (c *OrganizationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "retention": {
+	//       "description": "Optional. This setting is only applicable for organizations that are soft-deleted (i.e. BillingType is not EVALUATION). It controls how long Organization data will be retained after the initial delete operation completes. During this period, the Organization may be restored to its last known state. After this period, the Organization will no longer be able to be restored.",
+	//       "enum": [
+	//         "DELETION_RETENTION_UNSPECIFIED",
+	//         "MINIMUM"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default data retention settings will be applied.",
+	//         "Organization data will be retained for the minimum period of 24 hours."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -11017,6 +12255,156 @@ func (c *OrganizationsGetDeployedIngressConfigCall) Do(opts ...googleapi.CallOpt
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1IngressConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.getProjectMapping":
+
+type OrganizationsGetProjectMappingCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetProjectMapping: Gets the project ID and region for an Apigee
+// organization.
+//
+// - name: Apigee organization name in the following format:
+//   `organizations/{org}`.
+func (r *OrganizationsService) GetProjectMapping(name string) *OrganizationsGetProjectMappingCall {
+	c := &OrganizationsGetProjectMappingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsGetProjectMappingCall) Fields(s ...googleapi.Field) *OrganizationsGetProjectMappingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsGetProjectMappingCall) IfNoneMatch(entityTag string) *OrganizationsGetProjectMappingCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsGetProjectMappingCall) Context(ctx context.Context) *OrganizationsGetProjectMappingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsGetProjectMappingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetProjectMappingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:getProjectMapping")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.getProjectMapping" call.
+// Exactly one of *GoogleCloudApigeeV1OrganizationProjectMapping or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1OrganizationProjectMapping.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsGetProjectMappingCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1OrganizationProjectMapping, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1OrganizationProjectMapping{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the project ID and region for an Apigee organization.",
+	//   "flatPath": "v1/organizations/{organizationsId}:getProjectMapping",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.getProjectMapping",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Apigee organization name in the following format: `organizations/{org}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:getProjectMapping",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1OrganizationProjectMapping"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -16406,6 +17794,658 @@ func (c *OrganizationsApisKeyvaluemapsDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ]
 	// }
 
+}
+
+// method id "apigee.organizations.apis.keyvaluemaps.entries.create":
+
+type OrganizationsApisKeyvaluemapsEntriesCreateCall struct {
+	s                                *Service
+	parent                           string
+	googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Create: Creates key value entries in a key value map scoped to an
+// organization, environment, or API proxy.
+//
+// - parent: Scope as indicated by the URI in which to create the key
+//   value map entry. Use **one** of the following structures in your
+//   request: *
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
+//   . *
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}` *
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+func (r *OrganizationsApisKeyvaluemapsEntriesService) Create(parent string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsApisKeyvaluemapsEntriesCreateCall {
+	c := &OrganizationsApisKeyvaluemapsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1keyvalueentry = googlecloudapigeev1keyvalueentry
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsApisKeyvaluemapsEntriesCreateCall) Fields(s ...googleapi.Field) *OrganizationsApisKeyvaluemapsEntriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsApisKeyvaluemapsEntriesCreateCall) Context(ctx context.Context) *OrganizationsApisKeyvaluemapsEntriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsApisKeyvaluemapsEntriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApisKeyvaluemapsEntriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1keyvalueentry)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apis.keyvaluemaps.entries.create" call.
+// Exactly one of *GoogleCloudApigeeV1KeyValueEntry or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1KeyValueEntry.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsApisKeyvaluemapsEntriesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1KeyValueEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1KeyValueEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates key value entries in a key value map scoped to an organization, environment, or API proxy.",
+	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/keyvaluemaps/{keyvaluemapsId}/entries",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.apis.keyvaluemaps.entries.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Scope as indicated by the URI in which to create the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/apis/[^/]+/keyvaluemaps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/entries",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.apis.keyvaluemaps.entries.delete":
+
+type OrganizationsApisKeyvaluemapsEntriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a key value entry from a key value map scoped to an
+// organization, environment, or API proxy. **Note:** After you delete
+// the key value entry, the policy consuming the entry will continue to
+// function with its cached values for a few minutes. This is expected
+// behavior.
+//
+// - name: Scope as indicated by the URI in which to delete the key
+//   value map entry. Use **one** of the following structures in your
+//   request: *
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/
+//   entries/{entry}`. *
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}/entries/{entry}` *
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{en
+//   try}`.
+func (r *OrganizationsApisKeyvaluemapsEntriesService) Delete(name string) *OrganizationsApisKeyvaluemapsEntriesDeleteCall {
+	c := &OrganizationsApisKeyvaluemapsEntriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsApisKeyvaluemapsEntriesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsApisKeyvaluemapsEntriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsApisKeyvaluemapsEntriesDeleteCall) Context(ctx context.Context) *OrganizationsApisKeyvaluemapsEntriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsApisKeyvaluemapsEntriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApisKeyvaluemapsEntriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apis.keyvaluemaps.entries.delete" call.
+// Exactly one of *GoogleCloudApigeeV1KeyValueEntry or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1KeyValueEntry.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsApisKeyvaluemapsEntriesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1KeyValueEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1KeyValueEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Note:** After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior.",
+	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.apis.keyvaluemaps.entries.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Scope as indicated by the URI in which to delete the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/apis/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.apis.keyvaluemaps.entries.get":
+
+type OrganizationsApisKeyvaluemapsEntriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the Key value entry value for org, env or apis scoped Key
+// value map.
+//
+// - name: Scope as indicated by the URI in which to fetch the key value
+//   map entry/value. Use **one** of the following structures in your
+//   request: *
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/
+//   entries/{entry}`. *
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}/entries/{entry}` *
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{en
+//   try}`.
+func (r *OrganizationsApisKeyvaluemapsEntriesService) Get(name string) *OrganizationsApisKeyvaluemapsEntriesGetCall {
+	c := &OrganizationsApisKeyvaluemapsEntriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsApisKeyvaluemapsEntriesGetCall) Fields(s ...googleapi.Field) *OrganizationsApisKeyvaluemapsEntriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsApisKeyvaluemapsEntriesGetCall) IfNoneMatch(entityTag string) *OrganizationsApisKeyvaluemapsEntriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsApisKeyvaluemapsEntriesGetCall) Context(ctx context.Context) *OrganizationsApisKeyvaluemapsEntriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsApisKeyvaluemapsEntriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApisKeyvaluemapsEntriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apis.keyvaluemaps.entries.get" call.
+// Exactly one of *GoogleCloudApigeeV1KeyValueEntry or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1KeyValueEntry.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsApisKeyvaluemapsEntriesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1KeyValueEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1KeyValueEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the Key value entry value for org, env or apis scoped Key value map.",
+	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.apis.keyvaluemaps.entries.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Scope as indicated by the URI in which to fetch the key value map entry/value. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/apis/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.apis.keyvaluemaps.entries.list":
+
+type OrganizationsApisKeyvaluemapsEntriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists key value entries for key values maps scoped to an
+// organization, environment, or API proxy.
+//
+// - parent: Scope as indicated by the URI in which to list key value
+//   maps. Use **one** of the following structures in your request: *
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
+//   . *
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}` *
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+func (r *OrganizationsApisKeyvaluemapsEntriesService) List(parent string) *OrganizationsApisKeyvaluemapsEntriesListCall {
+	c := &OrganizationsApisKeyvaluemapsEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// key value entries to return. If unspecified, at most 100 entries will
+// be returned.
+func (c *OrganizationsApisKeyvaluemapsEntriesListCall) PageSize(pageSize int64) *OrganizationsApisKeyvaluemapsEntriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token. If
+// provides, must be a valid key value entry returned from a previous
+// call that can be used to retrieve the next page.
+func (c *OrganizationsApisKeyvaluemapsEntriesListCall) PageToken(pageToken string) *OrganizationsApisKeyvaluemapsEntriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsApisKeyvaluemapsEntriesListCall) Fields(s ...googleapi.Field) *OrganizationsApisKeyvaluemapsEntriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsApisKeyvaluemapsEntriesListCall) IfNoneMatch(entityTag string) *OrganizationsApisKeyvaluemapsEntriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsApisKeyvaluemapsEntriesListCall) Context(ctx context.Context) *OrganizationsApisKeyvaluemapsEntriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsApisKeyvaluemapsEntriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApisKeyvaluemapsEntriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apis.keyvaluemaps.entries.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListKeyValueEntriesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListKeyValueEntriesResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsApisKeyvaluemapsEntriesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListKeyValueEntriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1ListKeyValueEntriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists key value entries for key values maps scoped to an organization, environment, or API proxy.",
+	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/keyvaluemaps/{keyvaluemapsId}/entries",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.apis.keyvaluemaps.entries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of key value entries to return. If unspecified, at most 100 entries will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token. If provides, must be a valid key value entry returned from a previous call that can be used to retrieve the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Scope as indicated by the URI in which to list key value maps. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/apis/[^/]+/keyvaluemaps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/entries",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListKeyValueEntriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsApisKeyvaluemapsEntriesListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListKeyValueEntriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "apigee.organizations.apis.revisions.delete":
@@ -26647,7 +28687,9 @@ type OrganizationsEnvironmentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an environment from an organization.
+// Delete: Deletes an environment from an organization. **Note**: You
+// must delete all key value maps and key value entries before you can
+// delete an environment.
 //
 // - name: Name of the environment. Use the following structure in your
 //   request: `organizations/{org}/environments/{env}`.
@@ -26743,7 +28785,7 @@ func (c *OrganizationsEnvironmentsDeleteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an environment from an organization.",
+	//   "description": "Deletes an environment from an organization. **Note**: You must delete all key value maps and key value entries before you can delete an environment.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.environments.delete",
@@ -27233,8 +29275,9 @@ type OrganizationsEnvironmentsGetIamPolicyCall struct {
 // call this API.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsEnvironmentsService) GetIamPolicy(resource string) *OrganizationsEnvironmentsGetIamPolicyCall {
 	c := &OrganizationsEnvironmentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -27373,7 +29416,7 @@ func (c *OrganizationsEnvironmentsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -27558,8 +29601,9 @@ type OrganizationsEnvironmentsSetIamPolicyCall struct {
 // call this API.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsEnvironmentsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *OrganizationsEnvironmentsSetIamPolicyCall {
 	c := &OrganizationsEnvironmentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -27667,7 +29711,7 @@ func (c *OrganizationsEnvironmentsSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -27840,7 +29884,8 @@ type OrganizationsEnvironmentsTestIamPermissionsCall struct {
 // permission set is returned (a NOT_FOUND error is not returned).
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *OrganizationsEnvironmentsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *OrganizationsEnvironmentsTestIamPermissionsCall {
 	c := &OrganizationsEnvironmentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -27950,7 +29995,7 @@ func (c *OrganizationsEnvironmentsTestIamPermissionsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -34657,6 +36702,658 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsDeleteCall) Do(opts ...googleapi.C
 
 }
 
+// method id "apigee.organizations.environments.keyvaluemaps.entries.create":
+
+type OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall struct {
+	s                                *Service
+	parent                           string
+	googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Create: Creates key value entries in a key value map scoped to an
+// organization, environment, or API proxy.
+//
+// - parent: Scope as indicated by the URI in which to create the key
+//   value map entry. Use **one** of the following structures in your
+//   request: *
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
+//   . *
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}` *
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) Create(parent string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall {
+	c := &OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1keyvalueentry = googlecloudapigeev1keyvalueentry
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall) Context(ctx context.Context) *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1keyvalueentry)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.keyvaluemaps.entries.create" call.
+// Exactly one of *GoogleCloudApigeeV1KeyValueEntry or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1KeyValueEntry.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1KeyValueEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1KeyValueEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates key value entries in a key value map scoped to an organization, environment, or API proxy.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keyvaluemaps/{keyvaluemapsId}/entries",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.environments.keyvaluemaps.entries.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Scope as indicated by the URI in which to create the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/keyvaluemaps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/entries",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.keyvaluemaps.entries.delete":
+
+type OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a key value entry from a key value map scoped to an
+// organization, environment, or API proxy. **Note:** After you delete
+// the key value entry, the policy consuming the entry will continue to
+// function with its cached values for a few minutes. This is expected
+// behavior.
+//
+// - name: Scope as indicated by the URI in which to delete the key
+//   value map entry. Use **one** of the following structures in your
+//   request: *
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/
+//   entries/{entry}`. *
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}/entries/{entry}` *
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{en
+//   try}`.
+func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) Delete(name string) *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall {
+	c := &OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall) Context(ctx context.Context) *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.keyvaluemaps.entries.delete" call.
+// Exactly one of *GoogleCloudApigeeV1KeyValueEntry or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1KeyValueEntry.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1KeyValueEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1KeyValueEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Note:** After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.environments.keyvaluemaps.entries.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Scope as indicated by the URI in which to delete the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.keyvaluemaps.entries.get":
+
+type OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the Key value entry value for org, env or apis scoped Key
+// value map.
+//
+// - name: Scope as indicated by the URI in which to fetch the key value
+//   map entry/value. Use **one** of the following structures in your
+//   request: *
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/
+//   entries/{entry}`. *
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}/entries/{entry}` *
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{en
+//   try}`.
+func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) Get(name string) *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall {
+	c := &OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall) Context(ctx context.Context) *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.keyvaluemaps.entries.get" call.
+// Exactly one of *GoogleCloudApigeeV1KeyValueEntry or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1KeyValueEntry.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1KeyValueEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1KeyValueEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the Key value entry value for org, env or apis scoped Key value map.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.keyvaluemaps.entries.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Scope as indicated by the URI in which to fetch the key value map entry/value. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.keyvaluemaps.entries.list":
+
+type OrganizationsEnvironmentsKeyvaluemapsEntriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists key value entries for key values maps scoped to an
+// organization, environment, or API proxy.
+//
+// - parent: Scope as indicated by the URI in which to list key value
+//   maps. Use **one** of the following structures in your request: *
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
+//   . *
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}` *
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) List(parent string) *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall {
+	c := &OrganizationsEnvironmentsKeyvaluemapsEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// key value entries to return. If unspecified, at most 100 entries will
+// be returned.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) PageSize(pageSize int64) *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token. If
+// provides, must be a valid key value entry returned from a previous
+// call that can be used to retrieve the next page.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) PageToken(pageToken string) *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) Context(ctx context.Context) *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.keyvaluemaps.entries.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListKeyValueEntriesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListKeyValueEntriesResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListKeyValueEntriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1ListKeyValueEntriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists key value entries for key values maps scoped to an organization, environment, or API proxy.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keyvaluemaps/{keyvaluemapsId}/entries",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.keyvaluemaps.entries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of key value entries to return. If unspecified, at most 100 entries will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token. If provides, must be a valid key value entry returned from a previous call that can be used to retrieve the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Scope as indicated by the URI in which to list key value maps. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/keyvaluemaps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/entries",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListKeyValueEntriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListKeyValueEntriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "apigee.organizations.environments.optimizedStats.get":
 
 type OrganizationsEnvironmentsOptimizedStatsGetCall struct {
@@ -37391,6 +40088,866 @@ func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) Do(opts ...googleapi.
 	//   ]
 	// }
 
+}
+
+// method id "apigee.organizations.environments.securityReports.create":
+
+type OrganizationsEnvironmentsSecurityReportsCreateCall struct {
+	s                                      *Service
+	parent                                 string
+	googlecloudapigeev1securityreportquery *GoogleCloudApigeeV1SecurityReportQuery
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Create: Submit a report request to be processed in the background. If
+// the submission succeeds, the API returns a 200 status and an ID that
+// refer to the report request. In addition to the HTTP status 200, the
+// `state` of "enqueued" means that the request succeeded.
+//
+// - parent: The parent resource name. Must be of the form
+//   `organizations/{org}/environments/{env}`.
+func (r *OrganizationsEnvironmentsSecurityReportsService) Create(parent string, googlecloudapigeev1securityreportquery *GoogleCloudApigeeV1SecurityReportQuery) *OrganizationsEnvironmentsSecurityReportsCreateCall {
+	c := &OrganizationsEnvironmentsSecurityReportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1securityreportquery = googlecloudapigeev1securityreportquery
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityReportsCreateCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityReportsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityReportsCreateCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityReportsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityReportsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityReportsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securityreportquery)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityReports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityReports.create" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityReport or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityReport.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityReportsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityReport, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1SecurityReport{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Submit a report request to be processed in the background. If the submission succeeds, the API returns a 200 status and an ID that refer to the report request. In addition to the HTTP status 200, the `state` of \"enqueued\" means that the request succeeded.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityReports",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.environments.securityReports.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource name. Must be of the form `organizations/{org}/environments/{env}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/securityReports",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityReportQuery"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityReport"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.securityReports.get":
+
+type OrganizationsEnvironmentsSecurityReportsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get security report status If the query is still in progress,
+// the `state` is set to "running" After the query has completed
+// successfully, `state` is set to "completed"
+//
+// - name: Name of the security report to get. Must be of the form
+//   `organizations/{org}/environments/{env}/securityReports/{reportId}`.
+func (r *OrganizationsEnvironmentsSecurityReportsService) Get(name string) *OrganizationsEnvironmentsSecurityReportsGetCall {
+	c := &OrganizationsEnvironmentsSecurityReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityReportsGetCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityReportsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsSecurityReportsGetCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsSecurityReportsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityReportsGetCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityReportsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityReportsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityReportsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityReports.get" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityReport or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityReport.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityReportsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityReport, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1SecurityReport{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get security report status If the query is still in progress, the `state` is set to \"running\" After the query has completed successfully, `state` is set to \"completed\"",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityReports/{securityReportsId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.securityReports.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the security report to get. Must be of the form `organizations/{org}/environments/{env}/securityReports/{reportId}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/securityReports/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityReport"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.securityReports.getResult":
+
+type OrganizationsEnvironmentsSecurityReportsGetResultCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetResult: After the query is completed, use this API to retrieve the
+// results as file. If the request succeeds, and there is a non-zero
+// result set, the result is downloaded to the client as a zipped JSON
+// file. The name of the downloaded file will be:
+// OfflineQueryResult-.zip Example:
+// `OfflineQueryResult-9cfc0d85-0f30-46d6-ae6f-318d0cb961bd.zip`
+//
+// - name: Name of the security report result to get. Must be of the
+//   form
+//   `organizations/{org}/environments/{env}/securityReports/{reportId}/r
+//   esult`.
+func (r *OrganizationsEnvironmentsSecurityReportsService) GetResult(name string) *OrganizationsEnvironmentsSecurityReportsGetResultCall {
+	c := &OrganizationsEnvironmentsSecurityReportsGetResultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityReportsGetResultCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityReportsGetResultCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsSecurityReportsGetResultCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsSecurityReportsGetResultCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityReportsGetResultCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityReportsGetResultCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityReportsGetResultCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityReportsGetResultCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityReports.getResult" call.
+// Exactly one of *GoogleApiHttpBody or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleApiHttpBody.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEnvironmentsSecurityReportsGetResultCall) Do(opts ...googleapi.CallOption) (*GoogleApiHttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleApiHttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "After the query is completed, use this API to retrieve the results as file. If the request succeeds, and there is a non-zero result set, the result is downloaded to the client as a zipped JSON file. The name of the downloaded file will be: OfflineQueryResult-.zip Example: `OfflineQueryResult-9cfc0d85-0f30-46d6-ae6f-318d0cb961bd.zip`",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityReports/{securityReportsId}/result",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.securityReports.getResult",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the security report result to get. Must be of the form `organizations/{org}/environments/{env}/securityReports/{reportId}/result`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/securityReports/[^/]+/result$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleApiHttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.securityReports.getResultView":
+
+type OrganizationsEnvironmentsSecurityReportsGetResultViewCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetResultView: After the query is completed, use this API to view the
+// query result when result size is small.
+//
+// - name: Name of the security report result view to get. Must be of
+//   the form
+//   `organizations/{org}/environments/{env}/securityReports/{reportId}/r
+//   esultView`.
+func (r *OrganizationsEnvironmentsSecurityReportsService) GetResultView(name string) *OrganizationsEnvironmentsSecurityReportsGetResultViewCall {
+	c := &OrganizationsEnvironmentsSecurityReportsGetResultViewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityReportsGetResultViewCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityReportsGetResultViewCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsSecurityReportsGetResultViewCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsSecurityReportsGetResultViewCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityReportsGetResultViewCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityReportsGetResultViewCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityReportsGetResultViewCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityReportsGetResultViewCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityReports.getResultView" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityReportResultView or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1SecurityReportResultView.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityReportsGetResultViewCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityReportResultView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1SecurityReportResultView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "After the query is completed, use this API to view the query result when result size is small.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityReports/{securityReportsId}/resultView",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.securityReports.getResultView",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the security report result view to get. Must be of the form `organizations/{org}/environments/{env}/securityReports/{reportId}/resultView`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/securityReports/[^/]+/resultView$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityReportResultView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.securityReports.list":
+
+type OrganizationsEnvironmentsSecurityReportsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Return a list of Security Reports
+//
+// - parent: The parent resource name. Must be of the form
+//   `organizations/{org}/environments/{env}`.
+func (r *OrganizationsEnvironmentsSecurityReportsService) List(parent string) *OrganizationsEnvironmentsSecurityReportsListCall {
+	c := &OrganizationsEnvironmentsSecurityReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Dataset sets the optional parameter "dataset": Filter response list
+// by dataset. Example: `api`, `mint`
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) Dataset(dataset string) *OrganizationsEnvironmentsSecurityReportsListCall {
+	c.urlParams_.Set("dataset", dataset)
+	return c
+}
+
+// From sets the optional parameter "from": Filter response list by
+// returning security reports that created after this date time. Time
+// must be in ISO date-time format like '2011-12-03T10:15:30Z'.
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) From(from string) *OrganizationsEnvironmentsSecurityReportsListCall {
+	c.urlParams_.Set("from", from)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of security report to return in the list response.
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) PageSize(pageSize int64) *OrganizationsEnvironmentsSecurityReportsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned
+// from the previous list response to fetch the next page.
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) PageToken(pageToken string) *OrganizationsEnvironmentsSecurityReportsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Status sets the optional parameter "status": Filter response list by
+// security reports status.
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) Status(status string) *OrganizationsEnvironmentsSecurityReportsListCall {
+	c.urlParams_.Set("status", status)
+	return c
+}
+
+// SubmittedBy sets the optional parameter "submittedBy": Filter
+// response list by user who submitted queries.
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) SubmittedBy(submittedBy string) *OrganizationsEnvironmentsSecurityReportsListCall {
+	c.urlParams_.Set("submittedBy", submittedBy)
+	return c
+}
+
+// To sets the optional parameter "to": Filter response list by
+// returning security reports that created before this date time. Time
+// must be in ISO date-time format like '2011-12-03T10:16:30Z'.
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) To(to string) *OrganizationsEnvironmentsSecurityReportsListCall {
+	c.urlParams_.Set("to", to)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityReportsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsSecurityReportsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityReportsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityReports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityReports.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListSecurityReportsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListSecurityReportsResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListSecurityReportsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1ListSecurityReportsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return a list of Security Reports",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityReports",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.securityReports.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "dataset": {
+	//       "description": "Filter response list by dataset. Example: `api`, `mint`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "from": {
+	//       "description": "Filter response list by returning security reports that created after this date time. Time must be in ISO date-time format like '2011-12-03T10:15:30Z'.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of security report to return in the list response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token returned from the previous list response to fetch the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource name. Must be of the form `organizations/{org}/environments/{env}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "status": {
+	//       "description": "Filter response list by security reports status.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "submittedBy": {
+	//       "description": "Filter response list by user who submitted queries.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "to": {
+	//       "description": "Filter response list by returning security reports that created before this date time. Time must be in ISO date-time format like '2011-12-03T10:16:30Z'.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/securityReports",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListSecurityReportsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsEnvironmentsSecurityReportsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListSecurityReportsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "apigee.organizations.environments.sharedflows.deployments.list":
@@ -40564,6 +44121,875 @@ func (c *OrganizationsHostQueriesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ]
 	// }
 
+}
+
+// method id "apigee.organizations.hostSecurityReports.create":
+
+type OrganizationsHostSecurityReportsCreateCall struct {
+	s                                      *Service
+	parent                                 string
+	googlecloudapigeev1securityreportquery *GoogleCloudApigeeV1SecurityReportQuery
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Create: Submit a query at host level to be processed in the
+// background. If the submission of the query succeeds, the API returns
+// a 201 status and an ID that refer to the query. In addition to the
+// HTTP status 201, the `state` of "enqueued" means that the request
+// succeeded.
+//
+// - parent: The parent resource name. Must be of the form
+//   `organizations/{org}`.
+func (r *OrganizationsHostSecurityReportsService) Create(parent string, googlecloudapigeev1securityreportquery *GoogleCloudApigeeV1SecurityReportQuery) *OrganizationsHostSecurityReportsCreateCall {
+	c := &OrganizationsHostSecurityReportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1securityreportquery = googlecloudapigeev1securityreportquery
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsHostSecurityReportsCreateCall) Fields(s ...googleapi.Field) *OrganizationsHostSecurityReportsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsHostSecurityReportsCreateCall) Context(ctx context.Context) *OrganizationsHostSecurityReportsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsHostSecurityReportsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsHostSecurityReportsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securityreportquery)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/hostSecurityReports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.hostSecurityReports.create" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityReport or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityReport.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsHostSecurityReportsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityReport, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1SecurityReport{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Submit a query at host level to be processed in the background. If the submission of the query succeeds, the API returns a 201 status and an ID that refer to the query. In addition to the HTTP status 201, the `state` of \"enqueued\" means that the request succeeded.",
+	//   "flatPath": "v1/organizations/{organizationsId}/hostSecurityReports",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.hostSecurityReports.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource name. Must be of the form `organizations/{org}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/hostSecurityReports",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityReportQuery"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityReport"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.hostSecurityReports.get":
+
+type OrganizationsHostSecurityReportsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get status of a query submitted at host level. If the query is
+// still in progress, the `state` is set to "running" After the query
+// has completed successfully, `state` is set to "completed"
+//
+// - name: Name of the security report to get. Must be of the form
+//   `organizations/{org}/securityReports/{reportId}`.
+func (r *OrganizationsHostSecurityReportsService) Get(name string) *OrganizationsHostSecurityReportsGetCall {
+	c := &OrganizationsHostSecurityReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsHostSecurityReportsGetCall) Fields(s ...googleapi.Field) *OrganizationsHostSecurityReportsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsHostSecurityReportsGetCall) IfNoneMatch(entityTag string) *OrganizationsHostSecurityReportsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsHostSecurityReportsGetCall) Context(ctx context.Context) *OrganizationsHostSecurityReportsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsHostSecurityReportsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsHostSecurityReportsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.hostSecurityReports.get" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityReport or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityReport.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsHostSecurityReportsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityReport, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1SecurityReport{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get status of a query submitted at host level. If the query is still in progress, the `state` is set to \"running\" After the query has completed successfully, `state` is set to \"completed\"",
+	//   "flatPath": "v1/organizations/{organizationsId}/hostSecurityReports/{hostSecurityReportsId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.hostSecurityReports.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the security report to get. Must be of the form `organizations/{org}/securityReports/{reportId}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/hostSecurityReports/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityReport"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.hostSecurityReports.getResult":
+
+type OrganizationsHostSecurityReportsGetResultCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetResult: After the query is completed, use this API to retrieve the
+// results. If the request succeeds, and there is a non-zero result set,
+// the result is downloaded to the client as a zipped JSON file. The
+// name of the downloaded file will be: OfflineQueryResult-.zip Example:
+// `OfflineQueryResult-9cfc0d85-0f30-46d6-ae6f-318d0cb961bd.zip`
+//
+// - name: Name of the security report result to get. Must be of the
+//   form `organizations/{org}/securityReports/{reportId}/result`.
+func (r *OrganizationsHostSecurityReportsService) GetResult(name string) *OrganizationsHostSecurityReportsGetResultCall {
+	c := &OrganizationsHostSecurityReportsGetResultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsHostSecurityReportsGetResultCall) Fields(s ...googleapi.Field) *OrganizationsHostSecurityReportsGetResultCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsHostSecurityReportsGetResultCall) IfNoneMatch(entityTag string) *OrganizationsHostSecurityReportsGetResultCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsHostSecurityReportsGetResultCall) Context(ctx context.Context) *OrganizationsHostSecurityReportsGetResultCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsHostSecurityReportsGetResultCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsHostSecurityReportsGetResultCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.hostSecurityReports.getResult" call.
+// Exactly one of *GoogleApiHttpBody or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleApiHttpBody.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsHostSecurityReportsGetResultCall) Do(opts ...googleapi.CallOption) (*GoogleApiHttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleApiHttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "After the query is completed, use this API to retrieve the results. If the request succeeds, and there is a non-zero result set, the result is downloaded to the client as a zipped JSON file. The name of the downloaded file will be: OfflineQueryResult-.zip Example: `OfflineQueryResult-9cfc0d85-0f30-46d6-ae6f-318d0cb961bd.zip`",
+	//   "flatPath": "v1/organizations/{organizationsId}/hostSecurityReports/{hostSecurityReportsId}/result",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.hostSecurityReports.getResult",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the security report result to get. Must be of the form `organizations/{org}/securityReports/{reportId}/result`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/hostSecurityReports/[^/]+/result$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleApiHttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.hostSecurityReports.getResultView":
+
+type OrganizationsHostSecurityReportsGetResultViewCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetResultView: After the query is completed, use this API to view the
+// query result when result size is small.
+//
+// - name: Name of the security report result view to get. Must be of
+//   the form
+//   `organizations/{org}/securityReports/{reportId}/resultView`.
+func (r *OrganizationsHostSecurityReportsService) GetResultView(name string) *OrganizationsHostSecurityReportsGetResultViewCall {
+	c := &OrganizationsHostSecurityReportsGetResultViewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsHostSecurityReportsGetResultViewCall) Fields(s ...googleapi.Field) *OrganizationsHostSecurityReportsGetResultViewCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsHostSecurityReportsGetResultViewCall) IfNoneMatch(entityTag string) *OrganizationsHostSecurityReportsGetResultViewCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsHostSecurityReportsGetResultViewCall) Context(ctx context.Context) *OrganizationsHostSecurityReportsGetResultViewCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsHostSecurityReportsGetResultViewCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsHostSecurityReportsGetResultViewCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.hostSecurityReports.getResultView" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityReportResultView or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1SecurityReportResultView.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsHostSecurityReportsGetResultViewCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityReportResultView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1SecurityReportResultView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "After the query is completed, use this API to view the query result when result size is small.",
+	//   "flatPath": "v1/organizations/{organizationsId}/hostSecurityReports/{hostSecurityReportsId}/resultView",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.hostSecurityReports.getResultView",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the security report result view to get. Must be of the form `organizations/{org}/securityReports/{reportId}/resultView`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/hostSecurityReports/[^/]+/resultView$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityReportResultView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.hostSecurityReports.list":
+
+type OrganizationsHostSecurityReportsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Return a list of Security Reports at host level.
+//
+// - parent: The parent resource name. Must be of the form
+//   `organizations/{org}`.
+func (r *OrganizationsHostSecurityReportsService) List(parent string) *OrganizationsHostSecurityReportsListCall {
+	c := &OrganizationsHostSecurityReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Dataset sets the optional parameter "dataset": Filter response list
+// by dataset. Example: `api`, `mint`
+func (c *OrganizationsHostSecurityReportsListCall) Dataset(dataset string) *OrganizationsHostSecurityReportsListCall {
+	c.urlParams_.Set("dataset", dataset)
+	return c
+}
+
+// EnvgroupHostname sets the optional parameter "envgroupHostname":
+// Required. Filter response list by hostname.
+func (c *OrganizationsHostSecurityReportsListCall) EnvgroupHostname(envgroupHostname string) *OrganizationsHostSecurityReportsListCall {
+	c.urlParams_.Set("envgroupHostname", envgroupHostname)
+	return c
+}
+
+// From sets the optional parameter "from": Filter response list by
+// returning security reports that created after this date time. Time
+// must be in ISO date-time format like '2011-12-03T10:15:30Z'.
+func (c *OrganizationsHostSecurityReportsListCall) From(from string) *OrganizationsHostSecurityReportsListCall {
+	c.urlParams_.Set("from", from)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of security report to return in the list response.
+func (c *OrganizationsHostSecurityReportsListCall) PageSize(pageSize int64) *OrganizationsHostSecurityReportsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned
+// from the previous list response to fetch the next page.
+func (c *OrganizationsHostSecurityReportsListCall) PageToken(pageToken string) *OrganizationsHostSecurityReportsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Status sets the optional parameter "status": Filter response list by
+// security report status.
+func (c *OrganizationsHostSecurityReportsListCall) Status(status string) *OrganizationsHostSecurityReportsListCall {
+	c.urlParams_.Set("status", status)
+	return c
+}
+
+// SubmittedBy sets the optional parameter "submittedBy": Filter
+// response list by user who submitted queries.
+func (c *OrganizationsHostSecurityReportsListCall) SubmittedBy(submittedBy string) *OrganizationsHostSecurityReportsListCall {
+	c.urlParams_.Set("submittedBy", submittedBy)
+	return c
+}
+
+// To sets the optional parameter "to": Filter response list by
+// returning security reports that created before this date time. Time
+// must be in ISO date-time format like '2011-12-03T10:16:30Z'.
+func (c *OrganizationsHostSecurityReportsListCall) To(to string) *OrganizationsHostSecurityReportsListCall {
+	c.urlParams_.Set("to", to)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsHostSecurityReportsListCall) Fields(s ...googleapi.Field) *OrganizationsHostSecurityReportsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsHostSecurityReportsListCall) IfNoneMatch(entityTag string) *OrganizationsHostSecurityReportsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsHostSecurityReportsListCall) Context(ctx context.Context) *OrganizationsHostSecurityReportsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsHostSecurityReportsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsHostSecurityReportsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/hostSecurityReports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.hostSecurityReports.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListSecurityReportsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListSecurityReportsResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsHostSecurityReportsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListSecurityReportsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1ListSecurityReportsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return a list of Security Reports at host level.",
+	//   "flatPath": "v1/organizations/{organizationsId}/hostSecurityReports",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.hostSecurityReports.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "dataset": {
+	//       "description": "Filter response list by dataset. Example: `api`, `mint`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "envgroupHostname": {
+	//       "description": "Required. Filter response list by hostname.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "from": {
+	//       "description": "Filter response list by returning security reports that created after this date time. Time must be in ISO date-time format like '2011-12-03T10:15:30Z'.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of security report to return in the list response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token returned from the previous list response to fetch the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource name. Must be of the form `organizations/{org}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "status": {
+	//       "description": "Filter response list by security report status.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "submittedBy": {
+	//       "description": "Filter response list by user who submitted queries.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "to": {
+	//       "description": "Filter response list by returning security reports that created before this date time. Time must be in ISO date-time format like '2011-12-03T10:16:30Z'.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/hostSecurityReports",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListSecurityReportsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsHostSecurityReportsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListSecurityReportsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "apigee.organizations.hostStats.get":
@@ -43800,6 +48226,658 @@ func (c *OrganizationsKeyvaluemapsDeleteCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "apigee.organizations.keyvaluemaps.entries.create":
+
+type OrganizationsKeyvaluemapsEntriesCreateCall struct {
+	s                                *Service
+	parent                           string
+	googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Create: Creates key value entries in a key value map scoped to an
+// organization, environment, or API proxy.
+//
+// - parent: Scope as indicated by the URI in which to create the key
+//   value map entry. Use **one** of the following structures in your
+//   request: *
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
+//   . *
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}` *
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+func (r *OrganizationsKeyvaluemapsEntriesService) Create(parent string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsKeyvaluemapsEntriesCreateCall {
+	c := &OrganizationsKeyvaluemapsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1keyvalueentry = googlecloudapigeev1keyvalueentry
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsKeyvaluemapsEntriesCreateCall) Fields(s ...googleapi.Field) *OrganizationsKeyvaluemapsEntriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsKeyvaluemapsEntriesCreateCall) Context(ctx context.Context) *OrganizationsKeyvaluemapsEntriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsKeyvaluemapsEntriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsKeyvaluemapsEntriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1keyvalueentry)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.keyvaluemaps.entries.create" call.
+// Exactly one of *GoogleCloudApigeeV1KeyValueEntry or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1KeyValueEntry.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsKeyvaluemapsEntriesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1KeyValueEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1KeyValueEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates key value entries in a key value map scoped to an organization, environment, or API proxy.",
+	//   "flatPath": "v1/organizations/{organizationsId}/keyvaluemaps/{keyvaluemapsId}/entries",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.keyvaluemaps.entries.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Scope as indicated by the URI in which to create the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/keyvaluemaps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/entries",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.keyvaluemaps.entries.delete":
+
+type OrganizationsKeyvaluemapsEntriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a key value entry from a key value map scoped to an
+// organization, environment, or API proxy. **Note:** After you delete
+// the key value entry, the policy consuming the entry will continue to
+// function with its cached values for a few minutes. This is expected
+// behavior.
+//
+// - name: Scope as indicated by the URI in which to delete the key
+//   value map entry. Use **one** of the following structures in your
+//   request: *
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/
+//   entries/{entry}`. *
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}/entries/{entry}` *
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{en
+//   try}`.
+func (r *OrganizationsKeyvaluemapsEntriesService) Delete(name string) *OrganizationsKeyvaluemapsEntriesDeleteCall {
+	c := &OrganizationsKeyvaluemapsEntriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsKeyvaluemapsEntriesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsKeyvaluemapsEntriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsKeyvaluemapsEntriesDeleteCall) Context(ctx context.Context) *OrganizationsKeyvaluemapsEntriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsKeyvaluemapsEntriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsKeyvaluemapsEntriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.keyvaluemaps.entries.delete" call.
+// Exactly one of *GoogleCloudApigeeV1KeyValueEntry or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1KeyValueEntry.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsKeyvaluemapsEntriesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1KeyValueEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1KeyValueEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Note:** After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior.",
+	//   "flatPath": "v1/organizations/{organizationsId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.keyvaluemaps.entries.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Scope as indicated by the URI in which to delete the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.keyvaluemaps.entries.get":
+
+type OrganizationsKeyvaluemapsEntriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the Key value entry value for org, env or apis scoped Key
+// value map.
+//
+// - name: Scope as indicated by the URI in which to fetch the key value
+//   map entry/value. Use **one** of the following structures in your
+//   request: *
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/
+//   entries/{entry}`. *
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}/entries/{entry}` *
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{en
+//   try}`.
+func (r *OrganizationsKeyvaluemapsEntriesService) Get(name string) *OrganizationsKeyvaluemapsEntriesGetCall {
+	c := &OrganizationsKeyvaluemapsEntriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsKeyvaluemapsEntriesGetCall) Fields(s ...googleapi.Field) *OrganizationsKeyvaluemapsEntriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsKeyvaluemapsEntriesGetCall) IfNoneMatch(entityTag string) *OrganizationsKeyvaluemapsEntriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsKeyvaluemapsEntriesGetCall) Context(ctx context.Context) *OrganizationsKeyvaluemapsEntriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsKeyvaluemapsEntriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsKeyvaluemapsEntriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.keyvaluemaps.entries.get" call.
+// Exactly one of *GoogleCloudApigeeV1KeyValueEntry or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1KeyValueEntry.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsKeyvaluemapsEntriesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1KeyValueEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1KeyValueEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the Key value entry value for org, env or apis scoped Key value map.",
+	//   "flatPath": "v1/organizations/{organizationsId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.keyvaluemaps.entries.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Scope as indicated by the URI in which to fetch the key value map entry/value. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}/entries/{entry}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}/entries/{entry}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}/entries/{entry}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.keyvaluemaps.entries.list":
+
+type OrganizationsKeyvaluemapsEntriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists key value entries for key values maps scoped to an
+// organization, environment, or API proxy.
+//
+// - parent: Scope as indicated by the URI in which to list key value
+//   maps. Use **one** of the following structures in your request: *
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
+//   . *
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}` *
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+func (r *OrganizationsKeyvaluemapsEntriesService) List(parent string) *OrganizationsKeyvaluemapsEntriesListCall {
+	c := &OrganizationsKeyvaluemapsEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// key value entries to return. If unspecified, at most 100 entries will
+// be returned.
+func (c *OrganizationsKeyvaluemapsEntriesListCall) PageSize(pageSize int64) *OrganizationsKeyvaluemapsEntriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token. If
+// provides, must be a valid key value entry returned from a previous
+// call that can be used to retrieve the next page.
+func (c *OrganizationsKeyvaluemapsEntriesListCall) PageToken(pageToken string) *OrganizationsKeyvaluemapsEntriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsKeyvaluemapsEntriesListCall) Fields(s ...googleapi.Field) *OrganizationsKeyvaluemapsEntriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsKeyvaluemapsEntriesListCall) IfNoneMatch(entityTag string) *OrganizationsKeyvaluemapsEntriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsKeyvaluemapsEntriesListCall) Context(ctx context.Context) *OrganizationsKeyvaluemapsEntriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsKeyvaluemapsEntriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsKeyvaluemapsEntriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.keyvaluemaps.entries.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListKeyValueEntriesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListKeyValueEntriesResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsKeyvaluemapsEntriesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListKeyValueEntriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1ListKeyValueEntriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists key value entries for key values maps scoped to an organization, environment, or API proxy.",
+	//   "flatPath": "v1/organizations/{organizationsId}/keyvaluemaps/{keyvaluemapsId}/entries",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.keyvaluemaps.entries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of key value entries to return. If unspecified, at most 100 entries will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token. If provides, must be a valid key value entry returned from a previous call that can be used to retrieve the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Scope as indicated by the URI in which to list key value maps. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/keyvaluemaps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/entries",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListKeyValueEntriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsKeyvaluemapsEntriesListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListKeyValueEntriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "apigee.organizations.operations.get":
 
 type OrganizationsOperationsGetCall struct {
@@ -45220,6 +50298,1008 @@ func (c *OrganizationsReportsUpdateCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1CustomReport"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.securityProfiles.get":
+
+type OrganizationsSecurityProfilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: GetSecurityProfile gets the specified security profile. Returns
+// NOT_FOUND if security profile is not present for the specified
+// organization.
+//
+// - name: Security profile in the following format:
+//   `organizations/{org}/securityProfiles/{profile}'. Profile may
+//   optionally contain revision ID. If revision ID is not provided, the
+//   response will contain latest revision by default. Example:
+//   organizations/testOrg/securityProfiles/testProfile@5.
+func (r *OrganizationsSecurityProfilesService) Get(name string) *OrganizationsSecurityProfilesGetCall {
+	c := &OrganizationsSecurityProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityProfilesGetCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityProfilesGetCall) IfNoneMatch(entityTag string) *OrganizationsSecurityProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityProfilesGetCall) Context(ctx context.Context) *OrganizationsSecurityProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfiles.get" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityProfile or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityProfile.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityProfilesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1SecurityProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "GetSecurityProfile gets the specified security profile. Returns NOT_FOUND if security profile is not present for the specified organization.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityProfiles/{securityProfilesId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.securityProfiles.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Security profile in the following format: `organizations/{org}/securityProfiles/{profile}'. Profile may optionally contain revision ID. If revision ID is not provided, the response will contain latest revision by default. Example: organizations/testOrg/securityProfiles/testProfile@5",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityProfile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.securityProfiles.list":
+
+type OrganizationsSecurityProfilesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: ListSecurityProfiles lists all the security profiles associated
+// with the org including attached and unattached profiles.
+//
+// - parent: For a specific organization, list of all the security
+//   profiles. Format: `organizations/{org}`.
+func (r *OrganizationsSecurityProfilesService) List(parent string) *OrganizationsSecurityProfilesListCall {
+	c := &OrganizationsSecurityProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of profiles to return. The service may return fewer than this value.
+// If unspecified, at most 50 profiles will be returned.
+func (c *OrganizationsSecurityProfilesListCall) PageSize(pageSize int64) *OrganizationsSecurityProfilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListSecurityProfiles` call. Provide this to
+// retrieve the subsequent page.
+func (c *OrganizationsSecurityProfilesListCall) PageToken(pageToken string) *OrganizationsSecurityProfilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityProfilesListCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityProfilesListCall) IfNoneMatch(entityTag string) *OrganizationsSecurityProfilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityProfilesListCall) Context(ctx context.Context) *OrganizationsSecurityProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityProfilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfiles.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListSecurityProfilesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListSecurityProfilesResponse.ServerResponse.Header
+//  or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityProfilesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListSecurityProfilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1ListSecurityProfilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "ListSecurityProfiles lists all the security profiles associated with the org including attached and unattached profiles.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityProfiles",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.securityProfiles.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of profiles to return. The service may return fewer than this value. If unspecified, at most 50 profiles will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListSecurityProfiles` call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. For a specific organization, list of all the security profiles. Format: `organizations/{org}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/securityProfiles",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListSecurityProfilesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityProfilesListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListSecurityProfilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "apigee.organizations.securityProfiles.listRevisions":
+
+type OrganizationsSecurityProfilesListRevisionsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListRevisions: ListSecurityProfileRevisions lists all the revisions
+// of the security profile.
+//
+// - name: For a specific profile, list all the revisions. Format:
+//   `organizations/{org}/securityProfiles/{profile}`.
+func (r *OrganizationsSecurityProfilesService) ListRevisions(name string) *OrganizationsSecurityProfilesListRevisionsCall {
+	c := &OrganizationsSecurityProfilesListRevisionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of profile revisions to return. The service may return fewer than
+// this value. If unspecified, at most 50 revisions will be returned.
+func (c *OrganizationsSecurityProfilesListRevisionsCall) PageSize(pageSize int64) *OrganizationsSecurityProfilesListRevisionsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListSecurityProfileRevisions` call. Provide
+// this to retrieve the subsequent page.
+func (c *OrganizationsSecurityProfilesListRevisionsCall) PageToken(pageToken string) *OrganizationsSecurityProfilesListRevisionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityProfilesListRevisionsCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesListRevisionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityProfilesListRevisionsCall) IfNoneMatch(entityTag string) *OrganizationsSecurityProfilesListRevisionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityProfilesListRevisionsCall) Context(ctx context.Context) *OrganizationsSecurityProfilesListRevisionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityProfilesListRevisionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesListRevisionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:listRevisions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfiles.listRevisions" call.
+// Exactly one of
+// *GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityProfilesListRevisionsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "ListSecurityProfileRevisions lists all the revisions of the security profile.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityProfiles/{securityProfilesId}:listRevisions",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.securityProfiles.listRevisions",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. For a specific profile, list all the revisions. Format: `organizations/{org}/securityProfiles/{profile}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of profile revisions to return. The service may return fewer than this value. If unspecified, at most 50 revisions will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListSecurityProfileRevisions` call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:listRevisions",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityProfilesListRevisionsCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "apigee.organizations.securityProfiles.environments.computeEnvironmentScores":
+
+type OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall struct {
+	s                                                  *Service
+	profileEnvironment                                 string
+	googlecloudapigeev1computeenvironmentscoresrequest *GoogleCloudApigeeV1ComputeEnvironmentScoresRequest
+	urlParams_                                         gensupport.URLParams
+	ctx_                                               context.Context
+	header_                                            http.Header
+}
+
+// ComputeEnvironmentScores: ComputeEnvironmentScores calculates scores
+// for requested time range for the specified security profile and
+// environment.
+//
+// - profileEnvironment: Name of organization and environment and
+//   profile id for which score needs to be computed. Format:
+//   organizations/{org}/securityProfiles/{profile}/environments/{env}.
+func (r *OrganizationsSecurityProfilesEnvironmentsService) ComputeEnvironmentScores(profileEnvironment string, googlecloudapigeev1computeenvironmentscoresrequest *GoogleCloudApigeeV1ComputeEnvironmentScoresRequest) *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall {
+	c := &OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileEnvironment = profileEnvironment
+	c.googlecloudapigeev1computeenvironmentscoresrequest = googlecloudapigeev1computeenvironmentscoresrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall) Context(ctx context.Context) *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1computeenvironmentscoresrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+profileEnvironment}:computeEnvironmentScores")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileEnvironment": c.profileEnvironment,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfiles.environments.computeEnvironmentScores" call.
+// Exactly one of *GoogleCloudApigeeV1ComputeEnvironmentScoresResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudApigeeV1ComputeEnvironmentScoresResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ComputeEnvironmentScoresResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1ComputeEnvironmentScoresResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "ComputeEnvironmentScores calculates scores for requested time range for the specified security profile and environment.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityProfiles/{securityProfilesId}/environments/{environmentsId}:computeEnvironmentScores",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.securityProfiles.environments.computeEnvironmentScores",
+	//   "parameterOrder": [
+	//     "profileEnvironment"
+	//   ],
+	//   "parameters": {
+	//     "profileEnvironment": {
+	//       "description": "Required. Name of organization and environment and profile id for which score needs to be computed. Format: organizations/{org}/securityProfiles/{profile}/environments/{env}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityProfiles/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+profileEnvironment}:computeEnvironmentScores",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1ComputeEnvironmentScoresRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ComputeEnvironmentScoresResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ComputeEnvironmentScoresResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googlecloudapigeev1computeenvironmentscoresrequest.PageToken = pt }(c.googlecloudapigeev1computeenvironmentscoresrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googlecloudapigeev1computeenvironmentscoresrequest.PageToken = x.NextPageToken
+	}
+}
+
+// method id "apigee.organizations.securityProfiles.environments.create":
+
+type OrganizationsSecurityProfilesEnvironmentsCreateCall struct {
+	s                                                        *Service
+	parent                                                   string
+	googlecloudapigeev1securityprofileenvironmentassociation *GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// Create: CreateSecurityProfileEnvironmentAssociation creates profile
+// environment association i.e. attaches environment to security
+// profile.
+//
+// - parent: Name of organization and security profile ID. Format:
+//   organizations/{org}/securityProfiles/{profile}.
+func (r *OrganizationsSecurityProfilesEnvironmentsService) Create(parent string, googlecloudapigeev1securityprofileenvironmentassociation *GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation) *OrganizationsSecurityProfilesEnvironmentsCreateCall {
+	c := &OrganizationsSecurityProfilesEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1securityprofileenvironmentassociation = googlecloudapigeev1securityprofileenvironmentassociation
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityProfilesEnvironmentsCreateCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesEnvironmentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityProfilesEnvironmentsCreateCall) Context(ctx context.Context) *OrganizationsSecurityProfilesEnvironmentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityProfilesEnvironmentsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securityprofileenvironmentassociation)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/environments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfiles.environments.create" call.
+// Exactly one of
+// *GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityProfilesEnvironmentsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "CreateSecurityProfileEnvironmentAssociation creates profile environment association i.e. attaches environment to security profile.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityProfiles/{securityProfilesId}/environments",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.securityProfiles.environments.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of organization and security profile ID. Format: organizations/{org}/securityProfiles/{profile}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/environments",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.securityProfiles.environments.delete":
+
+type OrganizationsSecurityProfilesEnvironmentsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: DeleteSecurityProfileEnvironmentAssociation removes profile
+// environment association i.e. detaches environment from security
+// profile.
+//
+// - name: The name of the environment attachment to delete. Format:
+//   organizations/{org}/securityProfiles/{profile}/environments/{env}.
+func (r *OrganizationsSecurityProfilesEnvironmentsService) Delete(name string) *OrganizationsSecurityProfilesEnvironmentsDeleteCall {
+	c := &OrganizationsSecurityProfilesEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityProfilesEnvironmentsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesEnvironmentsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityProfilesEnvironmentsDeleteCall) Context(ctx context.Context) *OrganizationsSecurityProfilesEnvironmentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityProfilesEnvironmentsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfiles.environments.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsSecurityProfilesEnvironmentsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "DeleteSecurityProfileEnvironmentAssociation removes profile environment association i.e. detaches environment from security profile.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityProfiles/{securityProfilesId}/environments/{environmentsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.securityProfiles.environments.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the environment attachment to delete. Format: organizations/{org}/securityProfiles/{profile}/environments/{env}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityProfiles/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

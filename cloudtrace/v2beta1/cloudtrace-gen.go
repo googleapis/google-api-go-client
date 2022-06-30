@@ -222,8 +222,8 @@ func (s *ListTraceSinksResponse) MarshalJSON() ([]byte, error) {
 // OutputConfig: OutputConfig contains a destination for writing trace
 // data.
 type OutputConfig struct {
-	// Destination: The destination for writing trace data. Currently only
-	// BigQuery is supported. E.g.:
+	// Destination: The destination for writing trace data. Supported
+	// formats include:
 	// "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]"
 	Destination string `json:"destination,omitempty"`
 

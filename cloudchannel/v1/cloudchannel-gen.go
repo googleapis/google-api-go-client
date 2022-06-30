@@ -3693,6 +3693,50 @@ func (s *GoogleCloudChannelV1alpha1AssociationInfo) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1alpha1ChannelPartnerEvent: Represents Pub/Sub
+// messages about updates to a Channel Partner. You can retrieve updated
+// values through the ChannelPartnerLinks API.
+type GoogleCloudChannelV1alpha1ChannelPartnerEvent struct {
+	// ChannelPartner: Resource name for the Channel Partner Link.
+	// Channel_partner uses the format:
+	// accounts/{account_id}/channelPartnerLinks/{channel_partner_id}
+	ChannelPartner string `json:"channelPartner,omitempty"`
+
+	// EventType: Type of event performed on the Channel Partner.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value. Does not display if there are
+	// no errors.
+	//   "LINK_STATE_CHANGED" - The Channel Partner link state changed.
+	//   "PARTNER_ADVANTAGE_INFO_CHANGED" - The Channel Partner's Partner
+	// Advantage information changed. This can entail the Channel Partner's
+	// authorization to sell a product in a particular region.
+	EventType string `json:"eventType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelPartner") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChannelPartner") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1alpha1ChannelPartnerEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1alpha1ChannelPartnerEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1alpha1CommitmentSettings: Commitment settings for
 // commitment-based offers.
 type GoogleCloudChannelV1alpha1CommitmentSettings struct {
@@ -4202,6 +4246,10 @@ func (s *GoogleCloudChannelV1alpha1RenewalSettings) MarshalJSON() ([]byte, error
 // GoogleCloudChannelV1alpha1SubscriberEvent: Represents information
 // which resellers will get as part of notification from Pub/Sub.
 type GoogleCloudChannelV1alpha1SubscriberEvent struct {
+	// ChannelPartnerEvent: Channel Partner event sent as part of Pub/Sub
+	// event to partners.
+	ChannelPartnerEvent *GoogleCloudChannelV1alpha1ChannelPartnerEvent `json:"channelPartnerEvent,omitempty"`
+
 	// CustomerEvent: Customer event sent as part of Pub/Sub event to
 	// partners.
 	CustomerEvent *GoogleCloudChannelV1alpha1CustomerEvent `json:"customerEvent,omitempty"`
@@ -4210,20 +4258,21 @@ type GoogleCloudChannelV1alpha1SubscriberEvent struct {
 	// partners.
 	EntitlementEvent *GoogleCloudChannelV1alpha1EntitlementEvent `json:"entitlementEvent,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CustomerEvent") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ChannelPartnerEvent")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CustomerEvent") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ChannelPartnerEvent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4675,11 +4724,12 @@ func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 // not intended to model geographical locations (roads, towns,
 // mountains). In typical usage an address would be created via user
 // input or from importing existing data, depending on the type of
-// process. Advice on address input / editing: - Use an i18n-ready
-// address widget such as https://github.com/google/libaddressinput) -
-// Users should not be presented with UI elements for input or editing
-// of fields outside countries where that field is used. For more
-// guidance on how to use this schema, please see:
+// process. Advice on address input / editing: - Use an
+// internationalization-ready address widget such as
+// https://github.com/google/libaddressinput) - Users should not be
+// presented with UI elements for input or editing of fields outside
+// countries where that field is used. For more guidance on how to use
+// this schema, please see:
 // https://support.google.com/business/answer/6397478
 type GoogleTypePostalAddress struct {
 	// AddressLines: Unstructured address lines describing the lower levels

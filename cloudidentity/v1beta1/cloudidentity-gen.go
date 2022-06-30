@@ -84,6 +84,9 @@ const mtlsBasePath = "https://cloudidentity.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Private Service: https://www.googleapis.com/auth/cloud-identity
+	CloudIdentityScope = "https://www.googleapis.com/auth/cloud-identity"
+
 	// Private Service:
 	// https://www.googleapis.com/auth/cloud-identity.devices
 	CloudIdentityDevicesScope = "https://www.googleapis.com/auth/cloud-identity.devices"
@@ -103,6 +106,14 @@ const (
 	// members and their emails
 	CloudIdentityGroupsReadonlyScope = "https://www.googleapis.com/auth/cloud-identity.groups.readonly"
 
+	// See, send, or cancel any Cloud Identity UserInvitations to join your
+	// organization to users
+	CloudIdentityUserinvitationsScope = "https://www.googleapis.com/auth/cloud-identity.userinvitations"
+
+	// See, send, or cancel any Cloud Identity UserInvitations to join your
+	// organization to users
+	CloudIdentityUserinvitationsReadonlyScope = "https://www.googleapis.com/auth/cloud-identity.userinvitations.readonly"
+
 	// See, edit, configure, and delete your Google Cloud data and see the
 	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
@@ -111,11 +122,14 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/cloud-identity",
 		"https://www.googleapis.com/auth/cloud-identity.devices",
 		"https://www.googleapis.com/auth/cloud-identity.devices.lookup",
 		"https://www.googleapis.com/auth/cloud-identity.devices.readonly",
 		"https://www.googleapis.com/auth/cloud-identity.groups",
 		"https://www.googleapis.com/auth/cloud-identity.groups.readonly",
+		"https://www.googleapis.com/auth/cloud-identity.userinvitations",
+		"https://www.googleapis.com/auth/cloud-identity.userinvitations.readonly",
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -1286,39 +1300,6 @@ func (s *ExpiryDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FirstAdminInvitationInfo: Message containing first admin invitation
-// info for customers
-type FirstAdminInvitationInfo struct {
-	// IsFirstAdmin: Optional. To enable First Admin Invitation for Domained
-	// Customer
-	IsFirstAdmin bool `json:"isFirstAdmin,omitempty"`
-
-	// PrimaryDomain: Optional. Domain information of first admin invited
-	PrimaryDomain string `json:"primaryDomain,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IsFirstAdmin") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IsFirstAdmin") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FirstAdminInvitationInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod FirstAdminInvitationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GetMembershipGraphResponse: The response message for
 // MembershipsService.GetMembershipGraph.
 type GetMembershipGraphResponse struct {
@@ -1765,6 +1746,9 @@ type GoogleAppsCloudidentityDevicesV1Device struct {
 	// CreateTime: Output only. When the Company-Owned device was imported.
 	// This field is empty for BYOD devices.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// DeviceId: Unique identifier for the device.
+	DeviceId string `json:"deviceId,omitempty"`
 
 	// DeviceType: Output only. Type of device.
 	//
@@ -3409,33 +3393,6 @@ func (s *SecuritySettings) MarshalJSON() ([]byte, error) {
 // SendUserInvitationRequest: A request to send email for inviting
 // target user corresponding to the UserInvitation.
 type SendUserInvitationRequest struct {
-	// FirstAdminInvitationInfo: Optional. First admin invitation info for
-	// customers
-	FirstAdminInvitationInfo *FirstAdminInvitationInfo `json:"firstAdminInvitationInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "FirstAdminInvitationInfo") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FirstAdminInvitationInfo")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SendUserInvitationRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod SendUserInvitationRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -3839,7 +3796,11 @@ func (c *CustomersUserinvitationsCancelCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
+	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations"
+	//   ]
 	// }
 
 }
@@ -3986,7 +3947,12 @@ func (c *CustomersUserinvitationsGetCall) Do(opts ...googleapi.CallOption) (*Use
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "UserInvitation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
+	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations",
+	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations.readonly"
+	//   ]
 	// }
 
 }
@@ -4137,7 +4103,12 @@ func (c *CustomersUserinvitationsIsInvitableUserCall) Do(opts ...googleapi.CallO
 	//   "path": "v1beta1/{+name}:isInvitableUser",
 	//   "response": {
 	//     "$ref": "IsInvitableUserResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
+	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations",
+	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations.readonly"
+	//   ]
 	// }
 
 }
@@ -4344,7 +4315,12 @@ func (c *CustomersUserinvitationsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   "path": "v1beta1/{+parent}/userinvitations",
 	//   "response": {
 	//     "$ref": "ListUserInvitationsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
+	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations",
+	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations.readonly"
+	//   ]
 	// }
 
 }
@@ -4511,7 +4487,11 @@ func (c *CustomersUserinvitationsSendCall) Do(opts ...googleapi.CallOption) (*Op
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
+	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations"
+	//   ]
 	// }
 
 }
@@ -4657,6 +4637,7 @@ func (c *DevicesCancelWipeCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices"
 	//   ]
 	// }
@@ -4785,6 +4766,7 @@ func (c *DevicesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices"
 	//   ]
 	// }
@@ -4920,6 +4902,7 @@ func (c *DevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices"
 	//   ]
 	// }
@@ -5069,6 +5052,7 @@ func (c *DevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, error) {
 	//     "$ref": "Device"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices.readonly"
 	//   ]
@@ -5292,6 +5276,7 @@ func (c *DevicesListCall) Do(opts ...googleapi.CallOption) (*ListDevicesResponse
 	//     "$ref": "ListDevicesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices.readonly"
 	//   ]
@@ -5460,6 +5445,7 @@ func (c *DevicesWipeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices"
 	//   ]
 	// }
@@ -5606,6 +5592,7 @@ func (c *DevicesDeviceUsersApproveCall) Do(opts ...googleapi.CallOption) (*Opera
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices"
 	//   ]
 	// }
@@ -5752,6 +5739,7 @@ func (c *DevicesDeviceUsersBlockCall) Do(opts ...googleapi.CallOption) (*Operati
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices"
 	//   ]
 	// }
@@ -5900,6 +5888,7 @@ func (c *DevicesDeviceUsersCancelWipeCall) Do(opts ...googleapi.CallOption) (*Op
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices"
 	//   ]
 	// }
@@ -6037,6 +6026,7 @@ func (c *DevicesDeviceUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Operat
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices"
 	//   ]
 	// }
@@ -6187,6 +6177,7 @@ func (c *DevicesDeviceUsersGetCall) Do(opts ...googleapi.CallOption) (*DeviceUse
 	//     "$ref": "DeviceUser"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices.readonly"
 	//   ]
@@ -6393,6 +6384,7 @@ func (c *DevicesDeviceUsersListCall) Do(opts ...googleapi.CallOption) (*ListDevi
 	//     "$ref": "ListDeviceUsersResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices.readonly"
 	//   ]
@@ -6814,6 +6806,7 @@ func (c *DevicesDeviceUsersWipeCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices"
 	//   ]
 	// }
@@ -6992,6 +6985,7 @@ func (c *DevicesDeviceUsersClientStatesGetCall) Do(opts ...googleapi.CallOption)
 	//     "$ref": "ClientState"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices.readonly"
 	//   ]
@@ -7173,6 +7167,7 @@ func (c *DevicesDeviceUsersClientStatesPatchCall) Do(opts ...googleapi.CallOptio
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.devices"
 	//   ]
 	// }
@@ -7328,6 +7323,7 @@ func (c *GroupsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
@@ -7463,6 +7459,7 @@ func (c *GroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
@@ -7612,6 +7609,7 @@ func (c *GroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 	//     "$ref": "Group"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -7776,6 +7774,7 @@ func (c *GroupsGetSecuritySettingsCall) Do(opts ...googleapi.CallOption) (*Secur
 	//     "$ref": "SecuritySettings"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -7983,6 +7982,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	//     "$ref": "ListGroupsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -8170,6 +8170,7 @@ func (c *GroupsLookupCall) Do(opts ...googleapi.CallOption) (*LookupGroupNameRes
 	//     "$ref": "LookupGroupNameResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -8331,6 +8332,7 @@ func (c *GroupsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
@@ -8535,6 +8537,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//     "$ref": "SearchGroupsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -8715,6 +8718,7 @@ func (c *GroupsUpdateSecuritySettingsCall) Do(opts ...googleapi.CallOption) (*Op
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
@@ -8890,6 +8894,7 @@ func (c *GroupsMembershipsCheckTransitiveMembershipCall) Do(opts ...googleapi.Ca
 	//     "$ref": "CheckTransitiveMembershipResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -9035,6 +9040,7 @@ func (c *GroupsMembershipsCreateCall) Do(opts ...googleapi.CallOption) (*Operati
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
@@ -9171,6 +9177,7 @@ func (c *GroupsMembershipsDeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
@@ -9321,6 +9328,7 @@ func (c *GroupsMembershipsGetCall) Do(opts ...googleapi.CallOption) (*Membership
 	//     "$ref": "Membership"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -9499,6 +9507,7 @@ func (c *GroupsMembershipsGetMembershipGraphCall) Do(opts ...googleapi.CallOptio
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -9704,6 +9713,7 @@ func (c *GroupsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembe
 	//     "$ref": "ListMembershipsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -9908,6 +9918,7 @@ func (c *GroupsMembershipsLookupCall) Do(opts ...googleapi.CallOption) (*LookupM
 	//     "$ref": "LookupMembershipNameResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -10056,6 +10067,7 @@ func (c *GroupsMembershipsModifyMembershipRolesCall) Do(opts ...googleapi.CallOp
 	//     "$ref": "ModifyMembershipRolesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
@@ -10255,6 +10267,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) Do(opts ...googleapi.CallO
 	//     "$ref": "SearchTransitiveGroupsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -10458,6 +10471,7 @@ func (c *GroupsMembershipsSearchTransitiveMembershipsCall) Do(opts ...googleapi.
 	//     "$ref": "SearchTransitiveMembershipsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups",
 	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -10694,7 +10708,10 @@ func (c *OrgUnitsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListOrg
 	//   "path": "v1beta1/{+parent}/memberships",
 	//   "response": {
 	//     "$ref": "ListOrgMembershipsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity"
+	//   ]
 	// }
 
 }
@@ -10871,7 +10888,10 @@ func (c *OrgUnitsMembershipsMoveCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity"
+	//   ]
 	// }
 
 }

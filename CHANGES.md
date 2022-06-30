@@ -1,5 +1,76 @@
 # Changes
 
+## [0.86.0](https://github.com/googleapis/google-api-go-client/compare/v0.85.0...v0.86.0) (2022-06-28)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1603](https://github.com/googleapis/google-api-go-client/issues/1603) [#1601](https://github.com/googleapis/google-api-go-client/issues/1601) [#1600](https://github.com/googleapis/google-api-go-client/issues/1600) [#1599](https://github.com/googleapis/google-api-go-client/issues/1599) [#1596](https://github.com/googleapis/google-api-go-client/issues/1596)
+
+## [0.85.0](https://github.com/googleapis/google-api-go-client/compare/v0.84.0...v0.85.0) (2022-06-21)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1593](https://github.com/googleapis/google-api-go-client/issues/1593) [#1592](https://github.com/googleapis/google-api-go-client/issues/1592) [#1589](https://github.com/googleapis/google-api-go-client/issues/1589) [#1586](https://github.com/googleapis/google-api-go-client/issues/1586)
+
+## [0.84.0](https://github.com/googleapis/google-api-go-client/compare/v0.83.0...v0.84.0) (2022-06-14)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1584](https://github.com/googleapis/google-api-go-client/issues/1584) [#1581](https://github.com/googleapis/google-api-go-client/issues/1581) [#1580](https://github.com/googleapis/google-api-go-client/issues/1580) [#1576](https://github.com/googleapis/google-api-go-client/issues/1576) [#1574](https://github.com/googleapis/google-api-go-client/issues/1574)
+* **transport:** Integrate with enterprise certificate proxy ([#1570](https://github.com/googleapis/google-api-go-client/issues/1570)) ([1d5389b](https://github.com/googleapis/google-api-go-client/commit/1d5389b15d7a4669049cc446eba90285c67a554f))
+
+## [0.83.0](https://github.com/googleapis/google-api-go-client/compare/v0.82.0...v0.83.0) (2022-06-07)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1571](https://github.com/googleapis/google-api-go-client/issues/1571) [#1569](https://github.com/googleapis/google-api-go-client/issues/1569) [#1566](https://github.com/googleapis/google-api-go-client/issues/1566)
+
+## [0.82.0](https://github.com/googleapis/google-api-go-client/compare/v0.81.0...v0.82.0) (2022-06-01)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1565](https://github.com/googleapis/google-api-go-client/issues/1565) [#1562](https://github.com/googleapis/google-api-go-client/issues/1562) [#1561](https://github.com/googleapis/google-api-go-client/issues/1561) [#1560](https://github.com/googleapis/google-api-go-client/issues/1560) [#1557](https://github.com/googleapis/google-api-go-client/issues/1557)
+
+## [0.81.0](https://github.com/googleapis/google-api-go-client/compare/v0.80.0...v0.81.0) (2022-05-24)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1556](https://github.com/googleapis/google-api-go-client/issues/1556) [#1553](https://github.com/googleapis/google-api-go-client/issues/1553) [#1551](https://github.com/googleapis/google-api-go-client/issues/1551) [#1550](https://github.com/googleapis/google-api-go-client/issues/1550) [#1548](https://github.com/googleapis/google-api-go-client/issues/1548)
+
+## [0.80.0](https://github.com/googleapis/google-api-go-client/compare/v0.79.0...v0.80.0) (2022-05-17)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1547](https://github.com/googleapis/google-api-go-client/issues/1547) [#1545](https://github.com/googleapis/google-api-go-client/issues/1545) [#1543](https://github.com/googleapis/google-api-go-client/issues/1543) [#1541](https://github.com/googleapis/google-api-go-client/issues/1541) [#1539](https://github.com/googleapis/google-api-go-client/issues/1539)
+
+## [0.79.0](https://github.com/googleapis/google-api-go-client/compare/v0.78.0...v0.79.0) (2022-05-10)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1538](https://github.com/googleapis/google-api-go-client/issues/1538) [#1535](https://github.com/googleapis/google-api-go-client/issues/1535) [#1534](https://github.com/googleapis/google-api-go-client/issues/1534) [#1533](https://github.com/googleapis/google-api-go-client/issues/1533) [#1531](https://github.com/googleapis/google-api-go-client/issues/1531)
+
+## [0.78.0](https://github.com/googleapis/google-api-go-client/compare/v0.77.0...v0.78.0) (2022-05-03)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1530](https://github.com/googleapis/google-api-go-client/issues/1530) [#1527](https://github.com/googleapis/google-api-go-client/issues/1527)
+
+## [0.77.0](https://github.com/googleapis/google-api-go-client/compare/v0.76.0...v0.77.0) (2022-04-29)
+
+
+### Features
+
+* regen cloudcommerceprocurement v1 ([#1525](https://github.com/googleapis/google-api-go-client/issues/1525)) ([138823b](https://github.com/googleapis/google-api-go-client/commit/138823b86344b32485c692ef3fa4adff7d661825))
+
 ## [0.76.0](https://github.com/googleapis/google-api-go-client/compare/v0.75.0...v0.76.0) (2022-04-26)
 
 

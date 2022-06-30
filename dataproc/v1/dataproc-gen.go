@@ -746,8 +746,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. members can have the following values: allUsers: A
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. members can have the following values: allUsers: A
 	// special identifier that represents anyone who is on the internet;
 	// with or without a Google account. allAuthenticatedUsers: A special
 	// identifier that represents anyone who is authenticated with a Google
@@ -813,8 +813,10 @@ type CancelJobRequest struct {
 // Cluster: Describes the identifying information, config, and status of
 // a Dataproc cluster
 type Cluster struct {
-	// ClusterName: Required. The cluster name. Cluster names within a
-	// project must be unique. Names of deleted clusters can be reused.
+	// ClusterName: Required. The cluster name, which must be unique within
+	// a project. The name must start with a lowercase letter, and can
+	// contain up to 51 lowercase letters, numbers, and hyphens. It cannot
+	// end with a hyphen. The name of a deleted cluster can be reused.
 	ClusterName string `json:"clusterName,omitempty"`
 
 	// ClusterUuid: Output only. A cluster UUID (Unique Universal
@@ -851,14 +853,14 @@ type Cluster struct {
 	// StatusHistory: Output only. The previous cluster status.
 	StatusHistory []*ClusterStatus `json:"statusHistory,omitempty"`
 
-	// VirtualClusterConfig: Optional. The virtual cluster config, used when
-	// creating a Dataproc cluster that does not directly control the
+	// VirtualClusterConfig: Optional. The virtual cluster config is used
+	// when creating a Dataproc cluster that does not directly control the
 	// underlying compute resources, for example, when creating a
 	// Dataproc-on-GKE cluster
-	// (https://cloud.google.com/dataproc/docs/concepts/jobs/dataproc-gke#create-a-dataproc-on-gke-cluster).
-	// Note that Dataproc may set default values, and values may change when
-	// clusters are updated. Exactly one of config or virtualClusterConfig
-	// must be specified.
+	// (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke).
+	// Dataproc may set default values, and values may change when clusters
+	// are updated. Exactly one of config or virtual_cluster_config must be
+	// specified.
 	VirtualClusterConfig *VirtualClusterConfig `json:"virtualClusterConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -907,8 +909,7 @@ type ClusterConfig struct {
 	// to a Cloud Storage bucket.
 	ConfigBucket string `json:"configBucket,omitempty"`
 
-	// DataprocMetricConfig: Optional. The configuration(s) for a dataproc
-	// metric(s).
+	// DataprocMetricConfig: Optional. The config for Dataproc metrics.
 	DataprocMetricConfig *DataprocMetricConfig `json:"dataprocMetricConfig,omitempty"`
 
 	// EncryptionConfig: Optional. Encryption settings for the cluster.
@@ -922,10 +923,10 @@ type ClusterConfig struct {
 	// for all instances in a cluster.
 	GceClusterConfig *GceClusterConfig `json:"gceClusterConfig,omitempty"`
 
-	// GkeClusterConfig: Optional. Deprecated. Use VirtualClusterConfig
-	// based clusters instead. BETA. The Kubernetes Engine config for
-	// Dataproc clusters deployed to Kubernetes. Setting this is considered
-	// mutually exclusive with Compute Engine-based options such as
+	// GkeClusterConfig: Optional. BETA. The Kubernetes Engine config for
+	// Dataproc clusters deployed to The Kubernetes Engine config for
+	// Dataproc clusters deployed to Kubernetes. These config settings are
+	// mutually exclusive with Compute Engine-based options, such as
 	// gce_cluster_config, master_config, worker_config,
 	// secondary_worker_config, and autoscaling_config.
 	GkeClusterConfig *GkeClusterConfig `json:"gkeClusterConfig,omitempty"`
@@ -1008,7 +1009,7 @@ type ClusterMetrics struct {
 	// HdfsMetrics: The HDFS metrics.
 	HdfsMetrics map[string]string `json:"hdfsMetrics,omitempty"`
 
-	// YarnMetrics: The YARN metrics.
+	// YarnMetrics: YARN metrics.
 	YarnMetrics map[string]string `json:"yarnMetrics,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HdfsMetrics") to
@@ -1302,9 +1303,9 @@ func (s *ConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataprocMetricConfig: Contains dataproc metric config.
+// DataprocMetricConfig: Dataproc metric config.
 type DataprocMetricConfig struct {
-	// Metrics: Required. Metrics to be enabled.
+	// Metrics: Required. Metrics to enable.
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Metrics") to
@@ -1845,11 +1846,12 @@ type GkeClusterConfig struct {
 	// deployment.
 	NamespacedGkeDeploymentTarget *NamespacedGkeDeploymentTarget `json:"namespacedGkeDeploymentTarget,omitempty"`
 
-	// NodePoolTarget: Optional. GKE NodePools where workloads will be
-	// scheduled. At least one node pool must be assigned the 'default'
-	// role. Each role can be given to only a single NodePoolTarget. All
-	// NodePools must have the same location settings. If a nodePoolTarget
-	// is not specified, Dataproc constructs a default nodePoolTarget.
+	// NodePoolTarget: Optional. GKE node pools where workloads will be
+	// scheduled. At least one node pool must be assigned the DEFAULT
+	// GkeNodePoolTarget.Role. If a GkeNodePoolTarget is not specified,
+	// Dataproc constructs a DEFAULT GkeNodePoolTarget. Each role can be
+	// given to only one GkeNodePoolTarget. All node pools must have the
+	// same location settings.
 	NodePoolTarget []*GkeNodePoolTarget `json:"nodePoolTarget,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GkeClusterTarget") to
@@ -1882,6 +1884,13 @@ type GkeNodeConfig struct {
 	// (https://cloud.google.com/compute/docs/gpus) to attach to each node.
 	Accelerators []*GkeNodePoolAcceleratorConfig `json:"accelerators,omitempty"`
 
+	// BootDiskKmsKey: Optional. The Customer Managed Encryption Key (CMEK)
+	// (https://cloud.google.com/compute/docs/disks/customer-managed-encryption)
+	// used to encrypt the boot disk attached to each node in the node pool.
+	// Specify the key using the following format: projects/KEY_PROJECT_ID
+	// /locations/LOCATION/keyRings/RING_NAME/cryptoKeys/KEY_NAME.
+	BootDiskKmsKey string `json:"bootDiskKmsKey,omitempty"`
+
 	// LocalSsdCount: Optional. The number of local SSD disks to attach to
 	// the node, which is limited by the maximum number of disks allowable
 	// per zone (see Adding Local SSDs
@@ -1902,6 +1911,9 @@ type GkeNodeConfig struct {
 	// Preemptible: Optional. Whether the nodes are created as preemptible
 	// VM instances
 	// (https://cloud.google.com/compute/docs/instances/preemptible).
+	// Preemptible nodes cannot be used in a node pool with the CONTROLLER
+	// role or in the DEFAULT node pool if the CONTROLLER role is not
+	// assigned (the DEFAULT node pool will assume the CONTROLLER role).
 	Preemptible bool `json:"preemptible,omitempty"`
 
 	// Spot: Optional. Spot flag for enabling Spot VM, which is a rebrand of
@@ -1932,7 +1944,7 @@ func (s *GkeNodeConfig) MarshalJSON() ([]byte, error) {
 }
 
 // GkeNodePoolAcceleratorConfig: A GkeNodeConfigAcceleratorConfig
-// represents a Hardware Accelerator request for a NodePool.
+// represents a Hardware Accelerator request for a node pool.
 type GkeNodePoolAcceleratorConfig struct {
 	// AcceleratorCount: The number of accelerator cards exposed to an
 	// instance.
@@ -1975,13 +1987,13 @@ func (s *GkeNodePoolAcceleratorConfig) MarshalJSON() ([]byte, error) {
 // information the cluster autoscaler needs to adjust the size of the
 // node pool to the current cluster usage.
 type GkeNodePoolAutoscalingConfig struct {
-	// MaxNodeCount: The maximum number of nodes in the NodePool. Must be >=
-	// min_node_count. Note: Quota must be sufficient to scale up the
-	// cluster.
+	// MaxNodeCount: The maximum number of nodes in the node pool. Must be
+	// >= min_node_count, and must be > 0. Note: Quota must be sufficient to
+	// scale up the cluster.
 	MaxNodeCount int64 `json:"maxNodeCount,omitempty"`
 
-	// MinNodeCount: The minimum number of nodes in the NodePool. Must be >=
-	// 0 and <= max_node_count.
+	// MinNodeCount: The minimum number of nodes in the node pool. Must be
+	// >= 0 and <= max_node_count.
 	MinNodeCount int64 `json:"minNodeCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxNodeCount") to
@@ -2007,23 +2019,26 @@ func (s *GkeNodePoolAutoscalingConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GkeNodePoolConfig: The configuration of a GKE NodePool used by a
+// GkeNodePoolConfig: The configuration of a GKE node pool used by a
 // Dataproc-on-GKE cluster
 // (https://cloud.google.com/dataproc/docs/concepts/jobs/dataproc-gke#create-a-dataproc-on-gke-cluster).
 type GkeNodePoolConfig struct {
-	// Autoscaling: Optional. The autoscaler configuration for this
-	// NodePool. The autoscaler is enabled only when a valid configuration
-	// is present.
+	// Autoscaling: Optional. The autoscaler configuration for this node
+	// pool. The autoscaler is enabled only when a valid configuration is
+	// present.
 	Autoscaling *GkeNodePoolAutoscalingConfig `json:"autoscaling,omitempty"`
 
 	// Config: Optional. The node pool configuration.
 	Config *GkeNodeConfig `json:"config,omitempty"`
 
 	// Locations: Optional. The list of Compute Engine zones
-	// (https://cloud.google.com/compute/docs/zones#available) where
-	// NodePool's nodes will be located.Note: Currently, only one zone may
-	// be specified.If a location is not specified during NodePool creation,
-	// Dataproc will choose a location.
+	// (https://cloud.google.com/compute/docs/zones#available) where node
+	// pool nodes associated with a Dataproc on GKE virtual cluster will be
+	// located.Note: All node pools associated with a virtual cluster must
+	// be located in the same region as the virtual cluster, and they must
+	// be located in the same zone within that region.If a location is not
+	// specified during node pool creation, Dataproc on GKE will choose the
+	// zone.
 	Locations []string `json:"locations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Autoscaling") to
@@ -2049,32 +2064,38 @@ func (s *GkeNodePoolConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GkeNodePoolTarget: GKE NodePools that Dataproc workloads run on.
+// GkeNodePoolTarget: GKE node pools that Dataproc workloads run on.
 type GkeNodePoolTarget struct {
-	// NodePool: Required. The target GKE NodePool. Format:
+	// NodePool: Required. The target GKE node pool. Format:
 	// 'projects/{project}/locations/{location}/clusters/{cluster}/nodePools/
 	// {node_pool}'
 	NodePool string `json:"nodePool,omitempty"`
 
-	// NodePoolConfig: Input only. The configuration for the GKE NodePool.If
-	// specified, Dataproc attempts to create a NodePool with the specified
-	// shape. If one with the same name already exists, it is verified
-	// against all specified fields. If a field differs, the virtual cluster
-	// creation will fail.If omitted, any NodePool with the specified name
-	// is used. If a NodePool with the specified name does not exist,
-	// Dataproc create a NodePool with default values.This is an input only
-	// field. It will not be returned by the API.
+	// NodePoolConfig: Input only. The configuration for the GKE node
+	// pool.If specified, Dataproc attempts to create a node pool with the
+	// specified shape. If one with the same name already exists, it is
+	// verified against all specified fields. If a field differs, the
+	// virtual cluster creation will fail.If omitted, any node pool with the
+	// specified name is used. If a node pool with the specified name does
+	// not exist, Dataproc create a node pool with default values.This is an
+	// input only field. It will not be returned by the API.
 	NodePoolConfig *GkeNodePoolConfig `json:"nodePoolConfig,omitempty"`
 
-	// Roles: Required. The types of role for a GKE NodePool
+	// Roles: Required. The roles associated with the GKE node pool.
 	//
 	// Possible values:
 	//   "ROLE_UNSPECIFIED" - Role is unspecified.
-	//   "DEFAULT" - Any roles that are not directly assigned to a NodePool
-	// run on the default role's NodePool.
-	//   "CONTROLLER" - Run controllers and webhooks.
-	//   "SPARK_DRIVER" - Run spark driver.
-	//   "SPARK_EXECUTOR" - Run spark executors.
+	//   "DEFAULT" - At least one node pool must have the DEFAULT role. Work
+	// assigned to a role that is not associated with a node pool is
+	// assigned to the node pool with the DEFAULT role. For example, work
+	// assigned to the CONTROLLER role will be assigned to the node pool
+	// with the DEFAULT role if no node pool has the CONTROLLER role.
+	//   "CONTROLLER" - Run work associated with the Dataproc control plane
+	// (for example, controllers and webhooks). Very low resource
+	// requirements.
+	//   "SPARK_DRIVER" - Run work associated with a Spark driver of a job.
+	//   "SPARK_EXECUTOR" - Run work associated with a Spark executor of a
+	// job.
 	Roles []string `json:"roles,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NodePool") to
@@ -3466,25 +3487,25 @@ func (s *MetastoreConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Metric: Metric source to enable along with any optional metrics for
-// this source that override the dataproc defaults
+// Metric: The metric source to enable, with any optional metrics, to
+// override Dataproc default metrics.
 type Metric struct {
-	// MetricOverrides: Optional. Optional Metrics to override the dataproc
-	// default metrics configured for the metric source
+	// MetricOverrides: Optional. Optional Metrics to override the Dataproc
+	// default metrics configured for the metric source.
 	MetricOverrides []string `json:"metricOverrides,omitempty"`
 
-	// MetricSource: Required. MetricSource that should be enabled
+	// MetricSource: Required. MetricSource to enable.
 	//
 	// Possible values:
-	//   "METRIC_SOURCE_UNSPECIFIED" - Required unspecified metric source
-	//   "MONITORING_AGENT_DEFAULTS" - all default monitoring agent metrics
-	// that are published with prefix "agent.googleapis.com" when we enable
-	// a monitoring agent in Compute Engine
-	//   "HDFS" - Hdfs metric source
-	//   "SPARK" - Spark metric source
-	//   "YARN" - Yarn metric source
-	//   "SPARK_HISTORY_SERVER" - Spark history server metric source
-	//   "HIVESERVER2" - hiveserver2 metric source
+	//   "METRIC_SOURCE_UNSPECIFIED" - Required unspecified metric source.
+	//   "MONITORING_AGENT_DEFAULTS" - Default monitoring agent metrics,
+	// which are published with an agent.googleapis.com prefix when Dataproc
+	// enables the monitoring agent in Compute Engine.
+	//   "HDFS" - HDFS metric source.
+	//   "SPARK" - Spark metric source.
+	//   "YARN" - YARN metric source.
+	//   "SPARK_HISTORY_SERVER" - Spark History Server metric source.
+	//   "HIVESERVER2" - Hiveserver2 metric source.
 	MetricSource string `json:"metricSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MetricOverrides") to
@@ -3617,6 +3638,49 @@ type NodeInitializationAction struct {
 
 func (s *NodeInitializationAction) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeInitializationAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NodePool: indicating a list of workers of same type
+type NodePool struct {
+	// Id: Required. A unique id of the node pool. Primary and Secondary
+	// workers can be specified using special reserved ids
+	// PRIMARY_WORKER_POOL and SECONDARY_WORKER_POOL respectively. Aux node
+	// pools can be referenced using corresponding pool id.
+	Id string `json:"id,omitempty"`
+
+	// InstanceNames: Name of instances to be repaired. These instances must
+	// belong to specified node pool.
+	InstanceNames []string `json:"instanceNames,omitempty"`
+
+	// RepairAction: Required. Repair action to take on specified resources
+	// of the node pool.
+	//
+	// Possible values:
+	//   "REPAIR_ACTION_UNSPECIFIED" - No action will be taken by default.
+	//   "DELETE" - delete the specified list of nodes.
+	RepairAction string `json:"repairAction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodePool) MarshalJSON() ([]byte, error) {
+	type NoMethod NodePool
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4226,6 +4290,11 @@ type RepairClusterRequest struct {
 	// not exist.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
+	// NodePools: Optional. Node pools and corresponding repair action to be
+	// taken. All node pools should be unique in this request. i.e. Multiple
+	// entries for the same node pool id are not allowed.
+	NodePools []*NodePool `json:"nodePools,omitempty"`
+
 	// RequestId: Optional. A unique ID used to identify the request. If the
 	// server receives two RepairClusterRequests with the same ID, the
 	// second request is ignored, and the first google.longrunning.Operation
@@ -4474,7 +4543,7 @@ func (s *SessionOperationMetadata) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the resource.
 	// The size of the policy is limited to a few 10s of KB. An empty policy
-	// is a valid policy but certain Cloud Platform services (such as
+	// is a valid policy but certain Google Cloud services (such as
 	// Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -5318,8 +5387,8 @@ func (s *TemplateParameter) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the resource.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see IAM Overview
+	// Permissions with wildcards (such as * or storage.*) are not allowed.
+	// For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
@@ -5408,10 +5477,10 @@ func (s *ValueValidation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VirtualClusterConfig: Dataproc cluster config for a cluster that does
-// not directly control the underlying compute resources, such as a
+// VirtualClusterConfig: The Dataproc cluster config for a cluster that
+// does not directly control the underlying compute resources, such as a
 // Dataproc-on-GKE cluster
-// (https://cloud.google.com/dataproc/docs/concepts/jobs/dataproc-gke#create-a-dataproc-on-gke-cluster).
+// (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke).
 type VirtualClusterConfig struct {
 	// AuxiliaryServicesConfig: Optional. Configuration of auxiliary
 	// services used by this cluster.
@@ -5421,7 +5490,7 @@ type VirtualClusterConfig struct {
 	// Dataproc cluster on Kubernetes.
 	KubernetesClusterConfig *KubernetesClusterConfig `json:"kubernetesClusterConfig,omitempty"`
 
-	// StagingBucket: Optional. A Storage bucket used to stage job
+	// StagingBucket: Optional. A Cloud Storage bucket used to stage job
 	// dependencies, config files, and job driver console output. If you do
 	// not specify a staging bucket, Cloud Dataproc will determine a Cloud
 	// Storage location (US, ASIA, or EU) for your cluster's staging bucket
@@ -6278,8 +6347,9 @@ type ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsAutoscalingPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall {
 	c := &ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6387,7 +6457,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/autoscalingPolicies/[^/]+$",
 	//       "required": true,
@@ -6624,8 +6694,9 @@ type ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall struct {
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsAutoscalingPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall {
 	c := &ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6733,7 +6804,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/autoscalingPolicies/[^/]+$",
 	//       "required": true,
@@ -6773,7 +6844,8 @@ type ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsAutoscalingPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall {
 	c := &ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6882,7 +6954,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/autoscalingPolicies/[^/]+$",
 	//       "required": true,
@@ -8196,8 +8268,9 @@ type ProjectsLocationsWorkflowTemplatesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsWorkflowTemplatesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsWorkflowTemplatesGetIamPolicyCall {
 	c := &ProjectsLocationsWorkflowTemplatesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8305,7 +8378,7 @@ func (c *ProjectsLocationsWorkflowTemplatesGetIamPolicyCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflowTemplates/[^/]+$",
 	//       "required": true,
@@ -8879,8 +8952,9 @@ type ProjectsLocationsWorkflowTemplatesSetIamPolicyCall struct {
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsWorkflowTemplatesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsWorkflowTemplatesSetIamPolicyCall {
 	c := &ProjectsLocationsWorkflowTemplatesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8988,7 +9062,7 @@ func (c *ProjectsLocationsWorkflowTemplatesSetIamPolicyCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflowTemplates/[^/]+$",
 	//       "required": true,
@@ -9028,7 +9102,8 @@ type ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsWorkflowTemplatesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall {
 	c := &ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9137,7 +9212,7 @@ func (c *ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflowTemplates/[^/]+$",
 	//       "required": true,
@@ -9769,8 +9844,9 @@ type ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsAutoscalingPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall {
 	c := &ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9878,7 +9954,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/autoscalingPolicies/[^/]+$",
 	//       "required": true,
@@ -10115,8 +10191,9 @@ type ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall struct {
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsAutoscalingPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall {
 	c := &ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10224,7 +10301,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/autoscalingPolicies/[^/]+$",
 	//       "required": true,
@@ -10264,7 +10341,8 @@ type ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsRegionsAutoscalingPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall {
 	c := &ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10373,7 +10451,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/autoscalingPolicies/[^/]+$",
 	//       "required": true,
@@ -11293,8 +11371,9 @@ type ProjectsRegionsClustersGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsClustersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsClustersGetIamPolicyCall {
 	c := &ProjectsRegionsClustersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11402,7 +11481,7 @@ func (c *ProjectsRegionsClustersGetIamPolicyCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -12234,8 +12313,9 @@ type ProjectsRegionsClustersSetIamPolicyCall struct {
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsClustersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsClustersSetIamPolicyCall {
 	c := &ProjectsRegionsClustersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12343,7 +12423,7 @@ func (c *ProjectsRegionsClustersSetIamPolicyCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -12711,7 +12791,8 @@ type ProjectsRegionsClustersTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsRegionsClustersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsClustersTestIamPermissionsCall {
 	c := &ProjectsRegionsClustersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12820,7 +12901,7 @@ func (c *ProjectsRegionsClustersTestIamPermissionsCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -13348,8 +13429,9 @@ type ProjectsRegionsJobsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsJobsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsJobsGetIamPolicyCall {
 	c := &ProjectsRegionsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13457,7 +13539,7 @@ func (c *ProjectsRegionsJobsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -13939,8 +14021,9 @@ type ProjectsRegionsJobsSetIamPolicyCall struct {
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsJobsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsJobsSetIamPolicyCall {
 	c := &ProjectsRegionsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14048,7 +14131,7 @@ func (c *ProjectsRegionsJobsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -14394,7 +14477,8 @@ type ProjectsRegionsJobsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsRegionsJobsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsJobsTestIamPermissionsCall {
 	c := &ProjectsRegionsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14503,7 +14587,7 @@ func (c *ProjectsRegionsJobsTestIamPermissionsCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -14964,8 +15048,9 @@ type ProjectsRegionsOperationsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsOperationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsOperationsGetIamPolicyCall {
 	c := &ProjectsRegionsOperationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15073,7 +15158,7 @@ func (c *ProjectsRegionsOperationsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/operations/[^/]+$",
 	//       "required": true,
@@ -15323,8 +15408,9 @@ type ProjectsRegionsOperationsSetIamPolicyCall struct {
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsOperationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsOperationsSetIamPolicyCall {
 	c := &ProjectsRegionsOperationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15432,7 +15518,7 @@ func (c *ProjectsRegionsOperationsSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/operations/[^/]+$",
 	//       "required": true,
@@ -15472,7 +15558,8 @@ type ProjectsRegionsOperationsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsRegionsOperationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsOperationsTestIamPermissionsCall {
 	c := &ProjectsRegionsOperationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15581,7 +15668,7 @@ func (c *ProjectsRegionsOperationsTestIamPermissionsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/operations/[^/]+$",
 	//       "required": true,
@@ -16091,8 +16178,9 @@ type ProjectsRegionsWorkflowTemplatesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsWorkflowTemplatesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsWorkflowTemplatesGetIamPolicyCall {
 	c := &ProjectsRegionsWorkflowTemplatesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -16200,7 +16288,7 @@ func (c *ProjectsRegionsWorkflowTemplatesGetIamPolicyCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/workflowTemplates/[^/]+$",
 	//       "required": true,
@@ -16774,8 +16862,9 @@ type ProjectsRegionsWorkflowTemplatesSetIamPolicyCall struct {
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsWorkflowTemplatesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsWorkflowTemplatesSetIamPolicyCall {
 	c := &ProjectsRegionsWorkflowTemplatesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -16883,7 +16972,7 @@ func (c *ProjectsRegionsWorkflowTemplatesSetIamPolicyCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/workflowTemplates/[^/]+$",
 	//       "required": true,
@@ -16923,7 +17012,8 @@ type ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsRegionsWorkflowTemplatesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall {
 	c := &ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -17032,7 +17122,7 @@ func (c *ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/workflowTemplates/[^/]+$",
 	//       "required": true,

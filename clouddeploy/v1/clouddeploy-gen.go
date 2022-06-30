@@ -218,6 +218,17 @@ type ProjectsLocationsTargetsService struct {
 	s *Service
 }
 
+// AbandonReleaseRequest: The request object used by `AbandonRelease`.
+type AbandonReleaseRequest struct {
+}
+
+// AbandonReleaseResponse: The response object for `AbandonRelease`.
+type AbandonReleaseResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // AnthosCluster: Information specifying an Anthos Cluster.
 type AnthosCluster struct {
 	// Membership: Membership of the GKE Hub-registered cluster to which to
@@ -300,8 +311,8 @@ type ApproveRolloutResponse struct {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -664,6 +675,10 @@ type DeliveryPipeline struct {
 	// a `DeliveryPipeline`.
 	SerialPipeline *SerialPipeline `json:"serialPipeline,omitempty"`
 
+	// Suspended: When suspended, no new releases or rollouts can be
+	// created, but in-progress ones will complete.
+	Suspended bool `json:"suspended,omitempty"`
+
 	// Uid: Output only. Unique identifier of the `DeliveryPipeline`.
 	Uid string `json:"uid,omitempty"`
 
@@ -765,6 +780,11 @@ type ExecutionConfig struct {
 
 	// DefaultPool: Optional. Use default Cloud Build pool.
 	DefaultPool *DefaultPool `json:"defaultPool,omitempty"`
+
+	// ExecutionTimeout: Optional. Execution timeout for a Cloud Build
+	// Execution. This must be between 10m and 24h in seconds format. If
+	// unspecified, a default timeout of 1h is used.
+	ExecutionTimeout string `json:"executionTimeout,omitempty"`
 
 	// PrivatePool: Optional. Use private Cloud Build pool.
 	PrivatePool *PrivatePool `json:"privatePool,omitempty"`
@@ -1540,6 +1560,10 @@ func (s *PrivatePool) MarshalJSON() ([]byte, error) {
 // `Release` defines a specific Skaffold configuration instance that can
 // be deployed.
 type Release struct {
+	// Abandoned: Output only. Indicates whether this is an abandoned
+	// release.
+	Abandoned bool `json:"abandoned,omitempty"`
+
 	// Annotations: User annotations. These attributes can only be set and
 	// used by the user, and not by Google Cloud Deploy. See
 	// https://google.aip.dev/128#annotations for more details such as
@@ -1630,7 +1654,7 @@ type Release struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// ForceSendFields is a list of field names (e.g. "Abandoned") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1638,10 +1662,10 @@ type Release struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Annotations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Abandoned") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1777,6 +1801,7 @@ type Rollout struct {
 	//   "DEADLINE_EXCEEDED" - Deployment did not complete within the
 	// alloted time.
 	//   "RELEASE_FAILED" - Release is in a failed state.
+	//   "RELEASE_ABANDONED" - Release is abandoned.
 	DeployFailureCause string `json:"deployFailureCause,omitempty"`
 
 	// DeployStartTime: Output only. Time at which the `Rollout` started
@@ -3503,8 +3528,9 @@ type ProjectsLocationsDeliveryPipelinesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDeliveryPipelinesService) GetIamPolicy(resource string) *ProjectsLocationsDeliveryPipelinesGetIamPolicyCall {
 	c := &ProjectsLocationsDeliveryPipelinesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3643,7 +3669,7 @@ func (c *ProjectsLocationsDeliveryPipelinesGetIamPolicyCall) Do(opts ...googleap
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -4107,8 +4133,9 @@ type ProjectsLocationsDeliveryPipelinesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDeliveryPipelinesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDeliveryPipelinesSetIamPolicyCall {
 	c := &ProjectsLocationsDeliveryPipelinesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4216,7 +4243,7 @@ func (c *ProjectsLocationsDeliveryPipelinesSetIamPolicyCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -4256,7 +4283,8 @@ type ProjectsLocationsDeliveryPipelinesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsDeliveryPipelinesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDeliveryPipelinesTestIamPermissionsCall {
 	c := &ProjectsLocationsDeliveryPipelinesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4365,7 +4393,7 @@ func (c *ProjectsLocationsDeliveryPipelinesTestIamPermissionsCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -4378,6 +4406,150 @@ func (c *ProjectsLocationsDeliveryPipelinesTestIamPermissionsCall) Do(opts ...go
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.deliveryPipelines.releases.abandon":
+
+type ProjectsLocationsDeliveryPipelinesReleasesAbandonCall struct {
+	s                     *Service
+	name                  string
+	abandonreleaserequest *AbandonReleaseRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Abandon: Abandons a Release in the Delivery Pipeline.
+//
+// - name: Name of the Release. Format is
+//   projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
+//   ipeline}/ releases/{release}.
+func (r *ProjectsLocationsDeliveryPipelinesReleasesService) Abandon(name string, abandonreleaserequest *AbandonReleaseRequest) *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall {
+	c := &ProjectsLocationsDeliveryPipelinesReleasesAbandonCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.abandonreleaserequest = abandonreleaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall) Context(ctx context.Context) *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.abandonreleaserequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:abandon")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.abandon" call.
+// Exactly one of *AbandonReleaseResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AbandonReleaseResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall) Do(opts ...googleapi.CallOption) (*AbandonReleaseResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AbandonReleaseResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Abandons a Release in the Delivery Pipeline.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/deliveryPipelines/{deliveryPipelinesId}/releases/{releasesId}:abandon",
+	//   "httpMethod": "POST",
+	//   "id": "clouddeploy.projects.locations.deliveryPipelines.releases.abandon",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the Release. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:abandon",
+	//   "request": {
+	//     "$ref": "AbandonReleaseRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AbandonReleaseResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -6852,8 +7024,9 @@ type ProjectsLocationsTargetsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTargetsService) GetIamPolicy(resource string) *ProjectsLocationsTargetsGetIamPolicyCall {
 	c := &ProjectsLocationsTargetsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6992,7 +7165,7 @@ func (c *ProjectsLocationsTargetsGetIamPolicyCall) Do(opts ...googleapi.CallOpti
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/targets/[^/]+$",
 	//       "required": true,
@@ -7455,8 +7628,9 @@ type ProjectsLocationsTargetsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTargetsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTargetsSetIamPolicyCall {
 	c := &ProjectsLocationsTargetsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7564,7 +7738,7 @@ func (c *ProjectsLocationsTargetsSetIamPolicyCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/targets/[^/]+$",
 	//       "required": true,
@@ -7604,7 +7778,8 @@ type ProjectsLocationsTargetsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsTargetsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTargetsTestIamPermissionsCall {
 	c := &ProjectsLocationsTargetsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7713,7 +7888,7 @@ func (c *ProjectsLocationsTargetsTestIamPermissionsCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/targets/[^/]+$",
 	//       "required": true,

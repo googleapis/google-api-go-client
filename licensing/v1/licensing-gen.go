@@ -794,9 +794,9 @@ type LicenseAssignmentsListForProductCall struct {
 // ListForProduct: List all users assigned licenses for a specific
 // product SKU.
 //
-// - customerId: Customer's `customerId`. A previous version of this API
-//   accepted the primary domain name as a value for this field. If the
-//   customer is suspended, the server returns an error.
+// - customerId: The customer's unique ID as defined in the Admin
+//   console, such as `C00000000`. If the customer is suspended, the
+//   server returns an error.
 // - productId: A product's unique identifier. For more information
 //   about products in this version of the API, see Products and SKUs.
 func (r *LicenseAssignmentsService) ListForProduct(productId string, customerId string) *LicenseAssignmentsListForProductCall {
@@ -934,7 +934,7 @@ func (c *LicenseAssignmentsListForProductCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Customer's `customerId`. A previous version of this API accepted the primary domain name as a value for this field. If the customer is suspended, the server returns an error.",
+	//       "description": "The customer's unique ID as defined in the Admin console, such as `C00000000`. If the customer is suspended, the server returns an error.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -1008,9 +1008,9 @@ type LicenseAssignmentsListForProductAndSkuCall struct {
 // ListForProductAndSku: List all users assigned licenses for a specific
 // product SKU.
 //
-// - customerId: Customer's `customerId`. A previous version of this API
-//   accepted the primary domain name as a value for this field. If the
-//   customer is suspended, the server returns an error.
+// - customerId: The customer's unique ID as defined in the Admin
+//   console, such as `C00000000`. If the customer is suspended, the
+//   server returns an error.
 // - productId: A product's unique identifier. For more information
 //   about products in this version of the API, see Products and SKUs.
 // - skuId: A product SKU's unique identifier. For more information
@@ -1154,7 +1154,7 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Customer's `customerId`. A previous version of this API accepted the primary domain name as a value for this field. If the customer is suspended, the server returns an error.",
+	//       "description": "The customer's unique ID as defined in the Admin console, such as `C00000000`. If the customer is suspended, the server returns an error.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"

@@ -329,6 +329,11 @@ func (s *GoogleIamV1PolicyDelta) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleIamV1betaWorkloadIdentityPoolOperationMetadata: Metadata for
+// long-running WorkloadIdentityPool operations.
+type GoogleIamV1betaWorkloadIdentityPoolOperationMetadata struct {
+}
+
 // GoogleIamV2betaDenyRule: A deny rule in an IAM deny policy.
 type GoogleIamV2betaDenyRule struct {
 	// DenialCondition: The condition that determines whether this deny rule
@@ -343,7 +348,7 @@ type GoogleIamV2betaDenyRule struct {
 
 	// DeniedPermissions: The permissions that are explicitly denied by this
 	// rule. Each permission uses the format
-	// `{service-fqdn}/{resource}.{verb}`, where `{service-fqdn}` is the
+	// `{service_fqdn}/{resource}.{verb}`, where `{service_fqdn}` is the
 	// fully qualified domain name for the service. For example,
 	// `iam.googleapis.com/roles.list`.
 	DeniedPermissions []string `json:"deniedPermissions,omitempty"`
@@ -353,33 +358,33 @@ type GoogleIamV2betaDenyRule struct {
 	// the following values: * `principalSet://goog/public:all`: A special
 	// identifier that represents any user who is on the internet, even if
 	// they do not have a Google Account or are not logged in. *
-	// `principal://goog/subject/{email-id}`: A specific Google Account.
+	// `principal://goog/subject/{email_id}`: A specific Google Account.
 	// Includes Gmail, Cloud Identity, and Google Workspace user accounts.
 	// For example, `principal://goog/subject/alice@example.com`. *
-	// `deleted:principal://goog/subject/{email-id}?uid={uid}`: A specific
+	// `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
 	// Google Account that was deleted recently. For example,
 	// `deleted:principal://goog/subject/alice@example.com?uid=1234567890`.
 	// If the Google Account is recovered, this identifier reverts to the
 	// standard identifier for a Google Account. *
-	// `principalSet://goog/group/{group-id}`: A Google group. For example,
+	// `principalSet://goog/group/{group_id}`: A Google group. For example,
 	// `principalSet://goog/group/admins@example.com`. *
-	// `deleted:principalSet://goog/group/{group-id}?uid={uid}`: A Google
+	// `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google
 	// group that was deleted recently. For example,
 	// `deleted:principalSet://goog/group/admins@example.com?uid=1234567890`.
 	//  If the Google group is restored, this identifier reverts to the
 	// standard identifier for a Google group. *
-	// `principal://iam.googleapis.com/projects/-/serviceAccounts/{service-ac
-	// count-id}`: A Google Cloud service account. For example,
+	// `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_ac
+	// count_id}`: A Google Cloud service account. For example,
 	// `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-
 	// account@iam.gserviceaccount.com`. *
 	// `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{se
-	// rvice-account-id}?uid={uid}`: A Google Cloud service account that was
+	// rvice_account_id}?uid={uid}`: A Google Cloud service account that was
 	// deleted recently. For example,
 	// `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-
 	// service-account@iam.gserviceaccount.com?uid=1234567890`. If the
 	// service account is undeleted, this identifier reverts to the standard
 	// identifier for a service account. *
-	// `principalSet://goog/cloudIdentityCustomerId/{customer-id}`: All of
+	// `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of
 	// the principals associated with the specified Google Workspace or
 	// Cloud Identity customer ID. For example,
 	// `principalSet://goog/cloudIdentityCustomerId/C01Abc35`.
@@ -495,7 +500,7 @@ type GoogleIamV2betaPolicy struct {
 
 	// Name: Immutable. The resource name of the `Policy`, which must be
 	// unique. Format:
-	// `policies/{attachment-point}/denypolicies/{policy-id}` The attachment
+	// `policies/{attachment_point}/denypolicies/{policy_id}` The attachment
 	// point is identified by its URL-encoded full resource name, which
 	// means that the forward-slash character, `/`, must be written as
 	// `%2F`. For example,
@@ -787,7 +792,7 @@ type PoliciesCreatePolicyCall struct {
 //
 // - parent: The resource that the policy is attached to, along with the
 //   kind of policy to create. Format:
-//   `policies/{attachment-point}/denypolicies` The attachment point is
+//   `policies/{attachment_point}/denypolicies` The attachment point is
 //   identified by its URL-encoded full resource name, which means that
 //   the forward-slash character, `/`, must be written as `%2F`. For
 //   example,
@@ -912,7 +917,7 @@ func (c *PoliciesCreatePolicyCall) Do(opts ...googleapi.CallOption) (*GoogleLong
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource that the policy is attached to, along with the kind of policy to create. Format: `policies/{attachment-point}/denypolicies` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.",
+	//       "description": "Required. The resource that the policy is attached to, along with the kind of policy to create. Format: `policies/{attachment_point}/denypolicies` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.",
 	//       "location": "path",
 	//       "pattern": "^policies/[^/]+/[^/]+$",
 	//       "required": true,
@@ -951,7 +956,7 @@ type PoliciesDeleteCall struct {
 // Delete: Deletes a policy. This action is permanent.
 //
 // - name: The resource name of the policy to delete. Format:
-//   `policies/{attachment-point}/denypolicies/{policy-id}` Use the
+//   `policies/{attachment_point}/denypolicies/{policy_id}` Use the
 //   URL-encoded full resource name, which means that the forward-slash
 //   character, `/`, must be written as `%2F`. For example,
 //   `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-projec
@@ -1074,7 +1079,7 @@ func (c *PoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of the policy to delete. Format: `policies/{attachment-point}/denypolicies/{policy-id}` Use the URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.",
+	//       "description": "Required. The resource name of the policy to delete. Format: `policies/{attachment_point}/denypolicies/{policy_id}` Use the URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.",
 	//       "location": "path",
 	//       "pattern": "^policies/[^/]+/[^/]+/[^/]+$",
 	//       "required": true,
@@ -1106,7 +1111,7 @@ type PoliciesGetCall struct {
 // Get: Gets a policy.
 //
 // - name: The resource name of the policy to retrieve. Format:
-//   `policies/{attachment-point}/denypolicies/{policy-id}` Use the
+//   `policies/{attachment_point}/denypolicies/{policy_id}` Use the
 //   URL-encoded full resource name, which means that the forward-slash
 //   character, `/`, must be written as `%2F`. For example,
 //   `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-projec
@@ -1227,7 +1232,7 @@ func (c *PoliciesGetCall) Do(opts ...googleapi.CallOption) (*GoogleIamV2betaPoli
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the policy to retrieve. Format: `policies/{attachment-point}/denypolicies/{policy-id}` Use the URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.",
+	//       "description": "Required. The resource name of the policy to retrieve. Format: `policies/{attachment_point}/denypolicies/{policy_id}` Use the URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.",
 	//       "location": "path",
 	//       "pattern": "^policies/[^/]+/[^/]+/[^/]+$",
 	//       "required": true,
@@ -1262,7 +1267,7 @@ type PoliciesListPoliciesCall struct {
 //
 // - parent: The resource that the policy is attached to, along with the
 //   kind of policy to list. Format:
-//   `policies/{attachment-point}/denypolicies` The attachment point is
+//   `policies/{attachment_point}/denypolicies` The attachment point is
 //   identified by its URL-encoded full resource name, which means that
 //   the forward-slash character, `/`, must be written as `%2F`. For
 //   example,
@@ -1412,7 +1417,7 @@ func (c *PoliciesListPoliciesCall) Do(opts ...googleapi.CallOption) (*GoogleIamV
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource that the policy is attached to, along with the kind of policy to list. Format: `policies/{attachment-point}/denypolicies` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.",
+	//       "description": "Required. The resource that the policy is attached to, along with the kind of policy to list. Format: `policies/{attachment_point}/denypolicies` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.",
 	//       "location": "path",
 	//       "pattern": "^policies/[^/]+/[^/]+$",
 	//       "required": true,
@@ -1471,7 +1476,7 @@ type PoliciesUpdateCall struct {
 //
 // - name: Immutable. The resource name of the `Policy`, which must be
 //   unique. Format:
-//   `policies/{attachment-point}/denypolicies/{policy-id}` The
+//   `policies/{attachment_point}/denypolicies/{policy_id}` The
 //   attachment point is identified by its URL-encoded full resource
 //   name, which means that the forward-slash character, `/`, must be
 //   written as `%2F`. For example,
@@ -1587,7 +1592,7 @@ func (c *PoliciesUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The resource name of the `Policy`, which must be unique. Format: `policies/{attachment-point}/denypolicies/{policy-id}` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, requests can use the alphanumeric or the numeric ID. Responses always contain the numeric ID.",
+	//       "description": "Immutable. The resource name of the `Policy`, which must be unique. Format: `policies/{attachment_point}/denypolicies/{policy_id}` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, requests can use the alphanumeric or the numeric ID. Responses always contain the numeric ID.",
 	//       "location": "path",
 	//       "pattern": "^policies/[^/]+/[^/]+/[^/]+$",
 	//       "required": true,

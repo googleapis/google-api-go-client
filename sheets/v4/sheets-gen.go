@@ -1037,6 +1037,7 @@ func (s *BandedRange) MarshalJSON() ([]byte, error) {
 // not set.
 type BandingProperties struct {
 	// FirstBandColor: The first color that is alternating. (Required)
+	// Deprecated: Use first_band_color_style.
 	FirstBandColor *Color `json:"firstBandColor,omitempty"`
 
 	// FirstBandColorStyle: The first color that is alternating. (Required)
@@ -1046,7 +1047,7 @@ type BandingProperties struct {
 	// FooterColor: The color of the last row or column. If this field is
 	// not set, the last row or column is filled with either
 	// first_band_color or second_band_color, depending on the color of the
-	// previous row or column.
+	// previous row or column. Deprecated: Use footer_color_style.
 	FooterColor *Color `json:"footerColor,omitempty"`
 
 	// FooterColorStyle: The color of the last row or column. If this field
@@ -1061,7 +1062,7 @@ type BandingProperties struct {
 	// alternate between first_band_color and second_band_color starting
 	// from the second row or column. Otherwise, the first row or column is
 	// filled with first_band_color and the colors proceed to alternate as
-	// they normally would.
+	// they normally would. Deprecated: Use header_color_style.
 	HeaderColor *Color `json:"headerColor,omitempty"`
 
 	// HeaderColorStyle: The color of the first row or column. If this field
@@ -1074,6 +1075,7 @@ type BandingProperties struct {
 	HeaderColorStyle *ColorStyle `json:"headerColorStyle,omitempty"`
 
 	// SecondBandColor: The second color that is alternating. (Required)
+	// Deprecated: Use second_band_color_style.
 	SecondBandColor *Color `json:"secondBandColor,omitempty"`
 
 	// SecondBandColorStyle: The second color that is alternating.
@@ -1122,7 +1124,8 @@ type BaselineValueFormat struct {
 	Description string `json:"description,omitempty"`
 
 	// NegativeColor: Color to be used, in case baseline value represents a
-	// negative change for key value. This field is optional.
+	// negative change for key value. This field is optional. Deprecated:
+	// Use negative_color_style.
 	NegativeColor *Color `json:"negativeColor,omitempty"`
 
 	// NegativeColorStyle: Color to be used, in case baseline value
@@ -1136,7 +1139,8 @@ type BaselineValueFormat struct {
 	Position *TextPosition `json:"position,omitempty"`
 
 	// PositiveColor: Color to be used, in case baseline value represents a
-	// positive change for key value. This field is optional.
+	// positive change for key value. This field is optional. Deprecated:
+	// Use positive_color_style.
 	PositiveColor *Color `json:"positiveColor,omitempty"`
 
 	// PositiveColorStyle: Color to be used, in case baseline value
@@ -1268,6 +1272,7 @@ func (s *BasicChartDomain) MarshalJSON() ([]byte, error) {
 type BasicChartSeries struct {
 	// Color: The color for elements (such as bars, lines, and points)
 	// associated with this series. If empty, a default color is used.
+	// Deprecated: Use color_style.
 	Color *Color `json:"color,omitempty"`
 
 	// ColorStyle: The color for elements (such as bars, lines, and points)
@@ -1520,7 +1525,7 @@ func (s *BasicFilter) MarshalJSON() ([]byte, error) {
 // single series data point.
 type BasicSeriesDataPointStyleOverride struct {
 	// Color: Color of the series data point. If empty, the series default
-	// is used.
+	// is used. Deprecated: Use color_style.
 	Color *Color `json:"color,omitempty"`
 
 	// ColorStyle: Color of the series data point. If empty, the series
@@ -2510,7 +2515,7 @@ func (s *BooleanRule) MarshalJSON() ([]byte, error) {
 
 // Border: A border along a cell.
 type Border struct {
-	// Color: The color of the border.
+	// Color: The color of the border. Deprecated: Use color_style.
 	Color *Color `json:"color,omitempty"`
 
 	// ColorStyle: The color of the border. If color is also set, this field
@@ -2597,7 +2602,8 @@ func (s *Borders) MarshalJSON() ([]byte, error) {
 
 // BubbleChartSpec: A bubble chart.
 type BubbleChartSpec struct {
-	// BubbleBorderColor: The bubble border color.
+	// BubbleBorderColor: The bubble border color. Deprecated: Use
+	// bubble_border_color_style.
 	BubbleBorderColor *Color `json:"bubbleBorderColor,omitempty"`
 
 	// BubbleBorderColorStyle: The bubble border color. If
@@ -2936,7 +2942,8 @@ func (s *CellData) MarshalJSON() ([]byte, error) {
 
 // CellFormat: The format of a cell.
 type CellFormat struct {
-	// BackgroundColor: The background color of the cell.
+	// BackgroundColor: The background color of the cell. Deprecated: Use
+	// background_color_style.
 	BackgroundColor *Color `json:"backgroundColor,omitempty"`
 
 	// BackgroundColorStyle: The background color of the cell. If
@@ -2958,7 +2965,7 @@ type CellFormat struct {
 	//   "RIGHT" - The text is explicitly aligned to the right of the cell.
 	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
 
-	// HyperlinkDisplayType: How a hyperlink, if it exists, should be
+	// HyperlinkDisplayType: If one exists, how a hyperlink should be
 	// displayed in the cell.
 	//
 	// Possible values:
@@ -2987,12 +2994,12 @@ type CellFormat struct {
 	TextDirection string `json:"textDirection,omitempty"`
 
 	// TextFormat: The format of the text in the cell (unless overridden by
-	// a format run). Setting a cell-level link here will clear the cell's
-	// existing links. Setting the link field in a TextFormatRun will take
+	// a format run). Setting a cell-level link here clears the cell's
+	// existing links. Setting the link field in a TextFormatRun takes
 	// precedence over the cell-level link.
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
 
-	// TextRotation: The rotation applied to text in a cell
+	// TextRotation: The rotation applied to text in the cell.
 	TextRotation *TextRotation `json:"textRotation,omitempty"`
 
 	// VerticalAlignment: The vertical alignment of the value in the cell.
@@ -3403,7 +3410,7 @@ type ChartSpec struct {
 	AltText string `json:"altText,omitempty"`
 
 	// BackgroundColor: The background color of the entire chart. Not
-	// applicable to Org charts.
+	// applicable to Org charts. Deprecated: Use background_color_style.
 	BackgroundColor *Color `json:"backgroundColor,omitempty"`
 
 	// BackgroundColorStyle: The background color of the entire chart. Not
@@ -3714,7 +3721,11 @@ func (s *Color) UnmarshalJSON(data []byte) error {
 
 // ColorStyle: A color value.
 type ColorStyle struct {
-	// RgbColor: RGB color.
+	// RgbColor: RGB color. The `alpha`
+	// (/sheets/api/reference/rest/v4/spreadsheets/other#Color.FIELDS.alpha)
+	// value in the `Color`
+	// (/sheets/api/reference/rest/v4/spreadsheets/other#color) object isn't
+	// generally supported.
 	RgbColor *Color `json:"rgbColor,omitempty"`
 
 	// ThemeColor: Theme color.
@@ -6106,7 +6117,7 @@ func (s *EmbeddedChart) MarshalJSON() ([]byte, error) {
 
 // EmbeddedObjectBorder: A border along an embedded object.
 type EmbeddedObjectBorder struct {
-	// Color: The color of the border.
+	// Color: The color of the border. Deprecated: Use color_style.
 	Color *Color `json:"color,omitempty"`
 
 	// ColorStyle: The color of the border. If color is also set, this field
@@ -6291,7 +6302,8 @@ type FilterCriteria struct {
 
 	// VisibleBackgroundColor: The background fill color to filter by; only
 	// cells with this fill color are shown. Mutually exclusive with
-	// visible_foreground_color.
+	// visible_foreground_color. Deprecated: Use
+	// visible_background_color_style.
 	VisibleBackgroundColor *Color `json:"visibleBackgroundColor,omitempty"`
 
 	// VisibleBackgroundColorStyle: The background fill color to filter by;
@@ -6303,7 +6315,8 @@ type FilterCriteria struct {
 
 	// VisibleForegroundColor: The foreground color to filter by; only cells
 	// with this foreground color are shown. Mutually exclusive with
-	// visible_background_color.
+	// visible_background_color. Deprecated: Use
+	// visible_foreground_color_style.
 	VisibleForegroundColor *Color `json:"visibleForegroundColor,omitempty"`
 
 	// VisibleForegroundColorStyle: The foreground color to filter by; only
@@ -6948,7 +6961,7 @@ func (s *HistogramRule) UnmarshalJSON(data []byte) error {
 // data.
 type HistogramSeries struct {
 	// BarColor: The color of the column representing this series in each
-	// bucket. This field is optional.
+	// bucket. This field is optional. Deprecated: Use bar_color_style.
 	BarColor *Color `json:"barColor,omitempty"`
 
 	// BarColorStyle: The color of the column representing this series in
@@ -7069,7 +7082,8 @@ func (s *InsertRangeRequest) MarshalJSON() ([]byte, error) {
 // conditional format. These pin the gradient color scale according to
 // the color, type and value chosen.
 type InterpolationPoint struct {
-	// Color: The color this interpolation point should use.
+	// Color: The color this interpolation point should use. Deprecated: Use
+	// color_style.
 	Color *Color `json:"color,omitempty"`
 
 	// ColorStyle: The color this interpolation point should use. If color
@@ -7642,7 +7656,8 @@ type OrgChartSpec struct {
 	// chart. Labels must be unique.
 	Labels *ChartData `json:"labels,omitempty"`
 
-	// NodeColor: The color of the org chart nodes.
+	// NodeColor: The color of the org chart nodes. Deprecated: Use
+	// node_color_style.
 	NodeColor *Color `json:"nodeColor,omitempty"`
 
 	// NodeColorStyle: The color of the org chart nodes. If node_color is
@@ -7664,6 +7679,7 @@ type OrgChartSpec struct {
 	ParentLabels *ChartData `json:"parentLabels,omitempty"`
 
 	// SelectedNodeColor: The color of the selected org chart nodes.
+	// Deprecated: Use selected_node_color_style.
 	SelectedNodeColor *Color `json:"selectedNodeColor,omitempty"`
 
 	// SelectedNodeColorStyle: The color of the selected org chart nodes. If
@@ -9388,7 +9404,8 @@ type SheetProperties struct {
 	// shows the preview of data.
 	SheetType string `json:"sheetType,omitempty"`
 
-	// TabColor: The color of the tab in the UI.
+	// TabColor: The color of the tab in the UI. Deprecated: Use
+	// tab_color_style.
 	TabColor *Color `json:"tabColor,omitempty"`
 
 	// TabColorStyle: The color of the tab in the UI. If tab_color is also
@@ -9469,7 +9486,8 @@ type SlicerSpec struct {
 	// If not set, default to `True`.
 	ApplyToPivotTables bool `json:"applyToPivotTables,omitempty"`
 
-	// BackgroundColor: The background color of the slicer.
+	// BackgroundColor: The background color of the slicer. Deprecated: Use
+	// background_color_style.
 	BackgroundColor *Color `json:"backgroundColor,omitempty"`
 
 	// BackgroundColorStyle: The background color of the slicer. If
@@ -9566,7 +9584,7 @@ func (s *SortRangeRequest) MarshalJSON() ([]byte, error) {
 type SortSpec struct {
 	// BackgroundColor: The background fill color to sort by; cells with
 	// this fill color are sorted to the top. Mutually exclusive with
-	// foreground_color.
+	// foreground_color. Deprecated: Use background_color_style.
 	BackgroundColor *Color `json:"backgroundColor,omitempty"`
 
 	// BackgroundColorStyle: The background fill color to sort by; cells
@@ -9583,7 +9601,7 @@ type SortSpec struct {
 
 	// ForegroundColor: The foreground color to sort by; cells with this
 	// foreground color are sorted to the top. Mutually exclusive with
-	// background_color.
+	// background_color. Deprecated: Use foreground_color_style.
 	ForegroundColor *Color `json:"foregroundColor,omitempty"`
 
 	// ForegroundColorStyle: The foreground color to sort by; cells with
@@ -9835,7 +9853,8 @@ type TextFormat struct {
 	// FontSize: The size of the font.
 	FontSize int64 `json:"fontSize,omitempty"`
 
-	// ForegroundColor: The foreground color of the text.
+	// ForegroundColor: The foreground color of the text. Deprecated: Use
+	// foreground_color_style.
 	ForegroundColor *Color `json:"foregroundColor,omitempty"`
 
 	// ForegroundColorStyle: The foreground color of the text. If
@@ -10130,7 +10149,7 @@ func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
 type TreemapChartColorScale struct {
 	// MaxValueColor: The background color for cells with a color value
 	// greater than or equal to maxValue. Defaults to #109618 if not
-	// specified.
+	// specified. Deprecated: Use max_value_color_style.
 	MaxValueColor *Color `json:"maxValueColor,omitempty"`
 
 	// MaxValueColorStyle: The background color for cells with a color value
@@ -10141,7 +10160,7 @@ type TreemapChartColorScale struct {
 
 	// MidValueColor: The background color for cells with a color value at
 	// the midpoint between minValue and maxValue. Defaults to #efe6dc if
-	// not specified.
+	// not specified. Deprecated: Use mid_value_color_style.
 	MidValueColor *Color `json:"midValueColor,omitempty"`
 
 	// MidValueColorStyle: The background color for cells with a color value
@@ -10152,6 +10171,7 @@ type TreemapChartColorScale struct {
 
 	// MinValueColor: The background color for cells with a color value less
 	// than or equal to minValue. Defaults to #dc3912 if not specified.
+	// Deprecated: Use min_value_color_style.
 	MinValueColor *Color `json:"minValueColor,omitempty"`
 
 	// MinValueColorStyle: The background color for cells with a color value
@@ -10161,6 +10181,7 @@ type TreemapChartColorScale struct {
 
 	// NoDataColor: The background color for cells that have no color data
 	// associated with them. Defaults to #000000 if not specified.
+	// Deprecated: Use no_data_color_style.
 	NoDataColor *Color `json:"noDataColor,omitempty"`
 
 	// NoDataColorStyle: The background color for cells that have no color
@@ -10213,7 +10234,8 @@ type TreemapChartSpec struct {
 	// have noDataColor as their background color.
 	ColorScale *TreemapChartColorScale `json:"colorScale,omitempty"`
 
-	// HeaderColor: The background color for header cells.
+	// HeaderColor: The background color for header cells. Deprecated: Use
+	// header_color_style.
 	HeaderColor *Color `json:"headerColor,omitempty"`
 
 	// HeaderColorStyle: The background color for header cells. If
@@ -11355,7 +11377,7 @@ func (s *ValueRange) MarshalJSON() ([]byte, error) {
 
 // WaterfallChartColumnStyle: Styles for a waterfall chart column.
 type WaterfallChartColumnStyle struct {
-	// Color: The color of the column.
+	// Color: The color of the column. Deprecated: Use color_style.
 	Color *Color `json:"color,omitempty"`
 
 	// ColorStyle: The color of the column. If color is also set, this field

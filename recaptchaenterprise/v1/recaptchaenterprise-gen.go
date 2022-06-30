@@ -396,6 +396,11 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// "projects/{project}/assessments/{assessment}".
 	Name string `json:"name,omitempty"`
 
+	// PrivatePasswordLeakVerification: The private password leak
+	// verification field contains the parameters used to check for leaks
+	// privately without sharing user credentials.
+	PrivatePasswordLeakVerification *GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification `json:"privatePasswordLeakVerification,omitempty"`
+
 	// RiskAnalysis: Output only. The risk analysis result for the event
 	// being assessed.
 	RiskAnalysis *GoogleCloudRecaptchaenterpriseV1RiskAnalysis `json:"riskAnalysis,omitempty"`
@@ -790,6 +795,56 @@ func (s *GoogleCloudRecaptchaenterpriseV1Metrics) MarshalJSON() ([]byte, error) 
 type GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest struct {
 }
 
+// GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification:
+// Private password leak verification info.
+type GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification struct {
+	// EncryptedLeakMatchPrefixes: Output only. List of prefixes of the
+	// encrypted potential password leaks that matched the given parameters.
+	// They should be compared with the client-side decryption prefix of
+	// `reencrypted_user_credentials_hash`
+	EncryptedLeakMatchPrefixes []string `json:"encryptedLeakMatchPrefixes,omitempty"`
+
+	// EncryptedUserCredentialsHash: Optional. Encrypted Scrypt hash of the
+	// canonicalized username+password. It is re-encrypted by the server and
+	// returned through `reencrypted_user_credentials_hash`.
+	EncryptedUserCredentialsHash string `json:"encryptedUserCredentialsHash,omitempty"`
+
+	// LookupHashPrefix: Optional. Exactly 26-bit prefix of the SHA-256 hash
+	// of the canonicalized username. It is used to look up password leaks
+	// associated with that hash prefix.
+	LookupHashPrefix string `json:"lookupHashPrefix,omitempty"`
+
+	// ReencryptedUserCredentialsHash: Output only. Corresponds to the
+	// re-encryption of the `encrypted_user_credentials_hash` field. Used to
+	// match potential password leaks within
+	// `encrypted_leak_match_prefixes`.
+	ReencryptedUserCredentialsHash string `json:"reencryptedUserCredentialsHash,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EncryptedLeakMatchPrefixes") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EncryptedLeakMatchPrefixes") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup: A group of
 // related accounts.
 type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup struct {
@@ -854,6 +909,44 @@ type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership struct {
 
 func (s *GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse:
+// Secret key used in legacy reCAPTCHA only. Should be used when
+// integrating with a 3rd party which is still using legacy reCAPTCHA.
+type GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse struct {
+	// LegacySecretKey: The secret key (also known as shared secret)
+	// authorizes communication between your application backend and the
+	// reCAPTCHA Enterprise server to create an assessment. The secret key
+	// needs to be kept safe for security purposes.
+	LegacySecretKey string `json:"legacySecretKey,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "LegacySecretKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LegacySecretKey") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2674,6 +2767,159 @@ func (c *ProjectsKeysPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRe
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudRecaptchaenterpriseV1Key"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recaptchaenterprise.projects.keys.retrieveLegacySecretKey":
+
+type ProjectsKeysRetrieveLegacySecretKeyCall struct {
+	s            *Service
+	key          string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrieveLegacySecretKey: Returns the secret key related to the
+// specified public key. You should use the legacy secret key only if
+// you are integrating with a 3rd party using the legacy reCAPTCHA
+// instead of reCAPTCHA Enterprise.
+//
+// - key: The public key name linked to the requested secret key , in
+//   the format "projects/{project}/keys/{key}".
+func (r *ProjectsKeysService) RetrieveLegacySecretKey(key string) *ProjectsKeysRetrieveLegacySecretKeyCall {
+	c := &ProjectsKeysRetrieveLegacySecretKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.key = key
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsKeysRetrieveLegacySecretKeyCall) Fields(s ...googleapi.Field) *ProjectsKeysRetrieveLegacySecretKeyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsKeysRetrieveLegacySecretKeyCall) IfNoneMatch(entityTag string) *ProjectsKeysRetrieveLegacySecretKeyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsKeysRetrieveLegacySecretKeyCall) Context(ctx context.Context) *ProjectsKeysRetrieveLegacySecretKeyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsKeysRetrieveLegacySecretKeyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsKeysRetrieveLegacySecretKeyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+key}:retrieveLegacySecretKey")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"key": c.key,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.keys.retrieveLegacySecretKey" call.
+// Exactly one of
+// *GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse.Serve
+// rResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsKeysRetrieveLegacySecretKeyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the secret key related to the specified public key. You should use the legacy secret key only if you are integrating with a 3rd party using the legacy reCAPTCHA instead of reCAPTCHA Enterprise.",
+	//   "flatPath": "v1/projects/{projectsId}/keys/{keysId}:retrieveLegacySecretKey",
+	//   "httpMethod": "GET",
+	//   "id": "recaptchaenterprise.projects.keys.retrieveLegacySecretKey",
+	//   "parameterOrder": [
+	//     "key"
+	//   ],
+	//   "parameters": {
+	//     "key": {
+	//       "description": "Required. The public key name linked to the requested secret key , in the format \"projects/{project}/keys/{key}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/keys/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+key}:retrieveLegacySecretKey",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

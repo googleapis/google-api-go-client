@@ -2989,11 +2989,11 @@ func (s *Features) MarshalJSON() ([]byte, error) {
 // information about common tasks, see the Developer's Guide
 // (/admin-sdk/directory/v1/guides/manage-groups).
 type Group struct {
-	// AdminCreated: Value is `true` if this group was created by an
-	// administrator rather than a user.
+	// AdminCreated: Read-only. Value is `true` if this group was created by
+	// an administrator rather than a user.
 	AdminCreated bool `json:"adminCreated,omitempty"`
 
-	// Aliases: List of a group's alias email addresses.
+	// Aliases: Read-only. A list of a group's alias email addresses.
 	Aliases []string `json:"aliases,omitempty"`
 
 	// Description: An extended description to help users determine the
@@ -3020,8 +3020,8 @@ type Group struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The unique ID of a group. A group `id` can be used as a group
-	// request URI's `groupKey`.
+	// Id: Read-only. The unique ID of a group. A group `id` can be used as
+	// a group request URI's `groupKey`.
 	Id string `json:"id,omitempty"`
 
 	// Kind: The type of the API resource. For Groups resources, the value
@@ -3031,12 +3031,12 @@ type Group struct {
 	// Name: The group's display name.
 	Name string `json:"name,omitempty"`
 
-	// NonEditableAliases: List of the group's non-editable alias email
-	// addresses that are outside of the account's primary domain or
-	// subdomains. These are functioning email addresses used by the group.
-	// This is a read-only property returned in the API's response for a
-	// group. If edited in a group's POST or PUT request, the edit is
-	// ignored by the API service.
+	// NonEditableAliases: Read-only. A list of the group's non-editable
+	// alias email addresses that are outside of the account's primary
+	// domain or subdomains. These are functioning email addresses used by
+	// the group. This is a read-only property returned in the API's
+	// response for a group. If edited in a group's POST or PUT request, the
+	// edit is ignored by the API service.
 	NonEditableAliases []string `json:"nonEditableAliases,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4045,7 +4045,10 @@ func (s *RoleRolePrivileges) MarshalJSON() ([]byte, error) {
 
 // RoleAssignment: Defines an assignment of a role.
 type RoleAssignment struct {
-	// AssignedTo: The unique ID of the user this role is assigned to.
+	// AssignedTo: The unique ID of the entity this role is assigned
+	// to—either the `user_id` of a user or the `uniqueId` of a service
+	// account, as defined in Identity and Access Management (IAM)
+	// (https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts).
 	AssignedTo string `json:"assignedTo,omitempty"`
 
 	// Etag: ETag of the resource.
@@ -4551,12 +4554,14 @@ type User struct {
 	// field is 1Kb.
 	Gender interface{} `json:"gender,omitempty"`
 
-	// HashFunction: Stores the hash format of the password property. We
-	// recommend sending the `password` property value as a base 16 bit
-	// hexadecimal-encoded hash value. The following `hashFunction` values
-	// are allowed: * `DES` * `MD5` - hash prefix is `$1$` * `SHA2-256` -
-	// hash prefix is `$5$` * `SHA2-512` - hash prefix is `$6$` If rounds
-	// are specified as part of the prefix, they must be 10,000 or fewer.
+	// HashFunction: Stores the hash format of the `password` property. The
+	// following `hashFunction` values are allowed: * `MD5` - Accepts simple
+	// hex-encoded values. * `SHA1` - Accepts simple hex-encoded values. *
+	// `crypt` - Compliant with the C crypt library
+	// (https://en.wikipedia.org/wiki/Crypt_%28C%29). Supports the DES, MD5
+	// (hash prefix `$1$`), SHA-256 (hash prefix `$5$`), and SHA-512 (hash
+	// prefix `$6$`) hash algorithms. If rounds are specified as part of the
+	// prefix, they must be 10,000 or fewer.
 	HashFunction string `json:"hashFunction,omitempty"`
 
 	// Id: The unique ID for the user. A user `id` can be used as a user
@@ -10979,11 +10984,12 @@ func (r *GroupsService) List() *GroupsListCall {
 
 // Customer sets the optional parameter "customer": The unique ID for
 // the customer's Google Workspace account. In case of a multi-domain
-// account, to fetch all groups for a customer, fill this field instead
-// of domain. As an account administrator, you can also use the
-// `my_customer` alias to represent your account's `customerId`. The
-// `customerId` is also returned as part of the Users
-// (/admin-sdk/directory/v1/reference/users)
+// account, to fetch all groups for a customer, fill in this field
+// instead of `domain`. You can also use the `my_customer` alias to
+// represent your account's `customerId`. The `customerId` is also
+// returned as part of the Users
+// (/admin-sdk/directory/v1/reference/users) resource. Either the
+// `customer` or the `domain` parameter must be provided.
 func (c *GroupsListCall) Customer(customer string) *GroupsListCall {
 	c.urlParams_.Set("customer", customer)
 	return c
@@ -11153,7 +11159,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, fill this field instead of domain. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users)",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, fill in this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. Either the `customer` or the `domain` parameter must be provided.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

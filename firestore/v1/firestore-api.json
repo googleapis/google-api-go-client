@@ -112,6 +112,40 @@
       "resources": {
         "databases": {
           "methods": {
+            "create": {
+              "description": "Create a database.",
+              "flatPath": "v1/projects/{projectsId}/databases",
+              "httpMethod": "POST",
+              "id": "firestore.projects.databases.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "databaseId": {
+                  "description": "Required. The ID to use for the database, which will become the final component of the database's resource name. This value should be 4-63 characters. Valid characters are /a-z-/ with first character a letter and the last a letter or a number. Must not be UUID-like /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. \"(default)\" database id is also valid.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. A parent name of the form `projects/{project_id}`",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/databases",
+              "request": {
+                "$ref": "GoogleFirestoreAdminV1Database"
+              },
+              "response": {
+                "$ref": "GoogleLongrunningOperation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/datastore"
+              ]
+            },
             "exportDocuments": {
               "description": "Exports a copy of all or a subset of documents from Google Cloud Firestore to another storage system, such as Google Cloud Storage. Recent updates to documents may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage. For more details on export behavior and output format, refer to: https://cloud.google.com/firestore/docs/manage-data/export-import",
               "flatPath": "v1/projects/{projectsId}/databases/{databasesId}:exportDocuments",
@@ -1055,35 +1089,6 @@
                     "https://www.googleapis.com/auth/datastore"
                   ]
                 },
-                "runAggregationQuery": {
-                  "description": "Runs an aggregation query. Rather than producing Document results like Firestore.RunQuery, this API allows running an aggregation to produce a series of AggregationResult server-side. High-Level Example: ``` -- Return the number of documents in table given a filter. SELECT COUNT(*) FROM ( SELECT * FROM k where a = true ); ```",
-                  "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}:runAggregationQuery",
-                  "httpMethod": "POST",
-                  "id": "firestore.projects.databases.documents.runAggregationQuery",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "parent": {
-                      "description": "Required. The parent resource name. In the format: `projects/{project_id}/databases/{database_id}/documents` or `projects/{project_id}/databases/{database_id}/documents/{document_path}`. For example: `projects/my-project/databases/my-database/documents` or `projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+parent}:runAggregationQuery",
-                  "request": {
-                    "$ref": "RunAggregationQueryRequest"
-                  },
-                  "response": {
-                    "$ref": "RunAggregationQueryResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/datastore"
-                  ]
-                },
                 "runQuery": {
                   "description": "Runs a query.",
                   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}:runQuery",
@@ -1348,38 +1353,9 @@
       }
     }
   },
-  "revision": "20220402",
+  "revision": "20220625",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
-    "Aggregation": {
-      "description": "Defines a aggregation that produces a single result.",
-      "id": "Aggregation",
-      "properties": {
-        "alias": {
-          "description": "Required. The name of the field to store the result of the aggregation into. Requires: * Must be present. * Must be unique across all aggregation aliases. * Conform to existing document field name limitations.",
-          "type": "string"
-        },
-        "count": {
-          "$ref": "Count",
-          "description": "Count aggregator."
-        }
-      },
-      "type": "object"
-    },
-    "AggregationResult": {
-      "description": "The result of a single bucket from a Firestore aggregation query. The keys of `aggregate_fields` are the same for all results in an aggregation query, unlike document queries which can have different fields present for each result.",
-      "id": "AggregationResult",
-      "properties": {
-        "aggregateFields": {
-          "additionalProperties": {
-            "$ref": "Value"
-          },
-          "description": "The result of the aggregation functions, ex: `COUNT(*) AS total_docs`. The key is the alias assigned to the aggregation function on input and the size of this map equals the number of aggregation functions in the query.",
-          "type": "object"
-        }
-      },
-      "type": "object"
-    },
     "ArrayValue": {
       "description": "An array value.",
       "id": "ArrayValue",
@@ -1591,18 +1567,6 @@
             "Documents are required to satisfy all of the combined filters."
           ],
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Count": {
-      "description": "Count of documents that match the query. The `COUNT(*)` aggregation function operates on the entire document so it does not require a field reference.",
-      "id": "Count",
-      "properties": {
-        "upTo": {
-          "description": "Optional. Optional constraint on the maximum number of documents to count. This provides a way to set an upper bound on the number of documents to scan, limiting latency and cost. High-Level Example: ``` SELECT COUNT_UP_TO(1000) FROM ( SELECT * FROM k ); ``` Requires: * Must be greater than zero when present.",
-          "format": "int32",
-          "type": "integer"
         }
       },
       "type": "object"
@@ -2082,6 +2046,10 @@
         "name": {
           "description": "Required. A field name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/fields/{field_path}` A field path may be a simple field name, e.g. `address` or a path to fields within map_value , e.g. `address.city`, or a special field path. The only valid special field is `*`, which represents any field. Field paths may be quoted using ` (backtick). The only character that needs to be escaped within a quoted field path is the backtick character itself, escaped using a backslash. Special characters in field paths that must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well as any ascii symbolic characters. Examples: (Note: Comments here are written in markdown syntax, so there is an additional layer of backticks to represent a code block) `\\`address.city\\`` represents a field named `address.city`, not the map key `city` in the field `address`. `\\`*\\`` represents a field named `*`, not any field. A special `Field` contains the default indexing settings for all fields. This field's resource name is: `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/fields/*` Indexes defined on this `Field` will be applied to all fields which do not have their own `Field` index configuration.",
           "type": "string"
+        },
+        "ttlConfig": {
+          "$ref": "GoogleFirestoreAdminV1TtlConfig",
+          "description": "The TTL configuration for this `Field`. Setting or unsetting this will enable or disable the TTL for documents that have this `Field`."
         }
       },
       "type": "object"
@@ -2142,6 +2110,10 @@
             "Request has finished being cancelled after user called google.longrunning.Operations.CancelOperation."
           ],
           "type": "string"
+        },
+        "ttlConfigDelta": {
+          "$ref": "GoogleFirestoreAdminV1TtlConfigDelta",
+          "description": "Describes the deltas of TTL configuration."
         }
       },
       "type": "object"
@@ -2486,6 +2458,51 @@
       },
       "type": "object"
     },
+    "GoogleFirestoreAdminV1TtlConfig": {
+      "description": "The TTL (time-to-live) configuration for documents that have this `Field` set. Storing a timestamp value into a TTL-enabled field will be treated as the document's absolute expiration time. Using any other data type or leaving the field absent will disable the TTL for the individual document.",
+      "id": "GoogleFirestoreAdminV1TtlConfig",
+      "properties": {
+        "state": {
+          "description": "Output only. The state of the TTL configuration.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "CREATING",
+            "ACTIVE",
+            "NEEDS_REPAIR"
+          ],
+          "enumDescriptions": [
+            "The state is unspecified or unknown.",
+            "The TTL is being applied. There is an active long-running operation to track the change. Newly written documents will have TTLs applied as requested. Requested TTLs on existing documents are still being processed. When TTLs on all existing documents have been processed, the state will move to 'ACTIVE'.",
+            "The TTL is active for all documents.",
+            "The TTL configuration could not be enabled for all existing documents. Newly written documents will continue to have their TTL applied. The LRO returned when last attempting to enable TTL for this `Field` has failed, and may have more details."
+          ],
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleFirestoreAdminV1TtlConfigDelta": {
+      "description": "Information about an TTL configuration change.",
+      "id": "GoogleFirestoreAdminV1TtlConfigDelta",
+      "properties": {
+        "changeType": {
+          "description": "Specifies how the TTL configuration is changing.",
+          "enum": [
+            "CHANGE_TYPE_UNSPECIFIED",
+            "ADD",
+            "REMOVE"
+          ],
+          "enumDescriptions": [
+            "The type of change is not specified or known.",
+            "The TTL config is being added.",
+            "The TTL config is being removed."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleFirestoreAdminV1UpdateDatabaseMetadata": {
       "description": "Metadata related to the update database operation.",
       "id": "GoogleFirestoreAdminV1UpdateDatabaseMetadata",
@@ -2579,6 +2596,11 @@
         },
         "pageToken": {
           "description": "A page token. Must be a value from ListCollectionIdsResponse.",
+          "type": "string"
+        },
+        "readTime": {
+          "description": "Reads documents as they were at the given time. This may not be older than 270 seconds.",
+          "format": "google-datetime",
           "type": "string"
         }
       },
@@ -2779,6 +2801,11 @@
           "format": "int64",
           "type": "string"
         },
+        "readTime": {
+          "description": "Reads documents as they were at the given time. This may not be older than 270 seconds.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "structuredQuery": {
           "$ref": "StructuredQuery",
           "description": "A structured query. Query must specify collection with all descendants and be ordered by name ascending. Other filters, order bys, limits, offsets, and start/end cursors are not supported."
@@ -2885,52 +2912,6 @@
       },
       "type": "object"
     },
-    "RunAggregationQueryRequest": {
-      "description": "The request for Firestore.RunAggregationQuery.",
-      "id": "RunAggregationQueryRequest",
-      "properties": {
-        "newTransaction": {
-          "$ref": "TransactionOptions",
-          "description": "Starts a new transaction as part of the query, defaulting to read-only. The new transaction ID will be returned as the first response in the stream."
-        },
-        "readTime": {
-          "description": "Executes the query at the given timestamp. Requires: * Cannot be more than 270 seconds in the past.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "structuredAggregationQuery": {
-          "$ref": "StructuredAggregationQuery",
-          "description": "An aggregation query."
-        },
-        "transaction": {
-          "description": "Run the aggregation within an already active transaction. The value here is the opaque transaction ID to execute the query in.",
-          "format": "byte",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "RunAggregationQueryResponse": {
-      "description": "The response for Firestore.RunAggregationQuery.",
-      "id": "RunAggregationQueryResponse",
-      "properties": {
-        "readTime": {
-          "description": "The time at which the aggregate value is valid for.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "result": {
-          "$ref": "AggregationResult",
-          "description": "A single aggregation result. Not present when reporting partial progress or when the query produced zero results."
-        },
-        "transaction": {
-          "description": "The transaction that was started as part of this request. Only present on the first response when the request requested to start a new transaction.",
-          "format": "byte",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "RunQueryRequest": {
       "description": "The request for Firestore.RunQuery.",
       "id": "RunQueryRequest",
@@ -2963,6 +2944,10 @@
         "document": {
           "$ref": "Document",
           "description": "A query result, not set when reporting partial progress."
+        },
+        "done": {
+          "description": "If present, Firestore has completely finished the request and no more documents will be returned.",
+          "type": "boolean"
         },
         "readTime": {
           "description": "The time at which the document was read. This may be monotonically increasing; in this case, the previous documents in the result stream are guaranteed not to have changed between their `read_time` and this one. If the query returns no results, a response with `read_time` and no `document` will be sent, and this represents the time at which the query was run.",
@@ -3005,24 +2990,6 @@
         "message": {
           "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "StructuredAggregationQuery": {
-      "description": "Firestore query for running an aggregation over a StructuredQuery.",
-      "id": "StructuredAggregationQuery",
-      "properties": {
-        "aggregations": {
-          "description": "Optional. Series of aggregations to apply on top of the `structured_query`.",
-          "items": {
-            "$ref": "Aggregation"
-          },
-          "type": "array"
-        },
-        "structuredQuery": {
-          "$ref": "StructuredQuery",
-          "description": "Nested structured query."
         }
       },
       "type": "object"

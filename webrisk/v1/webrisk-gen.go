@@ -489,6 +489,8 @@ type GoogleCloudWebriskV1SearchHashesResponseThreatHash struct {
 	//   "MALWARE" - Malware targeting any platform.
 	//   "SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 	//   "UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
+	//   "HIGH_RECALL" - High Recall Social Engineering list targeting any
+	// platform.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
@@ -561,6 +563,8 @@ type GoogleCloudWebriskV1SearchUrisResponseThreatUri struct {
 	//   "MALWARE" - Malware targeting any platform.
 	//   "SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 	//   "UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
+	//   "HIGH_RECALL" - High Recall Social Engineering list targeting any
+	// platform.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
@@ -599,6 +603,8 @@ type GoogleCloudWebriskV1Submission struct {
 	//   "MALWARE" - Malware targeting any platform.
 	//   "SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 	//   "UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
+	//   "HIGH_RECALL" - High Recall Social Engineering list targeting any
+	// platform.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// Uri: Required. The URI that is being reported for malicious content
@@ -974,6 +980,8 @@ func (c *HashesSearchCall) HashPrefix(hashPrefix string) *HashesSearchCall {
 //   "MALWARE" - Malware targeting any platform.
 //   "SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 //   "UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
+//   "HIGH_RECALL" - High Recall Social Engineering list targeting any
+// platform.
 func (c *HashesSearchCall) ThreatTypes(threatTypes ...string) *HashesSearchCall {
 	c.urlParams_.SetMulti("threatTypes", append([]string{}, threatTypes...))
 	return c
@@ -1095,13 +1103,15 @@ func (c *HashesSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudWebrisk
 	//         "THREAT_TYPE_UNSPECIFIED",
 	//         "MALWARE",
 	//         "SOCIAL_ENGINEERING",
-	//         "UNWANTED_SOFTWARE"
+	//         "UNWANTED_SOFTWARE",
+	//         "HIGH_RECALL"
 	//       ],
 	//       "enumDescriptions": [
 	//         "No entries should match this threat type. This threat type is unused.",
 	//         "Malware targeting any platform.",
 	//         "Social engineering targeting any platform.",
-	//         "Unwanted software targeting any platform."
+	//         "Unwanted software targeting any platform.",
+	//         "High Recall Social Engineering list targeting any platform."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -2127,6 +2137,8 @@ func (c *ThreatListsComputeDiffCall) ConstraintsSupportedCompressions(constraint
 //   "MALWARE" - Malware targeting any platform.
 //   "SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 //   "UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
+//   "HIGH_RECALL" - High Recall Social Engineering list targeting any
+// platform.
 func (c *ThreatListsComputeDiffCall) ThreatType(threatType string) *ThreatListsComputeDiffCall {
 	c.urlParams_.Set("threatType", threatType)
 	return c
@@ -2281,13 +2293,15 @@ func (c *ThreatListsComputeDiffCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//         "THREAT_TYPE_UNSPECIFIED",
 	//         "MALWARE",
 	//         "SOCIAL_ENGINEERING",
-	//         "UNWANTED_SOFTWARE"
+	//         "UNWANTED_SOFTWARE",
+	//         "HIGH_RECALL"
 	//       ],
 	//       "enumDescriptions": [
 	//         "No entries should match this threat type. This threat type is unused.",
 	//         "Malware targeting any platform.",
 	//         "Social engineering targeting any platform.",
-	//         "Unwanted software targeting any platform."
+	//         "Unwanted software targeting any platform.",
+	//         "High Recall Social Engineering list targeting any platform."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2339,6 +2353,8 @@ func (r *UrisService) Search() *UrisSearchCall {
 //   "MALWARE" - Malware targeting any platform.
 //   "SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 //   "UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
+//   "HIGH_RECALL" - High Recall Social Engineering list targeting any
+// platform.
 func (c *UrisSearchCall) ThreatTypes(threatTypes ...string) *UrisSearchCall {
 	c.urlParams_.SetMulti("threatTypes", append([]string{}, threatTypes...))
 	return c
@@ -2460,13 +2476,15 @@ func (c *UrisSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudWebriskV1
 	//         "THREAT_TYPE_UNSPECIFIED",
 	//         "MALWARE",
 	//         "SOCIAL_ENGINEERING",
-	//         "UNWANTED_SOFTWARE"
+	//         "UNWANTED_SOFTWARE",
+	//         "HIGH_RECALL"
 	//       ],
 	//       "enumDescriptions": [
 	//         "No entries should match this threat type. This threat type is unused.",
 	//         "Malware targeting any platform.",
 	//         "Social engineering targeting any platform.",
-	//         "Unwanted software targeting any platform."
+	//         "Unwanted software targeting any platform.",
+	//         "High Recall Social Engineering list targeting any platform."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,

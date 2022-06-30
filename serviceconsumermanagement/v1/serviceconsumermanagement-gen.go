@@ -3617,7 +3617,7 @@ type TenantProjectConfig struct {
 	Services []string `json:"services,omitempty"`
 
 	// TenantProjectPolicy: Describes ownership and policies for the new
-	// tenant project. Required.
+	// tenant project.
 	TenantProjectPolicy *TenantProjectPolicy `json:"tenantProjectPolicy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BillingConfig") to
@@ -3643,13 +3643,12 @@ func (s *TenantProjectConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TenantProjectPolicy: Describes policy settings that need to be
-// applied to a newly created tenant project.
+// TenantProjectPolicy: Describes policy settings that can be applied to
+// a newly created tenant project.
 type TenantProjectPolicy struct {
 	// PolicyBindings: Policy bindings to be applied to the tenant project,
 	// in addition to the 'roles/owner' role granted to the Service Consumer
-	// Management service account. At least one binding must have the role
-	// `roles/owner`.
+	// Management service account.
 	PolicyBindings []*PolicyBinding `json:"policyBindings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PolicyBindings") to

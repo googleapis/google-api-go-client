@@ -1525,7 +1525,6 @@ type CdnSettings struct {
 	//   "dash"
 	//   "webrtc"
 	//   "hls"
-	//   "srt"
 	IngestionType string `json:"ingestionType,omitempty"`
 
 	// Resolution: The resolution of the inbound video data.
@@ -4084,6 +4083,60 @@ type ContentRating struct {
 
 func (s *ContentRating) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentRating
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Cuepoint: Note that there may be a 5-second end-point resolution
+// issue. For instance, if a cuepoint comes in for 22:03:27, we may
+// stuff the cuepoint into 22:03:25 or 22:03:30, depending. This is an
+// artifact of HLS.
+type Cuepoint struct {
+	// Possible values:
+	//   "cueTypeUnspecified"
+	//   "cueTypeAd"
+	CueType string `json:"cueType,omitempty"`
+
+	// DurationSecs: The duration of this cuepoint.
+	DurationSecs int64 `json:"durationSecs,omitempty"`
+
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The identifier for cuepoint resource.
+	Id string `json:"id,omitempty"`
+
+	// InsertionOffsetTimeMs: The time when the cuepoint should be inserted
+	// by offset to the broadcast actual start time.
+	InsertionOffsetTimeMs int64 `json:"insertionOffsetTimeMs,omitempty,string"`
+
+	// WalltimeMs: The wall clock time at which the cuepoint should be
+	// inserted. Only one of insertion_offset_time_ms and walltime_ms may be
+	// set at a time.
+	WalltimeMs uint64 `json:"walltimeMs,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CueType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CueType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Cuepoint) MarshalJSON() ([]byte, error) {
+	type NoMethod Cuepoint
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8363,6 +8416,43 @@ type ThirdPartyLink struct {
 
 func (s *ThirdPartyLink) MarshalJSON() ([]byte, error) {
 	type NoMethod ThirdPartyLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ThirdPartyLinkListResponse struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	Items []*ThirdPartyLink `json:"items,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#thirdPartyLinkListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThirdPartyLinkListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ThirdPartyLinkListResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -15496,6 +15586,283 @@ func (c *LiveBroadcastsInsertCall) Do(opts ...googleapi.CallOption) (*LiveBroadc
 
 }
 
+// method id "youtube.liveBroadcasts.insertCuepoint":
+
+type LiveBroadcastsInsertCuepointCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// InsertCuepoint: Insert cuepoints in a broadcast
+func (r *LiveBroadcastsService) InsertCuepoint() *LiveBroadcastsInsertCuepointCall {
+	c := &LiveBroadcastsInsertCuepointCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Id sets the optional parameter "id": Broadcast to insert ads to, or
+// equivalently `external_video_id` for internal use.
+func (c *LiveBroadcastsInsertCuepointCall) Id(id string) *LiveBroadcastsInsertCuepointCall {
+	c.urlParams_.Set("id", id)
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": *Note:* This parameter is intended
+// exclusively for YouTube content partners. The
+// *onBehalfOfContentOwner* parameter indicates that the request's
+// authorization credentials identify a YouTube CMS user who is acting
+// on behalf of the content owner specified in the parameter value. This
+// parameter is intended for YouTube content partners that own and
+// manage many different YouTube channels. It allows content owners to
+// authenticate once and get access to all their video and channel data,
+// without having to provide authentication credentials for each
+// individual channel. The CMS account that the user authenticates with
+// must be linked to the specified YouTube content owner.
+func (c *LiveBroadcastsInsertCuepointCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *LiveBroadcastsInsertCuepointCall {
+	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// OnBehalfOfContentOwnerChannel sets the optional parameter
+// "onBehalfOfContentOwnerChannel": This parameter can only be used in a
+// properly authorized request. *Note:* This parameter is intended
+// exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube
+// channel ID of the channel to which a video is being added. This
+// parameter is required when a request specifies a value for the
+// onBehalfOfContentOwner parameter, and it can only be used in
+// conjunction with that parameter. In addition, the request must be
+// authorized using a CMS account that is linked to the content owner
+// that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value
+// specifies must be linked to the content owner that the
+// onBehalfOfContentOwner parameter specifies. This parameter is
+// intended for YouTube content partners that own and manage many
+// different YouTube channels. It allows content owners to authenticate
+// once and perform actions on behalf of the channel specified in the
+// parameter value, without having to provide authentication credentials
+// for each separate channel.
+func (c *LiveBroadcastsInsertCuepointCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveBroadcastsInsertCuepointCall {
+	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
+	return c
+}
+
+// Part sets the optional parameter "part": The *part* parameter
+// specifies a comma-separated list of one or more liveBroadcast
+// resource properties that the API response will include. The part
+// names that you can include in the parameter value are id, snippet,
+// contentDetails, and status.
+func (c *LiveBroadcastsInsertCuepointCall) Part(part ...string) *LiveBroadcastsInsertCuepointCall {
+	c.urlParams_.SetMulti("part", append([]string{}, part...))
+	return c
+}
+
+// ResourceCueType sets the optional parameter "resource.cueType":
+//
+// Possible values:
+//   "cueTypeUnspecified"
+//   "cueTypeAd"
+func (c *LiveBroadcastsInsertCuepointCall) ResourceCueType(resourceCueType string) *LiveBroadcastsInsertCuepointCall {
+	c.urlParams_.Set("resource.cueType", resourceCueType)
+	return c
+}
+
+// ResourceDurationSecs sets the optional parameter
+// "resource.durationSecs": The duration of this cuepoint.
+func (c *LiveBroadcastsInsertCuepointCall) ResourceDurationSecs(resourceDurationSecs int64) *LiveBroadcastsInsertCuepointCall {
+	c.urlParams_.Set("resource.durationSecs", fmt.Sprint(resourceDurationSecs))
+	return c
+}
+
+// ResourceEtag sets the optional parameter "resource.etag":
+func (c *LiveBroadcastsInsertCuepointCall) ResourceEtag(resourceEtag string) *LiveBroadcastsInsertCuepointCall {
+	c.urlParams_.Set("resource.etag", resourceEtag)
+	return c
+}
+
+// ResourceId sets the optional parameter "resource.id": The identifier
+// for cuepoint resource.
+func (c *LiveBroadcastsInsertCuepointCall) ResourceId(resourceId string) *LiveBroadcastsInsertCuepointCall {
+	c.urlParams_.Set("resource.id", resourceId)
+	return c
+}
+
+// ResourceInsertionOffsetTimeMs sets the optional parameter
+// "resource.insertionOffsetTimeMs": The time when the cuepoint should
+// be inserted by offset to the broadcast actual start time.
+func (c *LiveBroadcastsInsertCuepointCall) ResourceInsertionOffsetTimeMs(resourceInsertionOffsetTimeMs int64) *LiveBroadcastsInsertCuepointCall {
+	c.urlParams_.Set("resource.insertionOffsetTimeMs", fmt.Sprint(resourceInsertionOffsetTimeMs))
+	return c
+}
+
+// ResourceWalltimeMs sets the optional parameter "resource.walltimeMs":
+// The wall clock time at which the cuepoint should be inserted. Only
+// one of insertion_offset_time_ms and walltime_ms may be set at a time.
+func (c *LiveBroadcastsInsertCuepointCall) ResourceWalltimeMs(resourceWalltimeMs uint64) *LiveBroadcastsInsertCuepointCall {
+	c.urlParams_.Set("resource.walltimeMs", fmt.Sprint(resourceWalltimeMs))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveBroadcastsInsertCuepointCall) Fields(s ...googleapi.Field) *LiveBroadcastsInsertCuepointCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LiveBroadcastsInsertCuepointCall) Context(ctx context.Context) *LiveBroadcastsInsertCuepointCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LiveBroadcastsInsertCuepointCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LiveBroadcastsInsertCuepointCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/liveBroadcasts/cuepoint")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "youtube.liveBroadcasts.insertCuepoint" call.
+// Exactly one of *Cuepoint or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Cuepoint.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LiveBroadcastsInsertCuepointCall) Do(opts ...googleapi.CallOption) (*Cuepoint, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Cuepoint{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Insert cuepoints in a broadcast",
+	//   "flatPath": "youtube/v3/liveBroadcasts/cuepoint",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.liveBroadcasts.insertCuepoint",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "Broadcast to insert ads to, or equivalently `external_video_id` for internal use.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwner": {
+	//       "description": "*Note:* This parameter is intended exclusively for YouTube content partners. The *onBehalfOfContentOwner* parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwnerChannel": {
+	//       "description": "This parameter can only be used in a properly authorized request. *Note:* This parameter is intended exclusively for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID of the channel to which a video is being added. This parameter is required when a request specifies a value for the onBehalfOfContentOwner parameter, and it can only be used in conjunction with that parameter. In addition, the request must be authorized using a CMS account that is linked to the content owner that the onBehalfOfContentOwner parameter specifies. Finally, the channel that the onBehalfOfContentOwnerChannel parameter value specifies must be linked to the content owner that the onBehalfOfContentOwner parameter specifies. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and perform actions on behalf of the channel specified in the parameter value, without having to provide authentication credentials for each separate channel.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "The *part* parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, and status.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "resource.cueType": {
+	//       "enum": [
+	//         "cueTypeUnspecified",
+	//         "cueTypeAd"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "resource.durationSecs": {
+	//       "description": "The duration of this cuepoint.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "resource.etag": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "resource.id": {
+	//       "description": "The identifier for cuepoint resource.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "resource.insertionOffsetTimeMs": {
+	//       "description": "The time when the cuepoint should be inserted by offset to the broadcast actual start time.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "resource.walltimeMs": {
+	//       "description": "The wall clock time at which the cuepoint should be inserted. Only one of insertion_offset_time_ms and walltime_ms may be set at a time.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "youtube/v3/liveBroadcasts/cuepoint",
+	//   "response": {
+	//     "$ref": "Cuepoint"
+	//   }
+	// }
+
+}
+
 // method id "youtube.liveBroadcasts.list":
 
 type LiveBroadcastsListCall struct {
@@ -22275,13 +22642,13 @@ func (c *ThirdPartyLinksListCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "youtube.thirdPartyLinks.list" call.
-// Exactly one of *ThirdPartyLink or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *ThirdPartyLink.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
+// Exactly one of *ThirdPartyLinkListResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ThirdPartyLinkListResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ThirdPartyLinksListCall) Do(opts ...googleapi.CallOption) (*ThirdPartyLink, error) {
+func (c *ThirdPartyLinksListCall) Do(opts ...googleapi.CallOption) (*ThirdPartyLinkListResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -22300,7 +22667,7 @@ func (c *ThirdPartyLinksListCall) Do(opts ...googleapi.CallOption) (*ThirdPartyL
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &ThirdPartyLink{
+	ret := &ThirdPartyLinkListResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -22353,7 +22720,7 @@ func (c *ThirdPartyLinksListCall) Do(opts ...googleapi.CallOption) (*ThirdPartyL
 	//   },
 	//   "path": "youtube/v3/thirdPartyLinks",
 	//   "response": {
-	//     "$ref": "ThirdPartyLink"
+	//     "$ref": "ThirdPartyLinkListResponse"
 	//   }
 	// }
 

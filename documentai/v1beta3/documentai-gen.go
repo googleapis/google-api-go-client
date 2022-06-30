@@ -1746,9 +1746,21 @@ func (s *GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata) MarshalJSON() (
 // GoogleCloudDocumentaiV1ReviewDocumentResponse: Response message for
 // review document method.
 type GoogleCloudDocumentaiV1ReviewDocumentResponse struct {
-	// GcsDestination: The Cloud Storage uri for the human reviewed
-	// document.
+	// GcsDestination: The Cloud Storage uri for the human reviewed document
+	// if the review is succeeded.
 	GcsDestination string `json:"gcsDestination,omitempty"`
+
+	// RejectionReason: The reason why the review is rejected by reviewer.
+	RejectionReason string `json:"rejectionReason,omitempty"`
+
+	// State: The state of the review operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value is used if the
+	// state is omitted.
+	//   "REJECTED" - The review operation is rejected by the reviewer.
+	//   "SUCCEEDED" - The review operation is succeeded.
+	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
@@ -7683,6 +7695,215 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentRevisionHumanReview) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta3DocumentSchema: The schema defines the
+// output of the processed document by a processor.
+type GoogleCloudDocumentaiV1beta3DocumentSchema struct {
+	// Description: Description of the schema.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Display name to show to users.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EntityTypes: Entity types of the schema.
+	EntityTypes []*GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType `json:"entityTypes,omitempty"`
+
+	// Metadata: Metadata of the schema.
+	Metadata *GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DocumentSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType: EntityType is
+// the wrapper of a label of the corresponding model with detailed
+// attributes and limitations for entity-based processors. Multiple
+// types can also compose a dependency tree to represent nested types.
+type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType struct {
+	// BaseTypes: The entity type that this type is derived from. For now,
+	// one and only one should be set.
+	BaseTypes []string `json:"baseTypes,omitempty"`
+
+	// DisplayName: User defined name for the type.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EnumValues: If specified, lists all the possible values for this
+	// entity. This should not be more than a handful of values. If the
+	// number of values is >10 or could change frequently use the
+	// `EntityType.value_ontology` field and specify a list of all possible
+	// values in a value ontology file.
+	EnumValues *GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues `json:"enumValues,omitempty"`
+
+	// Name: Name of the type. It must be unique within the schema file and
+	// cannot be a 'Common Type'. Besides that we use the following naming
+	// conventions: - *use snake_casing* - name matching is case-insensitive
+	// - Maximum 64 characters. - Must start with a letter. - Allowed
+	// characters: ASCII letters [a-z0-9_-]. (For backward compatibility
+	// internal infrastructure and tooling can handle any ascii character) -
+	// The '/' is sometimes used to denote a property of a type. For example
+	// line_item/amount. This convention is deprecated, but will still be
+	// honored for backward compatibility.
+	Name string `json:"name,omitempty"`
+
+	// Properties: Describing the nested structure, or composition of an
+	// entity.
+	Properties []*GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty `json:"properties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues:
+// Defines the a list of enum values.
+type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues struct {
+	// Values: The individual values that this enum values type can include.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty: Defines
+// properties that can be part of the entity type.
+type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty struct {
+	// Name: The name of the property. Follows the same guidelines as the
+	// EntityType name.
+	Name string `json:"name,omitempty"`
+
+	// OccurrenceType: Occurrence type limits the number of instances an
+	// entity type appears in the document.
+	//
+	// Possible values:
+	//   "OCCURRENCE_TYPE_UNSPECIFIED" - Unspecified occurrence type.
+	//   "OPTIONAL_ONCE" - There will be zero or one instance of this entity
+	// type.
+	//   "OPTIONAL_MULTIPLE" - The entity type will appear zero or multiple
+	// times.
+	//   "REQUIRED_ONCE" - The entity type will only appear exactly once.
+	//   "REQUIRED_MULTIPLE" - The entity type will appear once or more
+	// times.
+	OccurrenceType string `json:"occurrenceType,omitempty"`
+
+	// ValueType: A reference to the value type of the property. This type
+	// is subject to the same conventions as the `Entity.base_types` field.
+	ValueType string `json:"valueType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata: Metadata for
+// global schema behavior.
+type GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata struct {
+	// DocumentAllowMultipleLabels: If true, on a given page, there can be
+	// multiple `document` annotations covering it.
+	DocumentAllowMultipleLabels bool `json:"documentAllowMultipleLabels,omitempty"`
+
+	// DocumentSplitter: If true, a `document` entity type can be applied to
+	// subdocument ( splitting). Otherwise, it can only be applied to the
+	// entire document (classification).
+	DocumentSplitter bool `json:"documentSplitter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DocumentAllowMultipleLabels") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "DocumentAllowMultipleLabels") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3DocumentShardInfo: For a large document,
 // sharding may be performed to produce several document shards. Each
 // document shard contains this field to detail which shard it is.
@@ -8275,6 +8496,10 @@ type GoogleCloudDocumentaiV1beta3ProcessRequest struct {
 	// must be set.
 	Document *GoogleCloudDocumentaiV1beta3Document `json:"document,omitempty"`
 
+	// FieldMask: Specifies which fields to include in ProcessResponse's
+	// document.
+	FieldMask string `json:"fieldMask,omitempty"`
+
 	// InlineDocument: An inline document proto.
 	InlineDocument *GoogleCloudDocumentaiV1beta3Document `json:"inlineDocument,omitempty"`
 
@@ -8752,6 +8977,9 @@ type GoogleCloudDocumentaiV1beta3ReviewDocumentRequest struct {
 	// Document: The document that needs human review.
 	Document *GoogleCloudDocumentaiV1beta3Document `json:"document,omitempty"`
 
+	// DocumentSchema: The document schema of the human review task.
+	DocumentSchema *GoogleCloudDocumentaiV1beta3DocumentSchema `json:"documentSchema,omitempty"`
+
 	// EnableSchemaValidation: Whether the validation should be performed on
 	// the ad-hoc review request.
 	EnableSchemaValidation bool `json:"enableSchemaValidation,omitempty"`
@@ -8794,9 +9022,21 @@ func (s *GoogleCloudDocumentaiV1beta3ReviewDocumentRequest) MarshalJSON() ([]byt
 // GoogleCloudDocumentaiV1beta3ReviewDocumentResponse: Response message
 // for review document method.
 type GoogleCloudDocumentaiV1beta3ReviewDocumentResponse struct {
-	// GcsDestination: The Cloud Storage uri for the human reviewed
-	// document.
+	// GcsDestination: The Cloud Storage uri for the human reviewed document
+	// if the review is succeeded.
 	GcsDestination string `json:"gcsDestination,omitempty"`
+
+	// RejectionReason: The reason why the review is rejected by reviewer.
+	RejectionReason string `json:"rejectionReason,omitempty"`
+
+	// State: The state of the review operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value is used if the
+	// state is omitted.
+	//   "REJECTED" - The review operation is rejected by the reviewer.
+	//   "SUCCEEDED" - The review operation is succeeded.
+	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
@@ -8857,7 +9097,9 @@ func (s *GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata) Marshal
 // Request message for the set default processor version method.
 type GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest struct {
 	// DefaultProcessorVersion: Required. The resource name of child
-	// ProcessorVersion to use as default.
+	// ProcessorVersion to use as default. Format:
+	// `projects/{project}/locations/{location}/processors/{processor}/proces
+	// sorVersions/{version}`
 	DefaultProcessorVersion string `json:"defaultProcessorVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

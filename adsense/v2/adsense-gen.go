@@ -329,8 +329,10 @@ type AdClient struct {
 	// accounts/{account}/adclients/{adclient}
 	Name string `json:"name,omitempty"`
 
-	// ProductCode: Output only. Product code of the ad client. For example,
-	// "AFC" for AdSense for Content.
+	// ProductCode: Output only. Reporting product code of the ad client.
+	// For example, "AFC" for AdSense for Content. Corresponds to the
+	// `PRODUCT_CODE` dimension, and present only if the ad client supports
+	// reporting.
 	ProductCode string `json:"productCode,omitempty"`
 
 	// ReportingDimensionId: Output only. Unique ID of the ad client as used
@@ -348,6 +350,10 @@ type AdClient struct {
 	//   "REQUIRES_REVIEW" - The ad client hasn't been checked yet. There
 	// are tasks pending before AdSense will start the review.
 	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -1403,6 +1409,10 @@ type SavedReport struct {
 	// Title: Report title as specified by publisher.
 	Title string `json:"title,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1533,6 +1543,10 @@ type UrlChannel struct {
 	// UriPattern: URI pattern of the channel. Does not include "http://" or
 	// "https://". Example: www.example.com/home
 	UriPattern string `json:"uriPattern,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -2084,6 +2098,154 @@ func (c *AccountsListChildAccountsCall) Pages(ctx context.Context, f func(*ListC
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "adsense.accounts.adclients.get":
+
+type AccountsAdclientsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the ad client from the given resource name.
+//
+// - name: The name of the ad client to retrieve. Format:
+//   accounts/{account}/adclients/{adclient}.
+func (r *AccountsAdclientsService) Get(name string) *AccountsAdclientsGetCall {
+	c := &AccountsAdclientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAdclientsGetCall) Fields(s ...googleapi.Field) *AccountsAdclientsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsAdclientsGetCall) IfNoneMatch(entityTag string) *AccountsAdclientsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAdclientsGetCall) Context(ctx context.Context) *AccountsAdclientsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAdclientsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAdclientsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.adclients.get" call.
+// Exactly one of *AdClient or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *AdClient.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsAdclientsGetCall) Do(opts ...googleapi.CallOption) (*AdClient, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AdClient{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the ad client from the given resource name.",
+	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.adclients.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the ad client to retrieve. Format: accounts/{account}/adclients/{adclient}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/adclients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "AdClient"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
 }
 
 // method id "adsense.accounts.adclients.getAdcode":
@@ -3679,6 +3841,154 @@ func (c *AccountsAdclientsCustomchannelsListLinkedAdUnitsCall) Pages(ctx context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "adsense.accounts.adclients.urlchannels.get":
+
+type AccountsAdclientsUrlchannelsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about the selected url channel.
+//
+// - name: The name of the url channel to retrieve. Format:
+//   accounts/{account}/adclients/{adclient}/urlchannels/{urlchannel}.
+func (r *AccountsAdclientsUrlchannelsService) Get(name string) *AccountsAdclientsUrlchannelsGetCall {
+	c := &AccountsAdclientsUrlchannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAdclientsUrlchannelsGetCall) Fields(s ...googleapi.Field) *AccountsAdclientsUrlchannelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsAdclientsUrlchannelsGetCall) IfNoneMatch(entityTag string) *AccountsAdclientsUrlchannelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAdclientsUrlchannelsGetCall) Context(ctx context.Context) *AccountsAdclientsUrlchannelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAdclientsUrlchannelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAdclientsUrlchannelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.adclients.urlchannels.get" call.
+// Exactly one of *UrlChannel or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *UrlChannel.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsAdclientsUrlchannelsGetCall) Do(opts ...googleapi.CallOption) (*UrlChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &UrlChannel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about the selected url channel.",
+	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/urlchannels/{urlchannelsId}",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.adclients.urlchannels.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the url channel to retrieve. Format: accounts/{account}/adclients/{adclient}/urlchannels/{urlchannel}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/adclients/[^/]+/urlchannels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "UrlChannel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
 }
 
 // method id "adsense.accounts.adclients.urlchannels.list":
@@ -5691,6 +6001,154 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//   "path": "v2/{+account}/reports:generateCsv",
 	//   "response": {
 	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.accounts.reports.getSaved":
+
+type AccountsReportsGetSavedCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSaved: Gets the saved report from the given resource name.
+//
+// - name: The name of the saved report to retrieve. Format:
+//   accounts/{account}/reports/{report}.
+func (r *AccountsReportsService) GetSaved(name string) *AccountsReportsGetSavedCall {
+	c := &AccountsReportsGetSavedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsReportsGetSavedCall) Fields(s ...googleapi.Field) *AccountsReportsGetSavedCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsReportsGetSavedCall) IfNoneMatch(entityTag string) *AccountsReportsGetSavedCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsReportsGetSavedCall) Context(ctx context.Context) *AccountsReportsGetSavedCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsReportsGetSavedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsReportsGetSavedCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}/saved")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.reports.getSaved" call.
+// Exactly one of *SavedReport or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SavedReport.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsReportsGetSavedCall) Do(opts ...googleapi.CallOption) (*SavedReport, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SavedReport{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the saved report from the given resource name.",
+	//   "flatPath": "v2/accounts/{accountsId}/reports/{reportsId}/saved",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.reports.getSaved",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the saved report to retrieve. Format: accounts/{account}/reports/{report}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/reports/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}/saved",
+	//   "response": {
+	//     "$ref": "SavedReport"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adsense",

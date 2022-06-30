@@ -717,7 +717,7 @@ func (s *BooleanOperatorOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BooleanPropertyOptions: Options for boolean properties.
+// BooleanPropertyOptions: The options for boolean properties.
 type BooleanPropertyOptions struct {
 	// OperatorOptions: If set, describes how the boolean should be used as
 	// a search operator.
@@ -857,12 +857,16 @@ func (s *ContextAttribute) MarshalJSON() ([]byte, error) {
 // CustomEmoji: Proto representation of a custom emoji. May be used in
 // both APIs and in Spanner, but certain fields should be restricted to
 // one or the other. See the per-field documentation for details.
-// NEXT_TAG: 11
+// NEXT_TAG: 14
 type CustomEmoji struct {
 	// BlobId: ID for the underlying image data in Blobstore. This field
 	// should *only* be present in Spanner or within the server, but should
 	// not be exposed in public APIs.
 	BlobId string `json:"blobId,omitempty"`
+
+	// ContentType: Content type of the file used to upload the emoji. Used
+	// for takeout. Written to Spanner when the emoji is created.
+	ContentType string `json:"contentType,omitempty"`
 
 	// CreateTimeMicros: Time when the Emoji was created, in microseconds.
 	// This field may be present in Spanner, within the server, or in public
@@ -871,6 +875,16 @@ type CustomEmoji struct {
 
 	// CreatorUserId: This field should *never* be persisted to Spanner.
 	CreatorUserId *UserId `json:"creatorUserId,omitempty"`
+
+	// DeleteTimeMicros: Time when the emoji was deleted, in microseconds.
+	// This field may be present in Spanner, within the server, or in public
+	// APIs. Only present if the emoji has been deleted.
+	DeleteTimeMicros int64 `json:"deleteTimeMicros,omitempty,string"`
+
+	// EphemeralUrl: Output only. A short-lived URL clients can use for
+	// directly accessing a custom emoji image. This field is intended for
+	// API consumption, and should *never* be persisted to Spanner.
+	EphemeralUrl string `json:"ephemeralUrl,omitempty"`
 
 	// OwnerCustomerId: This field should *never* be persisted to Spanner.
 	OwnerCustomerId *CustomerId `json:"ownerCustomerId,omitempty"`
@@ -963,7 +977,7 @@ func (s *CustomerId) MarshalJSON() ([]byte, error) {
 // CustomerIndexStats: Aggregation of items by status code as of the
 // specified date.
 type CustomerIndexStats struct {
-	// Date: Date for which statistics were calculated.
+	// Date: The date for which statistics were calculated.
 	Date *Date `json:"date,omitempty"`
 
 	// ItemCountByStatus: Number of items aggregrated by status code.
@@ -993,8 +1007,8 @@ func (s *CustomerIndexStats) MarshalJSON() ([]byte, error) {
 }
 
 type CustomerQueryStats struct {
-	// Date: Date for which query stats were calculated. Stats calculated on
-	// the next day close to midnight are returned.
+	// Date: The date for which query stats were calculated. Stats
+	// calculated on the next day close to midnight are returned.
 	Date *Date `json:"date,omitempty"`
 
 	QueryCountByStatus []*QueryCountByStatus `json:"queryCountByStatus,omitempty"`
@@ -1028,7 +1042,7 @@ type CustomerSearchApplicationStats struct {
 	// Count: The count of search applications for the date.
 	Count int64 `json:"count,omitempty,string"`
 
-	// Date: Date for which search application stats were calculated.
+	// Date: The date for which search application stats were calculated.
 	Date *Date `json:"date,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
@@ -1055,7 +1069,7 @@ func (s *CustomerSearchApplicationStats) MarshalJSON() ([]byte, error) {
 }
 
 type CustomerSessionStats struct {
-	// Date: Date for which session stats were calculated. Stats are
+	// Date: The date for which session stats were calculated. Stats are
 	// calculated on the following day, close to midnight PST, and then
 	// returned.
 	Date *Date `json:"date,omitempty"`
@@ -1128,8 +1142,8 @@ func (s *CustomerSettings) MarshalJSON() ([]byte, error) {
 }
 
 type CustomerUserStats struct {
-	// Date: Date for which session stats were calculated. Stats calculated
-	// on the next day close to midnight are returned.
+	// Date: The date for which session stats were calculated. Stats
+	// calculated on the next day close to midnight are returned.
 	Date *Date `json:"date,omitempty"`
 
 	// OneDayActiveUsersCount: The count of unique active users in the past
@@ -1197,7 +1211,7 @@ type DataSource struct {
 	// shared outside this visibility.
 	ItemsVisibility []*GSuitePrincipal `json:"itemsVisibility,omitempty"`
 
-	// Name: Name of the datasource resource. Format:
+	// Name: The name of the datasource resource. Format:
 	// datasources/{source_id}. The name is ignored when creating a
 	// datasource.
 	Name string `json:"name,omitempty"`
@@ -1253,7 +1267,7 @@ func (s *DataSource) MarshalJSON() ([]byte, error) {
 // DataSourceIndexStats: Aggregation of items by status code as of the
 // specified date.
 type DataSourceIndexStats struct {
-	// Date: Date for which index stats were calculated. If the date of
+	// Date: The date for which index stats were calculated. If the date of
 	// request is not the current date then stats calculated on the next day
 	// are returned. Stats are calculated close to mid night in this case.
 	// If date of request is current date, then real time stats are
@@ -1425,7 +1439,7 @@ func (s *DateOperatorOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DatePropertyOptions: Options for date properties.
+// DatePropertyOptions: The options for date properties.
 type DatePropertyOptions struct {
 	// OperatorOptions: If set, describes how the date should be used as a
 	// search operator.
@@ -1514,14 +1528,14 @@ func (s *DebugOptions) MarshalJSON() ([]byte, error) {
 }
 
 type DeleteQueueItemsRequest struct {
-	// ConnectorName: Name of connector making this call. Format:
+	// ConnectorName: The name of connector making this call. Format:
 	// datasources/{source_id}/connectors/{ID}
 	ConnectorName string `json:"connectorName,omitempty"`
 
 	// DebugOptions: Common debug options.
 	DebugOptions *DebugOptions `json:"debugOptions,omitempty"`
 
-	// Queue: Name of a queue to delete items from.
+	// Queue: The name of a queue to delete items from.
 	Queue string `json:"queue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConnectorName") to
@@ -1642,7 +1656,7 @@ func (s *DoubleOperatorOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DoublePropertyOptions: Options for double properties.
+// DoublePropertyOptions: The options for double properties.
 type DoublePropertyOptions struct {
 	// OperatorOptions: If set, describes how the double should be used as a
 	// search operator.
@@ -1858,7 +1872,9 @@ type DynamiteSpacesScoringInfo struct {
 
 	JoinedSpacesAffinityScore float64 `json:"joinedSpacesAffinityScore,omitempty"`
 
-	LastMessagePostedTimestampMicros int64 `json:"lastMessagePostedTimestampMicros,omitempty,string"`
+	LastMessagePostedTimestampSecs int64 `json:"lastMessagePostedTimestampSecs,omitempty,string"`
+
+	LastReadTimestampSecs int64 `json:"lastReadTimestampSecs,omitempty,string"`
 
 	MemberMetadataCount float64 `json:"memberMetadataCount,omitempty"`
 
@@ -1872,7 +1888,7 @@ type DynamiteSpacesScoringInfo struct {
 
 	SpaceAgeInDays float64 `json:"spaceAgeInDays,omitempty"`
 
-	SpaceCreationTimestampMicros int64 `json:"spaceCreationTimestampMicros,omitempty,string"`
+	SpaceCreationTimestampSecs int64 `json:"spaceCreationTimestampSecs,omitempty,string"`
 
 	TopicalityScore float64 `json:"topicalityScore,omitempty"`
 
@@ -2039,8 +2055,8 @@ func (s *EnumOperatorOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EnumPropertyOptions: Options for enum properties, which allow you to
-// define a restricted set of strings to match user queries, set
+// EnumPropertyOptions: The options for enum properties, which allow you
+// to define a restricted set of strings to match user queries, set
 // rankings for those string values, and define an operator name to be
 // paired with those strings so that users can narrow results to only
 // items with a specific value. For example, for items in a request
@@ -2294,7 +2310,7 @@ type FacetOptions struct {
 	// used to compute facets.
 	ObjectType string `json:"objectType,omitempty"`
 
-	// OperatorName: Name of the operator chosen for faceting. @see
+	// OperatorName: The name of the operator chosen for faceting. @see
 	// cloudsearch.SchemaPropertyOptions
 	OperatorName string `json:"operatorName,omitempty"`
 
@@ -2329,14 +2345,14 @@ func (s *FacetOptions) MarshalJSON() ([]byte, error) {
 // FacetResult: Source specific facet response
 type FacetResult struct {
 	// Buckets: FacetBuckets for values in response containing at least a
-	// single result.
+	// single result with the corresponding filter.
 	Buckets []*FacetBucket `json:"buckets,omitempty"`
 
 	// ObjectType: Object type for which facet results are returned. Can be
 	// empty.
 	ObjectType string `json:"objectType,omitempty"`
 
-	// OperatorName: Name of the operator chosen for faceting. @see
+	// OperatorName: The name of the operator chosen for faceting. @see
 	// cloudsearch.SchemaPropertyOptions
 	OperatorName string `json:"operatorName,omitempty"`
 
@@ -2368,7 +2384,7 @@ func (s *FacetResult) MarshalJSON() ([]byte, error) {
 }
 
 type FieldViolation struct {
-	// Description: Description of the error.
+	// Description: The description of the error.
 	Description string `json:"description,omitempty"`
 
 	// Field: Path of field with violation.
@@ -3052,7 +3068,7 @@ func (s *HtmlOperatorOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HtmlPropertyOptions: Options for html properties.
+// HtmlPropertyOptions: The options for html properties.
 type HtmlPropertyOptions struct {
 	// OperatorOptions: If set, describes how the property should be used as
 	// a search operator.
@@ -3196,7 +3212,7 @@ func (s *IndexItemOptions) MarshalJSON() ([]byte, error) {
 }
 
 type IndexItemRequest struct {
-	// ConnectorName: Name of connector making this call. Format:
+	// ConnectorName: The name of connector making this call. Format:
 	// datasources/{source_id}/connectors/{ID}
 	ConnectorName string `json:"connectorName,omitempty"`
 
@@ -3205,15 +3221,15 @@ type IndexItemRequest struct {
 
 	IndexItemOptions *IndexItemOptions `json:"indexItemOptions,omitempty"`
 
-	// Item: Name of the item. Format:
+	// Item: The name of the item. Format:
 	// datasources/{source_id}/items/{item_id}
 	Item *Item `json:"item,omitempty"`
 
 	// Mode: Required. The RequestMode for this request.
 	//
 	// Possible values:
-	//   "UNSPECIFIED" - Priority is not specified in the update request.
-	// Leaving priority unspecified results in an update failure.
+	//   "UNSPECIFIED" - The priority is not specified in the update
+	// request. Leaving priority unspecified results in an update failure.
 	//   "SYNCHRONOUS" - For real-time updates.
 	//   "ASYNCHRONOUS" - For changes that are executed after the response
 	// is sent back to the caller.
@@ -3307,7 +3323,7 @@ func (s *IntegerOperatorOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// IntegerPropertyOptions: Options for integer properties.
+// IntegerPropertyOptions: The options for integer properties.
 type IntegerPropertyOptions struct {
 	// MaximumValue: The maximum value of the property. The minimum and
 	// maximum values for the property are used to rank results according to
@@ -3438,7 +3454,7 @@ type Item struct {
 	// Content: Item content to be indexed and made text searchable.
 	Content *ItemContent `json:"content,omitempty"`
 
-	// ItemType: Type for this item.
+	// ItemType: The type for this item.
 	//
 	// Possible values:
 	//   "UNSPECIFIED"
@@ -3451,10 +3467,10 @@ type Item struct {
 	// otherwise has the same purpose as CONTAINER_ITEM.
 	ItemType string `json:"itemType,omitempty"`
 
-	// Metadata: Metadata information.
+	// Metadata: The metadata information.
 	Metadata *ItemMetadata `json:"metadata,omitempty"`
 
-	// Name: Name of the Item. Format:
+	// Name: The name of the Item. Format:
 	// datasources/{source_id}/items/{item_id} This is a required field. The
 	// maximum length is 1536 characters.
 	Name string `json:"name,omitempty"`
@@ -3513,7 +3529,8 @@ func (s *Item) MarshalJSON() ([]byte, error) {
 }
 
 // ItemAcl: Access control list information for the item. For more
-// information see Map ACLs (/cloud-search/docs/guides/acls).
+// information see Map ACLs
+// (https://developers.google.com/cloud-search/docs/guides/acls).
 type ItemAcl struct {
 	// AclInheritanceType: Sets the type of access rules to apply when an
 	// item inherits its ACL from a parent. This should always be set in
@@ -3540,7 +3557,7 @@ type ItemAcl struct {
 	// list allowed readers. The maximum number of elements is 100.
 	DeniedReaders []*Principal `json:"deniedReaders,omitempty"`
 
-	// InheritAclFrom: Name of the item to inherit the Access Permission
+	// InheritAclFrom: The name of the item to inherit the Access Permission
 	// List (ACL) from. Note: ACL inheritance *only* provides access
 	// permissions to child items and does not define structural
 	// relationships, nor does it provide convenient ways to delete large
@@ -4254,8 +4271,8 @@ func (s *Metaline) MarshalJSON() ([]byte, error) {
 // Name: A person's name.
 type Name struct {
 	// DisplayName: The read-only display name formatted according to the
-	// locale specified by the viewer's account or the Accept-Language HTTP
-	// header.
+	// locale specified by the viewer's account or the `Accept-Language`
+	// HTTP header.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -4334,13 +4351,13 @@ func (s *NamedProperty) MarshalJSON() ([]byte, error) {
 
 // ObjectDefinition: The definition for an object within a data source.
 type ObjectDefinition struct {
-	// Name: Name for the object, which then defines its type. Item indexing
-	// requests should set the objectType field equal to this value. For
-	// example, if *name* is *Document*, then indexing requests for items of
-	// type Document should set objectType equal to *Document*. Each object
-	// definition must be uniquely named within a schema. The name must
-	// start with a letter and can only contain letters (A-Z, a-z) or
-	// numbers (0-9). The maximum length is 256 characters.
+	// Name: The name for the object, which then defines its type. Item
+	// indexing requests should set the objectType field equal to this
+	// value. For example, if *name* is *Document*, then indexing requests
+	// for items of type Document should set objectType equal to *Document*.
+	// Each object definition must be uniquely named within a schema. The
+	// name must start with a letter and can only contain letters (A-Z, a-z)
+	// or numbers (0-9). The maximum length is 256 characters.
 	Name string `json:"name,omitempty"`
 
 	// Options: The optional object-specific options.
@@ -4415,8 +4432,8 @@ func (s *ObjectDisplayOptions) MarshalJSON() ([]byte, error) {
 
 // ObjectOptions: The options for an object.
 type ObjectOptions struct {
-	// DisplayOptions: Options that determine how the object is displayed in
-	// the Cloud Search results page.
+	// DisplayOptions: The options that determine how the object is
+	// displayed in the Cloud Search results page.
 	DisplayOptions *ObjectDisplayOptions `json:"displayOptions,omitempty"`
 
 	// FreshnessOptions: The freshness options for an object.
@@ -4446,7 +4463,7 @@ func (s *ObjectOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ObjectPropertyOptions: Options for object properties.
+// ObjectPropertyOptions: The options for object properties.
 type ObjectPropertyOptions struct {
 	// SubobjectProperties: The properties of the sub-object. These
 	// properties represent a nested object. For example, if this property
@@ -4604,7 +4621,9 @@ type Person struct {
 	EmailAddresses []*EmailAddress `json:"emailAddresses,omitempty"`
 
 	// Name: The resource name of the person to provide information about.
-	// See People.get from Google People API.
+	// See `People.get`
+	// (https://developers.google.com/people/api/rest/v1/people/get) from
+	// the Google People API.
 	Name string `json:"name,omitempty"`
 
 	// ObfuscatedId: Obfuscated ID of a person.
@@ -4612,6 +4631,9 @@ type Person struct {
 
 	// PersonNames: The person's name
 	PersonNames []*Name `json:"personNames,omitempty"`
+
+	// PhoneNumbers: The person's phone numbers
+	PhoneNumbers []*PhoneNumber `json:"phoneNumbers,omitempty"`
 
 	// Photos: A person's read-only photo. A picture shown next to the
 	// person's name to help others recognize the person in search results.
@@ -4637,6 +4659,40 @@ type Person struct {
 
 func (s *Person) MarshalJSON() ([]byte, error) {
 	type NoMethod Person
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PhoneNumber: A person's Phone Number
+type PhoneNumber struct {
+	// PhoneNumber: The phone number of the person.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+
+	// Possible values:
+	//   "OTHER"
+	//   "MOBILE"
+	//   "OFFICE"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PhoneNumber") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PhoneNumber") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PhoneNumber) MarshalJSON() ([]byte, error) {
+	type NoMethod PhoneNumber
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4670,7 +4726,7 @@ func (s *Photo) MarshalJSON() ([]byte, error) {
 }
 
 type PollItemsRequest struct {
-	// ConnectorName: Name of connector making this call. Format:
+	// ConnectorName: The name of connector making this call. Format:
 	// datasources/{source_id}/connectors/{ID}
 	ConnectorName string `json:"connectorName,omitempty"`
 
@@ -4813,7 +4869,7 @@ type ProcessingError struct {
 	//   "ACL_CYCLE" - ACL inheritance graph formed a cycle.
 	Code string `json:"code,omitempty"`
 
-	// ErrorMessage: Description of the error.
+	// ErrorMessage: The description of the error.
 	ErrorMessage string `json:"errorMessage,omitempty"`
 
 	// FieldViolations: In case the item fields are invalid, this field
@@ -4849,9 +4905,9 @@ type PropertyDefinition struct {
 
 	DatePropertyOptions *DatePropertyOptions `json:"datePropertyOptions,omitempty"`
 
-	// DisplayOptions: Options that determine how the property is displayed
-	// in the Cloud Search results page if it is specified to be displayed
-	// in the object's display options .
+	// DisplayOptions: The options that determine how the property is
+	// displayed in the Cloud Search results page if it's specified to be
+	// displayed in the object's display options.
 	DisplayOptions *PropertyDisplayOptions `json:"displayOptions,omitempty"`
 
 	DoublePropertyOptions *DoublePropertyOptions `json:"doublePropertyOptions,omitempty"`
@@ -4865,7 +4921,7 @@ type PropertyDefinition struct {
 	// IsFacetable: Indicates that the property can be used for generating
 	// facets. Cannot be true for properties whose type is object.
 	// IsReturnable must be true to set this option. Only supported for
-	// Boolean, Enum, and Text properties.
+	// boolean, enum, and text properties.
 	IsFacetable bool `json:"isFacetable,omitempty"`
 
 	// IsRepeatable: Indicates that multiple values are allowed for the
@@ -4888,8 +4944,8 @@ type PropertyDefinition struct {
 	// IsSortable: Indicates that the property can be used for sorting.
 	// Cannot be true for properties that are repeatable. Cannot be true for
 	// properties whose type is object. IsReturnable must be true to set
-	// this option. Only supported for Boolean, Date, Double, Integer, and
-	// Timestamp properties.
+	// this option. Only supported for boolean, date, double, integer, and
+	// timestamp properties.
 	IsSortable bool `json:"isSortable,omitempty"`
 
 	// IsSuggestable: Indicates that the property can be used for generating
@@ -4989,10 +5045,10 @@ type PushItem struct {
 	// error. The maximum length is 2048 characters.
 	ContentHash string `json:"contentHash,omitempty"`
 
-	// MetadataHash: Metadata hash of the item according to the repository.
-	// If specified, this is used to determine how to modify this item's
-	// status. Setting this field and the type field results in argument
-	// error. The maximum length is 2048 characters.
+	// MetadataHash: The metadata hash of the item according to the
+	// repository. If specified, this is used to determine how to modify
+	// this item's status. Setting this field and the type field results in
+	// argument error. The maximum length is 2048 characters.
 	MetadataHash string `json:"metadataHash,omitempty"`
 
 	// Payload: Provides additional document state information for the
@@ -5000,7 +5056,7 @@ type PushItem struct {
 	// maximum length is 8192 bytes.
 	Payload string `json:"payload,omitempty"`
 
-	// Queue: Queue to which this item belongs to. The default queue is
+	// Queue: Queue to which this item belongs. The `default` queue is
 	// chosen if this field is not specified. The maximum length is 512
 	// characters.
 	Queue string `json:"queue,omitempty"`
@@ -5061,7 +5117,7 @@ func (s *PushItem) MarshalJSON() ([]byte, error) {
 }
 
 type PushItemRequest struct {
-	// ConnectorName: Name of connector making this call. Format:
+	// ConnectorName: The name of connector making this call. Format:
 	// datasources/{source_id}/connectors/{ID}
 	ConnectorName string `json:"connectorName,omitempty"`
 
@@ -5333,15 +5389,15 @@ type QueryOperator struct {
 	// isolate the property using the less-than operator.
 	LessThanOperatorName string `json:"lessThanOperatorName,omitempty"`
 
-	// ObjectType: Name of the object corresponding to the operator. This
-	// field is only filled for schema-specific operators, and is unset for
-	// common operators.
+	// ObjectType: The name of the object corresponding to the operator.
+	// This field is only filled for schema-specific operators, and is unset
+	// for common operators.
 	ObjectType string `json:"objectType,omitempty"`
 
 	// OperatorName: The name of the operator.
 	OperatorName string `json:"operatorName,omitempty"`
 
-	// Type: Type of the operator.
+	// Type: The type of the operator.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Invalid value.
@@ -5391,7 +5447,7 @@ type QuerySource struct {
 	// used with the 'source' operator.
 	ShortName string `json:"shortName,omitempty"`
 
-	// Source: Name of the source
+	// Source: The name of the source
 	Source *Source `json:"source,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -5434,7 +5490,7 @@ type RepositoryError struct {
 	// codes.
 	HttpStatusCode int64 `json:"httpStatusCode,omitempty"`
 
-	// Type: Type of error.
+	// Type: The type of error.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown error.
@@ -5913,7 +5969,7 @@ type SearchApplication struct {
 	// requests made for the search application in query APIs.
 	EnableAuditLog bool `json:"enableAuditLog,omitempty"`
 
-	// Name: Name of the Search Application. Format:
+	// Name: The name of the Search Application. Format:
 	// searchapplications/{application_id}.
 	Name string `json:"name,omitempty"`
 
@@ -5968,8 +6024,8 @@ func (s *SearchApplication) MarshalJSON() ([]byte, error) {
 // SearchApplicationQueryStats: Search application level query stats per
 // date
 type SearchApplicationQueryStats struct {
-	// Date: Date for which query stats were calculated. Stats calculated on
-	// the next day close to midnight are returned.
+	// Date: The date for which query stats were calculated. Stats
+	// calculated on the next day close to midnight are returned.
 	Date *Date `json:"date,omitempty"`
 
 	QueryCountByStatus []*QueryCountByStatus `json:"queryCountByStatus,omitempty"`
@@ -5998,7 +6054,7 @@ func (s *SearchApplicationQueryStats) MarshalJSON() ([]byte, error) {
 }
 
 type SearchApplicationSessionStats struct {
-	// Date: Date for which session stats were calculated. Stats are
+	// Date: The date for which session stats were calculated. Stats are
 	// calculated on the following day, close to midnight PST, and then
 	// returned.
 	Date *Date `json:"date,omitempty"`
@@ -6030,8 +6086,8 @@ func (s *SearchApplicationSessionStats) MarshalJSON() ([]byte, error) {
 }
 
 type SearchApplicationUserStats struct {
-	// Date: Date for which session stats were calculated. Stats calculated
-	// on the next day close to midnight are returned.
+	// Date: The date for which session stats were calculated. Stats
+	// calculated on the next day close to midnight are returned.
 	Date *Date `json:"date,omitempty"`
 
 	// OneDayActiveUsersCount: The count of unique active users in the past
@@ -6432,8 +6488,8 @@ func (s *Snippet) MarshalJSON() ([]byte, error) {
 }
 
 type SortOptions struct {
-	// OperatorName: Name of the operator corresponding to the field to sort
-	// on. The corresponding property must be marked as sortable.
+	// OperatorName: The name of the operator corresponding to the field to
+	// sort on. The corresponding property must be marked as sortable.
 	OperatorName string `json:"operatorName,omitempty"`
 
 	// SortOrder: Ascending is the default sort order
@@ -6780,7 +6836,7 @@ func (s *SpellResult) MarshalJSON() ([]byte, error) {
 
 // StartUploadItemRequest: Start upload file request.
 type StartUploadItemRequest struct {
-	// ConnectorName: Name of connector making this call. Format:
+	// ConnectorName: The name of connector making this call. Format:
 	// datasources/{source_id}/connectors/{ID}
 	ConnectorName string `json:"connectorName,omitempty"`
 
@@ -7039,7 +7095,7 @@ type TextOperatorOptions struct {
 	// atomic value in operator searches and facet matches. For example, if
 	// the operator name is "genre" and the value is "science-fiction" the
 	// query restrictions "genre:science" and "genre:fiction" doesn't match
-	// the item; "genre:science-fiction" does. Value matching is
+	// the item; "genre:science-fiction" does. Text value matching is
 	// case-sensitive and does not remove special characters. If false, the
 	// text is tokenized. For example, if the value is "science-fiction" the
 	// queries "genre:science" and "genre:fiction" matches the item.
@@ -7081,7 +7137,7 @@ func (s *TextOperatorOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TextPropertyOptions: Options for text properties.
+// TextPropertyOptions: The options for text properties.
 type TextPropertyOptions struct {
 	// OperatorOptions: If set, describes how the property should be used as
 	// a search operator.
@@ -7205,7 +7261,7 @@ func (s *TimestampOperatorOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimestampPropertyOptions: Options for timestamp properties.
+// TimestampPropertyOptions: The options for timestamp properties.
 type TimestampPropertyOptions struct {
 	// OperatorOptions: If set, describes how the timestamp should be used
 	// as a search operator.
@@ -7338,14 +7394,14 @@ func (s *UnmappedIdentity) MarshalJSON() ([]byte, error) {
 }
 
 type UnreserveItemsRequest struct {
-	// ConnectorName: Name of connector making this call. Format:
+	// ConnectorName: The name of connector making this call. Format:
 	// datasources/{source_id}/connectors/{ID}
 	ConnectorName string `json:"connectorName,omitempty"`
 
 	// DebugOptions: Common debug options.
 	DebugOptions *DebugOptions `json:"debugOptions,omitempty"`
 
-	// Queue: Name of a queue to unreserve items from.
+	// Queue: The name of a queue to unreserve items from.
 	Queue string `json:"queue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConnectorName") to
@@ -7439,7 +7495,7 @@ func (s *UpdateSchemaRequest) MarshalJSON() ([]byte, error) {
 // after its creation. Updating of item content may refer to this
 // uploaded content via contentDataRef.
 type UploadItemRef struct {
-	// Name: Name of the content reference. The maximum length is 2048
+	// Name: The name of the content reference. The maximum length is 2048
 	// characters.
 	Name string `json:"name,omitempty"`
 
@@ -8708,7 +8764,7 @@ type IndexingDatasourcesDeleteSchemaCall struct {
 // DeleteSchema: Deletes the schema of a data source. **Note:** This API
 // requires an admin or service account to execute.
 //
-// - name: Name of the data source to delete Schema. Format:
+// - name: The name of the data source to delete Schema. Format:
 //   datasources/{source_id}.
 func (r *IndexingDatasourcesService) DeleteSchema(name string) *IndexingDatasourcesDeleteSchemaCall {
 	c := &IndexingDatasourcesDeleteSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8824,7 +8880,7 @@ func (c *IndexingDatasourcesDeleteSchemaCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Name of the data source to delete Schema. Format: datasources/{source_id}",
+	//       "description": "The name of the data source to delete Schema. Format: datasources/{source_id}",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
@@ -8858,7 +8914,7 @@ type IndexingDatasourcesGetSchemaCall struct {
 // GetSchema: Gets the schema of a data source. **Note:** This API
 // requires an admin or service account to execute.
 //
-// - name: Name of the data source to get Schema. Format:
+// - name: The name of the data source to get Schema. Format:
 //   datasources/{source_id}.
 func (r *IndexingDatasourcesService) GetSchema(name string) *IndexingDatasourcesGetSchemaCall {
 	c := &IndexingDatasourcesGetSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8987,7 +9043,7 @@ func (c *IndexingDatasourcesGetSchemaCall) Do(opts ...googleapi.CallOption) (*Sc
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Name of the data source to get Schema. Format: datasources/{source_id}",
+	//       "description": "The name of the data source to get Schema. Format: datasources/{source_id}",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
@@ -9023,7 +9079,7 @@ type IndexingDatasourcesUpdateSchemaCall struct {
 // updates the schema by overwriting the entire schema. **Note:** This
 // API requires an admin or service account to execute.
 //
-// - name: Name of the data source to update Schema. Format:
+// - name: The name of the data source to update Schema. Format:
 //   datasources/{source_id}.
 func (r *IndexingDatasourcesService) UpdateSchema(name string, updateschemarequest *UpdateSchemaRequest) *IndexingDatasourcesUpdateSchemaCall {
 	c := &IndexingDatasourcesUpdateSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9132,7 +9188,7 @@ func (c *IndexingDatasourcesUpdateSchemaCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the data source to update Schema. Format: datasources/{source_id}",
+	//       "description": "The name of the data source to update Schema. Format: datasources/{source_id}",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
@@ -9169,7 +9225,7 @@ type IndexingDatasourcesItemsDeleteCall struct {
 // API requires an admin or service account to execute. The service
 // account used is the one whitelisted in the corresponding data source.
 //
-// - name: Name of the item to delete. Format:
+// - name: The name of the item to delete. Format:
 //   datasources/{source_id}/items/{item_id}.
 func (r *IndexingDatasourcesItemsService) Delete(name string) *IndexingDatasourcesItemsDeleteCall {
 	c := &IndexingDatasourcesItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9177,8 +9233,8 @@ func (r *IndexingDatasourcesItemsService) Delete(name string) *IndexingDatasourc
 	return c
 }
 
-// ConnectorName sets the optional parameter "connectorName": Name of
-// connector making this call. Format:
+// ConnectorName sets the optional parameter "connectorName": The name
+// of connector making this call. Format:
 // datasources/{source_id}/connectors/{ID}
 func (c *IndexingDatasourcesItemsDeleteCall) ConnectorName(connectorName string) *IndexingDatasourcesItemsDeleteCall {
 	c.urlParams_.Set("connectorName", connectorName)
@@ -9197,8 +9253,8 @@ func (c *IndexingDatasourcesItemsDeleteCall) DebugOptionsEnableDebugging(debugOp
 // for this request.
 //
 // Possible values:
-//   "UNSPECIFIED" - Priority is not specified in the update request.
-// Leaving priority unspecified results in an update failure.
+//   "UNSPECIFIED" - The priority is not specified in the update
+// request. Leaving priority unspecified results in an update failure.
 //   "SYNCHRONOUS" - For real-time updates.
 //   "ASYNCHRONOUS" - For changes that are executed after the response
 // is sent back to the caller.
@@ -9318,7 +9374,7 @@ func (c *IndexingDatasourcesItemsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "connectorName": {
-	//       "description": "Name of connector making this call. Format: datasources/{source_id}/connectors/{ID}",
+	//       "description": "The name of connector making this call. Format: datasources/{source_id}/connectors/{ID}",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9335,7 +9391,7 @@ func (c *IndexingDatasourcesItemsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//         "ASYNCHRONOUS"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Priority is not specified in the update request. Leaving priority unspecified results in an update failure.",
+	//         "The priority is not specified in the update request. Leaving priority unspecified results in an update failure.",
 	//         "For real-time updates.",
 	//         "For changes that are executed after the response is sent back to the caller."
 	//       ],
@@ -9343,7 +9399,7 @@ func (c *IndexingDatasourcesItemsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. Name of the item to delete. Format: datasources/{source_id}/items/{item_id}",
+	//       "description": "Required. The name of the item to delete. Format: datasources/{source_id}/items/{item_id}",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+/items/[^/]+$",
 	//       "required": true,
@@ -9384,8 +9440,8 @@ type IndexingDatasourcesItemsDeleteQueueItemsCall struct {
 // account to execute. The service account used is the one whitelisted
 // in the corresponding data source.
 //
-// - name: Name of the Data Source to delete items in a queue. Format:
-//   datasources/{source_id}.
+// - name: The name of the Data Source to delete items in a queue.
+//   Format: datasources/{source_id}.
 func (r *IndexingDatasourcesItemsService) DeleteQueueItems(name string, deletequeueitemsrequest *DeleteQueueItemsRequest) *IndexingDatasourcesItemsDeleteQueueItemsCall {
 	c := &IndexingDatasourcesItemsDeleteQueueItemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9493,7 +9549,7 @@ func (c *IndexingDatasourcesItemsDeleteQueueItemsCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the Data Source to delete items in a queue. Format: datasources/{source_id}",
+	//       "description": "The name of the Data Source to delete items in a queue. Format: datasources/{source_id}",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
@@ -9530,7 +9586,7 @@ type IndexingDatasourcesItemsGetCall struct {
 // service account to execute. The service account used is the one
 // whitelisted in the corresponding data source.
 //
-// - name: Name of the item to get info. Format:
+// - name: The name of the item to get info. Format:
 //   datasources/{source_id}/items/{item_id}.
 func (r *IndexingDatasourcesItemsService) Get(name string) *IndexingDatasourcesItemsGetCall {
 	c := &IndexingDatasourcesItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9538,8 +9594,8 @@ func (r *IndexingDatasourcesItemsService) Get(name string) *IndexingDatasourcesI
 	return c
 }
 
-// ConnectorName sets the optional parameter "connectorName": Name of
-// connector making this call. Format:
+// ConnectorName sets the optional parameter "connectorName": The name
+// of connector making this call. Format:
 // datasources/{source_id}/connectors/{ID}
 func (c *IndexingDatasourcesItemsGetCall) ConnectorName(connectorName string) *IndexingDatasourcesItemsGetCall {
 	c.urlParams_.Set("connectorName", connectorName)
@@ -9662,7 +9718,7 @@ func (c *IndexingDatasourcesItemsGetCall) Do(opts ...googleapi.CallOption) (*Ite
 	//   ],
 	//   "parameters": {
 	//     "connectorName": {
-	//       "description": "Name of connector making this call. Format: datasources/{source_id}/connectors/{ID}",
+	//       "description": "The name of connector making this call. Format: datasources/{source_id}/connectors/{ID}",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9672,7 +9728,7 @@ func (c *IndexingDatasourcesItemsGetCall) Do(opts ...googleapi.CallOption) (*Ite
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Name of the item to get info. Format: datasources/{source_id}/items/{item_id}",
+	//       "description": "The name of the item to get info. Format: datasources/{source_id}/items/{item_id}",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+/items/[^/]+$",
 	//       "required": true,
@@ -9709,7 +9765,7 @@ type IndexingDatasourcesItemsIndexCall struct {
 // execute. The service account used is the one whitelisted in the
 // corresponding data source.
 //
-// - name: Name of the Item. Format:
+// - name: The name of the Item. Format:
 //   datasources/{source_id}/items/{item_id} This is a required field.
 //   The maximum length is 1536 characters.
 func (r *IndexingDatasourcesItemsService) Index(name string, indexitemrequest *IndexItemRequest) *IndexingDatasourcesItemsIndexCall {
@@ -9819,7 +9875,7 @@ func (c *IndexingDatasourcesItemsIndexCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the Item. Format: datasources/{source_id}/items/{item_id} This is a required field. The maximum length is 1536 characters.",
+	//       "description": "The name of the Item. Format: datasources/{source_id}/items/{item_id} This is a required field. The maximum length is 1536 characters.",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+/items/[^/]+$",
 	//       "required": true,
@@ -9856,7 +9912,7 @@ type IndexingDatasourcesItemsListCall struct {
 // admin or service account to execute. The service account used is the
 // one whitelisted in the corresponding data source.
 //
-// - name: Name of the Data Source to list Items. Format:
+// - name: The name of the Data Source to list Items. Format:
 //   datasources/{source_id}.
 func (r *IndexingDatasourcesItemsService) List(name string) *IndexingDatasourcesItemsListCall {
 	c := &IndexingDatasourcesItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9877,8 +9933,8 @@ func (c *IndexingDatasourcesItemsListCall) Brief(brief bool) *IndexingDatasource
 	return c
 }
 
-// ConnectorName sets the optional parameter "connectorName": Name of
-// connector making this call. Format:
+// ConnectorName sets the optional parameter "connectorName": The name
+// of connector making this call. Format:
 // datasources/{source_id}/connectors/{ID}
 func (c *IndexingDatasourcesItemsListCall) ConnectorName(connectorName string) *IndexingDatasourcesItemsListCall {
 	c.urlParams_.Set("connectorName", connectorName)
@@ -10021,7 +10077,7 @@ func (c *IndexingDatasourcesItemsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "boolean"
 	//     },
 	//     "connectorName": {
-	//       "description": "Name of connector making this call. Format: datasources/{source_id}/connectors/{ID}",
+	//       "description": "The name of connector making this call. Format: datasources/{source_id}/connectors/{ID}",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10031,7 +10087,7 @@ func (c *IndexingDatasourcesItemsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Name of the Data Source to list Items. Format: datasources/{source_id}",
+	//       "description": "The name of the Data Source to list Items. Format: datasources/{source_id}",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
@@ -10106,7 +10162,7 @@ type IndexingDatasourcesItemsPollCall struct {
 // service account used is the one whitelisted in the corresponding data
 // source.
 //
-// - name: Name of the Data Source to poll items. Format:
+// - name: The name of the Data Source to poll items. Format:
 //   datasources/{source_id}.
 func (r *IndexingDatasourcesItemsService) Poll(name string, pollitemsrequest *PollItemsRequest) *IndexingDatasourcesItemsPollCall {
 	c := &IndexingDatasourcesItemsPollCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10215,7 +10271,7 @@ func (c *IndexingDatasourcesItemsPollCall) Do(opts ...googleapi.CallOption) (*Po
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the Data Source to poll items. Format: datasources/{source_id}",
+	//       "description": "The name of the Data Source to poll items. Format: datasources/{source_id}",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
@@ -10252,7 +10308,7 @@ type IndexingDatasourcesItemsPushCall struct {
 // This API requires an admin or service account to execute. The service
 // account used is the one whitelisted in the corresponding data source.
 //
-// - name: Name of the item to push into the indexing queue. Format:
+// - name: The name of the item to push into the indexing queue. Format:
 //   datasources/{source_id}/items/{ID} This is a required field. The
 //   maximum length is 1536 characters.
 func (r *IndexingDatasourcesItemsService) Push(name string, pushitemrequest *PushItemRequest) *IndexingDatasourcesItemsPushCall {
@@ -10362,7 +10418,7 @@ func (c *IndexingDatasourcesItemsPushCall) Do(opts ...googleapi.CallOption) (*It
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the item to push into the indexing queue. Format: datasources/{source_id}/items/{ID} This is a required field. The maximum length is 1536 characters.",
+	//       "description": "The name of the item to push into the indexing queue. Format: datasources/{source_id}/items/{ID} This is a required field. The maximum length is 1536 characters.",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+/items/[^/]+$",
 	//       "required": true,
@@ -10401,7 +10457,7 @@ type IndexingDatasourcesItemsUnreserveCall struct {
 // requires an admin or service account to execute. The service account
 // used is the one whitelisted in the corresponding data source.
 //
-// - name: Name of the Data Source to unreserve all items. Format:
+// - name: The name of the Data Source to unreserve all items. Format:
 //   datasources/{source_id}.
 func (r *IndexingDatasourcesItemsService) Unreserve(name string, unreserveitemsrequest *UnreserveItemsRequest) *IndexingDatasourcesItemsUnreserveCall {
 	c := &IndexingDatasourcesItemsUnreserveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10510,7 +10566,7 @@ func (c *IndexingDatasourcesItemsUnreserveCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the Data Source to unreserve all items. Format: datasources/{source_id}",
+	//       "description": "The name of the Data Source to unreserve all items. Format: datasources/{source_id}",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
@@ -10549,7 +10605,7 @@ type IndexingDatasourcesItemsUploadCall struct {
 // account to execute. The service account used is the one whitelisted
 // in the corresponding data source.
 //
-// - name: Name of the Item to start a resumable upload. Format:
+// - name: The name of the Item to start a resumable upload. Format:
 //   datasources/{source_id}/items/{item_id}. The maximum length is 1536
 //   bytes.
 func (r *IndexingDatasourcesItemsService) Upload(name string, startuploaditemrequest *StartUploadItemRequest) *IndexingDatasourcesItemsUploadCall {
@@ -10659,7 +10715,7 @@ func (c *IndexingDatasourcesItemsUploadCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the Item to start a resumable upload. Format: datasources/{source_id}/items/{item_id}. The maximum length is 1536 bytes.",
+	//       "description": "The name of the Item to start a resumable upload. Format: datasources/{source_id}/items/{item_id}. The maximum length is 1536 bytes.",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+/items/[^/]+$",
 	//       "required": true,
@@ -12210,7 +12266,7 @@ type SettingsDatasourcesDeleteCall struct {
 // Delete: Deletes a datasource. **Note:** This API requires an admin
 // account to execute.
 //
-// - name: Name of the datasource. Format: datasources/{source_id}.
+// - name: The name of the datasource. Format: datasources/{source_id}.
 func (r *SettingsDatasourcesService) Delete(name string) *SettingsDatasourcesDeleteCall {
 	c := &SettingsDatasourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12325,7 +12381,7 @@ func (c *SettingsDatasourcesDeleteCall) Do(opts ...googleapi.CallOption) (*Opera
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Name of the datasource. Format: datasources/{source_id}.",
+	//       "description": "The name of the datasource. Format: datasources/{source_id}.",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
@@ -12359,7 +12415,7 @@ type SettingsDatasourcesGetCall struct {
 // Get: Gets a datasource. **Note:** This API requires an admin account
 // to execute.
 //
-// - name: Name of the datasource resource. Format:
+// - name: The name of the datasource resource. Format:
 //   datasources/{source_id}.
 func (r *SettingsDatasourcesService) Get(name string) *SettingsDatasourcesGetCall {
 	c := &SettingsDatasourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12488,7 +12544,7 @@ func (c *SettingsDatasourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSour
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Name of the datasource resource. Format: datasources/{source_id}.",
+	//       "description": "The name of the datasource resource. Format: datasources/{source_id}.",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
@@ -12715,7 +12771,7 @@ type SettingsDatasourcesUpdateCall struct {
 // Update: Updates a datasource. **Note:** This API requires an admin
 // account to execute.
 //
-// - name: Name of the datasource resource. Format:
+// - name: The name of the datasource resource. Format:
 //   datasources/{source_id}. The name is ignored when creating a
 //   datasource.
 func (r *SettingsDatasourcesService) Update(name string, updatedatasourcerequest *UpdateDataSourceRequest) *SettingsDatasourcesUpdateCall {
@@ -12825,7 +12881,7 @@ func (c *SettingsDatasourcesUpdateCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the datasource resource. Format: datasources/{source_id}. The name is ignored when creating a datasource.",
+	//       "description": "The name of the datasource resource. Format: datasources/{source_id}. The name is ignored when creating a datasource.",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
@@ -13139,7 +13195,7 @@ type SettingsSearchapplicationsGetCall struct {
 // Get: Gets the specified search application. **Note:** This API
 // requires an admin account to execute.
 //
-// - name: Name of the search application. Format:
+// - name: The name of the search application. Format:
 //   searchapplications/{application_id}.
 func (r *SettingsSearchapplicationsService) Get(name string) *SettingsSearchapplicationsGetCall {
 	c := &SettingsSearchapplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13268,7 +13324,7 @@ func (c *SettingsSearchapplicationsGetCall) Do(opts ...googleapi.CallOption) (*S
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Name of the search application. Format: searchapplications/{application_id}.",
+	//       "description": "The name of the search application. Format: searchapplications/{application_id}.",
 	//       "location": "path",
 	//       "pattern": "^searchapplications/[^/]+$",
 	//       "required": true,
@@ -13642,7 +13698,7 @@ type SettingsSearchapplicationsUpdateCall struct {
 // Update: Updates a search application. **Note:** This API requires an
 // admin account to execute.
 //
-// - name: Name of the Search Application. Format:
+// - name: The name of the Search Application. Format:
 //   searchapplications/{application_id}.
 func (r *SettingsSearchapplicationsService) Update(name string, searchapplication *SearchApplication) *SettingsSearchapplicationsUpdateCall {
 	c := &SettingsSearchapplicationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13751,7 +13807,7 @@ func (c *SettingsSearchapplicationsUpdateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the Search Application. Format: searchapplications/{application_id}.",
+	//       "description": "The name of the Search Application. Format: searchapplications/{application_id}.",
 	//       "location": "path",
 	//       "pattern": "^searchapplications/[^/]+$",
 	//       "required": true,

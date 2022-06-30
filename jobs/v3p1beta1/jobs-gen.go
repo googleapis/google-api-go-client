@@ -2350,15 +2350,19 @@ type JobQuery struct {
 
 	// CompanyDisplayNames: Optional. This filter specifies the company
 	// Company.display_name of the jobs to search against. The company name
-	// must match the value exactly. Alternatively, if the value being
-	// searched for is wrapped in `SUBSTRING_MATCH([value])`, the company
-	// name must contain a case insensitive substring match of the value.
-	// Using this function may increase latency. Sample Value:
-	// `SUBSTRING_MATCH(google)` If a value isn't specified, jobs within the
-	// search results are associated with any company. If multiple values
-	// are specified, jobs within the search results may be associated with
-	// any of the specified companies. At most 20 company display name
-	// filters are allowed.
+	// must match the value exactly. Alternatively, the value being searched
+	// for can be wrapped in different match operators.
+	// `SUBSTRING_MATCH([value])` The company name must contain a case
+	// insensitive substring match of the value. Using this function may
+	// increase latency. Sample Value: `SUBSTRING_MATCH(google)`
+	// `MULTI_WORD_TOKEN_MATCH([value])` The value will be treated as a
+	// multi word token and the company name must contain a case insensitive
+	// match of the value. Using this function may increase latency. Sample
+	// Value: `MULTI_WORD_TOKEN_MATCH(google)` If a value isn't specified,
+	// jobs within the search results are associated with any company. If
+	// multiple values are specified, jobs within the search results may be
+	// associated with any of the specified companies. At most 20 company
+	// display name filters are allowed.
 	CompanyDisplayNames []string `json:"companyDisplayNames,omitempty"`
 
 	// CompanyNames: Optional. This filter specifies the company entities to
@@ -2830,8 +2834,11 @@ type LocationFilter struct {
 	// Possible values:
 	//   "TELECOMMUTE_PREFERENCE_UNSPECIFIED" - Default value if the
 	// telecommute preference is not specified.
-	//   "TELECOMMUTE_EXCLUDED" - Ignore telecommute status of jobs.
+	//   "TELECOMMUTE_EXCLUDED" - Deprecated: Ignore telecommute status of
+	// jobs. Use TELECOMMUTE_JOBS_EXCLUDED if want to exclude telecommute
+	// jobs.
 	//   "TELECOMMUTE_ALLOWED" - Allow telecommute jobs.
+	//   "TELECOMMUTE_JOBS_EXCLUDED" - Exclude telecommute jobs.
 	TelecommutePreference string `json:"telecommutePreference,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
@@ -3000,7 +3007,7 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NamespacedDebugInput: Next ID: 15
+// NamespacedDebugInput: Next ID: 16
 type NamespacedDebugInput struct {
 	// AbsolutelyForcedExpNames: Set of experiment names to be absolutely
 	// forced. These experiments will be forced without evaluating the
@@ -3088,6 +3095,17 @@ type NamespacedDebugInput struct {
 	// ForcedRollouts: Rollouts to force in a particular experiment state.
 	// Map from rollout name to rollout value.
 	ForcedRollouts map[string]bool `json:"forcedRollouts,omitempty"`
+
+	// TestingMode: If set to ALL_OFF, organic selection will be disabled;
+	// if set to ALL_ON, organic selection will be disabled, and only select
+	// launch experiments will receive traffic. See
+	// go/mendel-aoao-runtime-design.
+	//
+	// Possible values:
+	//   "TESTING_MODE_UNSPECIFIED"
+	//   "TESTING_MODE_ALL_OFF"
+	//   "TESTING_MODE_ALL_ON"
+	TestingMode string `json:"testingMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AbsolutelyForcedExpNames") to unconditionally include in API

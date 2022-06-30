@@ -1239,6 +1239,9 @@ type GoogleCloudDialogflowCxV3Environment struct {
 	// from `Start Flow` in the agent. Otherwise, an error will be returned.
 	VersionConfigs []*GoogleCloudDialogflowCxV3EnvironmentVersionConfig `json:"versionConfigs,omitempty"`
 
+	// WebhookConfig: The webhook configuration for this environment.
+	WebhookConfig *GoogleCloudDialogflowCxV3EnvironmentWebhookConfig `json:"webhookConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1330,6 +1333,38 @@ type GoogleCloudDialogflowCxV3EnvironmentVersionConfig struct {
 
 func (s *GoogleCloudDialogflowCxV3EnvironmentVersionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3EnvironmentVersionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3EnvironmentWebhookConfig: Configuration for
+// webhooks.
+type GoogleCloudDialogflowCxV3EnvironmentWebhookConfig struct {
+	// WebhookOverrides: The list of webhooks to override for the agent
+	// environment. The webhook must exist in the agent. You can override
+	// fields in `generic_web_service` and `service_directory`.
+	WebhookOverrides []*GoogleCloudDialogflowCxV3Webhook `json:"webhookOverrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WebhookOverrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "WebhookOverrides") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3EnvironmentWebhookConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3EnvironmentWebhookConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3623,9 +3658,118 @@ func (s *GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3Webhook: Webhooks host the developer's
+// business logic. During a session, webhooks allow the developer to use
+// the data extracted by Dialogflow's natural language processing to
+// generate dynamic responses, validate collected data, or trigger
+// actions on the backend.
+type GoogleCloudDialogflowCxV3Webhook struct {
+	// Disabled: Indicates whether the webhook is disabled.
+	Disabled bool `json:"disabled,omitempty"`
+
+	// DisplayName: Required. The human-readable name of the webhook, unique
+	// within the agent.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// GenericWebService: Configuration for a generic web service.
+	GenericWebService *GoogleCloudDialogflowCxV3WebhookGenericWebService `json:"genericWebService,omitempty"`
+
+	// Name: The unique identifier of the webhook. Required for the
+	// Webhooks.UpdateWebhook method. Webhooks.CreateWebhook populates the
+	// name automatically. Format: `projects//locations//agents//webhooks/`.
+	Name string `json:"name,omitempty"`
+
+	// ServiceDirectory: Configuration for a Service Directory
+	// (https://cloud.google.com/service-directory) service.
+	ServiceDirectory *GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig `json:"serviceDirectory,omitempty"`
+
+	// Timeout: Webhook execution timeout. Execution is considered failed if
+	// Dialogflow doesn't receive a response from webhook at the end of the
+	// timeout period. Defaults to 5 seconds, maximum allowed timeout is 30
+	// seconds.
+	Timeout string `json:"timeout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Disabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3Webhook) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3Webhook
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookGenericWebService: Represents
+// configuration for a generic web service.
+type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
+	// AllowedCaCerts: Optional. Specifies a list of allowed custom CA
+	// certificates (in DER format) for HTTPS verification. This overrides
+	// the default SSL trust store. If this is empty or unspecified,
+	// Dialogflow will use Google's default trust store to verify
+	// certificates. N.B. Make sure the HTTPS server certificates are signed
+	// with "subject alt name". For instance a certificate can be
+	// self-signed using the following command, ``` openssl x509 -req -days
+	// 200 -in example.com.csr \ -signkey example.com.key \ -out
+	// example.com.crt \ -extfile <(printf
+	// "\nsubjectAltName='DNS:www.example.com'") ```
+	AllowedCaCerts []string `json:"allowedCaCerts,omitempty"`
+
+	// Password: The password for HTTP Basic authentication.
+	Password string `json:"password,omitempty"`
+
+	// RequestHeaders: The HTTP request headers to send together with
+	// webhook requests.
+	RequestHeaders map[string]string `json:"requestHeaders,omitempty"`
+
+	// Uri: Required. The webhook URI for receiving POST requests. It must
+	// use https protocol.
+	Uri string `json:"uri,omitempty"`
+
+	// Username: The user name for HTTP Basic authentication.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedCaCerts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedCaCerts") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookGenericWebService) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookGenericWebService
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3WebhookRequest: The request message for a
 // webhook call. The request is sent as a JSON object and the field
-// names will be presented in camel cases.
+// names will be presented in camel cases. You may see undocumented
+// fields in an actual request. These fields are used internally by
+// Dialogflow and should be ignored.
 type GoogleCloudDialogflowCxV3WebhookRequest struct {
 	// DetectIntentResponseId: Always present. The unique identifier of the
 	// DetectIntentResponse that will be returned to the API caller.
@@ -3967,6 +4111,43 @@ type GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse struct {
 
 func (s *GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig: Represents
+// configuration for a Service Directory
+// (https://cloud.google.com/service-directory) service.
+type GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig struct {
+	// GenericWebService: Generic Service configuration of this webhook.
+	GenericWebService *GoogleCloudDialogflowCxV3WebhookGenericWebService `json:"genericWebService,omitempty"`
+
+	// Service: Required. The name of Service Directory
+	// (https://cloud.google.com/service-directory) service. Format:
+	// `projects//locations//namespaces//services/`. `Location ID` of the
+	// service directory must be the same as the location of the agent.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GenericWebService")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GenericWebService") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4466,6 +4647,9 @@ type GoogleCloudDialogflowCxV3beta1Environment struct {
 	// from `Start Flow` in the agent. Otherwise, an error will be returned.
 	VersionConfigs []*GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig `json:"versionConfigs,omitempty"`
 
+	// WebhookConfig: The webhook configuration for this environment.
+	WebhookConfig *GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig `json:"webhookConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4557,6 +4741,38 @@ type GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig: Configuration
+// for webhooks.
+type GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig struct {
+	// WebhookOverrides: The list of webhooks to override for the agent
+	// environment. The webhook must exist in the agent. You can override
+	// fields in `generic_web_service` and `service_directory`.
+	WebhookOverrides []*GoogleCloudDialogflowCxV3beta1Webhook `json:"webhookOverrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WebhookOverrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "WebhookOverrides") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6856,9 +7072,118 @@ func (s *GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata) MarshalJ
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1Webhook: Webhooks host the developer's
+// business logic. During a session, webhooks allow the developer to use
+// the data extracted by Dialogflow's natural language processing to
+// generate dynamic responses, validate collected data, or trigger
+// actions on the backend.
+type GoogleCloudDialogflowCxV3beta1Webhook struct {
+	// Disabled: Indicates whether the webhook is disabled.
+	Disabled bool `json:"disabled,omitempty"`
+
+	// DisplayName: Required. The human-readable name of the webhook, unique
+	// within the agent.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// GenericWebService: Configuration for a generic web service.
+	GenericWebService *GoogleCloudDialogflowCxV3beta1WebhookGenericWebService `json:"genericWebService,omitempty"`
+
+	// Name: The unique identifier of the webhook. Required for the
+	// Webhooks.UpdateWebhook method. Webhooks.CreateWebhook populates the
+	// name automatically. Format: `projects//locations//agents//webhooks/`.
+	Name string `json:"name,omitempty"`
+
+	// ServiceDirectory: Configuration for a Service Directory
+	// (https://cloud.google.com/service-directory) service.
+	ServiceDirectory *GoogleCloudDialogflowCxV3beta1WebhookServiceDirectoryConfig `json:"serviceDirectory,omitempty"`
+
+	// Timeout: Webhook execution timeout. Execution is considered failed if
+	// Dialogflow doesn't receive a response from webhook at the end of the
+	// timeout period. Defaults to 5 seconds, maximum allowed timeout is 30
+	// seconds.
+	Timeout string `json:"timeout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Disabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1Webhook) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1Webhook
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1WebhookGenericWebService: Represents
+// configuration for a generic web service.
+type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
+	// AllowedCaCerts: Optional. Specifies a list of allowed custom CA
+	// certificates (in DER format) for HTTPS verification. This overrides
+	// the default SSL trust store. If this is empty or unspecified,
+	// Dialogflow will use Google's default trust store to verify
+	// certificates. N.B. Make sure the HTTPS server certificates are signed
+	// with "subject alt name". For instance a certificate can be
+	// self-signed using the following command, ``` openssl x509 -req -days
+	// 200 -in example.com.csr \ -signkey example.com.key \ -out
+	// example.com.crt \ -extfile <(printf
+	// "\nsubjectAltName='DNS:www.example.com'") ```
+	AllowedCaCerts []string `json:"allowedCaCerts,omitempty"`
+
+	// Password: The password for HTTP Basic authentication.
+	Password string `json:"password,omitempty"`
+
+	// RequestHeaders: The HTTP request headers to send together with
+	// webhook requests.
+	RequestHeaders map[string]string `json:"requestHeaders,omitempty"`
+
+	// Uri: Required. The webhook URI for receiving POST requests. It must
+	// use https protocol.
+	Uri string `json:"uri,omitempty"`
+
+	// Username: The user name for HTTP Basic authentication.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedCaCerts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedCaCerts") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1WebhookGenericWebService) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookGenericWebService
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1WebhookRequest: The request message for
 // a webhook call. The request is sent as a JSON object and the field
-// names will be presented in camel cases.
+// names will be presented in camel cases. You may see undocumented
+// fields in an actual request. These fields are used internally by
+// Dialogflow and should be ignored.
 type GoogleCloudDialogflowCxV3beta1WebhookRequest struct {
 	// DetectIntentResponseId: Always present. The unique identifier of the
 	// DetectIntentResponse that will be returned to the API caller.
@@ -7200,6 +7525,43 @@ type GoogleCloudDialogflowCxV3beta1WebhookResponseFulfillmentResponse struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1WebhookResponseFulfillmentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookResponseFulfillmentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1WebhookServiceDirectoryConfig:
+// Represents configuration for a Service Directory
+// (https://cloud.google.com/service-directory) service.
+type GoogleCloudDialogflowCxV3beta1WebhookServiceDirectoryConfig struct {
+	// GenericWebService: Generic Service configuration of this webhook.
+	GenericWebService *GoogleCloudDialogflowCxV3beta1WebhookGenericWebService `json:"genericWebService,omitempty"`
+
+	// Service: Required. The name of Service Directory
+	// (https://cloud.google.com/service-directory) service. Format:
+	// `projects//locations//namespaces//services/`. `Location ID` of the
+	// service directory must be the same as the location of the agent.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GenericWebService")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GenericWebService") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1WebhookServiceDirectoryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookServiceDirectoryConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9974,7 +10336,9 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	AllRequiredParamsPresent bool `json:"allRequiredParamsPresent,omitempty"`
 
 	// CancelsSlotFilling: Indicates whether the conversational query
-	// triggers a cancellation for slot filling.
+	// triggers a cancellation for slot filling. For more information, see
+	// the cancel slot filling documentation
+	// (https://cloud.google.com/dialogflow/es/docs/intents-actions-parameters#cancel).
 	CancelsSlotFilling bool `json:"cancelsSlotFilling,omitempty"`
 
 	// DiagnosticInfo: Free-form diagnostic information for the associated
@@ -11018,6 +11382,26 @@ type GoogleCloudDialogflowV2beta1AnalyzeContentRequest struct {
 	// AssistQueryParams: Parameters for a human assist query.
 	AssistQueryParams *GoogleCloudDialogflowV2beta1AssistQueryParameters `json:"assistQueryParams,omitempty"`
 
+	// AudioInput: The natural language speech audio to be processed.
+	AudioInput *GoogleCloudDialogflowV2beta1AudioInput `json:"audioInput,omitempty"`
+
+	// CxCurrentPage: The unique identifier of the CX page to override the
+	// `current_page` in the session. Format:
+	// `projects//locations//agents//flows//pages/`. If `cx_current_page` is
+	// specified, the previous state of the session will be ignored by
+	// Dialogflow CX, including the previous page and the previous session
+	// parameters. In most cases, `cx_current_page` and `cx_parameters`
+	// should be configured together to direct a session to a specific
+	// state. Note: this field should only be used if you are connecting to
+	// a Dialogflow CX agent.
+	CxCurrentPage string `json:"cxCurrentPage,omitempty"`
+
+	// CxParameters: Additional parameters to be put into Dialogflow CX
+	// session parameters. To remove a parameter from the session, clients
+	// should explicitly set the parameter value to null. Note: this field
+	// should only be used if you are connecting to a Dialogflow CX agent.
+	CxParameters googleapi.RawMessage `json:"cxParameters,omitempty"`
+
 	// EventInput: An input event to send to Dialogflow.
 	EventInput *GoogleCloudDialogflowV2beta1EventInput `json:"eventInput,omitempty"`
 
@@ -11392,6 +11776,41 @@ type GoogleCloudDialogflowV2beta1AssistQueryParameters struct {
 
 func (s *GoogleCloudDialogflowV2beta1AssistQueryParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1AssistQueryParameters
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1AudioInput: Represents the natural
+// language speech audio to be processed.
+type GoogleCloudDialogflowV2beta1AudioInput struct {
+	// Audio: Required. The natural language speech audio to be processed. A
+	// single request can contain up to 1 minute of speech audio data. The
+	// transcribed text cannot contain more than 256 bytes.
+	Audio string `json:"audio,omitempty"`
+
+	// Config: Required. Instructs the speech recognizer how to process the
+	// speech audio.
+	Config *GoogleCloudDialogflowV2beta1InputAudioConfig `json:"config,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Audio") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Audio") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1AudioInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AudioInput
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13608,7 +14027,8 @@ func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig) MarshalJSON() ([
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModel
 // Config: Custom conversation models used in agent assist feature.
-// Supported feature: ARTICLE_SUGGESTION, SMART_COMPOSE, SMART_REPLY.
+// Supported feature: ARTICLE_SUGGESTION, SMART_COMPOSE, SMART_REPLY,
+// CONVERSATION_SUMMARIZATION.
 type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig struct {
 	// Model: Conversation model resource name. Format:
 	// `projects//conversationModels/`.
@@ -17813,7 +18233,9 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	AllRequiredParamsPresent bool `json:"allRequiredParamsPresent,omitempty"`
 
 	// CancelsSlotFilling: Indicates whether the conversational query
-	// triggers a cancellation for slot filling.
+	// triggers a cancellation for slot filling. For more information, see
+	// the cancel slot filling documentation
+	// (https://cloud.google.com/dialogflow/es/docs/intents-actions-parameters#cancel).
 	CancelsSlotFilling bool `json:"cancelsSlotFilling,omitempty"`
 
 	// DiagnosticInfo: Free-form diagnostic information for the associated
@@ -17991,6 +18413,11 @@ type GoogleCloudDialogflowV2beta1ResponseMessage struct {
 	// LiveAgentHandoff: Hands off conversation to a live agent.
 	LiveAgentHandoff *GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff `json:"liveAgentHandoff,omitempty"`
 
+	// MixedAudio: An audio response message composed of both the
+	// synthesized Dialogflow agent responses and the audios hosted in
+	// places known to the client.
+	MixedAudio *GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio `json:"mixedAudio,omitempty"`
+
 	// Payload: Returns a response containing a custom, platform-specific
 	// payload.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
@@ -18064,6 +18491,78 @@ type GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff struct {
 
 func (s *GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageLiveAgentHandoff
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio: Represents an
+// audio message that is composed of both segments synthesized from the
+// Dialogflow agent prompts and ones hosted externally at the specified
+// URIs.
+type GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio struct {
+	// Segments: Segments this audio response is composed of.
+	Segments []*GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment `json:"segments,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Segments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Segments") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageMixedAudio
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment:
+// Represents one segment of audio.
+type GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment struct {
+	// AllowPlaybackInterruption: Whether the playback of this segment can
+	// be interrupted by the end user's speech and the client should then
+	// start the next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+
+	// Audio: Raw audio synthesized from the Dialogflow agent's response
+	// using the output config specified in the request.
+	Audio string `json:"audio,omitempty"`
+
+	// Uri: Client-specific URI that points to an audio clip accessible to
+	// the client.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ResponseMessageMixedAudioSegment
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

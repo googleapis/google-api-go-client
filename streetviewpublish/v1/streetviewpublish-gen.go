@@ -118,6 +118,8 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Photo = NewPhotoService(s)
+	s.PhotoSequence = NewPhotoSequenceService(s)
+	s.PhotoSequences = NewPhotoSequencesService(s)
 	s.Photos = NewPhotosService(s)
 	return s, nil
 }
@@ -128,6 +130,10 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Photo *PhotoService
+
+	PhotoSequence *PhotoSequenceService
+
+	PhotoSequences *PhotoSequencesService
 
 	Photos *PhotosService
 }
@@ -145,6 +151,24 @@ func NewPhotoService(s *Service) *PhotoService {
 }
 
 type PhotoService struct {
+	s *Service
+}
+
+func NewPhotoSequenceService(s *Service) *PhotoSequenceService {
+	rs := &PhotoSequenceService{s: s}
+	return rs
+}
+
+type PhotoSequenceService struct {
+	s *Service
+}
+
+func NewPhotoSequencesService(s *Service) *PhotoSequencesService {
+	rs := &PhotoSequencesService{s: s}
+	return rs
+}
+
+type PhotoSequencesService struct {
 	s *Service
 }
 
@@ -359,6 +383,43 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// Imu: IMU data from the device sensors.
+type Imu struct {
+	// AccelMpsps: The accelerometer measurements in meters/sec^2 with
+	// increasing timestamps from devices.
+	AccelMpsps []*Measurement3d `json:"accelMpsps,omitempty"`
+
+	// GyroRps: The gyroscope measurements in radians/sec with increasing
+	// timestamps from devices.
+	GyroRps []*Measurement3d `json:"gyroRps,omitempty"`
+
+	// MagUt: The magnetometer measurements of the magnetic field in
+	// microtesla (uT) with increasing timestamps from devices.
+	MagUt []*Measurement3d `json:"magUt,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccelMpsps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccelMpsps") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Imu) MarshalJSON() ([]byte, error) {
+	type NoMethod Imu
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LatLng: An object that represents a latitude/longitude pair. This is
 // expressed as a pair of doubles to represent degrees latitude and
 // degrees longitude. Unless specified otherwise, this object must
@@ -412,6 +473,37 @@ func (s *LatLng) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// LatLngBounds: A rectangle in geographical coordinates.
+type LatLngBounds struct {
+	// Northeast: The northeast corner of these bounds.
+	Northeast *LatLng `json:"northeast,omitempty"`
+
+	// Southwest: The southwest corner of these bounds.
+	Southwest *LatLng `json:"southwest,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Northeast") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Northeast") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LatLngBounds) MarshalJSON() ([]byte, error) {
+	type NoMethod LatLngBounds
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Level: Level information containing level number and its
 // corresponding name.
 type Level struct {
@@ -463,6 +555,50 @@ func (s *Level) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ListPhotoSequencesResponse: Response to list all photo sequences that
+// belong to a user.
+type ListPhotoSequencesResponse struct {
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PhotoSequences: List of photo sequences via Operation interface. The
+	// maximum number of items returned is based on the pageSize field in
+	// the request. Each item in the list can have three possible states, *
+	// `Operation.done` = false, if the processing of PhotoSequence is not
+	// finished yet. * `Operation.done` = true and `Operation.error` is
+	// populated, if there was an error in processing. * `Operation.done` =
+	// true and `Operation.response` contains a PhotoSequence message, In
+	// each sequence, only Id is populated.
+	PhotoSequences []*Operation `json:"photoSequences,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPhotoSequencesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPhotoSequencesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListPhotosResponse: Response to list all photos that belong to a
 // user.
 type ListPhotosResponse struct {
@@ -501,6 +637,61 @@ func (s *ListPhotosResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Measurement3d: A Generic 3d measurement sample.
+type Measurement3d struct {
+	// CaptureTime: The timestamp of the IMU measurement.
+	CaptureTime string `json:"captureTime,omitempty"`
+
+	// X: The sensor measurement in the x axis.
+	X float64 `json:"x,omitempty"`
+
+	// Y: The sensor measurement in the y axis.
+	Y float64 `json:"y,omitempty"`
+
+	// Z: The sensor measurement in the z axis.
+	Z float64 `json:"z,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaptureTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaptureTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Measurement3d) MarshalJSON() ([]byte, error) {
+	type NoMethod Measurement3d
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Measurement3d) UnmarshalJSON(data []byte) error {
+	type NoMethod Measurement3d
+	var s1 struct {
+		X gensupport.JSONFloat64 `json:"x"`
+		Y gensupport.JSONFloat64 `json:"y"`
+		Z gensupport.JSONFloat64 `json:"z"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.X = float64(s1.X)
+	s.Y = float64(s1.Y)
+	s.Z = float64(s1.Z)
+	return nil
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -535,6 +726,10 @@ type Operation struct {
 	// if the original method name is `TakeSnapshot()`, the inferred
 	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
@@ -721,6 +916,151 @@ func (s *PhotoResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PhotoSequence: A sequence of 360 photos along with metadata.
+type PhotoSequence struct {
+	// CaptureTimeOverride: Optional. Absolute time when the photo sequence
+	// starts to be captured. If the photo sequence is a video, this is the
+	// start time of the video. If this field is populated in input, it
+	// overrides the capture time in the video or XDM file.
+	CaptureTimeOverride string `json:"captureTimeOverride,omitempty"`
+
+	// DistanceMeters: Output only. The computed distance of the photo
+	// sequence in meters.
+	DistanceMeters float64 `json:"distanceMeters,omitempty"`
+
+	// FailureReason: Output only. If this sequence has processing_state =
+	// FAILED, this will contain the reason why it failed. If the
+	// processing_state is any other value, this field will be unset.
+	//
+	// Possible values:
+	//   "PROCESSING_FAILURE_REASON_UNSPECIFIED" - The failure reason is
+	// unspecified, this is the default value.
+	//   "LOW_RESOLUTION" - Video frame's resolution is too small.
+	//   "DUPLICATE" - This video has been uploaded before.
+	//   "INSUFFICIENT_GPS" - Too few GPS points.
+	//   "NO_OVERLAP_GPS" - No overlap between the time frame of GPS track
+	// and the time frame of video.
+	//   "INVALID_GPS" - GPS is invalid (e.x. all GPS points are at (0,0))
+	//   "FAILED_TO_REFINE_POSITIONS" - The sequence of photos could not be
+	// accurately located in the world.
+	//   "TAKEDOWN" - The sequence was taken down for policy reasons.
+	//   "CORRUPT_VIDEO" - The video file was corrupt.
+	//   "INTERNAL" - A permanent failure in the underlying system occurred.
+	//   "INVALID_VIDEO_FORMAT" - The video format is invalid or
+	// unsupported.
+	//   "INVALID_VIDEO_DIMENSIONS" - Invalid image aspect ratio found.
+	//   "INVALID_CAPTURE_TIME" - Invalid capture time. Timestamps were from
+	// the future.
+	FailureReason string `json:"failureReason,omitempty"`
+
+	// Filename: Output only. The filename of the upload. Does not include
+	// the directory path. Only available if the sequence was uploaded on a
+	// platform that provides the filename.
+	Filename string `json:"filename,omitempty"`
+
+	// GpsSource: Input only. If both raw_gps_timeline and the Camera Motion
+	// Metadata Track (CAMM) contain GPS measurements, indicate which takes
+	// precedence.
+	//
+	// Possible values:
+	//   "PHOTO_SEQUENCE" - GPS in raw_gps_timeline takes precedence if it
+	// exists.
+	//   "CAMERA_MOTION_METADATA_TRACK" - GPS in Camera Motion Metadata
+	// Track (CAMM) takes precedence if it exists.
+	GpsSource string `json:"gpsSource,omitempty"`
+
+	// Id: Output only. Unique identifier for the photo sequence. This also
+	// acts as a long running operation ID if uploading is performed
+	// asynchronously.
+	Id string `json:"id,omitempty"`
+
+	// Imu: Input only. Three axis IMU data for the collection. If this data
+	// is too large to put in the request, then it should be put in the CAMM
+	// track for the video. This data always takes precedence over the
+	// equivalent CAMM data, if it exists.
+	Imu *Imu `json:"imu,omitempty"`
+
+	// Photos: Output only. Photos with increasing timestamps.
+	Photos []*Photo `json:"photos,omitempty"`
+
+	// ProcessingState: Output only. The processing state of this sequence.
+	//
+	// Possible values:
+	//   "PROCESSING_STATE_UNSPECIFIED" - The state is unspecified, this is
+	// the default value.
+	//   "PENDING" - The sequence has not yet started processing.
+	//   "PROCESSING" - The sequence is currently in processing.
+	//   "PROCESSED" - The sequence has finished processing including
+	// refining position.
+	//   "FAILED" - The sequence failed processing. See FailureReason for
+	// more details.
+	ProcessingState string `json:"processingState,omitempty"`
+
+	// RawGpsTimeline: Input only. Raw GPS measurements with increasing
+	// timestamps from the device that aren't time synced with each photo.
+	// These raw measurements will be used to infer the pose of each frame.
+	// Required in input when InputType is VIDEO and raw GPS measurements
+	// are not in Camera Motion Metadata Track (CAMM). User can indicate
+	// which takes precedence using gps_source if raw GPS measurements are
+	// provided in both raw_gps_timeline and Camera Motion Metadata Track
+	// (CAMM).
+	RawGpsTimeline []*Pose `json:"rawGpsTimeline,omitempty"`
+
+	// SequenceBounds: Output only. A rectangular box that encapsulates
+	// every image in this photo sequence.
+	SequenceBounds *LatLngBounds `json:"sequenceBounds,omitempty"`
+
+	// UploadReference: Input only. Required when creating photo sequence.
+	// The resource name where the bytes of the photo sequence (in the form
+	// of video) are uploaded.
+	UploadReference *UploadRef `json:"uploadReference,omitempty"`
+
+	// UploadTime: Output only. The time this photo sequence was created in
+	// uSV Store service.
+	UploadTime string `json:"uploadTime,omitempty"`
+
+	// ViewCount: Output only. The total number of views that all the
+	// published images in this PhotoSequence have received.
+	ViewCount int64 `json:"viewCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CaptureTimeOverride")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaptureTimeOverride") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PhotoSequence) MarshalJSON() ([]byte, error) {
+	type NoMethod PhotoSequence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *PhotoSequence) UnmarshalJSON(data []byte) error {
+	type NoMethod PhotoSequence
+	var s1 struct {
+		DistanceMeters gensupport.JSONFloat64 `json:"distanceMeters"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DistanceMeters = float64(s1.DistanceMeters)
+	return nil
+}
+
 // Place: Place metadata for an entity.
 type Place struct {
 	// LanguageCode: Output only. The language_code that the name is
@@ -772,6 +1112,9 @@ type Pose struct {
 	// Altitude: Altitude of the pose in meters above WGS84 ellipsoid. NaN
 	// indicates an unmeasured quantity.
 	Altitude float64 `json:"altitude,omitempty"`
+
+	// GpsRecordTimestampUnixEpoch: Time of the GPS record since UTC epoch.
+	GpsRecordTimestampUnixEpoch string `json:"gpsRecordTimestampUnixEpoch,omitempty"`
 
 	// Heading: The following pose parameters pertain to the center of the
 	// photo. They match
@@ -1745,6 +2088,829 @@ func (c *PhotoUpdateCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 	//   ]
 	// }
 
+}
+
+// method id "streetviewpublish.photoSequence.create":
+
+type PhotoSequenceCreateCall struct {
+	s             *Service
+	photosequence *PhotoSequence
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Create: After the client finishes uploading the PhotoSequence with
+// the returned UploadRef, CreatePhotoSequence extracts a sequence of
+// 360 photos from a video or Extensible Device Metadata (XDM,
+// http://www.xdm.org/) to be published to Street View on Google Maps.
+// `CreatePhotoSequence` returns an Operation, with the PhotoSequence Id
+// set in the `Operation.name` field. This method returns the following
+// error codes: * google.rpc.Code.INVALID_ARGUMENT if the request is
+// malformed. * google.rpc.Code.NOT_FOUND if the upload reference does
+// not exist.
+func (r *PhotoSequenceService) Create(photosequence *PhotoSequence) *PhotoSequenceCreateCall {
+	c := &PhotoSequenceCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.photosequence = photosequence
+	return c
+}
+
+// InputType sets the optional parameter "inputType": Required. The
+// input form of PhotoSequence.
+//
+// Possible values:
+//   "INPUT_TYPE_UNSPECIFIED" - Not specified. Server will return
+// google.rpc.Code.INVALID_ARGUMENT.
+//   "VIDEO" - 360 Video.
+//   "XDM" - Extensible Device Metadata, http://www.xdm.org
+func (c *PhotoSequenceCreateCall) InputType(inputType string) *PhotoSequenceCreateCall {
+	c.urlParams_.Set("inputType", inputType)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PhotoSequenceCreateCall) Fields(s ...googleapi.Field) *PhotoSequenceCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PhotoSequenceCreateCall) Context(ctx context.Context) *PhotoSequenceCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PhotoSequenceCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PhotoSequenceCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.photosequence)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/photoSequence")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "streetviewpublish.photoSequence.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PhotoSequenceCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "After the client finishes uploading the PhotoSequence with the returned UploadRef, CreatePhotoSequence extracts a sequence of 360 photos from a video or Extensible Device Metadata (XDM, http://www.xdm.org/) to be published to Street View on Google Maps. `CreatePhotoSequence` returns an Operation, with the PhotoSequence Id set in the `Operation.name` field. This method returns the following error codes: * google.rpc.Code.INVALID_ARGUMENT if the request is malformed. * google.rpc.Code.NOT_FOUND if the upload reference does not exist.",
+	//   "flatPath": "v1/photoSequence",
+	//   "httpMethod": "POST",
+	//   "id": "streetviewpublish.photoSequence.create",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "inputType": {
+	//       "description": "Required. The input form of PhotoSequence.",
+	//       "enum": [
+	//         "INPUT_TYPE_UNSPECIFIED",
+	//         "VIDEO",
+	//         "XDM"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Not specified. Server will return google.rpc.Code.INVALID_ARGUMENT.",
+	//         "360 Video.",
+	//         "Extensible Device Metadata, http://www.xdm.org"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/photoSequence",
+	//   "request": {
+	//     "$ref": "PhotoSequence"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/streetviewpublish"
+	//   ]
+	// }
+
+}
+
+// method id "streetviewpublish.photoSequence.delete":
+
+type PhotoSequenceDeleteCall struct {
+	s          *Service
+	sequenceId string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a PhotoSequence and its metadata. This method returns
+// the following error codes: * google.rpc.Code.PERMISSION_DENIED if the
+// requesting user did not create the requested photo sequence. *
+// google.rpc.Code.NOT_FOUND if the photo sequence ID does not exist. *
+// google.rpc.Code.FAILED_PRECONDITION if the photo sequence ID is not
+// yet finished processing.
+//
+// - sequenceId: ID of the PhotoSequence.
+func (r *PhotoSequenceService) Delete(sequenceId string) *PhotoSequenceDeleteCall {
+	c := &PhotoSequenceDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sequenceId = sequenceId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PhotoSequenceDeleteCall) Fields(s ...googleapi.Field) *PhotoSequenceDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PhotoSequenceDeleteCall) Context(ctx context.Context) *PhotoSequenceDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PhotoSequenceDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PhotoSequenceDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/photoSequence/{sequenceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"sequenceId": c.sequenceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "streetviewpublish.photoSequence.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *PhotoSequenceDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a PhotoSequence and its metadata. This method returns the following error codes: * google.rpc.Code.PERMISSION_DENIED if the requesting user did not create the requested photo sequence. * google.rpc.Code.NOT_FOUND if the photo sequence ID does not exist. * google.rpc.Code.FAILED_PRECONDITION if the photo sequence ID is not yet finished processing.",
+	//   "flatPath": "v1/photoSequence/{sequenceId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "streetviewpublish.photoSequence.delete",
+	//   "parameterOrder": [
+	//     "sequenceId"
+	//   ],
+	//   "parameters": {
+	//     "sequenceId": {
+	//       "description": "Required. ID of the PhotoSequence.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/photoSequence/{sequenceId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/streetviewpublish"
+	//   ]
+	// }
+
+}
+
+// method id "streetviewpublish.photoSequence.get":
+
+type PhotoSequenceGetCall struct {
+	s            *Service
+	sequenceId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the metadata of the specified PhotoSequence via the
+// Operation interface. This method returns the following three types of
+// responses: * `Operation.done` = false, if the processing of
+// PhotoSequence is not finished yet. * `Operation.done` = true and
+// `Operation.error` is populated, if there was an error in processing.
+// * `Operation.done` = true and `Operation.response` is poulated, which
+// contains a PhotoSequence message. This method returns the following
+// error codes: * google.rpc.Code.PERMISSION_DENIED if the requesting
+// user did not create the requested PhotoSequence. *
+// google.rpc.Code.NOT_FOUND if the requested PhotoSequence does not
+// exist.
+//
+// - sequenceId: ID of the photo sequence.
+func (r *PhotoSequenceService) Get(sequenceId string) *PhotoSequenceGetCall {
+	c := &PhotoSequenceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sequenceId = sequenceId
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression.
+// For example: `published_status=PUBLISHED`. The filters supported are:
+// `published_status`. See https://google.aip.dev/160 for more
+// information.
+func (c *PhotoSequenceGetCall) Filter(filter string) *PhotoSequenceGetCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies if a download URL
+// for the photo sequence should be returned in `download_url` of
+// individual photos in the PhotoSequence response. > Note: Currently
+// not implemented.
+//
+// Possible values:
+//   "BASIC" - Server responses do not include the download URL for the
+// photo bytes. The default value.
+//   "INCLUDE_DOWNLOAD_URL" - Server responses include the download URL
+// for the photo bytes.
+func (c *PhotoSequenceGetCall) View(view string) *PhotoSequenceGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PhotoSequenceGetCall) Fields(s ...googleapi.Field) *PhotoSequenceGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PhotoSequenceGetCall) IfNoneMatch(entityTag string) *PhotoSequenceGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PhotoSequenceGetCall) Context(ctx context.Context) *PhotoSequenceGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PhotoSequenceGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PhotoSequenceGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/photoSequence/{sequenceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"sequenceId": c.sequenceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "streetviewpublish.photoSequence.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PhotoSequenceGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the metadata of the specified PhotoSequence via the Operation interface. This method returns the following three types of responses: * `Operation.done` = false, if the processing of PhotoSequence is not finished yet. * `Operation.done` = true and `Operation.error` is populated, if there was an error in processing. * `Operation.done` = true and `Operation.response` is poulated, which contains a PhotoSequence message. This method returns the following error codes: * google.rpc.Code.PERMISSION_DENIED if the requesting user did not create the requested PhotoSequence. * google.rpc.Code.NOT_FOUND if the requested PhotoSequence does not exist.",
+	//   "flatPath": "v1/photoSequence/{sequenceId}",
+	//   "httpMethod": "GET",
+	//   "id": "streetviewpublish.photoSequence.get",
+	//   "parameterOrder": [
+	//     "sequenceId"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. The filter expression. For example: `published_status=PUBLISHED`. The filters supported are: `published_status`. See https://google.aip.dev/160 for more information.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sequenceId": {
+	//       "description": "Required. ID of the photo sequence.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies if a download URL for the photo sequence should be returned in `download_url` of individual photos in the PhotoSequence response. \u003e Note: Currently not implemented.",
+	//       "enum": [
+	//         "BASIC",
+	//         "INCLUDE_DOWNLOAD_URL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Server responses do not include the download URL for the photo bytes. The default value.",
+	//         "Server responses include the download URL for the photo bytes."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/photoSequence/{sequenceId}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/streetviewpublish"
+	//   ]
+	// }
+
+}
+
+// method id "streetviewpublish.photoSequence.startUpload":
+
+type PhotoSequenceStartUploadCall struct {
+	s          *Service
+	empty      *Empty
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// StartUpload: Creates an upload session to start uploading photo
+// sequence data. The upload URL of the returned UploadRef is used to
+// upload the data for the `photoSequence`. After the upload is
+// complete, the UploadRef is used with CreatePhotoSequence to create
+// the PhotoSequence object entry.
+func (r *PhotoSequenceService) StartUpload(empty *Empty) *PhotoSequenceStartUploadCall {
+	c := &PhotoSequenceStartUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.empty = empty
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PhotoSequenceStartUploadCall) Fields(s ...googleapi.Field) *PhotoSequenceStartUploadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PhotoSequenceStartUploadCall) Context(ctx context.Context) *PhotoSequenceStartUploadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PhotoSequenceStartUploadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PhotoSequenceStartUploadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.empty)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/photoSequence:startUpload")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "streetviewpublish.photoSequence.startUpload" call.
+// Exactly one of *UploadRef or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *UploadRef.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PhotoSequenceStartUploadCall) Do(opts ...googleapi.CallOption) (*UploadRef, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &UploadRef{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an upload session to start uploading photo sequence data. The upload URL of the returned UploadRef is used to upload the data for the `photoSequence`. After the upload is complete, the UploadRef is used with CreatePhotoSequence to create the PhotoSequence object entry.",
+	//   "flatPath": "v1/photoSequence:startUpload",
+	//   "httpMethod": "POST",
+	//   "id": "streetviewpublish.photoSequence.startUpload",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/photoSequence:startUpload",
+	//   "request": {
+	//     "$ref": "Empty"
+	//   },
+	//   "response": {
+	//     "$ref": "UploadRef"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/streetviewpublish"
+	//   ]
+	// }
+
+}
+
+// method id "streetviewpublish.photoSequences.list":
+
+type PhotoSequencesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the PhotoSequences that belong to the user, in
+// descending CreatePhotoSequence timestamp order.
+func (r *PhotoSequencesService) List() *PhotoSequencesListCall {
+	c := &PhotoSequencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression.
+// For example: `imagery_type=SPHERICAL`. The filters supported are:
+// `imagery_type`, `processing_state`, `min_latitude`, `max_latitude`,
+// `min_longitude`, `max_longitude`, and `filename_query`. See
+// https://google.aip.dev/160 for more information. Filename queries
+// should sent as a Phrase in order to support multple words and special
+// characters by adding escaped quotes. Ex: filename_query="example of a
+// phrase.mp4"
+func (c *PhotoSequencesListCall) Filter(filter string) *PhotoSequencesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of photo sequences to return. `pageSize` must be non-negative. If
+// `pageSize` is zero or is not provided, the default page size of 100
+// is used. The number of photo sequences returned in the response may
+// be less than `pageSize` if the number of matches is less than
+// `pageSize`. This is currently unimplemented but is in process.
+func (c *PhotoSequencesListCall) PageSize(pageSize int64) *PhotoSequencesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The nextPageToken
+// value returned from a previous ListPhotoSequences request, if any.
+func (c *PhotoSequencesListCall) PageToken(pageToken string) *PhotoSequencesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PhotoSequencesListCall) Fields(s ...googleapi.Field) *PhotoSequencesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PhotoSequencesListCall) IfNoneMatch(entityTag string) *PhotoSequencesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PhotoSequencesListCall) Context(ctx context.Context) *PhotoSequencesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PhotoSequencesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PhotoSequencesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/photoSequences")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "streetviewpublish.photoSequences.list" call.
+// Exactly one of *ListPhotoSequencesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPhotoSequencesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PhotoSequencesListCall) Do(opts ...googleapi.CallOption) (*ListPhotoSequencesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPhotoSequencesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the PhotoSequences that belong to the user, in descending CreatePhotoSequence timestamp order.",
+	//   "flatPath": "v1/photoSequences",
+	//   "httpMethod": "GET",
+	//   "id": "streetviewpublish.photoSequences.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. The filter expression. For example: `imagery_type=SPHERICAL`. The filters supported are: `imagery_type`, `processing_state`, `min_latitude`, `max_latitude`, `min_longitude`, `max_longitude`, and `filename_query`. See https://google.aip.dev/160 for more information. Filename queries should sent as a Phrase in order to support multple words and special characters by adding escaped quotes. Ex: filename_query=\"example of a phrase.mp4\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of photo sequences to return. `pageSize` must be non-negative. If `pageSize` is zero or is not provided, the default page size of 100 is used. The number of photo sequences returned in the response may be less than `pageSize` if the number of matches is less than `pageSize`. This is currently unimplemented but is in process.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The nextPageToken value returned from a previous ListPhotoSequences request, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/photoSequences",
+	//   "response": {
+	//     "$ref": "ListPhotoSequencesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/streetviewpublish"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PhotoSequencesListCall) Pages(ctx context.Context, f func(*ListPhotoSequencesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "streetviewpublish.photos.batchDelete":

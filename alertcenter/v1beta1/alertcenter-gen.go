@@ -1710,6 +1710,44 @@ func (s *PredefinedDetectorInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PrimaryAdminChangedEvent: Event occurred when primary admin changed
+// in customer's account. The event are being received from insight
+// forwarder
+type PrimaryAdminChangedEvent struct {
+	// Domain: domain in which actioned occurred
+	Domain string `json:"domain,omitempty"`
+
+	// PreviousAdminEmail: Email of person who was the primary admin before
+	// the action
+	PreviousAdminEmail string `json:"previousAdminEmail,omitempty"`
+
+	// UpdatedAdminEmail: Email of person who is the primary admin after the
+	// action
+	UpdatedAdminEmail string `json:"updatedAdminEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Domain") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrimaryAdminChangedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod PrimaryAdminChangedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReportingRule: Alerts from Reporting Rules configured by Admin.
 type ReportingRule struct {
 	// AlertDetails: Any other associated alert details, for example,
@@ -1940,6 +1978,157 @@ func (s *RuleViolationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SSOProfileCreatedEvent: Event occurred when SSO Profile created in
+// customer's account. The event are being received from insight
+// forwarder
+type SSOProfileCreatedEvent struct {
+	// InboundSsoProfileName: sso profile name which got created
+	InboundSsoProfileName string `json:"inboundSsoProfileName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "InboundSsoProfileName") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InboundSsoProfileName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SSOProfileCreatedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod SSOProfileCreatedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SSOProfileDeletedEvent: Event occurred when SSO Profile deleted in
+// customer's account. The event are being received from insight
+// forwarder
+type SSOProfileDeletedEvent struct {
+	// InboundSsoProfileName: sso profile name which got deleted
+	InboundSsoProfileName string `json:"inboundSsoProfileName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "InboundSsoProfileName") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InboundSsoProfileName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SSOProfileDeletedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod SSOProfileDeletedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SSOProfileUpdatedEvent: Event occurred when SSO Profile updated in
+// customer's account. The event are being received from insight
+// forwarder
+type SSOProfileUpdatedEvent struct {
+	// InboundSsoProfileChanges: changes made to sso profile
+	InboundSsoProfileChanges string `json:"inboundSsoProfileChanges,omitempty"`
+
+	// InboundSsoProfileName: sso profile name which got updated
+	InboundSsoProfileName string `json:"inboundSsoProfileName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "InboundSsoProfileChanges") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InboundSsoProfileChanges")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SSOProfileUpdatedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod SSOProfileUpdatedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SensitiveAdminAction: Alert that is triggered when Sensitive Admin
+// Action occur in customer account.
+type SensitiveAdminAction struct {
+	// ActorEmail: Email of person who performed the action
+	ActorEmail string `json:"actorEmail,omitempty"`
+
+	// EventTime: The time at which event occurred
+	EventTime string `json:"eventTime,omitempty"`
+
+	// PrimaryAdminChangedEvent: Event occurred when primary admin changed
+	// in customer's account
+	PrimaryAdminChangedEvent *PrimaryAdminChangedEvent `json:"primaryAdminChangedEvent,omitempty"`
+
+	// SsoProfileCreatedEvent: Event occurred when SSO Profile created in
+	// customer's account
+	SsoProfileCreatedEvent *SSOProfileCreatedEvent `json:"ssoProfileCreatedEvent,omitempty"`
+
+	// SsoProfileDeletedEvent: Event occurred when SSO Profile deleted in
+	// customer's account
+	SsoProfileDeletedEvent *SSOProfileDeletedEvent `json:"ssoProfileDeletedEvent,omitempty"`
+
+	// SsoProfileUpdatedEvent: Event occurred when SSO Profile updated in
+	// customer's account
+	SsoProfileUpdatedEvent *SSOProfileUpdatedEvent `json:"ssoProfileUpdatedEvent,omitempty"`
+
+	// SuperAdminPasswordResetEvent: Event occurred when password was reset
+	// for super admin in customer's account
+	SuperAdminPasswordResetEvent *SuperAdminPasswordResetEvent `json:"superAdminPasswordResetEvent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActorEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActorEmail") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SensitiveAdminAction) MarshalJSON() ([]byte, error) {
+	type NoMethod SensitiveAdminAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Settings: Customer-level settings.
 type Settings struct {
 	// Notifications: The list of notifications.
@@ -2041,6 +2230,36 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SuperAdminPasswordResetEvent: Event occurred when password was reset
+// for super admin in customer's account. The event are being received
+// from insight forwarder
+type SuperAdminPasswordResetEvent struct {
+	// UserEmail: email of person whose password was reset
+	UserEmail string `json:"userEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UserEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UserEmail") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SuperAdminPasswordResetEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod SuperAdminPasswordResetEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -750,78 +750,106 @@ func (s *BuilderConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CVSS: Common Vulnerability Scoring System.
+// CVSS: Common Vulnerability Scoring System. This message is compatible
+// with CVSS v2 and v3. For CVSS v2 details, see
+// https://www.first.org/cvss/v2/guide CVSS v2 calculator:
+// https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator For CVSS v3
+// details, see https://www.first.org/cvss/specification-document CVSS
+// v3 calculator: https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator
 type CVSS struct {
+	// AttackComplexity: Defined in CVSS v3, CVSS v2
+	//
 	// Possible values:
-	//   "ATTACK_COMPLEXITY_UNSPECIFIED"
-	//   "ATTACK_COMPLEXITY_LOW"
-	//   "ATTACK_COMPLEXITY_HIGH"
+	//   "ATTACK_COMPLEXITY_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_COMPLEXITY_LOW" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_COMPLEXITY_HIGH" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_COMPLEXITY_MEDIUM" - Defined in CVSS v2
 	AttackComplexity string `json:"attackComplexity,omitempty"`
 
 	// AttackVector: Base Metrics Represents the intrinsic characteristics
 	// of a vulnerability that are constant over time and across user
-	// environments.
+	// environments. Defined in CVSS v3, CVSS v2
 	//
 	// Possible values:
-	//   "ATTACK_VECTOR_UNSPECIFIED"
-	//   "ATTACK_VECTOR_NETWORK"
-	//   "ATTACK_VECTOR_ADJACENT"
-	//   "ATTACK_VECTOR_LOCAL"
-	//   "ATTACK_VECTOR_PHYSICAL"
+	//   "ATTACK_VECTOR_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_VECTOR_NETWORK" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_VECTOR_ADJACENT" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_VECTOR_LOCAL" - Defined in CVSS v3, CVSS v2
+	//   "ATTACK_VECTOR_PHYSICAL" - Defined in CVSS v3
 	AttackVector string `json:"attackVector,omitempty"`
 
+	// Authentication: Defined in CVSS v2
+	//
 	// Possible values:
-	//   "AUTHENTICATION_UNSPECIFIED"
-	//   "AUTHENTICATION_MULTIPLE"
-	//   "AUTHENTICATION_SINGLE"
-	//   "AUTHENTICATION_NONE"
+	//   "AUTHENTICATION_UNSPECIFIED" - Defined in CVSS v2
+	//   "AUTHENTICATION_MULTIPLE" - Defined in CVSS v2
+	//   "AUTHENTICATION_SINGLE" - Defined in CVSS v2
+	//   "AUTHENTICATION_NONE" - Defined in CVSS v2
 	Authentication string `json:"authentication,omitempty"`
 
+	// AvailabilityImpact: Defined in CVSS v3, CVSS v2
+	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED"
-	//   "IMPACT_HIGH"
-	//   "IMPACT_LOW"
-	//   "IMPACT_NONE"
+	//   "IMPACT_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
+	//   "IMPACT_HIGH" - Defined in CVSS v3
+	//   "IMPACT_LOW" - Defined in CVSS v3
+	//   "IMPACT_NONE" - Defined in CVSS v3, CVSS v2
+	//   "IMPACT_PARTIAL" - Defined in CVSS v2
+	//   "IMPACT_COMPLETE" - Defined in CVSS v2
 	AvailabilityImpact string `json:"availabilityImpact,omitempty"`
 
 	// BaseScore: The base score is a function of the base metric scores.
 	BaseScore float64 `json:"baseScore,omitempty"`
 
+	// ConfidentialityImpact: Defined in CVSS v3, CVSS v2
+	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED"
-	//   "IMPACT_HIGH"
-	//   "IMPACT_LOW"
-	//   "IMPACT_NONE"
+	//   "IMPACT_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
+	//   "IMPACT_HIGH" - Defined in CVSS v3
+	//   "IMPACT_LOW" - Defined in CVSS v3
+	//   "IMPACT_NONE" - Defined in CVSS v3, CVSS v2
+	//   "IMPACT_PARTIAL" - Defined in CVSS v2
+	//   "IMPACT_COMPLETE" - Defined in CVSS v2
 	ConfidentialityImpact string `json:"confidentialityImpact,omitempty"`
 
 	ExploitabilityScore float64 `json:"exploitabilityScore,omitempty"`
 
 	ImpactScore float64 `json:"impactScore,omitempty"`
 
+	// IntegrityImpact: Defined in CVSS v3, CVSS v2
+	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED"
-	//   "IMPACT_HIGH"
-	//   "IMPACT_LOW"
-	//   "IMPACT_NONE"
+	//   "IMPACT_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
+	//   "IMPACT_HIGH" - Defined in CVSS v3
+	//   "IMPACT_LOW" - Defined in CVSS v3
+	//   "IMPACT_NONE" - Defined in CVSS v3, CVSS v2
+	//   "IMPACT_PARTIAL" - Defined in CVSS v2
+	//   "IMPACT_COMPLETE" - Defined in CVSS v2
 	IntegrityImpact string `json:"integrityImpact,omitempty"`
 
+	// PrivilegesRequired: Defined in CVSS v3
+	//
 	// Possible values:
-	//   "PRIVILEGES_REQUIRED_UNSPECIFIED"
-	//   "PRIVILEGES_REQUIRED_NONE"
-	//   "PRIVILEGES_REQUIRED_LOW"
-	//   "PRIVILEGES_REQUIRED_HIGH"
+	//   "PRIVILEGES_REQUIRED_UNSPECIFIED" - Defined in CVSS v3
+	//   "PRIVILEGES_REQUIRED_NONE" - Defined in CVSS v3
+	//   "PRIVILEGES_REQUIRED_LOW" - Defined in CVSS v3
+	//   "PRIVILEGES_REQUIRED_HIGH" - Defined in CVSS v3
 	PrivilegesRequired string `json:"privilegesRequired,omitempty"`
 
+	// Scope: Defined in CVSS v3
+	//
 	// Possible values:
-	//   "SCOPE_UNSPECIFIED"
-	//   "SCOPE_UNCHANGED"
-	//   "SCOPE_CHANGED"
+	//   "SCOPE_UNSPECIFIED" - Defined in CVSS v3
+	//   "SCOPE_UNCHANGED" - Defined in CVSS v3
+	//   "SCOPE_CHANGED" - Defined in CVSS v3
 	Scope string `json:"scope,omitempty"`
 
+	// UserInteraction: Defined in CVSS v3
+	//
 	// Possible values:
-	//   "USER_INTERACTION_UNSPECIFIED"
-	//   "USER_INTERACTION_NONE"
-	//   "USER_INTERACTION_REQUIRED"
+	//   "USER_INTERACTION_UNSPECIFIED" - Defined in CVSS v3
+	//   "USER_INTERACTION_NONE" - Defined in CVSS v3
+	//   "USER_INTERACTION_REQUIRED" - Defined in CVSS v3
 	UserInteraction string `json:"userInteraction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AttackComplexity") to
@@ -2814,6 +2842,37 @@ func (s *Detail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Digest: Digest information.
+type Digest struct {
+	// Algo: `SHA1`, `SHA512` etc.
+	Algo string `json:"algo,omitempty"`
+
+	// DigestBytes: Value of the digest.
+	DigestBytes string `json:"digestBytes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Algo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Algo") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Digest) MarshalJSON() ([]byte, error) {
+	type NoMethod Digest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Discovered: Provides information about the scan status of a
 // discovered resource.
 type Discovered struct {
@@ -3312,6 +3371,36 @@ type FileHashes struct {
 
 func (s *FileHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod FileHashes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FileLocation: Indicates the location at which a package was found.
+type FileLocation struct {
+	// FilePath: For jars that are contained inside .war files, this
+	// filepath can indicate the path to war file combined with the path to
+	// jar file.
+	FilePath string `json:"filePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilePath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilePath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FileLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod FileLocation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3825,6 +3914,231 @@ func (s *GoogleDevtoolsContaineranalysisV1alpha1RepoId) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilde
+// r: Identifies the entity that executed the recipe, which is trusted
+// to have correctly performed the operation and populated this
+// provenance.
+type GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilder struct {
+	// Id: URI indicating the builder’s identity.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilder) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilder
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaComple
+// teness: Indicates that the builder claims certain fields in this
+// message to be complete.
+type GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaCompleteness struct {
+	// Environment: If true, the builder claims that invocation.environment
+	// is complete.
+	Environment bool `json:"environment,omitempty"`
+
+	// Materials: If true, the builder claims that materials is complete.
+	Materials bool `json:"materials,omitempty"`
+
+	// Parameters: If true, the builder claims that invocation.parameters is
+	// complete.
+	Parameters bool `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Environment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Environment") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaCompleteness) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaCompleteness
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfig
+// Source: Describes where the config file that kicked off the build
+// came from. This is effectively a pointer to the source where
+// buildConfig came from.
+type GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfigSource struct {
+	// Digest: Collection of cryptographic digests for the contents of the
+	// artifact specified by invocation.configSource.uri.
+	Digest map[string]string `json:"digest,omitempty"`
+
+	// EntryPoint: String identifying the entry point into the build.
+	EntryPoint string `json:"entryPoint,omitempty"`
+
+	// Uri: URI indicating the identity of the source of the config.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Digest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Digest") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfigSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfigSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvoca
+// tion: Identifies the event that kicked off the build.
+type GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvocation struct {
+	// ConfigSource: Describes where the config file that kicked off the
+	// build came from.
+	ConfigSource *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfigSource `json:"configSource,omitempty"`
+
+	// Environment: Any other builder-controlled inputs necessary for
+	// correctly evaluating the build.
+	Environment googleapi.RawMessage `json:"environment,omitempty"`
+
+	// Parameters: Collection of all external inputs that influenced the
+	// build on top of invocation.configSource.
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConfigSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConfigSource") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMateri
+// al: The collection of artifacts that influenced the build including
+// sources, dependencies, build tools, base images, and so on.
+type GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMaterial struct {
+	// Digest: Collection of cryptographic digests for the contents of this
+	// artifact.
+	Digest map[string]string `json:"digest,omitempty"`
+
+	// Uri: The method by which this artifact was referenced during the
+	// build.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Digest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Digest") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMaterial) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMaterial
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetada
+// ta: Other properties of the build.
+type GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetadata struct {
+	// BuildFinishedOn: The timestamp of when the build completed.
+	BuildFinishedOn string `json:"buildFinishedOn,omitempty"`
+
+	// BuildInvocationId: Identifies this particular build invocation, which
+	// can be useful for finding associated logs or other ad-hoc analysis.
+	BuildInvocationId string `json:"buildInvocationId,omitempty"`
+
+	// BuildStartedOn: The timestamp of when the build started.
+	BuildStartedOn string `json:"buildStartedOn,omitempty"`
+
+	// Completeness: Indicates that the builder claims certain fields in
+	// this message to be complete.
+	Completeness *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaCompleteness `json:"completeness,omitempty"`
+
+	// Reproducible: If true, the builder claims that running invocation on
+	// materials will produce bit-for-bit identical output.
+	Reproducible bool `json:"reproducible,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildFinishedOn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildFinishedOn") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDevtoolsContaineranalysisV1alpha1SourceContext: A SourceContext
 // is a reference to a tree of files. A SourceContext together with a
 // path point to a unique revision of a single file or directory.
@@ -3954,11 +4268,14 @@ type InTotoStatement struct {
 	// PredicateType: "https://slsa.dev/provenance/v0.1" for SlsaProvenance.
 	PredicateType string `json:"predicateType,omitempty"`
 
-	// Provenance: provenance is a predicate of type intotoprovenance
+	// Provenance: Generic Grafeas provenance.
 	Provenance *InTotoProvenance `json:"provenance,omitempty"`
 
-	// SlsaProvenance: slsa_provenance is a predicate of type slsaProvenance
+	// SlsaProvenance: SLSA 0.1 provenance.
 	SlsaProvenance *SlsaProvenance `json:"slsaProvenance,omitempty"`
+
+	// SlsaProvenanceZeroTwo: SLSA 0.2 provenance.
+	SlsaProvenanceZeroTwo *SlsaProvenanceZeroTwo `json:"slsaProvenanceZeroTwo,omitempty"`
 
 	// Subject: subject is the subjects of the intoto statement
 	Subject []*Subject `json:"subject,omitempty"`
@@ -3989,6 +4306,26 @@ func (s *InTotoStatement) MarshalJSON() ([]byte, error) {
 // Installation: This represents how a particular software package may
 // be installed on a system.
 type Installation struct {
+	// Architecture: Output only. The CPU architecture for which packages in
+	// this distribution channel were built. Architecture will be blank for
+	// language packages.
+	//
+	// Possible values:
+	//   "ARCHITECTURE_UNSPECIFIED" - Unknown architecture
+	//   "X86" - X86 architecture
+	//   "X64" - X64 architecture
+	Architecture string `json:"architecture,omitempty"`
+
+	// CpeUri: Output only. The cpe_uri in CPE format
+	// (https://cpe.mitre.org/specification/) denoting the package manager
+	// version distributing a package. The cpe_uri will be blank for
+	// language packages.
+	CpeUri string `json:"cpeUri,omitempty"`
+
+	// License: Licenses that have been declared by the authors of the
+	// package.
+	License *License `json:"license,omitempty"`
+
 	// Location: All of the places within the filesystem versions of this
 	// package have been found.
 	Location []*Location `json:"location,omitempty"`
@@ -3996,7 +4333,14 @@ type Installation struct {
 	// Name: Output only. The name of the installed package.
 	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Location") to
+	// PackageType: Output only. The type of package; whether native or non
+	// native (e.g., ruby gems, node.js packages, etc.).
+	PackageType string `json:"packageType,omitempty"`
+
+	// Version: Output only. The version of the package.
+	Version *Version `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4004,10 +4348,10 @@ type Installation struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Location") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Architecture") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -4072,14 +4416,16 @@ func (s *Layer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// License: License information:
-// https://spdx.github.io/spdx-spec/3-package-information/#315-declared-license
+// License: License information.
 type License struct {
 	// Comments: Comments
 	Comments string `json:"comments,omitempty"`
 
-	// Expression: Expression:
-	// https://spdx.github.io/spdx-spec/appendix-IV-SPDX-license-expressions/
+	// Expression: Often a single license can be used to represent the
+	// licensing terms. Sometimes it is necessary to include a choice of one
+	// or more licenses or some combination of license identifiers.
+	// Examples: "LGPL-2.1-only OR MIT", "LGPL-2.1-only AND MIT",
+	// "GPL-2.0-or-later WITH Bison-exception-2.2".
 	Expression string `json:"expression,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Comments") to
@@ -4256,7 +4602,7 @@ func (s *ListScanConfigsResponse) MarshalJSON() ([]byte, error) {
 // within a system's filesystem. e.g. glibc was found in
 // /var/lib/dpkg/status
 type Location struct {
-	// CpeUri: The cpe_uri in cpe format
+	// CpeUri: Deprecated. The cpe_uri in cpe format
 	// (https://cpe.mitre.org/specification/) denoting the package manager
 	// version distributing a package.
 	CpeUri string `json:"cpeUri,omitempty"`
@@ -4265,7 +4611,7 @@ type Location struct {
 	// installed.
 	Path string `json:"path,omitempty"`
 
-	// Version: The version installed at this location.
+	// Version: Deprecated. The version installed at this location.
 	Version *Version `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CpeUri") to
@@ -4734,13 +5080,53 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // over various channels. e.g. glibc (aka libc6) is distributed by many,
 // at various versions.
 type Package struct {
+	// Architecture: The CPU architecture for which packages in this
+	// distribution channel were built. Architecture will be blank for
+	// language packages.
+	//
+	// Possible values:
+	//   "ARCHITECTURE_UNSPECIFIED" - Unknown architecture
+	//   "X86" - X86 architecture
+	//   "X64" - X64 architecture
+	Architecture string `json:"architecture,omitempty"`
+
+	// CpeUri: The cpe_uri in CPE format
+	// (https://cpe.mitre.org/specification/) denoting the package manager
+	// version distributing a package. The cpe_uri will be blank for
+	// language packages.
+	CpeUri string `json:"cpeUri,omitempty"`
+
+	// Description: The description of this package.
+	Description string `json:"description,omitempty"`
+
+	// Digest: Hash value, typically a file digest, that allows unique
+	// identification a specific package.
+	Digest []*Digest `json:"digest,omitempty"`
+
 	// Distribution: The various channels by which a package is distributed.
 	Distribution []*Distribution `json:"distribution,omitempty"`
+
+	// License: Licenses that have been declared by the authors of the
+	// package.
+	License *License `json:"license,omitempty"`
+
+	// Maintainer: A freeform text denoting the maintainer of this package.
+	Maintainer string `json:"maintainer,omitempty"`
 
 	// Name: The name of the package.
 	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Distribution") to
+	// PackageType: The type of package; whether native or non native (e.g.,
+	// ruby gems, node.js packages, etc.).
+	PackageType string `json:"packageType,omitempty"`
+
+	// Url: The homepage for this package.
+	Url string `json:"url,omitempty"`
+
+	// Version: The version of the package.
+	Version *Version `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4748,7 +5134,7 @@ type Package struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Distribution") to include
+	// NullFields is a list of field names (e.g. "Architecture") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -5854,6 +6240,54 @@ func (s *SlsaProvenance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SlsaProvenanceZeroTwo: SlsaProvenanceZeroTwo is the slsa provenance
+// as defined by the slsa spec. See full explanation of fields at
+// slsa.dev/provenance/v0.2.
+type SlsaProvenanceZeroTwo struct {
+	// BuildConfig: Lists the steps in the build.
+	BuildConfig googleapi.RawMessage `json:"buildConfig,omitempty"`
+
+	// BuildType: URI indicating what type of build was performed.
+	BuildType string `json:"buildType,omitempty"`
+
+	// Builder: Identifies the entity that executed the recipe, which is
+	// trusted to have correctly performed the operation and populated this
+	// provenance.
+	Builder *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilder `json:"builder,omitempty"`
+
+	// Invocation: Identifies the event that kicked off the build.
+	Invocation *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvocation `json:"invocation,omitempty"`
+
+	// Materials: The collection of artifacts that influenced the build
+	// including sources, dependencies, build tools, base images, and so on.
+	Materials []*GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMaterial `json:"materials,omitempty"`
+
+	// Metadata: Other properties of the build.
+	Metadata *GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetadata `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SlsaProvenanceZeroTwo) MarshalJSON() ([]byte, error) {
+	type NoMethod SlsaProvenanceZeroTwo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SlsaRecipe: Steps taken to build the artifact. For a TaskRun,
 // typically each container corresponds to one step in the recipe.
 type SlsaRecipe struct {
@@ -6455,6 +6889,9 @@ type VulnerabilityLocation struct {
 	// as a filter in list requests.
 	CpeUri string `json:"cpeUri,omitempty"`
 
+	// FileLocation: The file location at which this package was found.
+	FileLocation []*FileLocation `json:"fileLocation,omitempty"`
+
 	// Package: The package being described.
 	Package string `json:"package,omitempty"`
 
@@ -6490,6 +6927,13 @@ func (s *VulnerabilityLocation) MarshalJSON() ([]byte, error) {
 type VulnerabilityType struct {
 	// CvssScore: The CVSS score for this Vulnerability.
 	CvssScore float64 `json:"cvssScore,omitempty"`
+
+	// CvssV2: The full description of the CVSS for version 2.
+	CvssV2 *CVSS `json:"cvssV2,omitempty"`
+
+	// Cwe: A list of CWE for this vulnerability. For details, see:
+	// https://cwe.mitre.org/index.html
+	Cwe []string `json:"cwe,omitempty"`
 
 	// Details: All information about the package to specifically identify
 	// this vulnerability. One entry per (version range and cpe_uri) the
@@ -7016,8 +7460,9 @@ type ProjectsNotesGetIamPolicyCall struct {
 // and projects/{PROJECT_ID}/notes/{NOTE_ID} for notes
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsNotesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsNotesGetIamPolicyCall {
 	c := &ProjectsNotesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7125,7 +7570,7 @@ func (c *ProjectsNotesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -7543,8 +7988,9 @@ type ProjectsNotesSetIamPolicyCall struct {
 // occurrences and projects/{projectid}/notes/{noteid} for notes
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsNotesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsNotesSetIamPolicyCall {
 	c := &ProjectsNotesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7652,7 +8098,7 @@ func (c *ProjectsNotesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -7695,7 +8141,8 @@ type ProjectsNotesTestIamPermissionsCall struct {
 // `Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsNotesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsNotesTestIamPermissionsCall {
 	c := &ProjectsNotesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7804,7 +8251,7 @@ func (c *ProjectsNotesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -8493,8 +8940,9 @@ type ProjectsOccurrencesGetIamPolicyCall struct {
 // and projects/{PROJECT_ID}/notes/{NOTE_ID} for notes
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsOccurrencesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsOccurrencesGetIamPolicyCall {
 	c := &ProjectsOccurrencesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8602,7 +9050,7 @@ func (c *ProjectsOccurrencesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/occurrences/[^/]+$",
 	//       "required": true,
@@ -9396,8 +9844,9 @@ type ProjectsOccurrencesSetIamPolicyCall struct {
 // occurrences and projects/{projectid}/notes/{noteid} for notes
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsOccurrencesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsOccurrencesSetIamPolicyCall {
 	c := &ProjectsOccurrencesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9505,7 +9954,7 @@ func (c *ProjectsOccurrencesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/occurrences/[^/]+$",
 	//       "required": true,
@@ -9548,7 +9997,8 @@ type ProjectsOccurrencesTestIamPermissionsCall struct {
 // `Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsOccurrencesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsOccurrencesTestIamPermissionsCall {
 	c := &ProjectsOccurrencesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9657,7 +10107,7 @@ func (c *ProjectsOccurrencesTestIamPermissionsCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/occurrences/[^/]+$",
 	//       "required": true,
@@ -10943,8 +11393,9 @@ type ProvidersNotesGetIamPolicyCall struct {
 // and projects/{PROJECT_ID}/notes/{NOTE_ID} for notes
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProvidersNotesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProvidersNotesGetIamPolicyCall {
 	c := &ProvidersNotesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11052,7 +11503,7 @@ func (c *ProvidersNotesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^providers/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -11470,8 +11921,9 @@ type ProvidersNotesSetIamPolicyCall struct {
 // occurrences and projects/{projectid}/notes/{noteid} for notes
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProvidersNotesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProvidersNotesSetIamPolicyCall {
 	c := &ProvidersNotesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11579,7 +12031,7 @@ func (c *ProvidersNotesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^providers/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -11622,7 +12074,8 @@ type ProvidersNotesTestIamPermissionsCall struct {
 // `Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProvidersNotesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProvidersNotesTestIamPermissionsCall {
 	c := &ProvidersNotesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -11731,7 +12184,7 @@ func (c *ProvidersNotesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^providers/[^/]+/notes/[^/]+$",
 	//       "required": true,

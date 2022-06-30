@@ -258,6 +258,69 @@ func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BigQueryConfig: Configuration for a BigQuery subscription.
+type BigQueryConfig struct {
+	// DropUnknownFields: When true and use_topic_schema is true, any fields
+	// that are a part of the topic schema that are not part of the BigQuery
+	// table schema are dropped when writing to BigQuery. Otherwise, the
+	// schemas must be kept in sync and any messages with extra fields are
+	// not written and remain in the subscription's backlog.
+	DropUnknownFields bool `json:"dropUnknownFields,omitempty"`
+
+	// State: Output only. An output-only field that indicates whether or
+	// not the subscription can receive messages.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - The subscription can actively send messages to BigQuery
+	//   "PERMISSION_DENIED" - Cannot write to the BigQuery table because of
+	// permission denied errors.
+	//   "NOT_FOUND" - Cannot write to the BigQuery table because it does
+	// not exist.
+	//   "SCHEMA_MISMATCH" - Cannot write to the BigQuery table due to a
+	// schema mismatch.
+	State string `json:"state,omitempty"`
+
+	// Table: The name of the table to which to write data, of the form
+	// {projectId}.{datasetId}.{tableId}
+	Table string `json:"table,omitempty"`
+
+	// UseTopicSchema: When true, use the topic's schema as the columns to
+	// write to in BigQuery, if it exists.
+	UseTopicSchema bool `json:"useTopicSchema,omitempty"`
+
+	// WriteMetadata: When true, write the subscription name, message_id,
+	// publish_time, attributes, and ordering_key to additional columns in
+	// the table. The subscription name, message_id, and publish_time fields
+	// are put in their own columns while all other message properties
+	// (other than data) are written to a JSON object in the attributes
+	// column.
+	WriteMetadata bool `json:"writeMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DropUnknownFields")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DropUnknownFields") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BigQueryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -869,6 +932,11 @@ func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 // OidcToken: Contains information needed for generating an OpenID
 // Connect token
 // (https://developers.google.com/identity/protocols/OpenIDConnect).
+// Service account email
+// (https://cloud.google.com/iam/docs/service-accounts) used for
+// generating the OIDC token. For more information on setting up
+// authentication, see Push subscriptions
+// (https://cloud.google.com/pubsub/docs/push).
 type OidcToken struct {
 	// Audience: Audience to be used when generating OIDC token. The
 	// audience claim identifies the recipients that the JWT is intended
@@ -879,11 +947,6 @@ type OidcToken struct {
 	// specified, the Push endpoint URL will be used.
 	Audience string `json:"audience,omitempty"`
 
-	// ServiceAccountEmail: Service account email
-	// (https://cloud.google.com/iam/docs/service-accounts) to be used for
-	// generating the OIDC token. See Setting up push authentication
-	// (/pubsub/docs/push#setting_up_for_push_authentication) for more
-	// details.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audience") to
@@ -1109,7 +1172,8 @@ type PubsubMessage struct {
 	// same non-empty `ordering_key` value will be delivered to subscribers
 	// in the order in which they are received by the Pub/Sub system. All
 	// `PubsubMessage`s published in a given `PublishRequest` must specify
-	// the same `ordering_key` value.
+	// the same `ordering_key` value. For more information, see ordering
+	// messages (https://cloud.google.com/pubsub/docs/ordering).
 	OrderingKey string `json:"orderingKey,omitempty"`
 
 	// PublishTime: The time at which the message was published, populated
@@ -1421,6 +1485,16 @@ type SchemaSettings struct {
 	// schema types, binary encoding may not be available.
 	Encoding string `json:"encoding,omitempty"`
 
+	// FirstRevisionId: The minimum (inclusive) revision allowed for
+	// validating messages. If empty or not present, allow any revision to
+	// be validated against last_revision or any revision created before.
+	FirstRevisionId string `json:"firstRevisionId,omitempty"`
+
+	// LastRevisionId: The maximum (inclusive) revision allowed for
+	// validating messages. If empty or not present, allow any revision to
+	// be validated against first_revision or any revision created after.
+	LastRevisionId string `json:"lastRevisionId,omitempty"`
+
 	// Schema: Required. The name of the schema that messages published
 	// should be validated against. Format is
 	// `projects/{project}/schemas/{schema}`. The value of this field will
@@ -1609,6 +1683,12 @@ type Subscription struct {
 	// message, the Pub/Sub system will eventually redeliver the message.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
+	// BigqueryConfig: If delivery to BigQuery is used with this
+	// subscription, this field is used to configure it. Either `pushConfig`
+	// or `bigQueryConfig` can be set, but not both. If both are empty, then
+	// the subscriber will pull and ack messages using API methods.
+	BigqueryConfig *BigQueryConfig `json:"bigqueryConfig,omitempty"`
+
 	// DeadLetterPolicy: A policy that specifies the conditions for dead
 	// lettering messages in this subscription. If dead_letter_policy is not
 	// set, dead lettering is disabled. The Cloud Pub/Sub service account
@@ -1679,9 +1759,9 @@ type Subscription struct {
 	Name string `json:"name,omitempty"`
 
 	// PushConfig: If push delivery is used with this subscription, this
-	// field is used to configure it. At most one of `pushConfig` and
-	// `bigQueryConfig` can be set. If both are empty, then the subscriber
-	// will pull and ack messages using API methods.
+	// field is used to configure it. Either `pushConfig` or
+	// `bigQueryConfig` can be set, but not both. If both are empty, then
+	// the subscriber will pull and ack messages using API methods.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
 
 	// RetainAckedMessages: Indicates whether to retain acknowledged
@@ -2568,8 +2648,9 @@ type ProjectsSchemasGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsSchemasService) GetIamPolicy(resource string) *ProjectsSchemasGetIamPolicyCall {
 	c := &ProjectsSchemasGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2708,7 +2789,7 @@ func (c *ProjectsSchemasGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/schemas/[^/]+$",
 	//       "required": true,
@@ -2969,8 +3050,9 @@ type ProjectsSchemasSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsSchemasService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSchemasSetIamPolicyCall {
 	c := &ProjectsSchemasSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3078,7 +3160,7 @@ func (c *ProjectsSchemasSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/schemas/[^/]+$",
 	//       "required": true,
@@ -3119,7 +3201,8 @@ type ProjectsSchemasTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsSchemasService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSchemasTestIamPermissionsCall {
 	c := &ProjectsSchemasTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3228,7 +3311,7 @@ func (c *ProjectsSchemasTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/schemas/[^/]+$",
 	//       "required": true,
@@ -3856,9 +3939,10 @@ type ProjectsSnapshotsGetCall struct {
 }
 
 // Get: Gets the configuration details of a snapshot. Snapshots are used
-// in Seek operations, which allow you to manage message acknowledgments
-// in bulk. That is, you can set the acknowledgment state of messages in
-// an existing subscription to the state captured by a snapshot.
+// in Seek (https://cloud.google.com/pubsub/docs/replay-overview)
+// operations, which allow you to manage message acknowledgments in
+// bulk. That is, you can set the acknowledgment state of messages in an
+// existing subscription to the state captured by a snapshot.
 //
 // - snapshot: The name of the snapshot to get. Format is
 //   `projects/{project}/snapshots/{snap}`.
@@ -3967,7 +4051,7 @@ func (c *ProjectsSnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the configuration details of a snapshot. Snapshots are used in Seek operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
+	//   "description": "Gets the configuration details of a snapshot. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.snapshots.get",
@@ -4011,8 +4095,9 @@ type ProjectsSnapshotsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsSnapshotsService) GetIamPolicy(resource string) *ProjectsSnapshotsGetIamPolicyCall {
 	c := &ProjectsSnapshotsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4151,7 +4236,7 @@ func (c *ProjectsSnapshotsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -4382,9 +4467,10 @@ type ProjectsSnapshotsPatchCall struct {
 }
 
 // Patch: Updates an existing snapshot. Snapshots are used in Seek
-// operations, which allow you to manage message acknowledgments in
-// bulk. That is, you can set the acknowledgment state of messages in an
-// existing subscription to the state captured by a snapshot.
+// (https://cloud.google.com/pubsub/docs/replay-overview) operations,
+// which allow you to manage message acknowledgments in bulk. That is,
+// you can set the acknowledgment state of messages in an existing
+// subscription to the state captured by a snapshot.
 //
 // - name: The name of the snapshot.
 func (r *ProjectsSnapshotsService) Patch(name string, updatesnapshotrequest *UpdateSnapshotRequest) *ProjectsSnapshotsPatchCall {
@@ -4485,7 +4571,7 @@ func (c *ProjectsSnapshotsPatchCall) Do(opts ...googleapi.CallOption) (*Snapshot
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing snapshot. Snapshots are used in Seek operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
+	//   "description": "Updates an existing snapshot. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "pubsub.projects.snapshots.patch",
@@ -4532,8 +4618,9 @@ type ProjectsSnapshotsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsSnapshotsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSnapshotsSetIamPolicyCall {
 	c := &ProjectsSnapshotsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4641,7 +4728,7 @@ func (c *ProjectsSnapshotsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -4682,7 +4769,8 @@ type ProjectsSnapshotsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsSnapshotsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSnapshotsTestIamPermissionsCall {
 	c := &ProjectsSnapshotsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4791,7 +4879,7 @@ func (c *ProjectsSnapshotsTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -5562,8 +5650,9 @@ type ProjectsSubscriptionsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsSubscriptionsService) GetIamPolicy(resource string) *ProjectsSubscriptionsGetIamPolicyCall {
 	c := &ProjectsSubscriptionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5702,7 +5791,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -6676,8 +6765,9 @@ type ProjectsSubscriptionsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsSubscriptionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSubscriptionsSetIamPolicyCall {
 	c := &ProjectsSubscriptionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6785,7 +6875,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -6826,7 +6916,8 @@ type ProjectsSubscriptionsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsSubscriptionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSubscriptionsTestIamPermissionsCall {
 	c := &ProjectsSubscriptionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6935,7 +7026,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -7410,8 +7501,9 @@ type ProjectsTopicsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsTopicsService) GetIamPolicy(resource string) *ProjectsTopicsGetIamPolicyCall {
 	c := &ProjectsTopicsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7550,7 +7642,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -8075,8 +8167,9 @@ type ProjectsTopicsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsTopicsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsTopicsSetIamPolicyCall {
 	c := &ProjectsTopicsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8184,7 +8277,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -8225,7 +8318,8 @@ type ProjectsTopicsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsTopicsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTopicsTestIamPermissionsCall {
 	c := &ProjectsTopicsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8334,7 +8428,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,

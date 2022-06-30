@@ -234,8 +234,8 @@ type ProjectsLocationsRealmsGameServerClustersService struct {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -488,15 +488,16 @@ type Condition struct {
 	// (go/security-realms). When used with IN, the condition indicates "any
 	// of the request's realms match one of the given values; with NOT_IN,
 	// "none of the realms match any of the given values". Note that a value
-	// can be: - 'self' (i.e., allow connections from clients that are in
-	// the same security realm, which is currently but not guaranteed to be
-	// campus-sized) - 'self:metro' (i.e., clients that are in the same
-	// metro) - 'self:cloud-region' (i.e., allow connections from clients
-	// that are in the same cloud region) - 'self:prod-region' (i.e., allow
-	// connections from clients that are in the same prod region) -
-	// 'guardians' (i.e., allow connections from its guardian realms. See
-	// go/security-realms-glossary#guardian for more information.) - a realm
-	// (e.g., 'campus-abc') - a realm group (e.g.,
+	// can be: - 'self:campus' (i.e., clients that are in the same campus) -
+	// 'self:metro' (i.e., clients that are in the same metro) -
+	// 'self:cloud-region' (i.e., allow connections from clients that are in
+	// the same cloud region) - 'self:prod-region' (i.e., allow connections
+	// from clients that are in the same prod region) - 'guardians' (i.e.,
+	// allow connections from its guardian realms. See
+	// go/security-realms-glossary#guardian for more information.) - 'self'
+	// [DEPRECATED] (i.e., allow connections from clients that are in the
+	// same security realm, which is currently but not guaranteed to be
+	// campus-sized) - a realm (e.g., 'campus-abc') - a realm group (e.g.,
 	// 'realms-for-borg-cell-xx', see: go/realm-groups) A match is
 	// determined by a realm group membership check performed by a
 	// RealmAclRep object (go/realm-acl-howto). It is not permitted to grant
@@ -3826,8 +3827,9 @@ type ProjectsLocationsGameServerDeploymentsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGameServerDeploymentsService) GetIamPolicy(resource string) *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall {
 	c := &ProjectsLocationsGameServerDeploymentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3966,7 +3968,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall) Do(opts ...goog
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -4713,8 +4715,9 @@ type ProjectsLocationsGameServerDeploymentsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGameServerDeploymentsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGameServerDeploymentsSetIamPolicyCall {
 	c := &ProjectsLocationsGameServerDeploymentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4822,7 +4825,7 @@ func (c *ProjectsLocationsGameServerDeploymentsSetIamPolicyCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -4862,7 +4865,8 @@ type ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsGameServerDeploymentsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall {
 	c := &ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4971,7 +4975,7 @@ func (c *ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,

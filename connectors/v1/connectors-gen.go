@@ -282,8 +282,8 @@ type ProjectsLocationsProvidersService struct {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -377,6 +377,7 @@ type AuthConfig struct {
 	// Authorization Grant based authentication
 	//   "OAUTH2_CLIENT_CREDENTIALS" - Oauth 2.0 Client Credentials Grant
 	// Authentication
+	//   "SSH_PUBLIC_KEY" - SSH Public Key Authentication
 	AuthType string `json:"authType,omitempty"`
 
 	// Oauth2ClientCredentials: Oauth2ClientCredentials.
@@ -384,6 +385,9 @@ type AuthConfig struct {
 
 	// Oauth2JwtBearer: Oauth2JwtBearer.
 	Oauth2JwtBearer *Oauth2JwtBearer `json:"oauth2JwtBearer,omitempty"`
+
+	// SshPublicKey: SSH Public Key.
+	SshPublicKey *SshPublicKey `json:"sshPublicKey,omitempty"`
 
 	// UserPassword: UserPassword.
 	UserPassword *UserPassword `json:"userPassword,omitempty"`
@@ -424,6 +428,7 @@ type AuthConfigTemplate struct {
 	// Authorization Grant based authentication
 	//   "OAUTH2_CLIENT_CREDENTIALS" - Oauth 2.0 Client Credentials Grant
 	// Authentication
+	//   "SSH_PUBLIC_KEY" - SSH Public Key Authentication
 	AuthType string `json:"authType,omitempty"`
 
 	// ConfigVariableTemplates: Config variables to describe an `AuthConfig`
@@ -465,8 +470,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -581,6 +586,9 @@ type ConfigVariableTemplate struct {
 	// DisplayName: Display name of the parameter.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EnumOptions: Enum options. To be populated if `ValueType` is `ENUM`
+	EnumOptions []*EnumOption `json:"enumOptions,omitempty"`
+
 	// Key: Key of the config variable.
 	Key string `json:"key,omitempty"`
 
@@ -604,6 +612,7 @@ type ConfigVariableTemplate struct {
 	//   "INT" - Value type is integer.
 	//   "BOOL" - Value type is boolean.
 	//   "SECRET" - Value type is secret.
+	//   "ENUM" - Value type is enum.
 	ValueType string `json:"valueType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -1003,12 +1012,42 @@ func (s *EgressControlConfig) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EnumOption: EnumOption definition
+type EnumOption struct {
+	// DisplayName: Display name of the option.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: Id of the option.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnumOption) MarshalJSON() ([]byte, error) {
+	type NoMethod EnumOption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression
@@ -2363,10 +2402,7 @@ type RuntimeConfig struct {
 	SchemaGcsBucket string `json:"schemaGcsBucket,omitempty"`
 
 	// ServiceDirectory: Output only. The name of the Service Directory
-	// service name. Used for Private Harpoon to resolve the ILB address.
-	// e.g.
-	// "projects/cloud-connectors-e2e-testing/locations/us-central1/namespace
-	// s/istio-system/services/istio-ingressgateway-connectors"
+	// service name.
 	ServiceDirectory string `json:"serviceDirectory,omitempty"`
 
 	// State: Output only. The state of the location.
@@ -2473,7 +2509,7 @@ func (s *Secret) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -2537,6 +2573,45 @@ type Source struct {
 
 func (s *Source) MarshalJSON() ([]byte, error) {
 	type NoMethod Source
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SshPublicKey: Parameters to support Ssh public key Authentication.
+type SshPublicKey struct {
+	// CertType: Format of SSH Client cert.
+	CertType string `json:"certType,omitempty"`
+
+	// Password: This is an optional field used in case client has enabled
+	// multi-factor authentication
+	Password *Secret `json:"password,omitempty"`
+
+	// SshClientCert: SSH Client Cert. It should contain both public and
+	// private key.
+	SshClientCert *Secret `json:"sshClientCert,omitempty"`
+
+	// Username: The user account used to authenticate.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CertType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SshPublicKey) MarshalJSON() ([]byte, error) {
+	type NoMethod SshPublicKey
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2630,7 +2705,7 @@ func (s *SupportedRuntimeFeatures) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -3042,8 +3117,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3172,7 +3247,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3856,8 +3931,9 @@ type ProjectsLocationsConnectionsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsConnectionsService) GetIamPolicy(resource string) *ProjectsLocationsConnectionsGetIamPolicyCall {
 	c := &ProjectsLocationsConnectionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3996,7 +4072,7 @@ func (c *ProjectsLocationsConnectionsGetIamPolicyCall) Do(opts ...googleapi.Call
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
 	//       "required": true,
@@ -4431,8 +4507,9 @@ type ProjectsLocationsConnectionsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsConnectionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsConnectionsSetIamPolicyCall {
 	c := &ProjectsLocationsConnectionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4540,7 +4617,7 @@ func (c *ProjectsLocationsConnectionsSetIamPolicyCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
 	//       "required": true,
@@ -4580,7 +4657,8 @@ type ProjectsLocationsConnectionsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsConnectionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsConnectionsTestIamPermissionsCall {
 	c := &ProjectsLocationsConnectionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4689,7 +4767,7 @@ func (c *ProjectsLocationsConnectionsTestIamPermissionsCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
 	//       "required": true,
@@ -6855,8 +6933,9 @@ type ProjectsLocationsProvidersGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsProvidersService) GetIamPolicy(resource string) *ProjectsLocationsProvidersGetIamPolicyCall {
 	c := &ProjectsLocationsProvidersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6995,7 +7074,7 @@ func (c *ProjectsLocationsProvidersGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/providers/[^/]+$",
 	//       "required": true,
@@ -7029,8 +7108,9 @@ type ProjectsLocationsProvidersSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsProvidersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsProvidersSetIamPolicyCall {
 	c := &ProjectsLocationsProvidersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7138,7 +7218,7 @@ func (c *ProjectsLocationsProvidersSetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/providers/[^/]+$",
 	//       "required": true,
@@ -7178,7 +7258,8 @@ type ProjectsLocationsProvidersTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsProvidersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsProvidersTestIamPermissionsCall {
 	c := &ProjectsLocationsProvidersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7287,7 +7368,7 @@ func (c *ProjectsLocationsProvidersTestIamPermissionsCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/providers/[^/]+$",
 	//       "required": true,

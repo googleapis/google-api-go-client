@@ -492,6 +492,10 @@ type Instance struct {
 	// will be used.
 	AuthorizedNetwork string `json:"authorizedNetwork,omitempty"`
 
+	// AvailableMaintenanceVersions: Optional. The available maintenance
+	// versions that an instance could update to.
+	AvailableMaintenanceVersions []string `json:"availableMaintenanceVersions,omitempty"`
+
 	// ConnectMode: Optional. The network connect mode of the Redis
 	// instance. If not provided, the connect mode defaults to
 	// DIRECT_PEERING.
@@ -514,6 +518,10 @@ type Instance struct {
 	// as [location_id]. In standard tier, this can be the zone of any node
 	// in the instance.
 	CurrentLocationId string `json:"currentLocationId,omitempty"`
+
+	// CustomerManagedKey: Optional. The KMS key reference that the customer
+	// provides when trying to create the instance.
+	CustomerManagedKey string `json:"customerManagedKey,omitempty"`
 
 	// DisplayName: An arbitrary and optional user-provided name for the
 	// instance.
@@ -541,6 +549,10 @@ type Instance struct {
 	// MaintenanceSchedule: Output only. Date and time of upcoming
 	// maintenance events which have been scheduled.
 	MaintenanceSchedule *MaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
+
+	// MaintenanceVersion: Optional. The self service update maintenance
+	// version. The version is date based such as "20210712_00_00".
+	MaintenanceVersion string `json:"maintenanceVersion,omitempty"`
 
 	// MemorySizeGb: Required. Redis memory size in GiB.
 	MemorySizeGb int64 `json:"memorySizeGb,omitempty"`
@@ -663,6 +675,15 @@ type Instance struct {
 	// StatusMessage: Output only. Additional information about the current
 	// status of this instance, if available.
 	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// SuspensionReasons: Optional. reasons that causes instance in
+	// "SUSPENDED" state.
+	//
+	// Possible values:
+	//   "SUSPENSION_REASON_UNSPECIFIED" - Not set.
+	//   "CUSTOMER_MANAGED_KEY_ISSUE" - Something wrong with the CMEK key
+	// provided by customer.
+	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
 
 	// Tier: Required. The service tier of the instance.
 	//

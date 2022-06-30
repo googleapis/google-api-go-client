@@ -349,7 +349,7 @@ type ErrorGroupStats struct {
 
 	// AffectedUsersCount: Approximate number of affected users in the given
 	// group that match the filter criteria. Users are distinguished by data
-	// in the `ErrorContext` of the individual error events, such as their
+	// in the ErrorContext of the individual error events, such as their
 	// login name or their remote IP address in case of HTTP requests. The
 	// number of affected users can be zero even if the number of errors is
 	// non-zero if no data was provided from which the affected user could
@@ -592,9 +592,9 @@ type ReportedErrorEvent struct {
 	// (https://ruby-doc.org/core-2.2.0/Exception.html#method-i-backtrace).
 	// * **C#**: Must be the return value of `Exception.ToString()`
 	// (https://msdn.microsoft.com/en-us/library/system.exception.tostring.aspx).
-	// * **PHP**: Must start with `PHP (Notice|Parse error|Fatal
-	// error|Warning)` and contain the result of `(string)$exception`
-	// (http://php.net/manual/en/exception.tostring.php). * **Go**: Must be
+	// * **PHP**: Must be prefixed with "PHP (Notice|Parse error|Fatal
+	// error|Warning): " and contain the result of `(string)$exception`
+	// (https://php.net/manual/en/exception.tostring.php). * **Go**: Must be
 	// the return value of `runtime.Stack()`
 	// (https://golang.org/pkg/runtime/debug/#Stack).
 	Message string `json:"message,omitempty"`
@@ -1418,7 +1418,7 @@ type ProjectsGroupStatsListCall struct {
 // - projectName: The resource name of the Google Cloud Platform
 //   project. Written as `projects/{projectID}` or
 //   `projects/{projectNumber}`, where `{projectID}` and
-//   `{projectNumber}` can be found in the Google Cloud Console
+//   `{projectNumber}` can be found in the Google Cloud console
 //   (https://support.google.com/cloud/answer/6158840). Examples:
 //   `projects/my-project-123`, `projects/5551234`.
 func (r *ProjectsGroupStatsService) List(projectName string) *ProjectsGroupStatsListCall {
@@ -1434,9 +1434,9 @@ func (r *ProjectsGroupStatsService) List(projectName string) *ProjectsGroupStats
 //   "ERROR_COUNT_ALIGNMENT_UNSPECIFIED" - No alignment specified.
 //   "ALIGNMENT_EQUAL_ROUNDED" - The time periods shall be consecutive,
 // have width equal to the requested duration, and be aligned at the
-// `alignment_time` provided in the request. The `alignment_time` does
-// not have to be inside the query period but even if it is outside,
-// only time periods are returned which overlap with the query period. A
+// alignment_time provided in the request. The alignment_time does not
+// have to be inside the query period but even if it is outside, only
+// time periods are returned which overlap with the query period. A
 // rounded alignment will typically result in a different size of the
 // first or the last time period.
 //   "ALIGNMENT_EQUAL_AT_END" - The time periods shall be consecutive,
@@ -1488,10 +1488,10 @@ func (c *ProjectsGroupStatsListCall) PageSize(pageSize int64) *ProjectsGroupStat
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A
-// `next_page_token` provided by a previous response. To view additional
-// results, pass this token along with the identical query parameters as
-// the first request.
+// PageToken sets the optional parameter "pageToken": A next_page_token
+// provided by a previous response. To view additional results, pass
+// this token along with the identical query parameters as the first
+// request.
 func (c *ProjectsGroupStatsListCall) PageToken(pageToken string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1548,8 +1548,8 @@ func (c *ProjectsGroupStatsListCall) TimeRangePeriod(timeRangePeriod string) *Pr
 }
 
 // TimedCountDuration sets the optional parameter "timedCountDuration":
-// The preferred duration for a single returned `TimedCount`. If not
-// set, no timed counts are returned.
+// The preferred duration for a single returned TimedCount. If not set,
+// no timed counts are returned.
 func (c *ProjectsGroupStatsListCall) TimedCountDuration(timedCountDuration string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("timedCountDuration", timedCountDuration)
 	return c
@@ -1671,7 +1671,7 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       ],
 	//       "enumDescriptions": [
 	//         "No alignment specified.",
-	//         "The time periods shall be consecutive, have width equal to the requested duration, and be aligned at the `alignment_time` provided in the request. The `alignment_time` does not have to be inside the query period but even if it is outside, only time periods are returned which overlap with the query period. A rounded alignment will typically result in a different size of the first or the last time period.",
+	//         "The time periods shall be consecutive, have width equal to the requested duration, and be aligned at the alignment_time provided in the request. The alignment_time does not have to be inside the query period but even if it is outside, only time periods are returned which overlap with the query period. A rounded alignment will typically result in a different size of the first or the last time period.",
 	//         "The time periods shall be consecutive, have width equal to the requested duration, and be aligned at the end of the requested time period. This can result in a different size of the first time period."
 	//       ],
 	//       "location": "query",
@@ -1715,12 +1715,12 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A `next_page_token` provided by a previous response. To view additional results, pass this token along with the identical query parameters as the first request.",
+	//       "description": "Optional. A next_page_token provided by a previous response. To view additional results, pass this token along with the identical query parameters as the first request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "Required. The resource name of the Google Cloud Platform project. Written as `projects/{projectID}` or `projects/{projectNumber}`, where `{projectID}` and `{projectNumber}` can be found in the [Google Cloud Console](https://support.google.com/cloud/answer/6158840). Examples: `projects/my-project-123`, `projects/5551234`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written as `projects/{projectID}` or `projects/{projectNumber}`, where `{projectID}` and `{projectNumber}` can be found in the [Google Cloud console](https://support.google.com/cloud/answer/6158840). Examples: `projects/my-project-123`, `projects/5551234`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1763,7 +1763,7 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "string"
 	//     },
 	//     "timedCountDuration": {
-	//       "description": "Optional. The preferred duration for a single returned `TimedCount`. If not set, no timed counts are returned.",
+	//       "description": "Optional. The preferred duration for a single returned TimedCount. If not set, no timed counts are returned.",
 	//       "format": "google-duration",
 	//       "location": "query",
 	//       "type": "string"
@@ -1815,9 +1815,8 @@ type ProjectsGroupsGetCall struct {
 // Get: Get the specified group.
 //
 // - groupName: The group resource name. Written as
-//   `projects/{projectID}/groups/{group_name}`. Call `groupStats.list`
-//   (https://cloud.google.com/error-reporting/reference/rest/v1beta1/projects.groupStats/list)
-//   to return a list of groups belonging to this project. Example:
+//   `projects/{projectID}/groups/{group_name}`. Call groupStats.list to
+//   return a list of groups belonging to this project. Example:
 //   `projects/my-project-123/groups/my-group`.
 func (r *ProjectsGroupsService) Get(groupName string) *ProjectsGroupsGetCall {
 	c := &ProjectsGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1933,7 +1932,7 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*ErrorGroup, e
 	//   ],
 	//   "parameters": {
 	//     "groupName": {
-	//       "description": "Required. The group resource name. Written as `projects/{projectID}/groups/{group_name}`. Call [`groupStats.list`](https://cloud.google.com/error-reporting/reference/rest/v1beta1/projects.groupStats/list) to return a list of groups belonging to this project. Example: `projects/my-project-123/groups/my-group`",
+	//       "description": "Required. The group resource name. Written as `projects/{projectID}/groups/{group_name}`. Call groupStats.list to return a list of groups belonging to this project. Example: `projects/my-project-123/groups/my-group`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,

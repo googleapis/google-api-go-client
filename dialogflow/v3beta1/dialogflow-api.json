@@ -3820,7 +3820,7 @@
       }
     }
   },
-  "revision": "20220411",
+  "revision": "20220616",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -4105,6 +4105,10 @@
             "$ref": "GoogleCloudDialogflowCxV3EnvironmentVersionConfig"
           },
           "type": "array"
+        },
+        "webhookConfig": {
+          "$ref": "GoogleCloudDialogflowCxV3EnvironmentWebhookConfig",
+          "description": "The webhook configuration for this environment."
         }
       },
       "type": "object"
@@ -4138,6 +4142,20 @@
         "version": {
           "description": "Required. Format: projects//locations//agents//flows//versions/.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3EnvironmentWebhookConfig": {
+      "description": "Configuration for webhooks.",
+      "id": "GoogleCloudDialogflowCxV3EnvironmentWebhookConfig",
+      "properties": {
+        "webhookOverrides": {
+          "description": "The list of webhooks to override for the agent environment. The webhook must exist in the agent. You can override fields in `generic_web_service` and `service_directory`.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3Webhook"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -5316,8 +5334,74 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3Webhook": {
+      "description": "Webhooks host the developer's business logic. During a session, webhooks allow the developer to use the data extracted by Dialogflow's natural language processing to generate dynamic responses, validate collected data, or trigger actions on the backend.",
+      "id": "GoogleCloudDialogflowCxV3Webhook",
+      "properties": {
+        "disabled": {
+          "description": "Indicates whether the webhook is disabled.",
+          "type": "boolean"
+        },
+        "displayName": {
+          "description": "Required. The human-readable name of the webhook, unique within the agent.",
+          "type": "string"
+        },
+        "genericWebService": {
+          "$ref": "GoogleCloudDialogflowCxV3WebhookGenericWebService",
+          "description": "Configuration for a generic web service."
+        },
+        "name": {
+          "description": "The unique identifier of the webhook. Required for the Webhooks.UpdateWebhook method. Webhooks.CreateWebhook populates the name automatically. Format: `projects//locations//agents//webhooks/`.",
+          "type": "string"
+        },
+        "serviceDirectory": {
+          "$ref": "GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig",
+          "description": "Configuration for a [Service Directory](https://cloud.google.com/service-directory) service."
+        },
+        "timeout": {
+          "description": "Webhook execution timeout. Execution is considered failed if Dialogflow doesn't receive a response from webhook at the end of the timeout period. Defaults to 5 seconds, maximum allowed timeout is 30 seconds.",
+          "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookGenericWebService": {
+      "description": "Represents configuration for a generic web service.",
+      "id": "GoogleCloudDialogflowCxV3WebhookGenericWebService",
+      "properties": {
+        "allowedCaCerts": {
+          "description": "Optional. Specifies a list of allowed custom CA certificates (in DER format) for HTTPS verification. This overrides the default SSL trust store. If this is empty or unspecified, Dialogflow will use Google's default trust store to verify certificates. N.B. Make sure the HTTPS server certificates are signed with \"subject alt name\". For instance a certificate can be self-signed using the following command, ``` openssl x509 -req -days 200 -in example.com.csr \\ -signkey example.com.key \\ -out example.com.crt \\ -extfile \u003c(printf \"\\nsubjectAltName='DNS:www.example.com'\") ```",
+          "items": {
+            "format": "byte",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "password": {
+          "description": "The password for HTTP Basic authentication.",
+          "type": "string"
+        },
+        "requestHeaders": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The HTTP request headers to send together with webhook requests.",
+          "type": "object"
+        },
+        "uri": {
+          "description": "Required. The webhook URI for receiving POST requests. It must use https protocol.",
+          "type": "string"
+        },
+        "username": {
+          "description": "The user name for HTTP Basic authentication.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3WebhookRequest": {
-      "description": "The request message for a webhook call. The request is sent as a JSON object and the field names will be presented in camel cases.",
+      "description": "The request message for a webhook call. The request is sent as a JSON object and the field names will be presented in camel cases. You may see undocumented fields in an actual request. These fields are used internally by Dialogflow and should be ignored.",
       "id": "GoogleCloudDialogflowCxV3WebhookRequest",
       "properties": {
         "detectIntentResponseId": {
@@ -5515,6 +5599,21 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig": {
+      "description": "Represents configuration for a [Service Directory](https://cloud.google.com/service-directory) service.",
+      "id": "GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig",
+      "properties": {
+        "genericWebService": {
+          "$ref": "GoogleCloudDialogflowCxV3WebhookGenericWebService",
+          "description": "Generic Service configuration of this webhook."
+        },
+        "service": {
+          "description": "Required. The name of [Service Directory](https://cloud.google.com/service-directory) service. Format: `projects//locations//namespaces//services/`. `Location ID` of the service directory must be the same as the location of the agent.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1AdvancedSettings": {
       "description": "Hierarchical advanced settings for agent/flow/page/fulfillment/parameter. Settings exposed at lower level overrides the settings exposed at higher level. Hierarchy: Agent-\u003eFlow-\u003ePage-\u003eFulfillment/Parameter.",
       "id": "GoogleCloudDialogflowCxV3beta1AdvancedSettings",
@@ -5574,7 +5673,7 @@
           "type": "boolean"
         },
         "locked": {
-          "description": "Indiciates whether the agent is locked for changes. If the agent is locked, modifications to the agent will be rejected except for RestoreAgent.",
+          "description": "Indicates whether the agent is locked for changes. If the agent is locked, modifications to the agent will be rejected except for RestoreAgent.",
           "type": "boolean"
         },
         "name": {
@@ -6262,6 +6361,10 @@
             "$ref": "GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig"
           },
           "type": "array"
+        },
+        "webhookConfig": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig",
+          "description": "The webhook configuration for this environment."
         }
       },
       "type": "object"
@@ -6295,6 +6398,20 @@
         "version": {
           "description": "Required. Format: projects//locations//agents//flows//versions/.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig": {
+      "description": "Configuration for webhooks.",
+      "id": "GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig",
+      "properties": {
+        "webhookOverrides": {
+          "description": "The list of webhooks to override for the agent environment. The webhook must exist in the agent. You can override fields in `generic_web_service` and `service_directory`.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1Webhook"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -8070,7 +8187,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The free-form diagnostic info. For example, this field could contain webhook call latency. The string keys of the Struct's fields map can change without notice.",
+          "description": "The free-form diagnostic info. For example, this field could contain webhook call latency. The fields of this data can change without notice, so you should not write code that depends on its structure. One of the fields is called \"Alternative Matched Intents\", which may aid with debugging. The following describes these intent results: - The list is empty if no intent was matched to end-user input. - Only intents that are referenced in the currently active flow are included. - The matched intent is included. - Other intents that could have matched end-user input, but did not match because they are referenced by intent routes that are out of [scope](https://cloud.google.com/dialogflow/cx/docs/concept/handler#scope), are included. - Other intents referenced by intent routes in scope that matched end-user input, but had a lower confidence score.",
           "type": "object"
         },
         "dtmf": {
@@ -8519,6 +8636,10 @@
       "description": "Represents the settings related to security issues, such as data redaction and data retention. It may take hours for updates on the settings to propagate to all the related components and take effect.",
       "id": "GoogleCloudDialogflowCxV3beta1SecuritySettings",
       "properties": {
+        "audioExportSettings": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettingsAudioExportSettings",
+          "description": "Controls audio export settings for post-conversation analytics when ingesting audio to conversations via Participants.AnalyzeContent or Participants.StreamingAnalyzeContent. If retention_strategy is set to REMOVE_AFTER_CONVERSATION or audio_export_settings.gcs_bucket is empty, audio export is disabled. If audio export is enabled, audio is recorded and saved to audio_export_settings.gcs_bucket, subject to retention policy of audio_export_settings.gcs_bucket. This setting won't effect audio input for implicit sessions via Sessions.DetectIntent or Sessions.StreamingDetectIntent."
+        },
         "deidentifyTemplate": {
           "description": "[DLP](https://cloud.google.com/dlp/docs) deidentify template name. Use this template to define de-identification configuration for the content. The `DLP De-identify Templates Reader` role is needed on the Dialogflow service identity service account (has the form `service-PROJECT_NUMBER@gcp-sa-dialogflow.iam.gserviceaccount.com`) for your agent's project. If empty, Dialogflow replaces sensitive info with `[redacted]` text. The template name will have one of the following formats: `projects//locations//deidentifyTemplates/` OR `organizations//locations//deidentifyTemplates/` Note: `deidentify_template` must be located in the same region as the `SecuritySettings`.",
           "type": "string"
@@ -8582,6 +8703,41 @@
           "description": "Retains data in interaction logging for the specified number of days. This does not apply to Cloud logging, which is owned by the user - not Dialogflow. User must set a value lower than Dialogflow's default 365d TTL. Setting a value higher than that has no effect. A missing value or setting to 0 also means we use Dialogflow's default TTL. Note: Interaction logging is a limited access feature. Talk to your Google representative to check availability for you.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1SecuritySettingsAudioExportSettings": {
+      "description": "Settings for exporting audio.",
+      "id": "GoogleCloudDialogflowCxV3beta1SecuritySettingsAudioExportSettings",
+      "properties": {
+        "audioExportPattern": {
+          "description": "Filename pattern for exported audio.",
+          "type": "string"
+        },
+        "audioFormat": {
+          "description": "File format for exported audio file. Currently only in telephony recordings.",
+          "enum": [
+            "AUDIO_FORMAT_UNSPECIFIED",
+            "MULAW",
+            "MP3",
+            "OGG"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Do not use.",
+            "G.711 mu-law PCM with 8kHz sample rate.",
+            "MP3 file format.",
+            "OGG Vorbis."
+          ],
+          "type": "string"
+        },
+        "enableAudioRedaction": {
+          "description": "Enable audio redaction if it is true.",
+          "type": "boolean"
+        },
+        "gcsBucket": {
+          "description": "Cloud Storage bucket to export audio record to. You need to grant `service-@gcp-sa-dialogflow.iam.gserviceaccount.com` the `Storage Object Admin` role in this bucket.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -9389,7 +9545,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3beta1WebhookRequest": {
-      "description": "The request message for a webhook call. The request is sent as a JSON object and the field names will be presented in camel cases.",
+      "description": "The request message for a webhook call. The request is sent as a JSON object and the field names will be presented in camel cases. You may see undocumented fields in an actual request. These fields are used internally by Dialogflow and should be ignored.",
       "id": "GoogleCloudDialogflowCxV3beta1WebhookRequest",
       "properties": {
         "detectIntentResponseId": {
@@ -11320,7 +11476,7 @@
           "type": "boolean"
         },
         "cancelsSlotFilling": {
-          "description": "Indicates whether the conversational query triggers a cancellation for slot filling.",
+          "description": "Indicates whether the conversational query triggers a cancellation for slot filling. For more information, see the [cancel slot filling documentation](https://cloud.google.com/dialogflow/es/docs/intents-actions-parameters#cancel).",
           "type": "boolean"
         },
         "diagnosticInfo": {
@@ -13530,7 +13686,7 @@
           "type": "boolean"
         },
         "cancelsSlotFilling": {
-          "description": "Indicates whether the conversational query triggers a cancellation for slot filling.",
+          "description": "Indicates whether the conversational query triggers a cancellation for slot filling. For more information, see the [cancel slot filling documentation](https://cloud.google.com/dialogflow/es/docs/intents-actions-parameters#cancel).",
           "type": "boolean"
         },
         "diagnosticInfo": {

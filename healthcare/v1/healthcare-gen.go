@@ -642,8 +642,8 @@ func (s *AttributeDefinition) MarshalJSON() ([]byte, error) {
 // "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
 // "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
 // enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -735,8 +735,8 @@ type Binding struct {
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the principals requesting access for a Cloud
-	// Platform resource. `members` can have the following values: *
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -1255,7 +1255,8 @@ func (s *CreateMessageRequest) MarshalJSON() ([]byte, error) {
 type CryptoHashConfig struct {
 	// CryptoKey: An AES 128/192/256 bit key. Causes the hash to be computed
 	// based on this key. A default key is generated for each Deidentify
-	// operation and is used wherever crypto_key is not specified.
+	// operation and is used when neither `crypto_key` nor `kms_wrapped` is
+	// specified. Must not be set if `kms_wrapped` is set.
 	CryptoKey string `json:"cryptoKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CryptoKey") to
@@ -1329,8 +1330,9 @@ func (s *Dataset) MarshalJSON() ([]byte, error) {
 type DateShiftConfig struct {
 	// CryptoKey: An AES 128/192/256 bit key. Causes the shift to be
 	// computed based on this key and the patient ID. A default key is
-	// generated for each Deidentify operation and is used wherever
-	// crypto_key is not specified.
+	// generated for each de-identification operation and is used when
+	// neither `crypto_key` nor `kms_wrapped` is specified. Must not be set
+	// if `kms_wrapped` is set.
 	CryptoKey string `json:"cryptoKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CryptoKey") to
@@ -1401,7 +1403,8 @@ func (s *DeidentifyConfig) MarshalJSON() ([]byte, error) {
 // DeidentifyDatasetRequest: Redacts identifying information from the
 // specified dataset.
 type DeidentifyDatasetRequest struct {
-	// Config: Deidentify configuration.
+	// Config: Deidentify configuration. Only one of `config` and
+	// `gcs_config_uri` can be specified.
 	Config *DeidentifyConfig `json:"config,omitempty"`
 
 	// DestinationDataset: The name of the dataset resource to create and
@@ -1410,6 +1413,15 @@ type DeidentifyDatasetRequest struct {
 	// dataset. De-identifying data across multiple locations is not
 	// supported.
 	DestinationDataset string `json:"destinationDataset,omitempty"`
+
+	// GcsConfigUri: Cloud Storage location to read the JSON
+	// cloud.healthcare.deidentify.DeidentifyConfig from, overriding the
+	// default config. Must be of the form
+	// `gs://{bucket_id}/path/to/object`. The Cloud Storage location must
+	// grant the Cloud IAM role `roles/storage.objectViewer` to the
+	// project's Cloud Healthcare Service Agent service account. Only one of
+	// `config` and `gcs_config_uri` can be specified.
+	GcsConfigUri string `json:"gcsConfigUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Config") to
 	// unconditionally include in API requests. By default, fields with
@@ -1437,7 +1449,8 @@ func (s *DeidentifyDatasetRequest) MarshalJSON() ([]byte, error) {
 // DeidentifyDicomStoreRequest: Creates a new DICOM store with sensitive
 // information de-identified.
 type DeidentifyDicomStoreRequest struct {
-	// Config: Deidentify configuration.
+	// Config: Deidentify configuration. Only one of `config` and
+	// `gcs_config_uri` can be specified.
 	Config *DeidentifyConfig `json:"config,omitempty"`
 
 	// DestinationStore: The name of the DICOM store to create and write the
@@ -1453,6 +1466,15 @@ type DeidentifyDicomStoreRequest struct {
 
 	// FilterConfig: Filter configuration.
 	FilterConfig *DicomFilterConfig `json:"filterConfig,omitempty"`
+
+	// GcsConfigUri: Cloud Storage location to read the JSON
+	// cloud.healthcare.deidentify.DeidentifyConfig from, overriding the
+	// default config. Must be of the form
+	// `gs://{bucket_id}/path/to/object`. The Cloud Storage location must
+	// grant the Cloud IAM role `roles/storage.objectViewer` to the
+	// project's Cloud Healthcare Service Agent service account. Only one of
+	// `config` and `gcs_config_uri` can be specified.
+	GcsConfigUri string `json:"gcsConfigUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Config") to
 	// unconditionally include in API requests. By default, fields with
@@ -1480,7 +1502,8 @@ func (s *DeidentifyDicomStoreRequest) MarshalJSON() ([]byte, error) {
 // DeidentifyFhirStoreRequest: Creates a new FHIR store with sensitive
 // information de-identified.
 type DeidentifyFhirStoreRequest struct {
-	// Config: Deidentify configuration.
+	// Config: Deidentify configuration. Only one of `config` and
+	// `gcs_config_uri` can be specified.
 	Config *DeidentifyConfig `json:"config,omitempty"`
 
 	// DestinationStore: The name of the FHIR store to create and write the
@@ -1493,6 +1516,15 @@ type DeidentifyFhirStoreRequest struct {
 	// have the healthcare.fhirResources.update permission to write to the
 	// destination FHIR store.
 	DestinationStore string `json:"destinationStore,omitempty"`
+
+	// GcsConfigUri: Cloud Storage location to read the JSON
+	// cloud.healthcare.deidentify.DeidentifyConfig from, overriding the
+	// default config. Must be of the form
+	// `gs://{bucket_id}/path/to/object`. The Cloud Storage location must
+	// grant the Cloud IAM role `roles/storage.objectViewer` to the
+	// project's Cloud Healthcare Service Agent service account. Only one of
+	// `config` and `gcs_config_uri` can be specified.
+	GcsConfigUri string `json:"gcsConfigUri,omitempty"`
 
 	// ResourceFilter: A filter specifying the resources to include in the
 	// output. If not specified, all resources are included in the output.
@@ -2301,6 +2333,24 @@ func (s *FhirFilter) MarshalJSON() ([]byte, error) {
 
 // FhirStore: Represents a FHIR store.
 type FhirStore struct {
+	// ComplexDataTypeReferenceParsing: Enable parsing of references within
+	// complex FHIR data types such as Extensions. If this value is set to
+	// ENABLED, then features like referential integrity and Bundle
+	// reference rewriting apply to all references. If this flag has not
+	// been specified the behavior of the FHIR store will not change,
+	// references in complex data types will not be parsed. New stores will
+	// have this value set to ENABLED after a notification period. Warning:
+	// turning on this flag causes processing existing resources to fail if
+	// they contain references to non-existent resources.
+	//
+	// Possible values:
+	//   "COMPLEX_DATA_TYPE_REFERENCE_PARSING_UNSPECIFIED" - No parsing
+	// behavior specified. This is the same as DISABLED for backwards
+	// compatibility.
+	//   "DISABLED" - References in complex data types are ignored.
+	//   "ENABLED" - References in complex data types are parsed.
+	ComplexDataTypeReferenceParsing string `json:"complexDataTypeReferenceParsing,omitempty"`
+
 	// DefaultSearchHandlingStrict: If true, overrides the default search
 	// behavior for this FHIR store to `handling=strict` which returns an
 	// error for unrecognized search parameters. If false, uses the FHIR
@@ -2405,7 +2455,7 @@ type FhirStore struct {
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "DefaultSearchHandlingStrict") to unconditionally include in API
+	// "ComplexDataTypeReferenceParsing") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -2414,8 +2464,8 @@ type FhirStore struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "DefaultSearchHandlingStrict") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
+	// "ComplexDataTypeReferenceParsing") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
 	// from API requests. However, any field with an empty value appearing
 	// in NullFields will be sent to the server as null. It is an error if a
 	// field in this list has a non-empty value. This may be used to include
@@ -3190,8 +3240,8 @@ type Hl7V2Store struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Resource name of the HL7v2 store, of the form
-	// `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_
-	// id}`.
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/h
+	// l7V2Stores/{hl7v2_store_id}`.
 	Name string `json:"name,omitempty"`
 
 	// NotificationConfigs: A list of notification configs. Each
@@ -3351,7 +3401,10 @@ type ImageConfig struct {
 	//   "TEXT_REDACTION_MODE_UNSPECIFIED" - No text redaction specified.
 	// Same as REDACT_NO_TEXT.
 	//   "REDACT_ALL_TEXT" - Redact all text.
-	//   "REDACT_SENSITIVE_TEXT" - Redact sensitive text.
+	//   "REDACT_SENSITIVE_TEXT" - Redact sensitive text. Uses the set of
+	// [Default DICOM
+	// InfoTypes](https://cloud.google.com/healthcare-api/docs/how-tos/dicom-
+	// deidentify#default_dicom_infotypes).
 	//   "REDACT_NO_TEXT" - Do not redact text.
 	TextRedactionMode string `json:"textRedactionMode,omitempty"`
 
@@ -4216,8 +4269,9 @@ type Message struct {
 	MessageType string `json:"messageType,omitempty"`
 
 	// Name: Resource name of the Message, of the form
-	// `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store
-	// _id}/messages/{message_id}`. Assigned by the server.
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/h
+	// l7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the
+	// server.
 	Name string `json:"name,omitempty"`
 
 	// ParsedData: Output only. The parsed version of the raw message data.
@@ -5227,7 +5281,7 @@ func (s *Segment) MarshalJSON() ([]byte, error) {
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Cloud Platform services
+	// empty policy is a valid policy but certain Google Cloud services
 	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
@@ -5445,7 +5499,7 @@ func (s *TagFilterList) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
 	// allowed. For more information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
@@ -5947,8 +6001,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 
 // Filter sets the optional parameter "filter": A filter to narrow down
 // results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
-// (https://google.aip.dev/160).
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6077,7 +6131,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6745,8 +6799,9 @@ type ProjectsLocationsDatasetsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6885,7 +6940,7 @@ func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -7271,8 +7326,9 @@ type ProjectsLocationsDatasetsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7380,7 +7436,7 @@ func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -7420,7 +7476,8 @@ type ProjectsLocationsDatasetsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7529,7 +7586,7 @@ func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -8318,8 +8375,9 @@ type ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsConsentStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8458,7 +8516,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) Do(opts ...goog
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -9031,8 +9089,9 @@ type ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsConsentStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9140,7 +9199,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -9180,7 +9239,8 @@ type ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsConsentStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9289,7 +9349,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -14147,8 +14207,9 @@ type ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsDicomStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14287,7 +14348,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Do(opts ...google
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -15273,8 +15334,9 @@ type ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15382,7 +15444,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -15550,7 +15612,8 @@ type ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsDicomStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15659,7 +15722,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -18691,8 +18754,9 @@ type ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsFhirStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -18831,7 +18895,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) Do(opts ...googlea
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -19458,8 +19522,9 @@ type ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsFhirStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -19567,7 +19632,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -19607,7 +19672,8 @@ type ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsFhirStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -19716,7 +19782,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -19822,16 +19888,18 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Type(Type
 }
 
 // End sets the optional parameter "end": The response includes records
-// prior to the end date. If no end date is provided, all records
-// subsequent to the start date are in scope.
+// prior to the end date. The date uses the format YYYY-MM-DD. If no end
+// date is provided, all records subsequent to the start date are in
+// scope.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) End(end string) *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall {
 	c.urlParams_.Set("end", end)
 	return c
 }
 
 // Start sets the optional parameter "start": The response includes
-// records subsequent to the start date. If no start date is provided,
-// all records prior to the end date are in scope.
+// records subsequent to the start date. The date uses the format
+// YYYY-MM-DD. If no start date is provided, all records prior to the
+// end date are in scope.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Start(start string) *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall {
 	c.urlParams_.Set("start", start)
 	return c
@@ -19933,7 +20001,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Do(opts .
 	//       "type": "string"
 	//     },
 	//     "end": {
-	//       "description": "The response includes records prior to the end date. If no end date is provided, all records subsequent to the start date are in scope.",
+	//       "description": "The response includes records prior to the end date. The date uses the format YYYY-MM-DD. If no end date is provided, all records subsequent to the start date are in scope.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19945,7 +20013,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Do(opts .
 	//       "type": "string"
 	//     },
 	//     "start": {
-	//       "description": "The response includes records subsequent to the start date. If no start date is provided, all records prior to the end date are in scope.",
+	//       "description": "The response includes records subsequent to the start date. The date uses the format YYYY-MM-DD. If no start date is provided, all records prior to the end date are in scope.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -20149,8 +20217,13 @@ func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ResourceValidate(parent
 	return c
 }
 
-// Profile sets the optional parameter "profile": A profile that this
-// resource should be validated against.
+// Profile sets the optional parameter "profile": The canonical URL of a
+// profile that this resource should be validated against. For example,
+// to validate a Patient resource against the US Core Patient profile
+// this parameter would be
+// `http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient`. A
+// StructureDefinition with this canonical URL must exist in the FHIR
+// store.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) Profile(profile string) *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall {
 	c.urlParams_.Set("profile", profile)
 	return c
@@ -20226,7 +20299,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "profile": {
-	//       "description": "A profile that this resource should be validated against.",
+	//       "description": "The canonical URL of a profile that this resource should be validated against. For example, to validate a Patient resource against the US Core Patient profile this parameter would be `http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient`. A StructureDefinition with this canonical URL must exist in the FHIR store.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -22395,8 +22468,9 @@ type ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   requested. See the operation documentation for the appropriate
-//   value for this field.
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -22535,7 +22609,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Do(opts ...google
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -22967,8 +23041,8 @@ type ProjectsLocationsDatasetsHl7V2StoresPatchCall struct {
 // Patch: Updates the HL7v2 store.
 //
 // - name: Resource name of the HL7v2 store, of the form
-//   `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_stor
-//   e_id}`.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /hl7V2Stores/{hl7v2_store_id}`.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Patch(name string, hl7v2store *Hl7V2Store) *ProjectsLocationsDatasetsHl7V2StoresPatchCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23084,7 +23158,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the HL7v2 store, of the form `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
+	//       "description": "Resource name of the HL7v2 store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -23127,8 +23201,9 @@ type ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-//   specified. See the operation documentation for the appropriate
-//   value for this field.
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -23236,7 +23311,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -23276,7 +23351,8 @@ type ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See the operation documentation for the
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
 //   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -23385,7 +23461,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -24347,8 +24423,9 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall struct {
 // updated.
 //
 // - name: Resource name of the Message, of the form
-//   `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_sto
-//   re_id}/messages/{message_id}`. Assigned by the server.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by
+//   the server.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Patch(name string, message *Message) *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24464,7 +24541,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the Message, of the form `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the server.",
+	//       "description": "Resource name of the Message, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the server.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+/messages/[^/]+$",
 	//       "required": true,

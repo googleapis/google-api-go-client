@@ -283,6 +283,37 @@ func (s *CheckUpgradeResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CidrBlock: CIDR block with an optional name.
+type CidrBlock struct {
+	// CidrBlock: CIDR block that must be specified in CIDR notation.
+	CidrBlock string `json:"cidrBlock,omitempty"`
+
+	// DisplayName: User-defined name that identifies the CIDR block.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CidrBlock") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CidrBlock") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CidrBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod CidrBlock
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DatabaseConfig: The configuration of Cloud SQL instance that is used
 // by the Apache Airflow software.
 type DatabaseConfig struct {
@@ -531,6 +562,13 @@ type EnvironmentConfig struct {
 	// omitted, the default value for maintenance window will be applied.
 	// The default value is Saturday and Sunday 00-06 GMT.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
+
+	// MasterAuthorizedNetworksConfig: Optional. The configuration options
+	// for GKE cluster master authorized networks. By default master
+	// authorized networks feature is: - in case of private environment:
+	// enabled with no external networks allowlisted. - in case of public
+	// environment: disabled.
+	MasterAuthorizedNetworksConfig *MasterAuthorizedNetworksConfig `json:"masterAuthorizedNetworksConfig,omitempty"`
 
 	// NodeConfig: The configuration used for the Kubernetes Engine cluster.
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
@@ -863,6 +901,43 @@ func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MasterAuthorizedNetworksConfig: Configuration options for the master
+// authorized networks feature. Enabled master authorized networks will
+// disallow all external traffic to access Kubernetes master through
+// HTTPS except traffic from the given CIDR blocks, Google Compute
+// Engine Public IPs and Google Prod IPs.
+type MasterAuthorizedNetworksConfig struct {
+	// CidrBlocks: Up to 50 external networks that could access Kubernetes
+	// master through HTTPS.
+	CidrBlocks []*CidrBlock `json:"cidrBlocks,omitempty"`
+
+	// Enabled: Whether or not master authorized networks feature is
+	// enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CidrBlocks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CidrBlocks") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MasterAuthorizedNetworksConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MasterAuthorizedNetworksConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NodeConfig: The configuration information for the Kubernetes Engine
 // nodes running the Apache Airflow software.
 type NodeConfig struct {
@@ -871,6 +946,13 @@ type NodeConfig struct {
 	// This field is supported for Cloud Composer environments in versions
 	// composer-1.*.*-airflow-*.*.*.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
+
+	// EnableIpMasqAgent: Optional. Deploys 'ip-masq-agent' daemon set in
+	// the GKE cluster and defines nonMasqueradeCIDRs equals to pod IP range
+	// so IP masquerading is used for all destination addresses, except
+	// between pods traffic. See:
+	// https://cloud.google.com/kubernetes-engine/docs/how-to/ip-masquerade-agent
+	EnableIpMasqAgent bool `json:"enableIpMasqAgent,omitempty"`
 
 	// IpAllocationPolicy: Optional. The configuration for controlling how
 	// IPs are allocated in the GKE cluster.
@@ -1181,6 +1263,12 @@ type PrivateEnvironmentConfig struct {
 	// `IPAllocationPolicy.use_ip_aliases` must be set to true for Cloud
 	// Composer environments in versions composer-1.*.*-airflow-*.*.*.
 	EnablePrivateEnvironment bool `json:"enablePrivateEnvironment,omitempty"`
+
+	// EnablePrivatelyUsedPublicIps: Optional. When enabled, IPs from public
+	// (non-RFC1918) ranges can be used for
+	// `IPAllocationPolicy.cluster_ipv4_cidr_block` and
+	// `IPAllocationPolicy.service_ipv4_cidr_block`.
+	EnablePrivatelyUsedPublicIps bool `json:"enablePrivatelyUsedPublicIps,omitempty"`
 
 	// PrivateClusterConfig: Optional. Configuration for the private GKE
 	// cluster for a Private IP Cloud Composer environment.

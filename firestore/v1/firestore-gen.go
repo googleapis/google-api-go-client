@@ -240,75 +240,6 @@ type ProjectsLocationsService struct {
 	s *Service
 }
 
-// Aggregation: Defines a aggregation that produces a single result.
-type Aggregation struct {
-	// Alias: Required. The name of the field to store the result of the
-	// aggregation into. Requires: * Must be present. * Must be unique
-	// across all aggregation aliases. * Conform to existing document field
-	// name limitations.
-	Alias string `json:"alias,omitempty"`
-
-	// Count: Count aggregator.
-	Count *Count `json:"count,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Alias") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Alias") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Aggregation) MarshalJSON() ([]byte, error) {
-	type NoMethod Aggregation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AggregationResult: The result of a single bucket from a Firestore
-// aggregation query. The keys of `aggregate_fields` are the same for
-// all results in an aggregation query, unlike document queries which
-// can have different fields present for each result.
-type AggregationResult struct {
-	// AggregateFields: The result of the aggregation functions, ex:
-	// `COUNT(*) AS total_docs`. The key is the alias assigned to the
-	// aggregation function on input and the size of this map equals the
-	// number of aggregation functions in the query.
-	AggregateFields map[string]Value `json:"aggregateFields,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AggregateFields") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AggregateFields") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AggregationResult) MarshalJSON() ([]byte, error) {
-	type NoMethod AggregationResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ArrayValue: An array value.
 type ArrayValue struct {
 	// Values: Values in the array.
@@ -709,40 +640,6 @@ type CompositeFilter struct {
 
 func (s *CompositeFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod CompositeFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Count: Count of documents that match the query. The `COUNT(*)`
-// aggregation function operates on the entire document so it does not
-// require a field reference.
-type Count struct {
-	// UpTo: Optional. Optional constraint on the maximum number of
-	// documents to count. This provides a way to set an upper bound on the
-	// number of documents to scan, limiting latency and cost. High-Level
-	// Example: ``` SELECT COUNT_UP_TO(1000) FROM ( SELECT * FROM k ); ```
-	// Requires: * Must be greater than zero when present.
-	UpTo int64 `json:"upTo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "UpTo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UpTo") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Count) MarshalJSON() ([]byte, error) {
-	type NoMethod Count
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1596,6 +1493,11 @@ type GoogleFirestoreAdminV1Field struct {
 	// all fields which do not have their own `Field` index configuration.
 	Name string `json:"name,omitempty"`
 
+	// TtlConfig: The TTL configuration for this `Field`. Setting or
+	// unsetting this will enable or disable the TTL for documents that have
+	// this `Field`.
+	TtlConfig *GoogleFirestoreAdminV1TtlConfig `json:"ttlConfig,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1666,6 +1568,9 @@ type GoogleFirestoreAdminV1FieldOperationMetadata struct {
 	//   "CANCELLED" - Request has finished being cancelled after user
 	// called google.longrunning.Operations.CancelOperation.
 	State string `json:"state,omitempty"`
+
+	// TtlConfigDelta: Describes the deltas of TTL configuration.
+	TtlConfigDelta *GoogleFirestoreAdminV1TtlConfigDelta `json:"ttlConfigDelta,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
@@ -2222,6 +2127,86 @@ func (s *GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1TtlConfig: The TTL (time-to-live) configuration
+// for documents that have this `Field` set. Storing a timestamp value
+// into a TTL-enabled field will be treated as the document's absolute
+// expiration time. Using any other data type or leaving the field
+// absent will disable the TTL for the individual document.
+type GoogleFirestoreAdminV1TtlConfig struct {
+	// State: Output only. The state of the TTL configuration.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unspecified or unknown.
+	//   "CREATING" - The TTL is being applied. There is an active
+	// long-running operation to track the change. Newly written documents
+	// will have TTLs applied as requested. Requested TTLs on existing
+	// documents are still being processed. When TTLs on all existing
+	// documents have been processed, the state will move to 'ACTIVE'.
+	//   "ACTIVE" - The TTL is active for all documents.
+	//   "NEEDS_REPAIR" - The TTL configuration could not be enabled for all
+	// existing documents. Newly written documents will continue to have
+	// their TTL applied. The LRO returned when last attempting to enable
+	// TTL for this `Field` has failed, and may have more details.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1TtlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1TtlConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1TtlConfigDelta: Information about an TTL
+// configuration change.
+type GoogleFirestoreAdminV1TtlConfigDelta struct {
+	// ChangeType: Specifies how the TTL configuration is changing.
+	//
+	// Possible values:
+	//   "CHANGE_TYPE_UNSPECIFIED" - The type of change is not specified or
+	// known.
+	//   "ADD" - The TTL config is being added.
+	//   "REMOVE" - The TTL config is being removed.
+	ChangeType string `json:"changeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChangeType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChangeType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1TtlConfigDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1TtlConfigDelta
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1UpdateDatabaseMetadata: Metadata related to the
 // update database operation.
 type GoogleFirestoreAdminV1UpdateDatabaseMetadata struct {
@@ -2393,6 +2378,10 @@ type ListCollectionIdsRequest struct {
 	// PageToken: A page token. Must be a value from
 	// ListCollectionIdsResponse.
 	PageToken string `json:"pageToken,omitempty"`
+
+	// ReadTime: Reads documents as they were at the given time. This may
+	// not be older than 270 seconds.
+	ReadTime string `json:"readTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with
@@ -2755,6 +2744,10 @@ type PartitionQueryRequest struct {
 	// fewer than the number of workers or compute instances available.
 	PartitionCount int64 `json:"partitionCount,omitempty,string"`
 
+	// ReadTime: Reads documents as they were at the given time. This may
+	// not be older than 270 seconds.
+	ReadTime string `json:"readTime,omitempty"`
+
 	// StructuredQuery: A structured query. Query must specify collection
 	// with all descendants and be ordered by name ascending. Other filters,
 	// order bys, limits, offsets, and start/end cursors are not supported.
@@ -3018,92 +3011,6 @@ func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RunAggregationQueryRequest: The request for
-// Firestore.RunAggregationQuery.
-type RunAggregationQueryRequest struct {
-	// NewTransaction: Starts a new transaction as part of the query,
-	// defaulting to read-only. The new transaction ID will be returned as
-	// the first response in the stream.
-	NewTransaction *TransactionOptions `json:"newTransaction,omitempty"`
-
-	// ReadTime: Executes the query at the given timestamp. Requires: *
-	// Cannot be more than 270 seconds in the past.
-	ReadTime string `json:"readTime,omitempty"`
-
-	// StructuredAggregationQuery: An aggregation query.
-	StructuredAggregationQuery *StructuredAggregationQuery `json:"structuredAggregationQuery,omitempty"`
-
-	// Transaction: Run the aggregation within an already active
-	// transaction. The value here is the opaque transaction ID to execute
-	// the query in.
-	Transaction string `json:"transaction,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NewTransaction") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RunAggregationQueryRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod RunAggregationQueryRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// RunAggregationQueryResponse: The response for
-// Firestore.RunAggregationQuery.
-type RunAggregationQueryResponse struct {
-	// ReadTime: The time at which the aggregate value is valid for.
-	ReadTime string `json:"readTime,omitempty"`
-
-	// Result: A single aggregation result. Not present when reporting
-	// partial progress or when the query produced zero results.
-	Result *AggregationResult `json:"result,omitempty"`
-
-	// Transaction: The transaction that was started as part of this
-	// request. Only present on the first response when the request
-	// requested to start a new transaction.
-	Transaction string `json:"transaction,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ReadTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReadTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RunAggregationQueryResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod RunAggregationQueryResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // RunQueryRequest: The request for Firestore.RunQuery.
 type RunQueryRequest struct {
 	// NewTransaction: Starts a new transaction and reads the documents.
@@ -3150,6 +3057,10 @@ func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 type RunQueryResponse struct {
 	// Document: A query result, not set when reporting partial progress.
 	Document *Document `json:"document,omitempty"`
+
+	// Done: If present, Firestore has completely finished the request and
+	// no more documents will be returned.
+	Done bool `json:"done,omitempty"`
 
 	// ReadTime: The time at which the document was read. This may be
 	// monotonically increasing; in this case, the previous documents in the
@@ -3236,39 +3147,6 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// StructuredAggregationQuery: Firestore query for running an
-// aggregation over a StructuredQuery.
-type StructuredAggregationQuery struct {
-	// Aggregations: Optional. Series of aggregations to apply on top of the
-	// `structured_query`.
-	Aggregations []*Aggregation `json:"aggregations,omitempty"`
-
-	// StructuredQuery: Nested structured query.
-	StructuredQuery *StructuredQuery `json:"structuredQuery,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Aggregations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Aggregations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *StructuredAggregationQuery) MarshalJSON() ([]byte, error) {
-	type NoMethod StructuredAggregationQuery
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3798,6 +3676,166 @@ func (s *WriteResult) MarshalJSON() ([]byte, error) {
 	type NoMethod WriteResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "firestore.projects.databases.create":
+
+type ProjectsDatabasesCreateCall struct {
+	s                              *Service
+	parent                         string
+	googlefirestoreadminv1database *GoogleFirestoreAdminV1Database
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Create: Create a database.
+//
+// - parent: A parent name of the form `projects/{project_id}`.
+func (r *ProjectsDatabasesService) Create(parent string, googlefirestoreadminv1database *GoogleFirestoreAdminV1Database) *ProjectsDatabasesCreateCall {
+	c := &ProjectsDatabasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlefirestoreadminv1database = googlefirestoreadminv1database
+	return c
+}
+
+// DatabaseId sets the optional parameter "databaseId": Required. The ID
+// to use for the database, which will become the final component of the
+// database's resource name. This value should be 4-63 characters. Valid
+// characters are /a-z-/ with first character a letter and the last a
+// letter or a number. Must not be UUID-like
+// /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)" database id
+// is also valid.
+func (c *ProjectsDatabasesCreateCall) DatabaseId(databaseId string) *ProjectsDatabasesCreateCall {
+	c.urlParams_.Set("databaseId", databaseId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesCreateCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesCreateCall) Context(ctx context.Context) *ProjectsDatabasesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1database)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databases")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a database.",
+	//   "flatPath": "v1/projects/{projectsId}/databases",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "databaseId": {
+	//       "description": "Required. The ID to use for the database, which will become the final component of the database's resource name. This value should be 4-63 characters. Valid characters are /a-z-/ with first character a letter and the last a letter or a number. Must not be UUID-like /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. \"(default)\" database id is also valid.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. A parent name of the form `projects/{project_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/databases",
+	//   "request": {
+	//     "$ref": "GoogleFirestoreAdminV1Database"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
 }
 
 // method id "firestore.projects.databases.exportDocuments":
@@ -8252,160 +8290,6 @@ func (c *ProjectsDatabasesDocumentsRollbackCall) Do(opts ...googleapi.CallOption
 	//   },
 	//   "response": {
 	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/datastore"
-	//   ]
-	// }
-
-}
-
-// method id "firestore.projects.databases.documents.runAggregationQuery":
-
-type ProjectsDatabasesDocumentsRunAggregationQueryCall struct {
-	s                          *Service
-	parent                     string
-	runaggregationqueryrequest *RunAggregationQueryRequest
-	urlParams_                 gensupport.URLParams
-	ctx_                       context.Context
-	header_                    http.Header
-}
-
-// RunAggregationQuery: Runs an aggregation query. Rather than producing
-// Document results like Firestore.RunQuery, this API allows running an
-// aggregation to produce a series of AggregationResult server-side.
-// High-Level Example: ``` -- Return the number of documents in table
-// given a filter. SELECT COUNT(*) FROM ( SELECT * FROM k where a = true
-// ); ```
-//
-// - parent: The parent resource name. In the format:
-//   `projects/{project_id}/databases/{database_id}/documents` or
-//   `projects/{project_id}/databases/{database_id}/documents/{document_p
-//   ath}`. For example:
-//   `projects/my-project/databases/my-database/documents` or
-//   `projects/my-project/databases/my-database/documents/chatrooms/my-ch
-//   atroom`.
-func (r *ProjectsDatabasesDocumentsService) RunAggregationQuery(parent string, runaggregationqueryrequest *RunAggregationQueryRequest) *ProjectsDatabasesDocumentsRunAggregationQueryCall {
-	c := &ProjectsDatabasesDocumentsRunAggregationQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.runaggregationqueryrequest = runaggregationqueryrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsDatabasesDocumentsRunAggregationQueryCall) Fields(s ...googleapi.Field) *ProjectsDatabasesDocumentsRunAggregationQueryCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsDatabasesDocumentsRunAggregationQueryCall) Context(ctx context.Context) *ProjectsDatabasesDocumentsRunAggregationQueryCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsDatabasesDocumentsRunAggregationQueryCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsDatabasesDocumentsRunAggregationQueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runaggregationqueryrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:runAggregationQuery")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "firestore.projects.databases.documents.runAggregationQuery" call.
-// Exactly one of *RunAggregationQueryResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *RunAggregationQueryResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsDatabasesDocumentsRunAggregationQueryCall) Do(opts ...googleapi.CallOption) (*RunAggregationQueryResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &RunAggregationQueryResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Runs an aggregation query. Rather than producing Document results like Firestore.RunQuery, this API allows running an aggregation to produce a series of AggregationResult server-side. High-Level Example: ``` -- Return the number of documents in table given a filter. SELECT COUNT(*) FROM ( SELECT * FROM k where a = true ); ```",
-	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}:runAggregationQuery",
-	//   "httpMethod": "POST",
-	//   "id": "firestore.projects.databases.documents.runAggregationQuery",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource name. In the format: `projects/{project_id}/databases/{database_id}/documents` or `projects/{project_id}/databases/{database_id}/documents/{document_path}`. For example: `projects/my-project/databases/my-database/documents` or `projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:runAggregationQuery",
-	//   "request": {
-	//     "$ref": "RunAggregationQueryRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RunAggregationQueryResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

@@ -175,7 +175,7 @@
                   "type": "string"
                 },
                 "projectId": {
-                  "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                  "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                   "location": "query",
                   "type": "string"
                 },
@@ -300,7 +300,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "query",
                       "type": "string"
                     },
@@ -340,7 +340,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "query",
                       "type": "string"
                     },
@@ -397,7 +397,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the parent field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
                       "location": "query",
                       "type": "string"
                     },
@@ -755,6 +755,34 @@
               "resources": {
                 "nodePools": {
                   "methods": {
+                    "completeUpgrade": {
+                      "description": "CompleteNodePoolUpgrade will signal an on-going node pool upgrade to complete.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/nodePools/{nodePoolsId}:completeUpgrade",
+                      "httpMethod": "POST",
+                      "id": "container.projects.locations.clusters.nodePools.completeUpgrade",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "The name (project, location, cluster, node pool id) of the node pool to complete upgrade. Specified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+/nodePools/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+name}:completeUpgrade",
+                      "request": {
+                        "$ref": "CompleteNodePoolUpgradeRequest"
+                      },
+                      "response": {
+                        "$ref": "Empty"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "create": {
                       "description": "Creates a node pool for a cluster.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/nodePools",
@@ -810,7 +838,7 @@
                           "type": "string"
                         },
                         "projectId": {
-                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                           "location": "query",
                           "type": "string"
                         },
@@ -855,7 +883,7 @@
                           "type": "string"
                         },
                         "projectId": {
-                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                           "location": "query",
                           "type": "string"
                         },
@@ -895,7 +923,7 @@
                           "type": "string"
                         },
                         "projectId": {
-                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the parent field.",
+                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
                           "location": "query",
                           "type": "string"
                         },
@@ -1135,7 +1163,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "query",
                       "type": "string"
                     },
@@ -1170,7 +1198,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the parent field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
                       "location": "query",
                       "type": "string"
                     },
@@ -1210,7 +1238,7 @@
                   "type": "string"
                 },
                 "projectId": {
-                  "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                  "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -1252,7 +1280,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1293,7 +1321,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1327,7 +1355,7 @@
                   ],
                   "parameters": {
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the parent field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1373,7 +1401,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1416,7 +1444,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1454,7 +1482,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1493,7 +1521,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the parent field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1531,7 +1559,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1572,7 +1600,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1613,7 +1641,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1654,7 +1682,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1695,7 +1723,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1736,7 +1764,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840).",
+                      "description": "Required. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects).",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1777,7 +1805,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1818,7 +1846,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1859,7 +1887,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1900,7 +1928,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1952,7 +1980,7 @@
                           "type": "string"
                         },
                         "projectId": {
-                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -1993,7 +2021,7 @@
                           "type": "string"
                         },
                         "projectId": {
-                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the parent field.",
+                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -2046,7 +2074,7 @@
                           "type": "string"
                         },
                         "projectId": {
-                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -2096,7 +2124,7 @@
                           "type": "string"
                         },
                         "projectId": {
-                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -2139,7 +2167,7 @@
                           "type": "string"
                         },
                         "projectId": {
-                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the parent field.",
+                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -2184,7 +2212,7 @@
                           "type": "string"
                         },
                         "projectId": {
-                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -2232,7 +2260,7 @@
                           "type": "string"
                         },
                         "projectId": {
-                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -2280,7 +2308,7 @@
                           "type": "string"
                         },
                         "projectId": {
-                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -2328,7 +2356,7 @@
                           "type": "string"
                         },
                         "projectId": {
-                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -2375,7 +2403,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -2421,7 +2449,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -2457,7 +2485,7 @@
                       "type": "string"
                     },
                     "projectId": {
-                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the parent field.",
+                      "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -2484,7 +2512,7 @@
       }
     }
   },
-  "revision": "20220328",
+  "revision": "20220615",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2502,6 +2530,15 @@
         },
         "gpuPartitionSize": {
           "description": "Size of partitions to create on the GPU. Valid values are described in the NVIDIA [mig user guide](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/#partitioning).",
+          "type": "string"
+        },
+        "gpuSharingConfig": {
+          "$ref": "GPUSharingConfig",
+          "description": "The configuration for GPU sharing options."
+        },
+        "maxTimeSharedClientsPerGpu": {
+          "description": "The number of time-shared GPU resources to expose for each physical GPU.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -2699,6 +2736,89 @@
         "enabled": {
           "description": "Enable Binary Authorization for this cluster. If enabled, all container images will be validated by Binary Authorization.",
           "type": "boolean"
+        },
+        "evaluationMode": {
+          "description": "Mode of operation for binauthz policy evaluation. Currently the only options are equivalent to enable/disable. If unspecified, defaults to DISABLED.",
+          "enum": [
+            "EVALUATION_MODE_UNSPECIFIED",
+            "DISABLED",
+            "PROJECT_SINGLETON_POLICY_ENFORCE"
+          ],
+          "enumDescriptions": [
+            "Default value",
+            "Disable BinaryAuthorization",
+            "Enforce Kubernetes admission requests with BinaryAuthorization using the project's singleton policy. This is equivalent to setting the enabled boolean to true."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BlueGreenInfo": {
+      "description": "Information relevant to blue-green upgrade.",
+      "id": "BlueGreenInfo",
+      "properties": {
+        "blueInstanceGroupUrls": {
+          "description": "The resource URLs of the [managed instance groups] (/compute/docs/instance-groups/creating-groups-of-managed-instances) associated with blue pool.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "bluePoolDeletionStartTime": {
+          "description": "Time to start deleting blue pool to complete blue-green upgrade, in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.",
+          "type": "string"
+        },
+        "greenInstanceGroupUrls": {
+          "description": "The resource URLs of the [managed instance groups] (/compute/docs/instance-groups/creating-groups-of-managed-instances) associated with green pool.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "greenPoolVersion": {
+          "description": "Version of green pool.",
+          "type": "string"
+        },
+        "phase": {
+          "description": "Current blue-green upgrade phase.",
+          "enum": [
+            "PHASE_UNSPECIFIED",
+            "UPDATE_STARTED",
+            "CREATING_GREEN_POOL",
+            "CORDONING_BLUE_POOL",
+            "DRAINING_BLUE_POOL",
+            "NODE_POOL_SOAKING",
+            "DELETING_BLUE_POOL",
+            "ROLLBACK_STARTED"
+          ],
+          "enumDescriptions": [
+            "Unspecified phase.",
+            "blue-green upgrade has been initiated.",
+            "Start creating green pool nodes.",
+            "Start cordoning blue pool nodes.",
+            "Start draining blue pool nodes.",
+            "Start soaking time after draining entire blue pool.",
+            "Start deleting blue nodes.",
+            "Rollback has been initiated."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BlueGreenSettings": {
+      "description": "Settings for blue-green upgrade.",
+      "id": "BlueGreenSettings",
+      "properties": {
+        "nodePoolSoakDuration": {
+          "description": "Time needed after draining entire blue pool. After this period, blue pool will be cleaned up.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "standardRolloutPolicy": {
+          "$ref": "StandardRolloutPolicy",
+          "description": "Standard policy for the blue-green upgrade."
         }
       },
       "type": "object"
@@ -2716,7 +2836,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "zone": {
@@ -2819,6 +2939,10 @@
         "confidentialNodes": {
           "$ref": "ConfidentialNodes",
           "description": "Configuration of Confidential Nodes. All the nodes in the cluster will be Confidential VM once enabled."
+        },
+        "costManagementConfig": {
+          "$ref": "CostManagementConfig",
+          "description": "Configuration for the fine-grained cost management feature."
         },
         "createTime": {
           "description": "[Output only] The time the cluster was created, in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.",
@@ -3009,6 +3133,10 @@
           "$ref": "PrivateClusterConfig",
           "description": "Configuration for private cluster."
         },
+        "protectConfig": {
+          "$ref": "ProtectConfig",
+          "description": "Enable/Disable Protect API features for the cluster."
+        },
         "releaseChannel": {
           "$ref": "ReleaseChannel",
           "description": "Release channel configuration."
@@ -3187,6 +3315,10 @@
           "$ref": "ClusterTelemetry",
           "description": "The desired telemetry integration for the cluster."
         },
+        "desiredCostManagementConfig": {
+          "$ref": "CostManagementConfig",
+          "description": "The desired configuration for the fine-grained cost management feature."
+        },
         "desiredDatabaseEncryption": {
           "$ref": "DatabaseEncryption",
           "description": "Configuration of etcd encryption."
@@ -3316,6 +3448,10 @@
           ],
           "type": "string"
         },
+        "desiredProtectConfig": {
+          "$ref": "ProtectConfig",
+          "description": "Enable/Disable Protect API features for the cluster."
+        },
         "desiredReleaseChannel": {
           "$ref": "ReleaseChannel",
           "description": "The desired release channel configuration."
@@ -3368,7 +3504,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "zone": {
@@ -3376,6 +3512,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "CompleteNodePoolUpgradeRequest": {
+      "description": "CompleteNodePoolUpgradeRequest sets the name of target node pool to complete upgrade.",
+      "id": "CompleteNodePoolUpgradeRequest",
+      "properties": {},
       "type": "object"
     },
     "ConfidentialNodes": {
@@ -3411,6 +3553,17 @@
       },
       "type": "object"
     },
+    "CostManagementConfig": {
+      "description": "Configuration for fine-grained cost management feature.",
+      "id": "CostManagementConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether the feature is enabled or not.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "CreateClusterRequest": {
       "description": "CreateClusterRequest creates a cluster.",
       "id": "CreateClusterRequest",
@@ -3424,7 +3577,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the parent field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
           "type": "string"
         },
         "zone": {
@@ -3451,7 +3604,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the parent field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
           "type": "string"
         },
         "zone": {
@@ -3624,6 +3777,30 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GPUSharingConfig": {
+      "description": "GPUSharingConfig represents the GPU sharing configuration for Hardware Accelerators.",
+      "id": "GPUSharingConfig",
+      "properties": {
+        "gpuSharingStrategy": {
+          "description": "The type of GPU sharing strategy to enable on the GPU node.",
+          "enum": [
+            "GPU_SHARING_STRATEGY_UNSPECIFIED",
+            "TIME_SHARING"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "GPUs are time-shared between containers."
+          ],
+          "type": "string"
+        },
+        "maxSharedClientsPerGpu": {
+          "description": "The max number of containers that can share a physical GPU.",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3821,6 +3998,20 @@
           "description": "Whether a new subnetwork will be created automatically for the cluster. This field is only applicable when `use_ip_aliases` is true.",
           "type": "boolean"
         },
+        "ipv6AccessType": {
+          "description": "The ipv6 access type (internal or external) when create_subnetwork is true",
+          "enum": [
+            "IPV6_ACCESS_TYPE_UNSPECIFIED",
+            "INTERNAL",
+            "EXTERNAL"
+          ],
+          "enumDescriptions": [
+            "Default value, will be defaulted as type external.",
+            "Access type internal (all v6 addresses are internal IPs)",
+            "Access type external (all v6 addresses are external IPs)"
+          ],
+          "type": "string"
+        },
         "nodeIpv4Cidr": {
           "description": "This field is deprecated, use node_ipv4_cidr_block.",
           "type": "string"
@@ -3837,8 +4028,32 @@
           "description": "The IP address range of the services IPs in this cluster. If blank, a range will be automatically chosen with the default size. This field is only applicable when `use_ip_aliases` is true. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. `/14`) to have a range chosen with a specific netmask. Set to a [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use.",
           "type": "string"
         },
+        "servicesIpv6CidrBlock": {
+          "description": "Output only. [Output only] The services IPv6 CIDR block for the cluster.",
+          "readOnly": true,
+          "type": "string"
+        },
         "servicesSecondaryRangeName": {
           "description": "The name of the secondary range to be used as for the services CIDR block. The secondary range will be used for service ClusterIPs. This must be an existing secondary range associated with the cluster subnetwork. This field is only applicable with use_ip_aliases and create_subnetwork is false.",
+          "type": "string"
+        },
+        "stackType": {
+          "description": "IP stack type",
+          "enum": [
+            "STACK_TYPE_UNSPECIFIED",
+            "IPV4",
+            "IPV4_IPV6"
+          ],
+          "enumDescriptions": [
+            "By default, the clusters will be IPV4 only",
+            "The value used if the cluster is a IPV4 only",
+            "The value used if the cluster is a dual stack cluster"
+          ],
+          "type": "string"
+        },
+        "subnetIpv6CidrBlock": {
+          "description": "Output only. [Output only] The subnet's IPv6 CIDR block used by nodes and pods.",
+          "readOnly": true,
           "type": "string"
         },
         "subnetworkName": {
@@ -3985,6 +4200,20 @@
       "description": "Parameters that can be configured on Linux nodes.",
       "id": "LinuxNodeConfig",
       "properties": {
+        "cgroupMode": {
+          "description": "cgroup_mode specifies the cgroup mode to be used on the node.",
+          "enum": [
+            "CGROUP_MODE_UNSPECIFIED",
+            "CGROUP_MODE_V1",
+            "CGROUP_MODE_V2"
+          ],
+          "enumDescriptions": [
+            "CGROUP_MODE_UNSPECIFIED is when unspecified cgroup configuration is used. The default for the GKE node OS image will be used.",
+            "CGROUP_MODE_V1 specifies to use cgroupv1 for the cgroup configuration on the node image.",
+            "CGROUP_MODE_V2 specifies to use cgroupv2 for the cgroup configuration on the node image."
+          ],
+          "type": "string"
+        },
         "sysctls": {
           "additionalProperties": {
             "type": "string"
@@ -4332,12 +4561,18 @@
             "enum": [
               "COMPONENT_UNSPECIFIED",
               "SYSTEM_COMPONENTS",
-              "WORKLOADS"
+              "WORKLOADS",
+              "APISERVER",
+              "SCHEDULER",
+              "CONTROLLER_MANAGER"
             ],
             "enumDescriptions": [
               "Default value. This shouldn't be used.",
               "system components",
-              "Deprecated: Use Google Cloud Managed Service for Prometheus."
+              "Deprecated: Use Google Cloud Managed Service for Prometheus.",
+              "kube-apiserver",
+              "kube-scheduler",
+              "kube-controller-manager"
             ],
             "type": "string"
           },
@@ -4426,6 +4661,37 @@
       },
       "type": "object"
     },
+    "NetworkPerformanceConfig": {
+      "description": "Configuration of all network bandwidth tiers",
+      "id": "NetworkPerformanceConfig",
+      "properties": {
+        "externalIpEgressBandwidthTier": {
+          "description": "Specifies the network bandwidth tier for the NodePool for traffic to external/public IP addresses.",
+          "enum": [
+            "TIER_UNSPECIFIED",
+            "TIER_1"
+          ],
+          "enumDescriptions": [
+            "Default value",
+            "Higher bandwidth, actual values based on VM size."
+          ],
+          "type": "string"
+        },
+        "totalEgressBandwidthTier": {
+          "description": "Specifies the total network bandwidth tier for the NodePool.",
+          "enum": [
+            "TIER_UNSPECIFIED",
+            "TIER_1"
+          ],
+          "enumDescriptions": [
+            "Default value",
+            "Higher bandwidth, actual values based on VM size."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "NetworkPolicy": {
       "description": "Configuration options for the NetworkPolicy feature. https://kubernetes.io/docs/concepts/services-networking/networkpolicies/",
       "id": "NetworkPolicy",
@@ -4475,7 +4741,7 @@
       "type": "object"
     },
     "NodeConfig": {
-      "description": "Parameters that describe the nodes in a cluster. *Note:* GKE Autopilot clusters do not recognize parameters in `NodeConfig`. Use AutoprovisioningNodePoolDefaults instead.",
+      "description": "Parameters that describe the nodes in a cluster. GKE Autopilot clusters do not recognize parameters in `NodeConfig`. Use AutoprovisioningNodePoolDefaults instead.",
       "id": "NodeConfig",
       "properties": {
         "accelerators": {
@@ -4619,7 +4885,7 @@
       "properties": {
         "gcfsConfig": {
           "$ref": "GcfsConfig",
-          "description": "GCFS (Google Container File System, a.k.a Riptide) options."
+          "description": "GCFS (Google Container File System, a.k.a. Riptide) options."
         }
       },
       "type": "object"
@@ -4689,6 +4955,10 @@
           "description": "Input only. Whether to create a new range for pod IPs in this node pool. Defaults are provided for `pod_range` and `pod_ipv4_cidr_block` if they are not specified. If neither `create_pod_range` or `pod_range` are specified, the cluster-level default (`ip_allocation_policy.cluster_ipv4_cidr_block`) is used. Only applicable if `ip_allocation_policy.use_ip_aliases` is true. This field cannot be changed after the node pool has been created.",
           "type": "boolean"
         },
+        "networkPerformanceConfig": {
+          "$ref": "NetworkPerformanceConfig",
+          "description": "Network bandwidth tier configuration."
+        },
         "podIpv4CidrBlock": {
           "description": "The IP address range for pod IPs in this node pool. Only applicable if `create_pod_range` is true. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. `/14`) to have a range chosen with a specific netmask. Set to a [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g. `10.96.0.0/14`) to pick a specific range to use. Only applicable if `ip_allocation_policy.use_ip_aliases` is true. This field cannot be changed after the node pool has been created.",
           "type": "string"
@@ -4725,7 +4995,7 @@
           "type": "integer"
         },
         "instanceGroupUrls": {
-          "description": "[Output only] The resource URLs of the [managed instance groups](https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances) associated with this node pool.",
+          "description": "[Output only] The resource URLs of the [managed instance groups](https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances) associated with this node pool. During the node pool blue-green upgrade operation, the URLs contain both blue and green resources.",
           "items": {
             "type": "string"
           },
@@ -4793,6 +5063,11 @@
           "description": "[Output only] Deprecated. Use conditions instead. Additional information about the current status of this node pool instance, if available.",
           "type": "string"
         },
+        "updateInfo": {
+          "$ref": "UpdateInfo",
+          "description": "Output only. [Output only] Update info contains relevant information during a node pool update.",
+          "readOnly": true
+        },
         "upgradeSettings": {
           "$ref": "UpgradeSettings",
           "description": "Upgrade settings control disruption and speed of the upgrade."
@@ -4827,6 +5102,20 @@
           "description": "Is autoscaling enabled for this node pool.",
           "type": "boolean"
         },
+        "locationPolicy": {
+          "description": "Location policy used when scaling up a nodepool.",
+          "enum": [
+            "LOCATION_POLICY_UNSPECIFIED",
+            "BALANCED",
+            "ANY"
+          ],
+          "enumDescriptions": [
+            "Not set.",
+            "BALANCED is a best effort policy that aims to balance the sizes of different zones.",
+            "ANY policy picks zones that have the highest capacity available."
+          ],
+          "type": "string"
+        },
         "maxNodeCount": {
           "description": "Maximum number of nodes for one location in the NodePool. Must be \u003e= min_node_count. There has to be enough quota to scale up the cluster.",
           "format": "int32",
@@ -4834,6 +5123,16 @@
         },
         "minNodeCount": {
           "description": "Minimum number of nodes for one location in the NodePool. Must be \u003e= 1 and \u003c= max_node_count.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalMaxNodeCount": {
+          "description": "Maximum number of nodes in the node pool. Must be greater than total_min_node_count. There has to be enough quota to scale up the cluster. The total_*_node_count fields are mutually exclusive with the *_node_count fields.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalMinNodeCount": {
+          "description": "Minimum number of nodes in the node pool. Must be greater than 1 less than total_max_node_count. The total_*_node_count fields are mutually exclusive with the *_node_count fields.",
           "format": "int32",
           "type": "integer"
         }
@@ -5153,6 +5452,17 @@
       },
       "type": "object"
     },
+    "ProtectConfig": {
+      "description": "ProtectConfig defines the flags needed to enable/disable features for the Protect API.",
+      "id": "ProtectConfig",
+      "properties": {
+        "workloadConfig": {
+          "$ref": "WorkloadConfig",
+          "description": "WorkloadConfig defines which actions are enabled for a cluster's workload configurations."
+        }
+      },
+      "type": "object"
+    },
     "PubSub": {
       "description": "Pub/Sub specific notification config.",
       "id": "PubSub",
@@ -5342,8 +5652,12 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
+        },
+        "respectPdb": {
+          "description": "Option for rollback to ignore the PodDisruptionBudget. Default value is false.",
+          "type": "boolean"
         },
         "zone": {
           "description": "Required. Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the name field.",
@@ -5509,7 +5823,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "zone": {
@@ -5536,7 +5850,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "resourceLabels": {
@@ -5570,7 +5884,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "zone": {
@@ -5600,7 +5914,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "zone": {
@@ -5627,7 +5941,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "zone": {
@@ -5654,7 +5968,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840).",
+          "description": "Required. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects).",
           "type": "string"
         },
         "zone": {
@@ -5693,7 +6007,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "update": {
@@ -5724,7 +6038,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "zone": {
@@ -5751,7 +6065,7 @@
           "description": "Required. Configuration options for the NetworkPolicy feature."
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "zone": {
@@ -5782,7 +6096,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "zone": {
@@ -5813,7 +6127,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "zone": {
@@ -5845,7 +6159,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "zone": {
@@ -5881,6 +6195,28 @@
       },
       "type": "object"
     },
+    "StandardRolloutPolicy": {
+      "description": "Standard rollout policy is the default policy for blue-green.",
+      "id": "StandardRolloutPolicy",
+      "properties": {
+        "batchNodeCount": {
+          "description": "Number of blue nodes to drain in a batch.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "batchPercentage": {
+          "description": "Percentage of the bool pool nodes to drain in a batch. The range of this field should be (0.0, 1.0].",
+          "format": "float",
+          "type": "number"
+        },
+        "batchSoakDuration": {
+          "description": "Soak time after each batch gets drained. Default to zero.",
+          "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "StartIPRotationRequest": {
       "description": "StartIPRotationRequest creates a new IP for the cluster and then performs a node upgrade on each node pool to point to the new IP.",
       "id": "StartIPRotationRequest",
@@ -5894,7 +6230,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "rotateCredentials": {
@@ -6063,7 +6399,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "update": {
@@ -6073,6 +6409,17 @@
         "zone": {
           "description": "Required. Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the name field.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpdateInfo": {
+      "description": "UpdateInfo contains resource (instance groups, etc), status and other intermediate information relevant to a node pool upgrade.",
+      "id": "UpdateInfo",
+      "properties": {
+        "blueGreenInfo": {
+          "$ref": "BlueGreenInfo",
+          "description": "Information of a blue-green upgrade."
         }
       },
       "type": "object"
@@ -6094,7 +6441,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "zone": {
@@ -6151,6 +6498,10 @@
           "description": "The name (project, location, cluster, node pool) of the node pool to update. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`.",
           "type": "string"
         },
+        "nodeNetworkConfig": {
+          "$ref": "NodeNetworkConfig",
+          "description": "Node network config."
+        },
         "nodePoolId": {
           "description": "Required. Deprecated. The name of the node pool to upgrade. This field has been deprecated and replaced by the name field.",
           "type": "string"
@@ -6160,7 +6511,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://support.google.com/cloud/answer/6158840). This field has been deprecated and replaced by the name field.",
+          "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
         "tags": {
@@ -6266,8 +6617,13 @@
       "type": "object"
     },
     "UpgradeSettings": {
+      "description": "These upgrade settings configure the upgrade strategy for the node pool. Use strategy to switch between the strategies applied to the node pool. If the strategy is SURGE, use max_surge and max_unavailable to control the level of parallelism and the level of disruption caused by upgrade. 1. maxSurge controls the number of additional nodes that can be added to the node pool temporarily for the time of the upgrade to increase the number of available nodes. 2. maxUnavailable controls the number of nodes that can be simultaneously unavailable. 3. (maxUnavailable + maxSurge) determines the level of parallelism (how many nodes are being upgraded at the same time). If the strategy is BLUE_GREEN, use blue_green_settings to configure the blue-green upgrade related settings. 1. standard_rollout_policy is the default policy. The policy is used to control the way blue pool gets drained. The draining is executed in the batch mode. The batch size could be specified as either percentage of the node pool size or the number of nodes. batch_soak_duration is the soak time after each batch gets drained. 2. node_pool_soak_duration is the soak time after all blue nodes are drained. After this period, the blue pool nodes will be deleted.",
       "id": "UpgradeSettings",
       "properties": {
+        "blueGreenSettings": {
+          "$ref": "BlueGreenSettings",
+          "description": "Settings for blue-green upgrade strategy."
+        },
         "maxSurge": {
           "description": "The maximum number of nodes that can be created beyond the current size of the node pool during the upgrade process.",
           "format": "int32",
@@ -6277,6 +6633,20 @@
           "description": "The maximum number of nodes that can be simultaneously unavailable during the upgrade process. A node is considered available if its status is Ready.",
           "format": "int32",
           "type": "integer"
+        },
+        "strategy": {
+          "description": "Update strategy of the node pool.",
+          "enum": [
+            "NODE_POOL_UPDATE_STRATEGY_UNSPECIFIED",
+            "BLUE_GREEN",
+            "SURGE"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "blue-green upgrade.",
+            "SURGE is the traditional way of upgrading a node pool. max_surge and max_unavailable determines the level of upgrade parallelism."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -6417,6 +6787,31 @@
         "enableCertificates": {
           "description": "enable_certificates controls issuance of workload mTLS certificates. If set, the GKE Workload Identity Certificates controller and node agent will be deployed in the cluster, which can then be configured by creating a WorkloadCertificateConfig Custom Resource. Requires Workload Identity (workload_pool must be non-empty).",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "WorkloadConfig": {
+      "description": "WorkloadConfig defines the flags to enable or disable the workload configurations for the cluster.",
+      "id": "WorkloadConfig",
+      "properties": {
+        "auditMode": {
+          "description": "Sets which mode of auditing should be used for the cluster's workloads.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "DISABLED",
+            "BASIC",
+            "BASELINE",
+            "RESTRICTED"
+          ],
+          "enumDescriptions": [
+            "Default value meaning that no mode has been specified.",
+            "This disables Workload Configuration auditing on the cluster, meaning that nothing is surfaced.",
+            "Applies the default set of policy auditing to a cluster's workloads.",
+            "Surfaces configurations that are not in line with the Pod Security Standard Baseline policy.",
+            "Surfaces configurations that are not in line with the Pod Security Standard Restricted policy."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

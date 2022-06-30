@@ -510,6 +510,10 @@ type Instance struct {
 	// in the instance.
 	CurrentLocationId string `json:"currentLocationId,omitempty"`
 
+	// CustomerManagedKey: Optional. The KMS key reference that the customer
+	// provides when trying to create the instance.
+	CustomerManagedKey string `json:"customerManagedKey,omitempty"`
+
 	// DisplayName: An arbitrary and optional user-provided name for the
 	// instance.
 	DisplayName string `json:"displayName,omitempty"`
@@ -658,6 +662,15 @@ type Instance struct {
 	// StatusMessage: Output only. Additional information about the current
 	// status of this instance, if available.
 	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// SuspensionReasons: Optional. reasons that causes instance in
+	// "SUSPENDED" state.
+	//
+	// Possible values:
+	//   "SUSPENSION_REASON_UNSPECIFIED" - Not set.
+	//   "CUSTOMER_MANAGED_KEY_ISSUE" - Something wrong with the CMEK key
+	// provided by customer.
+	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
 
 	// Tier: Required. The service tier of the instance.
 	//

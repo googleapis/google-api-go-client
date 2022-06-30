@@ -1927,15 +1927,19 @@ type TransferOptions struct {
 	OverwriteObjectsAlreadyExistingInSink bool `json:"overwriteObjectsAlreadyExistingInSink,omitempty"`
 
 	// OverwriteWhen: When to overwrite objects that already exist in the
-	// sink. If not set overwrite behavior is determined by
+	// sink. If not set, overwrite behavior is determined by
 	// overwrite_objects_already_existing_in_sink.
 	//
 	// Possible values:
-	//   "OVERWRITE_WHEN_UNSPECIFIED" - Indicate the option is not set.
-	//   "DIFFERENT" - Overwrite destination object with source if the two
-	// objects are different.
-	//   "NEVER" - Never overwrite destination object.
-	//   "ALWAYS" - Always overwrite destination object.
+	//   "OVERWRITE_WHEN_UNSPECIFIED" - Overwrite behavior is unspecified.
+	//   "DIFFERENT" - Overwrites destination objects with the source
+	// objects, only if the objects have the same name but different HTTP
+	// ETags or checksum values.
+	//   "NEVER" - Never overwrites a destination object if a source object
+	// has the same name. In this case, the source object is not
+	// transferred.
+	//   "ALWAYS" - Always overwrite the destination object with the source
+	// object, even if the HTTP Etags or checksum values are the same.
 	OverwriteWhen string `json:"overwriteWhen,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

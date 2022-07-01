@@ -591,7 +591,7 @@ type Release struct {
 	Name string `json:"name,omitempty"`
 
 	// RulesetName: Required. Name of the `Ruleset` referred to by this
-	// `Release`. The `Ruleset` must exist the `Release` to be created.
+	// `Release`. The `Ruleset` must exist for the `Release` to be created.
 	RulesetName string `json:"rulesetName,omitempty"`
 
 	// UpdateTime: Output only. Time the release was updated.

@@ -1513,6 +1513,11 @@ type ConfigManagementPolicyController struct {
 	// Monitoring: Monitoring specifies the configuration of monitoring.
 	Monitoring *ConfigManagementPolicyControllerMonitoring `json:"monitoring,omitempty"`
 
+	// MutationEnabled: Enable or disable mutation in policy controller. If
+	// true, mutation CRDs, webhook and controller deployment will be
+	// deployed to the cluster.
+	MutationEnabled bool `json:"mutationEnabled,omitempty"`
+
 	// ReferentialRulesEnabled: Enables the ability to use Constraint
 	// Templates that reference to objects other than the object currently
 	// being evaluated.

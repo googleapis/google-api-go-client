@@ -1071,6 +1071,9 @@ func (s *ClusterOperation) MarshalJSON() ([]byte, error) {
 
 // ClusterOperationMetadata: Metadata describing the operation.
 type ClusterOperationMetadata struct {
+	// ChildOperationIds: Output only. Child operation ids
+	ChildOperationIds []string `json:"childOperationIds,omitempty"`
+
 	// ClusterName: Output only. Name of the cluster for the operation.
 	ClusterName string `json:"clusterName,omitempty"`
 
@@ -1095,20 +1098,21 @@ type ClusterOperationMetadata struct {
 	// Warnings: Output only. Errors encountered during operation execution.
 	Warnings []string `json:"warnings,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ClusterName") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ChildOperationIds")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ClusterName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ChildOperationIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1227,6 +1231,8 @@ type ClusterStatus struct {
 	//   "STOPPED" - The cluster is currently stopped. It is not ready for
 	// use.
 	//   "STARTING" - The cluster is being started. It is not ready for use.
+	//   "REPAIRING" - The cluster is being repaired. It is not ready for
+	// use.
 	State string `json:"state,omitempty"`
 
 	// StateStartTime: Output only. Time when this state was entered (see
@@ -1305,7 +1311,7 @@ func (s *ConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
 
 // DataprocMetricConfig: Dataproc metric config.
 type DataprocMetricConfig struct {
-	// Metrics: Required. Metrics to enable.
+	// Metrics: Required. Metrics sources to enable.
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Metrics") to
@@ -1386,13 +1392,14 @@ type DiskConfig struct {
 	// (https://cloud.google.com/compute/docs/disks/local-ssd#performance).
 	LocalSsdInterface string `json:"localSsdInterface,omitempty"`
 
-	// NumLocalSsds: Optional. Number of attached SSDs, from 0 to 4 (default
+	// NumLocalSsds: Optional. Number of attached SSDs, from 0 to 8 (default
 	// is 0). If SSDs are not attached, the boot disk is used to store
 	// runtime logs and HDFS
 	// (https://hadoop.apache.org/docs/r1.2.1/hdfs_user_guide.html) data. If
 	// one or more SSDs are attached, this runtime bulk data is spread
 	// across them, and the boot disk contains only basic config and
-	// installed binaries.
+	// installed binaries.Note: Local SSD options may vary by machine type
+	// and number of vCPUs selected.
 	NumLocalSsds int64 `json:"numLocalSsds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BootDiskSizeGb") to
@@ -1885,10 +1892,11 @@ type GkeNodeConfig struct {
 	Accelerators []*GkeNodePoolAcceleratorConfig `json:"accelerators,omitempty"`
 
 	// BootDiskKmsKey: Optional. The Customer Managed Encryption Key (CMEK)
-	// (https://cloud.google.com/compute/docs/disks/customer-managed-encryption)
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/using-cmek)
 	// used to encrypt the boot disk attached to each node in the node pool.
-	// Specify the key using the following format: projects/KEY_PROJECT_ID
-	// /locations/LOCATION/keyRings/RING_NAME/cryptoKeys/KEY_NAME.
+	// Specify the key using the following format:
+	// projects/KEY_PROJECT_ID/locations/LOCATION
+	// /keyRings/RING_NAME/cryptoKeys/KEY_NAME.
 	BootDiskKmsKey string `json:"bootDiskKmsKey,omitempty"`
 
 	// LocalSsdCount: Optional. The number of local SSD disks to attach to
@@ -3487,20 +3495,40 @@ func (s *MetastoreConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Metric: The metric source to enable, with any optional metrics, to
-// override Dataproc default metrics.
+// Metric: A Dataproc OSS metric.
 type Metric struct {
-	// MetricOverrides: Optional. Optional Metrics to override the Dataproc
-	// default metrics configured for the metric source.
+	// MetricOverrides: Optional. Specify one or more available OSS metrics
+	// (https://cloud.google.com/dataproc/docs/guides/monitoring#available_oss_metrics)
+	// to collect for the metric course (for the SPARK metric source, any
+	// Spark metric
+	// (https://spark.apache.org/docs/latest/monitoring.html#metrics) can be
+	// specified).Provide metrics in the following format: METRIC_SOURCE:
+	// INSTANCE:GROUP:METRIC Use camelcase as appropriate.Examples:
+	// yarn:ResourceManager:QueueMetrics:AppsCompleted
+	// spark:driver:DAGScheduler:job.allJobs
+	// sparkHistoryServer:JVM:Memory:NonHeapMemoryUsage.committed
+	// hiveserver2:JVM:Memory:NonHeapMemoryUsage.used Notes: Only the
+	// specified overridden metrics will be collected for the metric source.
+	// For example, if one or more spark:executive metrics are listed as
+	// metric overrides, other SPARK metrics will not be collected. The
+	// collection of the default metrics for other OSS metric sources is
+	// unaffected. For example, if both SPARK andd YARN metric sources are
+	// enabled, and overrides are provided for Spark metrics only, all
+	// default YARN metrics will be collected.
 	MetricOverrides []string `json:"metricOverrides,omitempty"`
 
-	// MetricSource: Required. MetricSource to enable.
+	// MetricSource: Required. Default metrics are collected unless
+	// metricOverrides are specified for the metric source (see Available
+	// OSS metrics
+	// (https://cloud.google.com/dataproc/docs/guides/monitoring#available_oss_metrics)
+	// for more information).
 	//
 	// Possible values:
 	//   "METRIC_SOURCE_UNSPECIFIED" - Required unspecified metric source.
-	//   "MONITORING_AGENT_DEFAULTS" - Default monitoring agent metrics,
-	// which are published with an agent.googleapis.com prefix when Dataproc
-	// enables the monitoring agent in Compute Engine.
+	//   "MONITORING_AGENT_DEFAULTS" - Default monitoring agent metrics. If
+	// this source is enabled, Dataproc enables the monitoring agent in
+	// Compute Engine, and collects default monitoring agent metrics, which
+	// are published with an agent.googleapis.com prefix.
 	//   "HDFS" - HDFS metric source.
 	//   "SPARK" - Spark metric source.
 	//   "YARN" - YARN metric source.

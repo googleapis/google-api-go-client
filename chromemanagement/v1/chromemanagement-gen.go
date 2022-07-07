@@ -998,6 +998,14 @@ type GoogleChromeManagementV1CpuInfo struct {
 	//   "X64" - x64 architecture
 	Architecture string `json:"architecture,omitempty"`
 
+	// KeylockerConfigured: Output only. Whether keylocker is
+	// configured.`TRUE` = Enabled; `FALSE` = disabled. Only reported if
+	// keylockerSupported = `TRUE`.
+	KeylockerConfigured bool `json:"keylockerConfigured,omitempty"`
+
+	// KeylockerSupported: Output only. Whether keylocker is supported.
+	KeylockerSupported bool `json:"keylockerSupported,omitempty"`
+
 	// MaxClockSpeed: Output only. The max CPU clock speed in kHz.
 	MaxClockSpeed int64 `json:"maxClockSpeed,omitempty"`
 
@@ -1390,6 +1398,53 @@ func (s *GoogleChromeManagementV1GraphicsStatusReport) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1HttpsLatencyRoutineData: Data that describes
+// the result of the HTTPS latency diagnostics routine, with the HTTPS
+// requests issued to Google websites.
+type GoogleChromeManagementV1HttpsLatencyRoutineData struct {
+	// Latency: Output only. HTTPS latency if routine succeeded or failed
+	// because of HIGH_LATENCY or VERY_HIGH_LATENCY.
+	Latency string `json:"latency,omitempty"`
+
+	// Problem: Output only. HTTPS latency routine problem if a problem
+	// occurred.
+	//
+	// Possible values:
+	//   "HTTPS_LATENCY_PROBLEM_UNSPECIFIED" - HTTPS latency problem not
+	// specified.
+	//   "FAILED_DNS_RESOLUTIONS" - One or more DNS resolutions resulted in
+	// a failure.
+	//   "FAILED_HTTPS_REQUESTS" - One or more HTTPS requests resulted in a
+	// failure.
+	//   "HIGH_LATENCY" - Average HTTPS request latency time between 500ms
+	// and 1000ms is high.
+	//   "VERY_HIGH_LATENCY" - Average HTTPS request latency time greater
+	// than 1000ms is very high.
+	Problem string `json:"problem,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Latency") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Latency") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1HttpsLatencyRoutineData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1HttpsLatencyRoutineData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1InstalledApp: Describes an installed app.
 type GoogleChromeManagementV1InstalledApp struct {
 	// AppId: Output only. Unique identifier of the app. For Chrome apps and
@@ -1515,6 +1570,10 @@ type GoogleChromeManagementV1MemoryInfo struct {
 	// AvailableRamBytes: Output only. Amount of available RAM in bytes.
 	AvailableRamBytes int64 `json:"availableRamBytes,omitempty,string"`
 
+	// TotalMemoryEncryption: Output only. Total memory encryption info for
+	// the device.
+	TotalMemoryEncryption *GoogleChromeManagementV1TotalMemoryEncryptionInfo `json:"totalMemoryEncryption,omitempty"`
+
 	// TotalRamBytes: Output only. Total RAM in bytes.
 	TotalRamBytes int64 `json:"totalRamBytes,omitempty,string"`
 
@@ -1582,14 +1641,171 @@ func (s *GoogleChromeManagementV1MemoryStatusReport) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1NetworkDevice: Network device.
+type GoogleChromeManagementV1NetworkDevice struct {
+	// Iccid: Output only. The integrated circuit card ID associated with
+	// the device's sim card.
+	Iccid string `json:"iccid,omitempty"`
+
+	// Imei: Output only. IMEI (if applicable) of the corresponding network
+	// device.
+	Imei string `json:"imei,omitempty"`
+
+	// MacAddress: Output only. MAC address (if applicable) of the
+	// corresponding network device.
+	MacAddress string `json:"macAddress,omitempty"`
+
+	// Mdn: Output only. The mobile directory number associated with the
+	// device's sim card.
+	Mdn string `json:"mdn,omitempty"`
+
+	// Meid: Output only. MEID (if applicable) of the corresponding network
+	// device.
+	Meid string `json:"meid,omitempty"`
+
+	// Type: Output only. Network device type.
+	//
+	// Possible values:
+	//   "NETWORK_DEVICE_TYPE_UNSPECIFIED" - Network device type not
+	// specified.
+	//   "CELLULAR_DEVICE" - Cellular device.
+	//   "ETHERNET_DEVICE" - Ethernet device.
+	//   "WIFI_DEVICE" - Wifi device.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Iccid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Iccid") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1NetworkDevice) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1NetworkDevice
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1NetworkDiagnosticsReport: Network testing
+// results to determine the health of the device's network connection,
+// for example whether the HTTPS latency is high or normal.
+type GoogleChromeManagementV1NetworkDiagnosticsReport struct {
+	// HttpsLatencyData: Output only. HTTPS latency test data.
+	HttpsLatencyData *GoogleChromeManagementV1HttpsLatencyRoutineData `json:"httpsLatencyData,omitempty"`
+
+	// ReportTime: Output only. Timestamp of when the diagnostics were
+	// collected.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HttpsLatencyData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HttpsLatencyData") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1NetworkDiagnosticsReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1NetworkDiagnosticsReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1NetworkInfo: Network devices info.
+type GoogleChromeManagementV1NetworkInfo struct {
+	// NetworkDevices: Output only. List of network devices.
+	NetworkDevices []*GoogleChromeManagementV1NetworkDevice `json:"networkDevices,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NetworkDevices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NetworkDevices") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1NetworkInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1NetworkInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1NetworkStatusReport: State of
 // visible/configured networks.
 type GoogleChromeManagementV1NetworkStatusReport struct {
+	// ConnectionState: Output only. Current connection state of the
+	// network.
+	//
+	// Possible values:
+	//   "NETWORK_CONNECTION_STATE_UNSPECIFIED" - Network connection state
+	// unspecified.
+	//   "ONLINE" - The network is connected and internet connectivity is
+	// available.
+	//   "CONNECTED" - The network is connected and not in a detected portal
+	// state, but internet connectivity may not be available.
+	//   "PORTAL" - The network is connected but a portal state was
+	// detected. Internet connectivity may be limited.
+	//   "CONNECTING" - The network is in the process of connecting.
+	//   "NOT_CONNECTED" - The network is not connected.
+	ConnectionState string `json:"connectionState,omitempty"`
+
+	// ConnectionType: Output only. Network connection type.
+	//
+	// Possible values:
+	//   "NETWORK_TYPE_UNSPECIFIED" - Network connection type unspecified
+	//   "CELLULAR" - Cellular network connection.
+	//   "ETHERNET" - Ethernet network connection.
+	//   "TETHER" - Tether network connection.
+	//   "VPN" - VPN network connection.
+	//   "WIFI" - Wifi network connection.
+	ConnectionType string `json:"connectionType,omitempty"`
+
+	// EncryptionOn: Output only. Whether the wifi encryption key is turned
+	// off.
+	EncryptionOn bool `json:"encryptionOn,omitempty"`
+
 	// GatewayIpAddress: Output only. Gateway IP address.
 	GatewayIpAddress string `json:"gatewayIpAddress,omitempty"`
 
+	// Guid: Output only. Network connection guid.
+	Guid string `json:"guid,omitempty"`
+
 	// LanIpAddress: Output only. LAN IP address.
 	LanIpAddress string `json:"lanIpAddress,omitempty"`
+
+	// ReceivingBitRateMbps: Output only. Receiving bit rate measured in
+	// megabytes per second.
+	ReceivingBitRateMbps int64 `json:"receivingBitRateMbps,omitempty,string"`
 
 	// ReportTime: Output only. Time at which the network state was
 	// reported.
@@ -1602,7 +1818,23 @@ type GoogleChromeManagementV1NetworkStatusReport struct {
 	// measured in decibels.
 	SignalStrengthDbm int64 `json:"signalStrengthDbm,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GatewayIpAddress") to
+	// TransmissionBitRateMbps: Output only. Transmission bit rate measured
+	// in megabytes per second.
+	TransmissionBitRateMbps int64 `json:"transmissionBitRateMbps,omitempty,string"`
+
+	// TransmissionPowerDbm: Output only. Transmission power measured in
+	// decibels.
+	TransmissionPowerDbm int64 `json:"transmissionPowerDbm,omitempty"`
+
+	// WifiLinkQuality: Output only. Wifi link quality. Value ranges from
+	// [0, 70]. 0 indicates no signal and 70 indicates a strong signal.
+	WifiLinkQuality int64 `json:"wifiLinkQuality,omitempty,string"`
+
+	// WifiPowerManagementEnabled: Output only. Wifi power management
+	// enabled
+	WifiPowerManagementEnabled bool `json:"wifiPowerManagementEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectionState") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1610,7 +1842,7 @@ type GoogleChromeManagementV1NetworkStatusReport struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GatewayIpAddress") to
+	// NullFields is a list of field names (e.g. "ConnectionState") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1838,6 +2070,13 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	// Name: Output only. Resource name of the device.
 	Name string `json:"name,omitempty"`
 
+	// NetworkDiagnosticsReport: Output only. Network diagnostics collected
+	// periodically.
+	NetworkDiagnosticsReport []*GoogleChromeManagementV1NetworkDiagnosticsReport `json:"networkDiagnosticsReport,omitempty"`
+
+	// NetworkInfo: Output only. Network devices information.
+	NetworkInfo *GoogleChromeManagementV1NetworkInfo `json:"networkInfo,omitempty"`
+
 	// NetworkStatusReport: Output only. Network specs collected
 	// periodically.
 	NetworkStatusReport []*GoogleChromeManagementV1NetworkStatusReport `json:"networkStatusReport,omitempty"`
@@ -1861,6 +2100,9 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	// StorageStatusReport: Output only. Storage reports collected
 	// periodically.
 	StorageStatusReport []*GoogleChromeManagementV1StorageStatusReport `json:"storageStatusReport,omitempty"`
+
+	// ThunderboltInfo: Output only. Information on Thunderbolt bus.
+	ThunderboltInfo []*GoogleChromeManagementV1ThunderboltInfo `json:"thunderboltInfo,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1886,6 +2128,115 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 
 func (s *GoogleChromeManagementV1TelemetryDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryDevice
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1ThunderboltInfo: Thunderbolt bus info.
+type GoogleChromeManagementV1ThunderboltInfo struct {
+	// SecurityLevel: Security level of the Thunderbolt bus.
+	//
+	// Possible values:
+	//   "THUNDERBOLT_SECURITY_LEVEL_UNSPECIFIED" - Thunderbolt security
+	// level is not set.
+	//   "THUNDERBOLT_SECURITY_NONE_LEVEL" - All devices are automatically
+	// connected by the firmware. No user approval is needed.
+	//   "THUNDERBOLT_SECURITY_USER_LEVEL" - User is asked whether the
+	// device is allowed to be connected.
+	//   "THUNDERBOLT_SECURITY_SECURE_LEVEL" - User is asked whether the
+	// device is allowed to be connected. In addition the device is sent a
+	// challenge that should match the expected one based on a random key
+	// written to the key sysfs attribute
+	//   "THUNDERBOLT_SECURITY_DP_ONLY_LEVEL" - The firmware automatically
+	// creates tunnels for Thunderbolt.
+	//   "THUNDERBOLT_SECURITY_USB_ONLY_LEVEL" - The firmware automatically
+	// creates tunnels for the USB controller and Display Port in a dock.
+	// All PCIe links downstream of the dock are removed.
+	//   "THUNDERBOLT_SECURITY_NO_PCIE_LEVEL" - PCIE tunneling is disabled.
+	SecurityLevel string `json:"securityLevel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SecurityLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SecurityLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1ThunderboltInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1ThunderboltInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TotalMemoryEncryptionInfo: Memory encryption
+// information of a device.
+type GoogleChromeManagementV1TotalMemoryEncryptionInfo struct {
+	// EncryptionAlgorithm: Memory encryption algorithm.
+	//
+	// Possible values:
+	//   "MEMORY_ENCRYPTION_ALGORITHM_UNSPECIFIED" - Memory encryption
+	// algorithm is not set.
+	//   "MEMORY_ENCRYPTION_ALGORITHM_UNKNOWN" - The memory encryption
+	// algorithm being used is unknown.
+	//   "MEMORY_ENCRYPTION_ALGORITHM_AES_XTS_128" - The memory encryption
+	// algorithm is using the AES_XTS encryption algorithm with a 128 bit
+	// block cypher.
+	//   "MEMORY_ENCRYPTION_ALGORITHM_AES_XTS_256" - The memory encryption
+	// algorithm is using the AES_XTS encryption algorithm with a 256 bit
+	// block cypher.
+	EncryptionAlgorithm string `json:"encryptionAlgorithm,omitempty"`
+
+	// EncryptionState: The state of memory encryption on the device.
+	//
+	// Possible values:
+	//   "MEMORY_ENCRYPTION_STATE_UNSPECIFIED" - Memory encryption state is
+	// not set.
+	//   "MEMORY_ENCRYPTION_STATE_UNKNOWN" - The memory encryption state is
+	// unknown.
+	//   "MEMORY_ENCRYPTION_STATE_DISABLED" - Memory encrpytion on the
+	// device is disabled.
+	//   "MEMORY_ENCRYPTION_STATE_TME" - Memory encryption on the device
+	// uses total memory encryption.
+	//   "MEMORY_ENCRYPTION_STATE_MKTME" - Memory encryption on the device
+	// uses multi-key total memory encryption.
+	EncryptionState string `json:"encryptionState,omitempty"`
+
+	// KeyLength: The length of the encryption keys.
+	KeyLength int64 `json:"keyLength,omitempty,string"`
+
+	// MaxKeys: The maximum number of keys that can be used for encryption.
+	MaxKeys int64 `json:"maxKeys,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "EncryptionAlgorithm")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EncryptionAlgorithm") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1TotalMemoryEncryptionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TotalMemoryEncryptionInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

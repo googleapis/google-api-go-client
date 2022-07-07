@@ -5312,13 +5312,13 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Requested page size. The value is capped at 1000. Server may return fewer results than requested. If unspecified, server will default to 100.",
+	//       "description": "Optional. Requested page size. The value is capped at 1000. Server may return fewer results than requested. If unspecified, server will default to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.",
+	//       "description": "Optional. A token identifying a page of results the server should return.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

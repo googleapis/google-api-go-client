@@ -387,6 +387,9 @@ type Case struct {
 	// fully available.
 	Priority string `json:"priority,omitempty"`
 
+	// ProjectId: The ID of the project associated with the case.
+	ProjectId string `json:"projectId,omitempty"`
+
 	// Severity: The severity of this case. Deprecated. Use priority
 	// instead.
 	//

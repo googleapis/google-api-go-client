@@ -1567,6 +1567,9 @@ type NfsShare struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The share is in an unknown state.
 	//   "PROVISIONED" - The share has been provisioned.
+	//   "CREATING" - The NFS Share is being created.
+	//   "UPDATING" - The NFS Share is being updated.
+	//   "DELETING" - The NFS Share has been requested to be deleted.
 	State string `json:"state,omitempty"`
 
 	// Volume: The volume containing the share.

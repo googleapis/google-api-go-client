@@ -812,6 +812,41 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDe
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod: A description
+// of what time period or moment in time the product or service is being
+// delivered over.
+type GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod struct {
+	// EndTime: Optional. The end time of the service period. Time is
+	// exclusive.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Required. The start time of the service period. Time is
+	// inclusive.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudPaymentsResellerSubscriptionV1Subscription: A Subscription
 // resource managed by 3P Partners.
 type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
@@ -1000,7 +1035,7 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetail
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem:
-// Individual line item definition of a subscription. Next id: 6
+// Individual line item definition of a subscription. Next id: 8
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// Description: Output only. Description of this line item.
 	Description string `json:"description,omitempty"`
@@ -1019,9 +1054,24 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// resource name only.
 	LineItemPromotionSpecs []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec `json:"lineItemPromotionSpecs,omitempty"`
 
+	// OneTimeRecurrenceDetails: Output only. Details only set for a
+	// ONE_TIME recurrence line item.
+	OneTimeRecurrenceDetails *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails `json:"oneTimeRecurrenceDetails,omitempty"`
+
 	// Product: Required. Product resource name that identifies one the line
 	// item The format is 'partners/{partner_id}/products/{product_id}'.
 	Product string `json:"product,omitempty"`
+
+	// RecurrenceType: Output only. The recurrence type of the line item.
+	//
+	// Possible values:
+	//   "LINE_ITEM_RECURRENCE_TYPE_UNSPECIFIED" - The line item recurrence
+	// type is unspecified.
+	//   "LINE_ITEM_RECURRENCE_TYPE_PERIODIC" - The line item recurs
+	// periodically.
+	//   "LINE_ITEM_RECURRENCE_TYPE_ONE_TIME" - The line item does not recur
+	// in the future.
+	RecurrenceType string `json:"recurrenceType,omitempty"`
 
 	// State: Output only. The state of the line item.
 	//
@@ -1058,6 +1108,35 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRe
+// currenceDetails: Details for a ONE_TIME recurrence line item.
+type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails struct {
+	// ServicePeriod: The service period of the ONE_TIME line item.
+	ServicePeriod *GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod `json:"servicePeriod,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ServicePeriod") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ServicePeriod") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

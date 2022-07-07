@@ -383,6 +383,39 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GpsDataGapFailureDetails: Details related to
+// ProcessingFailureReason#GPS_DATA_GAP.
+type GpsDataGapFailureDetails struct {
+	// GapDuration: The duration of the gap in GPS data that was found.
+	GapDuration string `json:"gapDuration,omitempty"`
+
+	// GapTime: Relative time (from the start of the video stream) when the
+	// gap started.
+	GapTime string `json:"gapTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GapDuration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GapDuration") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GpsDataGapFailureDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GpsDataGapFailureDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Imu: IMU data from the device sensors.
 type Imu struct {
 	// AccelMpsps: The accelerometer measurements in meters/sec^2 with
@@ -416,6 +449,70 @@ type Imu struct {
 
 func (s *Imu) MarshalJSON() ([]byte, error) {
 	type NoMethod Imu
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImuDataGapFailureDetails: Details related to
+// ProcessingFailureReason#IMU_DATA_GAP.
+type ImuDataGapFailureDetails struct {
+	// GapDuration: The duration of the gap in IMU data that was found.
+	GapDuration string `json:"gapDuration,omitempty"`
+
+	// GapTime: Relative time (from the start of the video stream) when the
+	// gap started.
+	GapTime string `json:"gapTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GapDuration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GapDuration") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImuDataGapFailureDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ImuDataGapFailureDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InsufficientGpsFailureDetails: Details related to
+// ProcessingFailureReason#INSUFFICIENT_GPS.
+type InsufficientGpsFailureDetails struct {
+	// GpsPointsFound: The number of GPS points that were found in the
+	// video.
+	GpsPointsFound int64 `json:"gpsPointsFound,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GpsPointsFound") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GpsPointsFound") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InsufficientGpsFailureDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod InsufficientGpsFailureDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -692,6 +789,36 @@ func (s *Measurement3d) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// NotOutdoorsFailureDetails: Details related to
+// ProcessingFailureReason#NOT_OUTDOORS.
+type NotOutdoorsFailureDetails struct {
+	// Time: Relative time (from the start of the video stream) when an
+	// indoor frame was found.
+	Time string `json:"time,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Time") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Time") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NotOutdoorsFailureDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod NotOutdoorsFailureDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -928,6 +1055,10 @@ type PhotoSequence struct {
 	// sequence in meters.
 	DistanceMeters float64 `json:"distanceMeters,omitempty"`
 
+	// FailureDetails: Output only. If this sequence has `failure_reason`
+	// set, this may contain additional details about the failure.
+	FailureDetails *ProcessingFailureDetails `json:"failureDetails,omitempty"`
+
 	// FailureReason: Output only. If this sequence has processing_state =
 	// FAILED, this will contain the reason why it failed. If the
 	// processing_state is any other value, this field will be unset.
@@ -951,6 +1082,17 @@ type PhotoSequence struct {
 	//   "INVALID_VIDEO_DIMENSIONS" - Invalid image aspect ratio found.
 	//   "INVALID_CAPTURE_TIME" - Invalid capture time. Timestamps were from
 	// the future.
+	//   "GPS_DATA_GAP" - GPS data contains a gap greater than 5 seconds in
+	// duration.
+	//   "JUMPY_GPS" - GPS data is too erratic to be processed.
+	//   "INVALID_IMU" - IMU (Accelerometer, Gyroscope, etc.) data are not
+	// valid. They may be missing required fields (x, y, z or time), may not
+	// be formatted correctly, or any other issue that prevents our systems
+	// from parsing it.
+	//   "IMU_DATA_GAP" - IMU (Accelerometer, Gyroscope, etc.) data contain
+	// gaps greater than 0.1 seconds in duration.
+	//   "UNSUPPORTED_CAMERA" - The camera is not supported.
+	//   "NOT_OUTDOORS" - Some frames were indoors, which is unsupported.
 	FailureReason string `json:"failureReason,omitempty"`
 
 	// Filename: Output only. The filename of the upload. Does not include
@@ -1192,6 +1334,47 @@ func (s *Pose) UnmarshalJSON(data []byte) error {
 	s.Pitch = float64(s1.Pitch)
 	s.Roll = float64(s1.Roll)
 	return nil
+}
+
+// ProcessingFailureDetails: Additional details to accompany the
+// ProcessingFailureReason enum. This message is always expected to be
+// used in conjunction with ProcessingFailureReason, and the oneof value
+// set in this message should match the FailureReason.
+type ProcessingFailureDetails struct {
+	// GpsDataGapDetails: See GpsDataGapFailureDetails.
+	GpsDataGapDetails *GpsDataGapFailureDetails `json:"gpsDataGapDetails,omitempty"`
+
+	// ImuDataGapDetails: See ImuDataGapFailureDetails.
+	ImuDataGapDetails *ImuDataGapFailureDetails `json:"imuDataGapDetails,omitempty"`
+
+	// InsufficientGpsDetails: See InsufficientGpsFailureDetails.
+	InsufficientGpsDetails *InsufficientGpsFailureDetails `json:"insufficientGpsDetails,omitempty"`
+
+	// NotOutdoorsDetails: See NotOutdoorsFailureDetails.
+	NotOutdoorsDetails *NotOutdoorsFailureDetails `json:"notOutdoorsDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GpsDataGapDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GpsDataGapDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProcessingFailureDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ProcessingFailureDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is

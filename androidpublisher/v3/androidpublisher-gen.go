@@ -813,10 +813,11 @@ type AutoRenewingBasePlanType struct {
 	// default value will be used based on the recurring period duration.
 	GracePeriodDuration string `json:"gracePeriodDuration,omitempty"`
 
-	// LegacyCompatible: Whether the renewing base plan is compatible with
-	// legacy version of the Play Billing Library (prior to version 3) or
-	// not. Only one renewing base plan can be marked as legacy compatible
-	// for a given subscription.
+	// LegacyCompatible: Whether the renewing base plan is backward
+	// compatible. The backward compatible base plan is returned by the
+	// Google Play Billing Library deprecated method querySkuDetailsAsync().
+	// Only one renewing base plan can be marked as legacy compatible for a
+	// given subscription.
 	LegacyCompatible bool `json:"legacyCompatible,omitempty"`
 
 	// ProrationMode: The proration mode for the base plan determines what

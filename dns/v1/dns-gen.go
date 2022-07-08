@@ -2817,7 +2817,13 @@ type ResponsePolicyRule struct {
 	// public Internet instead. For instance, if these rules exist:
 	// *.example.com -> LocalData 1.2.3.4 foo.example.com -> Behavior
 	// 'bypassResponsePolicy' Then a query for 'foo.example.com' skips the
-	// wildcard.
+	// wildcard. This additionally functions to facilitate the allowlist
+	// feature. RPZs can be applied to multiple levels in the (eventually
+	// org, folder, project, network) hierarchy. If a rule is applied at a
+	// higher level of the hierarchy, adding a passthru rule at a lower
+	// level will supersede that, and a query from an affected vm to that
+	// domain will be exempt from the RPZ and proceed to normal resolution
+	// behavior.
 	Behavior string `json:"behavior,omitempty"`
 
 	// DnsName: The DNS name (wildcard or exact) to apply this rule to. Must

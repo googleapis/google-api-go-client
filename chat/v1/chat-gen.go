@@ -6332,8 +6332,10 @@ func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMes
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// field paths to be updated, comma separated if there are multiple.
-// Currently supported field paths: * text * cards * attachment
+// field paths to update. Separate multiple values with commas.
+// Currently supported field paths: - text - cards (Requires service
+// account authentication (/chat/api/guides/auth/service-accounts).) -
+// attachment
 func (c *SpacesMessagesUpdateCall) UpdateMask(updateMask string) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6446,7 +6448,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to be updated, comma separated if there are multiple. Currently supported field paths: * text * cards * attachment",
+	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - text - cards (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - attachment",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

@@ -2393,7 +2393,6 @@ func (s *ValidationResult) MarshalJSON() ([]byte, error) {
 // peering between Datastream and the consumer's VPC.
 type VpcPeeringConfig struct {
 	// Subnet: Required. A free subnet for peering. (CIDR of /29)
-	// TODO(b/172995841) add validators.
 	Subnet string `json:"subnet,omitempty"`
 
 	// Vpc: Required. Fully qualified name of the VPC that Datastream will

@@ -392,6 +392,13 @@ type CloudSqlProperties struct {
 	// `project:location:instance`.
 	InstanceId string `json:"instanceId,omitempty"`
 
+	// ServiceAccountId: Output only. The account ID of the service used for
+	// the purpose of this connection. When the connection is used in the
+	// context of an operation in BigQuery, this service account will serve
+	// as identity being used for connecting to the CloudSQL instance
+	// specified in this connection.
+	ServiceAccountId string `json:"serviceAccountId,omitempty"`
+
 	// Type: Type of the Cloud SQL database.
 	//
 	// Possible values:

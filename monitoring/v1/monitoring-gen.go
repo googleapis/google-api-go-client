@@ -278,6 +278,7 @@ type ProjectsLocationPrometheusApiService struct {
 func NewProjectsLocationPrometheusApiV1Service(s *Service) *ProjectsLocationPrometheusApiV1Service {
 	rs := &ProjectsLocationPrometheusApiV1Service{s: s}
 	rs.Label = NewProjectsLocationPrometheusApiV1LabelService(s)
+	rs.Labels_ = NewProjectsLocationPrometheusApiV1LabelsService(s)
 	rs.Metadata = NewProjectsLocationPrometheusApiV1MetadataService(s)
 	return rs
 }
@@ -286,6 +287,8 @@ type ProjectsLocationPrometheusApiV1Service struct {
 	s *Service
 
 	Label *ProjectsLocationPrometheusApiV1LabelService
+
+	Labels_ *ProjectsLocationPrometheusApiV1LabelsService
 
 	Metadata *ProjectsLocationPrometheusApiV1MetadataService
 }
@@ -296,6 +299,15 @@ func NewProjectsLocationPrometheusApiV1LabelService(s *Service) *ProjectsLocatio
 }
 
 type ProjectsLocationPrometheusApiV1LabelService struct {
+	s *Service
+}
+
+func NewProjectsLocationPrometheusApiV1LabelsService(s *Service) *ProjectsLocationPrometheusApiV1LabelsService {
+	rs := &ProjectsLocationPrometheusApiV1LabelsService{s: s}
+	return rs
+}
+
+type ProjectsLocationPrometheusApiV1LabelsService struct {
 	s *Service
 }
 
@@ -1289,6 +1301,44 @@ type ListDashboardsResponse struct {
 
 func (s *ListDashboardsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDashboardsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListLabelsRequest: ListLabelsRequest holds all parameters of the
+// Prometheus upstream API for returning a list of label names.
+type ListLabelsRequest struct {
+	// End: The end time to evaluate the query for. Either floating point
+	// UNIX seconds or RFC3339 formatted timestamp.
+	End string `json:"end,omitempty"`
+
+	// Match: A list of matchers encoded in the Prometheus label matcher
+	// format to constrain the values to series that satisfy them.
+	Match string `json:"match,omitempty"`
+
+	// Start: The start time to evaluate the query for. Either floating
+	// point UNIX seconds or RFC3339 formatted timestamp.
+	Start string `json:"start,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListLabelsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ListLabelsRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4290,6 +4340,165 @@ func (c *ProjectsDashboardsPatchCall) Do(opts ...googleapi.CallOption) (*Dashboa
 
 }
 
+// method id "monitoring.projects.location.prometheus.api.v1.labels":
+
+type ProjectsLocationPrometheusApiV1LabelsCall struct {
+	s                 *Service
+	name              string
+	location          string
+	listlabelsrequest *ListLabelsRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Labels: Lists labels for metrics.
+//
+// - location: Location of the resource information. Has to be "global"
+//   now.
+// - name: The workspace on which to execute the request. It is not part
+//   of the open source API but used as a request path prefix to
+//   distinguish different virtual Prometheus instances of Google
+//   Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
+func (r *ProjectsLocationPrometheusApiV1Service) Labels(name string, location string, listlabelsrequest *ListLabelsRequest) *ProjectsLocationPrometheusApiV1LabelsCall {
+	c := &ProjectsLocationPrometheusApiV1LabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.location = location
+	c.listlabelsrequest = listlabelsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationPrometheusApiV1LabelsCall) Fields(s ...googleapi.Field) *ProjectsLocationPrometheusApiV1LabelsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationPrometheusApiV1LabelsCall) Context(ctx context.Context) *ProjectsLocationPrometheusApiV1LabelsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationPrometheusApiV1LabelsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationPrometheusApiV1LabelsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.listlabelsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/location/{location}/prometheus/api/v1/labels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":     c.name,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.location.prometheus.api.v1.labels" call.
+// Exactly one of *HttpBody or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationPrometheusApiV1LabelsCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists labels for metrics.",
+	//   "flatPath": "v1/projects/{projectsId}/location/{location}/prometheus/api/v1/labels",
+	//   "httpMethod": "POST",
+	//   "id": "monitoring.projects.location.prometheus.api.v1.labels",
+	//   "parameterOrder": [
+	//     "name",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "Location of the resource information. Has to be \"global\" now.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The workspace on which to execute the request. It is not part of the open source API but used as a request path prefix to distinguish different virtual Prometheus instances of Google Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/labels",
+	//   "request": {
+	//     "$ref": "ListLabelsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
 // method id "monitoring.projects.location.prometheus.api.v1.query":
 
 type ProjectsLocationPrometheusApiV1QueryCall struct {
@@ -4970,6 +5179,208 @@ func (c *ProjectsLocationPrometheusApiV1LabelValuesCall) Do(opts ...googleapi.Ca
 	//     }
 	//   },
 	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/label/{label}/values",
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.location.prometheus.api.v1.labels.list":
+
+type ProjectsLocationPrometheusApiV1LabelsListCall struct {
+	s            *Service
+	name         string
+	location     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists labels for metrics.
+//
+// - location: Location of the resource information. Has to be "global"
+//   now.
+// - name: The workspace on which to execute the request. It is not part
+//   of the open source API but used as a request path prefix to
+//   distinguish different virtual Prometheus instances of Google
+//   Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
+func (r *ProjectsLocationPrometheusApiV1LabelsService) List(name string, location string) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c := &ProjectsLocationPrometheusApiV1LabelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.location = location
+	return c
+}
+
+// End sets the optional parameter "end": The end time to evaluate the
+// query for. Either floating point UNIX seconds or RFC3339 formatted
+// timestamp.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) End(end string) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c.urlParams_.Set("end", end)
+	return c
+}
+
+// Match sets the optional parameter "match": A list of matchers encoded
+// in the Prometheus label matcher format to constrain the values to
+// series that satisfy them.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) Match(match string) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c.urlParams_.Set("match", match)
+	return c
+}
+
+// Start sets the optional parameter "start": The start time to evaluate
+// the query for. Either floating point UNIX seconds or RFC3339
+// formatted timestamp.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) Start(start string) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c.urlParams_.Set("start", start)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) Fields(s ...googleapi.Field) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) IfNoneMatch(entityTag string) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) Context(ctx context.Context) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/location/{location}/prometheus/api/v1/labels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":     c.name,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.location.prometheus.api.v1.labels.list" call.
+// Exactly one of *HttpBody or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists labels for metrics.",
+	//   "flatPath": "v1/projects/{projectsId}/location/{location}/prometheus/api/v1/labels",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.projects.location.prometheus.api.v1.labels.list",
+	//   "parameterOrder": [
+	//     "name",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "end": {
+	//       "description": "The end time to evaluate the query for. Either floating point UNIX seconds or RFC3339 formatted timestamp.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "location": {
+	//       "description": "Location of the resource information. Has to be \"global\" now.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "match": {
+	//       "description": "A list of matchers encoded in the Prometheus label matcher format to constrain the values to series that satisfy them.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The workspace on which to execute the request. It is not part of the open source API but used as a request path prefix to distinguish different virtual Prometheus instances of Google Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "start": {
+	//       "description": "The start time to evaluate the query for. Either floating point UNIX seconds or RFC3339 formatted timestamp.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/labels",
 	//   "response": {
 	//     "$ref": "HttpBody"
 	//   },

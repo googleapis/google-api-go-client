@@ -2811,7 +2811,7 @@ type Job struct {
 	// time. Jobs in different regions can have the same name. If a caller
 	// attempts to create a Job with the same name as an already-existing
 	// Job, the attempt returns the existing Job. The name must match the
-	// regular expression `[a-z]([-a-z0-9]{0,38}[a-z0-9])?`
+	// regular expression `[a-z]([-a-z0-9]{0,1022}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
 
 	// PipelineDescription: Preliminary field: The format of this data may
@@ -3452,7 +3452,8 @@ type LaunchTemplateParameters struct {
 	// Environment: The runtime environment for the job.
 	Environment *RuntimeEnvironment `json:"environment,omitempty"`
 
-	// JobName: Required. The job name to use for the created job.
+	// JobName: Required. The job name to use for the created job. The name
+	// must match the regular expression `[a-z]([-a-z0-9]{0,1022}[a-z0-9])?`
 	JobName string `json:"jobName,omitempty"`
 
 	// Parameters: The runtime parameters to pass to the job.

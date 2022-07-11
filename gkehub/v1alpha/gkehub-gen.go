@@ -1831,8 +1831,9 @@ type ConfigManagementPolicyController struct {
 	// Monitoring: Monitoring specifies the configuration of monitoring.
 	Monitoring *ConfigManagementPolicyControllerMonitoring `json:"monitoring,omitempty"`
 
-	// MutationEnabled: Enable users to try out mutation for
-	// PolicyController.
+	// MutationEnabled: Enable or disable mutation in policy controller. If
+	// true, mutation CRDs, webhook and controller deployment will be
+	// deployed to the cluster.
 	MutationEnabled bool `json:"mutationEnabled,omitempty"`
 
 	// ReferentialRulesEnabled: Enables the ability to use Constraint
@@ -3439,7 +3440,7 @@ type MembershipFeatureState struct {
 	// Identityservice: Identity Service-specific state.
 	Identityservice *IdentityServiceMembershipState `json:"identityservice,omitempty"`
 
-	// Metering: Metering-specific spec.
+	// Metering: Metering-specific state.
 	Metering *MeteringMembershipState `json:"metering,omitempty"`
 
 	// Policycontroller: Policycontroller-specific state.

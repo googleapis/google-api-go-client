@@ -3051,12 +3051,12 @@ func (s *GoogleCloudRetailV2RejoinUserEventsResponse) MarshalJSON() ([]byte, err
 // GoogleCloudRetailV2RemoveFulfillmentPlacesMetadata: Metadata related
 // to the progress of the RemoveFulfillmentPlaces operation. Currently
 // empty because there is no meaningful metadata populated from the
-// RemoveFulfillmentPlaces method.
+// ProductService.RemoveFulfillmentPlaces method.
 type GoogleCloudRetailV2RemoveFulfillmentPlacesMetadata struct {
 }
 
 // GoogleCloudRetailV2RemoveFulfillmentPlacesRequest: Request message
-// for RemoveFulfillmentPlaces method.
+// for ProductService.RemoveFulfillmentPlaces method.
 type GoogleCloudRetailV2RemoveFulfillmentPlacesRequest struct {
 	// AllowMissing: If set to true, and the Product is not found, the
 	// fulfillment information will still be processed and retained for at
@@ -3113,20 +3113,20 @@ func (s *GoogleCloudRetailV2RemoveFulfillmentPlacesRequest) MarshalJSON() ([]byt
 
 // GoogleCloudRetailV2RemoveFulfillmentPlacesResponse: Response of the
 // RemoveFulfillmentPlacesRequest. Currently empty because there is no
-// meaningful response populated from the RemoveFulfillmentPlaces
-// method.
+// meaningful response populated from the
+// ProductService.RemoveFulfillmentPlaces method.
 type GoogleCloudRetailV2RemoveFulfillmentPlacesResponse struct {
 }
 
 // GoogleCloudRetailV2RemoveLocalInventoriesMetadata: Metadata related
 // to the progress of the RemoveLocalInventories operation. Currently
 // empty because there is no meaningful metadata populated from the
-// RemoveLocalInventories method.
+// ProductService.RemoveLocalInventories method.
 type GoogleCloudRetailV2RemoveLocalInventoriesMetadata struct {
 }
 
 // GoogleCloudRetailV2RemoveLocalInventoriesRequest: Request message for
-// RemoveLocalInventories method.
+// ProductService.RemoveLocalInventories method.
 type GoogleCloudRetailV2RemoveLocalInventoriesRequest struct {
 	// AllowMissing: If set to true, and the Product is not found, the local
 	// inventory removal request will still be processed and retained for at
@@ -3167,8 +3167,9 @@ func (s *GoogleCloudRetailV2RemoveLocalInventoriesRequest) MarshalJSON() ([]byte
 }
 
 // GoogleCloudRetailV2RemoveLocalInventoriesResponse: Response of the
-// RemoveLocalInventories API. Currently empty because there is no
-// meaningful response populated from the RemoveLocalInventories method.
+// ProductService.RemoveLocalInventories API. Currently empty because
+// there is no meaningful response populated from the
+// ProductService.RemoveLocalInventories method.
 type GoogleCloudRetailV2RemoveLocalInventoriesResponse struct {
 }
 
@@ -3636,13 +3637,13 @@ type GoogleCloudRetailV2SearchRequestFacetSpecFacetKey struct {
 	// "inventory(place_id,attributes.key)"
 	Key string `json:"key,omitempty"`
 
-	// OrderBy: The order in which Facet.values are returned. Allowed values
-	// are: * "count desc", which means order by Facet.FacetValue.count
-	// descending. * "value desc", which means order by
-	// Facet.FacetValue.value descending. Only applies to textual facets. If
-	// not set, textual values are sorted in natural order
-	// (https://en.wikipedia.org/wiki/Natural_sort_order); numerical
-	// intervals are sorted in the order given by
+	// OrderBy: The order in which SearchResponse.Facet.values are returned.
+	// Allowed values are: * "count desc", which means order by
+	// SearchResponse.Facet.values.count descending. * "value desc", which
+	// means order by SearchResponse.Facet.values.value descending. Only
+	// applies to textual facets. If not set, textual values are sorted in
+	// natural order (https://en.wikipedia.org/wiki/Natural_sort_order);
+	// numerical intervals are sorted in the order given by
 	// FacetSpec.FacetKey.intervals; FulfillmentInfo.place_ids are sorted in
 	// the order given by FacetSpec.FacetKey.restricted_values.
 	OrderBy string `json:"orderBy,omitempty"`
@@ -3659,13 +3660,13 @@ type GoogleCloudRetailV2SearchRequestFacetSpecFacetKey struct {
 	// computation. The query syntax is the same as a filter expression. See
 	// SearchRequest.filter for detail syntax and limitations. Notice that
 	// there is no limitation on FacetKey.key when query is specified. In
-	// the response, FacetValue.value will be always "1" and
-	// FacetValue.count will be the number of results that matches the
-	// query. For example, you can set a customized facet for "shipToStore",
-	// where FacetKey.key is "customizedShipToStore", and FacetKey.query is
-	// "availability: ANY(\"IN_STOCK\") AND shipToStore: ANY(\"123\")". Then
-	// the facet will count the products that are both in stock and ship to
-	// store "123".
+	// the response, SearchResponse.Facet.values.value will be always "1"
+	// and SearchResponse.Facet.values.count will be the number of results
+	// that match the query. For example, you can set a customized facet for
+	// "shipToStore", where FacetKey.key is "customizedShipToStore", and
+	// FacetKey.query is "availability: ANY(\"IN_STOCK\") AND shipToStore:
+	// ANY(\"123\")". Then the facet will count the products that are both
+	// in stock and ship to store "123".
 	Query string `json:"query,omitempty"`
 
 	// RestrictedValues: Only get facet for the given restricted values. For
@@ -4118,12 +4119,13 @@ func (s *GoogleCloudRetailV2SetDefaultBranchRequest) MarshalJSON() ([]byte, erro
 
 // GoogleCloudRetailV2SetInventoryMetadata: Metadata related to the
 // progress of the SetInventory operation. Currently empty because there
-// is no meaningful metadata populated from the SetInventory method.
+// is no meaningful metadata populated from the
+// ProductService.SetInventory method.
 type GoogleCloudRetailV2SetInventoryMetadata struct {
 }
 
 // GoogleCloudRetailV2SetInventoryRequest: Request message for
-// SetInventory method.
+// ProductService.SetInventory method.
 type GoogleCloudRetailV2SetInventoryRequest struct {
 	// AllowMissing: If set to true, and the Product with name Product.name
 	// is not found, the inventory update will still be processed and
@@ -4160,7 +4162,7 @@ type GoogleCloudRetailV2SetInventoryRequest struct {
 	// Product.price_info * Product.availability *
 	// Product.available_quantity * Product.fulfillment_info If a full
 	// overwrite of inventory information while ignoring timestamps is
-	// needed, UpdateProduct should be invoked instead.
+	// needed, ProductService.UpdateProduct should be invoked instead.
 	Inventory *GoogleCloudRetailV2Product `json:"inventory,omitempty"`
 
 	// SetMask: Indicates which inventory fields in the provided Product to
@@ -4199,7 +4201,7 @@ func (s *GoogleCloudRetailV2SetInventoryRequest) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudRetailV2SetInventoryResponse: Response of the
 // SetInventoryRequest. Currently empty because there is no meaningful
-// response populated from the SetInventory method.
+// response populated from the ProductService.SetInventory method.
 type GoogleCloudRetailV2SetInventoryResponse struct {
 }
 
@@ -5087,39 +5089,41 @@ func (s *GoogleCloudRetailV2alphaRejoinUserEventsResponse) MarshalJSON() ([]byte
 // GoogleCloudRetailV2alphaRemoveFulfillmentPlacesMetadata: Metadata
 // related to the progress of the RemoveFulfillmentPlaces operation.
 // Currently empty because there is no meaningful metadata populated
-// from the RemoveFulfillmentPlaces method.
+// from the ProductService.RemoveFulfillmentPlaces method.
 type GoogleCloudRetailV2alphaRemoveFulfillmentPlacesMetadata struct {
 }
 
 // GoogleCloudRetailV2alphaRemoveFulfillmentPlacesResponse: Response of
 // the RemoveFulfillmentPlacesRequest. Currently empty because there is
-// no meaningful response populated from the RemoveFulfillmentPlaces
-// method.
+// no meaningful response populated from the
+// ProductService.RemoveFulfillmentPlaces method.
 type GoogleCloudRetailV2alphaRemoveFulfillmentPlacesResponse struct {
 }
 
 // GoogleCloudRetailV2alphaRemoveLocalInventoriesMetadata: Metadata
 // related to the progress of the RemoveLocalInventories operation.
 // Currently empty because there is no meaningful metadata populated
-// from the RemoveLocalInventories method.
+// from the ProductService.RemoveLocalInventories method.
 type GoogleCloudRetailV2alphaRemoveLocalInventoriesMetadata struct {
 }
 
 // GoogleCloudRetailV2alphaRemoveLocalInventoriesResponse: Response of
-// the RemoveLocalInventories API. Currently empty because there is no
-// meaningful response populated from the RemoveLocalInventories method.
+// the ProductService.RemoveLocalInventories API. Currently empty
+// because there is no meaningful response populated from the
+// ProductService.RemoveLocalInventories method.
 type GoogleCloudRetailV2alphaRemoveLocalInventoriesResponse struct {
 }
 
 // GoogleCloudRetailV2alphaSetInventoryMetadata: Metadata related to the
 // progress of the SetInventory operation. Currently empty because there
-// is no meaningful metadata populated from the SetInventory method.
+// is no meaningful metadata populated from the
+// ProductService.SetInventory method.
 type GoogleCloudRetailV2alphaSetInventoryMetadata struct {
 }
 
 // GoogleCloudRetailV2alphaSetInventoryResponse: Response of the
 // SetInventoryRequest. Currently empty because there is no meaningful
-// response populated from the SetInventory method.
+// response populated from the ProductService.SetInventory method.
 type GoogleCloudRetailV2alphaSetInventoryResponse struct {
 }
 
@@ -5597,39 +5601,41 @@ func (s *GoogleCloudRetailV2betaRejoinUserEventsResponse) MarshalJSON() ([]byte,
 // GoogleCloudRetailV2betaRemoveFulfillmentPlacesMetadata: Metadata
 // related to the progress of the RemoveFulfillmentPlaces operation.
 // Currently empty because there is no meaningful metadata populated
-// from the RemoveFulfillmentPlaces method.
+// from the ProductService.RemoveFulfillmentPlaces method.
 type GoogleCloudRetailV2betaRemoveFulfillmentPlacesMetadata struct {
 }
 
 // GoogleCloudRetailV2betaRemoveFulfillmentPlacesResponse: Response of
 // the RemoveFulfillmentPlacesRequest. Currently empty because there is
-// no meaningful response populated from the RemoveFulfillmentPlaces
-// method.
+// no meaningful response populated from the
+// ProductService.RemoveFulfillmentPlaces method.
 type GoogleCloudRetailV2betaRemoveFulfillmentPlacesResponse struct {
 }
 
 // GoogleCloudRetailV2betaRemoveLocalInventoriesMetadata: Metadata
 // related to the progress of the RemoveLocalInventories operation.
 // Currently empty because there is no meaningful metadata populated
-// from the RemoveLocalInventories method.
+// from the ProductService.RemoveLocalInventories method.
 type GoogleCloudRetailV2betaRemoveLocalInventoriesMetadata struct {
 }
 
 // GoogleCloudRetailV2betaRemoveLocalInventoriesResponse: Response of
-// the RemoveLocalInventories API. Currently empty because there is no
-// meaningful response populated from the RemoveLocalInventories method.
+// the ProductService.RemoveLocalInventories API. Currently empty
+// because there is no meaningful response populated from the
+// ProductService.RemoveLocalInventories method.
 type GoogleCloudRetailV2betaRemoveLocalInventoriesResponse struct {
 }
 
 // GoogleCloudRetailV2betaSetInventoryMetadata: Metadata related to the
 // progress of the SetInventory operation. Currently empty because there
-// is no meaningful metadata populated from the SetInventory method.
+// is no meaningful metadata populated from the
+// ProductService.SetInventory method.
 type GoogleCloudRetailV2betaSetInventoryMetadata struct {
 }
 
 // GoogleCloudRetailV2betaSetInventoryResponse: Response of the
 // SetInventoryRequest. Currently empty because there is no meaningful
-// response populated from the SetInventory method.
+// response populated from the ProductService.SetInventory method.
 type GoogleCloudRetailV2betaSetInventoryResponse struct {
 }
 
@@ -5919,7 +5925,9 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType strin
 	return c
 }
 
-// LanguageCodes sets the optional parameter "languageCodes": The
+// LanguageCodes sets the optional parameter "languageCodes": Note that
+// this field applies for `user-data` dataset only. For requests with
+// `cloud-retail` dataset, setting this field has no effect. The
 // language filters applied to the output suggestions. If set, it should
 // contain the language of the query. If not set, suggestions are
 // returned without considering language restrictions. This is the
@@ -6089,7 +6097,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "languageCodes": {
-	//       "description": "The language filters applied to the output suggestions. If set, it should contain the language of the query. If not set, suggestions are returned without considering language restrictions. This is the BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see [Tags for Identifying Languages](https://tools.ietf.org/html/bcp47). The maximum number of language codes is 3.",
+	//       "description": "Note that this field applies for `user-data` dataset only. For requests with `cloud-retail` dataset, setting this field has no effect. The language filters applied to the output suggestions. If set, it should contain the language of the query. If not set, suggestions are returned without considering language restrictions. This is the BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see [Tags for Identifying Languages](https://tools.ietf.org/html/bcp47). The maximum number of language codes is 3.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -6959,9 +6967,10 @@ type ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall struct {
 // information. If the request is valid, the update will be enqueued and
 // processed downstream. As a consequence, when a response is returned,
 // the added place IDs are not immediately manifested in the Product
-// queried by GetProduct or ListProducts. This feature is only available
-// for users who have Retail Search enabled. Please enable Retail Search
-// on Cloud Console before using this feature.
+// queried by ProductService.GetProduct or ProductService.ListProducts.
+// This feature is only available for users who have Retail Search
+// enabled. Please enable Retail Search on Cloud Console before using
+// this feature.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -7066,7 +7075,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Do(o
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
+	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.addFulfillmentPlaces",
@@ -7114,8 +7123,9 @@ type ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall struct {
 // information. If the request is valid, the update will be enqueued and
 // processed downstream. As a consequence, when a response is returned,
 // updates are not immediately manifested in the Product queried by
-// GetProduct or ListProducts. Local inventory information can only be
-// modified using this method. CreateProduct and UpdateProduct has no
+// ProductService.GetProduct or ProductService.ListProducts. Local
+// inventory information can only be modified using this method.
+// ProductService.CreateProduct and ProductService.UpdateProduct has no
 // effect on local inventories. This feature is only available for users
 // who have Retail Search enabled. Please enable Retail Search on Cloud
 // Console before using this feature.
@@ -7223,7 +7233,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates local inventory information for a Product at a list of places, while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating inventory information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. Local inventory information can only be modified using this method. CreateProduct and UpdateProduct has no effect on local inventories. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
+	//   "description": "Updates local inventory information for a Product at a list of places, while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating inventory information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. Local inventory information can only be modified using this method. ProductService.CreateProduct and ProductService.UpdateProduct has no effect on local inventories. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addLocalInventories",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.addLocalInventories",
@@ -8294,9 +8304,10 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall struct
 // information. If the request is valid, the update will be enqueued and
 // processed downstream. As a consequence, when a response is returned,
 // the removed place IDs are not immediately manifested in the Product
-// queried by GetProduct or ListProducts. This feature is only available
-// for users who have Retail Search enabled. Please enable Retail Search
-// on Cloud Console before using this feature.
+// queried by ProductService.GetProduct or ProductService.ListProducts.
+// This feature is only available for users who have Retail Search
+// enabled. Please enable Retail Search on Cloud Console before using
+// this feature.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -8401,7 +8412,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
+	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.removeFulfillmentPlaces",
@@ -8447,11 +8458,12 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall struct 
 // asynchronous. If the request is valid, the removal will be enqueued
 // and processed downstream. As a consequence, when a response is
 // returned, removals are not immediately manifested in the Product
-// queried by GetProduct or ListProducts. Local inventory information
-// can only be removed using this method. CreateProduct and
-// UpdateProduct has no effect on local inventories. This feature is
-// only available for users who have Retail Search enabled. Please
-// enable Retail Search on Cloud Console before using this feature.
+// queried by ProductService.GetProduct or ProductService.ListProducts.
+// Local inventory information can only be removed using this method.
+// ProductService.CreateProduct and ProductService.UpdateProduct has no
+// effect on local inventories. This feature is only available for users
+// who have Retail Search enabled. Please enable Retail Search on Cloud
+// Console before using this feature.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -8556,7 +8568,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) Do
 	}
 	return ret, nil
 	// {
-	//   "description": "Remove local inventory information for a Product at a list of places at a removal timestamp. This process is asynchronous. If the request is valid, the removal will be enqueued and processed downstream. As a consequence, when a response is returned, removals are not immediately manifested in the Product queried by GetProduct or ListProducts. Local inventory information can only be removed using this method. CreateProduct and UpdateProduct has no effect on local inventories. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
+	//   "description": "Remove local inventory information for a Product at a list of places at a removal timestamp. This process is asynchronous. If the request is valid, the removal will be enqueued and processed downstream. As a consequence, when a response is returned, removals are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. Local inventory information can only be removed using this method. ProductService.CreateProduct and ProductService.UpdateProduct has no effect on local inventories. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeLocalInventories",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.removeLocalInventories",
@@ -8603,21 +8615,23 @@ type ProjectsLocationsCatalogsBranchesProductsSetInventoryCall struct {
 // before updating fulfillment information. If the request is valid, the
 // update will be enqueued and processed downstream. As a consequence,
 // when a response is returned, updates are not immediately manifested
-// in the Product queried by GetProduct or ListProducts. When inventory
-// is updated with CreateProduct and UpdateProduct, the specified
-// inventory field value(s) will overwrite any existing value(s) while
-// ignoring the last update time for this field. Furthermore, the last
-// update time for the specified inventory fields will be overwritten to
-// the time of the CreateProduct or UpdateProduct request. If no
-// inventory fields are set in CreateProductRequest.product, then any
-// pre-existing inventory information for this product will be used. If
-// no inventory fields are set in SetInventoryRequest.set_mask, then any
-// existing inventory information will be preserved. Pre-existing
-// inventory information can only be updated with SetInventory,
-// ProductService.AddFulfillmentPlaces, and RemoveFulfillmentPlaces.
-// This feature is only available for users who have Retail Search
-// enabled. Please enable Retail Search on Cloud Console before using
-// this feature.
+// in the Product queried by ProductService.GetProduct or
+// ProductService.ListProducts. When inventory is updated with
+// ProductService.CreateProduct and ProductService.UpdateProduct, the
+// specified inventory field value(s) will overwrite any existing
+// value(s) while ignoring the last update time for this field.
+// Furthermore, the last update time for the specified inventory fields
+// will be overwritten to the time of the ProductService.CreateProduct
+// or ProductService.UpdateProduct request. If no inventory fields are
+// set in CreateProductRequest.product, then any pre-existing inventory
+// information for this product will be used. If no inventory fields are
+// set in SetInventoryRequest.set_mask, then any existing inventory
+// information will be preserved. Pre-existing inventory information can
+// only be updated with ProductService.SetInventory,
+// ProductService.AddFulfillmentPlaces, and
+// ProductService.RemoveFulfillmentPlaces. This feature is only
+// available for users who have Retail Search enabled. Please enable
+// Retail Search on Cloud Console before using this feature.
 //
 // - name: Immutable. Full resource name of the product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -8720,7 +8734,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, ProductService.AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
+	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. When inventory is updated with ProductService.CreateProduct and ProductService.UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the ProductService.CreateProduct or ProductService.UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with ProductService.SetInventory, ProductService.AddFulfillmentPlaces, and ProductService.RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please enable Retail Search on Cloud Console before using this feature.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:setInventory",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.setInventory",

@@ -16208,11 +16208,12 @@ func (s *SearchResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Segments: Dimensions according to which metrics are segmented in the
-// response. Values of product dimensions, e.g., offer id, reflect the
-// state of a product at the time of the corresponding event, e.g.,
-// impression or order. Segment fields cannot be selected in queries
-// without also selecting at least one metric field. Values are only set
-// for dimensions requested explicitly in the request's search query.
+// response. Values of product dimensions, such as `offer_id`, reflect
+// the state of a product at the time of the corresponding event, for
+// example, impression or order. Segment fields cannot be selected in
+// queries without also selecting at least one metric field. Values are
+// only set for dimensions requested explicitly in the request's search
+// query.
 type Segments struct {
 	// Brand: Brand of the product.
 	Brand string `json:"brand,omitempty"`
@@ -16242,9 +16243,9 @@ type Segments struct {
 	// in Google's product taxonomy.
 	CategoryL5 string `json:"categoryL5,omitempty"`
 
-	// CurrencyCode: Currency in which price metrics are represented, e.g.,
-	// if you select `ordered_item_sales_micros`, the returned value will be
-	// represented by this currency.
+	// CurrencyCode: Currency in which price metrics are represented, for
+	// example, if you select `ordered_item_sales_micros`, the returned
+	// value will be represented by this currency.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// CustomLabel0: Custom label 0 for custom grouping of products.
@@ -16299,7 +16300,8 @@ type Segments struct {
 	// in merchant's own product taxonomy.
 	ProductTypeL5 string `json:"productTypeL5,omitempty"`
 
-	// Program: Program to which metrics apply, e.g., Free Product Listing.
+	// Program: Program to which metrics apply, for example, Free Product
+	// Listing.
 	//
 	// Possible values:
 	//   "PROGRAM_UNSPECIFIED" - Not specified.

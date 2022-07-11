@@ -4989,6 +4989,9 @@ type SchemaConfig struct {
 	// type `Resource`, which can hold any resource type. The affected
 	// fields are `Parameters.parameter.resource`, `Bundle.entry.resource`,
 	// and `Bundle.entry.response.outcome`.
+	//   "ANALYTICS_V2" - Analytics V2, similar to schema defined by the
+	// FHIR community, with added support for extensions with one or more
+	// occurrences and contained resources in stringified JSON.
 	SchemaType string `json:"schemaType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

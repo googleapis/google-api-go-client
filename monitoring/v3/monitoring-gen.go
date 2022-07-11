@@ -3905,8 +3905,7 @@ type MetricThreshold struct {
 	//   "EVALUATION_MISSING_DATA_INACTIVE" - If there is no data to
 	// evaluate the condition, then evaluate the condition as false.
 	//   "EVALUATION_MISSING_DATA_ACTIVE" - If there is no data to evaluate
-	// the condition, then evaluate the condition as true. The default for
-	// conditions with a duration value.
+	// the condition, then evaluate the condition as true.
 	//   "EVALUATION_MISSING_DATA_NO_OP" - Do not evaluate the condition to
 	// any value if there is no data.
 	EvaluationMissingData string `json:"evaluationMissingData,omitempty"`
@@ -4193,8 +4192,7 @@ type MonitoringQueryLanguageCondition struct {
 	//   "EVALUATION_MISSING_DATA_INACTIVE" - If there is no data to
 	// evaluate the condition, then evaluate the condition as false.
 	//   "EVALUATION_MISSING_DATA_ACTIVE" - If there is no data to evaluate
-	// the condition, then evaluate the condition as true. The default for
-	// conditions with a duration value.
+	// the condition, then evaluate the condition as true.
 	//   "EVALUATION_MISSING_DATA_NO_OP" - Do not evaluate the condition to
 	// any value if there is no data.
 	EvaluationMissingData string `json:"evaluationMissingData,omitempty"`

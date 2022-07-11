@@ -1328,7 +1328,7 @@ func (s *SubscribeListingRequest) MarshalJSON() ([]byte, error) {
 }
 
 // SubscribeListingResponse: Message for response when you subscribe to
-// a listing. Empty for now.
+// a listing.
 type SubscribeListingResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

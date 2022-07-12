@@ -519,7 +519,7 @@
       }
     }
   },
-  "revision": "20220703",
+  "revision": "20220708",
   "rootUrl": "https://chromemanagement.googleapis.com/",
   "schemas": {
     "GoogleChromeManagementV1AndroidAppInfo": {
@@ -1803,7 +1803,7 @@
           "type": "string"
         },
         "receivingBitRateMbps": {
-          "description": "Output only. Receiving bit rate measured in megabytes per second.",
+          "description": "Output only. Receiving bit rate measured in Megabits per second.",
           "format": "int64",
           "readOnly": true,
           "type": "string"
@@ -1827,7 +1827,7 @@
           "type": "integer"
         },
         "transmissionBitRateMbps": {
-          "description": "Output only. Transmission bit rate measured in megabytes per second.",
+          "description": "Output only. Transmission bit rate measured in Megabits per second.",
           "format": "int64",
           "readOnly": true,
           "type": "string"

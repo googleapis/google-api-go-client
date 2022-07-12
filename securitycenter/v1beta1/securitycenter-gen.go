@@ -1166,8 +1166,8 @@ type Finding struct {
 	// value contains a list of all the contacts that pertain. Please refer
 	// to:
 	// https://cloud.google.com/resource-manager/docs/managing-notification-contacts#notification-categories
-	// { “security”: {contact: {email: “person1@company.com”}
-	// contact: {email: “person2@company.com”} }
+	// { "security":[ { "contact":{ "email":"person1@company.com" } }, {
+	// "contact":{ "email":“person2@company.com” } } ] }
 	Contacts map[string]ContactDetails `json:"contacts,omitempty"`
 
 	// CreateTime: The time at which the finding was created in Security
@@ -3329,8 +3329,9 @@ type Process struct {
 	// Libraries: File information for libraries loaded by the process.
 	Libraries []*File `json:"libraries,omitempty"`
 
-	// Name: The process name visible in utilities like top and ps; it can
-	// be accessed via /proc/[pid]/comm and changed with prctl(PR_SET_NAME).
+	// Name: The process name visible in utilities like `top` and `ps`; it
+	// can be accessed via `/proc/[pid]/comm` and changed with
+	// `prctl(PR_SET_NAME)`.
 	Name string `json:"name,omitempty"`
 
 	// ParentPid: The parent process id.

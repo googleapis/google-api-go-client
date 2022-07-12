@@ -1804,7 +1804,7 @@ type GoogleChromeManagementV1NetworkStatusReport struct {
 	LanIpAddress string `json:"lanIpAddress,omitempty"`
 
 	// ReceivingBitRateMbps: Output only. Receiving bit rate measured in
-	// megabytes per second.
+	// Megabits per second.
 	ReceivingBitRateMbps int64 `json:"receivingBitRateMbps,omitempty,string"`
 
 	// ReportTime: Output only. Time at which the network state was
@@ -1819,7 +1819,7 @@ type GoogleChromeManagementV1NetworkStatusReport struct {
 	SignalStrengthDbm int64 `json:"signalStrengthDbm,omitempty"`
 
 	// TransmissionBitRateMbps: Output only. Transmission bit rate measured
-	// in megabytes per second.
+	// in Megabits per second.
 	TransmissionBitRateMbps int64 `json:"transmissionBitRateMbps,omitempty,string"`
 
 	// TransmissionPowerDbm: Output only. Transmission power measured in

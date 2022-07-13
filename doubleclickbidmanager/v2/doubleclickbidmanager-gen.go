@@ -209,25 +209,33 @@ type DataRange struct {
 	// Range: Report data range used to generate the report.
 	//
 	// Possible values:
-	//   "RANGE_UNSPECIFIED"
-	//   "CUSTOM_DATES"
-	//   "CURRENT_DAY"
-	//   "PREVIOUS_DAY"
-	//   "WEEK_TO_DATE"
-	//   "MONTH_TO_DATE"
-	//   "QUARTER_TO_DATE"
-	//   "YEAR_TO_DATE"
-	//   "PREVIOUS_WEEK"
-	//   "PREVIOUS_MONTH"
-	//   "PREVIOUS_QUARTER"
-	//   "PREVIOUS_YEAR"
-	//   "LAST_7_DAYS"
-	//   "LAST_30_DAYS"
-	//   "LAST_90_DAYS"
-	//   "LAST_365_DAYS"
-	//   "ALL_TIME"
-	//   "LAST_14_DAYS"
-	//   "LAST_60_DAYS"
+	//   "RANGE_UNSPECIFIED" - Default value when range is not specified or
+	// is unknown in this version.
+	//   "CUSTOM_DATES" - Custom range specified by custom_start_date and
+	// custom_end_date fields.
+	//   "CURRENT_DAY" - Current day.
+	//   "PREVIOUS_DAY" - Previous day.
+	//   "WEEK_TO_DATE" - All days, including the current day, since the
+	// most recent Sunday.
+	//   "MONTH_TO_DATE" - All days, including the current day, since the
+	// start of the current month.
+	//   "QUARTER_TO_DATE" - All days, including the current day, since the
+	// start of the current quarter.
+	//   "YEAR_TO_DATE" - All days, including the current day, since the
+	// start of the current calendar year.
+	//   "PREVIOUS_WEEK" - The previous completed week, beginning from
+	// Sunday.
+	//   "PREVIOUS_MONTH" - The previous completed calendar month.
+	//   "PREVIOUS_QUARTER" - The previous completed quarter.
+	//   "PREVIOUS_YEAR" - The previous completed calendar year.
+	//   "LAST_7_DAYS" - The previous 7 days, excluding the current day.
+	//   "LAST_30_DAYS" - The previous 30 days, excluding the current day.
+	//   "LAST_90_DAYS" - The previous 90 days, excluding the current day.
+	//   "LAST_365_DAYS" - The previous 365 days, excluding the current day.
+	//   "ALL_TIME" - All time for which data is available, excluding the
+	// current day.
+	//   "LAST_14_DAYS" - The previous 14 days, excluding the current day.
+	//   "LAST_60_DAYS" - The previous 60 days, excluding the current day.
 	Range string `json:"range,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomEndDate") to
@@ -391,14 +399,13 @@ func (s *FilterPair) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListQueriesResponse: Represents a list of queries.
 type ListQueriesResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// NextPageToken: A token, which can be sent as page_token to retrieve
 	// the next page of queries. If this field is omitted, there are no
 	// subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Queries: Retrieved queries.
+	// Queries: The list of queries.
 	Queries []*Query `json:"queries,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -428,9 +435,8 @@ func (s *ListQueriesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListReportsResponse: Represents a list of reports.
 type ListReportsResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// NextPageToken: A token, which can be sent as page_token to retrieve
 	// the next page of reports. If this field is omitted, there are no
 	// subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -515,21 +521,24 @@ type Parameters struct {
 	// Options: Additional query options.
 	Options *Options `json:"options,omitempty"`
 
-	// Type: Report type.
+	// Type: The type of the report. The type of the report will dictate
+	// what dimesions, filters, and metrics can be used.
 	//
 	// Possible values:
-	//   "REPORT_TYPE_UNSPECIFIED"
-	//   "STANDARD"
-	//   "INVENTORY_AVAILABILITY"
-	//   "AUDIENCE_COMPOSITION"
-	//   "FLOODLIGHT"
-	//   "YOUTUBE"
-	//   "GRP"
-	//   "YOUTUBE_PROGRAMMATIC_GUARANTEED"
-	//   "REACH"
-	//   "UNIQUE_REACH_AUDIENCE"
-	//   "FULL_PATH"
-	//   "PATH_ATTRIBUTION"
+	//   "REPORT_TYPE_UNSPECIFIED" - Default value when report type is not
+	// specified or is unknown in this version.
+	//   "STANDARD" - Standard report.
+	//   "INVENTORY_AVAILABILITY" - Inventory Availability report.
+	//   "AUDIENCE_COMPOSITION" - Audience Composition report.
+	//   "FLOODLIGHT" - Floodlight report.
+	//   "YOUTUBE" - YouTube report.
+	//   "GRP" - GRP report.
+	//   "YOUTUBE_PROGRAMMATIC_GUARANTEED" - YouTube Programmatic Guaranteed
+	// report.
+	//   "REACH" - Reach report.
+	//   "UNIQUE_REACH_AUDIENCE" - Unique Reach Audience report.
+	//   "FULL_PATH" - Full Path report.
+	//   "PATH_ATTRIBUTION" - Path Attribution report.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filters") to
@@ -565,14 +574,15 @@ type PathFilter struct {
 	// path.
 	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
 
-	// PathMatchPosition: Indicates the position of the path the filter
-	// should match to (first, last, or any event in path).
+	// PathMatchPosition: The position of the path the filter should match
+	// to (first, last, or any event in path).
 	//
 	// Possible values:
-	//   "PATH_MATCH_POSITION_UNSPECIFIED"
-	//   "ANY"
-	//   "FIRST"
-	//   "LAST"
+	//   "PATH_MATCH_POSITION_UNSPECIFIED" - Default value when path match
+	// position is not specified or is unknown in this version.
+	//   "ANY" - Any position in the path.
+	//   "FIRST" - The first position in the path.
+	//   "LAST" - The last position in the path.
 	PathMatchPosition string `json:"pathMatchPosition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EventFilters") to
@@ -631,22 +641,24 @@ func (s *PathQueryOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PathQueryOptionsFilter: Dimension Filter on path events.
+// PathQueryOptionsFilter: Dimension filter on path events.
 type PathQueryOptionsFilter struct {
 	// Filter: Dimension the filter is applied to.
 	Filter string `json:"filter,omitempty"`
 
-	// Match: Indicates how the filter should be matched to the value.
+	// Match: Match logic of the filter.
 	//
 	// Possible values:
-	//   "UNKNOWN"
-	//   "EXACT"
-	//   "PARTIAL"
-	//   "BEGINS_WITH"
-	//   "WILDCARD_EXPRESSION"
+	//   "UNKNOWN" - Default value when match is not specified or is unknown
+	// in this version.
+	//   "EXACT" - Matches a value exactly.
+	//   "PARTIAL" - Matches a value partially.
+	//   "BEGINS_WITH" - Begins with a value.
+	//   "WILDCARD_EXPRESSION" - Matches a value, utilizing wildcard
+	// character logic in the value.
 	Match string `json:"match,omitempty"`
 
-	// Values: Value to filter on.
+	// Values: Values to filter on.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -683,7 +695,9 @@ type Query struct {
 	// QueryId: Output only. Query ID.
 	QueryId int64 `json:"queryId,omitempty,string"`
 
-	// Schedule: Information on how often and when to run a query.
+	// Schedule: Information on how often and when to run a query. If
+	// `ONE_TIME` is set to the frequency field, the query will only be run
+	// at the time of creation.
 	Schedule *QuerySchedule `json:"schedule,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -715,7 +729,8 @@ func (s *Query) MarshalJSON() ([]byte, error) {
 
 // QueryMetadata: Query metadata.
 type QueryMetadata struct {
-	// DataRange: Range of report data.
+	// DataRange: Range of report data. All reports will be based on the
+	// same time zone as used by the advertiser.
 	DataRange *DataRange `json:"dataRange,omitempty"`
 
 	// Format: Format of the generated report.
@@ -733,7 +748,7 @@ type QueryMetadata struct {
 
 	// ShareEmailAddress: List of email addresses which are sent email
 	// notifications when the report is finished. Separate from
-	// `sendNotification`.
+	// send_notification.
 	ShareEmailAddress []string `json:"shareEmailAddress,omitempty"`
 
 	// Title: Query title. It is used to name the reports generated from
@@ -763,7 +778,7 @@ func (s *QueryMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// QuerySchedule: Information on how frequently and when to run a query.
+// QuerySchedule: Information on when and how frequently to run a query.
 type QuerySchedule struct {
 	// EndDate: Date to periodically run the query until. Not applicable to
 	// `ONE_TIME` frequency.
@@ -772,14 +787,15 @@ type QuerySchedule struct {
 	// Frequency: How often the query is run.
 	//
 	// Possible values:
-	//   "FREQUENCY_UNSPECIFIED"
-	//   "ONE_TIME"
-	//   "DAILY"
-	//   "WEEKLY"
-	//   "SEMI_MONTHLY"
-	//   "MONTHLY"
-	//   "QUARTERLY"
-	//   "YEARLY"
+	//   "FREQUENCY_UNSPECIFIED" - Default value when frequency is not
+	// specified or is unknown in this version.
+	//   "ONE_TIME" - Only once.
+	//   "DAILY" - Once a day.
+	//   "WEEKLY" - Once a week.
+	//   "SEMI_MONTHLY" - Twice a month.
+	//   "MONTHLY" - Once a month.
+	//   "QUARTERLY" - Once a quarter
+	//   "YEARLY" - Once a year.
 	Frequency string `json:"frequency,omitempty"`
 
 	// NextRunTimezoneCode: Canonical timezone code for report generation
@@ -942,11 +958,12 @@ type ReportStatus struct {
 	// State: Output only. The state of the report.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
-	//   "QUEUED"
-	//   "RUNNING"
-	//   "DONE"
-	//   "FAILED"
+	//   "STATE_UNSPECIFIED" - Default value when state is not specified or
+	// is unknown in this version.
+	//   "QUEUED" - The report is queued to run.
+	//   "RUNNING" - The report is currently running.
+	//   "DONE" - The report has finished running successfully.
+	//   "FAILED" - The report has finished running in failure.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FinishTime") to
@@ -1174,10 +1191,9 @@ type QueriesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a stored query as well as the associated stored
-// reports.
+// Delete: Deletes a query as well as the associated reports.
 //
-// - queryId: Query ID to delete.
+// - queryId: ID of query to delete.
 func (r *QueriesService) Delete(queryId int64) *QueriesDeleteCall {
 	c := &QueriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -1245,7 +1261,7 @@ func (c *QueriesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes a stored query as well as the associated stored reports.",
+	//   "description": "Deletes a query as well as the associated reports.",
 	//   "flatPath": "queries/{queryId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "doubleclickbidmanager.queries.delete",
@@ -1254,7 +1270,7 @@ func (c *QueriesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   ],
 	//   "parameters": {
 	//     "queryId": {
-	//       "description": "Required. Query ID to delete.",
+	//       "description": "Required. ID of query to delete.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -1280,9 +1296,9 @@ type QueriesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a stored query.
+// Get: Retrieves a query.
 //
-// - queryId: Query ID to retrieve.
+// - queryId: ID of query to retrieve.
 func (r *QueriesService) Get(queryId int64) *QueriesGetCall {
 	c := &QueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -1388,7 +1404,7 @@ func (c *QueriesGetCall) Do(opts ...googleapi.CallOption) (*Query, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a stored query.",
+	//   "description": "Retrieves a query.",
 	//   "flatPath": "queries/{queryId}",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclickbidmanager.queries.get",
@@ -1397,7 +1413,7 @@ func (c *QueriesGetCall) Do(opts ...googleapi.CallOption) (*Query, error) {
 	//   ],
 	//   "parameters": {
 	//     "queryId": {
-	//       "description": "Required. Query ID to retrieve.",
+	//       "description": "Required. ID of query to retrieve.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -1425,7 +1441,7 @@ type QueriesListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieves stored queries.
+// List: Lists queries created by the current user.
 func (r *QueriesService) List() *QueriesListCall {
 	c := &QueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1435,7 +1451,7 @@ func (r *QueriesService) List() *QueriesListCall {
 // to order results. The default sorting order is ascending. To specify
 // descending order for a field, append a " desc" suffix. For example
 // "metadata.title desc". Sorting is only supported for the following
-// fields: * queryId * metadata.title
+// fields: * `queryId` * `metadata.title`
 func (c *QueriesListCall) OrderBy(orderBy string) *QueriesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -1553,14 +1569,14 @@ func (c *QueriesListCall) Do(opts ...googleapi.CallOption) (*ListQueriesResponse
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves stored queries.",
+	//   "description": "Lists queries created by the current user.",
 	//   "flatPath": "queries",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclickbidmanager.queries.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "orderBy": {
-	//       "description": "Name of a field used to order results. The default sorting order is ascending. To specify descending order for a field, append a \" desc\" suffix. For example \"metadata.title desc\". Sorting is only supported for the following fields: * queryId * metadata.title",
+	//       "description": "Name of a field used to order results. The default sorting order is ascending. To specify descending order for a field, append a \" desc\" suffix. For example \"metadata.title desc\". Sorting is only supported for the following fields: * `queryId` * `metadata.title`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1621,7 +1637,7 @@ type QueriesRunCall struct {
 
 // Run: Runs a stored query to generate a report.
 //
-// - queryId: Query ID to run.
+// - queryId: ID of query to run.
 func (r *QueriesService) Run(queryId int64, runqueryrequest *RunQueryRequest) *QueriesRunCall {
 	c := &QueriesRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -1738,7 +1754,7 @@ func (c *QueriesRunCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	//   ],
 	//   "parameters": {
 	//     "queryId": {
-	//       "description": "Required. Query ID to run.",
+	//       "description": "Required. ID of query to run.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -1776,7 +1792,7 @@ type QueriesReportsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a stored report.
+// Get: Retrieves a report.
 //
 // - queryId: ID of the query the report is associated with.
 // - reportId: ID of the report to retrieve.
@@ -1887,7 +1903,7 @@ func (c *QueriesReportsGetCall) Do(opts ...googleapi.CallOption) (*Report, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a stored report.",
+	//   "description": "Retrieves a report.",
 	//   "flatPath": "queries/{queryId}/reports/{reportId}",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclickbidmanager.queries.reports.get",
@@ -1933,9 +1949,9 @@ type QueriesReportsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists reports.
+// List: Lists reports associated with a query.
 //
-// - queryId: Query ID with which the reports are associated.
+// - queryId: ID of the query with which the reports are associated.
 func (r *QueriesReportsService) List(queryId int64) *QueriesReportsListCall {
 	c := &QueriesReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -1946,7 +1962,7 @@ func (r *QueriesReportsService) List(queryId int64) *QueriesReportsListCall {
 // to order results. The default sorting order is ascending. To specify
 // descending order for a field, append a " desc" suffix. For example
 // "key.reportId desc". Sorting is only supported for the following
-// fields: * key.reportId
+// fields: * `key.reportId`
 func (c *QueriesReportsListCall) OrderBy(orderBy string) *QueriesReportsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -2067,7 +2083,7 @@ func (c *QueriesReportsListCall) Do(opts ...googleapi.CallOption) (*ListReportsR
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists reports.",
+	//   "description": "Lists reports associated with a query.",
 	//   "flatPath": "queries/{queryId}/reports",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclickbidmanager.queries.reports.list",
@@ -2076,7 +2092,7 @@ func (c *QueriesReportsListCall) Do(opts ...googleapi.CallOption) (*ListReportsR
 	//   ],
 	//   "parameters": {
 	//     "orderBy": {
-	//       "description": "Name of a field used to order results. The default sorting order is ascending. To specify descending order for a field, append a \" desc\" suffix. For example \"key.reportId desc\". Sorting is only supported for the following fields: * key.reportId",
+	//       "description": "Name of a field used to order results. The default sorting order is ascending. To specify descending order for a field, append a \" desc\" suffix. For example \"key.reportId desc\". Sorting is only supported for the following fields: * `key.reportId`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2092,7 +2108,7 @@ func (c *QueriesReportsListCall) Do(opts ...googleapi.CallOption) (*ListReportsR
 	//       "type": "string"
 	//     },
 	//     "queryId": {
-	//       "description": "Required. Query ID with which the reports are associated.",
+	//       "description": "Required. ID of the query with which the reports are associated.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,

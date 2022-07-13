@@ -3217,8 +3217,8 @@ type Message struct {
 	FallbackText string `json:"fallbackText,omitempty"`
 
 	// LastUpdateTime: Output only. The time at which the message was last
-	// updated. If the message was never updated, this field matches
-	// `create_time`.
+	// edited by a user. If the message has never been edited, this field is
+	// empty.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 
 	// MatchedUrl: Output only. A URL in `spaces.messages.text` that matches

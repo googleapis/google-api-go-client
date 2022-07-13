@@ -1619,6 +1619,22 @@ func (s *GoogleCloudApigeeV1ApiCategoryData) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudApigeeV1ApiProduct struct {
+	// ApiResources: Comma-separated list of API resources to be bundled in
+	// the API product. By default, the resource paths are mapped from the
+	// `proxy.pathsuffix` variable. The proxy path suffix is defined as the
+	// URI fragment following the ProxyEndpoint base path. For example, if
+	// the `apiResources` element is defined to be `/forecastrss` and the
+	// base path defined for the API proxy is `/weather`, then only requests
+	// to `/weather/forecastrss` are permitted by the API product. You can
+	// select a specific path, or you can select all subpaths with the
+	// following wildcard: - `/**`: Indicates that all sub-URIs are
+	// included. - `/*` : Indicates that only URIs one level down are
+	// included. By default, / supports the same resources as /** as well as
+	// the base path defined by the API proxy. For example, if the base path
+	// of the API proxy is `/v1/weatherapikey`, then the API product
+	// supports requests to `/v1/weatherapikey` and to any sub-URIs, such as
+	// `/v1/weatherapikey/forecastrss`, `/v1/weatherapikey/region/CA`, and
+	// so on. For more information, see Managing API products.
 	ApiResources []string `json:"apiResources,omitempty"`
 
 	// ApprovalType: Flag that specifies how API keys are approved to access
@@ -1649,22 +1665,6 @@ type GoogleCloudApigeeV1ApiProduct struct {
 
 	// Description: Description of the API product. Include key information
 	// about the API product that is not captured by other fields.
-	// Comma-separated list of API resources to be bundled in the API
-	// product. By default, the resource paths are mapped from the
-	// `proxy.pathsuffix` variable. The proxy path suffix is defined as the
-	// URI fragment following the ProxyEndpoint base path. For example, if
-	// the `apiResources` element is defined to be `/forecastrss` and the
-	// base path defined for the API proxy is `/weather`, then only requests
-	// to `/weather/forecastrss` are permitted by the API product. You can
-	// select a specific path, or you can select all subpaths with the
-	// following wildcard: - `/**`: Indicates that all sub-URIs are
-	// included. - `/*` : Indicates that only URIs one level down are
-	// included. By default, / supports the same resources as /** as well as
-	// the base path defined by the API proxy. For example, if the base path
-	// of the API proxy is `/v1/weatherapikey`, then the API product
-	// supports requests to `/v1/weatherapikey` and to any sub-URIs, such as
-	// `/v1/weatherapikey/forecastrss`, `/v1/weatherapikey/region/CA`, and
-	// so on. For more information, see Managing API products.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Name displayed in the UI or developer portal to
@@ -28687,9 +28687,11 @@ type OrganizationsEnvironmentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an environment from an organization. **Note**: You
-// must delete all key value maps and key value entries before you can
-// delete an environment.
+// Delete: Deletes an environment from an organization. **Warning: You
+// must delete all key value maps and key value entries before you
+// delete an environment.** Otherwise, if you re-create the environment
+// the key value map entry operations will encounter
+// encryption/decryption discrepancies.
 //
 // - name: Name of the environment. Use the following structure in your
 //   request: `organizations/{org}/environments/{env}`.
@@ -28785,7 +28787,7 @@ func (c *OrganizationsEnvironmentsDeleteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an environment from an organization. **Note**: You must delete all key value maps and key value entries before you can delete an environment.",
+	//   "description": "Deletes an environment from an organization. **Warning: You must delete all key value maps and key value entries before you delete an environment.** Otherwise, if you re-create the environment the key value map entry operations will encounter encryption/decryption discrepancies.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.environments.delete",

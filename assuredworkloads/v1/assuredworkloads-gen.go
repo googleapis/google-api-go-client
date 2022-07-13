@@ -1391,8 +1391,7 @@ func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings) Marsha
 // GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus:
 // Represents the Compliance Status of this workload
 type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus struct {
-	// ActiveViolationCount: Optional. Count of active Violations in the
-	// Workload.
+	// ActiveViolationCount: Count of active Violations in the Workload.
 	ActiveViolationCount int64 `json:"activeViolationCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

@@ -10069,7 +10069,7 @@ func (s *VideoStatistics) MarshalJSON() ([]byte, error) {
 }
 
 // VideoStatus: Basic details about a video category, such as its
-// localized title. Next Id: 17
+// localized title. Next Id: 18
 type VideoStatus struct {
 	// Embeddable: This value indicates if the video can be embedded on
 	// another website. @mutable youtube.videos.insert youtube.videos.update
@@ -15858,7 +15858,10 @@ func (c *LiveBroadcastsInsertCuepointCall) Do(opts ...googleapi.CallOption) (*Cu
 	//   "path": "youtube/v3/liveBroadcasts/cuepoint",
 	//   "response": {
 	//     "$ref": "Cuepoint"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
 	// }
 
 }

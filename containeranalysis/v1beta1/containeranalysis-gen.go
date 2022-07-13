@@ -232,6 +232,34 @@ func (s *AliasContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AnalysisCompleted: Indicates which analysis completed successfully.
+// Multiple types of analysis can be performed on a single resource.
+type AnalysisCompleted struct {
+	AnalysisType []string `json:"analysisType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalysisType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalysisType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalysisCompleted) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalysisCompleted
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Artifact: Artifact describes a build product.
 type Artifact struct {
 	// Checksum: Hash or checksum value of a binary, or Docker Registry 2.0
@@ -2808,6 +2836,12 @@ func (s *Digest) MarshalJSON() ([]byte, error) {
 // Discovered: Provides information about the analysis status of a
 // discovered resource.
 type Discovered struct {
+	AnalysisCompleted *AnalysisCompleted `json:"analysisCompleted,omitempty"`
+
+	// AnalysisError: Indicates any errors encountered during analysis of a
+	// resource. There could be 0 or more of these errors.
+	AnalysisError []*Status `json:"analysisError,omitempty"`
+
 	// AnalysisStatus: The status of discovery for the resource.
 	//
 	// Possible values:
@@ -2815,6 +2849,7 @@ type Discovered struct {
 	//   "PENDING" - Resource is known but no action has been taken yet.
 	//   "SCANNING" - Resource is being analyzed.
 	//   "FINISHED_SUCCESS" - Analysis has finished successfully.
+	//   "COMPLETE" - Analysis has completed.
 	//   "FINISHED_FAILED" - Analysis has finished unsuccessfully, the
 	// analysis itself is in a bad state.
 	//   "FINISHED_UNSUPPORTED" - The resource is known not to be supported
@@ -2837,15 +2872,15 @@ type Discovered struct {
 	// resource. Deprecated, do not use.
 	LastAnalysisTime string `json:"lastAnalysisTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AnalysisStatus") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AnalysisCompleted")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AnalysisStatus") to
+	// NullFields is a list of field names (e.g. "AnalysisCompleted") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

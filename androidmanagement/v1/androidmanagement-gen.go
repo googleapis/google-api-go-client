@@ -444,9 +444,9 @@ type AppProcessInfo struct {
 	ApkSha256Hash string `json:"apkSha256Hash,omitempty"`
 
 	// PackageNames: Package names of all packages that are associated with
-	// the particular user id. In most cases, this will be a single package
-	// name, the package that has been assigned that user id. If multiple
-	// application share a uid then all packages sharing uid will be
+	// the particular user ID. In most cases, this will be a single package
+	// name, the package that has been assigned that user ID. If multiple
+	// application share a UID then all packages sharing UID will be
 	// included.
 	PackageNames []string `json:"packageNames,omitempty"`
 
@@ -909,6 +909,30 @@ type ApplicationPolicy struct {
 	// permission grant state.
 	//   "PACKAGE_ACCESS" - Grants access to package access state.
 	//   "ENABLE_SYSTEM_APP" - Grants access for enabling system apps.
+	//   "NETWORK_ACTIVITY_LOGS" - Grants access to network activity logs.
+	// Allows the delegated application to call setNetworkLoggingEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#setNetworkLoggingEnabled%28android.content.ComponentName,%20boolean%29),
+	// isNetworkLoggingEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isNetworkLoggingEnabled%28android.content.ComponentName%29)
+	// and retrieveNetworkLogs
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#retrieveNetworkLogs%28android.content.ComponentName,%20long%29)
+	// methods. This scope can be delegated to at most one application.
+	// Supported for fully managed devices on Android 10 and above.
+	// Supported for a work profile on Android 12 and above. When delegation
+	// is supported and set, NETWORK_ACTIVITY_LOGS is ignored.
+	//   "SECURITY_LOGS" - Grants access to security logs. Allows the
+	// delegated application to call setSecurityLoggingEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#setSecurityLoggingEnabled%28android.content.ComponentName,%20boolean%29),
+	// isSecurityLoggingEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isSecurityLoggingEnabled%28android.content.ComponentName%29),
+	// retrieveSecurityLogs
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#retrieveSecurityLogs%28android.content.ComponentName%29)
+	// and retrievePreRebootSecurityLogs
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#retrievePreRebootSecurityLogs%28android.content.ComponentName%29)
+	// methods. This scope can be delegated to at most one application.
+	// Supported for fully managed devices and company-owned devices with a
+	// work profile on Android 12 and above. When delegation is supported
+	// and set, SECURITY_LOGS is ignored.
 	DelegatedScopes []string `json:"delegatedScopes,omitempty"`
 
 	// Disabled: Whether the app is disabled. When disabled, the app data is
@@ -2332,8 +2356,13 @@ type EnrollmentToken struct {
 	AllowPersonalUsage string `json:"allowPersonalUsage,omitempty"`
 
 	// Duration: The length of time the enrollment token is valid, ranging
-	// from 1 minute to 90 days. If not specified, the default duration is 1
-	// hour.
+	// from 1 minute to Durations.MAX_VALUE
+	// (https://developers.google.com/protocol-buffers/docs/reference/java/com/google/protobuf/util/Durations.html#MAX_VALUE),
+	// approximately 10,000 years. If not specified, the default duration is
+	// 1 hour. Please note that if requested duration causes the resulting
+	// expiration_timestamp to exceed Timestamps.MAX_VALUE
+	// (https://developers.google.com/protocol-buffers/docs/reference/java/com/google/protobuf/util/Timestamps.html#MAX_VALUE),
+	// then expiration_timestamp is coerced to Timestamps.MAX_VALUE.
 	Duration string `json:"duration,omitempty"`
 
 	// ExpirationTimestamp: The expiration time of the token. This is a
@@ -6023,13 +6052,15 @@ type UsageLog struct {
 	// logged security events. Supported for fully managed devices on
 	// Android 7 and above. Supported for company-owned devices with a work
 	// profile on Android 12 and above, on which only security events from
-	// the work profile are logged.
+	// the work profile are logged. Can be overridden by the application
+	// delegated scope SECURITY_LOGS
 	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network
 	// events, like DNS lookups and TCP connections. See UsageLogEvent for a
 	// complete description of the logged network events. Supported for
 	// fully managed devices on Android 8 and above. Supported for
 	// company-owned devices with a work profile on Android 12 and above, on
-	// which only network events from the work profile are logged.
+	// which only network events from the work profile are logged. Can be
+	// overridden by the application delegated scope NETWORK_ACTIVITY_LOGS
 	EnabledLogTypes []string `json:"enabledLogTypes,omitempty"`
 
 	// UploadOnCellularAllowed: Specifies which of the enabled log types can
@@ -6044,13 +6075,15 @@ type UsageLog struct {
 	// logged security events. Supported for fully managed devices on
 	// Android 7 and above. Supported for company-owned devices with a work
 	// profile on Android 12 and above, on which only security events from
-	// the work profile are logged.
+	// the work profile are logged. Can be overridden by the application
+	// delegated scope SECURITY_LOGS
 	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network
 	// events, like DNS lookups and TCP connections. See UsageLogEvent for a
 	// complete description of the logged network events. Supported for
 	// fully managed devices on Android 8 and above. Supported for
 	// company-owned devices with a work profile on Android 12 and above, on
-	// which only network events from the work profile are logged.
+	// which only network events from the work profile are logged. Can be
+	// overridden by the application delegated scope NETWORK_ACTIVITY_LOGS
 	UploadOnCellularAllowed []string `json:"uploadOnCellularAllowed,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EnabledLogTypes") to
@@ -6107,7 +6140,7 @@ type UsageLogEvent struct {
 	CertValidationFailureEvent *CertValidationFailureEvent `json:"certValidationFailureEvent,omitempty"`
 
 	// ConnectEvent: A TCP connect event was initiated through the standard
-	// network stack. Part of NETWORK_LOGS.
+	// network stack. Part of NETWORK_ACTIVITY_LOGS.
 	ConnectEvent *ConnectEvent `json:"connectEvent,omitempty"`
 
 	// CryptoSelfTestCompletedEvent: Validates whether Android’s built-in
@@ -6117,7 +6150,7 @@ type UsageLogEvent struct {
 	CryptoSelfTestCompletedEvent *CryptoSelfTestCompletedEvent `json:"cryptoSelfTestCompletedEvent,omitempty"`
 
 	// DnsEvent: A DNS lookup event was initiated through the standard
-	// network stack. Part of NETWORK_LOGS.
+	// network stack. Part of NETWORK_ACTIVITY_LOGS.
 	DnsEvent *DnsEvent `json:"dnsEvent,omitempty"`
 
 	// EventId: Unique id of the event.
@@ -6243,8 +6276,8 @@ type UsageLogEvent struct {
 	RemoteLockEvent *RemoteLockEvent `json:"remoteLockEvent,omitempty"`
 
 	// WipeFailureEvent: The work profile or company-owned device failed to
-	// wipe when when requested. This could be user initiated or admin
-	// initiated e.g. delete was received. Part of SECURITY_LOGS.
+	// wipe when requested. This could be user initiated or admin initiated
+	// e.g. delete was received. Part of SECURITY_LOGS.
 	WipeFailureEvent *WipeFailureEvent `json:"wipeFailureEvent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6557,8 +6590,8 @@ func (s *WipeAction) MarshalJSON() ([]byte, error) {
 }
 
 // WipeFailureEvent: The work profile or company-owned device failed to
-// wipe when when requested. This could be user initiated or admin
-// initiated e.g. delete was received. Intentionally empty.
+// wipe when requested. This could be user initiated or admin initiated
+// e.g. delete was received. Intentionally empty.
 type WipeFailureEvent struct {
 }
 

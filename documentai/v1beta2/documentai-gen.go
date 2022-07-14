@@ -1936,6 +1936,52 @@ func (s *GoogleCloudDocumentaiV1alpha1CommonOperationMetadata) MarshalJSON() ([]
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta1Barcode: Encodes the detailed information
+// of a barcode.
+type GoogleCloudDocumentaiV1beta1Barcode struct {
+	// Format: Format of a barcode. The supported formats are: CODE_128:
+	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
+	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
+	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
+	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
+	// Aztec code type. DATABAR: GS1 DataBar code type.
+	Format string `json:"format,omitempty"`
+
+	// RawValue: Raw value encoded in the barcode. For example,
+	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	RawValue string `json:"rawValue,omitempty"`
+
+	// ValueFormat: Value format describes the format of the value that a
+	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
+	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
+	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
+	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
+	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	ValueFormat string `json:"valueFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta1Barcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1Barcode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse: Response
 // to an batch document processing request. This is returned in the LRO
 // Operation after the operation is complete.
@@ -2290,6 +2336,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPage struct {
 	// line-spacing and orientation.
 	Blocks []*GoogleCloudDocumentaiV1beta1DocumentPageBlock `json:"blocks,omitempty"`
 
+	// DetectedBarcodes: A list of detected barcodes.
+	DetectedBarcodes []*GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode `json:"detectedBarcodes,omitempty"`
+
 	// DetectedLanguages: A list of detected languages together with
 	// confidence.
 	DetectedLanguages []*GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage `json:"detectedLanguages,omitempty"`
@@ -2500,6 +2549,38 @@ type GoogleCloudDocumentaiV1beta1DocumentPageBlock struct {
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentPageBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageBlock
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode: A detected
+// barcode.
+type GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode struct {
+	// Barcode: Detailed barcode information of the DetectedBarcode.
+	Barcode *GoogleCloudDocumentaiV1beta1Barcode `json:"barcode,omitempty"`
+
+	// Layout: Layout for DetectedBarcode.
+	Layout *GoogleCloudDocumentaiV1beta1DocumentPageLayout `json:"layout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Barcode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Barcode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3887,6 +3968,52 @@ func (s *GoogleCloudDocumentaiV1beta2AutoMlParams) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta2Barcode: Encodes the detailed information
+// of a barcode.
+type GoogleCloudDocumentaiV1beta2Barcode struct {
+	// Format: Format of a barcode. The supported formats are: CODE_128:
+	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
+	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
+	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
+	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
+	// Aztec code type. DATABAR: GS1 DataBar code type.
+	Format string `json:"format,omitempty"`
+
+	// RawValue: Raw value encoded in the barcode. For example,
+	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	RawValue string `json:"rawValue,omitempty"`
+
+	// ValueFormat: Value format describes the format of the value that a
+	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
+	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
+	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
+	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
+	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	ValueFormat string `json:"valueFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta2Barcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2Barcode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta2BatchProcessDocumentsRequest: Request to
 // batch process documents as an asynchronous operation. The output is
 // written to Cloud Storage as JSON in the [Document] format.
@@ -4333,6 +4460,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPage struct {
 	// line-spacing and orientation.
 	Blocks []*GoogleCloudDocumentaiV1beta2DocumentPageBlock `json:"blocks,omitempty"`
 
+	// DetectedBarcodes: A list of detected barcodes.
+	DetectedBarcodes []*GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode `json:"detectedBarcodes,omitempty"`
+
 	// DetectedLanguages: A list of detected languages together with
 	// confidence.
 	DetectedLanguages []*GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage `json:"detectedLanguages,omitempty"`
@@ -4543,6 +4673,38 @@ type GoogleCloudDocumentaiV1beta2DocumentPageBlock struct {
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentPageBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageBlock
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode: A detected
+// barcode.
+type GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode struct {
+	// Barcode: Detailed barcode information of the DetectedBarcode.
+	Barcode *GoogleCloudDocumentaiV1beta2Barcode `json:"barcode,omitempty"`
+
+	// Layout: Layout for DetectedBarcode.
+	Layout *GoogleCloudDocumentaiV1beta2DocumentPageLayout `json:"layout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Barcode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Barcode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7152,11 +7314,12 @@ func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 // not intended to model geographical locations (roads, towns,
 // mountains). In typical usage an address would be created via user
 // input or from importing existing data, depending on the type of
-// process. Advice on address input / editing: - Use an i18n-ready
-// address widget such as https://github.com/google/libaddressinput) -
-// Users should not be presented with UI elements for input or editing
-// of fields outside countries where that field is used. For more
-// guidance on how to use this schema, please see:
+// process. Advice on address input / editing: - Use an
+// internationalization-ready address widget such as
+// https://github.com/google/libaddressinput) - Users should not be
+// presented with UI elements for input or editing of fields outside
+// countries where that field is used. For more guidance on how to use
+// this schema, please see:
 // https://support.google.com/business/answer/6397478
 type GoogleTypePostalAddress struct {
 	// AddressLines: Unstructured address lines describing the lower levels

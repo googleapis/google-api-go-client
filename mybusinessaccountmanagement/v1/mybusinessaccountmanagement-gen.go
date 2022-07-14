@@ -306,6 +306,14 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 
 // Admin: An administrator of an Account or a location.
 type Admin struct {
+	// Account: Immutable. The name of the Account resource that this Admin
+	// refers to. Used when calling CreateAccountAdmin or
+	// CreateLocationAdmin to invite UserGroups or LocationGroups as admins,
+	// respectively. If both this field and `admin` are set on `CREATE`
+	// requests, this field takes precedence and the email address in
+	// `admin` will be ignored. Format: `accounts/{account}`.
+	Account string `json:"account,omitempty"`
+
 	// Admin: Optional. The name of the admin. When making the initial
 	// invitation, this is the invitee's email address. On `GET` calls, the
 	// user's email address is returned if the invitation is still pending.
@@ -343,7 +351,7 @@ type Admin struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Admin") to
+	// ForceSendFields is a list of field names (e.g. "Account") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -351,8 +359,8 @@ type Admin struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Admin") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Account") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

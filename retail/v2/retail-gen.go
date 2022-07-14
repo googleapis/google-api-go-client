@@ -1936,7 +1936,7 @@ type GoogleCloudRetailV2PredictRequest struct {
 	// is 100. Values above 100 will be coerced to 100.
 	PageSize int64 `json:"pageSize,omitempty"`
 
-	// PageToken: The previous PredictResponse.next_page_token.
+	// PageToken: This field is not used for now, please leave it unset.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// Params: Additional domain specific parameters for the predictions.

@@ -1450,7 +1450,10 @@
           "path": "youtube/v3/liveBroadcasts/cuepoint",
           "response": {
             "$ref": "Cuepoint"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/youtubepartner"
+          ]
         },
         "list": {
           "description": "Retrieve the list of broadcasts associated with the given channel.",
@@ -3862,7 +3865,7 @@
       }
     }
   },
-  "revision": "20220628",
+  "revision": "20220711",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -11377,7 +11380,7 @@
       "type": "object"
     },
     "VideoStatus": {
-      "description": "Basic details about a video category, such as its localized title. Next Id: 17",
+      "description": "Basic details about a video category, such as its localized title. Next Id: 18",
       "id": "VideoStatus",
       "properties": {
         "embeddable": {

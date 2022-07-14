@@ -379,7 +379,7 @@
       }
     }
   },
-  "revision": "20220623",
+  "revision": "20220707",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata": {
@@ -1271,7 +1271,7 @@
       "id": "GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus",
       "properties": {
         "activeViolationCount": {
-          "description": "Optional. Count of active Violations in the Workload.",
+          "description": "Count of active Violations in the Workload.",
           "format": "int32",
           "type": "integer"
         }

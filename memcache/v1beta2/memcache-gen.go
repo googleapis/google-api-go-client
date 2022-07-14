@@ -545,9 +545,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// value are arbitrary strings provided by the user.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// MaintenancePolicyNames: Deprecated. The MaintenancePolicies that have
-	// been attached to the instance. The key must be of the type name of
-	// the oneof policy name defined in MaintenancePolicy, and the
+	// MaintenancePolicyNames: Optional. Deprecated. The MaintenancePolicies
+	// that have been attached to the instance. The key must be of the type
+	// name of the oneof policy name defined in MaintenancePolicy, and the
 	// referenced policy must define the same policy type. For complete
 	// details of MaintenancePolicy, please refer to go/cloud-saas-mw-ug.
 	MaintenancePolicyNames map[string]string `json:"maintenancePolicyNames,omitempty"`
@@ -718,9 +718,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings struct {
 	// oneof policy name defined in MaintenancePolicy, and the embedded
 	// policy must define the same policy type. For complete details of
 	// MaintenancePolicy, please refer to go/cloud-saas-mw-ug. If only the
-	// name is needed (like in the deprecated
-	// Instance.maintenance_policy_names field) then only populate
-	// MaintenancePolicy.name.
+	// name is needed, then only populate MaintenancePolicy.name.
 	MaintenancePolicies map[string]MaintenancePolicy `json:"maintenancePolicies,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exclude") to

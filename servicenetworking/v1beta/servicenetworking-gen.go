@@ -852,6 +852,40 @@ func (s *BillingDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CloudSQLConfig: Cloud SQL configuration.
+type CloudSQLConfig struct {
+	// Service: Peering service used for peering with the Cloud SQL project.
+	Service string `json:"service,omitempty"`
+
+	// UmbrellaNetwork: The name of network in Cloud SQL umbrella project.
+	UmbrellaNetwork string `json:"umbrellaNetwork,omitempty"`
+
+	// UmbrellaProject: The project number of Cloud SQL umbrella project.
+	UmbrellaProject int64 `json:"umbrellaProject,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Service") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Service") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudSQLConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSQLConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Connection: Represents a private connection resource. A private
 // connection is implemented as a VPC Network Peering connection between
 // a service producer's VPC network and a service consumer's VPC
@@ -910,6 +944,9 @@ func (s *Connection) MarshalJSON() ([]byte, error) {
 // ConsumerConfig: Configuration information for a private service
 // access connection.
 type ConsumerConfig struct {
+	// CloudsqlConfigs: Represents one or multiple Cloud SQL configurations.
+	CloudsqlConfigs []*CloudSQLConfig `json:"cloudsqlConfigs,omitempty"`
+
 	// ConsumerExportCustomRoutes: Export custom routes flag value for
 	// peering from consumer to producer.
 	ConsumerExportCustomRoutes bool `json:"consumerExportCustomRoutes,omitempty"`
@@ -961,22 +998,21 @@ type ConsumerConfig struct {
 	// producer VPC host network.
 	VpcScReferenceArchitectureEnabled bool `json:"vpcScReferenceArchitectureEnabled,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ConsumerExportCustomRoutes") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CloudsqlConfigs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "ConsumerExportCustomRoutes") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CloudsqlConfigs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

@@ -2427,6 +2427,14 @@ func (r *ProjectsLocationsApisService) Delete(name string) *ProjectsLocationsApi
 	return c
 }
 
+// Force sets the optional parameter "force": If set to true, any child
+// resources will also be deleted. (Otherwise, the request will only
+// work if there are no child resources.)
+func (c *ProjectsLocationsApisDeleteCall) Force(force bool) *ProjectsLocationsApisDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2521,6 +2529,11 @@ func (c *ProjectsLocationsApisDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "force": {
+	//       "description": "If set to true, any child resources will also be deleted. (Otherwise, the request will only work if there are no child resources.)",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. The name of the API to delete. Format: projects/*/locations/*/apis/*",
 	//       "location": "path",
@@ -8002,6 +8015,14 @@ func (r *ProjectsLocationsApisVersionsService) Delete(name string) *ProjectsLoca
 	return c
 }
 
+// Force sets the optional parameter "force": If set to true, any child
+// resources will also be deleted. (Otherwise, the request will only
+// work if there are no child resources.)
+func (c *ProjectsLocationsApisVersionsDeleteCall) Force(force bool) *ProjectsLocationsApisVersionsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8096,6 +8117,11 @@ func (c *ProjectsLocationsApisVersionsDeleteCall) Do(opts ...googleapi.CallOptio
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "force": {
+	//       "description": "If set to true, any child resources will also be deleted. (Otherwise, the request will only work if there are no child resources.)",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. The name of the version to delete. Format: projects/*/locations/*/apis/*/versions/*",
 	//       "location": "path",

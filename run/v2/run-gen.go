@@ -313,6 +313,7 @@ type GoogleCloudRunV2Condition struct {
 	//   "NON_ZERO_EXIT_CODE" - A task reached its retry limit and the last
 	// attempt failed due to the user container exiting with a non-zero exit
 	// code.
+	//   "CANCELLED" - The execution was cancelled by users.
 	ExecutionReason string `json:"executionReason,omitempty"`
 
 	// LastTransitionTime: Last time the condition transitioned from one
@@ -484,6 +485,11 @@ type GoogleCloudRunV2Container struct {
 
 	// VolumeMounts: Volume to mount into the container's filesystem.
 	VolumeMounts []*GoogleCloudRunV2VolumeMount `json:"volumeMounts,omitempty"`
+
+	// WorkingDir: Container's working directory. If not specified, the
+	// container runtime's default will be used, which might be configured
+	// in the container image.
+	WorkingDir string `json:"workingDir,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
 	// unconditionally include in API requests. By default, fields with
@@ -1666,7 +1672,7 @@ func (s *GoogleCloudRunV2SecretKeySelector) MarshalJSON() ([]byte, error) {
 type GoogleCloudRunV2SecretVolumeSource struct {
 	// DefaultMode: Integer representation of mode bits to use on created
 	// files by default. Must be a value between 0000 and 0777 (octal),
-	// defaulting to 0644. Directories within the path are not affected by
+	// defaulting to 0444. Directories within the path are not affected by
 	// this setting. Notes * Internally, a umask of 0222 will be applied to
 	// any non-zero value. * This is an integer representation of the mode
 	// bits. So, the octal integer value should look exactly as the chmod

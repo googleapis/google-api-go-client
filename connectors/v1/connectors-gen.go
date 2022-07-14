@@ -458,6 +458,41 @@ func (s *AuthConfigTemplate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AuthorizationCodeLink: This configuration captures the details
+// required to render an authorization link for the OAuth Authorization
+// Code Flow.
+type AuthorizationCodeLink struct {
+	// Scopes: The scopes for which the user will authorize GCP Connectors
+	// on the connector data source.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// Uri: The base URI the user must click to trigger the authorization
+	// code login flow.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Scopes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Scopes") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuthorizationCodeLink) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthorizationCodeLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -580,6 +615,10 @@ func (s *ConfigVariable) MarshalJSON() ([]byte, error) {
 // ConfigVariableTemplate: ConfigVariableTemplate provides metadata
 // about a `ConfigVariable` that is used in a Connection.
 type ConfigVariableTemplate struct {
+	// AuthorizationCodeLink: Authorization code link options. To be
+	// populated if `ValueType` is `AUTHORIZATION_CODE`
+	AuthorizationCodeLink *AuthorizationCodeLink `json:"authorizationCodeLink,omitempty"`
+
 	// Description: Description.
 	Description string `json:"description,omitempty"`
 
@@ -613,22 +652,25 @@ type ConfigVariableTemplate struct {
 	//   "BOOL" - Value type is boolean.
 	//   "SECRET" - Value type is secret.
 	//   "ENUM" - Value type is enum.
+	//   "AUTHORIZATION_CODE" - Value type is authorization code.
 	ValueType string `json:"valueType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthorizationCodeLink") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AuthorizationCodeLink") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -658,10 +700,6 @@ type Connection struct {
 
 	// Description: Optional. Description of the resource.
 	Description string `json:"description,omitempty"`
-
-	// EgressBackends: Output only. Outbound domains/hosts needs to be
-	// allowlisted.
-	EgressBackends []string `json:"egressBackends,omitempty"`
 
 	// EnvoyImageLocation: Output only. GCR location where the envoy image
 	// is stored. formatted like: gcr.io/{bucketName}/{imageName}
@@ -2590,6 +2628,10 @@ type SshPublicKey struct {
 	// private key.
 	SshClientCert *Secret `json:"sshClientCert,omitempty"`
 
+	// SshClientCertPass: Password (passphrase) for ssh client certificate
+	// if it has one.
+	SshClientCertPass *Secret `json:"sshClientCertPass,omitempty"`
+
 	// Username: The user account used to authenticate.
 	Username string `json:"username,omitempty"`
 
@@ -4353,12 +4395,12 @@ func (r *ProjectsLocationsConnectionsService) Patch(name string, connection *Con
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Field mask is
-// used to specify the fields to be overwritten in the Connection
-// resource by the update. The fields specified in the update_mask are
-// relative to the resource, not the full request. A field will be
-// overwritten if it is in the mask. If the user does not provide a mask
-// then all fields will be overwritten.
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// Connection resource by the update. The fields specified in the
+// update_mask are relative to the resource, not the full request. A
+// field will be overwritten if it is in the mask. If the user does not
+// provide a mask then all fields will be overwritten.
 func (c *ProjectsLocationsConnectionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsConnectionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4471,7 +4513,7 @@ func (c *ProjectsLocationsConnectionsPatchCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Field mask is used to specify the fields to be overwritten in the Connection resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the Connection resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

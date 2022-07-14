@@ -2019,9 +2019,10 @@ type GoogleCloudRetailV2betaCatalogAttribute struct {
 	// CatalogService.AddCatalogAttribute,
 	// CatalogService.ImportCatalogAttributes, or
 	// CatalogService.UpdateAttributesConfig APIs. This field is `False` for
-	// pre-loaded CatalogAttributes. Only CatalogAttributes that are not in
-	// use by products can be deleted. CatalogAttributes that are in use by
-	// products cannot be deleted; however, their configuration properties
+	// pre-loaded CatalogAttributes. Only pre-loaded CatalogAttributes that
+	// are neither in use by products nor predefined can be deleted.
+	// CatalogAttributes that are either in use by products or are
+	// predefined cannot be deleted; however, their configuration properties
 	// will reset to default values upon removal request. After catalog
 	// changes, it takes about 10 minutes for this field to update.
 	InUse bool `json:"inUse,omitempty"`
@@ -3744,7 +3745,7 @@ type GoogleCloudRetailV2betaPredictRequest struct {
 	// is 100. Values above 100 will be coerced to 100.
 	PageSize int64 `json:"pageSize,omitempty"`
 
-	// PageToken: The previous PredictResponse.next_page_token.
+	// PageToken: This field is not used for now, please leave it unset.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// Params: Additional domain specific parameters for the predictions.

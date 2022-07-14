@@ -751,6 +751,9 @@ type GoogleCloudDatacatalogV1ColumnSchema struct {
 	// size of 2000 bytes.
 	Description string `json:"description,omitempty"`
 
+	// LookerColumnSpec: Looker specific column info of this column.
+	LookerColumnSpec *GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec `json:"lookerColumnSpec,omitempty"`
+
 	// Mode: Optional. A column's mode indicates whether values in this
 	// column are required, nullable, or repeated. Only `NULLABLE`,
 	// `REQUIRED`, and `REPEATED` values are supported. Default mode is
@@ -784,6 +787,43 @@ type GoogleCloudDatacatalogV1ColumnSchema struct {
 
 func (s *GoogleCloudDatacatalogV1ColumnSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ColumnSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec: Column info
+// specific to Looker System.
+type GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec struct {
+	// Type: Looker specific column type of this column.
+	//
+	// Possible values:
+	//   "LOOKER_COLUMN_TYPE_UNSPECIFIED" - Unspecified.
+	//   "DIMENSION" - Dimension.
+	//   "DIMENSION_GROUP" - Dimension group - parent for Dimension.
+	//   "FILTER" - Filter.
+	//   "MEASURE" - Measure.
+	//   "PAREMETER" - Parameter.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

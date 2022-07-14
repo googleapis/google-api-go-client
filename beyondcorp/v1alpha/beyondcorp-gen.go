@@ -1414,6 +1414,58 @@ func (s *Gateway) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBeyondcorpAppconnectionsV1AppConnectionOperationMetadata:
+// Represents the metadata of the long-running operation.
+type GoogleCloudBeyondcorpAppconnectionsV1AppConnectionOperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have
+	// successfully been cancelled have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+
+	// StatusMessage: Output only. Human-readable status of the operation,
+	// if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// Target: Output only. Server-defined resource path for the target of
+	// the operation.
+	Target string `json:"target,omitempty"`
+
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpAppconnectionsV1AppConnectionOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpAppconnectionsV1AppConnectionOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudBeyondcorpAppconnectionsV1alphaAppConnection: A BeyondCorp
 // AppConnection resource represents a BeyondCorp protected
 // AppConnection to a remote application. It creates all the necessary
@@ -1543,7 +1595,8 @@ func (s *GoogleCloudBeyondcorpAppconnectionsV1alphaAppConnectionApplicationEndpo
 // to enable connectivity.
 type GoogleCloudBeyondcorpAppconnectionsV1alphaAppConnectionGateway struct {
 	// AppGateway: Required. AppGateway name in following format:
-	// projects/{project_id}/locations/{location_id}/appgateways/{gateway_id}
+	// `projects/{project_id}/locations/{location_id}/appgateways/{gateway_id
+	// }`
 	AppGateway string `json:"appGateway,omitempty"`
 
 	// IngressPort: Output only. Ingress port reserved on the gateways for
@@ -1729,8 +1782,8 @@ type GoogleCloudBeyondcorpAppconnectionsV1alphaResolveAppConnectionsResponseAppC
 
 	// RecentMigVms: If type=GCP_REGIONAL_MIG, contains most recent VM
 	// instances, like
-	// "https://www.googleapis.com/compute/v1/projects/{project_id}/zones/{zo
-	// ne_id}/instances/{instance_id}".
+	// `https://www.googleapis.com/compute/v1/projects/{project_id}/zones/{zo
+	// ne_id}/instances/{instance_id}`.
 	RecentMigVms []string `json:"recentMigVms,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppConnection") to
@@ -1754,6 +1807,104 @@ func (s *GoogleCloudBeyondcorpAppconnectionsV1alphaResolveAppConnectionsResponse
 	type NoMethod GoogleCloudBeyondcorpAppconnectionsV1alphaResolveAppConnectionsResponseAppConnectionDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpAppconnectorsV1AppConnectorOperationMetadata:
+// Represents the metadata of the long-running operation.
+type GoogleCloudBeyondcorpAppconnectorsV1AppConnectorOperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have
+	// successfully been cancelled have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+
+	// StatusMessage: Output only. Human-readable status of the operation,
+	// if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// Target: Output only. Server-defined resource path for the target of
+	// the operation.
+	Target string `json:"target,omitempty"`
+
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpAppconnectorsV1AppConnectorOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1AppConnectorOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpAppconnectorsV1ContainerHealthDetails:
+// ContainerHealthDetails reflects the health details of a container.
+type GoogleCloudBeyondcorpAppconnectorsV1ContainerHealthDetails struct {
+	// CurrentConfigVersion: The version of the current config.
+	CurrentConfigVersion string `json:"currentConfigVersion,omitempty"`
+
+	// ErrorMsg: The latest error message.
+	ErrorMsg string `json:"errorMsg,omitempty"`
+
+	// ExpectedConfigVersion: The version of the expected config.
+	ExpectedConfigVersion string `json:"expectedConfigVersion,omitempty"`
+
+	// ExtendedStatus: The extended status. Such as ExitCode, StartedAt,
+	// FinishedAt, etc.
+	ExtendedStatus map[string]string `json:"extendedStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CurrentConfigVersion") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentConfigVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpAppconnectorsV1ContainerHealthDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpAppconnectorsV1ContainerHealthDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpAppconnectorsV1RemoteAgentDetails:
+// RemoteAgentDetails reflects the details of a remote agent.
+type GoogleCloudBeyondcorpAppconnectorsV1RemoteAgentDetails struct {
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1alphaAppConnector: A BeyondCorp
@@ -2308,6 +2459,58 @@ func (s *GoogleCloudBeyondcorpAppconnectorsV1alphaResourceInfo) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBeyondcorpAppgatewaysV1AppGatewayOperationMetadata:
+// Represents the metadata of the long-running operation.
+type GoogleCloudBeyondcorpAppgatewaysV1AppGatewayOperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have
+	// successfully been cancelled have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+
+	// StatusMessage: Output only. Human-readable status of the operation,
+	// if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// Target: Output only. Server-defined resource path for the target of
+	// the operation.
+	Target string `json:"target,omitempty"`
+
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpAppgatewaysV1AppGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpAppgatewaysV1AppGatewayOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudBeyondcorpApplicationsV1alphaApplicationOperationMetadata:
 // Represents the metadata of the long-running operation.
 type GoogleCloudBeyondcorpApplicationsV1alphaApplicationOperationMetadata struct {
@@ -2353,6 +2556,111 @@ type GoogleCloudBeyondcorpApplicationsV1alphaApplicationOperationMetadata struct
 
 func (s *GoogleCloudBeyondcorpApplicationsV1alphaApplicationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpApplicationsV1alphaApplicationOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpClientconnectorservicesV1ClientConnectorServiceOp
+// erationMetadata: Represents the metadata of the long-running
+// operation.
+type GoogleCloudBeyondcorpClientconnectorservicesV1ClientConnectorServiceOperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have
+	// successfully been cancelled have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+
+	// StatusMessage: Output only. Human-readable status of the operation,
+	// if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// Target: Output only. Server-defined resource path for the target of
+	// the operation.
+	Target string `json:"target,omitempty"`
+
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpClientconnectorservicesV1ClientConnectorServiceOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpClientconnectorservicesV1ClientConnectorServiceOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpClientgatewaysV1ClientGatewayOperationMetadata:
+// Represents the metadata of the long-running operation.
+type GoogleCloudBeyondcorpClientgatewaysV1ClientGatewayOperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have been
+	// cancelled successfully have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+
+	// StatusMessage: Output only. Human-readable status of the operation,
+	// if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// Target: Output only. Server-defined resource path for the target of
+	// the operation.
+	Target string `json:"target,omitempty"`
+
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpClientgatewaysV1ClientGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpClientgatewaysV1ClientGatewayOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10014,7 +10322,7 @@ func (c *ProjectsLocationsClientConnectorServicesPatchCall) RequestId(requestId 
 // in the update_mask are relative to the resource, not the full
 // request. A field will be overwritten if it is in the mask. If the
 // user does not provide a mask then all fields will be overwritten.
-// Mutable fields: display_name.
+// Mutable fields: display_name, ingress.config.destination_routes.
 func (c *ProjectsLocationsClientConnectorServicesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsClientConnectorServicesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -10145,7 +10453,7 @@ func (c *ProjectsLocationsClientConnectorServicesPatchCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the ClientConnectorService resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten. Mutable fields: display_name.",
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the ClientConnectorService resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten. Mutable fields: display_name, ingress.config.destination_routes.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

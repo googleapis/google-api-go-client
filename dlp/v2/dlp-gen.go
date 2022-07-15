@@ -3833,14 +3833,17 @@ type GooglePrivacyDlpV2HotwordRule struct {
 	// findings.
 	LikelihoodAdjustment *GooglePrivacyDlpV2LikelihoodAdjustment `json:"likelihoodAdjustment,omitempty"`
 
-	// Proximity: Proximity of the finding within which the entire hotword
-	// must reside. The total length of the window cannot exceed 1000
-	// characters. Note that the finding itself will be included in the
-	// window, so that hotwords may be used to match substrings of the
-	// finding itself. For example, the certainty of a phone number regex
-	// "\(\d{3}\) \d{3}-\d{4}" could be adjusted upwards if the area code is
-	// known to be the local area code of a company office using the hotword
-	// regex "\(xxx\)", where "xxx" is the area code in question.
+	// Proximity: Range of characters within which the entire hotword must
+	// reside. The total length of the window cannot exceed 1000 characters.
+	// The finding itself will be included in the window, so that hotwords
+	// can be used to match substrings of the finding itself. Suppose you
+	// want Cloud DLP to promote the likelihood of the phone number regex
+	// "\(\d{3}\) \d{3}-\d{4}" if the area code is known to be the area code
+	// of a company's office. In this case, use the hotword regex "\(xxx\)",
+	// where "xxx" is the area code in question. For tabular data, if you
+	// want to modify the likelihood of an entire column of findngs, see
+	// [Hotword example: Set the match likelihood of a table column]
+	// (https://cloud.google.com/dlp/docs/creating-custom-infotypes-likelihood#match-column-values).
 	Proximity *GooglePrivacyDlpV2Proximity `json:"proximity,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HotwordRegex") to
@@ -6452,6 +6455,10 @@ type GooglePrivacyDlpV2Proximity struct {
 	WindowAfter int64 `json:"windowAfter,omitempty"`
 
 	// WindowBefore: Number of characters before the finding to consider.
+	// For tabular data, if you want to modify the likelihood of an entire
+	// column of findngs, set this to 1. For more information, see [Hotword
+	// example: Set the match likelihood of a table column]
+	// (https://cloud.google.com/dlp/docs/creating-custom-infotypes-likelihood#match-column-values).
 	WindowBefore int64 `json:"windowBefore,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "WindowAfter") to

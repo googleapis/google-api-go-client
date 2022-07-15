@@ -15590,14 +15590,16 @@ func (c *LiveBroadcastsInsertCall) Do(opts ...googleapi.CallOption) (*LiveBroadc
 
 type LiveBroadcastsInsertCuepointCall struct {
 	s          *Service
+	cuepoint   *Cuepoint
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
 }
 
 // InsertCuepoint: Insert cuepoints in a broadcast
-func (r *LiveBroadcastsService) InsertCuepoint() *LiveBroadcastsInsertCuepointCall {
+func (r *LiveBroadcastsService) InsertCuepoint(cuepoint *Cuepoint) *LiveBroadcastsInsertCuepointCall {
 	c := &LiveBroadcastsInsertCuepointCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.cuepoint = cuepoint
 	return c
 }
 
@@ -15659,52 +15661,6 @@ func (c *LiveBroadcastsInsertCuepointCall) Part(part ...string) *LiveBroadcastsI
 	return c
 }
 
-// ResourceCueType sets the optional parameter "resource.cueType":
-//
-// Possible values:
-//   "cueTypeUnspecified"
-//   "cueTypeAd"
-func (c *LiveBroadcastsInsertCuepointCall) ResourceCueType(resourceCueType string) *LiveBroadcastsInsertCuepointCall {
-	c.urlParams_.Set("resource.cueType", resourceCueType)
-	return c
-}
-
-// ResourceDurationSecs sets the optional parameter
-// "resource.durationSecs": The duration of this cuepoint.
-func (c *LiveBroadcastsInsertCuepointCall) ResourceDurationSecs(resourceDurationSecs int64) *LiveBroadcastsInsertCuepointCall {
-	c.urlParams_.Set("resource.durationSecs", fmt.Sprint(resourceDurationSecs))
-	return c
-}
-
-// ResourceEtag sets the optional parameter "resource.etag":
-func (c *LiveBroadcastsInsertCuepointCall) ResourceEtag(resourceEtag string) *LiveBroadcastsInsertCuepointCall {
-	c.urlParams_.Set("resource.etag", resourceEtag)
-	return c
-}
-
-// ResourceId sets the optional parameter "resource.id": The identifier
-// for cuepoint resource.
-func (c *LiveBroadcastsInsertCuepointCall) ResourceId(resourceId string) *LiveBroadcastsInsertCuepointCall {
-	c.urlParams_.Set("resource.id", resourceId)
-	return c
-}
-
-// ResourceInsertionOffsetTimeMs sets the optional parameter
-// "resource.insertionOffsetTimeMs": The time when the cuepoint should
-// be inserted by offset to the broadcast actual start time.
-func (c *LiveBroadcastsInsertCuepointCall) ResourceInsertionOffsetTimeMs(resourceInsertionOffsetTimeMs int64) *LiveBroadcastsInsertCuepointCall {
-	c.urlParams_.Set("resource.insertionOffsetTimeMs", fmt.Sprint(resourceInsertionOffsetTimeMs))
-	return c
-}
-
-// ResourceWalltimeMs sets the optional parameter "resource.walltimeMs":
-// The wall clock time at which the cuepoint should be inserted. Only
-// one of insertion_offset_time_ms and walltime_ms may be set at a time.
-func (c *LiveBroadcastsInsertCuepointCall) ResourceWalltimeMs(resourceWalltimeMs uint64) *LiveBroadcastsInsertCuepointCall {
-	c.urlParams_.Set("resource.walltimeMs", fmt.Sprint(resourceWalltimeMs))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -15738,6 +15694,11 @@ func (c *LiveBroadcastsInsertCuepointCall) doRequest(alt string) (*http.Response
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cuepoint)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/liveBroadcasts/cuepoint")
@@ -15814,48 +15775,12 @@ func (c *LiveBroadcastsInsertCuepointCall) Do(opts ...googleapi.CallOption) (*Cu
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
-	//     },
-	//     "resource.cueType": {
-	//       "enum": [
-	//         "cueTypeUnspecified",
-	//         "cueTypeAd"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource.durationSecs": {
-	//       "description": "The duration of this cuepoint.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resource.etag": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource.id": {
-	//       "description": "The identifier for cuepoint resource.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource.insertionOffsetTimeMs": {
-	//       "description": "The time when the cuepoint should be inserted by offset to the broadcast actual start time.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource.walltimeMs": {
-	//       "description": "The wall clock time at which the cuepoint should be inserted. Only one of insertion_offset_time_ms and walltime_ms may be set at a time.",
-	//       "format": "uint64",
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "youtube/v3/liveBroadcasts/cuepoint",
+	//   "request": {
+	//     "$ref": "Cuepoint"
+	//   },
 	//   "response": {
 	//     "$ref": "Cuepoint"
 	//   },

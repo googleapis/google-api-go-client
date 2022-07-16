@@ -3002,6 +3002,10 @@ type PolicyControllerHubConfig struct {
 	// Monitoring: Monitoring specifies the configuration of monitoring.
 	Monitoring *PolicyControllerMonitoringConfig `json:"monitoring,omitempty"`
 
+	// MutationEnabled: Enables the ability to mutate resources using Policy
+	// Controller.
+	MutationEnabled bool `json:"mutationEnabled,omitempty"`
+
 	// ReferentialRulesEnabled: Enables the ability to use Constraint
 	// Templates that reference to objects other than the object currently
 	// being evaluated.

@@ -1730,6 +1730,9 @@ type Instance struct {
 	// `projects/{project}/instances/a-z+[a-z0-9]`.
 	Name string `json:"name,omitempty"`
 
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+
 	// State: Output only. The current state of the instance.
 	//
 	// Possible values:

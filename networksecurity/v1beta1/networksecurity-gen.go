@@ -384,8 +384,8 @@ type Destination struct {
 	// Hosts: Required. List of host names to match. Matched against the
 	// ":authority" header in http requests. At least one host should match.
 	// Each host can be an exact match, or a prefix match (example
-	// "mydomain.*") or a suffix match (example // *.myorg.com") or a
-	// presence(any) match "*".
+	// "mydomain.*") or a suffix match (example "*.myorg.com") or a presence
+	// (any) match "*".
 	Hosts []string `json:"hosts,omitempty"`
 
 	// HttpHeaderMatch: Optional. Match against key:value pair in http
@@ -540,7 +540,7 @@ func (s *GoogleCloudNetworksecurityV1beta1CertificateProvider) MarshalJSON() ([]
 // GRPC Endpoint.
 type GoogleCloudNetworksecurityV1beta1GrpcEndpoint struct {
 	// TargetUri: Required. The target URI of the gRPC endpoint. Only UDS
-	// path is supported, and should start with “unix:”.
+	// path is supported, and should start with "unix:".
 	TargetUri string `json:"targetUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TargetUri") to
@@ -951,7 +951,7 @@ func (s *GoogleIamV1TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HttpHeaderMatch: Specification of HTTP header match atrributes.
+// HttpHeaderMatch: Specification of HTTP header match attributes.
 type HttpHeaderMatch struct {
 	// HeaderName: Required. The name of the HTTP header to match. For
 	// matching against the HTTP request's authority, use a headerMatch with
@@ -1501,8 +1501,8 @@ type Source struct {
 	// Principals: Optional. List of peer identities to match for
 	// authorization. At least one principal should match. Each peer can be
 	// an exact match, or a prefix match (example, "namespace/*") or a
-	// suffix match (example, // */service-account") or a presence match
-	// "*". Authorization based on the principal name without certificate
+	// suffix match (example, "*/service-account") or a presence match "*".
+	// Authorization based on the principal name without certificate
 	// validation (configured by ServerTlsPolicy resource) is considered
 	// insecure.
 	Principals []string `json:"principals,omitempty"`

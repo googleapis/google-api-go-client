@@ -469,6 +469,58 @@ func (s *Access) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AccessReview: Conveys information about a Kubernetes access review
+// (e.g. kubectl auth can-i ...) that was involved in a finding.
+type AccessReview struct {
+	// Group: Group is the API Group of the Resource. "*" means all.
+	Group string `json:"group,omitempty"`
+
+	// Name: Name is the name of the resource being requested. Empty means
+	// all.
+	Name string `json:"name,omitempty"`
+
+	// Ns: Namespace of the action being requested. Currently, there is no
+	// distinction between no namespace and all namespaces. Both are
+	// represented by "" (empty).
+	Ns string `json:"ns,omitempty"`
+
+	// Resource: Resource is the optional resource type requested. "*" means
+	// all.
+	Resource string `json:"resource,omitempty"`
+
+	// Subresource: Subresource is the optional subresource type.
+	Subresource string `json:"subresource,omitempty"`
+
+	// Verb: Verb is a Kubernetes resource API verb, like: get, list, watch,
+	// create, update, delete, proxy. "*" means all.
+	Verb string `json:"verb,omitempty"`
+
+	// Version: Version is the API Version of the Resource. "*" means all.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Group") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Group") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessReview) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessReview
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Compliance: Contains compliance information about a security standard
 // indicating unmet recommendations.
 type Compliance struct {
@@ -650,6 +702,46 @@ type ContactDetails struct {
 
 func (s *ContactDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Container: Container associated with the finding.
+type Container struct {
+	// ImageId: Optional container image id, when provided by the container
+	// runtime. Uniquely identifies the container image launched using a
+	// container image digest.
+	ImageId string `json:"imageId,omitempty"`
+
+	// Labels: Container labels, as provided by the container runtime.
+	Labels []*Label `json:"labels,omitempty"`
+
+	// Name: Container name.
+	Name string `json:"name,omitempty"`
+
+	// Uri: Container image URI provided when configuring a pod/container.
+	// May identify a container image version using mutable tags.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Container) MarshalJSON() ([]byte, error) {
+	type NoMethod Container
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1254,9 +1346,14 @@ type Finding struct {
 	// value contains a list of all the contacts that pertain. Please refer
 	// to:
 	// https://cloud.google.com/resource-manager/docs/managing-notification-contacts#notification-categories
-	// { "security":[ { "contact":{ "email":"person1@company.com" } }, {
-	// "contact":{ "email":“person2@company.com” } } ] }
+	// { "security": { "contacts": [ { "email": "person1@company.com" }, {
+	// "email": "person2@company.com" } ] }
 	Contacts map[string]ContactDetails `json:"contacts,omitempty"`
+
+	// Containers: Containers associated with the finding. containers
+	// provides information for both Kubernetes and non-Kubernetes
+	// containers.
+	Containers []*Container `json:"containers,omitempty"`
 
 	// CreateTime: The time at which the finding was created in Security
 	// Command Center.
@@ -1312,6 +1409,9 @@ type Finding struct {
 	// indicates a computer intrusion. Reference:
 	// https://en.wikipedia.org/wiki/Indicator_of_compromise
 	Indicator *Indicator `json:"indicator,omitempty"`
+
+	// Kubernetes: Kubernetes resources associated with the finding.
+	Kubernetes *Kubernetes `json:"kubernetes,omitempty"`
 
 	// MitreAttack: MITRE ATT&CK tactics and techniques related to this
 	// finding. See: https://attack.mitre.org
@@ -1596,6 +1696,45 @@ type GoogleCloudSecuritycenterV1BigQueryExport struct {
 
 func (s *GoogleCloudSecuritycenterV1BigQueryExport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1BigQueryExport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1Binding: Represents a Kubernetes
+// RoleBinding or ClusterRoleBinding.
+type GoogleCloudSecuritycenterV1Binding struct {
+	// Name: Name for binding.
+	Name string `json:"name,omitempty"`
+
+	// Ns: Namespace for binding.
+	Ns string `json:"ns,omitempty"`
+
+	// Role: The Role or ClusterRole referenced by the binding.
+	Role *Role `json:"role,omitempty"`
+
+	// Subjects: Represents the subjects(s) bound to the role. Not always
+	// available for PATCH requests.
+	Subjects []*Subject `json:"subjects,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1Binding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1Binding
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2309,6 +2448,87 @@ func (s *Indicator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Kubernetes: Kubernetes related attributes.
+type Kubernetes struct {
+	// AccessReviews: Provides information on any Kubernetes access reviews
+	// (i.e. privilege checks) relevant to the finding.
+	AccessReviews []*AccessReview `json:"accessReviews,omitempty"`
+
+	// Bindings: Provides Kubernetes role binding information for findings
+	// that involve RoleBindings or ClusterRoleBindings.
+	Bindings []*GoogleCloudSecuritycenterV1Binding `json:"bindings,omitempty"`
+
+	// NodePools: GKE Node Pools associated with the finding. This field
+	// will contain NodePool information for each Node, when it is
+	// available.
+	NodePools []*NodePool `json:"nodePools,omitempty"`
+
+	// Nodes: Provides Kubernetes Node information.
+	Nodes []*Node `json:"nodes,omitempty"`
+
+	// Pods: Kubernetes Pods associated with the finding. This field will
+	// contain Pod records for each container that is owned by a Pod.
+	Pods []*Pod `json:"pods,omitempty"`
+
+	// Roles: Provides Kubernetes role information for findings that involve
+	// Roles or ClusterRoles.
+	Roles []*Role `json:"roles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessReviews") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessReviews") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Kubernetes) MarshalJSON() ([]byte, error) {
+	type NoMethod Kubernetes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Label: Label represents a generic name=value label. Label has
+// separate name and value fields to support filtering with contains().
+type Label struct {
+	// Name: Label name.
+	Name string `json:"name,omitempty"`
+
+	// Value: Label value.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Label) MarshalJSON() ([]byte, error) {
+	type NoMethod Label
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MemoryHashSignature: A signature corresponding to memory page hashes.
 type MemoryHashSignature struct {
 	// BinaryFamily: The binary family.
@@ -2402,6 +2622,7 @@ type MitreAttack struct {
 	//   "DATA_DESTRUCTION" - T1485
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "IMPAIR_DEFENSES" - T1562
+	//   "NETWORK_SERVICE_DISCOVERY" - T1046
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
@@ -2466,6 +2687,7 @@ type MitreAttack struct {
 	//   "DATA_DESTRUCTION" - T1485
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "IMPAIR_DEFENSES" - T1562
+	//   "NETWORK_SERVICE_DISCOVERY" - T1046
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 
 	// Version: The MITRE ATT&CK version referenced by the above fields.
@@ -2492,6 +2714,66 @@ type MitreAttack struct {
 
 func (s *MitreAttack) MarshalJSON() ([]byte, error) {
 	type NoMethod MitreAttack
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Node: Kubernetes Nodes associated with the finding.
+type Node struct {
+	// Name: Full Resource name of the Compute Engine VM running the cluster
+	// node.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Node) MarshalJSON() ([]byte, error) {
+	type NoMethod Node
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NodePool: Provides GKE Node Pool information.
+type NodePool struct {
+	// Name: Kubernetes Node pool name.
+	Name string `json:"name,omitempty"`
+
+	// Nodes: Nodes associated with the finding.
+	Nodes []*Node `json:"nodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodePool) MarshalJSON() ([]byte, error) {
+	type NoMethod NodePool
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2541,6 +2823,44 @@ type OnboardingState struct {
 
 func (s *OnboardingState) MarshalJSON() ([]byte, error) {
 	type NoMethod OnboardingState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Pod: Kubernetes Pod.
+type Pod struct {
+	// Containers: Pod containers associated with this finding, if any.
+	Containers []*Container `json:"containers,omitempty"`
+
+	// Labels: Pod labels. For Kubernetes containers, these are applied to
+	// the container.
+	Labels []*Label `json:"labels,omitempty"`
+
+	// Name: Kubernetes Pod name.
+	Name string `json:"name,omitempty"`
+
+	// Ns: Kubernetes Pod namespace.
+	Ns string `json:"ns,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Containers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Containers") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Pod) MarshalJSON() ([]byte, error) {
+	type NoMethod Pod
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2727,6 +3047,45 @@ func (s *Reference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Role: Kubernetes Role or ClusterRole.
+type Role struct {
+	// Kind: Role type.
+	//
+	// Possible values:
+	//   "KIND_UNSPECIFIED" - Role type is not specified.
+	//   "ROLE" - Kubernetes Role.
+	//   "CLUSTER_ROLE" - Kubernetes ClusterRole.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Role name.
+	Name string `json:"name,omitempty"`
+
+	// Ns: Role namespace.
+	Ns string `json:"ns,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Role) MarshalJSON() ([]byte, error) {
+	type NoMethod Role
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SecurityCenterSettings: Resource capturing the settings for Security
 // Center.
 type SecurityCenterSettings struct {
@@ -2735,7 +3094,8 @@ type SecurityCenterSettings struct {
 	// in. The format is `projects/{project_id}`. An empty value disables
 	// logging. This value is only referenced by services that support log
 	// sink. Please refer to the documentation for an updated list of
-	// compatible services.
+	// compatible services. This may only be specified for organization
+	// level onboarding.
 	LogSinkProject string `json:"logSinkProject,omitempty"`
 
 	// Name: The resource name of the SecurityCenterSettings. Format:
@@ -2744,12 +3104,12 @@ type SecurityCenterSettings struct {
 	// projects/{project}/securityCenterSettings
 	Name string `json:"name,omitempty"`
 
-	// OnboardingTime: Timestamp of when the customer organization was
-	// onboarded to SCC.
+	// OnboardingTime: Output only. Timestamp of when the customer
+	// organization was onboarded to SCC.
 	OnboardingTime string `json:"onboardingTime,omitempty"`
 
-	// OrgServiceAccount: The organization level service account to be used
-	// for security center components.
+	// OrgServiceAccount: Output only. The organization level service
+	// account to be used for security center components.
 	OrgServiceAccount string `json:"orgServiceAccount,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2894,6 +3254,47 @@ type SecurityMarks struct {
 
 func (s *SecurityMarks) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityMarks
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Subject: Represents a Kubernetes Subject.
+type Subject struct {
+	// Kind: Authentication type for subject.
+	//
+	// Possible values:
+	//   "AUTH_TYPE_UNSPECIFIED" - Authentication is not specified.
+	//   "USER" - User with valid certificate.
+	//   "SERVICEACCOUNT" - Users managed by Kubernetes API with credentials
+	// stored as Secrets.
+	//   "GROUP" - Collection of users.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name for subject.
+	Name string `json:"name,omitempty"`
+
+	// Ns: Namespace for subject.
+	Ns string `json:"ns,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Subject) MarshalJSON() ([]byte, error) {
+	type NoMethod Subject
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

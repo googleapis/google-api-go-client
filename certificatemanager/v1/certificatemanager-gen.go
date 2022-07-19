@@ -1183,52 +1183,6 @@ func (s *ProvisioningIssue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ResourcesCount: ResourcesCount represents the resource that stores
-// aggregated project's info in the given location, e.g.: total number
-// of certificates assigned to the project.
-type ResourcesCount struct {
-	// Certificates: The count of certificates.
-	Certificates uint64 `json:"certificates,omitempty,string"`
-
-	// ComputeTime: Required. Input only. The time of the computation. The
-	// field is input only, used in Create and Update calls. For Update
-	// call, new values of selected resources are set if their compute_time
-	// is younger than the persisted ones, e.g.: If you support 3 types of
-	// resources: A, B and C, and you have: 'A' resource count computed at
-	// timestamp = 3 'B' resource count computed at timestamp = 10 'C'
-	// resource count computed at timestamp = 5 And you're going to update
-	// all of them with compute_time = 8, only 'A' and 'C' will be updated,
-	// as 'B' already has fresher data. For Get call a ResourcesCount
-	// instance contains the freshest values for every type.
-	ComputeTime string `json:"computeTime,omitempty"`
-
-	// Name: The singleton resource of the resources count. Must be in the
-	// format `projects/*/locations/*/resourcesCounts/single`.
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Certificates") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Certificates") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ResourcesCount) MarshalJSON() ([]byte, error) {
-	type NoMethod ResourcesCount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // SelfManagedCertificate: Certificate data for a SelfManaged
 // Certificate. SelfManaged Certificates are uploaded by the user.
 // Updating such certificates before they expire remains the user's

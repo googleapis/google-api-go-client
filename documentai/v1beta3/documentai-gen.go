@@ -1418,7 +1418,8 @@ type GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus struct {
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
-	// Status: The status of the processing of the document.
+	// Status: The error encountered while attempting to process the
+	// document. Empty if there are no errors.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HumanReviewStatus")
@@ -6175,7 +6176,8 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus str
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
-	// Status: The status of the processing of the document.
+	// Status: The error encountered while attempting to process the
+	// document. Empty if there are no errors.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

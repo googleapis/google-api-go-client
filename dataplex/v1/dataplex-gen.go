@@ -1964,12 +1964,12 @@ type GoogleCloudDataplexV1Job struct {
 
 	// Name: Output only. The relative resource name of the job, of the
 	// form:
-	// projects/{project_number}/locations/{location_id}/lakes/{lake_id}/
-	// tasks/{task_id}/jobs/{job_id}.
+	// projects/{project_number}/locations/{location_id}/lakes/{lake_id}/task
+	// s/{task_id}/jobs/{job_id}.
 	Name string `json:"name,omitempty"`
 
-	// RetryCount: Output only. . The number of times the job has been
-	// retried (excluding the initial attempt).
+	// RetryCount: Output only. The number of times the job has been retried
+	// (excluding the initial attempt).
 	RetryCount int64 `json:"retryCount,omitempty"`
 
 	// Service: Output only. The underlying service running a job.
@@ -3341,6 +3341,12 @@ type GoogleCloudDataplexV1TaskExecutionSpec struct {
 	// passed as the last argument.
 	Args map[string]string `json:"args,omitempty"`
 
+	// KmsKey: Optional. The Cloud KMS key to use for encryption, of the
+	// form:
+	// projects/{project_number}/locations/{location_id}/keyRings/{key-ring-n
+	// ame}/cryptoKeys/{key-name}.
+	KmsKey string `json:"kmsKey,omitempty"`
+
 	// MaxJobExecutionLifetime: Optional. The maximum duration after which
 	// the job execution is expired.
 	MaxJobExecutionLifetime string `json:"maxJobExecutionLifetime,omitempty"`
@@ -3485,6 +3491,9 @@ func (s *GoogleCloudDataplexV1TaskInfrastructureSpecBatchComputeResources) Marsh
 // GoogleCloudDataplexV1TaskInfrastructureSpecContainerImageRuntime:
 // Container Image Runtime Configuration used with Batch execution.
 type GoogleCloudDataplexV1TaskInfrastructureSpecContainerImageRuntime struct {
+	// Image: Optional. Container image to use.
+	Image string `json:"image,omitempty"`
+
 	// JavaJars: Optional. A list of Java JARS to add to the classpath.
 	// Valid input includes Cloud Storage URIs to Jar binaries. For example,
 	// gs://bucket-name/my/path/to/file.jar
@@ -3503,7 +3512,7 @@ type GoogleCloudDataplexV1TaskInfrastructureSpecContainerImageRuntime struct {
 	// For example, gs://bucket-name/my/path/to/lib.tar.gz
 	PythonPackages []string `json:"pythonPackages,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "JavaJars") to
+	// ForceSendFields is a list of field names (e.g. "Image") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3511,8 +3520,8 @@ type GoogleCloudDataplexV1TaskInfrastructureSpecContainerImageRuntime struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "JavaJars") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Image") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -5285,7 +5294,7 @@ func (c *ProjectsLocationsLakesDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}",
+	//       "description": "Required. The resource name of the lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+$",
 	//       "required": true,
@@ -5432,7 +5441,7 @@ func (c *ProjectsLocationsLakesGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}",
+	//       "description": "Required. The resource name of the lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+$",
 	//       "required": true,
@@ -6476,7 +6485,7 @@ func (c *ProjectsLocationsLakesActionsListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}",
+	//       "description": "Required. The resource name of the parent lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+$",
 	//       "required": true,
@@ -9312,7 +9321,7 @@ func (c *ProjectsLocationsLakesEnvironmentsCreateCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent lake: projects/{project_id}/locations/{location_id}/lakes/{lake_id}",
+	//       "description": "Required. The resource name of the parent lake: projects/{project_id}/locations/{location_id}/lakes/{lake_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+$",
 	//       "required": true,
@@ -9353,7 +9362,7 @@ type ProjectsLocationsLakesEnvironmentsDeleteCall struct {
 //
 // - name: The resource name of the environment:
 //   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/enviro
-//   nments/{environment_id}`.
+//   nments/{environment_id}.
 func (r *ProjectsLocationsLakesEnvironmentsService) Delete(name string) *ProjectsLocationsLakesEnvironmentsDeleteCall {
 	c := &ProjectsLocationsLakesEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9455,7 +9464,7 @@ func (c *ProjectsLocationsLakesEnvironmentsDeleteCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the environment: projects/{project_id}/locations/{location_id}/lakes/{lake_id}/environments/{environment_id}`",
+	//       "description": "Required. The resource name of the environment: projects/{project_id}/locations/{location_id}/lakes/{lake_id}/environments/{environment_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -9603,7 +9612,7 @@ func (c *ProjectsLocationsLakesEnvironmentsGetCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the environment: projects/{project_id}/locations/{location_id}/lakes/{lake_id}/environments/{environment_id}",
+	//       "description": "Required. The resource name of the environment: projects/{project_id}/locations/{location_id}/lakes/{lake_id}/environments/{environment_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -9980,7 +9989,7 @@ func (c *ProjectsLocationsLakesEnvironmentsListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent lake: projects/{project_id}/locations/{location_id}/lakes/{lake_id}",
+	//       "description": "Required. The resource name of the parent lake: projects/{project_id}/locations/{location_id}/lakes/{lake_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+$",
 	//       "required": true,
@@ -10667,7 +10676,7 @@ func (c *ProjectsLocationsLakesEnvironmentsSessionsListCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent environment: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/environment/{environment_id}",
+	//       "description": "Required. The resource name of the parent environment: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/environment/{environment_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -10843,7 +10852,7 @@ func (c *ProjectsLocationsLakesTasksCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}",
+	//       "description": "Required. The resource name of the parent lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+$",
 	//       "required": true,
@@ -10887,8 +10896,8 @@ type ProjectsLocationsLakesTasksDeleteCall struct {
 // Delete: Delete the task resource.
 //
 // - name: The resource name of the task:
-//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}
-//   /task/{task_id}`.
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
+//   sk/{task_id}.
 func (r *ProjectsLocationsLakesTasksService) Delete(name string) *ProjectsLocationsLakesTasksDeleteCall {
 	c := &ProjectsLocationsLakesTasksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10990,7 +10999,7 @@ func (c *ProjectsLocationsLakesTasksDeleteCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the task: projects/{project_number}/locations/{location_id}/lakes/{lake_id} /task/{task_id}`",
+	//       "description": "Required. The resource name of the task: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/task/{task_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/tasks/[^/]+$",
 	//       "required": true,
@@ -11022,8 +11031,8 @@ type ProjectsLocationsLakesTasksGetCall struct {
 // Get: Get task resource.
 //
 // - name: The resource name of the task:
-//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}
-//   /tasks/{tasks_id}.
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
+//   sks/{tasks_id}.
 func (r *ProjectsLocationsLakesTasksService) Get(name string) *ProjectsLocationsLakesTasksGetCall {
 	c := &ProjectsLocationsLakesTasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11138,7 +11147,7 @@ func (c *ProjectsLocationsLakesTasksGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the task: projects/{project_number}/locations/{location_id}/lakes/{lake_id} /tasks/{tasks_id}",
+	//       "description": "Required. The resource name of the task: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{tasks_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/tasks/[^/]+$",
 	//       "required": true,
@@ -11513,7 +11522,7 @@ func (c *ProjectsLocationsLakesTasksListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}",
+	//       "description": "Required. The resource name of the parent lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+$",
 	//       "required": true,
@@ -12035,8 +12044,8 @@ type ProjectsLocationsLakesTasksJobsCancelCall struct {
 // Cancel: Cancel jobs running for the task resource.
 //
 // - name: The resource name of the job:
-//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}
-//   /task/{task_id}/job/{job_id}`.
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
+//   sk/{task_id}/job/{job_id}.
 func (r *ProjectsLocationsLakesTasksJobsService) Cancel(name string, googleclouddataplexv1canceljobrequest *GoogleCloudDataplexV1CancelJobRequest) *ProjectsLocationsLakesTasksJobsCancelCall {
 	c := &ProjectsLocationsLakesTasksJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12144,7 +12153,7 @@ func (c *ProjectsLocationsLakesTasksJobsCancelCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the job: projects/{project_number}/locations/{location_id}/lakes/{lake_id} /task/{task_id}/job/{job_id}`",
+	//       "description": "Required. The resource name of the job: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/task/{task_id}/job/{job_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/tasks/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -12179,8 +12188,8 @@ type ProjectsLocationsLakesTasksJobsGetCall struct {
 // Get: Get job resource.
 //
 // - name: The resource name of the job:
-//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}
-//   /tasks/{task_id}/jobs/{job_id}.
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
+//   sks/{task_id}/jobs/{job_id}.
 func (r *ProjectsLocationsLakesTasksJobsService) Get(name string) *ProjectsLocationsLakesTasksJobsGetCall {
 	c := &ProjectsLocationsLakesTasksJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12295,7 +12304,7 @@ func (c *ProjectsLocationsLakesTasksJobsGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the job: projects/{project_number}/locations/{location_id}/lakes/{lake_id} /tasks/{task_id}/jobs/{job_id}",
+	//       "description": "Required. The resource name of the job: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{task_id}/jobs/{job_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/tasks/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -12473,7 +12482,7 @@ func (c *ProjectsLocationsLakesTasksJobsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent environment: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{task_id}",
+	//       "description": "Required. The resource name of the parent environment: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{task_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/tasks/[^/]+$",
 	//       "required": true,
@@ -12655,7 +12664,7 @@ func (c *ProjectsLocationsLakesZonesCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}",
+	//       "description": "Required. The resource name of the parent lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+$",
 	//       "required": true,
@@ -12700,8 +12709,8 @@ type ProjectsLocationsLakesZonesDeleteCall struct {
 // deleted before the zone can be deleted.
 //
 // - name: The resource name of the zone:
-//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}
-//   /zones/{zone_id}`.
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}.
 func (r *ProjectsLocationsLakesZonesService) Delete(name string) *ProjectsLocationsLakesZonesDeleteCall {
 	c := &ProjectsLocationsLakesZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12803,7 +12812,7 @@ func (c *ProjectsLocationsLakesZonesDeleteCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the zone: projects/{project_number}/locations/{location_id}/lakes/{lake_id} /zones/{zone_id}`",
+	//       "description": "Required. The resource name of the zone: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/zones/[^/]+$",
 	//       "required": true,
@@ -12835,8 +12844,8 @@ type ProjectsLocationsLakesZonesGetCall struct {
 // Get: Retrieves a zone resource.
 //
 // - name: The resource name of the zone:
-//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}
-//   /zones/{zone_id}.
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}.
 func (r *ProjectsLocationsLakesZonesService) Get(name string) *ProjectsLocationsLakesZonesGetCall {
 	c := &ProjectsLocationsLakesZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12951,7 +12960,7 @@ func (c *ProjectsLocationsLakesZonesGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the zone: projects/{project_number}/locations/{location_id}/lakes/{lake_id} /zones/{zone_id}",
+	//       "description": "Required. The resource name of the zone: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/zones/[^/]+$",
 	//       "required": true,
@@ -13326,7 +13335,7 @@ func (c *ProjectsLocationsLakesZonesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}",
+	//       "description": "Required. The resource name of the parent lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+$",
 	//       "required": true,
@@ -13996,7 +14005,7 @@ func (c *ProjectsLocationsLakesZonesActionsListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent zone: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}",
+	//       "description": "Required. The resource name of the parent zone: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/zones/[^/]+$",
 	//       "required": true,
@@ -14049,8 +14058,8 @@ type ProjectsLocationsLakesZonesAssetsCreateCall struct {
 // Create: Creates an asset resource.
 //
 // - parent: The resource name of the parent zone:
-//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}
-//   /zones/{zone_id}`.
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}.
 func (r *ProjectsLocationsLakesZonesAssetsService) Create(parent string, googleclouddataplexv1asset *GoogleCloudDataplexV1Asset) *ProjectsLocationsLakesZonesAssetsCreateCall {
 	c := &ProjectsLocationsLakesZonesAssetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14182,7 +14191,7 @@ func (c *ProjectsLocationsLakesZonesAssetsCreateCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent zone: projects/{project_number}/locations/{location_id}/lakes/{lake_id} /zones/{zone_id}`",
+	//       "description": "Required. The resource name of the parent zone: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/zones/[^/]+$",
 	//       "required": true,
@@ -14223,8 +14232,8 @@ type ProjectsLocationsLakesZonesAssetsDeleteCall struct {
 // policy.
 //
 // - name: The resource name of the asset:
-//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}
-//   /zones/{zone_id}/assets/{asset_id}.
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/assets/{asset_id}.
 func (r *ProjectsLocationsLakesZonesAssetsService) Delete(name string) *ProjectsLocationsLakesZonesAssetsDeleteCall {
 	c := &ProjectsLocationsLakesZonesAssetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14326,7 +14335,7 @@ func (c *ProjectsLocationsLakesZonesAssetsDeleteCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the asset: projects/{project_number}/locations/{location_id}/lakes/{lake_id} /zones/{zone_id}/assets/{asset_id}",
+	//       "description": "Required. The resource name of the asset: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}/assets/{asset_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/zones/[^/]+/assets/[^/]+$",
 	//       "required": true,
@@ -14358,8 +14367,8 @@ type ProjectsLocationsLakesZonesAssetsGetCall struct {
 // Get: Retrieves an asset resource.
 //
 // - name: The resource name of the asset:
-//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}
-//   /zones/{zone_id}/assets/{asset_id}.
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/assets/{asset_id}.
 func (r *ProjectsLocationsLakesZonesAssetsService) Get(name string) *ProjectsLocationsLakesZonesAssetsGetCall {
 	c := &ProjectsLocationsLakesZonesAssetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14474,7 +14483,7 @@ func (c *ProjectsLocationsLakesZonesAssetsGetCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the asset: projects/{project_number}/locations/{location_id}/lakes/{lake_id} /zones/{zone_id}/assets/{asset_id}",
+	//       "description": "Required. The resource name of the asset: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}/assets/{asset_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/zones/[^/]+/assets/[^/]+$",
 	//       "required": true,
@@ -14681,8 +14690,8 @@ type ProjectsLocationsLakesZonesAssetsListCall struct {
 // List: Lists asset resources in a zone.
 //
 // - parent: The resource name of the parent zone:
-//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}
-//   /zones/{zone_id}`.
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}.
 func (r *ProjectsLocationsLakesZonesAssetsService) List(parent string) *ProjectsLocationsLakesZonesAssetsListCall {
 	c := &ProjectsLocationsLakesZonesAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14850,7 +14859,7 @@ func (c *ProjectsLocationsLakesZonesAssetsListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent zone: projects/{project_number}/locations/{location_id}/lakes/{lake_id} /zones/{zone_id}`",
+	//       "description": "Required. The resource name of the parent zone: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/zones/[^/]+$",
 	//       "required": true,
@@ -15520,7 +15529,7 @@ func (c *ProjectsLocationsLakesZonesAssetsActionsListCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent asset: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}/assets/{asset_id}",
+	//       "description": "Required. The resource name of the parent asset: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}/assets/{asset_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/zones/[^/]+/assets/[^/]+$",
 	//       "required": true,

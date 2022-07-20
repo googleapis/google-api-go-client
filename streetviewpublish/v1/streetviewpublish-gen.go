@@ -1093,6 +1093,7 @@ type PhotoSequence struct {
 	// gaps greater than 0.1 seconds in duration.
 	//   "UNSUPPORTED_CAMERA" - The camera is not supported.
 	//   "NOT_OUTDOORS" - Some frames were indoors, which is unsupported.
+	//   "INSUFFICIENT_VIDEO_FRAMES" - Not enough video frames.
 	FailureReason string `json:"failureReason,omitempty"`
 
 	// Filename: Output only. The filename of the upload. Does not include

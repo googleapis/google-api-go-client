@@ -533,7 +533,7 @@
       }
     }
   },
-  "revision": "20220703",
+  "revision": "20220718",
   "rootUrl": "https://streetviewpublish.googleapis.com/",
   "schemas": {
     "BatchDeletePhotosRequest": {
@@ -1028,7 +1028,8 @@
             "INVALID_IMU",
             "IMU_DATA_GAP",
             "UNSUPPORTED_CAMERA",
-            "NOT_OUTDOORS"
+            "NOT_OUTDOORS",
+            "INSUFFICIENT_VIDEO_FRAMES"
           ],
           "enumDescriptions": [
             "The failure reason is unspecified, this is the default value.",
@@ -1049,7 +1050,8 @@
             "IMU (Accelerometer, Gyroscope, etc.) data are not valid. They may be missing required fields (x, y, z or time), may not be formatted correctly, or any other issue that prevents our systems from parsing it.",
             "IMU (Accelerometer, Gyroscope, etc.) data contain gaps greater than 0.1 seconds in duration.",
             "The camera is not supported.",
-            "Some frames were indoors, which is unsupported."
+            "Some frames were indoors, which is unsupported.",
+            "Not enough video frames."
           ],
           "readOnly": true,
           "type": "string"

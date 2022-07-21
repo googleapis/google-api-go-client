@@ -231,6 +231,10 @@ type AccessDeniedPageSettings struct {
 	// on access denied events to this application.
 	GenerateTroubleshootingUri bool `json:"generateTroubleshootingUri,omitempty"`
 
+	// RemediationTokenGenerationEnabled: Whether to generate remediation
+	// token on access denied events to this application.
+	RemediationTokenGenerationEnabled bool `json:"remediationTokenGenerationEnabled,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AccessDeniedPageUri")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -257,6 +261,10 @@ func (s *AccessDeniedPageSettings) MarshalJSON() ([]byte, error) {
 
 // AccessSettings: Access related settings for IAP protected apps.
 type AccessSettings struct {
+	// AllowedDomainsSettings: Settings to configure and enable allowed
+	// domains.
+	AllowedDomainsSettings *AllowedDomainsSettings `json:"allowedDomainsSettings,omitempty"`
+
 	// CorsSettings: Configuration to allow cross-origin requests via IAP.
 	CorsSettings *CorsSettings `json:"corsSettings,omitempty"`
 
@@ -275,7 +283,42 @@ type AccessSettings struct {
 	// IAP.
 	ReauthSettings *ReauthSettings `json:"reauthSettings,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CorsSettings") to
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedDomainsSettings") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedDomainsSettings")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AllowedDomainsSettings: Configuration for IAP allowed domains. Allows
+// the customers to restrict access to the app by only allowing requests
+// from the listed trusted domains.
+type AllowedDomainsSettings struct {
+	// Domains: List of trusted domains.
+	Domains []string `json:"domains,omitempty"`
+
+	// Enable: Configuration for customers to opt in for the feature.
+	Enable bool `json:"enable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Domains") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -283,17 +326,17 @@ type AccessSettings struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CorsSettings") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Domains") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessSettings) MarshalJSON() ([]byte, error) {
-	type NoMethod AccessSettings
+func (s *AllowedDomainsSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AllowedDomainsSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -489,11 +532,11 @@ func (s *CorsSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CsmSettings: Configuration for RCTokens generated for service mesh
-// workloads protected by IAP. RCTokens are IAP generated JWTs that can
+// CsmSettings: Configuration for RCToken generated for service mesh
+// workloads protected by IAP. RCToken are IAP generated JWTs that can
 // be verified at the application. The RCToken is primarily used for
 // service mesh deployments, and can be scoped to a single mesh by
-// configuring the audience field accordingly
+// configuring the audience field accordingly.
 type CsmSettings struct {
 	// RctokenAud: Audience claim set in the generated RCToken. This value
 	// is not validated by IAP.
@@ -1131,13 +1174,7 @@ type ReauthSettings struct {
 	//
 	// Possible values:
 	//   "METHOD_UNSPECIFIED" - Reauthentication disabled.
-	//   "LOGIN" - Mimics the behavior as if the user had logged out and
-	// tried to log in again. Users with 2SV (2-step verification) enabled
-	// see their 2SV challenges if they did not opt to have their second
-	// factor responses saved. Apps Core (GSuites) admins can configure
-	// settings to disable 2SV cookies and require 2SV for all Apps Core
-	// users in their domains.
-	//   "PASSWORD" - User must type their password.
+	//   "LOGIN" - Prompts the user to log in again.
 	//   "SECURE_KEY" - User must use their secure key 2nd factor device.
 	Method string `json:"method,omitempty"`
 

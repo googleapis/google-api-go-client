@@ -607,11 +607,12 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Hub: A hub is a collection of spokes. A single hub can contain spokes
-// from multiple regions. However, if any of a hub's spokes use the data
-// transfer feature, the resources associated with those spokes must all
-// reside in the same VPC network. Spokes that do not use data transfer
-// can be associated with any VPC network in your project.
+// Hub: A Network Connectivity Center hub is a collection of spokes. A
+// single hub can contain spokes from multiple regions. However, if any
+// of a hub's spokes use the data transfer feature, the resources
+// associated with those spokes must all reside in the same VPC network.
+// Spokes that do not use data transfer can be associated with any VPC
+// network in your project.
 type Hub struct {
 	// CreateTime: Output only. The time the hub was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -641,6 +642,7 @@ type Hub struct {
 	//   "CREATING" - The resource's create operation is in progress
 	//   "ACTIVE" - The resource is active
 	//   "DELETING" - The resource's Delete operation is in progress
+	//   "UPDATING" - The resource's Update operation is in progress
 	State string `json:"state,omitempty"`
 
 	// UniqueId: Output only. The Google-generated UUID for the hub. This
@@ -1197,7 +1199,7 @@ func (s *RouterApplianceInstance) MarshalJSON() ([]byte, error) {
 }
 
 // RoutingVPC: RoutingVPC contains information about the VPC networks
-// that are associated with a hub's spokes.
+// associated with the spokes of a Network Connectivity Center hub.
 type RoutingVPC struct {
 	// RequiredForNewSiteToSiteDataTransferSpokes: Output only. If true,
 	// indicates that this VPC network is currently associated with spokes
@@ -1272,11 +1274,12 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Spoke: A spoke represents a connection between your Google Cloud
-// network resources and a non-Google-Cloud network. When you create a
-// spoke, you associate it with a hub. You must also identify a value
-// for exactly one of the following fields: * linked_vpn_tunnels *
-// linked_interconnect_attachments * linked_router_appliance_instances
+// Spoke: A Network Connectivity Center spoke represents a connection
+// between your Google Cloud network resources and a non-Google-Cloud
+// network. When you create a spoke, you associate it with a hub. You
+// must also identify a value for exactly one of the following fields: *
+// linked_vpn_tunnels * linked_interconnect_attachments *
+// linked_router_appliance_instances
 type Spoke struct {
 	// CreateTime: Output only. The time the spoke was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1315,6 +1318,7 @@ type Spoke struct {
 	//   "CREATING" - The resource's create operation is in progress
 	//   "ACTIVE" - The resource is active
 	//   "DELETING" - The resource's Delete operation is in progress
+	//   "UPDATING" - The resource's Update operation is in progress
 	State string `json:"state,omitempty"`
 
 	// UniqueId: Output only. The Google-generated UUID for the spoke. This
@@ -1785,7 +1789,8 @@ type ProjectsLocationsGlobalHubsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new hub in the specified project.
+// Create: Creates a new Network Connectivity Center hub in the
+// specified project.
 //
 // - parent: The parent resource.
 func (r *ProjectsLocationsGlobalHubsService) Create(parent string, hub *Hub) *ProjectsLocationsGlobalHubsCreateCall {
@@ -1911,7 +1916,7 @@ func (c *ProjectsLocationsGlobalHubsCreateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new hub in the specified project.",
+	//   "description": "Creates a new Network Connectivity Center hub in the specified project.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs",
 	//   "httpMethod": "POST",
 	//   "id": "networkconnectivity.projects.locations.global.hubs.create",
@@ -1961,7 +1966,7 @@ type ProjectsLocationsGlobalHubsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the specified hub.
+// Delete: Deletes a Network Connectivity Center hub.
 //
 // - name: The name of the hub to delete.
 func (r *ProjectsLocationsGlobalHubsService) Delete(name string) *ProjectsLocationsGlobalHubsDeleteCall {
@@ -2074,7 +2079,7 @@ func (c *ProjectsLocationsGlobalHubsDeleteCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified hub.",
+	//   "description": "Deletes a Network Connectivity Center hub.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "networkconnectivity.projects.locations.global.hubs.delete",
@@ -2117,7 +2122,7 @@ type ProjectsLocationsGlobalHubsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details about the specified hub.
+// Get: Gets details about a Network Connectivity Center hub.
 //
 // - name: The name of the hub resource to get.
 func (r *ProjectsLocationsGlobalHubsService) Get(name string) *ProjectsLocationsGlobalHubsGetCall {
@@ -2225,7 +2230,7 @@ func (c *ProjectsLocationsGlobalHubsGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets details about the specified hub.",
+	//   "description": "Gets details about a Network Connectivity Center hub.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}",
 	//   "httpMethod": "GET",
 	//   "id": "networkconnectivity.projects.locations.global.hubs.get",
@@ -2438,7 +2443,8 @@ type ProjectsLocationsGlobalHubsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists hubs in a given project.
+// List: Lists the Network Connectivity Center hubs associated with a
+// given project.
 //
 // - parent: The parent resource's name.
 func (r *ProjectsLocationsGlobalHubsService) List(parent string) *ProjectsLocationsGlobalHubsListCall {
@@ -2573,7 +2579,7 @@ func (c *ProjectsLocationsGlobalHubsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists hubs in a given project.",
+	//   "description": "Lists the Network Connectivity Center hubs associated with a given project.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs",
 	//   "httpMethod": "GET",
 	//   "id": "networkconnectivity.projects.locations.global.hubs.list",
@@ -2653,7 +2659,8 @@ type ProjectsLocationsGlobalHubsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates the description and/or labels of the specified hub.
+// Patch: Updates the description and/or labels of a Network
+// Connectivity Center hub.
 //
 // - name: Immutable. The name of the hub. Hub names must be unique.
 //   They use the following form:
@@ -2785,7 +2792,7 @@ func (c *ProjectsLocationsGlobalHubsPatchCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the description and/or labels of the specified hub.",
+	//   "description": "Updates the description and/or labels of a Network Connectivity Center hub.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "networkconnectivity.projects.locations.global.hubs.patch",
@@ -4254,7 +4261,7 @@ type ProjectsLocationsSpokesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a spoke in the specified project and location.
+// Create: Creates a Network Connectivity Center spoke.
 //
 // - parent: The parent resource.
 func (r *ProjectsLocationsSpokesService) Create(parent string, spoke *Spoke) *ProjectsLocationsSpokesCreateCall {
@@ -4380,7 +4387,7 @@ func (c *ProjectsLocationsSpokesCreateCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a spoke in the specified project and location.",
+	//   "description": "Creates a Network Connectivity Center spoke.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/spokes",
 	//   "httpMethod": "POST",
 	//   "id": "networkconnectivity.projects.locations.spokes.create",
@@ -4430,7 +4437,7 @@ type ProjectsLocationsSpokesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the specified spoke.
+// Delete: Deletes a Network Connectivity Center spoke.
 //
 // - name: The name of the spoke to delete.
 func (r *ProjectsLocationsSpokesService) Delete(name string) *ProjectsLocationsSpokesDeleteCall {
@@ -4543,7 +4550,7 @@ func (c *ProjectsLocationsSpokesDeleteCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified spoke.",
+	//   "description": "Deletes a Network Connectivity Center spoke.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/spokes/{spokesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "networkconnectivity.projects.locations.spokes.delete",
@@ -4586,7 +4593,7 @@ type ProjectsLocationsSpokesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details about the specified spoke.
+// Get: Gets details about a Network Connectivity Center spoke.
 //
 // - name: The name of the spoke resource.
 func (r *ProjectsLocationsSpokesService) Get(name string) *ProjectsLocationsSpokesGetCall {
@@ -4694,7 +4701,7 @@ func (c *ProjectsLocationsSpokesGetCall) Do(opts ...googleapi.CallOption) (*Spok
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets details about the specified spoke.",
+	//   "description": "Gets details about a Network Connectivity Center spoke.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/spokes/{spokesId}",
 	//   "httpMethod": "GET",
 	//   "id": "networkconnectivity.projects.locations.spokes.get",
@@ -4907,7 +4914,8 @@ type ProjectsLocationsSpokesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the spokes in the specified project and location.
+// List: Lists the Network Connectivity Center spokes in a specified
+// project and location.
 //
 // - parent: The parent resource.
 func (r *ProjectsLocationsSpokesService) List(parent string) *ProjectsLocationsSpokesListCall {
@@ -5042,7 +5050,7 @@ func (c *ProjectsLocationsSpokesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the spokes in the specified project and location.",
+	//   "description": "Lists the Network Connectivity Center spokes in a specified project and location.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/spokes",
 	//   "httpMethod": "GET",
 	//   "id": "networkconnectivity.projects.locations.spokes.list",
@@ -5122,7 +5130,7 @@ type ProjectsLocationsSpokesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates the parameters of the specified spoke.
+// Patch: Updates the parameters of a Network Connectivity Center spoke.
 //
 // - name: Immutable. The name of the spoke. Spoke names must be unique.
 //   They use the following form:
@@ -5254,7 +5262,7 @@ func (c *ProjectsLocationsSpokesPatchCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the parameters of the specified spoke.",
+	//   "description": "Updates the parameters of a Network Connectivity Center spoke.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/spokes/{spokesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "networkconnectivity.projects.locations.spokes.patch",

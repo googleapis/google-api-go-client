@@ -533,7 +533,7 @@
       }
     }
   },
-  "revision": "20220718",
+  "revision": "20220719",
   "rootUrl": "https://streetviewpublish.googleapis.com/",
   "schemas": {
     "BatchDeletePhotosRequest": {
@@ -624,7 +624,7 @@
       "type": "object"
     },
     "GpsDataGapFailureDetails": {
-      "description": "Details related to ProcessingFailureReason#GPS_DATA_GAP.",
+      "description": "Details related to ProcessingFailureReason#GPS_DATA_GAP. If there are multiple GPS data gaps, only the one with the largest duration is reported here.",
       "id": "GpsDataGapFailureDetails",
       "properties": {
         "gapDuration": {
@@ -669,7 +669,7 @@
       "type": "object"
     },
     "ImuDataGapFailureDetails": {
-      "description": "Details related to ProcessingFailureReason#IMU_DATA_GAP.",
+      "description": "Details related to ProcessingFailureReason#IMU_DATA_GAP. If there are multiple IMU data gaps, only the one with the largest duration is reported here.",
       "id": "ImuDataGapFailureDetails",
       "properties": {
         "gapDuration": {
@@ -809,7 +809,7 @@
       "type": "object"
     },
     "NotOutdoorsFailureDetails": {
-      "description": "Details related to ProcessingFailureReason#NOT_OUTDOORS.",
+      "description": "Details related to ProcessingFailureReason#NOT_OUTDOORS. If there are multiple indoor frames found, the first frame is recorded here.",
       "id": "NotOutdoorsFailureDetails",
       "properties": {
         "time": {

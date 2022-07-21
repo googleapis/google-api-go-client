@@ -384,7 +384,8 @@ type Empty struct {
 }
 
 // GpsDataGapFailureDetails: Details related to
-// ProcessingFailureReason#GPS_DATA_GAP.
+// ProcessingFailureReason#GPS_DATA_GAP. If there are multiple GPS data
+// gaps, only the one with the largest duration is reported here.
 type GpsDataGapFailureDetails struct {
 	// GapDuration: The duration of the gap in GPS data that was found.
 	GapDuration string `json:"gapDuration,omitempty"`
@@ -454,7 +455,8 @@ func (s *Imu) MarshalJSON() ([]byte, error) {
 }
 
 // ImuDataGapFailureDetails: Details related to
-// ProcessingFailureReason#IMU_DATA_GAP.
+// ProcessingFailureReason#IMU_DATA_GAP. If there are multiple IMU data
+// gaps, only the one with the largest duration is reported here.
 type ImuDataGapFailureDetails struct {
 	// GapDuration: The duration of the gap in IMU data that was found.
 	GapDuration string `json:"gapDuration,omitempty"`
@@ -790,7 +792,8 @@ func (s *Measurement3d) UnmarshalJSON(data []byte) error {
 }
 
 // NotOutdoorsFailureDetails: Details related to
-// ProcessingFailureReason#NOT_OUTDOORS.
+// ProcessingFailureReason#NOT_OUTDOORS. If there are multiple indoor
+// frames found, the first frame is recorded here.
 type NotOutdoorsFailureDetails struct {
 	// Time: Relative time (from the start of the video stream) when an
 	// indoor frame was found.

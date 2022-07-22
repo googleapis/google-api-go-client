@@ -1129,10 +1129,12 @@ type CloudSQLConfig struct {
 	// Service: Peering service used for peering with the Cloud SQL project.
 	Service string `json:"service,omitempty"`
 
-	// UmbrellaNetwork: The name of network in Cloud SQL umbrella project.
+	// UmbrellaNetwork: The name of the umbrella network in the Cloud SQL
+	// umbrella project.
 	UmbrellaNetwork string `json:"umbrellaNetwork,omitempty"`
 
-	// UmbrellaProject: The project number of Cloud SQL umbrella project.
+	// UmbrellaProject: The project number of the Cloud SQL umbrella
+	// project.
 	UmbrellaProject int64 `json:"umbrellaProject,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Service") to

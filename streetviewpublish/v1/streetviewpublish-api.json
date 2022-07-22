@@ -533,7 +533,7 @@
       }
     }
   },
-  "revision": "20220719",
+  "revision": "20220720",
   "rootUrl": "https://streetviewpublish.googleapis.com/",
   "schemas": {
     "BatchDeletePhotosRequest": {
@@ -632,7 +632,7 @@
           "format": "google-duration",
           "type": "string"
         },
-        "gapTime": {
+        "gapStartTime": {
           "description": "Relative time (from the start of the video stream) when the gap started.",
           "format": "google-duration",
           "type": "string"
@@ -677,7 +677,7 @@
           "format": "google-duration",
           "type": "string"
         },
-        "gapTime": {
+        "gapStartTime": {
           "description": "Relative time (from the start of the video stream) when the gap started.",
           "format": "google-duration",
           "type": "string"
@@ -812,7 +812,7 @@
       "description": "Details related to ProcessingFailureReason#NOT_OUTDOORS. If there are multiple indoor frames found, the first frame is recorded here.",
       "id": "NotOutdoorsFailureDetails",
       "properties": {
-        "time": {
+        "startTime": {
           "description": "Relative time (from the start of the video stream) when an indoor frame was found.",
           "format": "google-duration",
           "type": "string"

@@ -1716,38 +1716,40 @@ func (s *GooglePlayDeveloperReportingV1alpha1TimelineSpec) MarshalJSON() ([]byte
 // is set and utc_offset is unset: a civil time on a calendar day in a
 // particular time zone. * When neither time_zone nor utc_offset is set:
 // a civil time on a calendar day in local time. The date is relative to
-// the Proleptic Gregorian Calendar. If year is 0, the DateTime is
-// considered not to have a specific year. month and day must have
-// valid, non-zero values. This type may also be used to represent a
-// physical time if all the date and time fields are set and either case
-// of the `time_offset` oneof is set. Consider using `Timestamp` message
-// for physical time instead. If your use case also would like to store
-// the user's timezone, that can be done in another field. This type is
-// more flexible than some applications may want. Make sure to document
-// and validate your application's limitations.
+// the Proleptic Gregorian Calendar. If year, month, or day are 0, the
+// DateTime is considered not to have a specific year, month, or day
+// respectively. This type may also be used to represent a physical time
+// if all the date and time fields are set and either case of the
+// `time_offset` oneof is set. Consider using `Timestamp` message for
+// physical time instead. If your use case also would like to store the
+// user's timezone, that can be done in another field. This type is more
+// flexible than some applications may want. Make sure to document and
+// validate your application's limitations.
 type GoogleTypeDateTime struct {
-	// Day: Required. Day of month. Must be from 1 to 31 and valid for the
-	// year and month.
+	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the
+	// year and month, or 0 if specifying a datetime without a day.
 	Day int64 `json:"day,omitempty"`
 
-	// Hours: Required. Hours of day in 24 hour format. Should be from 0 to
-	// 23. An API may choose to allow the value "24:00:00" for scenarios
-	// like business closing time.
+	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to
+	// 23, defaults to 0 (midnight). An API may choose to allow the value
+	// "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
 
-	// Minutes: Required. Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59,
+	// defaults to 0.
 	Minutes int64 `json:"minutes,omitempty"`
 
-	// Month: Required. Month of year. Must be from 1 to 12.
+	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if
+	// specifying a datetime without a month.
 	Month int64 `json:"month,omitempty"`
 
-	// Nanos: Required. Fractions of seconds in nanoseconds. Must be from 0
-	// to 999,999,999.
+	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0
+	// to 999,999,999, defaults to 0.
 	Nanos int64 `json:"nanos,omitempty"`
 
-	// Seconds: Required. Seconds of minutes of the time. Must normally be
-	// from 0 to 59. An API may allow the value 60 if it allows
-	// leap-seconds.
+	// Seconds: Optional. Seconds of minutes of the time. Must normally be
+	// from 0 to 59, defaults to 0. An API may allow the value 60 if it
+	// allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 
 	// TimeZone: Time zone.
@@ -3091,50 +3093,50 @@ func (c *VitalsErrorsIssuesSearchCall) Filter(filter string) *VitalsErrorsIssues
 }
 
 // IntervalEndTimeDay sets the optional parameter
-// "interval.endTime.day": Required. Day of month. Must be from 1 to 31
-// and valid for the year and month.
+// "interval.endTime.day": Day of month. Must be from 1 to 31 and valid
+// for the year and month, or 0 if specifying a datetime without a day.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeDay(intervalEndTimeDay int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.day", fmt.Sprint(intervalEndTimeDay))
 	return c
 }
 
 // IntervalEndTimeHours sets the optional parameter
-// "interval.endTime.hours": Required. Hours of day in 24 hour format.
-// Should be from 0 to 23. An API may choose to allow the value
-// "24:00:00" for scenarios like business closing time.
+// "interval.endTime.hours": Hours of day in 24 hour format. Should be
+// from 0 to 23, defaults to 0 (midnight). An API may choose to allow
+// the value "24:00:00" for scenarios like business closing time.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeHours(intervalEndTimeHours int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.hours", fmt.Sprint(intervalEndTimeHours))
 	return c
 }
 
 // IntervalEndTimeMinutes sets the optional parameter
-// "interval.endTime.minutes": Required. Minutes of hour of day. Must be
-// from 0 to 59.
+// "interval.endTime.minutes": Minutes of hour of day. Must be from 0 to
+// 59, defaults to 0.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeMinutes(intervalEndTimeMinutes int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.minutes", fmt.Sprint(intervalEndTimeMinutes))
 	return c
 }
 
 // IntervalEndTimeMonth sets the optional parameter
-// "interval.endTime.month": Required. Month of year. Must be from 1 to
-// 12.
+// "interval.endTime.month": Month of year. Must be from 1 to 12, or 0
+// if specifying a datetime without a month.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeMonth(intervalEndTimeMonth int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.month", fmt.Sprint(intervalEndTimeMonth))
 	return c
 }
 
 // IntervalEndTimeNanos sets the optional parameter
-// "interval.endTime.nanos": Required. Fractions of seconds in
-// nanoseconds. Must be from 0 to 999,999,999.
+// "interval.endTime.nanos": Fractions of seconds in nanoseconds. Must
+// be from 0 to 999,999,999, defaults to 0.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeNanos(intervalEndTimeNanos int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.nanos", fmt.Sprint(intervalEndTimeNanos))
 	return c
 }
 
 // IntervalEndTimeSeconds sets the optional parameter
-// "interval.endTime.seconds": Required. Seconds of minutes of the time.
-// Must normally be from 0 to 59. An API may allow the value 60 if it
-// allows leap-seconds.
+// "interval.endTime.seconds": Seconds of minutes of the time. Must
+// normally be from 0 to 59, defaults to 0. An API may allow the value
+// 60 if it allows leap-seconds.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeSeconds(intervalEndTimeSeconds int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.seconds", fmt.Sprint(intervalEndTimeSeconds))
 	return c
@@ -3174,50 +3176,51 @@ func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeYear(intervalEndTimeYear i
 }
 
 // IntervalStartTimeDay sets the optional parameter
-// "interval.startTime.day": Required. Day of month. Must be from 1 to
-// 31 and valid for the year and month.
+// "interval.startTime.day": Day of month. Must be from 1 to 31 and
+// valid for the year and month, or 0 if specifying a datetime without a
+// day.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeDay(intervalStartTimeDay int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.day", fmt.Sprint(intervalStartTimeDay))
 	return c
 }
 
 // IntervalStartTimeHours sets the optional parameter
-// "interval.startTime.hours": Required. Hours of day in 24 hour format.
-// Should be from 0 to 23. An API may choose to allow the value
-// "24:00:00" for scenarios like business closing time.
+// "interval.startTime.hours": Hours of day in 24 hour format. Should be
+// from 0 to 23, defaults to 0 (midnight). An API may choose to allow
+// the value "24:00:00" for scenarios like business closing time.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeHours(intervalStartTimeHours int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.hours", fmt.Sprint(intervalStartTimeHours))
 	return c
 }
 
 // IntervalStartTimeMinutes sets the optional parameter
-// "interval.startTime.minutes": Required. Minutes of hour of day. Must
-// be from 0 to 59.
+// "interval.startTime.minutes": Minutes of hour of day. Must be from 0
+// to 59, defaults to 0.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeMinutes(intervalStartTimeMinutes int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.minutes", fmt.Sprint(intervalStartTimeMinutes))
 	return c
 }
 
 // IntervalStartTimeMonth sets the optional parameter
-// "interval.startTime.month": Required. Month of year. Must be from 1
-// to 12.
+// "interval.startTime.month": Month of year. Must be from 1 to 12, or 0
+// if specifying a datetime without a month.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeMonth(intervalStartTimeMonth int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.month", fmt.Sprint(intervalStartTimeMonth))
 	return c
 }
 
 // IntervalStartTimeNanos sets the optional parameter
-// "interval.startTime.nanos": Required. Fractions of seconds in
-// nanoseconds. Must be from 0 to 999,999,999.
+// "interval.startTime.nanos": Fractions of seconds in nanoseconds. Must
+// be from 0 to 999,999,999, defaults to 0.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeNanos(intervalStartTimeNanos int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.nanos", fmt.Sprint(intervalStartTimeNanos))
 	return c
 }
 
 // IntervalStartTimeSeconds sets the optional parameter
-// "interval.startTime.seconds": Required. Seconds of minutes of the
-// time. Must normally be from 0 to 59. An API may allow the value 60 if
-// it allows leap-seconds.
+// "interval.startTime.seconds": Seconds of minutes of the time. Must
+// normally be from 0 to 59, defaults to 0. An API may allow the value
+// 60 if it allows leap-seconds.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeSeconds(intervalStartTimeSeconds int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.seconds", fmt.Sprint(intervalStartTimeSeconds))
 	return c
@@ -3390,37 +3393,37 @@ func (c *VitalsErrorsIssuesSearchCall) Do(opts ...googleapi.CallOption) (*Google
 	//       "type": "string"
 	//     },
 	//     "interval.endTime.day": {
-	//       "description": "Required. Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "description": "Optional. Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a datetime without a day.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.endTime.hours": {
-	//       "description": "Required. Hours of day in 24 hour format. Should be from 0 to 23. An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.",
+	//       "description": "Optional. Hours of day in 24 hour format. Should be from 0 to 23, defaults to 0 (midnight). An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.endTime.minutes": {
-	//       "description": "Required. Minutes of hour of day. Must be from 0 to 59.",
+	//       "description": "Optional. Minutes of hour of day. Must be from 0 to 59, defaults to 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.endTime.month": {
-	//       "description": "Required. Month of year. Must be from 1 to 12.",
+	//       "description": "Optional. Month of year. Must be from 1 to 12, or 0 if specifying a datetime without a month.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.endTime.nanos": {
-	//       "description": "Required. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.",
+	//       "description": "Optional. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999, defaults to 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.endTime.seconds": {
-	//       "description": "Required. Seconds of minutes of the time. Must normally be from 0 to 59. An API may allow the value 60 if it allows leap-seconds.",
+	//       "description": "Optional. Seconds of minutes of the time. Must normally be from 0 to 59, defaults to 0. An API may allow the value 60 if it allows leap-seconds.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3448,37 +3451,37 @@ func (c *VitalsErrorsIssuesSearchCall) Do(opts ...googleapi.CallOption) (*Google
 	//       "type": "integer"
 	//     },
 	//     "interval.startTime.day": {
-	//       "description": "Required. Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "description": "Optional. Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a datetime without a day.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.startTime.hours": {
-	//       "description": "Required. Hours of day in 24 hour format. Should be from 0 to 23. An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.",
+	//       "description": "Optional. Hours of day in 24 hour format. Should be from 0 to 23, defaults to 0 (midnight). An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.startTime.minutes": {
-	//       "description": "Required. Minutes of hour of day. Must be from 0 to 59.",
+	//       "description": "Optional. Minutes of hour of day. Must be from 0 to 59, defaults to 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.startTime.month": {
-	//       "description": "Required. Month of year. Must be from 1 to 12.",
+	//       "description": "Optional. Month of year. Must be from 1 to 12, or 0 if specifying a datetime without a month.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.startTime.nanos": {
-	//       "description": "Required. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.",
+	//       "description": "Optional. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999, defaults to 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.startTime.seconds": {
-	//       "description": "Required. Seconds of minutes of the time. Must normally be from 0 to 59. An API may allow the value 60 if it allows leap-seconds.",
+	//       "description": "Optional. Seconds of minutes of the time. Must normally be from 0 to 59, defaults to 0. An API may allow the value 60 if it allows leap-seconds.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3611,50 +3614,50 @@ func (c *VitalsErrorsReportsSearchCall) Filter(filter string) *VitalsErrorsRepor
 }
 
 // IntervalEndTimeDay sets the optional parameter
-// "interval.endTime.day": Required. Day of month. Must be from 1 to 31
-// and valid for the year and month.
+// "interval.endTime.day": Day of month. Must be from 1 to 31 and valid
+// for the year and month, or 0 if specifying a datetime without a day.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeDay(intervalEndTimeDay int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.day", fmt.Sprint(intervalEndTimeDay))
 	return c
 }
 
 // IntervalEndTimeHours sets the optional parameter
-// "interval.endTime.hours": Required. Hours of day in 24 hour format.
-// Should be from 0 to 23. An API may choose to allow the value
-// "24:00:00" for scenarios like business closing time.
+// "interval.endTime.hours": Hours of day in 24 hour format. Should be
+// from 0 to 23, defaults to 0 (midnight). An API may choose to allow
+// the value "24:00:00" for scenarios like business closing time.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeHours(intervalEndTimeHours int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.hours", fmt.Sprint(intervalEndTimeHours))
 	return c
 }
 
 // IntervalEndTimeMinutes sets the optional parameter
-// "interval.endTime.minutes": Required. Minutes of hour of day. Must be
-// from 0 to 59.
+// "interval.endTime.minutes": Minutes of hour of day. Must be from 0 to
+// 59, defaults to 0.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeMinutes(intervalEndTimeMinutes int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.minutes", fmt.Sprint(intervalEndTimeMinutes))
 	return c
 }
 
 // IntervalEndTimeMonth sets the optional parameter
-// "interval.endTime.month": Required. Month of year. Must be from 1 to
-// 12.
+// "interval.endTime.month": Month of year. Must be from 1 to 12, or 0
+// if specifying a datetime without a month.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeMonth(intervalEndTimeMonth int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.month", fmt.Sprint(intervalEndTimeMonth))
 	return c
 }
 
 // IntervalEndTimeNanos sets the optional parameter
-// "interval.endTime.nanos": Required. Fractions of seconds in
-// nanoseconds. Must be from 0 to 999,999,999.
+// "interval.endTime.nanos": Fractions of seconds in nanoseconds. Must
+// be from 0 to 999,999,999, defaults to 0.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeNanos(intervalEndTimeNanos int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.nanos", fmt.Sprint(intervalEndTimeNanos))
 	return c
 }
 
 // IntervalEndTimeSeconds sets the optional parameter
-// "interval.endTime.seconds": Required. Seconds of minutes of the time.
-// Must normally be from 0 to 59. An API may allow the value 60 if it
-// allows leap-seconds.
+// "interval.endTime.seconds": Seconds of minutes of the time. Must
+// normally be from 0 to 59, defaults to 0. An API may allow the value
+// 60 if it allows leap-seconds.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeSeconds(intervalEndTimeSeconds int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.seconds", fmt.Sprint(intervalEndTimeSeconds))
 	return c
@@ -3694,50 +3697,51 @@ func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeYear(intervalEndTimeYear 
 }
 
 // IntervalStartTimeDay sets the optional parameter
-// "interval.startTime.day": Required. Day of month. Must be from 1 to
-// 31 and valid for the year and month.
+// "interval.startTime.day": Day of month. Must be from 1 to 31 and
+// valid for the year and month, or 0 if specifying a datetime without a
+// day.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeDay(intervalStartTimeDay int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.day", fmt.Sprint(intervalStartTimeDay))
 	return c
 }
 
 // IntervalStartTimeHours sets the optional parameter
-// "interval.startTime.hours": Required. Hours of day in 24 hour format.
-// Should be from 0 to 23. An API may choose to allow the value
-// "24:00:00" for scenarios like business closing time.
+// "interval.startTime.hours": Hours of day in 24 hour format. Should be
+// from 0 to 23, defaults to 0 (midnight). An API may choose to allow
+// the value "24:00:00" for scenarios like business closing time.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeHours(intervalStartTimeHours int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.hours", fmt.Sprint(intervalStartTimeHours))
 	return c
 }
 
 // IntervalStartTimeMinutes sets the optional parameter
-// "interval.startTime.minutes": Required. Minutes of hour of day. Must
-// be from 0 to 59.
+// "interval.startTime.minutes": Minutes of hour of day. Must be from 0
+// to 59, defaults to 0.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeMinutes(intervalStartTimeMinutes int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.minutes", fmt.Sprint(intervalStartTimeMinutes))
 	return c
 }
 
 // IntervalStartTimeMonth sets the optional parameter
-// "interval.startTime.month": Required. Month of year. Must be from 1
-// to 12.
+// "interval.startTime.month": Month of year. Must be from 1 to 12, or 0
+// if specifying a datetime without a month.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeMonth(intervalStartTimeMonth int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.month", fmt.Sprint(intervalStartTimeMonth))
 	return c
 }
 
 // IntervalStartTimeNanos sets the optional parameter
-// "interval.startTime.nanos": Required. Fractions of seconds in
-// nanoseconds. Must be from 0 to 999,999,999.
+// "interval.startTime.nanos": Fractions of seconds in nanoseconds. Must
+// be from 0 to 999,999,999, defaults to 0.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeNanos(intervalStartTimeNanos int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.nanos", fmt.Sprint(intervalStartTimeNanos))
 	return c
 }
 
 // IntervalStartTimeSeconds sets the optional parameter
-// "interval.startTime.seconds": Required. Seconds of minutes of the
-// time. Must normally be from 0 to 59. An API may allow the value 60 if
-// it allows leap-seconds.
+// "interval.startTime.seconds": Seconds of minutes of the time. Must
+// normally be from 0 to 59, defaults to 0. An API may allow the value
+// 60 if it allows leap-seconds.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeSeconds(intervalStartTimeSeconds int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.seconds", fmt.Sprint(intervalStartTimeSeconds))
 	return c
@@ -3911,37 +3915,37 @@ func (c *VitalsErrorsReportsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "type": "string"
 	//     },
 	//     "interval.endTime.day": {
-	//       "description": "Required. Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "description": "Optional. Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a datetime without a day.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.endTime.hours": {
-	//       "description": "Required. Hours of day in 24 hour format. Should be from 0 to 23. An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.",
+	//       "description": "Optional. Hours of day in 24 hour format. Should be from 0 to 23, defaults to 0 (midnight). An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.endTime.minutes": {
-	//       "description": "Required. Minutes of hour of day. Must be from 0 to 59.",
+	//       "description": "Optional. Minutes of hour of day. Must be from 0 to 59, defaults to 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.endTime.month": {
-	//       "description": "Required. Month of year. Must be from 1 to 12.",
+	//       "description": "Optional. Month of year. Must be from 1 to 12, or 0 if specifying a datetime without a month.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.endTime.nanos": {
-	//       "description": "Required. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.",
+	//       "description": "Optional. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999, defaults to 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.endTime.seconds": {
-	//       "description": "Required. Seconds of minutes of the time. Must normally be from 0 to 59. An API may allow the value 60 if it allows leap-seconds.",
+	//       "description": "Optional. Seconds of minutes of the time. Must normally be from 0 to 59, defaults to 0. An API may allow the value 60 if it allows leap-seconds.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3969,37 +3973,37 @@ func (c *VitalsErrorsReportsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "type": "integer"
 	//     },
 	//     "interval.startTime.day": {
-	//       "description": "Required. Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "description": "Optional. Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a datetime without a day.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.startTime.hours": {
-	//       "description": "Required. Hours of day in 24 hour format. Should be from 0 to 23. An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.",
+	//       "description": "Optional. Hours of day in 24 hour format. Should be from 0 to 23, defaults to 0 (midnight). An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.startTime.minutes": {
-	//       "description": "Required. Minutes of hour of day. Must be from 0 to 59.",
+	//       "description": "Optional. Minutes of hour of day. Must be from 0 to 59, defaults to 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.startTime.month": {
-	//       "description": "Required. Month of year. Must be from 1 to 12.",
+	//       "description": "Optional. Month of year. Must be from 1 to 12, or 0 if specifying a datetime without a month.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.startTime.nanos": {
-	//       "description": "Required. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.",
+	//       "description": "Optional. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999, defaults to 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "interval.startTime.seconds": {
-	//       "description": "Required. Seconds of minutes of the time. Must normally be from 0 to 59. An API may allow the value 60 if it allows leap-seconds.",
+	//       "description": "Optional. Seconds of minutes of the time. Must normally be from 0 to 59, defaults to 0. An API may allow the value 60 if it allows leap-seconds.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

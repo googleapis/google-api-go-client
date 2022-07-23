@@ -2431,6 +2431,10 @@ type RuntimeConfig struct {
 	// "us-west1".
 	LocationId string `json:"locationId,omitempty"`
 
+	// Name: Output only. Name of the runtimeConfig resource. Format:
+	// projects/{project}/locations/{location}/runtimeConfig
+	Name string `json:"name,omitempty"`
+
 	// RuntimeEndpoint: Output only. The endpoint of the connectors runtime
 	// ingress.
 	RuntimeEndpoint string `json:"runtimeEndpoint,omitempty"`

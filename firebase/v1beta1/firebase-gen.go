@@ -767,8 +767,21 @@ func (s *FirebaseAppInfo) MarshalJSON() ([]byte, error) {
 // has the same underlying GCP identifiers (`projectNumber` and
 // `projectId`). This allows for easy interop with Google APIs.
 type FirebaseProject struct {
+	// Annotations: Set of user-defined annotations for the FirebaseProject
+	// as per AIP-128 (https://google.aip.dev/128#annotations). These
+	// annotations are intended solely for developers and client-side tools
+	// Firebase services will not mutate this annotation set.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
 	// DisplayName: The user-assigned display name of the Project.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: This checksum is computed by the server based on the value of
+	// other fields, and may be sent on update requests to ensure the client
+	// has an up-to-date value before proceeding. AIP-154
+	// (https://google.aip.dev/154#declarative-friendly-resources). This
+	// etag is strongly validated.
+	Etag string `json:"etag,omitempty"`
 
 	// Name: The resource name of the Project, in the format:
 	// projects/PROJECT_IDENTIFIER PROJECT_IDENTIFIER: the Project's
@@ -811,7 +824,7 @@ type FirebaseProject struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -819,7 +832,7 @@ type FirebaseProject struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// NullFields is a list of field names (e.g. "Annotations") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as

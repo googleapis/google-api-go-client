@@ -14464,7 +14464,8 @@ type GoogleCloudDialogflowV2QueryInput struct {
 	// Event: The event to be processed.
 	Event *GoogleCloudDialogflowV2EventInput `json:"event,omitempty"`
 
-	// Text: The natural language text to be processed.
+	// Text: The natural language text to be processed. Text length must not
+	// exceed 256 character for virtual agent interactions.
 	Text *GoogleCloudDialogflowV2TextInput `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AudioConfig") to
@@ -15856,7 +15857,8 @@ type GoogleCloudDialogflowV2TextInput struct {
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Text: Required. The UTF-8 encoded natural language text to be
-	// processed. Text length must not exceed 256 characters.
+	// processed. Text length must not exceed 256 characters for virtual
+	// agent interactions.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -32918,6 +32920,15 @@ func (r *ProjectsAnswerRecordsService) List(parent string) *ProjectsAnswerRecord
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filters to restrict
+// results to specific answer records. Marked deprecated as it hasn't
+// been, and isn't currently, supported. For more information about
+// filtering, see API Filtering (https://aip.dev/160).
+func (c *ProjectsAnswerRecordsListCall) Filter(filter string) *ProjectsAnswerRecordsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of records to return in a single page. The server may return fewer
 // records than this. If unspecified, we use 10. The maximum is 100.
@@ -33043,6 +33054,11 @@ func (c *ProjectsAnswerRecordsListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filters to restrict results to specific answer records. Marked deprecated as it hasn't been, and isn't currently, supported. For more information about filtering, see [API Filtering](https://aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The maximum number of records to return in a single page. The server may return fewer records than this. If unspecified, we use 10. The maximum is 100.",
 	//       "format": "int32",
@@ -51287,6 +51303,15 @@ func (r *ProjectsLocationsAnswerRecordsService) List(parent string) *ProjectsLoc
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filters to restrict
+// results to specific answer records. Marked deprecated as it hasn't
+// been, and isn't currently, supported. For more information about
+// filtering, see API Filtering (https://aip.dev/160).
+func (c *ProjectsLocationsAnswerRecordsListCall) Filter(filter string) *ProjectsLocationsAnswerRecordsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of records to return in a single page. The server may return fewer
 // records than this. If unspecified, we use 10. The maximum is 100.
@@ -51412,6 +51437,11 @@ func (c *ProjectsLocationsAnswerRecordsListCall) Do(opts ...googleapi.CallOption
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filters to restrict results to specific answer records. Marked deprecated as it hasn't been, and isn't currently, supported. For more information about filtering, see [API Filtering](https://aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The maximum number of records to return in a single page. The server may return fewer records than this. If unspecified, we use 10. The maximum is 100.",
 	//       "format": "int32",

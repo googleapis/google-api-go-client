@@ -205,6 +205,8 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -358,6 +360,8 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
@@ -664,6 +668,8 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -739,6 +745,8 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
@@ -1171,6 +1179,8 @@ type GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMetadata 
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -1246,6 +1256,8 @@ type GoogleCloudAssuredworkloadsVersioningV1mainWorkload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// ComplianceStatus: Output only. Count of active Violations in the
@@ -1391,11 +1403,12 @@ func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings) Marsha
 // GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus:
 // Represents the Compliance Status of this workload
 type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus struct {
-	// AcknowledgedViolationCount: Count of acknowledged violations in the
-	// Workload.
+	// AcknowledgedViolationCount: Count of active Violations which are
+	// acknowledged in the Workload.
 	AcknowledgedViolationCount int64 `json:"acknowledgedViolationCount,omitempty"`
 
-	// ActiveViolationCount: Count of active Violations in the Workload.
+	// ActiveViolationCount: Count of active Violations which haven't been
+	// acknowledged.
 	ActiveViolationCount int64 `json:"activeViolationCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

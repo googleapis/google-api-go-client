@@ -533,7 +533,7 @@
       }
     }
   },
-  "revision": "20220720",
+  "revision": "20220722",
   "rootUrl": "https://streetviewpublish.googleapis.com/",
   "schemas": {
     "BatchDeletePhotosRequest": {
@@ -1026,6 +1026,8 @@
             "GPS_DATA_GAP",
             "JUMPY_GPS",
             "INVALID_IMU",
+            "INSUFFICIENT_IMU",
+            "INSUFFICIENT_OVERLAP_TIME_SERIES",
             "IMU_DATA_GAP",
             "UNSUPPORTED_CAMERA",
             "NOT_OUTDOORS",
@@ -1040,7 +1042,7 @@
             "GPS is invalid (e.x. all GPS points are at (0,0))",
             "The sequence of photos could not be accurately located in the world.",
             "The sequence was taken down for policy reasons.",
-            "The video file was corrupt.",
+            "The video file was corrupt or could not be decoded.",
             "A permanent failure in the underlying system occurred.",
             "The video format is invalid or unsupported.",
             "Invalid image aspect ratio found.",
@@ -1048,6 +1050,8 @@
             "GPS data contains a gap greater than 5 seconds in duration.",
             "GPS data is too erratic to be processed.",
             "IMU (Accelerometer, Gyroscope, etc.) data are not valid. They may be missing required fields (x, y, z or time), may not be formatted correctly, or any other issue that prevents our systems from parsing it.",
+            "Too few IMU points.",
+            "Insufficient overlap in the time frame between GPS, IMU, and other time series data.",
             "IMU (Accelerometer, Gyroscope, etc.) data contain gaps greater than 0.1 seconds in duration.",
             "The camera is not supported.",
             "Some frames were indoors, which is unsupported.",

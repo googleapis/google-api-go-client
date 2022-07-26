@@ -1078,7 +1078,8 @@ type PhotoSequence struct {
 	//   "FAILED_TO_REFINE_POSITIONS" - The sequence of photos could not be
 	// accurately located in the world.
 	//   "TAKEDOWN" - The sequence was taken down for policy reasons.
-	//   "CORRUPT_VIDEO" - The video file was corrupt.
+	//   "CORRUPT_VIDEO" - The video file was corrupt or could not be
+	// decoded.
 	//   "INTERNAL" - A permanent failure in the underlying system occurred.
 	//   "INVALID_VIDEO_FORMAT" - The video format is invalid or
 	// unsupported.
@@ -1092,6 +1093,9 @@ type PhotoSequence struct {
 	// valid. They may be missing required fields (x, y, z or time), may not
 	// be formatted correctly, or any other issue that prevents our systems
 	// from parsing it.
+	//   "INSUFFICIENT_IMU" - Too few IMU points.
+	//   "INSUFFICIENT_OVERLAP_TIME_SERIES" - Insufficient overlap in the
+	// time frame between GPS, IMU, and other time series data.
 	//   "IMU_DATA_GAP" - IMU (Accelerometer, Gyroscope, etc.) data contain
 	// gaps greater than 0.1 seconds in duration.
 	//   "UNSUPPORTED_CAMERA" - The camera is not supported.

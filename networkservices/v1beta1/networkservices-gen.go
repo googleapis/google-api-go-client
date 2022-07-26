@@ -662,9 +662,10 @@ type Gateway struct {
 	// `projects/*/locations/*/gateways/`.
 	Name string `json:"name,omitempty"`
 
-	// Ports: Required. One or more ports that the Gateway must receive
-	// traffic on. The proxy binds to the ports specified. Gateway listen on
-	// 0.0.0.0 on the ports specified below.
+	// Ports: Required. One or more port numbers (1-65535), on which the
+	// Gateway will receive traffic. The proxy binds to the specified ports.
+	// Gateways of type 'SECURE_WEB_GATEWAY' are limited to 1 port. Gateways
+	// of type 'OPEN_MESH' listen on 0.0.0.0 and support multiple ports.
 	Ports []int64 `json:"ports,omitempty"`
 
 	// Scope: Required. Immutable. Scope determines how configuration across
@@ -683,7 +684,8 @@ type Gateway struct {
 	// termination is disabled.
 	ServerTlsPolicy string `json:"serverTlsPolicy,omitempty"`
 
-	// Type: Immutable. The type of the customer managed gateway.
+	// Type: Immutable. The type of the customer managed gateway. This field
+	// is required. If unspecified, an error is returned.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - The type of the customer managed gateway is
@@ -1058,7 +1060,7 @@ func (s *GrpcRouteMethodMatch) MarshalJSON() ([]byte, error) {
 // GrpcRouteRetryPolicy: The specifications for retries.
 type GrpcRouteRetryPolicy struct {
 	// NumRetries: Specifies the allowed number of retries. This number must
-	// be > 0. If not specpfied, default to 1.
+	// be > 0. If not specified, default to 1.
 	NumRetries int64 `json:"numRetries,omitempty"`
 
 	// RetryConditions: - connect-failure: Router will retry on failures
@@ -7655,7 +7657,7 @@ func (c *ProjectsLocationsHttpRoutesListCall) PageSize(pageSize int64) *Projects
 
 // PageToken sets the optional parameter "pageToken": The value returned
 // by the last `ListHttpRoutesResponse` Indicates that this is a
-// continuation of a prior `ListRouters` call, and that the system
+// continuation of a prior `ListHttpRoutes` call, and that the system
 // should return the next page of data.
 func (c *ProjectsLocationsHttpRoutesListCall) PageToken(pageToken string) *ProjectsLocationsHttpRoutesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -7776,7 +7778,7 @@ func (c *ProjectsLocationsHttpRoutesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListHttpRoutesResponse` Indicates that this is a continuation of a prior `ListRouters` call, and that the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListHttpRoutesResponse` Indicates that this is a continuation of a prior `ListHttpRoutes` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11458,7 +11460,7 @@ func (c *ProjectsLocationsTcpRoutesListCall) PageSize(pageSize int64) *ProjectsL
 
 // PageToken sets the optional parameter "pageToken": The value returned
 // by the last `ListTcpRoutesResponse` Indicates that this is a
-// continuation of a prior `ListRouters` call, and that the system
+// continuation of a prior `ListTcpRoutes` call, and that the system
 // should return the next page of data.
 func (c *ProjectsLocationsTcpRoutesListCall) PageToken(pageToken string) *ProjectsLocationsTcpRoutesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -11579,7 +11581,7 @@ func (c *ProjectsLocationsTcpRoutesListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListTcpRoutesResponse` Indicates that this is a continuation of a prior `ListRouters` call, and that the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListTcpRoutesResponse` Indicates that this is a continuation of a prior `ListTcpRoutes` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12249,7 +12251,7 @@ func (c *ProjectsLocationsTlsRoutesListCall) PageSize(pageSize int64) *ProjectsL
 
 // PageToken sets the optional parameter "pageToken": The value returned
 // by the last `ListTlsRoutesResponse` Indicates that this is a
-// continuation of a prior `ListRouters` call, and that the system
+// continuation of a prior `ListTlsRoutes` call, and that the system
 // should return the next page of data.
 func (c *ProjectsLocationsTlsRoutesListCall) PageToken(pageToken string) *ProjectsLocationsTlsRoutesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -12370,7 +12372,7 @@ func (c *ProjectsLocationsTlsRoutesListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListTlsRoutesResponse` Indicates that this is a continuation of a prior `ListRouters` call, and that the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListTlsRoutesResponse` Indicates that this is a continuation of a prior `ListTlsRoutes` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

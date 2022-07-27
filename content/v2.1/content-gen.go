@@ -2039,7 +2039,8 @@ type AccountsCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -2401,7 +2402,8 @@ type AccountstatusesCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountStatus") to
@@ -2580,7 +2582,8 @@ type AccounttaxCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -3912,7 +3915,8 @@ type DatafeedsCustomBatchResponseEntry struct {
 	// was successful.
 	Datafeed *Datafeed `json:"datafeed,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BatchId") to
@@ -4129,7 +4133,8 @@ type DatafeedstatusesCustomBatchResponseEntry struct {
 	// if the request was successful.
 	DatafeedStatus *DatafeedStatus `json:"datafeedStatus,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BatchId") to
@@ -6425,7 +6430,8 @@ type LocalinventoryCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -13276,7 +13282,8 @@ type ProductsCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -13463,7 +13470,8 @@ type ProductstatusesCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors, if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -14225,7 +14233,8 @@ type RegionalinventoryCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -17049,7 +17058,8 @@ type ShippingsettingsCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry to which this entry responds.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if, and only if, the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed

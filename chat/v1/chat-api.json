@@ -595,7 +595,7 @@
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - text - cards (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - attachment",
+                  "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - text - cards (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) ",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -642,7 +642,7 @@
       }
     }
   },
-  "revision": "20220716",
+  "revision": "20220720",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -2627,13 +2627,17 @@
           "readOnly": true,
           "type": "boolean"
         },
+        "spaceDetails": {
+          "$ref": "SpaceDetails",
+          "description": "Details about the space including description and rules."
+        },
         "threaded": {
           "description": "Output only. Whether messages are threaded in this space.",
           "readOnly": true,
           "type": "boolean"
         },
         "type": {
-          "description": "Output only. Deprecated: Use `single_user_bot_dm` or `space_type` (developer preview) instead. The type of a space.",
+          "description": "Output only. Deprecated: Use `singleUserBotDm` or `spaceType` (developer preview) instead. The type of a space.",
           "enum": [
             "TYPE_UNSPECIFIED",
             "ROOM",
@@ -2645,6 +2649,21 @@
             "1:1 Direct Message between a human and a Chat app, where all messages are flat. Note that this does not include direct messages between two humans."
           ],
           "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SpaceDetails": {
+      "description": "Details about the space including description and rules.",
+      "id": "SpaceDetails",
+      "properties": {
+        "description": {
+          "description": "Optional. A description of the space. It could describe the space's discussion topic, functional purpose, or participants.",
+          "type": "string"
+        },
+        "guidelines": {
+          "description": "Optional. The space's rules, expectations, and etiquette.",
           "type": "string"
         }
       },

@@ -3359,11 +3359,15 @@ type Space struct {
 	// Chat app and a single human.
 	SingleUserBotDm bool `json:"singleUserBotDm,omitempty"`
 
+	// SpaceDetails: Details about the space including description and
+	// rules.
+	SpaceDetails *SpaceDetails `json:"spaceDetails,omitempty"`
+
 	// Threaded: Output only. Whether messages are threaded in this space.
 	Threaded bool `json:"threaded,omitempty"`
 
-	// Type: Output only. Deprecated: Use `single_user_bot_dm` or
-	// `space_type` (developer preview) instead. The type of a space.
+	// Type: Output only. Deprecated: Use `singleUserBotDm` or `spaceType`
+	// (developer preview) instead. The type of a space.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED"
@@ -3396,6 +3400,39 @@ type Space struct {
 
 func (s *Space) MarshalJSON() ([]byte, error) {
 	type NoMethod Space
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpaceDetails: Details about the space including description and
+// rules.
+type SpaceDetails struct {
+	// Description: Optional. A description of the space. It could describe
+	// the space's discussion topic, functional purpose, or participants.
+	Description string `json:"description,omitempty"`
+
+	// Guidelines: Optional. The space's rules, expectations, and etiquette.
+	Guidelines string `json:"guidelines,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpaceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SpaceDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6237,8 +6274,7 @@ func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMes
 // UpdateMask sets the optional parameter "updateMask": Required. The
 // field paths to update. Separate multiple values with commas.
 // Currently supported field paths: - text - cards (Requires service
-// account authentication (/chat/api/guides/auth/service-accounts).) -
-// attachment
+// account authentication (/chat/api/guides/auth/service-accounts).)
 func (c *SpacesMessagesUpdateCall) UpdateMask(updateMask string) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6351,7 +6387,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - text - cards (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - attachment",
+	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - text - cards (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) ",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

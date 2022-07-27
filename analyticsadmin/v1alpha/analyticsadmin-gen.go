@@ -190,6 +190,7 @@ type AccountsUserLinksService struct {
 
 func NewPropertiesService(s *Service) *PropertiesService {
 	rs := &PropertiesService{s: s}
+	rs.Audiences = NewPropertiesAudiencesService(s)
 	rs.ConversionEvents = NewPropertiesConversionEventsService(s)
 	rs.CustomDimensions = NewPropertiesCustomDimensionsService(s)
 	rs.CustomMetrics = NewPropertiesCustomMetricsService(s)
@@ -204,6 +205,8 @@ func NewPropertiesService(s *Service) *PropertiesService {
 
 type PropertiesService struct {
 	s *Service
+
+	Audiences *PropertiesAudiencesService
 
 	ConversionEvents *PropertiesConversionEventsService
 
@@ -222,6 +225,15 @@ type PropertiesService struct {
 	GoogleAdsLinks *PropertiesGoogleAdsLinksService
 
 	UserLinks *PropertiesUserLinksService
+}
+
+func NewPropertiesAudiencesService(s *Service) *PropertiesAudiencesService {
+	rs := &PropertiesAudiencesService{s: s}
+	return rs
+}
+
+type PropertiesAudiencesService struct {
+	s *Service
 }
 
 func NewPropertiesConversionEventsService(s *Service) *PropertiesConversionEventsService {
@@ -500,6 +512,11 @@ func (s *GoogleAnalyticsAdminV1alphaApproveDisplayVideo360AdvertiserLinkProposal
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaArchiveAudienceRequest: Request message
+// for ArchiveAudience RPC.
+type GoogleAnalyticsAdminV1alphaArchiveAudienceRequest struct {
+}
+
 // GoogleAnalyticsAdminV1alphaArchiveCustomDimensionRequest: Request
 // message for ArchiveCustomDimension RPC.
 type GoogleAnalyticsAdminV1alphaArchiveCustomDimensionRequest struct {
@@ -605,6 +622,706 @@ type GoogleAnalyticsAdminV1alphaAttributionSettings struct {
 
 func (s *GoogleAnalyticsAdminV1alphaAttributionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaAttributionSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudience: A resource message representing
+// a GA4 Audience.
+type GoogleAnalyticsAdminV1alphaAudience struct {
+	// AdsPersonalizationEnabled: Output only. It is automatically set by GA
+	// to false if this is an NPA Audience and is excluded from ads
+	// personalization.
+	AdsPersonalizationEnabled bool `json:"adsPersonalizationEnabled,omitempty"`
+
+	// Description: Required. The description of the Audience.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Required. The display name of the Audience.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EventTrigger: Optional. Specifies an event to log when a user joins
+	// the Audience. If not set, no event is logged when a user joins the
+	// Audience.
+	EventTrigger *GoogleAnalyticsAdminV1alphaAudienceEventTrigger `json:"eventTrigger,omitempty"`
+
+	// ExclusionDurationMode: Immutable. Specifies how long an exclusion
+	// lasts for users that meet the exclusion filter. It is applied to all
+	// EXCLUDE filter clauses and is ignored when there is no EXCLUDE filter
+	// clause in the Audience.
+	//
+	// Possible values:
+	//   "AUDIENCE_EXCLUSION_DURATION_MODE_UNSPECIFIED" - Not specified.
+	//   "EXCLUDE_TEMPORARILY" - Exclude users from the Audience during
+	// periods when they meet the filter clause.
+	//   "EXCLUDE_PERMANENTLY" - Exclude users from the Audience if they've
+	// ever met the filter clause.
+	ExclusionDurationMode string `json:"exclusionDurationMode,omitempty"`
+
+	// FilterClauses: Required. Immutable. null Filter clauses that define
+	// the Audience. All clauses will be AND’ed together.
+	FilterClauses []*GoogleAnalyticsAdminV1alphaAudienceFilterClause `json:"filterClauses,omitempty"`
+
+	// MembershipDurationDays: Required. Immutable. The duration a user
+	// should stay in an Audience. It cannot be set to more than 540 days.
+	MembershipDurationDays int64 `json:"membershipDurationDays,omitempty"`
+
+	// Name: Output only. The resource name for this Audience resource.
+	// Format: properties/{propertyId}/audiences/{audienceId}
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdsPersonalizationEnabled") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AdsPersonalizationEnabled") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudience) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudience
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilter: A
+// specific filter for a single dimension or metric.
+type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilter struct {
+	// AtAnyPointInTime: Optional. Indicates whether this filter needs
+	// dynamic evaluation or not. If set to true, users join the Audience if
+	// they ever met the condition (static evaluation). If unset or set to
+	// false, user evaluation for an Audience is dynamic; users are added to
+	// an Audience when they meet the conditions and then removed when they
+	// no longer meet them. This can only be set when Audience scope is
+	// ACROSS_ALL_SESSIONS.
+	AtAnyPointInTime bool `json:"atAnyPointInTime,omitempty"`
+
+	// BetweenFilter: A filter for numeric or date values between certain
+	// values on a dimension or metric.
+	BetweenFilter *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterBetweenFilter `json:"betweenFilter,omitempty"`
+
+	// FieldName: Required. Immutable. The dimension name or metric name to
+	// filter.
+	FieldName string `json:"fieldName,omitempty"`
+
+	// InAnyNDayPeriod: Optional. If set, specifies the time window for
+	// which to evaluate data in number of days. If not set, then audience
+	// data is evaluated against lifetime data (i.e., infinite time window).
+	// For example, if set to 1 day, only the current day's data is
+	// evaluated. The reference point is the current day when
+	// at_any_point_in_time is unset or false. It can only be set when
+	// Audience scope is ACROSS_ALL_SESSIONS and cannot be greater than 60
+	// days.
+	InAnyNDayPeriod int64 `json:"inAnyNDayPeriod,omitempty"`
+
+	// InListFilter: A filter for a string dimension that matches a
+	// particular list of options.
+	InListFilter *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterInListFilter `json:"inListFilter,omitempty"`
+
+	// NumericFilter: A filter for numeric or date values on a dimension or
+	// metric.
+	NumericFilter *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilter `json:"numericFilter,omitempty"`
+
+	// StringFilter: A filter for a string-type dimension that matches a
+	// particular pattern.
+	StringFilter *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterStringFilter `json:"stringFilter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AtAnyPointInTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AtAnyPointInTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterBetweenFilte
+// r: A filter for numeric or date values between certain values on a
+// dimension or metric.
+type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterBetweenFilter struct {
+	// FromValue: Required. Begins with this number, inclusive.
+	FromValue *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue `json:"fromValue,omitempty"`
+
+	// ToValue: Required. Ends with this number, inclusive.
+	ToValue *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue `json:"toValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FromValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FromValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterBetweenFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterBetweenFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterInListFilter
+// : A filter for a string dimension that matches a particular list of
+// options.
+type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterInListFilter struct {
+	// CaseSensitive: Optional. If true, the match is case-sensitive. If
+	// false, the match is case-insensitive.
+	CaseSensitive bool `json:"caseSensitive,omitempty"`
+
+	// Values: Required. The list of possible string values to match
+	// against. Must be non-empty.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaseSensitive") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterInListFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterInListFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilte
+// r: A filter for numeric or date values on a dimension or metric.
+type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilter struct {
+	// Operation: Required. The operation applied to a numeric filter.
+	//
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - Unspecified.
+	//   "EQUAL" - Equal.
+	//   "LESS_THAN" - Less than.
+	//   "LESS_THAN_OR_EQUAL" - Less than or equal.
+	//   "GREATER_THAN" - Greater than.
+	//   "GREATER_THAN_OR_EQUAL" - Greater than or equal.
+	Operation string `json:"operation,omitempty"`
+
+	// Value: Required. The numeric or date value to match against.
+	Value *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Operation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue
+// : To represent a number.
+type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue struct {
+	// DoubleValue: Double value.
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+
+	// Int64Value: Integer value.
+	Int64Value int64 `json:"int64Value,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DoubleValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DoubleValue") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	return nil
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterStringFilter
+// : A filter for a string-type dimension that matches a particular
+// pattern.
+type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterStringFilter struct {
+	// CaseSensitive: Optional. If true, the match is case-sensitive. If
+	// false, the match is case-insensitive.
+	CaseSensitive bool `json:"caseSensitive,omitempty"`
+
+	// MatchType: Required. The match type for the string filter.
+	//
+	// Possible values:
+	//   "MATCH_TYPE_UNSPECIFIED" - Unspecified
+	//   "EXACT" - Exact match of the string value.
+	//   "BEGINS_WITH" - Begins with the string value.
+	//   "ENDS_WITH" - Ends with the string value.
+	//   "CONTAINS" - Contains the string value.
+	//   "FULL_REGEXP" - Full regular expression matches with the string
+	// value.
+	//   "PARTIAL_REGEXP" - Partial regular expression matches with the
+	// string value.
+	MatchType string `json:"matchType,omitempty"`
+
+	// Value: Required. The string value to be matched against.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaseSensitive") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterStringFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterStringFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceEventFilter: A filter that matches
+// events of a single event name. If an event parameter is specified,
+// only the subset of events that match both the single event name and
+// the parameter filter expressions match this event filter.
+type GoogleAnalyticsAdminV1alphaAudienceEventFilter struct {
+	// EventName: Required. Immutable. The name of the event to match
+	// against.
+	EventName string `json:"eventName,omitempty"`
+
+	// EventParameterFilterExpression: Optional. If specified, this filter
+	// matches events that match both the single event name and the
+	// parameter filter expressions. AudienceEventFilter inside the
+	// parameter filter expression cannot be set (i.e., nested event filters
+	// are not supported). This should be a single and_group of
+	// dimension_or_metric_filter or not_expression; ANDs of ORs are not
+	// supported. Also, if it includes a filter for "eventCount", only that
+	// one will be considered; all the other filters will be ignored.
+	EventParameterFilterExpression *GoogleAnalyticsAdminV1alphaAudienceFilterExpression `json:"eventParameterFilterExpression,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceEventFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceEventFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceEventTrigger: Specifies an event
+// to log when a user joins the Audience.
+type GoogleAnalyticsAdminV1alphaAudienceEventTrigger struct {
+	// EventName: Required. The event name that will be logged.
+	EventName string `json:"eventName,omitempty"`
+
+	// LogCondition: Required. When to log the event.
+	//
+	// Possible values:
+	//   "LOG_CONDITION_UNSPECIFIED" - Log condition is not specified.
+	//   "AUDIENCE_JOINED" - The event should be logged only when a user is
+	// joined.
+	//   "AUDIENCE_MEMBERSHIP_RENEWED" - The event should be logged whenever
+	// the Audience condition is met, even if the user is already a member
+	// of the Audience.
+	LogCondition string `json:"logCondition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceEventTrigger) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceEventTrigger
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceFilterClause: A clause for
+// defining either a simple or sequence filter. A filter can be
+// inclusive (i.e., users satisfying the filter clause are included in
+// the Audience) or exclusive (i.e., users satisfying the filter clause
+// are excluded from the Audience).
+type GoogleAnalyticsAdminV1alphaAudienceFilterClause struct {
+	// ClauseType: Required. Specifies whether this is an include or exclude
+	// filter clause.
+	//
+	// Possible values:
+	//   "AUDIENCE_CLAUSE_TYPE_UNSPECIFIED" - Unspecified clause type.
+	//   "INCLUDE" - Users will be included in the Audience if the filter
+	// clause is met.
+	//   "EXCLUDE" - Users will be excluded from the Audience if the filter
+	// clause is met.
+	ClauseType string `json:"clauseType,omitempty"`
+
+	// SequenceFilter: Filters that must occur in a specific order for the
+	// user to be a member of the Audience.
+	SequenceFilter *GoogleAnalyticsAdminV1alphaAudienceSequenceFilter `json:"sequenceFilter,omitempty"`
+
+	// SimpleFilter: A simple filter that a user must satisfy to be a member
+	// of the Audience.
+	SimpleFilter *GoogleAnalyticsAdminV1alphaAudienceSimpleFilter `json:"simpleFilter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClauseType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClauseType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceFilterClause) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceFilterClause
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceFilterExpression: A logical
+// expression of Audience dimension, metric, or event filters.
+type GoogleAnalyticsAdminV1alphaAudienceFilterExpression struct {
+	// AndGroup: A list of expressions to be AND’ed together. It can only
+	// contain AudienceFilterExpressions with or_group. This must be set for
+	// the top level AudienceFilterExpression.
+	AndGroup *GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList `json:"andGroup,omitempty"`
+
+	// DimensionOrMetricFilter: A filter on a single dimension or metric.
+	// This cannot be set on the top level AudienceFilterExpression.
+	DimensionOrMetricFilter *GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilter `json:"dimensionOrMetricFilter,omitempty"`
+
+	// EventFilter: Creates a filter that matches a specific event. This
+	// cannot be set on the top level AudienceFilterExpression.
+	EventFilter *GoogleAnalyticsAdminV1alphaAudienceEventFilter `json:"eventFilter,omitempty"`
+
+	// NotExpression: A filter expression to be NOT'ed (i.e., inverted,
+	// complemented). It can only include a dimension_or_metric_filter. This
+	// cannot be set on the top level AudienceFilterExpression.
+	NotExpression *GoogleAnalyticsAdminV1alphaAudienceFilterExpression `json:"notExpression,omitempty"`
+
+	// OrGroup: A list of expressions to OR’ed together. It cannot contain
+	// AudienceFilterExpressions with and_group or or_group.
+	OrGroup *GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList `json:"orGroup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AndGroup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AndGroup") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceFilterExpression) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceFilterExpression
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList: A list of
+// Audience filter expressions.
+type GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList struct {
+	// FilterExpressions: A list of Audience filter expressions.
+	FilterExpressions []*GoogleAnalyticsAdminV1alphaAudienceFilterExpression `json:"filterExpressions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilterExpressions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilterExpressions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceSequenceFilter: Defines filters
+// that must occur in a specific order for the user to be a member of
+// the Audience.
+type GoogleAnalyticsAdminV1alphaAudienceSequenceFilter struct {
+	// Scope: Required. Immutable. Specifies the scope for this filter.
+	//
+	// Possible values:
+	//   "AUDIENCE_FILTER_SCOPE_UNSPECIFIED" - Scope is not specified.
+	//   "AUDIENCE_FILTER_SCOPE_WITHIN_SAME_EVENT" - User joins the Audience
+	// if the filter condition is met within one event.
+	//   "AUDIENCE_FILTER_SCOPE_WITHIN_SAME_SESSION" - User joins the
+	// Audience if the filter condition is met within one session.
+	//   "AUDIENCE_FILTER_SCOPE_ACROSS_ALL_SESSIONS" - User joins the
+	// Audience if the filter condition is met by any event across any
+	// session.
+	Scope string `json:"scope,omitempty"`
+
+	// SequenceMaximumDuration: Optional. Defines the time period in which
+	// the whole sequence must occur.
+	SequenceMaximumDuration string `json:"sequenceMaximumDuration,omitempty"`
+
+	// SequenceSteps: Required. An ordered sequence of steps. A user must
+	// complete each step in order to join the sequence filter.
+	SequenceSteps []*GoogleAnalyticsAdminV1alphaAudienceSequenceFilterAudienceSequenceStep `json:"sequenceSteps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Scope") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Scope") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceSequenceFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceSequenceFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceSequenceFilterAudienceSequenceStep:
+//  A condition that must occur in the specified step order for this
+// user to match the sequence.
+type GoogleAnalyticsAdminV1alphaAudienceSequenceFilterAudienceSequenceStep struct {
+	// ConstraintDuration: Optional. When set, this step must be satisfied
+	// within the constraint_duration of the previous step (i.e., t[i] -
+	// t[i-1] <= constraint_duration). If not set, there is no duration
+	// requirement (the duration is effectively unlimited). It is ignored
+	// for the first step.
+	ConstraintDuration string `json:"constraintDuration,omitempty"`
+
+	// FilterExpression: Required. Immutable. A logical expression of
+	// Audience dimension, metric, or event filters in each step.
+	FilterExpression *GoogleAnalyticsAdminV1alphaAudienceFilterExpression `json:"filterExpression,omitempty"`
+
+	// ImmediatelyFollows: Optional. If true, the event satisfying this step
+	// must be the very next event after the event satisfying the last step.
+	// If unset or false, this step indirectly follows the prior step; for
+	// example, there may be events between the prior step and this step. It
+	// is ignored for the first step.
+	ImmediatelyFollows bool `json:"immediatelyFollows,omitempty"`
+
+	// Scope: Required. Immutable. Specifies the scope for this step.
+	//
+	// Possible values:
+	//   "AUDIENCE_FILTER_SCOPE_UNSPECIFIED" - Scope is not specified.
+	//   "AUDIENCE_FILTER_SCOPE_WITHIN_SAME_EVENT" - User joins the Audience
+	// if the filter condition is met within one event.
+	//   "AUDIENCE_FILTER_SCOPE_WITHIN_SAME_SESSION" - User joins the
+	// Audience if the filter condition is met within one session.
+	//   "AUDIENCE_FILTER_SCOPE_ACROSS_ALL_SESSIONS" - User joins the
+	// Audience if the filter condition is met by any event across any
+	// session.
+	Scope string `json:"scope,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConstraintDuration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConstraintDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceSequenceFilterAudienceSequenceStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceSequenceFilterAudienceSequenceStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaAudienceSimpleFilter: Defines a simple
+// filter that a user must satisfy to be a member of the Audience.
+type GoogleAnalyticsAdminV1alphaAudienceSimpleFilter struct {
+	// FilterExpression: Required. Immutable. A logical expression of
+	// Audience dimension, metric, or event filters.
+	FilterExpression *GoogleAnalyticsAdminV1alphaAudienceFilterExpression `json:"filterExpression,omitempty"`
+
+	// Scope: Required. Immutable. Specifies the scope for this filter.
+	//
+	// Possible values:
+	//   "AUDIENCE_FILTER_SCOPE_UNSPECIFIED" - Scope is not specified.
+	//   "AUDIENCE_FILTER_SCOPE_WITHIN_SAME_EVENT" - User joins the Audience
+	// if the filter condition is met within one event.
+	//   "AUDIENCE_FILTER_SCOPE_WITHIN_SAME_SESSION" - User joins the
+	// Audience if the filter condition is met within one session.
+	//   "AUDIENCE_FILTER_SCOPE_ACROSS_ALL_SESSIONS" - User joins the
+	// Audience if the filter condition is met by any event across any
+	// session.
+	Scope string `json:"scope,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilterExpression") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilterExpression") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAudienceSimpleFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAudienceSimpleFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2186,6 +2903,44 @@ type GoogleAnalyticsAdminV1alphaListAccountsResponse struct {
 
 func (s *GoogleAnalyticsAdminV1alphaListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListAccountsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaListAudiencesResponse: Response message
+// for ListAudiences RPC.
+type GoogleAnalyticsAdminV1alphaListAudiencesResponse struct {
+	// Audiences: List of Audiences.
+	Audiences []*GoogleAnalyticsAdminV1alphaAudience `json:"audiences,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Audiences") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Audiences") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListAudiencesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListAudiencesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7871,6 +8626,800 @@ func (c *PropertiesUpdateGoogleSignalsSettingsCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaGoogleSignalsSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.audiences.archive":
+
+type PropertiesAudiencesArchiveCall struct {
+	s                                                 *Service
+	name                                              string
+	googleanalyticsadminv1alphaarchiveaudiencerequest *GoogleAnalyticsAdminV1alphaArchiveAudienceRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// Archive: Archives an Audience on a property.
+//
+// - name: Example format: properties/1234/audiences/5678.
+func (r *PropertiesAudiencesService) Archive(name string, googleanalyticsadminv1alphaarchiveaudiencerequest *GoogleAnalyticsAdminV1alphaArchiveAudienceRequest) *PropertiesAudiencesArchiveCall {
+	c := &PropertiesAudiencesArchiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphaarchiveaudiencerequest = googleanalyticsadminv1alphaarchiveaudiencerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAudiencesArchiveCall) Fields(s ...googleapi.Field) *PropertiesAudiencesArchiveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAudiencesArchiveCall) Context(ctx context.Context) *PropertiesAudiencesArchiveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAudiencesArchiveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAudiencesArchiveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaarchiveaudiencerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:archive")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.audiences.archive" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesAudiencesArchiveCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Archives an Audience on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/audiences/{audiencesId}:archive",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.audiences.archive",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Example format: properties/1234/audiences/5678",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/audiences/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:archive",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaArchiveAudienceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.audiences.create":
+
+type PropertiesAudiencesCreateCall struct {
+	s                                   *Service
+	parent                              string
+	googleanalyticsadminv1alphaaudience *GoogleAnalyticsAdminV1alphaAudience
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// Create: Creates an Audience.
+//
+// - parent: Example format: properties/1234.
+func (r *PropertiesAudiencesService) Create(parent string, googleanalyticsadminv1alphaaudience *GoogleAnalyticsAdminV1alphaAudience) *PropertiesAudiencesCreateCall {
+	c := &PropertiesAudiencesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alphaaudience = googleanalyticsadminv1alphaaudience
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAudiencesCreateCall) Fields(s ...googleapi.Field) *PropertiesAudiencesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAudiencesCreateCall) Context(ctx context.Context) *PropertiesAudiencesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAudiencesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAudiencesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaaudience)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/audiences")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.audiences.create" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaAudience or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAnalyticsAdminV1alphaAudience.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesAudiencesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaAudience, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaAudience{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an Audience.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/audiences",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.audiences.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Example format: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/audiences",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAudience"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAudience"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.audiences.get":
+
+type PropertiesAudiencesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Lookup for a single Audience.
+//
+// - name: The name of the Audience to get. Example format:
+//   properties/1234/audiences/5678.
+func (r *PropertiesAudiencesService) Get(name string) *PropertiesAudiencesGetCall {
+	c := &PropertiesAudiencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAudiencesGetCall) Fields(s ...googleapi.Field) *PropertiesAudiencesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesAudiencesGetCall) IfNoneMatch(entityTag string) *PropertiesAudiencesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAudiencesGetCall) Context(ctx context.Context) *PropertiesAudiencesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAudiencesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.audiences.get" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaAudience or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAnalyticsAdminV1alphaAudience.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesAudiencesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaAudience, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaAudience{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lookup for a single Audience.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/audiences/{audiencesId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.audiences.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the Audience to get. Example format: properties/1234/audiences/5678",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/audiences/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAudience"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.audiences.list":
+
+type PropertiesAudiencesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Audiences on a property.
+//
+// - parent: Example format: properties/1234.
+func (r *PropertiesAudiencesService) List(parent string) *PropertiesAudiencesListCall {
+	c := &PropertiesAudiencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of resources to return. If unspecified, at most 50 resources will be
+// returned. The maximum value is 200 (higher values will be coerced to
+// the maximum).
+func (c *PropertiesAudiencesListCall) PageSize(pageSize int64) *PropertiesAudiencesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListAudiences` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListAudiences` must match the call that provided the
+// page token.
+func (c *PropertiesAudiencesListCall) PageToken(pageToken string) *PropertiesAudiencesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAudiencesListCall) Fields(s ...googleapi.Field) *PropertiesAudiencesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesAudiencesListCall) IfNoneMatch(entityTag string) *PropertiesAudiencesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAudiencesListCall) Context(ctx context.Context) *PropertiesAudiencesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAudiencesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAudiencesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/audiences")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.audiences.list" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaListAudiencesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaListAudiencesResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesAudiencesListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListAudiencesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListAudiencesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Audiences on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/audiences",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.audiences.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200 (higher values will be coerced to the maximum).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListAudiences` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAudiences` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Example format: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/audiences",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListAudiencesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesAudiencesListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListAudiencesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticsadmin.properties.audiences.patch":
+
+type PropertiesAudiencesPatchCall struct {
+	s                                   *Service
+	name                                string
+	googleanalyticsadminv1alphaaudience *GoogleAnalyticsAdminV1alphaAudience
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// Patch: Updates an Audience on a property.
+//
+// - name: Output only. The resource name for this Audience resource.
+//   Format: properties/{propertyId}/audiences/{audienceId}.
+func (r *PropertiesAudiencesService) Patch(name string, googleanalyticsadminv1alphaaudience *GoogleAnalyticsAdminV1alphaAudience) *PropertiesAudiencesPatchCall {
+	c := &PropertiesAudiencesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphaaudience = googleanalyticsadminv1alphaaudience
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
+// replace the entire entity, use one path with the string "*" to match
+// all fields.
+func (c *PropertiesAudiencesPatchCall) UpdateMask(updateMask string) *PropertiesAudiencesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAudiencesPatchCall) Fields(s ...googleapi.Field) *PropertiesAudiencesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAudiencesPatchCall) Context(ctx context.Context) *PropertiesAudiencesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAudiencesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAudiencesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaaudience)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.audiences.patch" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaAudience or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAnalyticsAdminV1alphaAudience.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesAudiencesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaAudience, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaAudience{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an Audience on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/audiences/{audiencesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "analyticsadmin.properties.audiences.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name for this Audience resource. Format: properties/{propertyId}/audiences/{audienceId}",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/audiences/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAudience"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAudience"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"

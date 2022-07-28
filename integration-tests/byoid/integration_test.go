@@ -40,6 +40,7 @@ import (
 	"net/url"
 	"os"
 	"testing"
+	"time"
 
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/dns/v1"
@@ -187,11 +188,18 @@ type config struct {
 }
 
 type credentialSource struct {
-	File                        string `json:"file,omitempty"`
-	URL                         string `json:"url,omitempty"`
-	EnvironmentID               string `json:"environment_id,omitempty"`
-	RegionURL                   string `json:"region_url"`
-	RegionalCredVerificationURL string `json:"regional_cred_verification_url,omitempty"`
+	File                        string           `json:"file,omitempty"`
+	URL                         string           `json:"url,omitempty"`
+	Executable                  executableConfig `json:"executable,omitempty"`
+	EnvironmentID               string           `json:"environment_id,omitempty"`
+	RegionURL                   string           `json:"region_url"`
+	RegionalCredVerificationURL string           `json:"regional_cred_verification_url,omitempty"`
+}
+
+type executableConfig struct {
+	Command       string `json:"command"`
+	TimeoutMillis int    `json:"timeout_millis,omitempty"`
+	OutputFile    string `json:"output_file,omitempty"`
 }
 
 // Tests to make sure File based external credentials continues to work.
@@ -239,7 +247,7 @@ func TestURLBasedCredentials(t *testing.T) {
 		Type:                           "external_account",
 		Audience:                       oidcAudience,
 		SubjectTokenType:               "urn:ietf:params:oauth:token-type:jwt",
-		TokenURL:                       "https://sts.googleapis.com/v1beta/token",
+		TokenURL:                       "https://sts.googleapis.com/v1/token",
 		ServiceAccountImpersonationURL: fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateAccessToken", clientID),
 		CredentialSource: credentialSource{
 			URL: ts.URL,
@@ -334,6 +342,41 @@ func TestAWSBasedCredentials(t *testing.T) {
 		CredentialSource: credentialSource{
 			EnvironmentID:               "aws1",
 			RegionalCredVerificationURL: "https://sts.us-east-1.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15",
+		},
+	})
+}
+
+// Tests to make sure executable based external credentials continues to work.
+// We're using the same setup as file based external account credentials, and using `cat` as the command
+func TestExecutableBasedCredentials(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
+
+	// Set up Script as a executable file
+	scriptFile, err := ioutil.TempFile("", "script.sh")
+	if err != nil {
+		t.Fatalf("Error creating token file:")
+	}
+	defer os.Remove(scriptFile.Name())
+
+	fmt.Fprintf(scriptFile, `#!/bin/bash
+echo "{\"success\":true,\"version\":1,\"expiration_time\":%v,\"token_type\":\"urn:ietf:params:oauth:token-type:jwt\",\"id_token\":\"%v\"}"`,
+		time.Now().Add(time.Hour).Unix(), oidcToken)
+	scriptFile.Close()
+	os.Chmod(scriptFile.Name(), 0700)
+
+	// Run our test!
+	testBYOID(t, config{
+		Type:                           "external_account",
+		Audience:                       oidcAudience,
+		SubjectTokenType:               "urn:ietf:params:oauth:token-type:jwt",
+		TokenURL:                       "https://sts.googleapis.com/v1/token",
+		ServiceAccountImpersonationURL: fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateAccessToken", clientID),
+		CredentialSource: credentialSource{
+			Executable: executableConfig{
+				Command: scriptFile.Name(),
+			},
 		},
 	})
 }

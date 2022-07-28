@@ -2609,6 +2609,14 @@ type TimeSeriesTable struct {
 	// DataSets: Required. The data displayed in this table.
 	DataSets []*TableDataSet `json:"dataSets,omitempty"`
 
+	// MetricVisualization: Optional. Store rendering strategy
+	//
+	// Possible values:
+	//   "METRIC_VISUALIZATION_UNSPECIFIED" - Unspecified state
+	//   "NUMBER" - Default text rendering
+	//   "BAR" - Horizontal bar rendering
+	MetricVisualization string `json:"metricVisualization,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DataSets") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

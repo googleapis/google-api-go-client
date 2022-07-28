@@ -5939,6 +5939,14 @@ type UptimeCheckConfig struct {
 	// complete (must be between 1 and 60 seconds). Required.
 	Timeout string `json:"timeout,omitempty"`
 
+	// UserLabels: User-supplied key/value data to be used for organizing
+	// and identifying the UptimeCheckConfig objects.The field can contain
+	// up to 64 entries. Each key and value is limited to 63 Unicode
+	// characters or 128 bytes, whichever is smaller. Labels and values can
+	// contain only lowercase letters, numerals, underscores, and dashes.
+	// Keys must begin with a letter.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -10198,9 +10206,10 @@ type ProjectsMetricDescriptorsCreateCall struct {
 }
 
 // Create: Creates a new metric descriptor. The creation is executed
-// asynchronously and callers may check the returned operation to track
-// its progress. User-created metric descriptors define custom metrics
-// (https://cloud.google.com/monitoring/custom-metrics).
+// asynchronously. User-created metric descriptors define custom metrics
+// (https://cloud.google.com/monitoring/custom-metrics). The metric
+// descriptor is updated if it already exists, except that metric labels
+// are never removed.
 //
 // - name: The project
 //   (https://cloud.google.com/monitoring/api/v3#project_name) on which
@@ -10304,7 +10313,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new metric descriptor. The creation is executed asynchronously and callers may check the returned operation to track its progress. User-created metric descriptors define custom metrics (https://cloud.google.com/monitoring/custom-metrics).",
+	//   "description": "Creates a new metric descriptor. The creation is executed asynchronously. User-created metric descriptors define custom metrics (https://cloud.google.com/monitoring/custom-metrics). The metric descriptor is updated if it already exists, except that metric labels are never removed.",
 	//   "flatPath": "v3/projects/{projectsId}/metricDescriptors",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.metricDescriptors.create",

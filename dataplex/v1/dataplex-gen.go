@@ -3009,6 +3009,9 @@ func (s *GoogleCloudDataplexV1Session) MarshalJSON() ([]byte, error) {
 // about sessions within an environment. The monitored resource is
 // 'Environment'.
 type GoogleCloudDataplexV1SessionEvent struct {
+	// EventSucceeded: The status of the event.
+	EventSucceeded bool `json:"eventSucceeded,omitempty"`
+
 	// Message: The log message.
 	Message string `json:"message,omitempty"`
 
@@ -3022,15 +3025,25 @@ type GoogleCloudDataplexV1SessionEvent struct {
 	//
 	// Possible values:
 	//   "EVENT_TYPE_UNSPECIFIED" - An unspecified event type.
-	//   "START" - Event for start of a session.
+	//   "START" - Event when the session is assigned to a user.
 	//   "STOP" - Event for stop of a session.
 	//   "QUERY" - Query events in the session.
+	//   "CREATE" - Event for creation of a cluster. It is not yet assigned
+	// to a user. This comes before START in the sequence
 	Type string `json:"type,omitempty"`
 
-	// UserId: The information about the user that created the session.
+	// UnassignedDuration: The idle duration of a warm pooled session before
+	// it is assigned to user.
+	UnassignedDuration string `json:"unassignedDuration,omitempty"`
+
+	// UserId: The information about the user that created the session. It
+	// will be the email address of the user.
 	UserId string `json:"userId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Message") to
+	// WarmPoolEnabled: If the session is a warm pooled session.
+	WarmPoolEnabled bool `json:"warmPoolEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventSucceeded") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3038,12 +3051,13 @@ type GoogleCloudDataplexV1SessionEvent struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Message") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EventSucceeded") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3353,7 +3367,7 @@ type GoogleCloudDataplexV1TaskExecutionSpec struct {
 
 	// Project: Optional. The project in which jobs are run. By default, the
 	// project containing the Lake is used. If a project is provided, the
-	// executionspec.service_account must belong to this same project.
+	// ExecutionSpec.service_account must belong to this project.
 	Project string `json:"project,omitempty"`
 
 	// ServiceAccount: Required. Service account to use to execute a task.

@@ -1022,6 +1022,9 @@ type GoogleCloudBeyondcorpAppconnectionsV1AppConnectionGateway struct {
 	// 19443.
 	IngressPort int64 `json:"ingressPort,omitempty"`
 
+	// L7psc: Output only. L7 private service connection for this resource.
+	L7psc string `json:"l7psc,omitempty"`
+
 	// Type: Required. The type of hosting used by the gateway.
 	//
 	// Possible values:
@@ -6488,9 +6491,9 @@ type ProjectsLocationsAppConnectorsResolveInstanceConfigCall struct {
 	header_      http.Header
 }
 
-// ResolveInstanceConfig: Get instance config for a given AppConnector.
-// An internal method called by a AppConnector to get its container
-// config.
+// ResolveInstanceConfig: Gets instance configuration for a given
+// AppConnector. An internal method called by a AppConnector to get its
+// container config.
 //
 // - appConnector: BeyondCorp AppConnector name using the form:
 //   `projects/{project_id}/locations/{location_id}/appConnectors/{app_co
@@ -6603,7 +6606,7 @@ func (c *ProjectsLocationsAppConnectorsResolveInstanceConfigCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Get instance config for a given AppConnector. An internal method called by a AppConnector to get its container config.",
+	//   "description": "Gets instance configuration for a given AppConnector. An internal method called by a AppConnector to get its container config.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/appConnectors/{appConnectorsId}:resolveInstanceConfig",
 	//   "httpMethod": "GET",
 	//   "id": "beyondcorp.projects.locations.appConnectors.resolveInstanceConfig",

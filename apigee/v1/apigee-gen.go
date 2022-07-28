@@ -4232,7 +4232,8 @@ func (s *GoogleCloudApigeeV1DimensionMetric) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudApigeeV1EndpointAttachment: Apigee endpoint attachment.
-// For more information, see Southbound networking patterns.
+// For more information, see [Southbound networking patterns]
+// (https://cloud.google.com/apigee/docs/api-platform/architecture/southbound-networking-patterns-endpoints).
 type GoogleCloudApigeeV1EndpointAttachment struct {
 	// Host: Output only. Host that can be used in either the HTTP target
 	// endpoint directly or as the host in target server.
@@ -5267,15 +5268,16 @@ type GoogleCloudApigeeV1Instance struct {
 	// endpoint used by clients to connect to the service.
 	Host string `json:"host,omitempty"`
 
-	// IpRange: Optional. IP range represents the customer-provided CIDR
-	// block of length 22 that will be used for the Apigee instance
-	// creation. This optional range, if provided, should be freely
-	// available as part of larger named range the customer has allocated to
-	// the Service Networking peering. If this is not provided, Apigee will
-	// automatically request for any available /22 CIDR block from Service
-	// Networking. The customer should use this CIDR block for configuring
-	// their firewall needs to allow traffic from Apigee. Input format:
-	// "a.b.c.d/22", Output format: a.b.c.d/22, e.f.g.h/28"
+	// IpRange: Optional. Comma-separated list of CIDR blocks of length 22
+	// and/or 28 used to create the Apigee instance. Providing CIDR ranges
+	// is optional. You can provide just /22 or /28 or both (or neither).
+	// Ranges you provide should be freely available as part of a larger
+	// named range you have allocated to the Service Networking peering. If
+	// this parameter is not provided, Apigee automatically requests an
+	// available /22 and /28 CIDR block from Service Networking. Use the /22
+	// CIDR block for configuring your firewall needs to allow traffic from
+	// Apigee. Input formats: `a.b.c.d/22` or `e.f.g.h/28` or
+	// `a.b.c.d/22,e.f.g.h/28`
 	IpRange string `json:"ipRange,omitempty"`
 
 	// LastModifiedAt: Output only. Time the instance was last modified in
@@ -11778,7 +11780,7 @@ type OrganizationsDeleteCall struct {
 // Delete: Delete an Apigee organization. For organizations with
 // BillingType EVALUATION, an immediate deletion is performed. For paid
 // organizations, a soft-deletion is performed. The organization can be
-// restored within the soft-deletion period - which can be controlled
+// restored within the soft-deletion period which can be controlled
 // using the retention field in the request.
 //
 // - name: Name of the organization. Use the following structure in your
@@ -11790,7 +11792,7 @@ func (r *OrganizationsService) Delete(name string) *OrganizationsDeleteCall {
 }
 
 // Retention sets the optional parameter "retention": This setting is
-// only applicable for organizations that are soft-deleted (i.e.
+// applicable only for organizations that are soft-deleted (i.e.,
 // BillingType is not EVALUATION). It controls how long Organization
 // data will be retained after the initial delete operation completes.
 // During this period, the Organization may be restored to its last
@@ -11798,8 +11800,8 @@ func (r *OrganizationsService) Delete(name string) *OrganizationsDeleteCall {
 // able to be restored.
 //
 // Possible values:
-//   "DELETION_RETENTION_UNSPECIFIED" - Default data retention settings
-// will be applied.
+//   "DELETION_RETENTION_UNSPECIFIED" - Default data retention setting
+// of seven days will be applied.
 //   "MINIMUM" - Organization data will be retained for the minimum
 // period of 24 hours.
 func (c *OrganizationsDeleteCall) Retention(retention string) *OrganizationsDeleteCall {
@@ -11893,7 +11895,7 @@ func (c *OrganizationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete an Apigee organization. For organizations with BillingType EVALUATION, an immediate deletion is performed. For paid organizations, a soft-deletion is performed. The organization can be restored within the soft-deletion period - which can be controlled using the retention field in the request.",
+	//   "description": "Delete an Apigee organization. For organizations with BillingType EVALUATION, an immediate deletion is performed. For paid organizations, a soft-deletion is performed. The organization can be restored within the soft-deletion period which can be controlled using the retention field in the request.",
 	//   "flatPath": "v1/organizations/{organizationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.delete",
@@ -11909,13 +11911,13 @@ func (c *OrganizationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//       "type": "string"
 	//     },
 	//     "retention": {
-	//       "description": "Optional. This setting is only applicable for organizations that are soft-deleted (i.e. BillingType is not EVALUATION). It controls how long Organization data will be retained after the initial delete operation completes. During this period, the Organization may be restored to its last known state. After this period, the Organization will no longer be able to be restored.",
+	//       "description": "Optional. This setting is applicable only for organizations that are soft-deleted (i.e., BillingType is not EVALUATION). It controls how long Organization data will be retained after the initial delete operation completes. During this period, the Organization may be restored to its last known state. After this period, the Organization will no longer be able to be restored.",
 	//       "enum": [
 	//         "DELETION_RETENTION_UNSPECIFIED",
 	//         "MINIMUM"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Default data retention settings will be applied.",
+	//         "Default data retention setting of seven days will be applied.",
 	//         "Organization data will be retained for the minimum period of 24 hours."
 	//       ],
 	//       "location": "query",
@@ -22461,23 +22463,23 @@ type OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall st
 // developer app by enabling you to: * Approve or revoke a developer app
 // * Generate a new consumer key and secret for a developer app To
 // approve or revoke a developer app, set the `action` query parameter
-// to `approved` or `revoked`, respectively, and the `Content-Type`
-// header to `application/octet-stream`. If a developer app is revoked,
-// none of its API keys are valid for API calls even though the keys are
-// still `approved`. If successful, the API call returns the following
-// HTTP status code: `204 No Content` To generate a new consumer key and
+// to `approve` or `revoke`, respectively, and the `Content-Type` header
+// to `application/octet-stream`. If a developer app is revoked, none of
+// its API keys are valid for API calls even though the keys are still
+// approved. If successful, the API call returns the following HTTP
+// status code: `204 No Content` To generate a new consumer key and
 // secret for a developer app, pass the new key/secret details. Rather
 // than replace an existing key, this API generates a new key. In this
 // case, multiple key pairs may be associated with a single developer
-// app. Each key pair has an independent status (`approved` or
-// `revoked`) and expiration time. Any approved, non-expired key can be
-// used in an API call. For example, if you're using API key rotation,
-// you can generate new keys with expiration times that overlap keys
-// that are going to expire. You might also generate a new consumer
-// key/secret if the security of the original key/secret is compromised.
-// The `keyExpiresIn` property defines the expiration time for the API
-// key in milliseconds. If you don't set this property or set it to
-// `-1`, the API key never expires. **Notes**: * When generating a new
+// app. Each key pair has an independent status (`approve` or `revoke`)
+// and expiration time. Any approved, non-expired key can be used in an
+// API call. For example, if you're using API key rotation, you can
+// generate new keys with expiration times that overlap keys that are
+// going to expire. You might also generate a new consumer key/secret if
+// the security of the original key/secret is compromised. The
+// `keyExpiresIn` property defines the expiration time for the API key
+// in milliseconds. If you don't set this property or set it to `-1`,
+// the API key never expires. **Notes**: * When generating a new
 // key/secret, this API replaces the existing attributes, notes, and
 // callback URLs with those specified in the request. Include or exclude
 // any existing information that you want to retain or delete,
@@ -22592,7 +22594,7 @@ func (c *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCal
 	}
 	return ret, nil
 	// {
-	//   "description": "Manages access to a developer app by enabling you to: * Approve or revoke a developer app * Generate a new consumer key and secret for a developer app To approve or revoke a developer app, set the `action` query parameter to `approved` or `revoked`, respectively, and the `Content-Type` header to `application/octet-stream`. If a developer app is revoked, none of its API keys are valid for API calls even though the keys are still `approved`. If successful, the API call returns the following HTTP status code: `204 No Content` To generate a new consumer key and secret for a developer app, pass the new key/secret details. Rather than replace an existing key, this API generates a new key. In this case, multiple key pairs may be associated with a single developer app. Each key pair has an independent status (`approved` or `revoked`) and expiration time. Any approved, non-expired key can be used in an API call. For example, if you're using API key rotation, you can generate new keys with expiration times that overlap keys that are going to expire. You might also generate a new consumer key/secret if the security of the original key/secret is compromised. The `keyExpiresIn` property defines the expiration time for the API key in milliseconds. If you don't set this property or set it to `-1`, the API key never expires. **Notes**: * When generating a new key/secret, this API replaces the existing attributes, notes, and callback URLs with those specified in the request. Include or exclude any existing information that you want to retain or delete, respectively. * To migrate existing consumer keys and secrets to hybrid from another system, see the CreateDeveloperAppKey API.",
+	//   "description": "Manages access to a developer app by enabling you to: * Approve or revoke a developer app * Generate a new consumer key and secret for a developer app To approve or revoke a developer app, set the `action` query parameter to `approve` or `revoke`, respectively, and the `Content-Type` header to `application/octet-stream`. If a developer app is revoked, none of its API keys are valid for API calls even though the keys are still approved. If successful, the API call returns the following HTTP status code: `204 No Content` To generate a new consumer key and secret for a developer app, pass the new key/secret details. Rather than replace an existing key, this API generates a new key. In this case, multiple key pairs may be associated with a single developer app. Each key pair has an independent status (`approve` or `revoke`) and expiration time. Any approved, non-expired key can be used in an API call. For example, if you're using API key rotation, you can generate new keys with expiration times that overlap keys that are going to expire. You might also generate a new consumer key/secret if the security of the original key/secret is compromised. The `keyExpiresIn` property defines the expiration time for the API key in milliseconds. If you don't set this property or set it to `-1`, the API key never expires. **Notes**: * When generating a new key/secret, this API replaces the existing attributes, notes, and callback URLs with those specified in the request. Include or exclude any existing information that you want to retain or delete, respectively. * To migrate existing consumer keys and secrets to hybrid from another system, see the CreateDeveloperAppKey API.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.generateKeyPairOrUpdateDeveloperAppStatus",

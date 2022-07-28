@@ -1950,6 +1950,12 @@ type CsvOptions struct {
 	// value in CSV import data.
 	NullMarker string `json:"null_marker,omitempty"`
 
+	// PreserveAsciiControlCharacters: [Optional] Preserves the embedded
+	// ASCII control characters (the first 32 characters in the ASCII-table,
+	// from '\x00' to '\x1F') when loading from CSV. Only applicable to CSV,
+	// ignored for other formats.
+	PreserveAsciiControlCharacters bool `json:"preserveAsciiControlCharacters,omitempty"`
+
 	// Quote: [Optional] The value that is used to quote data sections in a
 	// CSV file. BigQuery converts the string to ISO-8859-1 encoding, and
 	// then uses the first byte of the encoded string to split the data in
@@ -3208,6 +3214,11 @@ type ExternalDataConfiguration struct {
 	// to Parquet.
 	ParquetOptions *ParquetOptions `json:"parquetOptions,omitempty"`
 
+	// ReferenceFileSchemaUri: [Optional] Provide a referencing file with
+	// the expected table schema. Enabled for the format: AVRO, PARQUET,
+	// ORC.
+	ReferenceFileSchemaUri string `json:"referenceFileSchemaUri,omitempty"`
+
 	// Schema: [Optional] The schema for the data. Schema is required for
 	// CSV and JSON formats. Schema is disallowed for Google Cloud Bigtable,
 	// Cloud Datastore backups, and Avro formats.
@@ -4428,6 +4439,10 @@ type JobConfigurationLoad struct {
 	// for this table. Only one of timePartitioning and rangePartitioning
 	// should be specified.
 	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
+
+	// ReferenceFileSchemaUri: User provided referencing file with the
+	// expected reader schema, Available for the format: AVRO, PARQUET, ORC.
+	ReferenceFileSchemaUri string `json:"referenceFileSchemaUri,omitempty"`
 
 	// Schema: [Optional] The schema for the destination table. The schema
 	// can be omitted if the destination table already exists, or if you're
@@ -6612,8 +6627,9 @@ type QueryTimelineSample struct {
 	// additional slots.
 	EstimatedRunnableUnits int64 `json:"estimatedRunnableUnits,omitempty,string"`
 
-	// PendingUnits: Total parallel units of work remaining for the active
-	// stages.
+	// PendingUnits: Total units of work remaining for the query. This
+	// number can be revised (increased or decreased) while the query is
+	// running.
 	PendingUnits int64 `json:"pendingUnits,omitempty,string"`
 
 	// TotalSlotMs: Cumulative slot-ms consumed by the query.

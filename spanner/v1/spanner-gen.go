@@ -1909,6 +1909,57 @@ func (s *Field) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FreeInstanceMetadata: Free instance specific metadata that is kept
+// even after an instance has been upgraded for tracking purposes.
+type FreeInstanceMetadata struct {
+	// ExpireBehavior: Specifies the expiration behavior of a free instance.
+	// The default of ExpireBehavior is `REMOVE_AFTER_GRACE_PERIOD`. This
+	// can be modified during or after creation, and before expiration.
+	//
+	// Possible values:
+	//   "EXPIRE_BEHAVIOR_UNSPECIFIED" - Not specified.
+	//   "FREE_TO_PROVISIONED" - When the free instance expires, upgrade the
+	// instance to a provisioned instance.
+	//   "REMOVE_AFTER_GRACE_PERIOD" - When the free instance expires,
+	// disable the instance, and delete it after the grace period passes if
+	// it has not been upgraded.
+	ExpireBehavior string `json:"expireBehavior,omitempty"`
+
+	// ExpireTime: Output only. Timestamp after which the instance will
+	// either be upgraded or scheduled for deletion after a grace period.
+	// ExpireBehavior is used to choose between upgrading or scheduling the
+	// free instance for deletion. This timestamp is set during the creation
+	// of a free instance.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// UpgradeTime: Output only. If present, the timestamp at which the free
+	// instance was upgraded to a provisioned instance.
+	UpgradeTime string `json:"upgradeTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExpireBehavior") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExpireBehavior") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FreeInstanceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod FreeInstanceMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GetDatabaseDdlResponse: The response for GetDatabaseDdl.
 type GetDatabaseDdlResponse struct {
 	// Statements: A list of formatted DDL statements defining the schema of
@@ -2093,6 +2144,21 @@ type Instance struct {
 	// EndpointUris: Deprecated. This field is not populated.
 	EndpointUris []string `json:"endpointUris,omitempty"`
 
+	// FreeInstanceMetadata: Free instance metadata. Only populated for free
+	// instances.
+	FreeInstanceMetadata *FreeInstanceMetadata `json:"freeInstanceMetadata,omitempty"`
+
+	// InstanceType: The `InstanceType` of the current instance.
+	//
+	// Possible values:
+	//   "INSTANCE_TYPE_UNSPECIFIED" - Not specified.
+	//   "PROVISIONED" - Provisioned instances have dedicated resources,
+	// standard usage limits and support.
+	//   "FREE_INSTANCE" - Free instances provide no guarantee for dedicated
+	// resources, [node_count, processing_units] should be 0. They come with
+	// stricter usage limits and limited support.
+	InstanceType string `json:"instanceType,omitempty"`
+
 	// Labels: Cloud Labels are a flexible and lightweight mechanism for
 	// organizing cloud resources into groups that reflect a customer's
 	// organizational needs and deployment strategies. Cloud Labels can be
@@ -2186,6 +2252,22 @@ type InstanceConfig struct {
 	// DisplayName: The name of this instance configuration as it appears in
 	// UIs.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// FreeInstanceAvailability: Output only. Describes whether free
+	// instances are available to be created in this instance config.
+	//
+	// Possible values:
+	//   "FREE_INSTANCE_AVAILABILITY_UNSPECIFIED" - Not specified.
+	//   "AVAILABLE" - Indicates that free instances are available to be
+	// created in this instance config.
+	//   "UNSUPPORTED" - Indicates that free instances are not supported in
+	// this instance config.
+	//   "DISABLED" - Indicates that free instances are currently not
+	// available to be created in this instance config.
+	//   "QUOTA_EXCEEDED" - Indicates that additional free instances cannot
+	// be created in this instance config because the project has reached
+	// its limit of free instances.
+	FreeInstanceAvailability string `json:"freeInstanceAvailability,omitempty"`
 
 	// LeaderOptions: Allowed values of the "default_leader" schema option
 	// for databases in instances that use this instance configuration.
@@ -3271,11 +3353,15 @@ type PartialResultSet struct {
 	// set whose rows contain a single string field. The following
 	// `PartialResultSet`s might be yielded: { "metadata": { ... } "values":
 	// ["Hello", "W"] "chunked_value": true "resume_token": "Af65..." } {
-	// "values": ["orl"] "chunked_value": true "resume_token": "Bqp2..." } {
-	// "values": ["d"] "resume_token": "Zx1B..." } This sequence of
-	// `PartialResultSet`s encodes two rows, one containing the field value
-	// "Hello", and a second containing the field value "World" = "W" +
-	// "orl" + "d".
+	// "values": ["orl"] "chunked_value": true } { "values": ["d"]
+	// "resume_token": "Zx1B..." } This sequence of `PartialResultSet`s
+	// encodes two rows, one containing the field value "Hello", and a
+	// second containing the field value "World" = "W" + "orl" + "d". Not
+	// all `PartialResultSet`s contain a `resume_token`. Execution can only
+	// be resumed from a previously yielded `resume_token`. For the above
+	// sequence of `PartialResultSet`s, resuming the query with
+	// "resume_token": "Af65..." will yield results from the
+	// `PartialResultSet` with value `["orl"]`.
 	Values []interface{} `json:"values,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

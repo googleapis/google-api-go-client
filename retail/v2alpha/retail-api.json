@@ -2019,7 +2019,7 @@
       }
     }
   },
-  "revision": "20220716",
+  "revision": "20220722",
   "rootUrl": "https://retail.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -2540,6 +2540,21 @@
       },
       "type": "object"
     },
+    "GoogleCloudRetailV2alphaBigQueryOutputResult": {
+      "description": "A BigQuery output result.",
+      "id": "GoogleCloudRetailV2alphaBigQueryOutputResult",
+      "properties": {
+        "datasetId": {
+          "description": "The ID of a BigQuery Dataset.",
+          "type": "string"
+        },
+        "tableId": {
+          "description": "The ID of a BigQuery Table.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudRetailV2alphaBigQuerySource": {
       "description": "BigQuery source import data from.",
       "id": "GoogleCloudRetailV2alphaBigQuerySource",
@@ -3030,6 +3045,10 @@
         "errorsConfig": {
           "$ref": "GoogleCloudRetailV2alphaExportErrorsConfig",
           "description": "This field is never set."
+        },
+        "outputResult": {
+          "$ref": "GoogleCloudRetailV2alphaOutputResult",
+          "description": "Output result indicating where the data were exported to."
         }
       },
       "type": "object"
@@ -3048,6 +3067,10 @@
         "errorsConfig": {
           "$ref": "GoogleCloudRetailV2alphaExportErrorsConfig",
           "description": "This field is never set."
+        },
+        "outputResult": {
+          "$ref": "GoogleCloudRetailV2alphaOutputResult",
+          "description": "Output result indicating where the data were exported to."
         }
       },
       "type": "object"
@@ -3578,6 +3601,14 @@
           ],
           "type": "string"
         },
+        "servingConfigLists": {
+          "description": "Output only. The list of valid serving configs associated with the PageOptimizationConfig.",
+          "items": {
+            "$ref": "GoogleCloudRetailV2alphaModelServingConfigList"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "servingState": {
           "description": "Output only. The serving state of the model: ACTIVE, NOT_ACTIVE.",
           "enum": [
@@ -3692,6 +3723,34 @@
         "displayName": {
           "description": "Optional. The name to display for the panel.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRetailV2alphaModelServingConfigList": {
+      "description": "Represents an ordered combination of valid serving configs, which / may be used for PAGE_OPTIMIZATION recommendations.",
+      "id": "GoogleCloudRetailV2alphaModelServingConfigList",
+      "properties": {
+        "servingConfigIds": {
+          "description": "Optional. A set of valid serving configs that may be used for PAGE_OPTIMIZATION.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRetailV2alphaOutputResult": {
+      "description": "Output result.",
+      "id": "GoogleCloudRetailV2alphaOutputResult",
+      "properties": {
+        "bigqueryResult": {
+          "description": "Export result in BigQuery.",
+          "items": {
+            "$ref": "GoogleCloudRetailV2alphaBigQueryOutputResult"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -5500,6 +5559,21 @@
       "properties": {},
       "type": "object"
     },
+    "GoogleCloudRetailV2betaBigQueryOutputResult": {
+      "description": "A BigQuery output result.",
+      "id": "GoogleCloudRetailV2betaBigQueryOutputResult",
+      "properties": {
+        "datasetId": {
+          "description": "The ID of a BigQuery Dataset.",
+          "type": "string"
+        },
+        "tableId": {
+          "description": "The ID of a BigQuery Table.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudRetailV2betaExportErrorsConfig": {
       "description": "Configuration of destination for Export related errors.",
       "id": "GoogleCloudRetailV2betaExportErrorsConfig",
@@ -5542,6 +5616,10 @@
         "errorsConfig": {
           "$ref": "GoogleCloudRetailV2betaExportErrorsConfig",
           "description": "This field is never set."
+        },
+        "outputResult": {
+          "$ref": "GoogleCloudRetailV2betaOutputResult",
+          "description": "Output result indicating where the data were exported to."
         }
       },
       "type": "object"
@@ -5560,6 +5638,10 @@
         "errorsConfig": {
           "$ref": "GoogleCloudRetailV2betaExportErrorsConfig",
           "description": "This field is never set."
+        },
+        "outputResult": {
+          "$ref": "GoogleCloudRetailV2betaOutputResult",
+          "description": "Output result indicating where the data were exported to."
         }
       },
       "type": "object"
@@ -5660,6 +5742,20 @@
         "importSummary": {
           "$ref": "GoogleCloudRetailV2betaUserEventImportSummary",
           "description": "Aggregated statistics of user event import status."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRetailV2betaOutputResult": {
+      "description": "Output result.",
+      "id": "GoogleCloudRetailV2betaOutputResult",
+      "properties": {
+        "bigqueryResult": {
+          "description": "Export result in BigQuery.",
+          "items": {
+            "$ref": "GoogleCloudRetailV2betaBigQueryOutputResult"
+          },
+          "type": "array"
         }
       },
       "type": "object"

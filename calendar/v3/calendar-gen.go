@@ -1397,10 +1397,13 @@ type Event struct {
 	// ICalUID: Event unique identifier as defined in RFC5545. It is used to
 	// uniquely identify events accross calendaring systems and must be
 	// supplied when importing events via the import method.
-	// Note that the icalUID and the id are not identical and only one of
+	// Note that the iCalUID and the id are not identical and only one of
 	// them should be supplied at event creation time. One difference in
 	// their semantics is that in recurring events, all occurrences of one
-	// event have different ids while they all share the same icalUIDs.
+	// event have different ids while they all share the same iCalUIDs. To
+	// retrieve an event using its iCalUID, call the events.list method
+	// using the iCalUID parameter. To retrieve an event using its id, call
+	// the events.get method.
 	ICalUID string `json:"iCalUID,omitempty"`
 
 	// Id: Opaque identifier of the event. When creating new single or
@@ -5976,7 +5979,9 @@ type EventsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns an event.
+// Get: Returns an event based on its Google Calendar ID. To retrieve an
+// event using its iCalendar ID, call the events.list method using the
+// iCalUID parameter.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
 //   calendarList.list method. If you want to access the primary
@@ -6116,7 +6121,7 @@ func (c *EventsGetCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns an event.",
+	//   "description": "Returns an event based on its Google Calendar ID. To retrieve an event using its iCalendar ID, call the events.list method using the iCalUID parameter.",
 	//   "httpMethod": "GET",
 	//   "id": "calendar.events.get",
 	//   "parameterOrder": [
@@ -6930,8 +6935,9 @@ func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsList
 	return c
 }
 
-// ICalUID sets the optional parameter "iCalUID": Specifies event ID in
-// the iCalendar format to be included in the response.
+// ICalUID sets the optional parameter "iCalUID": Specifies an event ID
+// in the iCalendar format to be provided in the response.  Use this if
+// you want to search for an event by its iCalendar ID.
 func (c *EventsListCall) ICalUID(iCalUID string) *EventsListCall {
 	c.urlParams_.Set("iCalUID", iCalUID)
 	return c
@@ -7220,7 +7226,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "iCalUID": {
-	//       "description": "Specifies event ID in the iCalendar format to be included in the response. Optional.",
+	//       "description": "Specifies an event ID in the iCalendar format to be provided in the response. Optional. Use this if you want to search for an event by its iCalendar ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8306,8 +8312,9 @@ func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWat
 	return c
 }
 
-// ICalUID sets the optional parameter "iCalUID": Specifies event ID in
-// the iCalendar format to be included in the response.
+// ICalUID sets the optional parameter "iCalUID": Specifies an event ID
+// in the iCalendar format to be provided in the response.  Use this if
+// you want to search for an event by its iCalendar ID.
 func (c *EventsWatchCall) ICalUID(iCalUID string) *EventsWatchCall {
 	c.urlParams_.Set("iCalUID", iCalUID)
 	return c
@@ -8588,7 +8595,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "iCalUID": {
-	//       "description": "Specifies event ID in the iCalendar format to be included in the response. Optional.",
+	//       "description": "Specifies an event ID in the iCalendar format to be provided in the response. Optional. Use this if you want to search for an event by its iCalendar ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

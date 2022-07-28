@@ -384,14 +384,15 @@ type Empty struct {
 }
 
 // GpsDataGapFailureDetails: Details related to
-// ProcessingFailureReason#GPS_DATA_GAP.
+// ProcessingFailureReason#GPS_DATA_GAP. If there are multiple GPS data
+// gaps, only the one with the largest duration is reported here.
 type GpsDataGapFailureDetails struct {
 	// GapDuration: The duration of the gap in GPS data that was found.
 	GapDuration string `json:"gapDuration,omitempty"`
 
-	// GapTime: Relative time (from the start of the video stream) when the
-	// gap started.
-	GapTime string `json:"gapTime,omitempty"`
+	// GapStartTime: Relative time (from the start of the video stream) when
+	// the gap started.
+	GapStartTime string `json:"gapStartTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GapDuration") to
 	// unconditionally include in API requests. By default, fields with
@@ -454,14 +455,15 @@ func (s *Imu) MarshalJSON() ([]byte, error) {
 }
 
 // ImuDataGapFailureDetails: Details related to
-// ProcessingFailureReason#IMU_DATA_GAP.
+// ProcessingFailureReason#IMU_DATA_GAP. If there are multiple IMU data
+// gaps, only the one with the largest duration is reported here.
 type ImuDataGapFailureDetails struct {
 	// GapDuration: The duration of the gap in IMU data that was found.
 	GapDuration string `json:"gapDuration,omitempty"`
 
-	// GapTime: Relative time (from the start of the video stream) when the
-	// gap started.
-	GapTime string `json:"gapTime,omitempty"`
+	// GapStartTime: Relative time (from the start of the video stream) when
+	// the gap started.
+	GapStartTime string `json:"gapStartTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GapDuration") to
 	// unconditionally include in API requests. By default, fields with
@@ -790,13 +792,14 @@ func (s *Measurement3d) UnmarshalJSON(data []byte) error {
 }
 
 // NotOutdoorsFailureDetails: Details related to
-// ProcessingFailureReason#NOT_OUTDOORS.
+// ProcessingFailureReason#NOT_OUTDOORS. If there are multiple indoor
+// frames found, the first frame is recorded here.
 type NotOutdoorsFailureDetails struct {
-	// Time: Relative time (from the start of the video stream) when an
+	// StartTime: Relative time (from the start of the video stream) when an
 	// indoor frame was found.
-	Time string `json:"time,omitempty"`
+	StartTime string `json:"startTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Time") to
+	// ForceSendFields is a list of field names (e.g. "StartTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -804,8 +807,8 @@ type NotOutdoorsFailureDetails struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Time") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "StartTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1075,7 +1078,8 @@ type PhotoSequence struct {
 	//   "FAILED_TO_REFINE_POSITIONS" - The sequence of photos could not be
 	// accurately located in the world.
 	//   "TAKEDOWN" - The sequence was taken down for policy reasons.
-	//   "CORRUPT_VIDEO" - The video file was corrupt.
+	//   "CORRUPT_VIDEO" - The video file was corrupt or could not be
+	// decoded.
 	//   "INTERNAL" - A permanent failure in the underlying system occurred.
 	//   "INVALID_VIDEO_FORMAT" - The video format is invalid or
 	// unsupported.
@@ -1089,10 +1093,14 @@ type PhotoSequence struct {
 	// valid. They may be missing required fields (x, y, z or time), may not
 	// be formatted correctly, or any other issue that prevents our systems
 	// from parsing it.
+	//   "INSUFFICIENT_IMU" - Too few IMU points.
+	//   "INSUFFICIENT_OVERLAP_TIME_SERIES" - Insufficient overlap in the
+	// time frame between GPS, IMU, and other time series data.
 	//   "IMU_DATA_GAP" - IMU (Accelerometer, Gyroscope, etc.) data contain
 	// gaps greater than 0.1 seconds in duration.
 	//   "UNSUPPORTED_CAMERA" - The camera is not supported.
 	//   "NOT_OUTDOORS" - Some frames were indoors, which is unsupported.
+	//   "INSUFFICIENT_VIDEO_FRAMES" - Not enough video frames.
 	FailureReason string `json:"failureReason,omitempty"`
 
 	// Filename: Output only. The filename of the upload. Does not include

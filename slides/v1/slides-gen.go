@@ -1272,10 +1272,10 @@ func (s *CreateSheetsChartResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateSlideRequest: Creates a new slide.
+// CreateSlideRequest: Creates a slide.
 type CreateSlideRequest struct {
 	// InsertionIndex: The optional zero-based index indicating where to
-	// insert the slides. If you don't specify an index, the new slide is
+	// insert the slides. If you don't specify an index, the slide is
 	// created at the end.
 	InsertionIndex int64 `json:"insertionIndex,omitempty"`
 
@@ -1283,15 +1283,15 @@ type CreateSlideRequest struct {
 	// unique among all pages and page elements in the presentation. The ID
 	// must start with an alphanumeric character or an underscore (matches
 	// regex `[a-zA-Z0-9_]`); remaining characters may include those as well
-	// as a hyphen or colon (matches regex `[a-zA-Z0-9_-:]`). The length of
-	// the ID must not be less than 5 or greater than 50. If you don't
-	// specify an ID, a unique one is generated.
+	// as a hyphen or colon (matches regex `[a-zA-Z0-9_-:]`). The ID length
+	// must be between 5 and 50 characters, inclusive. If you don't specify
+	// an ID, a unique one is generated.
 	ObjectId string `json:"objectId,omitempty"`
 
 	// PlaceholderIdMappings: An optional list of object ID mappings from
-	// the placeholder(s) on the layout to the placeholder(s) that will be
-	// created on the new slide from that specified layout. Can only be used
-	// when `slide_layout_reference` is specified.
+	// the placeholder(s) on the layout to the placeholders that are created
+	// on the slide from the specified layout. Can only be used when
+	// `slide_layout_reference` is specified.
 	PlaceholderIdMappings []*LayoutPlaceholderIdMapping `json:"placeholderIdMappings,omitempty"`
 
 	// SlideLayoutReference: Layout reference of the slide to be inserted,
@@ -1300,8 +1300,8 @@ type CreateSlideRequest struct {
 	// if the insertion_index is zero. - The first master in the
 	// presentation, if there are no slides. If the LayoutReference is not
 	// found in the current master, a 400 bad request error is returned. If
-	// you don't specify a layout reference, then the new slide will use the
-	// predefined layout `BLANK`.
+	// you don't specify a layout reference, the slide uses the predefined
+	// `BLANK` layout.
 	SlideLayoutReference *LayoutReference `json:"slideLayoutReference,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InsertionIndex") to

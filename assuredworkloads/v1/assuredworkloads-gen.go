@@ -205,6 +205,8 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -358,6 +360,8 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
@@ -664,6 +668,8 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -739,6 +745,8 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
@@ -1171,6 +1179,8 @@ type GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMetadata 
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -1246,6 +1256,8 @@ type GoogleCloudAssuredworkloadsVersioningV1mainWorkload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// ComplianceStatus: Output only. Count of active Violations in the
@@ -1391,25 +1403,30 @@ func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings) Marsha
 // GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus:
 // Represents the Compliance Status of this workload
 type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus struct {
-	// ActiveViolationCount: Count of active Violations in the Workload.
+	// AcknowledgedViolationCount: Count of active Violations which are
+	// acknowledged in the Workload.
+	AcknowledgedViolationCount int64 `json:"acknowledgedViolationCount,omitempty"`
+
+	// ActiveViolationCount: Count of active Violations which haven't been
+	// acknowledged.
 	ActiveViolationCount int64 `json:"activeViolationCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "ActiveViolationCount") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// "AcknowledgedViolationCount") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ActiveViolationCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "AcknowledgedViolationCount") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

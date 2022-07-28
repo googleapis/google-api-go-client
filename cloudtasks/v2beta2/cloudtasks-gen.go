@@ -306,6 +306,8 @@ type AppEngineHttpRequest struct {
 	//   "HEAD" - HTTP HEAD
 	//   "PUT" - HTTP PUT
 	//   "DELETE" - HTTP DELETE
+	//   "PATCH" - HTTP PATCH
+	//   "OPTIONS" - HTTP OPTIONS
 	HttpMethod string `json:"httpMethod,omitempty"`
 
 	// Payload: Payload. The payload will be sent as the HTTP message body.
@@ -1078,6 +1080,8 @@ type HttpRequest struct {
 	//   "HEAD" - HTTP HEAD
 	//   "PUT" - HTTP PUT
 	//   "DELETE" - HTTP DELETE
+	//   "PATCH" - HTTP PATCH
+	//   "OPTIONS" - HTTP OPTIONS
 	HttpMethod string `json:"httpMethod,omitempty"`
 
 	// OauthToken: If specified, an OAuth token
@@ -1164,6 +1168,8 @@ type HttpTarget struct {
 	//   "HEAD" - HTTP HEAD
 	//   "PUT" - HTTP PUT
 	//   "DELETE" - HTTP DELETE
+	//   "PATCH" - HTTP PATCH
+	//   "OPTIONS" - HTTP OPTIONS
 	HttpMethod string `json:"httpMethod,omitempty"`
 
 	// OauthToken: If specified, an OAuth token
@@ -2930,10 +2936,13 @@ type ProjectsLocationsQueuesBufferCall struct {
 	header_            http.Header
 }
 
-// Buffer: Creates and buffers a new task without the need to explicitly
-// define a Task message. The queue must be an http queue (i.e., must
-// have HTTP target). This method is used for a simplified application
-// of Cloud Tasks queues in buffer and rate limitting HTTP requests.
+// Buffer: Note: This feature is in its experimental stage. You must
+// request access to the API through the Cloud Tasks BufferQueues
+// Experiment Signup form (https://forms.gle/X8Zr5hiXH5tTGFqh8). Creates
+// and buffers a new task without the need to explicitly define a Task
+// message. The queue must be an http queue (i.e., must have HTTP
+// target). This method is used for a simplified application of Cloud
+// Tasks queues in buffer and rate limitting HTTP requests.
 //
 // - name: The queue name. For example:
 //   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The
@@ -3036,7 +3045,7 @@ func (c *ProjectsLocationsQueuesBufferCall) Do(opts ...googleapi.CallOption) (*B
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and buffers a new task without the need to explicitly define a Task message. The queue must be an http queue (i.e., must have HTTP target). This method is used for a simplified application of Cloud Tasks queues in buffer and rate limitting HTTP requests.",
+	//   "description": "Note: This feature is in its experimental stage. You must request access to the API through the [Cloud Tasks BufferQueues Experiment Signup form](https://forms.gle/X8Zr5hiXH5tTGFqh8). Creates and buffers a new task without the need to explicitly define a Task message. The queue must be an http queue (i.e., must have HTTP target). This method is used for a simplified application of Cloud Tasks queues in buffer and rate limitting HTTP requests.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:buffer",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.buffer",

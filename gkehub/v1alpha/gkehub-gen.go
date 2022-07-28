@@ -2433,20 +2433,14 @@ type Fleet struct {
 	// `Production Fleet`
 	DisplayName string `json:"displayName,omitempty"`
 
-	// FleetName: The name for the fleet. The name must meet the following
-	// constraints: + The name of a fleet should be unique within the
-	// organization; + It must consist of lower case alphanumeric characters
-	// or `-`; + The length of the name must be less than or equal to 63; +
-	// Unicode names must be expressed in Punycode format (rfc3492).
-	// Examples: + prod-fleet + xn--wlq33vhyw9jb （Punycode form for
-	// "生产环境")
-	FleetName string `json:"fleetName,omitempty"`
-
 	// Name: Output only. The full, unique resource name of this fleet in
 	// the format of
 	// `projects/{project}/locations/{location}/fleets/{fleet}`. Each GCP
 	// project can have at most one fleet resource, named "default".
 	Name string `json:"name,omitempty"`
+
+	// State: Output only. State of the namespace resource.
+	State *FleetLifecycleState `json:"state,omitempty"`
 
 	// Uid: Output only. Google-generated UUID for this resource. This is
 	// unique across all Fleet resources. If a Fleet resource is deleted and
@@ -2480,6 +2474,42 @@ type Fleet struct {
 
 func (s *Fleet) MarshalJSON() ([]byte, error) {
 	type NoMethod Fleet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FleetLifecycleState: FleetLifecycleState describes the state of a
+// Fleet resource.
+type FleetLifecycleState struct {
+	// Code: Output only. The current state of the Fleet resource.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - The code is not set.
+	//   "CREATING" - The fleet is being created.
+	//   "READY" - The fleet active.
+	//   "DELETING" - The fleet is being deleted.
+	//   "UPDATING" - The fleet is being updated.
+	Code string `json:"code,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FleetLifecycleState) MarshalJSON() ([]byte, error) {
+	type NoMethod FleetLifecycleState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2607,6 +2637,9 @@ type IdentityServiceAuthMethod struct {
 	// AzureadConfig: AzureAD specific Configuration.
 	AzureadConfig *IdentityServiceAzureADConfig `json:"azureadConfig,omitempty"`
 
+	// GoogleConfig: GoogleConfig specific configuration
+	GoogleConfig *IdentityServiceGoogleConfig `json:"googleConfig,omitempty"`
+
 	// Name: Identifier for auth config.
 	Name string `json:"name,omitempty"`
 
@@ -2646,10 +2679,11 @@ type IdentityServiceAzureADConfig struct {
 	// authentication requests to the Azure AD identity provider.
 	ClientId string `json:"clientId,omitempty"`
 
-	// ClientSecret: Raw client secret will be passed to the GKE Hub CLH.
+	// ClientSecret: Input only. Unencrypted AzureAD client secret will be
+	// passed to the GKE Hub CLH.
 	ClientSecret string `json:"clientSecret,omitempty"`
 
-	// EncryptedClientSecret: Encrypted AzureAD client secrets
+	// EncryptedClientSecret: Output only. Encrypted AzureAD client secret.
 	EncryptedClientSecret string `json:"encryptedClientSecret,omitempty"`
 
 	// KubectlRedirectUri: The redirect URL that kubectl uses for
@@ -2679,6 +2713,36 @@ type IdentityServiceAzureADConfig struct {
 
 func (s *IdentityServiceAzureADConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentityServiceAzureADConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceGoogleConfig: Configuration for the Google Plugin Auth
+// flow.
+type IdentityServiceGoogleConfig struct {
+	// Disable: Disable automatic configuration of Google Plugin on
+	// supported platforms.
+	Disable bool `json:"disable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Disable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Disable") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceGoogleConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceGoogleConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3668,6 +3732,8 @@ type MultiCloudCluster struct {
 	// a/awsClusters/my-cluster
 	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
 	// a/azureClusters/my-cluster
+	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
+	// a/attachedClusters/my-cluster
 	ResourceLink string `json:"resourceLink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClusterMissing") to
@@ -6979,13 +7045,13 @@ func (c *ProjectsLocationsFleetsCreateCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "gkehub.projects.locations.fleets.create" call.
-// Exactly one of *Fleet or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Fleet.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsLocationsFleetsCreateCall) Do(opts ...googleapi.CallOption) (*Fleet, error) {
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFleetsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7004,7 +7070,7 @@ func (c *ProjectsLocationsFleetsCreateCall) Do(opts ...googleapi.CallOption) (*F
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Fleet{
+	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7037,7 +7103,7 @@ func (c *ProjectsLocationsFleetsCreateCall) Do(opts ...googleapi.CallOption) (*F
 	//     "$ref": "Fleet"
 	//   },
 	//   "response": {
-	//     "$ref": "Fleet"
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -7116,13 +7182,13 @@ func (c *ProjectsLocationsFleetsDeleteCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "gkehub.projects.locations.fleets.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsLocationsFleetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFleetsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7141,7 +7207,7 @@ func (c *ProjectsLocationsFleetsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Empty{
+	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7171,7 +7237,7 @@ func (c *ProjectsLocationsFleetsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	//   },
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
-	//     "$ref": "Empty"
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -7611,13 +7677,13 @@ func (c *ProjectsLocationsFleetsPatchCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "gkehub.projects.locations.fleets.patch" call.
-// Exactly one of *Fleet or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Fleet.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsLocationsFleetsPatchCall) Do(opts ...googleapi.CallOption) (*Fleet, error) {
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFleetsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7636,7 +7702,7 @@ func (c *ProjectsLocationsFleetsPatchCall) Do(opts ...googleapi.CallOption) (*Fl
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Fleet{
+	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7675,7 +7741,7 @@ func (c *ProjectsLocationsFleetsPatchCall) Do(opts ...googleapi.CallOption) (*Fl
 	//     "$ref": "Fleet"
 	//   },
 	//   "response": {
-	//     "$ref": "Fleet"
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

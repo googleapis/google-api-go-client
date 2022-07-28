@@ -785,6 +785,9 @@ type Page struct {
 	// Admin user interface.
 	Title string `json:"title,omitempty"`
 
+	// Trashed: RFC 3339 date-time when this Page was trashed.
+	Trashed string `json:"trashed,omitempty"`
+
 	// Updated: RFC 3339 date-time when this Page was last updated.
 	Updated string `json:"updated,omitempty"`
 
@@ -1015,6 +1018,9 @@ type Post struct {
 
 	// TitleLink: The title link URL, similar to atom's related link.
 	TitleLink string `json:"titleLink,omitempty"`
+
+	// Trashed: RFC 3339 date-time when this Post was last trashed.
+	Trashed string `json:"trashed,omitempty"`
 
 	// Updated: RFC 3339 date-time when this Post was last updated.
 	Updated string `json:"updated,omitempty"`

@@ -269,7 +269,8 @@ type Account struct {
 	// DisplayName: Output only. Display name of this account.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Resource name of the account. Format: accounts/pub-[0-9]+
+	// Name: Output only. Resource name of the account. Format:
+	// accounts/pub-[0-9]+
 	Name string `json:"name,omitempty"`
 
 	// PendingTasks: Output only. Outstanding tasks that need to be
@@ -325,7 +326,7 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 // AdClient: Representation of an ad client. An ad client represents a
 // user's subscription with a specific AdSense product.
 type AdClient struct {
-	// Name: Resource name of the ad client. Format:
+	// Name: Output only. Resource name of the ad client. Format:
 	// accounts/{account}/adclients/{adclient}
 	Name string `json:"name,omitempty"`
 
@@ -432,7 +433,7 @@ type AdUnit struct {
 	// the ad unit was created.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Resource name of the ad unit. Format:
+	// Name: Output only. Resource name of the ad unit. Format:
 	// accounts/{account}/adclients/{adclient}/adunits/{adunit}
 	Name string `json:"name,omitempty"`
 
@@ -517,7 +518,7 @@ type Alert struct {
 	// HTML markup, such as phrase elements or links.
 	Message string `json:"message,omitempty"`
 
-	// Name: Resource name of the alert. Format:
+	// Name: Output only. Resource name of the alert. Format:
 	// accounts/{account}/alerts/{alert}
 	Name string `json:"name,omitempty"`
 
@@ -633,7 +634,7 @@ type CustomChannel struct {
 	// DisplayName: Required. Display name of the custom channel.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Resource name of the custom channel. Format:
+	// Name: Output only. Resource name of the custom channel. Format:
 	// accounts/{account}/adclients/{adclient}/customchannels/{customchannel}
 	Name string `json:"name,omitempty"`
 
@@ -1278,7 +1279,7 @@ type Payment struct {
 	// always returned in the billing timezone (America/Los_Angeles).
 	Date *Date `json:"date,omitempty"`
 
-	// Name: Resource name of the payment. Format: -
+	// Name: Output only. Resource name of the payment. Format: -
 	// accounts/{account}/payments/unpaid for unpaid (current) AdSense
 	// earnings. - accounts/{account}/payments/youtube-unpaid for unpaid
 	// (current) YouTube earnings. - accounts/{account}/payments/yyyy-MM-dd
@@ -1402,7 +1403,7 @@ func (s *Row) MarshalJSON() ([]byte, error) {
 
 // SavedReport: Representation of a saved report.
 type SavedReport struct {
-	// Name: Resource name of the report. Format:
+	// Name: Output only. Resource name of the report. Format:
 	// accounts/{account}/reports/{report}
 	Name string `json:"name,omitempty"`
 
@@ -1446,7 +1447,7 @@ type Site struct {
 	// reporting dimension.
 	Domain string `json:"domain,omitempty"`
 
-	// Name: Resource name of a site. Format:
+	// Name: Output only. Resource name of a site. Format:
 	// accounts/{account}/sites/{site}
 	Name string `json:"name,omitempty"`
 
@@ -1532,7 +1533,7 @@ func (s *TimeZone) MarshalJSON() ([]byte, error) {
 // channels (https://support.google.com/adsense/answer/2923836) for more
 // information.
 type UrlChannel struct {
-	// Name: Resource name of the URL channel. Format:
+	// Name: Output only. Resource name of the URL channel. Format:
 	// accounts/{account}/adclients/{adclient}/urlchannels/{urlchannel}
 	Name string `json:"name,omitempty"`
 

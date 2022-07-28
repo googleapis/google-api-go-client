@@ -1626,6 +1626,9 @@ type OperationWarnings struct {
 	//   "NEXT_HOP_INSTANCE_HAS_NO_IPV6_INTERFACE" - The route's
 	// nextHopInstance URL refers to an instance that does not have an ipv6
 	// interface on the same network as the route.
+	//   "INVALID_HEALTH_CHECK_FOR_DYNAMIC_WIEGHTED_LB" - A WEIGHTED_MAGLEV
+	// backend service is associated with a health check that is not of type
+	// HTTP/HTTPS/HTTP2.
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata about this warning in key: value format.
@@ -2067,6 +2070,9 @@ type ResourceWarnings struct {
 	//   "NEXT_HOP_INSTANCE_HAS_NO_IPV6_INTERFACE" - The route's
 	// nextHopInstance URL refers to an instance that does not have an ipv6
 	// interface on the same network as the route.
+	//   "INVALID_HEALTH_CHECK_FOR_DYNAMIC_WIEGHTED_LB" - A WEIGHTED_MAGLEV
+	// backend service is associated with a health check that is not of type
+	// HTTP/HTTPS/HTTP2.
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata about this warning in key: value format.
@@ -2363,6 +2369,9 @@ type ResourceUpdateWarnings struct {
 	//   "NEXT_HOP_INSTANCE_HAS_NO_IPV6_INTERFACE" - The route's
 	// nextHopInstance URL refers to an instance that does not have an ipv6
 	// interface on the same network as the route.
+	//   "INVALID_HEALTH_CHECK_FOR_DYNAMIC_WIEGHTED_LB" - A WEIGHTED_MAGLEV
+	// backend service is associated with a health check that is not of type
+	// HTTP/HTTPS/HTTP2.
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata about this warning in key: value format.

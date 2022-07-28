@@ -1319,7 +1319,8 @@ type GoogleAppsCardV1Action struct {
 	// the card use LoadIndicator.SPINNER
 	// (workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
 	// for all actions, as this locks the UI to ensure no changes are made
-	// by the user while the action is being processed.
+	// by the user while the action is being processed. Not supported by
+	// Google Chat apps.
 	PersistValues bool `json:"persistValues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Function") to
@@ -1376,44 +1377,6 @@ type GoogleAppsCardV1ActionParameter struct {
 
 func (s *GoogleAppsCardV1ActionParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCardV1ActionParameter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleAppsCardV1AppUri: Represents the platform specific uri/intent
-// to open for each client.
-type GoogleAppsCardV1AppUri struct {
-	// AndroidIntent: An intent object to be opened in the corresponding
-	// android hosting app.
-	AndroidIntent *GoogleAppsCardV1Intent `json:"androidIntent,omitempty"`
-
-	// CompanionUri: A companion uri string to be opened in the chat
-	// companion window. on the web.
-	CompanionUri string `json:"companionUri,omitempty"`
-
-	// IosUri: A uri string to be opened in the corresponding iOS hosting
-	// app.
-	IosUri string `json:"iosUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AndroidIntent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AndroidIntent") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleAppsCardV1AppUri) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAppsCardV1AppUri
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1565,16 +1528,17 @@ type GoogleAppsCardV1Card struct {
 	// "url": "https://example.com/feedback" } } } ] ```
 	CardActions []*GoogleAppsCardV1CardAction `json:"cardActions,omitempty"`
 
-	// DisplayStyle: The display style for `peekCardHeader`.
+	// DisplayStyle: The `peekCardHeader` display style for. Not supported
+	// by Google Chat apps.
 	//
 	// Possible values:
-	//   "DISPLAY_STYLE_UNSPECIFIED" - Default value. Do not use.
+	//   "DISPLAY_STYLE_UNSPECIFIED" - Do not use.
 	//   "PEEK" - The header of the card appears at the bottom of the
 	// sidebar, partially covering the current top card of the stack.
 	// Clicking the header pops the card into the card stack. If the card
 	// has no header, a generated header is used instead.
-	//   "REPLACE" - The card is shown by replacing the view of the top card
-	// in the card stack.
+	//   "REPLACE" - Default value. The card is shown by replacing the view
+	// of the top card in the card stack.
 	DisplayStyle string `json:"displayStyle,omitempty"`
 
 	// FixedFooter: The fixed footer shown at the bottom of this card.
@@ -1589,7 +1553,8 @@ type GoogleAppsCardV1Card struct {
 
 	// PeekCardHeader: When displaying contextual content, the peek card
 	// header acts as a placeholder so that the user can navigate forward
-	// between the homepage cards and the contextual cards.
+	// between the homepage cards and the contextual cards. Not supported by
+	// Google Chat apps.
 	PeekCardHeader *GoogleAppsCardV1CardHeader `json:"peekCardHeader,omitempty"`
 
 	// Sections: Sections are separated by a line divider.
@@ -1857,38 +1822,6 @@ func (s *GoogleAppsCardV1DecoratedText) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1Divider: A divider that appears in between widgets.
 type GoogleAppsCardV1Divider struct {
-}
-
-// GoogleAppsCardV1ExtraData: Extra data for an android intent. Valid
-// keys are defined in the hosting app contract.
-type GoogleAppsCardV1ExtraData struct {
-	// Key: A key for the intent extra data.
-	Key string `json:"key,omitempty"`
-
-	// Value: Value for the given extra data key.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleAppsCardV1ExtraData) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAppsCardV1ExtraData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCardV1Grid: Represents a Grid widget that displays items in
@@ -2167,42 +2100,6 @@ func (s *GoogleAppsCardV1ImageCropStyle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleAppsCardV1Intent: Android intent.
-type GoogleAppsCardV1Intent struct {
-	// ExtraData: A list of extra data for the android intent. For example,
-	// for a calendar event edit intent, the event title information can be
-	// passed as extra data.
-	ExtraData []*GoogleAppsCardV1ExtraData `json:"extraData,omitempty"`
-
-	// IntentAction: An android intent action string for the {@link
-	// android.content.Intent} object. For example: for the view intent
-	// action type, a valid value will be
-	// android.content.Intent.ACTION_VIEW.
-	IntentAction string `json:"intentAction,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ExtraData") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExtraData") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleAppsCardV1Intent) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAppsCardV1Intent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleAppsCardV1OnClick: Represents the response to an `onClick`
 // event.
 type GoogleAppsCardV1OnClick struct {
@@ -2249,15 +2146,6 @@ func (s *GoogleAppsCardV1OnClick) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1OpenLink: Represents an `onClick` event that opens a
 // hyperlink.
 type GoogleAppsCardV1OpenLink struct {
-	// AppUri: Represents the platform specific uri/intent to open on each
-	// client. For example: A companion_url will open in a companion window
-	// on the web. An iOS URL and android intent will open in the
-	// corresponding hosting apps. If these platform specific URLs can't be
-	// handled correctly, i.e. if the companion isn't supported on web and
-	// the hosting apps aren't available on the mobile platforms then the
-	// `uri` will open in a new browser window on all the platforms.
-	AppUri *GoogleAppsCardV1AppUri `json:"appUri,omitempty"`
-
 	// OnClose: Whether the client forgets about a link after opening it, or
 	// observes it until the window closes. Not supported by Chat apps.
 	//
@@ -2282,7 +2170,7 @@ type GoogleAppsCardV1OpenLink struct {
 	// Url: The URL to open.
 	Url string `json:"url,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AppUri") to
+	// ForceSendFields is a list of field names (e.g. "OnClose") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2290,8 +2178,8 @@ type GoogleAppsCardV1OpenLink struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AppUri") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "OnClose") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2604,7 +2492,7 @@ func (s *GoogleAppsCardV1TextInput) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1TextParagraph: A paragraph of text that supports
 // formatting. See Text formatting
-// (workspace/add-ons/concepts/widgets#text_formatting") for details.
+// (workspace/add-ons/concepts/widgets#text_formatting) for details.
 type GoogleAppsCardV1TextParagraph struct {
 	// Text: The text that's shown in the widget.
 	Text string `json:"text,omitempty"`
@@ -3146,6 +3034,21 @@ type Membership struct {
 	// spaces/{space}/members/{member}
 	Name string `json:"name,omitempty"`
 
+	// Role: Output only. User's role within a Chat space, which determines
+	// their permitted actions in the space.
+	//
+	// Possible values:
+	//   "MEMBERSHIP_ROLE_UNSPECIFIED" - Default value. The user isn't a
+	// member of the space, but might be invited.
+	//   "ROLE_MEMBER" - A member of the space. The user has basic
+	// permissions, like sending messages to the space. In 1:1 and unnamed
+	// group conversations, everyone has this role.
+	//   "ROLE_MANAGER" - A space manager. The user has all basic
+	// permissions plus administrative permissions that allow them to manage
+	// the space, like adding or removing members. Only supports
+	// SpaceType.SPACE.
+	Role string `json:"role,omitempty"`
+
 	// State: Output only. State of the membership.
 	//
 	// Possible values:
@@ -3456,11 +3359,15 @@ type Space struct {
 	// Chat app and a single human.
 	SingleUserBotDm bool `json:"singleUserBotDm,omitempty"`
 
+	// SpaceDetails: Details about the space including description and
+	// rules.
+	SpaceDetails *SpaceDetails `json:"spaceDetails,omitempty"`
+
 	// Threaded: Output only. Whether messages are threaded in this space.
 	Threaded bool `json:"threaded,omitempty"`
 
-	// Type: Output only. Deprecated: Use `single_user_bot_dm` or
-	// `space_type` (developer preview) instead. The type of a space.
+	// Type: Output only. Deprecated: Use `singleUserBotDm` or `spaceType`
+	// (developer preview) instead. The type of a space.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED"
@@ -3493,6 +3400,39 @@ type Space struct {
 
 func (s *Space) MarshalJSON() ([]byte, error) {
 	type NoMethod Space
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpaceDetails: Details about the space including description and
+// rules.
+type SpaceDetails struct {
+	// Description: Optional. A description of the space. It could describe
+	// the space's discussion topic, functional purpose, or participants.
+	Description string `json:"description,omitempty"`
+
+	// Guidelines: Optional. The space's rules, expectations, and etiquette.
+	Guidelines string `json:"guidelines,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpaceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SpaceDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6334,8 +6274,7 @@ func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMes
 // UpdateMask sets the optional parameter "updateMask": Required. The
 // field paths to update. Separate multiple values with commas.
 // Currently supported field paths: - text - cards (Requires service
-// account authentication (/chat/api/guides/auth/service-accounts).) -
-// attachment
+// account authentication (/chat/api/guides/auth/service-accounts).)
 func (c *SpacesMessagesUpdateCall) UpdateMask(updateMask string) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6448,7 +6387,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - text - cards (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - attachment",
+	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - text - cards (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) ",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

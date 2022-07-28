@@ -504,6 +504,12 @@ type AndroidApp struct {
 	// of the parent FirebaseProject for the `AndroidApp`.
 	ProjectId string `json:"projectId,omitempty"`
 
+	// Sha1Hashes: The SHA1 certificate hashes for the AndroidApp.
+	Sha1Hashes []string `json:"sha1Hashes,omitempty"`
+
+	// Sha256Hashes: The SHA256 certificate hashes for the AndroidApp.
+	Sha256Hashes []string `json:"sha256Hashes,omitempty"`
+
 	// State: Output only. The lifecycle state of the App.
 	//
 	// Possible values:
@@ -767,8 +773,21 @@ func (s *FirebaseAppInfo) MarshalJSON() ([]byte, error) {
 // has the same underlying GCP identifiers (`projectNumber` and
 // `projectId`). This allows for easy interop with Google APIs.
 type FirebaseProject struct {
+	// Annotations: Set of user-defined annotations for the FirebaseProject
+	// as per AIP-128 (https://google.aip.dev/128#annotations). These
+	// annotations are intended solely for developers and client-side tools
+	// Firebase services will not mutate this annotation set.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
 	// DisplayName: The user-assigned display name of the Project.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: This checksum is computed by the server based on the value of
+	// other fields, and may be sent on update requests to ensure the client
+	// has an up-to-date value before proceeding. AIP-154
+	// (https://google.aip.dev/154#declarative-friendly-resources). This
+	// etag is strongly validated.
+	Etag string `json:"etag,omitempty"`
 
 	// Name: The resource name of the Project, in the format:
 	// projects/PROJECT_IDENTIFIER PROJECT_IDENTIFIER: the Project's
@@ -811,7 +830,7 @@ type FirebaseProject struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -819,7 +838,7 @@ type FirebaseProject struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// NullFields is a list of field names (e.g. "Annotations") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -3652,19 +3671,19 @@ func (r *ProjectsService) SearchApps(parent string) *ProjectsSearchAppsCall {
 // (../projects.apps#FirebaseAppInfo.FIELDS.platform) We also support
 // the following "virtual" fields (fields which are not actually part of
 // the returned resource object, but can be queried as if they are
-// pre-populated with specific values): * `sha1_hash`: This field is
-// considered to be a repeated `string` field, populated with the list
-// of all SHA-1 certificate fingerprints registered with the app. This
-// list is empty if the app is not an Android app. * `sha256_hash`: This
-// field is considered to be a repeated `string` field, populated with
-// the list of all SHA-256 certificate fingerprints registered with the
-// app. This list is empty if the app is not an Android app. *
-// `app_store_id`: This field is considered to be a singular `string`
-// field, populated with the Apple App Store ID registered with the app.
-// This field is empty if the app is not an iOS app. * `team_id`: This
-// field is considered to be a singular `string` field, populated with
-// the Apple team ID registered with the app. This field is empty if the
-// app is not an iOS app.
+// pre-populated with specific values): * `sha1_hash` or `sha1_hashes`:
+// This field is considered to be a repeated `string` field, populated
+// with the list of all SHA-1 certificate fingerprints registered with
+// the app. This list is empty if the app is not an Android app. *
+// `sha256_hash` or `sha256_hashes`: This field is considered to be a
+// repeated `string` field, populated with the list of all SHA-256
+// certificate fingerprints registered with the app. This list is empty
+// if the app is not an Android app. * `app_store_id`: This field is
+// considered to be a singular `string` field, populated with the Apple
+// App Store ID registered with the app. This field is empty if the app
+// is not an iOS app. * `team_id`: This field is considered to be a
+// singular `string` field, populated with the Apple team ID registered
+// with the app. This field is empty if the app is not an iOS app.
 func (c *ProjectsSearchAppsCall) Filter(filter string) *ProjectsSearchAppsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3804,7 +3823,7 @@ func (c *ProjectsSearchAppsCall) Do(opts ...googleapi.CallOption) (*SearchFireba
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A query string compatible with Google's [AIP-160](https://google.aip.dev/160) standard. Use any of the following fields in a query: * [`app_id`](../projects.apps#FirebaseAppInfo.FIELDS.app_id) * [`namespace`](../projects.apps#FirebaseAppInfo.FIELDS.namespace) * [`platform`](../projects.apps#FirebaseAppInfo.FIELDS.platform) We also support the following \"virtual\" fields (fields which are not actually part of the returned resource object, but can be queried as if they are pre-populated with specific values): * `sha1_hash`: This field is considered to be a repeated `string` field, populated with the list of all SHA-1 certificate fingerprints registered with the app. This list is empty if the app is not an Android app. * `sha256_hash`: This field is considered to be a repeated `string` field, populated with the list of all SHA-256 certificate fingerprints registered with the app. This list is empty if the app is not an Android app. * `app_store_id`: This field is considered to be a singular `string` field, populated with the Apple App Store ID registered with the app. This field is empty if the app is not an iOS app. * `team_id`: This field is considered to be a singular `string` field, populated with the Apple team ID registered with the app. This field is empty if the app is not an iOS app.",
+	//       "description": "A query string compatible with Google's [AIP-160](https://google.aip.dev/160) standard. Use any of the following fields in a query: * [`app_id`](../projects.apps#FirebaseAppInfo.FIELDS.app_id) * [`namespace`](../projects.apps#FirebaseAppInfo.FIELDS.namespace) * [`platform`](../projects.apps#FirebaseAppInfo.FIELDS.platform) We also support the following \"virtual\" fields (fields which are not actually part of the returned resource object, but can be queried as if they are pre-populated with specific values): * `sha1_hash` or `sha1_hashes`: This field is considered to be a repeated `string` field, populated with the list of all SHA-1 certificate fingerprints registered with the app. This list is empty if the app is not an Android app. * `sha256_hash` or `sha256_hashes`: This field is considered to be a repeated `string` field, populated with the list of all SHA-256 certificate fingerprints registered with the app. This list is empty if the app is not an Android app. * `app_store_id`: This field is considered to be a singular `string` field, populated with the Apple App Store ID registered with the app. This field is empty if the app is not an iOS app. * `team_id`: This field is considered to be a singular `string` field, populated with the Apple team ID registered with the app. This field is empty if the app is not an iOS app.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -563,9 +563,9 @@ type BackupRun struct {
 	//   "DELETED" - The backup has been deleted.
 	Status string `json:"status,omitempty"`
 
-	// Type: The type of this run; can be either "AUTOMATED" or "ON_DEMAND".
-	// This field defaults to "ON_DEMAND" and is ignored, when specified for
-	// insert requests.
+	// Type: The type of this run; can be either "AUTOMATED" or "ON_DEMAND"
+	// or "FINAL". This field defaults to "ON_DEMAND" and is ignored, when
+	// specified for insert requests.
 	//
 	// Possible values:
 	//   "SQL_BACKUP_RUN_TYPE_UNSPECIFIED" - This is an unknown BackupRun
@@ -1111,7 +1111,8 @@ type DatabaseInstance struct {
 	// ReplicaNames: The replicas of the instance.
 	ReplicaNames []string `json:"replicaNames,omitempty"`
 
-	// RootPassword: Initial root password. Use only on creation.
+	// RootPassword: Initial root password. Use only on creation. You must
+	// set root passwords before you can connect to PostgreSQL instances.
 	RootPassword string `json:"rootPassword,omitempty"`
 
 	// SatisfiesPzs: The status indicating if instance satisfiesPzs.
@@ -3484,6 +3485,10 @@ type Settings struct {
 	// instances. Indicates whether replication is enabled or not. WARNING:
 	// Changing this restarts the instance.
 	DatabaseReplicationEnabled bool `json:"databaseReplicationEnabled,omitempty"`
+
+	// DeletionProtectionEnabled: Configuration to protect against
+	// accidental instance deletion.
+	DeletionProtectionEnabled bool `json:"deletionProtectionEnabled,omitempty"`
 
 	// DenyMaintenancePeriods: Deny maintenance periods
 	DenyMaintenancePeriods []*DenyMaintenancePeriod `json:"denyMaintenancePeriods,omitempty"`

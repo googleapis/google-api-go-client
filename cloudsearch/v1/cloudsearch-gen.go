@@ -2531,14 +2531,16 @@ func (s *FreshnessOptions) MarshalJSON() ([]byte, error) {
 }
 
 type GSuitePrincipal struct {
-	// GsuiteDomain: This principal represents all users of the G Suite
-	// domain of the customer.
+	// GsuiteDomain: This principal represents all users of the Google
+	// Workspace domain of the customer.
 	GsuiteDomain bool `json:"gsuiteDomain,omitempty"`
 
-	// GsuiteGroupEmail: This principal references a G Suite group account
+	// GsuiteGroupEmail: This principal references a Google Workspace group
+	// name.
 	GsuiteGroupEmail string `json:"gsuiteGroupEmail,omitempty"`
 
-	// GsuiteUserEmail: This principal references a G Suite user account
+	// GsuiteUserEmail: This principal references a Google Workspace user
+	// account.
 	GsuiteUserEmail string `json:"gsuiteUserEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GsuiteDomain") to
@@ -3182,8 +3184,7 @@ func (s *Id) MarshalJSON() ([]byte, error) {
 
 type IndexItemOptions struct {
 	// AllowUnknownGsuitePrincipals: Specifies if the index request should
-	// allow gsuite principals that do not exist or are deleted in the index
-	// request.
+	// allow Google Workspace principals that do not exist or are deleted.
 	AllowUnknownGsuitePrincipals bool `json:"allowUnknownGsuitePrincipals,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4833,7 +4834,8 @@ type Principal struct {
 	// name with this format: identitysources/{source_id}/groups/{ID}
 	GroupResourceName string `json:"groupResourceName,omitempty"`
 
-	// GsuitePrincipal: This principal is a GSuite user, group or domain.
+	// GsuitePrincipal: This principal is a Google Workspace user, group or
+	// domain.
 	GsuitePrincipal *GSuitePrincipal `json:"gsuitePrincipal,omitempty"`
 
 	// UserResourceName: This principal is a user identified using an

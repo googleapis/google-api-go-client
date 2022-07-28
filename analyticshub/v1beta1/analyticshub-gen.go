@@ -445,9 +445,9 @@ type DataExchange struct {
 
 	// DisplayName: Required. Human-readable display name of the data
 	// exchange. The display name must contain only Unicode letters, numbers
-	// (0-9), underscores (_), dashes (-), spaces ( ), and must not start or
-	// end with spaces. Default value is an empty string. Max length: 63
-	// bytes.
+	// (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and
+	// must not start or end with spaces. Default value is an empty string.
+	// Max length: 63 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Documentation: Optional. Documentation describing the data exchange.
@@ -947,8 +947,9 @@ type Listing struct {
 
 	// DisplayName: Required. Human-readable display name of the listing.
 	// The display name must contain only Unicode letters, numbers (0-9),
-	// underscores (_), dashes (-), spaces ( ), and can't start or end with
-	// spaces. Default value is an empty string. Max length: 63 bytes.
+	// underscores (_), dashes (-), spaces ( ), ampersands (&) and can't
+	// start or end with spaces. Default value is an empty string. Max
+	// length: 63 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Documentation: Optional. Documentation describing the listing.

@@ -6465,9 +6465,7 @@ type ProjectsSubscriptionsPullCall struct {
 	header_      http.Header
 }
 
-// Pull: Pulls messages from the server. The server may return
-// `UNAVAILABLE` if there are too many concurrent pull requests pending
-// for the given subscription.
+// Pull: Pulls messages from the server.
 //
 // - subscription: The subscription from which messages should be
 //   pulled. Format is `projects/{project}/subscriptions/{sub}`.
@@ -6569,7 +6567,7 @@ func (c *ProjectsSubscriptionsPullCall) Do(opts ...googleapi.CallOption) (*PullR
 	}
 	return ret, nil
 	// {
-	//   "description": "Pulls messages from the server. The server may return `UNAVAILABLE` if there are too many concurrent pull requests pending for the given subscription.",
+	//   "description": "Pulls messages from the server.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:pull",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.pull",

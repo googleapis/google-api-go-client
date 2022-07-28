@@ -2409,6 +2409,12 @@ func (s *Group) MarshalJSON() ([]byte, error) {
 // HttpCheck: Information involved in an HTTP/HTTPS Uptime check
 // request.
 type HttpCheck struct {
+	// AcceptedResponseStatusCodes: If present, the check will only pass if
+	// the HTTP response status code is in this set of status codes. If
+	// empty, the HTTP status code will only pass if the HTTP status code is
+	// 200-299.
+	AcceptedResponseStatusCodes []*ResponseStatusCode `json:"acceptedResponseStatusCodes,omitempty"`
+
 	// AuthInfo: The authentication information. Optional when creating an
 	// HTTP check; defaults to empty.
 	AuthInfo *BasicAuthentication `json:"authInfo,omitempty"`
@@ -2487,20 +2493,22 @@ type HttpCheck struct {
 	// setting validate_ssl to true has no effect.
 	ValidateSsl bool `json:"validateSsl,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AuthInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AcceptedResponseStatusCodes") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AuthInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "AcceptedResponseStatusCodes") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4938,6 +4946,48 @@ func (s *ResourceGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ResponseStatusCode: A status to accept. Either a status code class
+// like "2xx", or an integer status code like "200".
+type ResponseStatusCode struct {
+	// StatusClass: A class of status codes to accept.
+	//
+	// Possible values:
+	//   "STATUS_CLASS_UNSPECIFIED" - Default value that matches no status
+	// codes.
+	//   "STATUS_CLASS_1XX" - The class of status codes between 100 and 199.
+	//   "STATUS_CLASS_2XX" - The class of status codes between 200 and 299.
+	//   "STATUS_CLASS_3XX" - The class of status codes between 300 and 399.
+	//   "STATUS_CLASS_4XX" - The class of status codes between 400 and 499.
+	//   "STATUS_CLASS_5XX" - The class of status codes between 500 and 599.
+	//   "STATUS_CLASS_ANY" - The class of all status codes.
+	StatusClass string `json:"statusClass,omitempty"`
+
+	// StatusValue: A status code to accept.
+	StatusValue int64 `json:"statusValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "StatusClass") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StatusClass") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResponseStatusCode) MarshalJSON() ([]byte, error) {
+	type NoMethod ResponseStatusCode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SendNotificationChannelVerificationCodeRequest: The
 // SendNotificationChannelVerificationCode request.
 type SendNotificationChannelVerificationCodeRequest struct {
@@ -5888,6 +5938,14 @@ type UptimeCheckConfig struct {
 	// Timeout: The maximum amount of time to wait for the request to
 	// complete (must be between 1 and 60 seconds). Required.
 	Timeout string `json:"timeout,omitempty"`
+
+	// UserLabels: User-supplied key/value data to be used for organizing
+	// and identifying the UptimeCheckConfig objects.The field can contain
+	// up to 64 entries. Each key and value is limited to 63 Unicode
+	// characters or 128 bytes, whichever is smaller. Labels and values can
+	// contain only lowercase letters, numerals, underscores, and dashes.
+	// Keys must begin with a letter.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -10148,9 +10206,10 @@ type ProjectsMetricDescriptorsCreateCall struct {
 }
 
 // Create: Creates a new metric descriptor. The creation is executed
-// asynchronously and callers may check the returned operation to track
-// its progress. User-created metric descriptors define custom metrics
-// (https://cloud.google.com/monitoring/custom-metrics).
+// asynchronously. User-created metric descriptors define custom metrics
+// (https://cloud.google.com/monitoring/custom-metrics). The metric
+// descriptor is updated if it already exists, except that metric labels
+// are never removed.
 //
 // - name: The project
 //   (https://cloud.google.com/monitoring/api/v3#project_name) on which
@@ -10254,7 +10313,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new metric descriptor. The creation is executed asynchronously and callers may check the returned operation to track its progress. User-created metric descriptors define custom metrics (https://cloud.google.com/monitoring/custom-metrics).",
+	//   "description": "Creates a new metric descriptor. The creation is executed asynchronously. User-created metric descriptors define custom metrics (https://cloud.google.com/monitoring/custom-metrics). The metric descriptor is updated if it already exists, except that metric labels are never removed.",
 	//   "flatPath": "v3/projects/{projectsId}/metricDescriptors",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.metricDescriptors.create",

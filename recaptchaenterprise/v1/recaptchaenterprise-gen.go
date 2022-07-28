@@ -332,6 +332,11 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// cardholder having provided their card details but allegedly not being
 	// satisfied with the purchase (for example, misrepresentation,
 	// attempted cancellation).
+	//   "REFUND" - Indicates a completed payment transaction was refunded
+	// by the seller.
+	//   "REFUND_FRAUD" - Indicates a completed payment transaction was
+	// determined to be fraudulent by the seller, and was cancelled and
+	// refunded as a result.
 	//   "PAYMENT_HEURISTICS" - Indicates the transaction associated with
 	// the assessment is suspected of being fraudulent based on the payment
 	// method, billing details, shipping address or other transaction

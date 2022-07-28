@@ -1314,6 +1314,11 @@ type MysqlSourceConfig struct {
 	// IncludeObjects: MySQL objects to retrieve from the source.
 	IncludeObjects *MysqlRdbms `json:"includeObjects,omitempty"`
 
+	// MaxConcurrentCdcTasks: Maximum number of concurrent CDC tasks. The
+	// number should be non negative. If not set (or set to 0), the system's
+	// default value will be used.
+	MaxConcurrentCdcTasks int64 `json:"maxConcurrentCdcTasks,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1737,6 +1742,14 @@ type OracleSourceConfig struct {
 
 	// IncludeObjects: Oracle objects to include in the stream.
 	IncludeObjects *OracleRdbms `json:"includeObjects,omitempty"`
+
+	// MaxConcurrentCdcTasks: Maximum number of concurrent CDC tasks. The
+	// number should be non negative. If not set (or set to 0), the system's
+	// default value will be used.
+	MaxConcurrentCdcTasks int64 `json:"maxConcurrentCdcTasks,omitempty"`
+
+	// StreamLargeObjects: Stream large object values.
+	StreamLargeObjects *StreamLargeObjects `json:"streamLargeObjects,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DropLargeObjects") to
 	// unconditionally include in API requests. By default, fields with
@@ -2222,6 +2235,10 @@ func (s *Stream) MarshalJSON() ([]byte, error) {
 	type NoMethod Stream
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StreamLargeObjects: Configuration to stream large object values.
+type StreamLargeObjects struct {
 }
 
 // StreamObject: A specific stream object (e.g a specific DB table).

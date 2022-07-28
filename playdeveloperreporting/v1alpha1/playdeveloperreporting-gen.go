@@ -327,11 +327,28 @@ func (s *GooglePlayDeveloperReportingV1alpha1Anomaly) MarshalJSON() ([]byte, err
 // form factor) of the user's device. * `countryCode` (string): the
 // country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United
-// States). **Required permissions**: to access this resource, the
-// calling user needs the _View app information (read-only)_ permission
-// for the app. **Related metric sets:** * vitals.errors contains
-// unnormalized version (absolute counts) of crashes. * vitals.errors
-// contains normalized metrics about crashes, another stability metric.
+// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
+// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+// * `deviceSocModel` (string): Model of the device's primary
+// system-on-chip, e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
+// permissions**: to access this resource, the calling user needs the
+// _View app information (read-only)_ permission for the app. **Related
+// metric sets:** * vitals.errors contains unnormalized version
+// (absolute counts) of crashes. * vitals.errors contains normalized
+// metrics about crashes, another stability metric.
 type GooglePlayDeveloperReportingV1alpha1AnrRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1alpha1FreshnessInfo `json:"freshnessInfo,omitempty"`
@@ -396,11 +413,28 @@ func (s *GooglePlayDeveloperReportingV1alpha1AnrRateMetricSet) MarshalJSON() ([]
 // known as form factor) of the user's device. * `countryCode` (string):
 // the country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United
-// States). **Required permissions**: to access this resource, the
-// calling user needs the _View app information (read-only)_ permission
-// for the app. **Related metric sets:** * vitals.errors contains
-// unnormalized version (absolute counts) of crashes. * vitals.errors
-// contains normalized metrics about ANRs, another stability metric.
+// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
+// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+// * `deviceSocModel` (string): Model of the device's primary
+// system-on-chip, e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
+// permissions**: to access this resource, the calling user needs the
+// _View app information (read-only)_ permission for the app. **Related
+// metric sets:** * vitals.errors contains unnormalized version
+// (absolute counts) of crashes. * vitals.errors contains normalized
+// metrics about ANRs, another stability metric.
 type GooglePlayDeveloperReportingV1alpha1CrashRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1alpha1FreshnessInfo `json:"freshnessInfo,omitempty"`
@@ -499,7 +533,24 @@ func (s *GooglePlayDeveloperReportingV1alpha1DimensionValue) MarshalJSON() ([]by
 // identifier of the user's device model. * `deviceType` (string):
 // identifier of the device's form factor, e.g., PHONE. * `issueId`
 // (string): the id an error was assigned to. The value should
-// correspond to the `{issue}` component of the issue name. **Required
+// correspond to the `{issue}` component of the issue name. *
+// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB,
+// 4GB, etc.). * `deviceSocMake` (string): Make of the device's primary
+// system-on-chip, e.g., Samsung. Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+// * `deviceSocModel` (string): Model of the device's primary
+// system-on-chip, e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
 // permissions**: to access this resource, the calling user needs the
 // _View app information (read-only)_ permission for the app. **Related
 // metric sets:** * vitals.errors.counts contains normalized metrics
@@ -698,9 +749,25 @@ func (s *GooglePlayDeveloperReportingV1alpha1ErrorReport) MarshalJSON() ([]byte,
 // form factor) of the user's device. * `countryCode` (string): the
 // country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United
-// States). **Required permissions**: to access this resource, the
-// calling user needs the _View app information (read-only)_ permission
-// for the app.
+// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
+// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+// * `deviceSocModel` (string): Model of the device's primary
+// system-on-chip, e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
+// permissions**: to access this resource, the calling user needs the
+// _View app information (read-only)_ permission for the app.
 type GooglePlayDeveloperReportingV1alpha1ExcessiveWakeupRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1alpha1FreshnessInfo `json:"freshnessInfo,omitempty"`
@@ -939,7 +1006,24 @@ type GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest struct {
 	// `deviceType` (string): the type (also known as form factor) of the
 	// user's device. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States).
+	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
+	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
+	// `deviceSocMake` (string): Make of the device's primary
+	// system-on-chip, e.g., Samsung. Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+	// * `deviceSocModel` (string): Model of the device's primary
+	// system-on-chip, e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+	// (string): Screen density of the device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// Filter: Filters to apply to data. The filtering expression follows
@@ -1053,7 +1137,24 @@ type GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest struct {
 	// `deviceType` (string): the type (also known as form factor) of the
 	// user's device. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States).
+	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
+	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
+	// `deviceSocMake` (string): Make of the device's primary
+	// system-on-chip, e.g., Samsung. Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+	// * `deviceSocModel` (string): Model of the device's primary
+	// system-on-chip, e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+	// (string): Screen density of the device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// Filter: Filters to apply to data. The filtering expression follows
@@ -1168,7 +1269,24 @@ type GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest struct 
 	// PHONE. * `reportType` (string): the type of error. The value should
 	// correspond to one of the possible values in ErrorType. * `issueId`
 	// (string): the id an error was assigned to. The value should
-	// correspond to the `{issue}` component of the issue name.
+	// correspond to the `{issue}` component of the issue name. *
+	// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB,
+	// 4GB, etc.). * `deviceSocMake` (string): Make of the device's primary
+	// system-on-chip, e.g., Samsung. Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+	// * `deviceSocModel` (string): Model of the device's primary
+	// system-on-chip, e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+	// (string): Screen density of the device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// Filter: Filters to apply to data. The filtering expression follows
@@ -1272,7 +1390,24 @@ type GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetReques
 	// `deviceType` (string): the type (also known as form factor) of the
 	// user's device. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States).
+	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
+	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
+	// `deviceSocMake` (string): Make of the device's primary
+	// system-on-chip, e.g., Samsung. Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+	// * `deviceSocModel` (string): Model of the device's primary
+	// system-on-chip, e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+	// (string): Screen density of the device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// Filter: Filters to apply to data. The filtering expression follows
@@ -1389,7 +1524,24 @@ type GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricS
 	// `deviceType` (string): the type (also known as form factor) of the
 	// user's device. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States).
+	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
+	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
+	// `deviceSocMake` (string): Make of the device's primary
+	// system-on-chip, e.g., Samsung. Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+	// * `deviceSocModel` (string): Model of the device's primary
+	// system-on-chip, e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+	// (string): Screen density of the device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// Filter: Filters to apply to data. The filtering expression follows
@@ -1603,9 +1755,25 @@ func (s *GooglePlayDeveloperReportingV1alpha1SearchErrorReportsResponse) Marshal
 // form factor) of the user's device. * `countryCode` (string): the
 // country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United
-// States). **Required permissions**: to access this resource, the
-// calling user needs the _View app information (read-only)_ permission
-// for the app.
+// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
+// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+// * `deviceSocModel` (string): Model of the device's primary
+// system-on-chip, e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
+// permissions**: to access this resource, the calling user needs the
+// _View app information (read-only)_ permission for the app.
 type GooglePlayDeveloperReportingV1alpha1StuckBackgroundWakelockRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1alpha1FreshnessInfo `json:"freshnessInfo,omitempty"`

@@ -2773,7 +2773,7 @@
       }
     }
   },
-  "revision": "20220725",
+  "revision": "20220727",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccount": {
@@ -4839,6 +4839,7 @@
               "DATA_RETENTION_SETTINGS",
               "DISPLAY_VIDEO_360_ADVERTISER_LINK",
               "DISPLAY_VIDEO_360_ADVERTISER_LINK_PROPOSAL",
+              "SEARCH_ADS_360_LINK",
               "DATA_STREAM",
               "ATTRIBUTION_SETTINGS"
             ],
@@ -4856,6 +4857,7 @@
               "DataRetentionSettings resource",
               "DisplayVideo360AdvertiserLink resource",
               "DisplayVideo360AdvertiserLinkProposal resource",
+              "SearchAds360Link resource",
               "DataStream resource",
               "AttributionSettings resource"
             ],

@@ -307,11 +307,10 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 // Admin: An administrator of an Account or a location.
 type Admin struct {
 	// Account: Immutable. The name of the Account resource that this Admin
-	// refers to. Used when calling CreateAccountAdmin or
-	// CreateLocationAdmin to invite UserGroups or LocationGroups as admins,
-	// respectively. If both this field and `admin` are set on `CREATE`
-	// requests, this field takes precedence and the email address in
-	// `admin` will be ignored. Format: `accounts/{account}`.
+	// refers to. Used when calling locations.admins.create to invite a
+	// LocationGroup as an admin. If both this field and `admin` are set on
+	// `CREATE` requests, this field takes precedence and the email address
+	// in `admin` will be ignored. Format: `accounts/{account}`.
 	Account string `json:"account,omitempty"`
 
 	// Admin: Optional. The name of the admin. When making the initial
@@ -1109,8 +1108,7 @@ func (c *AccountsListCall) Filter(filter string) *AccountsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": How many accounts to
-// fetch per page. The minimum supported page_size is 2. The default and
-// maximum is 20.
+// fetch per page. The default and maximum is 20.
 func (c *AccountsListCall) PageSize(pageSize int64) *AccountsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1243,7 +1241,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccountsRespon
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. How many accounts to fetch per page. The minimum supported page_size is 2. The default and maximum is 20.",
+	//       "description": "Optional. How many accounts to fetch per page. The default and maximum is 20.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

@@ -2167,10 +2167,6 @@ type GoogleCloudChannelV1Offer struct {
 	// Constraints: Constraints on transacting the Offer.
 	Constraints *GoogleCloudChannelV1Constraints `json:"constraints,omitempty"`
 
-	// DealCode: The deal code of the offer to get a special promotion or
-	// discount.
-	DealCode string `json:"dealCode,omitempty"`
-
 	// EndTime: Output only. End of the Offer validity time.
 	EndTime string `json:"endTime,omitempty"`
 

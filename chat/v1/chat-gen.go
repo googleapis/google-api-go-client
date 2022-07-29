@@ -737,6 +737,39 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CardWithId: Widgets for Chat apps to specify.
+type CardWithId struct {
+	// Card: Card proto that allows Chat apps to specify UI elements and
+	// editable widgets.
+	Card *GoogleAppsCardV1Card `json:"card,omitempty"`
+
+	// CardId: Required for `cardsV2` messages. Chat app-specified
+	// identifier for this widget. Scoped within a message.
+	CardId string `json:"cardId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Card") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Card") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CardWithId) MarshalJSON() ([]byte, error) {
+	type NoMethod CardWithId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ChatAppLogEntry: JSON payload of error messages. If the Cloud Logging
 // API is enabled, these error messages are logged to Google Cloud
 // Logging (https://cloud.google.com/logging/docs).
@@ -3109,6 +3142,17 @@ type Message struct {
 	// images. Cards are normally displayed below the plain-text body of the
 	// message.
 	Cards []*Card `json:"cards,omitempty"`
+
+	// CardsV2: Richly formatted and interactive cards that display UI
+	// elements and editable widgets, such as: - Formatted text - Buttons -
+	// Clickable images - Checkboxes - Radio buttons - Input widgets. Cards
+	// are usually displayed below the text-body of a Chat message, but can
+	// situationally appear other places, such as dialogs
+	// (https://developers.google.com/chat/how-tos/dialogs). The `cardId` is
+	// a unique identifier among cards in the same message and for
+	// identifying user input values. Currently supported widgets include: -
+	// `TextParagraph` - `DecoratedText` - `Image` - `ButtonList`
+	CardsV2 []*CardWithId `json:"cardsV2,omitempty"`
 
 	// CreateTime: Output only. The time at which the message was created in
 	// Google Chat server.

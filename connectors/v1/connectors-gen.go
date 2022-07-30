@@ -638,6 +638,14 @@ type ConfigVariableTemplate struct {
 	// RoleGrant: Role grant configuration for the config variable.
 	RoleGrant *RoleGrant `json:"roleGrant,omitempty"`
 
+	// State: State of the config variable.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Status is unspecified.
+	//   "ACTIVE" - Config variable is active
+	//   "DEPRECATED" - Config variable is deprecated.
+	State string `json:"state,omitempty"`
+
 	// ValidationRegex: Regular expression in RE2 syntax used for validating
 	// the `value` of a `ConfigVariable`.
 	ValidationRegex string `json:"validationRegex,omitempty"`

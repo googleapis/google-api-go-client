@@ -56,3 +56,10 @@ if [[ $KOKORO_JOB_NAME == *"continuous"* ]]; then
 else
     go test -race -v -short ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$KOKORO_GERRIT_CHANGE_NUMBER.txt
 fi
+
+if [[ $KOKORO_BUILD_ARTIFACTS_SUBDIR = *"continuous"* ]]; then
+  chmod +x $KOKORO_GFILE_DIR/linux_amd64/flakybot
+  $KOKORO_GFILE_DIR/linux_amd64/flakybot -logs_dir=$GOCLOUD_HOME \
+    -repo=googleapis/google-api-go-client \
+    -commit_hash=$KOKORO_GITHUB_COMMIT_URL_google_api_go_client
+fi
